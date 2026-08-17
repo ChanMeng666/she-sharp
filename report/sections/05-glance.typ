@@ -2,14 +2,17 @@
 //
 // EVERY figure on this page is verified. That is a deliberate editorial choice,
 // not a coincidence: this is the page a reader photographs and quotes, so it
-// carries only numbers that survive a FINAL build unchanged. The half-year's
-// unreconciled totals (D.headline.registered / checked-in / avg-registered) are
-// real and are reported — but on the methodology page and in the event pages,
-// where their caveats travel with them, rather than here where they would be
-// stripped of context.
+// carries only numbers that survive a FINAL build unchanged.
 //
-// That is why four of the six rows say "across the four reconciled events".
-// A smaller true number beats a bigger one that a funder can pull apart.
+// Until the Humanitix account export landed (2026-08-17), only four of the nine
+// events had attendance anyone could stand behind, and these rows said so —
+// "across the four reconciled events". All nine are now reconciled against the
+// booking platform itself, so the rows carry the full half-year.
+//
+// One caveat survives and must not be quietly dropped: the two Youth Tech
+// workshops ran no check-in at all, so the check-in rate is computed over the
+// SEVEN events that scanned, not over all nine. Including them would report the
+// absence of a scanner as an absence of people.
 
 #import "../theme/theme.typ": *
 #import "../lib/layout.typ": sheet
@@ -24,9 +27,9 @@
   ]
 
   #stat-row(D.headline.events, "Events delivered")
-  #stat-row(D.headline.registered-verified, "Registered attendees across the four reconciled events")
-  #stat-row(D.headline.checked-in-verified, "Attendees checked in across those four events")
-  #stat-row(D.headline.check-in-rate-verified, "Check-in rate, reconciled events",
+  #stat-row(D.headline.registered, "Registered attendees across the nine events")
+  #stat-row(D.headline.checked-in, "Attendees checked in, across the seven events that scanned")
+  #stat-row(D.headline.check-in-rate-verified, "Check-in rate, events that scanned",
     fmt: v => str(v) + "%")
   #stat-row(D.headline.cohorts, "HER WAKA cohorts delivered, March to June")
   #stat-row(D.headline.mentors-onboarded, "Mentors onboarded to the platform")
@@ -54,14 +57,12 @@
             #num(D.comparatives.registered-2025) registrations across a full
             twelve months. This half-year records
             #num(D.headline.events) events and
-            #num(D.headline.registered-verified) reconciled registrations across
-            six. *The two are not like for like.* 2025 was almost entirely
-            community evenings open to anyone; this half-year mixes those with
-            programme cohorts deliberately capped at
-            #num(D.programme.her-waka.cohort-cap) people so a recruiter can talk
-            to everyone in the room. Average attendance is lower by design, not
-            by attrition, and five of this half-year's nine events are not yet
-            reconciled.
+            #num(D.headline.registered) registrations across six. *The two are
+            not like for like.* 2025 was almost entirely community evenings open
+            to anyone; this half-year mixes those with programme cohorts
+            deliberately capped at #num(D.programme.her-waka.cohort-cap) people
+            so a recruiter can talk to everyone in the room. Average attendance
+            is lower by design, not by attrition.
           ]
         })
       },
@@ -70,10 +71,11 @@
 
   #source-note[
     Every figure on this page is traced to the event register in the She Sharp
-    codebase or to the live member-platform database. Four of the nine H1 events
-    carry complete, reconciled attendance; the other five do not, so the totals
-    quoted here cover the reconciled four rather than the full nine. The May HER
-    WAKA export is known to be incomplete. Full detail, including what is still
-    being reconciled, is on the methodology page.
+    codebase, to the live member-platform database, or to the Humanitix account
+    export of 17 August 2026. All nine H1 events are reconciled against the
+    booking platform; the May HER WAKA figure, previously known to be an
+    incomplete export, is corrected here from 5 registrations to 33. Two events
+    ran no check-in, so the check-in rate covers the seven that did. Full detail
+    is on the methodology page.
   ]
 ]

@@ -1,0 +1,1525 @@
+{
+  "metadata": {
+    "generatedBy": "scripts/humanitix/build-archive.ts",
+    "exportId": "2026-08-17",
+    "currency": "NZD",
+    "definitionsDoc": "docs/development/HUMANITIX_ARCHIVE.md#metric-definitions",
+    "personHash": "sha256(email.trim().toLowerCase()) — used only to GROUP rows while counting. No hash is written to this file: 2,920 unsalted digests of email addresses are dictionary-attackable by anyone holding a candidate address list, and every count below survives without them.",
+    "saltFingerprint": "n/a — no hash is committed"
+  },
+  "totals": {
+    "instances": 62,
+    "eventNames": 59,
+    "registered": 5156,
+    "cancelled": 77,
+    "checkedIn": 2268,
+    "checkedInTimestamps": 2289,
+    "orders": {
+      "complete": 4145,
+      "incomplete": 27,
+      "donation": 67
+    },
+    "earnings": {
+      "tickets": 25180,
+      "donations": 871.22,
+      "total": 26051.22
+    },
+    "capacity": 12078,
+    "sold": 5107,
+    "instancesWithEventId": 50,
+    "payouts": {
+      "count": 48,
+      "total": 25953.42,
+      "eventsCovered": 38
+    }
+  },
+  "byYear": [
+    {
+      "year": 2020,
+      "instances": 10,
+      "registered": 739,
+      "checkedIn": 1,
+      "checkInDataPresent": false,
+      "checkInRate": null,
+      "earnings": 575
+    },
+    {
+      "year": 2021,
+      "instances": 6,
+      "registered": 333,
+      "checkedIn": 0,
+      "checkInDataPresent": false,
+      "checkInRate": null,
+      "earnings": 975
+    },
+    {
+      "year": 2022,
+      "instances": 8,
+      "registered": 733,
+      "checkedIn": 108,
+      "checkInDataPresent": true,
+      "checkInRate": 0.4909,
+      "earnings": 5110
+    },
+    {
+      "year": 2023,
+      "instances": 10,
+      "registered": 1025,
+      "checkedIn": 656,
+      "checkInDataPresent": true,
+      "checkInRate": 0.6986,
+      "earnings": 7000
+    },
+    {
+      "year": 2024,
+      "instances": 9,
+      "registered": 1138,
+      "checkedIn": 725,
+      "checkInDataPresent": true,
+      "checkInRate": 0.6371,
+      "earnings": 6620
+    },
+    {
+      "year": 2025,
+      "instances": 8,
+      "registered": 618,
+      "checkedIn": 429,
+      "checkInDataPresent": true,
+      "checkInRate": 0.6942,
+      "earnings": 3170
+    },
+    {
+      "year": 2026,
+      "instances": 11,
+      "registered": 570,
+      "checkedIn": 349,
+      "checkInDataPresent": true,
+      "checkInRate": 0.6911,
+      "earnings": 1730
+    }
+  ],
+  "bySegment": [
+    {
+      "segment": "professional",
+      "label": "Professionals",
+      "tickets": 1354,
+      "share": 0.2626
+    },
+    {
+      "segment": "session",
+      "label": "Session ticket",
+      "tickets": 817,
+      "share": 0.1585
+    },
+    {
+      "segment": "student",
+      "label": "Students",
+      "tickets": 624,
+      "share": 0.121
+    },
+    {
+      "segment": "partner-guest",
+      "label": "Partner guests",
+      "tickets": 583,
+      "share": 0.1131
+    },
+    {
+      "segment": "ambassador",
+      "label": "She# Ambassadors",
+      "tickets": 496,
+      "share": 0.0962
+    },
+    {
+      "segment": "guest",
+      "label": "Guests",
+      "tickets": 486,
+      "share": 0.0943
+    },
+    {
+      "segment": "general",
+      "label": "General admission",
+      "tickets": 220,
+      "share": 0.0427
+    },
+    {
+      "segment": "speaker",
+      "label": "Speakers and facilitators",
+      "tickets": 199,
+      "share": 0.0386
+    },
+    {
+      "segment": "teacher",
+      "label": "Teachers",
+      "tickets": 183,
+      "share": 0.0355
+    },
+    {
+      "segment": "crew",
+      "label": "Crew",
+      "tickets": 74,
+      "share": 0.0144
+    },
+    {
+      "segment": "mentor",
+      "label": "Mentors",
+      "tickets": 68,
+      "share": 0.0132
+    },
+    {
+      "segment": "mentee",
+      "label": "Mentees",
+      "tickets": 20,
+      "share": 0.0039
+    },
+    {
+      "segment": "youth",
+      "label": "School students",
+      "tickets": 19,
+      "share": 0.0037
+    },
+    {
+      "segment": "host",
+      "label": "Host organisation",
+      "tickets": 13,
+      "share": 0.0025
+    }
+  ],
+  "byTicketType": [
+    {
+      "ticketType": "Tickets - Professionals",
+      "segment": "professional",
+      "tickets": 1289
+    },
+    {
+      "ticketType": "Tickets - Students",
+      "segment": "student",
+      "tickets": 539
+    },
+    {
+      "ticketType": "Tickets - She# Ambassadors",
+      "segment": "ambassador",
+      "tickets": 459
+    },
+    {
+      "ticketType": "Tickets - Guests",
+      "segment": "guest",
+      "tickets": 399
+    },
+    {
+      "ticketType": "Tickets - Teachers",
+      "segment": "teacher",
+      "tickets": 183
+    },
+    {
+      "ticketType": "Future Ready event",
+      "segment": "session",
+      "tickets": 168
+    },
+    {
+      "ticketType": "Tickets - Speakers",
+      "segment": "speaker",
+      "tickets": 129
+    },
+    {
+      "ticketType": "Techweek Event",
+      "segment": "session",
+      "tickets": 109
+    },
+    {
+      "ticketType": "General",
+      "segment": "general",
+      "tickets": 92
+    },
+    {
+      "ticketType": "Tickets - Guests - Fonterra",
+      "segment": "partner-guest",
+      "tickets": 74
+    },
+    {
+      "ticketType": "Tickets - Guests - HCL",
+      "segment": "partner-guest",
+      "tickets": 69
+    },
+    {
+      "ticketType": "Thursday 14th May 5.30 pm featuring Tash Bettridge (Vodafone)",
+      "segment": "session",
+      "tickets": 65
+    },
+    {
+      "ticketType": "Tickets - Guests of Ambassadors",
+      "segment": "guest",
+      "tickets": 58
+    },
+    {
+      "ticketType": "Tickets",
+      "segment": "general",
+      "tickets": 56
+    },
+    {
+      "ticketType": "Tickets - Online",
+      "segment": "general",
+      "tickets": 54
+    },
+    {
+      "ticketType": "Thursday 21st May 5:30pm featuring Lena Waizenegger (AUT)",
+      "segment": "session",
+      "tickets": 53
+    },
+    {
+      "ticketType": "Thursday 7th May 5.30 pm featuring Saba Samiei (Microsoft)",
+      "segment": "session",
+      "tickets": 49
+    },
+    {
+      "ticketType": "Tickets - Volunteers",
+      "segment": "crew",
+      "tickets": 49
+    },
+    {
+      "ticketType": "Tickets - AUT",
+      "segment": "partner-guest",
+      "tickets": 48
+    },
+    {
+      "ticketType": "Tickets - Mentors",
+      "segment": "mentor",
+      "tickets": 48
+    },
+    {
+      "ticketType": "Girls Night Out - Professionals",
+      "segment": "professional",
+      "tickets": 45
+    },
+    {
+      "ticketType": "Tickets - Guests - MYOB",
+      "segment": "partner-guest",
+      "tickets": 45
+    },
+    {
+      "ticketType": "Tickets - Guests - Kiwibank",
+      "segment": "partner-guest",
+      "tickets": 44
+    },
+    {
+      "ticketType": "Workshop \"Iterative process and strategies for prompt development\" (Monday, July 22nd, 6-7pm NZT, online)",
+      "segment": "session",
+      "tickets": 41
+    },
+    {
+      "ticketType": "Thursday 28th May 5:30pm featuring Alisa Edwards (Gravity Lab)",
+      "segment": "session",
+      "tickets": 40
+    },
+    {
+      "ticketType": "Thursday 4th June 6.00 pm featuring Paola Golledge (Google)",
+      "segment": "session",
+      "tickets": 40
+    },
+    {
+      "ticketType": "Tickets - Speakers/ Workshop facilitators",
+      "segment": "speaker",
+      "tickets": 40
+    },
+    {
+      "ticketType": "Workshop \"Build your own AI Powered Web App\" (Tuesday, July 16th, 12-2pm NZT, online)",
+      "segment": "session",
+      "tickets": 32
+    },
+    {
+      "ticketType": "ONLINE EVENT CELEBRATING ADA LOVELACE DAY",
+      "segment": "session",
+      "tickets": 31
+    },
+    {
+      "ticketType": "Girls Night Out - Students",
+      "segment": "student",
+      "tickets": 30
+    },
+    {
+      "ticketType": "Tickets - Guests - Woolworths",
+      "segment": "partner-guest",
+      "tickets": 28
+    },
+    {
+      "ticketType": "Tickets - Guests - LesMills",
+      "segment": "partner-guest",
+      "tickets": 26
+    },
+    {
+      "ticketType": "Tickets - April 2026",
+      "segment": "session",
+      "tickets": 25
+    },
+    {
+      "ticketType": "Tickets - Guests - Fiserv",
+      "segment": "partner-guest",
+      "tickets": 25
+    },
+    {
+      "ticketType": "Tickets - March 2026",
+      "segment": "session",
+      "tickets": 25
+    },
+    {
+      "ticketType": "Tickets - Guests - Vector",
+      "segment": "partner-guest",
+      "tickets": 24
+    },
+    {
+      "ticketType": "Tickets - Guests - Deloitte",
+      "segment": "partner-guest",
+      "tickets": 22
+    },
+    {
+      "ticketType": "Tickets - Speakers / Mentors",
+      "segment": "speaker",
+      "tickets": 22
+    },
+    {
+      "ticketType": "Tickets - UniClubs",
+      "segment": "student",
+      "tickets": 22
+    },
+    {
+      "ticketType": "She Sharp Guests",
+      "segment": "guest",
+      "tickets": 21
+    },
+    {
+      "ticketType": "Thursday 24th Sep 5.30 pm featuring Sai Honig (ANZ Bank, Senior Security Consultant)",
+      "segment": "session",
+      "tickets": 21
+    },
+    {
+      "ticketType": "Thursday 4th June 5.30 pm featuring Paola Golledge (Google)",
+      "segment": "session",
+      "tickets": 21
+    },
+    {
+      "ticketType": "Tickets - Guests - Countdown",
+      "segment": "partner-guest",
+      "tickets": 20
+    },
+    {
+      "ticketType": "Tickets - May 2026",
+      "segment": "session",
+      "tickets": 20
+    },
+    {
+      "ticketType": "Tickets - Mentors-She#",
+      "segment": "mentor",
+      "tickets": 20
+    },
+    {
+      "ticketType": "Tickets - Expo",
+      "segment": "general",
+      "tickets": 18
+    },
+    {
+      "ticketType": "Tickets - MSD",
+      "segment": "partner-guest",
+      "tickets": 17
+    },
+    {
+      "ticketType": "Tickets - Uniclubs",
+      "segment": "student",
+      "tickets": 17
+    },
+    {
+      "ticketType": "Professionals Ticket",
+      "segment": "professional",
+      "tickets": 16
+    },
+    {
+      "ticketType": "Thursday 1st October 5.30 pm featuring Divya Kataria (Transmission Gully, Graduate Civil Engineer)",
+      "segment": "session",
+      "tickets": 16
+    },
+    {
+      "ticketType": "Workshop \"Build your own AI Powered Web App\" (Wednesday, July 17th, 12-2pm NZT, online)",
+      "segment": "session",
+      "tickets": 16
+    },
+    {
+      "ticketType": "Tickets - Ambassadors",
+      "segment": "ambassador",
+      "tickets": 14
+    },
+    {
+      "ticketType": "Tickets - Guests - FPH",
+      "segment": "partner-guest",
+      "tickets": 14
+    },
+    {
+      "ticketType": "Tickets - Guests - HCLTech",
+      "segment": "partner-guest",
+      "tickets": 14
+    },
+    {
+      "ticketType": "Tickets - June 2026",
+      "segment": "session",
+      "tickets": 14
+    },
+    {
+      "ticketType": "Tickets - School Students",
+      "segment": "youth",
+      "tickets": 14
+    },
+    {
+      "ticketType": "Tickets - Ambassdors",
+      "segment": "ambassador",
+      "tickets": 13
+    },
+    {
+      "ticketType": "Tickets - Guests - AcademyEX",
+      "segment": "partner-guest",
+      "tickets": 13
+    },
+    {
+      "ticketType": "Tickets - Mentees-She#",
+      "segment": "mentee",
+      "tickets": 13
+    },
+    {
+      "ticketType": "Workshop \"Build your own AI Powered Web App\" (Thursday, July 17th, 12-2pm NZT, online)",
+      "segment": "session",
+      "tickets": 13
+    },
+    {
+      "ticketType": "Tickets - Guests - AUT",
+      "segment": "partner-guest",
+      "tickets": 12
+    },
+    {
+      "ticketType": "Tickets - RCSA",
+      "segment": "partner-guest",
+      "tickets": 12
+    },
+    {
+      "ticketType": "Tickets - Guests - TECHBABES",
+      "segment": "partner-guest",
+      "tickets": 11
+    },
+    {
+      "ticketType": "Tickets - Judges",
+      "segment": "crew",
+      "tickets": 10
+    },
+    {
+      "ticketType": "Tickets - MYOB (Host)",
+      "segment": "host",
+      "tickets": 10
+    },
+    {
+      "ticketType": "Students Ticket",
+      "segment": "student",
+      "tickets": 8
+    },
+    {
+      "ticketType": "Tickets - WoM Tickets",
+      "segment": "partner-guest",
+      "tickets": 8
+    },
+    {
+      "ticketType": "Tickets - Guests - ANZ",
+      "segment": "partner-guest",
+      "tickets": 7
+    },
+    {
+      "ticketType": "Tickets - Mentees",
+      "segment": "mentee",
+      "tickets": 7
+    },
+    {
+      "ticketType": "Workshop \"Build your own AI Powered Web App\" (Wednesday, July 17th, 12-2pm NZT, online, Part 2)",
+      "segment": "session",
+      "tickets": 7
+    },
+    {
+      "ticketType": "Workshop \"Build your own AI Powered Web App\" (Tuesday, July 16th, 12-2pm NZT, online, Part 1)",
+      "segment": "session",
+      "tickets": 6
+    },
+    {
+      "ticketType": "She Sharp ambassadors",
+      "segment": "ambassador",
+      "tickets": 5
+    },
+    {
+      "ticketType": "Tickets - Les Mills",
+      "segment": "partner-guest",
+      "tickets": 5
+    },
+    {
+      "ticketType": "Tickets - Little Engineers",
+      "segment": "youth",
+      "tickets": 5
+    },
+    {
+      "ticketType": "Tickets - Observer (Sunday)",
+      "segment": "crew",
+      "tickets": 5
+    },
+    {
+      "ticketType": "Tickets - She# EX Ambassadors",
+      "segment": "ambassador",
+      "tickets": 5
+    },
+    {
+      "ticketType": "Tickets - Speakers /Mentors",
+      "segment": "speaker",
+      "tickets": 5
+    },
+    {
+      "ticketType": "Tickets - Guests - Dunedin Council",
+      "segment": "partner-guest",
+      "tickets": 4
+    },
+    {
+      "ticketType": "Tickets - Guests - Flexware",
+      "segment": "partner-guest",
+      "tickets": 4
+    },
+    {
+      "ticketType": "Tickets - Guests - Google",
+      "segment": "partner-guest",
+      "tickets": 4
+    },
+    {
+      "ticketType": "Tickets - HCLTech",
+      "segment": "partner-guest",
+      "tickets": 4
+    },
+    {
+      "ticketType": "Tickets - Metlifecare",
+      "segment": "partner-guest",
+      "tickets": 4
+    },
+    {
+      "ticketType": "Tickets - Observer (Sunday Presentation 2-6pm)",
+      "segment": "crew",
+      "tickets": 4
+    },
+    {
+      "ticketType": "Tickets - Observers",
+      "segment": "crew",
+      "tickets": 4
+    },
+    {
+      "ticketType": "Tickets - UNICLUBS",
+      "segment": "student",
+      "tickets": 4
+    },
+    {
+      "ticketType": "Tickets- She# Deloitte",
+      "segment": "partner-guest",
+      "tickets": 4
+    },
+    {
+      "ticketType": "Tickets - Guests - HPE",
+      "segment": "partner-guest",
+      "tickets": 3
+    },
+    {
+      "ticketType": "Tickets - Guests - SCW",
+      "segment": "partner-guest",
+      "tickets": 3
+    },
+    {
+      "ticketType": "Tickets - Guests - Students",
+      "segment": "guest",
+      "tickets": 3
+    },
+    {
+      "ticketType": "Tickets - Guests - Xero",
+      "segment": "partner-guest",
+      "tickets": 3
+    },
+    {
+      "ticketType": "Tickets - Professionals (Late Registration)",
+      "segment": "professional",
+      "tickets": 3
+    },
+    {
+      "ticketType": "Tickets - Speakers (Online)",
+      "segment": "speaker",
+      "tickets": 3
+    },
+    {
+      "ticketType": "Tickets - Sponsored Participants",
+      "segment": "guest",
+      "tickets": 3
+    },
+    {
+      "ticketType": "Tickets - TechwomenNZ",
+      "segment": "partner-guest",
+      "tickets": 3
+    },
+    {
+      "ticketType": "Tickets - UNESCO",
+      "segment": "partner-guest",
+      "tickets": 3
+    },
+    {
+      "ticketType": "Tickets - FlexWare",
+      "segment": "partner-guest",
+      "tickets": 2
+    },
+    {
+      "ticketType": "Tickets - Hack_AcademyEx",
+      "segment": "session",
+      "tickets": 2
+    },
+    {
+      "ticketType": "Tickets - Media Team",
+      "segment": "crew",
+      "tickets": 2
+    },
+    {
+      "ticketType": "Tickets - She Sharp Sponsors",
+      "segment": "host",
+      "tickets": 2
+    },
+    {
+      "ticketType": "Tickets - Students (Late Registration)",
+      "segment": "student",
+      "tickets": 2
+    },
+    {
+      "ticketType": "Tickets - UniClubs Tickets",
+      "segment": "student",
+      "tickets": 2
+    },
+    {
+      "ticketType": "She# Story Tellers Series",
+      "segment": "session",
+      "tickets": 1
+    },
+    {
+      "ticketType": "Tickets - Guests - AWS",
+      "segment": "partner-guest",
+      "tickets": 1
+    },
+    {
+      "ticketType": "Tickets - Guests - Cosgrove",
+      "segment": "partner-guest",
+      "tickets": 1
+    },
+    {
+      "ticketType": "Tickets - Guests Of Speaker",
+      "segment": "guest",
+      "tickets": 1
+    },
+    {
+      "ticketType": "Tickets - Guests Of Speakers",
+      "segment": "guest",
+      "tickets": 1
+    },
+    {
+      "ticketType": "Tickets - Hackathon Winners",
+      "segment": "session",
+      "tickets": 1
+    },
+    {
+      "ticketType": "Tickets - Lesmills",
+      "segment": "partner-guest",
+      "tickets": 1
+    },
+    {
+      "ticketType": "Tickets - Metlifecare (Host)",
+      "segment": "host",
+      "tickets": 1
+    },
+    {
+      "ticketType": "Tickets - MYOB",
+      "segment": "partner-guest",
+      "tickets": 1
+    },
+    {
+      "ticketType": "Tickets - Professionals (Additional)",
+      "segment": "professional",
+      "tickets": 1
+    },
+    {
+      "ticketType": "Workshop \"Build your own AI Powered Web App\" (Thursday, July 18th, 12-2pm NZT, online)",
+      "segment": "session",
+      "tickets": 1
+    }
+  ],
+  "people": {
+    "uniqueEmails": 2920,
+    "orgAccountsExcluded": 1,
+    "uniquePeople": 2919,
+    "repeatDistribution": [
+      {
+        "instances": 1,
+        "people": 2229
+      },
+      {
+        "instances": 2,
+        "people": 380
+      },
+      {
+        "instances": 3,
+        "people": 146
+      },
+      {
+        "instances": 4,
+        "people": 55
+      },
+      {
+        "instances": 5,
+        "people": 28
+      },
+      {
+        "instances": 6,
+        "people": 20
+      },
+      {
+        "instances": 7,
+        "people": 12
+      },
+      {
+        "instances": 8,
+        "people": 8
+      },
+      {
+        "instances": 9,
+        "people": 8
+      },
+      {
+        "instances": 10,
+        "people": 7
+      },
+      {
+        "instances": 11,
+        "people": 7
+      },
+      {
+        "instances": 12,
+        "people": 5
+      },
+      {
+        "instances": 13,
+        "people": 2
+      },
+      {
+        "instances": 14,
+        "people": 2
+      },
+      {
+        "instances": 15,
+        "people": 3
+      },
+      {
+        "instances": 17,
+        "people": 1
+      },
+      {
+        "instances": 18,
+        "people": 3
+      },
+      {
+        "instances": 19,
+        "people": 1
+      },
+      {
+        "instances": 21,
+        "people": 1
+      },
+      {
+        "instances": 25,
+        "people": 1
+      }
+    ],
+    "maxInstancesPerPerson": 25,
+    "caveat": "Repeat REGISTRATION, not repeat attendance — a person who registered and did not come is counted. It only becomes attendance when restricted to the instances that recorded check-ins, i.e. 2023 onward. One person with two addresses counts twice; a shared household address counts once. She Sharp's own shared booking mailbox is excluded: its 47 tickets carry 38 different attendee names, so the people behind them are unrecoverable and are simply absent from this distribution."
+  },
+  "organisations": {
+    "distinctRawStrings": 1127,
+    "distinctCanonical": 928,
+    "rowsAnswered": 4094,
+    "rowsNotAnswered": 1062,
+    "rowsNullish": 265,
+    "rowsPersonalName": 6,
+    "minTickets": 5,
+    "top": [
+      {
+        "id": "she-sharp",
+        "name": "She Sharp",
+        "tickets": 433,
+        "kind": "self"
+      },
+      {
+        "id": "aut",
+        "name": "Auckland University of Technology",
+        "tickets": 314,
+        "kind": "university"
+      },
+      {
+        "id": "myob",
+        "name": "MYOB",
+        "tickets": 130,
+        "kind": "company"
+      },
+      {
+        "id": "fonterra",
+        "name": "Fonterra",
+        "tickets": 128,
+        "kind": "company"
+      },
+      {
+        "id": "university-of-auckland",
+        "name": "University of Auckland",
+        "tickets": 121,
+        "kind": "university"
+      },
+      {
+        "id": "msd",
+        "name": "Ministry of Social Development",
+        "tickets": 79,
+        "kind": "government"
+      },
+      {
+        "id": "fisher-and-paykel-healthcare",
+        "name": "Fisher & Paykel Healthcare",
+        "tickets": 65,
+        "kind": "company"
+      },
+      {
+        "id": "deloitte",
+        "name": "Deloitte",
+        "tickets": 64,
+        "kind": "company"
+      },
+      {
+        "id": "2degrees",
+        "name": "2degrees",
+        "tickets": 63,
+        "kind": "company"
+      },
+      {
+        "id": "kiwibank",
+        "name": "Kiwibank",
+        "tickets": 58,
+        "kind": "company"
+      },
+      {
+        "id": "woolworths-nz",
+        "name": "Woolworths NZ",
+        "tickets": 56,
+        "kind": "company"
+      },
+      {
+        "id": "hcltech",
+        "name": "HCLTech",
+        "tickets": 54,
+        "kind": "company"
+      },
+      {
+        "id": "fiserv",
+        "name": "Fiserv",
+        "tickets": 43,
+        "kind": "company"
+      },
+      {
+        "id": "les-mills",
+        "name": "Les Mills International",
+        "tickets": 41,
+        "kind": "company"
+      },
+      {
+        "id": "datacom",
+        "name": "Datacom",
+        "tickets": 40,
+        "kind": "company"
+      },
+      {
+        "id": "flexware",
+        "name": "FlexWare",
+        "tickets": 40,
+        "kind": "company"
+      },
+      {
+        "id": "vector",
+        "name": "Vector",
+        "tickets": 34,
+        "kind": "company"
+      },
+      {
+        "id": "xero",
+        "name": "Xero",
+        "tickets": 33,
+        "kind": "company"
+      },
+      {
+        "id": "aws",
+        "name": "Amazon Web Services",
+        "tickets": 30,
+        "kind": "company"
+      },
+      {
+        "id": "academyex",
+        "name": "academyEX",
+        "tickets": 29,
+        "kind": "university"
+      },
+      {
+        "id": "anz",
+        "name": "ANZ",
+        "tickets": 26,
+        "kind": "company"
+      },
+      {
+        "id": "asb",
+        "name": "ASB",
+        "tickets": 26,
+        "kind": "company"
+      },
+      {
+        "id": "talent-international",
+        "name": "Talent International",
+        "tickets": 22,
+        "kind": "company"
+      },
+      {
+        "id": "ey",
+        "name": "EY",
+        "tickets": 21,
+        "kind": "company"
+      },
+      {
+        "id": "massey-university",
+        "name": "Massey University",
+        "tickets": 21,
+        "kind": "university"
+      },
+      {
+        "id": "peyvand-academy",
+        "name": "Peyvand Academy",
+        "tickets": 17,
+        "kind": "school"
+      },
+      {
+        "id": "fergus",
+        "name": "Fergus",
+        "tickets": 15,
+        "kind": "company"
+      },
+      {
+        "id": "international-student-cjlu",
+        "name": "international-student-cjlu",
+        "tickets": 15,
+        "kind": "unlisted"
+      },
+      {
+        "id": "beca",
+        "name": "Beca",
+        "tickets": 14,
+        "kind": "company"
+      },
+      {
+        "id": "microsoft",
+        "name": "Microsoft",
+        "tickets": 14,
+        "kind": "company"
+      },
+      {
+        "id": "unitec",
+        "name": "Unitec",
+        "tickets": 14,
+        "kind": "university"
+      },
+      {
+        "id": "developers-institute",
+        "name": "Developers Institute",
+        "tickets": 13,
+        "kind": "university"
+      },
+      {
+        "id": "ibm",
+        "name": "IBM",
+        "tickets": 13,
+        "kind": "company"
+      },
+      {
+        "id": "wintec",
+        "name": "Wintec",
+        "tickets": 13,
+        "kind": "university"
+      },
+      {
+        "id": "air-nz",
+        "name": "air-nz",
+        "tickets": 12,
+        "kind": "unlisted"
+      },
+      {
+        "id": "ezyvet",
+        "name": "ezyvet",
+        "tickets": 12,
+        "kind": "unlisted"
+      },
+      {
+        "id": "firn",
+        "name": "firn",
+        "tickets": 12,
+        "kind": "unlisted"
+      },
+      {
+        "id": "google",
+        "name": "google",
+        "tickets": 12,
+        "kind": "unlisted"
+      },
+      {
+        "id": "salt-recruitment",
+        "name": "salt-recruitment",
+        "tickets": 12,
+        "kind": "unlisted"
+      },
+      {
+        "id": "acc",
+        "name": "Accident Compensation Corporation",
+        "tickets": 11,
+        "kind": "government"
+      },
+      {
+        "id": "exhibit-group",
+        "name": "exhibit-group",
+        "tickets": 11,
+        "kind": "unlisted"
+      },
+      {
+        "id": "firn-analytics",
+        "name": "firn-analytics",
+        "tickets": 11,
+        "kind": "unlisted"
+      },
+      {
+        "id": "nzse",
+        "name": "New Zealand School of Education",
+        "tickets": 11,
+        "kind": "university"
+      },
+      {
+        "id": "open-polytechnic",
+        "name": "open-polytechnic",
+        "tickets": 11,
+        "kind": "unlisted"
+      },
+      {
+        "id": "salt",
+        "name": "salt",
+        "tickets": 11,
+        "kind": "unlisted"
+      },
+      {
+        "id": "spark",
+        "name": "spark",
+        "tickets": 11,
+        "kind": "unlisted"
+      },
+      {
+        "id": "fergus-software",
+        "name": "fergus-software",
+        "tickets": 10,
+        "kind": "unlisted"
+      },
+      {
+        "id": "firn-analytics-ltd",
+        "name": "firn-analytics-ltd",
+        "tickets": 10,
+        "kind": "unlisted"
+      },
+      {
+        "id": "fletcher-building",
+        "name": "fletcher-building",
+        "tickets": 10,
+        "kind": "unlisted"
+      },
+      {
+        "id": "rcsa",
+        "name": "RCSA",
+        "tickets": 10,
+        "kind": "nonprofit"
+      },
+      {
+        "id": "air-new-zealand",
+        "name": "air-new-zealand",
+        "tickets": 9,
+        "kind": "unlisted"
+      },
+      {
+        "id": "auror",
+        "name": "auror",
+        "tickets": 9,
+        "kind": "unlisted"
+      },
+      {
+        "id": "dev-academy",
+        "name": "dev-academy",
+        "tickets": 9,
+        "kind": "unlisted"
+      },
+      {
+        "id": "integration-works",
+        "name": "integration-works",
+        "tickets": 9,
+        "kind": "unlisted"
+      },
+      {
+        "id": "ministry-of-education",
+        "name": "ministry-of-education",
+        "tickets": 9,
+        "kind": "unlisted"
+      },
+      {
+        "id": "mission-ready-hq",
+        "name": "mission-ready-hq",
+        "tickets": 9,
+        "kind": "unlisted"
+      },
+      {
+        "id": "otago-polytechnic",
+        "name": "otago-polytechnic",
+        "tickets": 9,
+        "kind": "unlisted"
+      },
+      {
+        "id": "pwc",
+        "name": "pwc",
+        "tickets": 9,
+        "kind": "unlisted"
+      },
+      {
+        "id": "rototuna-senior-high-school",
+        "name": "rototuna-senior-high-school",
+        "tickets": 9,
+        "kind": "unlisted"
+      },
+      {
+        "id": "she-sharp-mentee",
+        "name": "she-sharp-mentee",
+        "tickets": 9,
+        "kind": "unlisted"
+      },
+      {
+        "id": "lancom-technology",
+        "name": "lancom-technology",
+        "tickets": 8,
+        "kind": "unlisted"
+      },
+      {
+        "id": "lyniate",
+        "name": "lyniate",
+        "tickets": 8,
+        "kind": "unlisted"
+      },
+      {
+        "id": "maslow-limited",
+        "name": "maslow-limited",
+        "tickets": 8,
+        "kind": "unlisted"
+      },
+      {
+        "id": "metlifecare",
+        "name": "Metlifecare",
+        "tickets": 8,
+        "kind": "company"
+      },
+      {
+        "id": "mission-ready",
+        "name": "mission-ready",
+        "tickets": 8,
+        "kind": "unlisted"
+      },
+      {
+        "id": "rbs-intellect",
+        "name": "rbs-intellect",
+        "tickets": 8,
+        "kind": "unlisted"
+      },
+      {
+        "id": "salesforce",
+        "name": "salesforce",
+        "tickets": 8,
+        "kind": "unlisted"
+      },
+      {
+        "id": "serko",
+        "name": "serko",
+        "tickets": 8,
+        "kind": "unlisted"
+      },
+      {
+        "id": "spectrum-consulting-limited",
+        "name": "spectrum-consulting-limited",
+        "tickets": 8,
+        "kind": "unlisted"
+      },
+      {
+        "id": "stayinfront",
+        "name": "stayinfront",
+        "tickets": 8,
+        "kind": "unlisted"
+      },
+      {
+        "id": "canva",
+        "name": "canva",
+        "tickets": 7,
+        "kind": "unlisted"
+      },
+      {
+        "id": "health-nz",
+        "name": "health-nz",
+        "tickets": 7,
+        "kind": "unlisted"
+      },
+      {
+        "id": "nz-super-fund",
+        "name": "nz-super-fund",
+        "tickets": 7,
+        "kind": "unlisted"
+      },
+      {
+        "id": "pb-tech",
+        "name": "pb-tech",
+        "tickets": 7,
+        "kind": "unlisted"
+      },
+      {
+        "id": "smartsense-solutions",
+        "name": "smartsense-solutions",
+        "tickets": 7,
+        "kind": "unlisted"
+      },
+      {
+        "id": "trade-me",
+        "name": "trade-me",
+        "tickets": 7,
+        "kind": "unlisted"
+      },
+      {
+        "id": "veovo",
+        "name": "veovo",
+        "tickets": 7,
+        "kind": "unlisted"
+      },
+      {
+        "id": "autoplay",
+        "name": "autoplay",
+        "tickets": 6,
+        "kind": "unlisted"
+      },
+      {
+        "id": "bnz",
+        "name": "bnz",
+        "tickets": 6,
+        "kind": "unlisted"
+      },
+      {
+        "id": "kinetics",
+        "name": "kinetics",
+        "tickets": 6,
+        "kind": "unlisted"
+      },
+      {
+        "id": "maslow",
+        "name": "maslow",
+        "tickets": 6,
+        "kind": "unlisted"
+      },
+      {
+        "id": "mercury",
+        "name": "mercury",
+        "tickets": 6,
+        "kind": "unlisted"
+      },
+      {
+        "id": "one-nz",
+        "name": "one-nz",
+        "tickets": 6,
+        "kind": "unlisted"
+      },
+      {
+        "id": "spectrum-consulting",
+        "name": "spectrum-consulting",
+        "tickets": 6,
+        "kind": "unlisted"
+      },
+      {
+        "id": "tvnz",
+        "name": "tvnz",
+        "tickets": 6,
+        "kind": "unlisted"
+      },
+      {
+        "id": "vodafone",
+        "name": "vodafone",
+        "tickets": 6,
+        "kind": "unlisted"
+      },
+      {
+        "id": "accenture",
+        "name": "accenture",
+        "tickets": 5,
+        "kind": "unlisted"
+      },
+      {
+        "id": "auckland-business-chamber",
+        "name": "auckland-business-chamber",
+        "tickets": 5,
+        "kind": "unlisted"
+      },
+      {
+        "id": "auckland-uni",
+        "name": "auckland-uni",
+        "tickets": 5,
+        "kind": "unlisted"
+      },
+      {
+        "id": "dev-academy-aotearoa",
+        "name": "dev-academy-aotearoa",
+        "tickets": 5,
+        "kind": "unlisted"
+      },
+      {
+        "id": "fileinvite",
+        "name": "fileinvite",
+        "tickets": 5,
+        "kind": "unlisted"
+      },
+      {
+        "id": "flight-centre-travel-group",
+        "name": "flight-centre-travel-group",
+        "tickets": 5,
+        "kind": "unlisted"
+      },
+      {
+        "id": "l-langa",
+        "name": "l-langa",
+        "tickets": 5,
+        "kind": "unlisted"
+      },
+      {
+        "id": "manukau-institute-of-technology",
+        "name": "manukau-institute-of-technology",
+        "tickets": 5,
+        "kind": "unlisted"
+      },
+      {
+        "id": "mint-innovation",
+        "name": "mint-innovation",
+        "tickets": 5,
+        "kind": "unlisted"
+      },
+      {
+        "id": "new-zealand-skills-and-education-college",
+        "name": "new-zealand-skills-and-education-college",
+        "tickets": 5,
+        "kind": "unlisted"
+      },
+      {
+        "id": "secure-code-warrior",
+        "name": "secure-code-warrior",
+        "tickets": 5,
+        "kind": "unlisted"
+      },
+      {
+        "id": "she-mentee",
+        "name": "she-mentee",
+        "tickets": 5,
+        "kind": "unlisted"
+      },
+      {
+        "id": "she-volunteer",
+        "name": "she-volunteer",
+        "tickets": 5,
+        "kind": "unlisted"
+      },
+      {
+        "id": "university-of-waikato",
+        "name": "university-of-waikato",
+        "tickets": 5,
+        "kind": "unlisted"
+      },
+      {
+        "id": "westpac",
+        "name": "westpac",
+        "tickets": 5,
+        "kind": "unlisted"
+      }
+    ]
+  },
+  "codes": {
+    "accessCodesDistinct": 124,
+    "accessCodeUses": 2050,
+    "discountCodesDistinct": 13,
+    "discountCodeUses": 300,
+    "note": "Counts only. No code value appears anywhere in this repository, including docs and commit messages — a leaked code grants free entry and can only be fixed by rotating it. See the 2026-06-11 incident."
+  },
+  "marketingOptIn": {
+    "orders": 224,
+    "uniqueEmails": 187,
+    "firstOrderDate": "2020-07-14",
+    "lastOrderDate": "2022-05-30",
+    "caveat": "A historical record of a checkout field that stopped being used after 2022, not a sending list. Whether a four-to-six-year-old opt-in is still a permission is decided by .claude/skills/update-mailing-list/references/consent-rules.md, not by this file."
+  },
+  "checkInCoverage": {
+    "instances": 62,
+    "withCheckIns": 36,
+    "withZeroCheckIns": 26,
+    "firstInstanceWithCheckIns": "2022-09-03--she-sharp-ai-for-the-environment-female-led-hackathon-aienvirohack",
+    "zeroInstanceKeys": [
+      "2020-03-05--she-sharp-ey",
+      "2020-05-07--storytellers-series",
+      "2020-05-14--storytellers-series",
+      "2020-05-29--storytellers-series",
+      "2020-07-29--she-sharp-techweek-envision-the-future-how-to-create-a-more-diverse-inclusive-and-sustainable-future-through-technology-and-human-centered-innovation",
+      "2020-08-13--she-sharp-future-ready",
+      "2020-09-24--storytellers-series-2-0",
+      "2020-10-01--storytellers-series-2-0",
+      "2020-10-15--online-event-celebrating-ada-lovelace-day",
+      "2020-11-26--girls-night-out-xero",
+      "2021-03-18--she-international-women-s-day-event-with-myob-thursday-18th-march-2021",
+      "2021-04-29--she-sharp-fergus-women-in-tech-and-trades",
+      "2021-05-25--the-truths-to-gaming-and-start-up-presented-by-she-sharp-and-geo-ar-games",
+      "2021-09-15--iamremarkable",
+      "2021-10-11--ada-lovelace-day-celebration",
+      "2021-11-30--women-in-data-and-analytics",
+      "2022-03-10--she-sharp-and-aws-international-women-s-day-event-breakthebias",
+      "2022-04-28--she-sharp-and-myob-mind-your-own-career",
+      "2022-05-20--women-igniting-a-passion-for-tech-sold-out",
+      "2022-06-17--women-in-security-reshaping-the-future",
+      "2022-07-21--she-sharp-and-anz-navigating-the-workplace-as-a-woman",
+      "2022-12-05--she-sharp-and-aws-presents-she-celebrates-end-of-year-event",
+      "2023-04-28--she-sharp-and-myob-kickstart-your-career-in-tech",
+      "2026-06-13--youth-tech-series-ai-and-electronics-workshop",
+      "2026-06-20--youth-tech-series-electronics-workshop",
+      "2026-09-03--she-sharp-and-les-mills-no-pain-all-gain-getting-fit-for-ai"
+    ],
+    "floor": 0.05,
+    "discardedAsArtefact": [
+      {
+        "key": "2020-11-26--girls-night-out-xero",
+        "scanned": 1,
+        "registered": 75
+      }
+    ]
+  },
+  "salesChannels": {
+    "Box Office": 2,
+    "Manual": 50,
+    "Online": 5104
+  },
+  "caveats": [
+    "Humanitix holds nothing before 2020. Any 'since 2014' figure drawn from this archive is wrong at the start.",
+    "This archive is not the event register: 62 ticketed instances against 97 records in lib/data/json/. Events sold elsewhere or never ticketed — the 2025 AI Hackathon Festival, every expo — are absent by design.",
+    "26 of 62 instances never ran a check-in. Their checkedIn is 0 because nobody scanned, not because nobody came; checkInDataPresent is the field that says which.",
+    "checkedIn counts the 'Checked in' flag. A slightly larger number of rows carry a check-in timestamp; the flag is the definition the organisation has reported against since 2020 and the one the site's own figures match.",
+    "earnings is net to She Sharp after Humanitix fees — not gross, not what attendees paid.",
+    "registered counts TICKETS, not people. It includes the organisation's own booking account.",
+    "The employer string is typed freehand at checkout and never verified."
+  ]
+}

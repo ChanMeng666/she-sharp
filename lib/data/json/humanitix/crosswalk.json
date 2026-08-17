@@ -1,0 +1,1189 @@
+{
+  "metadata": {
+    "authored": true,
+    "verifiedAt": "2026-08-18",
+    "verifiedAgainst": "lib/data/events.ts getAllEvents()",
+    "note": "HAND-AUTHORED AND HAND-VERIFIED. The builder reads this and never writes it, so a regeneration cannot overwrite a judgement made here. Rows were proposed by scripts/humanitix/propose-crosswalk.ts on an exact date match and then checked one at a time; `match: hand-verified` marks the rows where the titles alone would not have carried the match. Every row that is not `agrees` states in prose what differs and what should happen about it. A new export that introduces a key absent from this file makes the builder fail rather than skip it."
+  },
+  "links": [
+    {
+      "humanitixKey": "2020-03-05--she-sharp-ey",
+      "siteSlug": "robotic-process-automation",
+      "siteId": 60,
+      "siteFile": "events-v3",
+      "match": "hand-verified",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 50,
+          "checkedIn": 0
+        },
+        "export": {
+          "registered": 50,
+          "checkedIn": null
+        }
+      },
+      "status": "agrees",
+      "note": "The titles share nothing — Humanitix named the listing after the venue, the site after the topic. Same date and the same 50 registrations, so this is one event under two names."
+    },
+    {
+      "humanitixKey": "2020-07-29--she-sharp-techweek-envision-the-future-how-to-create-a-more-diverse-inclusive-and-sustainable-future-through-technology-and-human-centered-innovation",
+      "siteSlug": "she-sharp-techweek-envision-the-future",
+      "siteId": 61,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "medium",
+      "figures": {
+        "site": {
+          "attendees": 109,
+          "checkedIn": 0
+        },
+        "export": {
+          "registered": 109,
+          "checkedIn": null
+        }
+      },
+      "status": "agrees",
+      "note": "The site keeps the short title; Humanitix carries the full 130-character one. Same date, same 109 registrations."
+    },
+    {
+      "humanitixKey": "2020-08-13--she-sharp-future-ready",
+      "siteSlug": "shesharp-future-ready",
+      "siteId": 62,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 168,
+          "checkedIn": 0
+        },
+        "export": {
+          "registered": 168,
+          "checkedIn": null
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2020-10-15--online-event-celebrating-ada-lovelace-day",
+      "siteSlug": "online-quiz-night-celebrating-ada-lovelace-day",
+      "siteId": 39,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 31,
+          "checkedIn": 0
+        },
+        "export": {
+          "registered": 31,
+          "checkedIn": null
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2020-11-26--girls-night-out-xero",
+      "siteSlug": "girls-night-out",
+      "siteId": 64,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 75,
+          "checkedIn": 1
+        },
+        "export": {
+          "registered": 75,
+          "checkedIn": null
+        }
+      },
+      "status": "disagrees",
+      "note": "Registrations agree at 75. The site's checkedIn of 1 is a single stray scan — somebody testing the scanner, not a door count; the next-lowest genuine check-in operation anywhere in the archive scanned 24.3%. Correct it to null: 'not recorded' is the true statement, and a 1 invites a 1.3% attendance rate."
+    },
+    {
+      "humanitixKey": "2021-03-18--she-international-women-s-day-event-with-myob-thursday-18th-march-2021",
+      "siteSlug": "2021-international-womens-day",
+      "siteId": 69,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "medium",
+      "figures": {
+        "site": {
+          "attendees": 76,
+          "checkedIn": 0
+        },
+        "export": {
+          "registered": 76,
+          "checkedIn": null
+        }
+      },
+      "status": "agrees",
+      "note": "Humanitix repeated the date inside the event name. Same date, same 76 registrations."
+    },
+    {
+      "humanitixKey": "2021-04-29--she-sharp-fergus-women-in-tech-and-trades",
+      "siteSlug": "women-in-tech-and-trades",
+      "siteId": 58,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "medium",
+      "figures": {
+        "site": {
+          "attendees": 52,
+          "checkedIn": 0
+        },
+        "export": {
+          "registered": 52,
+          "checkedIn": null
+        }
+      },
+      "status": "agrees",
+      "note": "The site drops the host prefix. Same date, same 52 registrations."
+    },
+    {
+      "humanitixKey": "2021-05-25--the-truths-to-gaming-and-start-up-presented-by-she-sharp-and-geo-ar-games",
+      "siteSlug": "the-truths-to-gaming-and-start-up",
+      "siteId": 63,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 53,
+          "checkedIn": 0
+        },
+        "export": {
+          "registered": 53,
+          "checkedIn": null
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2021-09-15--iamremarkable",
+      "siteSlug": "2021-iamremarkable",
+      "siteId": 68,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 61,
+          "checkedIn": 0
+        },
+        "export": {
+          "registered": 61,
+          "checkedIn": null
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2021-10-11--ada-lovelace-day-celebration",
+      "siteSlug": "ada-lovelace-day",
+      "siteId": 66,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 31,
+          "checkedIn": 0
+        },
+        "export": {
+          "registered": 31,
+          "checkedIn": null
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2021-11-30--women-in-data-and-analytics",
+      "siteSlug": "women-in-data-and-analytics",
+      "siteId": 67,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 60,
+          "checkedIn": 0
+        },
+        "export": {
+          "registered": 60,
+          "checkedIn": null
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2022-03-10--she-sharp-and-aws-international-women-s-day-event-breakthebias",
+      "siteSlug": "2022-break-the-bias",
+      "siteId": 74,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "medium",
+      "figures": {
+        "site": {
+          "attendees": 86,
+          "checkedIn": 0
+        },
+        "export": {
+          "registered": 86,
+          "checkedIn": null
+        }
+      },
+      "status": "agrees",
+      "note": "The site title is the campaign hashtag alone. Same date, same 86 registrations."
+    },
+    {
+      "humanitixKey": "2022-04-28--she-sharp-and-myob-mind-your-own-career",
+      "siteSlug": "2022-mind-your-own-career",
+      "siteId": 76,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 73,
+          "checkedIn": 0
+        },
+        "export": {
+          "registered": 73,
+          "checkedIn": null
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2022-05-20--women-igniting-a-passion-for-tech-sold-out",
+      "siteSlug": "2022-women-igniting-tech",
+      "siteId": 77,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "medium",
+      "figures": {
+        "site": {
+          "attendees": 67,
+          "checkedIn": 0
+        },
+        "export": {
+          "registered": 67,
+          "checkedIn": null
+        }
+      },
+      "status": "agrees",
+      "note": "Humanitix appended 'SOLD OUT' to the listing title. Same date, same 67 registrations."
+    },
+    {
+      "humanitixKey": "2022-06-17--women-in-security-reshaping-the-future",
+      "siteSlug": "2022-women-in-security",
+      "siteId": 75,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 98,
+          "checkedIn": 0
+        },
+        "export": {
+          "registered": 98,
+          "checkedIn": null
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2022-07-21--she-sharp-and-anz-navigating-the-workplace-as-a-woman",
+      "siteSlug": "2022-navigating-the-workplace-as-a-woman",
+      "siteId": 78,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 87,
+          "checkedIn": 0
+        },
+        "export": {
+          "registered": 87,
+          "checkedIn": null
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2022-09-03--she-sharp-ai-for-the-environment-female-led-hackathon-aienvirohack",
+      "siteSlug": "2022-ai-enviro-hack",
+      "siteId": 80,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "medium",
+      "figures": {
+        "site": {
+          "attendees": 105,
+          "checkedIn": 80
+        },
+        "export": {
+          "registered": 105,
+          "checkedIn": 80
+        }
+      },
+      "status": "agrees",
+      "note": "The site title is the short campaign name. Same date, same 105 registrations and same 80 check-ins."
+    },
+    {
+      "humanitixKey": "2022-10-20--she-sharp-and-google-shaping-the-future-with-ai",
+      "siteSlug": "2022-shaping-the-future-with-ai",
+      "siteId": 82,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 115,
+          "checkedIn": 28
+        },
+        "export": {
+          "registered": 115,
+          "checkedIn": 28
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2022-12-05--she-sharp-and-aws-presents-she-celebrates-end-of-year-event",
+      "siteSlug": "2022-she-celebrates",
+      "siteId": 81,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "medium",
+      "figures": {
+        "site": {
+          "attendees": 102,
+          "checkedIn": 0
+        },
+        "export": {
+          "registered": 102,
+          "checkedIn": null
+        }
+      },
+      "status": "agrees",
+      "note": "The site drops the sponsor and the 'End of Year Event' suffix. Same date, same 102 registrations."
+    },
+    {
+      "humanitixKey": "2023-03-08--she-sharp-and-countdown-international-women-s-day",
+      "siteSlug": "2023-international-womens-day",
+      "siteId": 83,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 96,
+          "checkedIn": 73
+        },
+        "export": {
+          "registered": 96,
+          "checkedIn": 73
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2023-04-28--she-sharp-and-myob-kickstart-your-career-in-tech",
+      "siteSlug": "2023-kickstart-your-career-in-tech-with-myob",
+      "siteId": 84,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 86,
+          "checkedIn": null
+        },
+        "export": {
+          "registered": 86,
+          "checkedIn": null
+        }
+      },
+      "status": "agrees",
+      "note": "Matched by hand when the site published 12 April 2023 against Humanitix's 28 April. The export settled it — ticket sales ran 24 March to 28 April with the final order on the event day, and the record's own detailPageData.dateTime already said \"Fri, 28 Apr 2023\" — so the site date was corrected on 2026-08-18 by scripts/data/fix-myob-2023-event-date.ts. The two now match on date and on 86 registrations. Kept as prose because a row that reads `agrees` gives no hint that it once did not."
+    },
+    {
+      "humanitixKey": "2023-06-20--she-sharp-and-deloitte-innovation-unleashed",
+      "siteSlug": "2023-innovation-unleashed",
+      "siteId": 79,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 90,
+          "checkedIn": 62
+        },
+        "export": {
+          "registered": 90,
+          "checkedIn": 62
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2023-07-25--she-sharp-and-kiwibank-the-buzz-about-banking",
+      "siteSlug": "2023-the-buzz-about-banking",
+      "siteId": 73,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 90,
+          "checkedIn": 52
+        },
+        "export": {
+          "registered": 90,
+          "checkedIn": 52
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2023-08-24--she-sharp-and-fonterra-a-legendairy-career",
+      "siteSlug": "fonterra-a-legendairy-career",
+      "siteId": 71,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 120,
+          "checkedIn": 100
+        },
+        "export": {
+          "registered": 120,
+          "checkedIn": 100
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2023-09-20--she-sharp-and-techwomen-nz-from-burnout-to-balance",
+      "siteSlug": "from-burnout-to-balance",
+      "siteId": 86,
+      "siteFile": "events-custom",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 106,
+          "checkedIn": 75
+        },
+        "export": {
+          "registered": 106,
+          "checkedIn": 75
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2023-10-11--inspire-her-te-whakatipuranga-wahine",
+      "siteSlug": "inspire-her-te-whakatipuranga-wahine",
+      "siteId": 65,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 126,
+          "checkedIn": 58
+        },
+        "export": {
+          "registered": 126,
+          "checkedIn": 58
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2023-11-03--she-sharp-and-hcl-technological-change-workplace-and-workforce-impacts",
+      "siteSlug": "technological-change-workplace-workforce-impacts",
+      "siteId": 59,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 88,
+          "checkedIn": 71
+        },
+        "export": {
+          "registered": 88,
+          "checkedIn": 71
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2023-11-17--google-educators-conference",
+      "siteSlug": "google-educator-conference-2023",
+      "siteId": 21,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 123,
+          "checkedIn": 91
+        },
+        "export": {
+          "registered": 123,
+          "checkedIn": 91
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2023-12-14--she-celebrates-end-of-year-event",
+      "siteSlug": "google-end-of-year-event",
+      "siteId": 53,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 100,
+          "checkedIn": 74
+        },
+        "export": {
+          "registered": 100,
+          "checkedIn": 74
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2024-03-07--she-sharp-and-woolworths-international-women-s-day",
+      "siteSlug": "international-womens-day-2",
+      "siteId": 20,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 108,
+          "checkedIn": 70
+        },
+        "export": {
+          "registered": 108,
+          "checkedIn": 70
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2024-04-18--she-sharp-and-myob-embracing-bias",
+      "siteSlug": "embracing-bias",
+      "siteId": 19,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 74,
+          "checkedIn": 50
+        },
+        "export": {
+          "registered": 74,
+          "checkedIn": 50
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2024-05-09--she-sharp-and-les-mills-own-the-unexpected",
+      "siteSlug": "own-the-unexpected",
+      "siteId": 18,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 109,
+          "checkedIn": 95
+        },
+        "export": {
+          "registered": 109,
+          "checkedIn": 95
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2024-06-26--she-sharp-and-fiserv-bank-on-yourself",
+      "siteSlug": "bank-on-yourself",
+      "siteId": 17,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 96,
+          "checkedIn": 77
+        },
+        "export": {
+          "registered": 96,
+          "checkedIn": 77
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2024-07-26--f-and-p-hackathon-with-she",
+      "siteSlug": "f-p-hackathon",
+      "siteId": 16,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 259,
+          "checkedIn": 101
+        },
+        "export": {
+          "registered": 259,
+          "checkedIn": 101
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2024-08-29--she-sharp-and-fonterra-harness-the-power-of-generative-al",
+      "siteSlug": "harness-the-power-of-data-and-ai",
+      "siteId": 14,
+      "siteFile": "events-v3",
+      "match": "hand-verified",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 165,
+          "checkedIn": 112
+        },
+        "export": {
+          "registered": 165,
+          "checkedIn": 112
+        }
+      },
+      "status": "agrees",
+      "note": "The site says 'Data and AI' where the Humanitix listing says 'Generative Al' — with a lowercase L, a typo for AI that is preserved here because it is what the export contains. Same date, same 165 registrations and 112 check-ins."
+    },
+    {
+      "humanitixKey": "2024-10-18--she-sharp-10-year-anniversary",
+      "siteSlug": "she-sharp-10-year-anniversary",
+      "siteId": 13,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 127,
+          "checkedIn": 95
+        },
+        "export": {
+          "registered": 127,
+          "checkedIn": 95
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2024-11-15--she-sharp-and-hcltech",
+      "siteSlug": "the-role-of-technology-in-sustainable-development",
+      "siteId": 12,
+      "siteFile": "events-v3",
+      "match": "hand-verified",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 78,
+          "checkedIn": 49
+        },
+        "export": {
+          "registered": 78,
+          "checkedIn": 49
+        }
+      },
+      "status": "agrees",
+      "note": "The Humanitix listing was named after the partner only. Same date, same 78 registrations and 49 check-ins."
+    },
+    {
+      "humanitixKey": "2024-11-21--2024-google-educator-conference",
+      "siteSlug": "google-educator-conference-2024",
+      "siteId": 11,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 122,
+          "checkedIn": 76
+        },
+        "export": {
+          "registered": 122,
+          "checkedIn": 76
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2025-03-14--she-sharp-and-academy-ex-international-women-s-day",
+      "siteSlug": "she-sharp-academy-ex-international-womens-day",
+      "siteId": 10,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 75,
+          "checkedIn": 57
+        },
+        "export": {
+          "registered": 75,
+          "checkedIn": 57
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2025-04-16--she-sharp-iamremarkable",
+      "siteSlug": "iamremarkable",
+      "siteId": 9,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 63,
+          "checkedIn": 31
+        },
+        "export": {
+          "registered": 63,
+          "checkedIn": 24
+        }
+      },
+      "status": "disagrees",
+      "note": "Registrations agree at 63. The site's checkedIn of 31 is above the export's 24, and a check-in count cannot exceed what was scanned. Correct to 24."
+    },
+    {
+      "humanitixKey": "2025-05-22--she-sharp-and-myob-tech-that-matches-your-vibe-find-your-perfect-fit",
+      "siteSlug": "tech-that-matches-your-vibe-find-your-perfect-fit",
+      "siteId": 8,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 63,
+          "checkedIn": 45
+        },
+        "export": {
+          "registered": 63,
+          "checkedIn": 45
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2025-07-30--she-sharp-and-techbabesnz-thrive-your-career-your-story",
+      "siteSlug": "thrive-your-career-your-story",
+      "siteId": 5,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 98,
+          "checkedIn": 68
+        },
+        "export": {
+          "registered": 98,
+          "checkedIn": 68
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2025-09-03--she-sharp-and-fonterra-business-and-technology-transformation-through-platforms-and-products",
+      "siteSlug": "business-and-technology-transformation-through-platforms-and-products",
+      "siteId": 4,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 96,
+          "checkedIn": 61
+        },
+        "export": {
+          "registered": 96,
+          "checkedIn": 61
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2025-10-03--she-sharp-securecodewarrior-xero-code-secure-lead-the-future-women-in-cybersecurity-workshop",
+      "siteSlug": "code-secure",
+      "siteId": 3,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 62,
+          "checkedIn": 52
+        },
+        "export": {
+          "registered": 62,
+          "checkedIn": 52
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2025-11-12--she-sharp-and-vector-future-ready-data-ai-digital-innovation-and-inclusive-careers-at-vector",
+      "siteSlug": "she-sharp-vector-future-ready-data-ai-digital-innovation-inclusive-careers-at-vector",
+      "siteId": 2,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 93,
+          "checkedIn": 67
+        },
+        "export": {
+          "registered": 93,
+          "checkedIn": 67
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2025-11-21--she-sharp-and-hcltech-ai-empowerment-shaping-an-inclusive-digital-future",
+      "siteSlug": "she-sharp-hcltech-ai-empowerment-shaping-an-inclusive-digital-future",
+      "siteId": 1,
+      "siteFile": "events-v3",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 68,
+          "checkedIn": 55
+        },
+        "export": {
+          "registered": 68,
+          "checkedIn": 55
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2026-03-06--she-sharp-and-academyex-international-women-s-day-2026",
+      "siteSlug": "she-sharp-and-academyex-international-womens-day-2026",
+      "siteId": 85,
+      "siteFile": "events-custom",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 103,
+          "checkedIn": 72
+        },
+        "export": {
+          "registered": 103,
+          "checkedIn": 72
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2026-03-25--her-waka",
+      "siteSlug": "her-waka",
+      "siteId": 88,
+      "siteFile": "events-custom",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 39,
+          "checkedIn": 27
+        },
+        "export": {
+          "registered": 39,
+          "checkedIn": 27
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2026-04-07--her-waka-april-2026",
+      "siteSlug": "her-waka-april-2026",
+      "siteId": 89,
+      "siteFile": "events-custom",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 32,
+          "checkedIn": 24
+        },
+        "export": {
+          "registered": 32,
+          "checkedIn": 24
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2026-04-16--own-your-energy-with-candice-murray-presented-by-she-sharp-and-metlifecare",
+      "siteSlug": "she-sharp-candice-murray-own-your-energy",
+      "siteId": 87,
+      "siteFile": "events-custom",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 81,
+          "checkedIn": 60
+        },
+        "export": {
+          "registered": 81,
+          "checkedIn": 60
+        }
+      },
+      "status": "agrees",
+      "note": ""
+    },
+    {
+      "humanitixKey": "2026-05-05--her-waka-may-2026",
+      "siteSlug": "her-waka-may-2026",
+      "siteId": 90,
+      "siteFile": "events-custom",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 14,
+          "checkedIn": 0
+        },
+        "export": {
+          "registered": 33,
+          "checkedIn": 29
+        }
+      },
+      "status": "disagrees",
+      "note": "The largest error in the archive. The site publishes 14 registered and 0 checked in; the export has 33 and 29. report/data/report-data.typ already flags this record as 'ALMOST CERTAINLY AN INCOMPLETE EXPORT' and notes that the adjacent cohorts drew 39 and 32 — 33 sits exactly between them. Correct to 33/29."
+    },
+    {
+      "humanitixKey": "2026-05-15--making-linkedin-work-for-you",
+      "siteSlug": "making-linkedin-work-for-you-with-stuart-little",
+      "siteId": 91,
+      "siteFile": "events-custom",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 100,
+          "checkedIn": 0
+        },
+        "export": {
+          "registered": 106,
+          "checkedIn": 70
+        }
+      },
+      "status": "disagrees",
+      "note": "The site's 100 is a closing snapshot taken at the registration cap; the export counts 106 tickets actually sold, and 70 people were scanned in against a published 0. Correct to 106/70."
+    },
+    {
+      "humanitixKey": "2026-06-02--her-waka-june-2026",
+      "siteSlug": "her-waka-june-2026",
+      "siteId": 92,
+      "siteFile": "events-custom",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 23,
+          "checkedIn": null
+        },
+        "export": {
+          "registered": 24,
+          "checkedIn": 16
+        }
+      },
+      "status": "disagrees",
+      "note": "One more registration than the site records, and 16 check-ins against a null. Correct to 24/16."
+    },
+    {
+      "humanitixKey": "2026-06-13--youth-tech-series-ai-and-electronics-workshop",
+      "siteSlug": "peyvand-academy-13-june-2026",
+      "siteId": 93,
+      "siteFile": "events-custom",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": null,
+          "checkedIn": null
+        },
+        "export": {
+          "registered": 24,
+          "checkedIn": null
+        }
+      },
+      "status": "gap",
+      "note": "The site never recorded a figure. 24 registered; no check-in was run, so checkedIn must stay null rather than becoming 0."
+    },
+    {
+      "humanitixKey": "2026-06-20--youth-tech-series-electronics-workshop",
+      "siteSlug": "peyvand-academy-20-june-2026",
+      "siteId": 94,
+      "siteFile": "events-custom",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": null,
+          "checkedIn": null
+        },
+        "export": {
+          "registered": 26,
+          "checkedIn": null
+        }
+      },
+      "status": "gap",
+      "note": "The site never recorded a figure. 26 registered; no check-in was run, so checkedIn must stay null rather than becoming 0."
+    },
+    {
+      "humanitixKey": "2026-07-30--she-sharp-and-myob-working-smarter-ai-myob-and-the-new-delivery-landscape",
+      "siteSlug": "she-sharp-and-myob-working-smarter",
+      "siteId": 95,
+      "siteFile": "events-custom",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": 86,
+          "checkedIn": 0
+        },
+        "export": {
+          "registered": 87,
+          "checkedIn": 51
+        }
+      },
+      "status": "disagrees",
+      "note": "One more registration than the site records, and 51 check-ins against a published 0. Correct to 87/51."
+    },
+    {
+      "humanitixKey": "2026-09-03--she-sharp-and-les-mills-no-pain-all-gain-getting-fit-for-ai",
+      "siteSlug": "event-lesmills-03-september-2026",
+      "siteId": 97,
+      "siteFile": "events-custom",
+      "match": "exact-date",
+      "confidence": "high",
+      "figures": {
+        "site": {
+          "attendees": null,
+          "checkedIn": 0
+        },
+        "export": {
+          "registered": 15,
+          "checkedIn": null
+        }
+      },
+      "status": "gap",
+      "note": "A future event, still selling at the time of the export. 15 registered so far; the published 0 check-ins is a placeholder for an event that has not happened and must become null."
+    }
+  ],
+  "series": [
+    {
+      "seriesKey": "storytellers-series",
+      "siteSlug": "she-storytellers-series",
+      "siteId": 23,
+      "sessionKeys": [
+        "2020-05-07--storytellers-series",
+        "2020-05-14--storytellers-series",
+        "2020-05-29--storytellers-series"
+      ],
+      "sessions": 3,
+      "rule": "sum",
+      "exportRegistered": 269,
+      "exportCheckedIn": 0,
+      "siteAttendees": 269,
+      "siteCheckedIn": 0,
+      "status": "agrees",
+      "note": "Three Thursday sessions on 7, 14 and 29 May 2020 that the site models as one record dated 28 May. 220 + 9 + 40 = 269, which is exactly the site's figure — the site has been recording the SUM all along. Comparing any single session against it would look like a disagreement and would be wrong."
+    },
+    {
+      "seriesKey": "storytellers-series-2-0",
+      "siteSlug": "she-storytellers-series-2-0",
+      "siteId": 22,
+      "sessionKeys": [
+        "2020-09-24--storytellers-series-2-0",
+        "2020-10-01--storytellers-series-2-0"
+      ],
+      "sessions": 2,
+      "rule": "sum",
+      "exportRegistered": 37,
+      "exportCheckedIn": 0,
+      "siteAttendees": 37,
+      "siteCheckedIn": 0,
+      "status": "agrees",
+      "note": "Two sessions on 24 September and 1 October 2020. 30 + 7 = 37, exactly the site's figure. The same sum rule as the first series."
+    }
+  ],
+  "unmatched": [],
+  "keyAliases": []
+}

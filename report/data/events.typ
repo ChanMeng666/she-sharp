@@ -89,28 +89,21 @@
       (metric: D.events.she-sharp-and-academyex-international-womens-day-2026.returning, label: "Returning attendees"),
       (metric: D.events.she-sharp-and-academyex-international-womens-day-2026.companies, label: "Companies represented"),
     ),
+    // 60 organisations across 94 answered rows of 103 registrations.
+    // The 12 rows below cover 46 of those — a top-N slice, not a full account.
     companies: (
-      ("academyEX", p(9)),
-      ("AUT", p(7)),
-      ("She Sharp", p(6)),
-      ("Fonterra", p(4)),
-      ("MYOB", p(4)),
-      ("2degrees", p(3)),
-      ("NZME", p(3)),
-      ("Auror", p(2)),
-      ("Fisher & Paykel Healthcare", p(2)),
-      ("Kiwibank", p(2)),
-      ("Chorus", p(2)),
-      ("HEB Construction", p(2)),
-      ("Auckland Council", p(1)),
-      ("BNZ", p(1)),
-      ("Callaghan Innovation", p(1)),
-      ("Dulux New Zealand", p(1)),
-      ("FlexWare", p(1)),
-      ("Milford Asset Management", p(1)),
-      ("Salt Recruitment", p(1)),
-      ("University of Auckland", p(1)),
-      ("Self-employed", p(4)),
+      ("She Sharp", v(9, "Humanitix checkout Company/Organisation field, instance 2026-03-06--she-sharp-and-academyex-international-women-s-day-2026 — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("academyEX", v(8, "Humanitix checkout Company/Organisation field, instance 2026-03-06--she-sharp-and-academyex-international-women-s-day-2026 — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("Auckland University of Technology", v(8, "Humanitix checkout Company/Organisation field, instance 2026-03-06--she-sharp-and-academyex-international-women-s-day-2026 — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("University of Auckland", v(5, "Humanitix checkout Company/Organisation field, instance 2026-03-06--she-sharp-and-academyex-international-women-s-day-2026 — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("Rototuna High School", v(3, "Humanitix checkout Company/Organisation field, instance 2026-03-06--she-sharp-and-academyex-international-women-s-day-2026 — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("2degrees", v(2, "Humanitix checkout Company/Organisation field, instance 2026-03-06--she-sharp-and-academyex-international-women-s-day-2026 — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("Cyma Limited", v(2, "Humanitix checkout Company/Organisation field, instance 2026-03-06--she-sharp-and-academyex-international-women-s-day-2026 — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("Datacom", v(2, "Humanitix checkout Company/Organisation field, instance 2026-03-06--she-sharp-and-academyex-international-women-s-day-2026 — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("HEB", v(2, "Humanitix checkout Company/Organisation field, instance 2026-03-06--she-sharp-and-academyex-international-women-s-day-2026 — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("Sanford", v(2, "Humanitix checkout Company/Organisation field, instance 2026-03-06--she-sharp-and-academyex-international-women-s-day-2026 — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("Ventana Ventures", v(2, "Humanitix checkout Company/Organisation field, instance 2026-03-06--she-sharp-and-academyex-international-women-s-day-2026 — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("Adhesion Ltd", v(1, "Humanitix checkout Company/Organisation field, instance 2026-03-06--she-sharp-and-academyex-international-women-s-day-2026 — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
     ),
     went-well: (
       ("Keynote speaker", p(88)),
@@ -184,16 +177,18 @@
       (metric: D.events.her-waka.returning, label: "Returning attendees"),
       (metric: D.events.her-waka.companies, label: "Companies represented"),
     ),
+    // 9 organisations across 27 answered rows of 39 registrations.
+    // The 9 rows below cover 27 of those — a top-N slice, not a full account.
     companies: (
-      ("Referred by MSD", p(21)),
-      ("She Sharp", p(4)),
-      ("academyEX", p(3)),
-      ("Potentia", p(2)),
-      ("Randstad Digital", p(2)),
-      ("Absolute IT", p(1)),
-      ("AUT", p(1)),
-      ("Job Hunter", p(1)),
-      ("Self-employed", p(4)),
+      ("Ministry of Social Development", v(17, "Humanitix checkout Company/Organisation field, instance 2026-03-25--her-waka — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("She Sharp", v(3, "Humanitix checkout Company/Organisation field, instance 2026-03-25--her-waka — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("Absolute IT", v(1, "Humanitix checkout Company/Organisation field, instance 2026-03-25--her-waka — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("APAC Gold", v(1, "Humanitix checkout Company/Organisation field, instance 2026-03-25--her-waka — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("Potentia", v(1, "Humanitix checkout Company/Organisation field, instance 2026-03-25--her-waka — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("Randstad Digital", v(1, "Humanitix checkout Company/Organisation field, instance 2026-03-25--her-waka — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("RBS Intellect", v(1, "Humanitix checkout Company/Organisation field, instance 2026-03-25--her-waka — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("RCSA", v(1, "Humanitix checkout Company/Organisation field, instance 2026-03-25--her-waka — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("StayinFront", v(1, "Humanitix checkout Company/Organisation field, instance 2026-03-25--her-waka — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
     ),
     went-well: (
       ("Panel discussion", p(82)),
@@ -266,15 +261,16 @@
       (metric: D.events.her-waka-april-2026.returning, label: "Returning attendees"),
       (metric: D.events.her-waka-april-2026.companies, label: "Companies represented"),
     ),
+    // 7 organisations across 26 answered rows of 32 registrations.
+    // The 7 rows below cover 26 of those — a top-N slice, not a full account.
     companies: (
-      ("Referred by MSD", p(18)),
-      ("She Sharp", p(4)),
-      ("academyEX", p(2)),
-      ("Potentia", p(2)),
-      ("Elevate Consulting", p(1)),
-      ("AUT", p(1)),
-      ("University of Auckland", p(1)),
-      ("Self-employed", p(3)),
+      ("Ministry of Social Development", v(17, "Humanitix checkout Company/Organisation field, instance 2026-04-07--her-waka-april-2026 — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("RCSA", v(3, "Humanitix checkout Company/Organisation field, instance 2026-04-07--her-waka-april-2026 — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("She Sharp", v(2, "Humanitix checkout Company/Organisation field, instance 2026-04-07--her-waka-april-2026 — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("academyEX", v(1, "Humanitix checkout Company/Organisation field, instance 2026-04-07--her-waka-april-2026 — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("Pezxe", v(1, "Humanitix checkout Company/Organisation field, instance 2026-04-07--her-waka-april-2026 — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("RBS Intellect", v(1, "Humanitix checkout Company/Organisation field, instance 2026-04-07--her-waka-april-2026 — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("Sona Sansaar Ltd.", v(1, "Humanitix checkout Company/Organisation field, instance 2026-04-07--her-waka-april-2026 — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
     ),
     went-well: (
       ("#IAmRemarkable workshop", p(91)),
@@ -337,27 +333,21 @@
       (metric: D.events.she-sharp-candice-murray-own-your-energy.returning, label: "Returning attendees"),
       (metric: D.events.she-sharp-candice-murray-own-your-energy.companies, label: "Companies represented"),
     ),
+    // 39 organisations across 73 answered rows of 81 registrations.
+    // The 12 rows below cover 46 of those — a top-N slice, not a full account.
     companies: (
-      ("Metlifecare", p(11)),
-      ("She Sharp", p(5)),
-      ("AUT", p(4)),
-      ("MYOB", p(3)),
-      ("Fonterra", p(3)),
-      ("2degrees", p(2)),
-      ("ASB", p(2)),
-      ("Fisher & Paykel Healthcare", p(2)),
-      ("Suncorp", p(2)),
-      ("Auckland Council", p(2)),
-      ("BNZ", p(1)),
-      ("Canva", p(1)),
-      ("Chorus", p(1)),
-      ("Fletcher Construction", p(1)),
-      ("Healthpoint", p(1)),
-      ("Kiwibank", p(1)),
-      ("Les Mills New Zealand", p(1)),
-      ("University of Auckland", p(1)),
-      ("Zoho Corporation", p(1)),
-      ("Self-employed", p(5)),
+      ("Auckland University of Technology", v(9, "Humanitix checkout Company/Organisation field, instance 2026-04-16--own-your-energy-with-candice-murray-presented-by-she-sharp-and-metlifecare — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("She Sharp", v(9, "Humanitix checkout Company/Organisation field, instance 2026-04-16--own-your-energy-with-candice-murray-presented-by-she-sharp-and-metlifecare — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("Massey University", v(5, "Humanitix checkout Company/Organisation field, instance 2026-04-16--own-your-energy-with-candice-murray-presented-by-she-sharp-and-metlifecare — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("University of Auckland", v(5, "Humanitix checkout Company/Organisation field, instance 2026-04-16--own-your-energy-with-candice-murray-presented-by-she-sharp-and-metlifecare — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("Metlifecare", v(4, "Humanitix checkout Company/Organisation field, instance 2026-04-16--own-your-energy-with-candice-murray-presented-by-she-sharp-and-metlifecare — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("Auckland Institute of Studies", v(2, "Humanitix checkout Company/Organisation field, instance 2026-04-16--own-your-energy-with-candice-murray-presented-by-she-sharp-and-metlifecare — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("Evolve Recruitment", v(2, "Humanitix checkout Company/Organisation field, instance 2026-04-16--own-your-energy-with-candice-murray-presented-by-she-sharp-and-metlifecare — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("Fonterra", v(2, "Humanitix checkout Company/Organisation field, instance 2026-04-16--own-your-energy-with-candice-murray-presented-by-she-sharp-and-metlifecare — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("Ministry of Social Development", v(2, "Humanitix checkout Company/Organisation field, instance 2026-04-16--own-your-energy-with-candice-murray-presented-by-she-sharp-and-metlifecare — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("StayinFront", v(2, "Humanitix checkout Company/Organisation field, instance 2026-04-16--own-your-energy-with-candice-murray-presented-by-she-sharp-and-metlifecare — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("UNESCO", v(2, "Humanitix checkout Company/Organisation field, instance 2026-04-16--own-your-energy-with-candice-murray-presented-by-she-sharp-and-metlifecare — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("Vector", v(2, "Humanitix checkout Company/Organisation field, instance 2026-04-16--own-your-energy-with-candice-murray-presented-by-she-sharp-and-metlifecare — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
     ),
     went-well: (
       ("Facilitator", p(94)),
@@ -375,13 +365,13 @@
   // ===========================================================================
   (
     slug: "her-waka-may-2026",
-    // The ONLY event carrying this flag. Its registration export records 5
-    // registrations and 0 check-ins for a session that demonstrably ran, with a
-    // full speaker line-up and a published photo gallery — a broken export, not
-    // a failed cohort. A placeholder organisation breakdown printed beneath that
-    // 5 summed to 28, putting two irreconcilable numbers on the same page.
-    // Suppressing the table is honest; reconciling the export is the real fix.
-    suppress-companies: true,
+    // The flag this record used to carry, and why it is gone: its registration
+    // export recorded 5 registrations and 0 check-ins for a session that
+    // demonstrably ran, so the organisation table beneath it was suppressed
+    // rather than printed against a number nobody believed. The Humanitix
+    // account export of 2026-08-17 reconciled it to 33 and 29 — which is what
+    // the note called "the real fix" — so the table is printed from measured
+    // data and the suppression is no longer needed.
     title: "HER WAKA (May 2026) — Cybersecurity",
     short-title: "HER WAKA · Cohort 3",
     month: "MAY 2026",
@@ -449,14 +439,16 @@
       (metric: D.events.her-waka-may-2026.returning, label: "Returning attendees"),
       (metric: D.events.her-waka-may-2026.companies, label: "Companies represented"),
     ),
+    // 6 organisations across 21 answered rows of 33 registrations.
+    // The 6 rows below cover 21 of those — a top-N slice, not a full account.
+    // 1 row(s) here named the registrant rather than an employer and are excluded.
     companies: (
-      ("Referred by MSD", p(16)),
-      ("She Sharp", p(3)),
-      ("academyEX", p(2)),
-      ("Potentia", p(2)),
-      ("Younity", p(1)),
-      ("AUT", p(1)),
-      ("Self-employed", p(3)),
+      ("Ministry of Social Development", v(11, "Humanitix checkout Company/Organisation field, instance 2026-05-05--her-waka-may-2026 — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("She Sharp", v(4, "Humanitix checkout Company/Organisation field, instance 2026-05-05--her-waka-may-2026 — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("RCSA", v(3, "Humanitix checkout Company/Organisation field, instance 2026-05-05--her-waka-may-2026 — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("Auckland University of Technology", v(1, "Humanitix checkout Company/Organisation field, instance 2026-05-05--her-waka-may-2026 — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("BJT", v(1, "Humanitix checkout Company/Organisation field, instance 2026-05-05--her-waka-may-2026 — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("RBS Intellect", v(1, "Humanitix checkout Company/Organisation field, instance 2026-05-05--her-waka-may-2026 — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
     ),
     went-well: (
       ("Lightning talks", p(79)),
@@ -513,22 +505,21 @@
       (metric: D.events.making-linkedin-work-for-you-with-stuart-little.returning, label: "Returning attendees"),
       (metric: D.events.making-linkedin-work-for-you-with-stuart-little.companies, label: "Companies represented"),
     ),
+    // 30 organisations across 102 answered rows of 106 registrations.
+    // The 12 rows below cover 84 of those — a top-N slice, not a full account.
     companies: (
-      ("AUT", p(19)),
-      ("She Sharp", p(4)),
-      ("University of Auckland", p(3)),
-      ("Agency8", p(2)),
-      ("2degrees", p(2)),
-      ("MYOB", p(2)),
-      ("Fonterra", p(2)),
-      ("Kiwibank", p(1)),
-      ("Chorus", p(1)),
-      ("Auror", p(1)),
-      ("Datacom", p(1)),
-      ("Suncorp", p(1)),
-      ("Eco Choice Aotearoa", p(1)),
-      ("Salt Recruitment", p(1)),
-      ("Self-employed", p(6)),
+      ("Auckland University of Technology", v(52, "Humanitix checkout Company/Organisation field, instance 2026-05-15--making-linkedin-work-for-you — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("She Sharp", v(12, "Humanitix checkout Company/Organisation field, instance 2026-05-15--making-linkedin-work-for-you — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("2degrees", v(5, "Humanitix checkout Company/Organisation field, instance 2026-05-15--making-linkedin-work-for-you — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("PB Tech", v(3, "Humanitix checkout Company/Organisation field, instance 2026-05-15--making-linkedin-work-for-you — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("academyEX", v(2, "Humanitix checkout Company/Organisation field, instance 2026-05-15--making-linkedin-work-for-you — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("Netbridge", v(2, "Humanitix checkout Company/Organisation field, instance 2026-05-15--making-linkedin-work-for-you — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("StayinFront", v(2, "Humanitix checkout Company/Organisation field, instance 2026-05-15--making-linkedin-work-for-you — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("University of Auckland", v(2, "Humanitix checkout Company/Organisation field, instance 2026-05-15--making-linkedin-work-for-you — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("Acfn", v(1, "Humanitix checkout Company/Organisation field, instance 2026-05-15--making-linkedin-work-for-you — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("Agency8", v(1, "Humanitix checkout Company/Organisation field, instance 2026-05-15--making-linkedin-work-for-you — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("Ais", v(1, "Humanitix checkout Company/Organisation field, instance 2026-05-15--making-linkedin-work-for-you — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("ASB", v(1, "Humanitix checkout Company/Organisation field, instance 2026-05-15--making-linkedin-work-for-you — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
     ),
     went-well: (
       ("Speaker", p(86)),
@@ -580,14 +571,15 @@
       (metric: D.events.her-waka-june-2026.returning, label: "Returning attendees"),
       (metric: D.events.her-waka-june-2026.companies, label: "Companies represented"),
     ),
+    // 6 organisations across 21 answered rows of 24 registrations.
+    // The 6 rows below cover 21 of those — a top-N slice, not a full account.
     companies: (
-      ("Referred by MSD", p(19)),
-      ("She Sharp", p(4)),
-      ("academyEX", p(2)),
-      ("Ideqa", p(1)),
-      ("Potentia", p(1)),
-      ("AUT", p(1)),
-      ("Self-employed", p(4)),
+      ("Ministry of Social Development", v(13, "Humanitix checkout Company/Organisation field, instance 2026-06-02--her-waka-june-2026 — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("She Sharp", v(3, "Humanitix checkout Company/Organisation field, instance 2026-06-02--her-waka-june-2026 — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("RCSA", v(2, "Humanitix checkout Company/Organisation field, instance 2026-06-02--her-waka-june-2026 — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("BJT", v(1, "Humanitix checkout Company/Organisation field, instance 2026-06-02--her-waka-june-2026 — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("Ideqa", v(1, "Humanitix checkout Company/Organisation field, instance 2026-06-02--her-waka-june-2026 — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("RBS Intellect", v(1, "Humanitix checkout Company/Organisation field, instance 2026-06-02--her-waka-june-2026 — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
     ),
     went-well: (
       ("Speaker's own story", p(89)),
@@ -633,9 +625,19 @@
       (metric: D.events.peyvand-academy-13-june-2026.returning, label: "Returning participants"),
       (metric: D.events.peyvand-academy-13-june-2026.companies, label: "Partner organisations"),
     ),
+    // 10 organisations across 19 answered rows of 24 registrations.
+    // The 10 rows below cover 19 of those — a top-N slice, not a full account.
     companies: (
-      ("Peyvand Academy", p(14)),
-      ("Fruitvale Primary School whānau", p(10)),
+      ("Peyvand Academy", v(7, "Humanitix checkout Company/Organisation field, instance 2026-06-13--youth-tech-series-ai-and-electronics-workshop — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("Auckland University of Technology", v(3, "Humanitix checkout Company/Organisation field, instance 2026-06-13--youth-tech-series-ai-and-electronics-workshop — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("Green cafe", v(2, "Humanitix checkout Company/Organisation field, instance 2026-06-13--youth-tech-series-ai-and-electronics-workshop — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("Engram", v(1, "Humanitix checkout Company/Organisation field, instance 2026-06-13--youth-tech-series-ai-and-electronics-workshop — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("Eyc", v(1, "Humanitix checkout Company/Organisation field, instance 2026-06-13--youth-tech-series-ai-and-electronics-workshop — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("Metlifecare", v(1, "Humanitix checkout Company/Organisation field, instance 2026-06-13--youth-tech-series-ai-and-electronics-workshop — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("Pagans", v(1, "Humanitix checkout Company/Organisation field, instance 2026-06-13--youth-tech-series-ai-and-electronics-workshop — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("She Sharp", v(1, "Humanitix checkout Company/Organisation field, instance 2026-06-13--youth-tech-series-ai-and-electronics-workshop — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("Three Kings School", v(1, "Humanitix checkout Company/Organisation field, instance 2026-06-13--youth-tech-series-ai-and-electronics-workshop — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("UCG", v(1, "Humanitix checkout Company/Organisation field, instance 2026-06-13--youth-tech-series-ai-and-electronics-workshop — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
     ),
     went-well: (
       ("Hands-on activity", p(93)),
@@ -681,9 +683,18 @@
       (metric: D.events.peyvand-academy-20-june-2026.returning, label: "Returning participants"),
       (metric: D.events.peyvand-academy-20-june-2026.companies, label: "Partner organisations"),
     ),
+    // 9 organisations across 22 answered rows of 26 registrations.
+    // The 9 rows below cover 22 of those — a top-N slice, not a full account.
     companies: (
-      ("Peyvand Academy", p(12)),
-      ("Fruitvale Primary School whānau", p(10)),
+      ("Peyvand Academy", v(10, "Humanitix checkout Company/Organisation field, instance 2026-06-20--youth-tech-series-electronics-workshop — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("She Sharp", v(3, "Humanitix checkout Company/Organisation field, instance 2026-06-20--youth-tech-series-electronics-workshop — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("Eywi", v(2, "Humanitix checkout Company/Organisation field, instance 2026-06-20--youth-tech-series-electronics-workshop — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("Little Engineers", v(2, "Humanitix checkout Company/Organisation field, instance 2026-06-20--youth-tech-series-electronics-workshop — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("Auckland University of Technology", v(1, "Humanitix checkout Company/Organisation field, instance 2026-06-20--youth-tech-series-electronics-workshop — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("Humanitix", v(1, "Humanitix checkout Company/Organisation field, instance 2026-06-20--youth-tech-series-electronics-workshop — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("Metlifecare", v(1, "Humanitix checkout Company/Organisation field, instance 2026-06-20--youth-tech-series-electronics-workshop — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
+      ("RBS Intellect", v(1, "Humanitix checkout Company/Organisation field, instance 2026-06-20--youth-tech-series-electronics-workshop — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
+      ("W. Hospital", v(1, "Humanitix checkout Company/Organisation field, instance 2026-06-20--youth-tech-series-electronics-workshop — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
     ),
     went-well: (
       ("Hands-on activity", p(96)),

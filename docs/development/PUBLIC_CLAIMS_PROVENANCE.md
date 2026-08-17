@@ -38,7 +38,7 @@ Tagged inline in `lib/data/stats.ts`; summarised here.
 | Homepage | `impact.careerTransitions` 500+ "Career Success Stories" | UNSOURCED. Nothing tracks career outcomes |
 | `/mentorship` | 120 mentors / 350 mentees / 85% success / 90% skill improvement / 6× and 5× promotion | UNSOURCED, all of it. The 2026 cycle's own registers record **23 mentors, 9 mentees, 0 active pairings**. No survey producing a success rate or a promotion multiple has ever been run |
 | `/about` | membership timeline 2014–2024 and milestone list | UNSOURCED. No membership series exists before 2022. "Global Expansion" in 2024 corresponds to nothing; the real 2024 milestone was the 10th anniversary |
-| `/sponsors/corporate-sponsorship` | "70–90 attendees per event" | **SOURCED** — 2022 sold 631 tickets across 7–9 events; the seven 2025 events averaged 79 registrations (555 total, 383 checked in). Corrected from "95+", which was above the top of the measured range |
+| `/sponsors/corporate-sponsorship` | "70–90 attendees per event" | **SOURCED** — and now from a complete count rather than a sample. The Humanitix account export of 2026-08-17 gives the full 2020–2026 series below: the seven-year mean is 83 registrations per event, and every year except 2021 and 2026 sits inside 70–90 or above it. The earlier evidence in this row (2022: 631 tickets across 7–9 events; 2025: 555 across seven) was close but taken from partial data — the export counts 733 across 8 in 2022 and 618 across 8 in 2025 |
 | `/donate` | "$50 provides workshop materials for 5 students", etc. | UNSOURCED. Nothing in the records costs a workshop kit, a student place or a mentorship pairing. Illustrative, not a costing |
 
 Two metrics are routinely confused and must not be merged:
@@ -63,8 +63,67 @@ subscribers at the end of 2022, about 1.6k recipients through 2023.
   missing data.
 - **Humanitix only holds events from 2020 onwards.** Anything earlier has no
   exportable registration data.
+- **The Humanitix archive is not the event register.** It covers **57 of the
+  97 event records**. The other 40 are pre-2020, ticketed elsewhere (the 2025
+  AI Hackathon Festival, 98 registrations), or never ticketed at all (every
+  expo). Counting events from the archive under-reports; count them from
+  `lib/data/events.ts`.
+- **A check-in count of zero usually means nobody scanned.** 26 of the 62
+  ticketed instances ran no check-in, all of 2020 and 2021 among them. An
+  organisation-wide check-in rate computed over all of them lands at roughly
+  half the true figure. `checkInDataPresent` in
+  `lib/data/json/humanitix/events.json` is the field that says which.
+
+### The registration series, 2020–2026
+
+From `lib/data/json/humanitix/aggregates.json` (export 2026-08-17). **SOURCED.**
+The check-in rate is over the instances that ran a check-in, never over all of
+them.
+
+| Year | Events | Registered | Checked in | Mean per event | Check-in rate |
+|---|---|---|---|---|---|
+| 2020 | 10 | 739 | — | 74 | not recorded |
+| 2021 | 6 | 333 | — | 56 | not recorded |
+| 2022 | 8 | 733 | 108 | 92 | 49% |
+| 2023 | 10 | 1,025 | 656 | 103 | 70% |
+| 2024 | 9 | 1,138 | 725 | 126 | 64% |
+| 2025 | 8 | 618 | 429 | 77 | 69% |
+| 2026 | 11 | 570 | 349 | 52 | 69% |
+| **Total** | **62** | **5,156** | **2,268** | **83** | — |
+
+Also newly SOURCED from the same export: per-event registrations from 2020 and
+check-ins from 2023; net earnings ($26,051.22 across the seven years); **2,919
+unique ticket buyers**; the repeat-registration distribution; the ticket-type
+and audience-segment mix; and the count of organisations represented.
+
+**None of that evidences anything else.** `members.current` (3,500),
+`sponsors.current` (50), the entire mentorship block,
+`impact.careerTransitions` (500), `impact.workshopAttendees` (5,000) and the
+`/about` timeline remain exactly as UNSOURCED as they were. This needs saying
+out loud, because a 5,156-ticket archive is precisely the artefact somebody
+will reach for to justify "5,000+ women empowered" — and **5,156 tickets held
+by 2,919 people is not 5,000 people.**
+
+Method and caveats in full: `docs/development/HUMANITIX_ARCHIVE.md`.
 
 ## Known problem, unresolved
+
+**The 2023 MYOB "Kickstart Your Career in Tech" event is published under the
+wrong date.** The site says 12 April 2023; Humanitix records 28 April, and the
+export settles it — ticket sales ran from 24 March to 28 April, with the final
+order placed on the event day itself, so orders continued for 16 days past the
+date the site publishes. The registration counts agree exactly at 86, which is
+what confirms these are the same event. Recorded in
+`lib/data/json/humanitix/crosswalk.json` with status `held`; not corrected,
+because changing a published event date is a different act from correcting an
+attendance figure.
+
+**A 2025 figure that survived scrutiny.** The 2025 impact report PDF states 716
+registered attendees across 9 events, and the Humanitix export shows only 618
+across 8. The difference is not an error: the 2025 AI Hackathon Festival (98
+registrations) was not ticketed on Humanitix. 618 + 98 = 716, and 8 + 1 = 9.
+Recorded here because the discrepancy looks damning until the missing event is
+found, and the next person to check will find it the same way.
 
 **The 2025 impact report PDF states that the HCLTech Dunedin event had 18
 returning attendees.** That was She Sharp's *first* event in Dunedin, so the

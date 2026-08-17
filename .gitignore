@@ -95,6 +95,13 @@ scripts/newsletter/pilot-contacts.local.csv
 # ...but the hashed suppression list carries no PII and MUST stay tracked.
 !lib/data/json/email-suppression-hashes.json
 
+# Raw ticketing exports and anything derived from them that still carries a real
+# name, address or code. lib/data/json/humanitix/ holds the safe, derived,
+# committed archive; this holds the source it was built from — 5,156 attendee
+# rows and 124 live access codes. Never committed.
+# See docs/development/HUMANITIX_ARCHIVE.md.
+/private/
+
 # Generated audit reports (local tooling output, not tracked)
 scripts/audit-report.json
 

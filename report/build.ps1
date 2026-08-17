@@ -155,9 +155,18 @@ try {
     # report/lib/metrics.typ panics at compile time on the same condition. This
     # is the earlier, friendlier failure: it names the file and line so the
     # operator can go straight there.
+    #
+    # It matches the CONSTRUCTOR CALLS — `p(12)`, `e(46, "…")` — not the string
+    # `src: "placeholder"`. That string appears nowhere in the data: it only
+    # exists inside the two `#let` lines that DEFINE p() and e(), so the old
+    # pattern found exactly those two lines and nothing else, on every run,
+    # whatever the data said. A gate that fires unconditionally is a gate nobody
+    # can act on, and it would have passed a tree of pure placeholders just as
+    # readily. `-notmatch '^\s*#let'` keeps the definitions themselves out.
     if ($Final -and (Test-Path "report\data")) {
         $fake = Get-ChildItem -Path "report\data" -Filter *.typ -Recurse -File |
-            Select-String -Pattern 'src:\s*"(placeholder|estimate|projected)"'
+            Select-String -Pattern '(?<![A-Za-z0-9_-])[pe]\(' |
+            Where-Object { $_.Line -notmatch '^\s*#let' }
         if ($fake) {
             Write-Host ""
             Write-Host "FINAL build blocked. These metrics are not verified:"

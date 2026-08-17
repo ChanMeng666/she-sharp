@@ -1,0 +1,183 @@
+{
+  "metadata": {
+    "authored": true,
+    "note": "HAND-AUTHORED. Humanitix ticket-type strings are free text typed afresh for each event, so 112 distinct strings describe maybe a dozen actual kinds of person. These rules collapse them. Every ticket-type string in an export MUST match a rule: the builder fails and lists any it cannot classify, so 'other' is a choice someone makes deliberately rather than a bucket things fall into. Rules are evaluated IN ORDER and the first match wins, which is why the compound cases ('Guests of Ambassadors') sit above the simple ones ('Ambassadors'). Matching is done on the ticket type lowercased, with the byte-order marks Humanitix left inside two 2020 strings stripped and internal whitespace collapsed."
+  },
+  "segments": [
+    {
+      "id": "professional",
+      "label": "Professionals",
+      "definition": "Working in industry and paying the standard rate. The largest segment and the one the paid ticket price is set for."
+    },
+    {
+      "id": "student",
+      "label": "Students",
+      "definition": "Tertiary students, including university club allocations. Concession-priced or free."
+    },
+    {
+      "id": "youth",
+      "label": "School students",
+      "definition": "Under-18 participants at a school or youth workshop. Kept apart from `student` because the consent, safeguarding and reporting questions differ, and because the registering address is usually a parent's."
+    },
+    {
+      "id": "ambassador",
+      "label": "She# Ambassadors",
+      "definition": "She Sharp's own volunteer ambassador programme, current or former."
+    },
+    {
+      "id": "guest",
+      "label": "Guests",
+      "definition": "Invited by an ambassador, a speaker or She Sharp itself, with no named partner organisation attached."
+    },
+    {
+      "id": "partner-guest",
+      "label": "Partner guests",
+      "definition": "An allocation held for the host or partner organisation of that event — the tickets a venue sponsor distributes internally. Named per event ('Guests - Fonterra'), which is why this is a rule rather than a list."
+    },
+    {
+      "id": "speaker",
+      "label": "Speakers and facilitators",
+      "definition": "On the programme: keynote speakers, panellists and workshop facilitators."
+    },
+    {
+      "id": "mentor",
+      "label": "Mentors",
+      "definition": "Mentors attending in that capacity, including hackathon mentors."
+    },
+    {
+      "id": "mentee",
+      "label": "Mentees",
+      "definition": "Mentees attending in that capacity."
+    },
+    {
+      "id": "teacher",
+      "label": "Teachers",
+      "definition": "Educators at the Google Educator conferences and equivalent teacher-facing events."
+    },
+    {
+      "id": "crew",
+      "label": "Crew",
+      "definition": "Gave their time to run the event rather than attending it: volunteers, the media team, hackathon judges and observers. Grouped because separating them would produce single-digit segments that say nothing, and because for reporting they are all 'staffing', not 'audience'."
+    },
+    {
+      "id": "host",
+      "label": "Host organisation",
+      "definition": "The host organisation's own staff running the event on the day, and She Sharp's sponsors attending as sponsors."
+    },
+    {
+      "id": "session",
+      "label": "Session ticket",
+      "definition": "A named session, date or workshop slot rather than a kind of person — 'Thursday 14th May featuring …', 'Workshop \"Build your own AI Powered Web App\"', 'Tickets - March 2026'. A segment mix that treats these as an audience breakdown is wrong: they say when someone came, not who they are."
+    },
+    {
+      "id": "general",
+      "label": "General admission",
+      "definition": "A single undifferentiated ticket type — the early events and the expos, which sold one kind of ticket to everyone."
+    }
+  ],
+  "rules": [
+    {
+      "match": "contains",
+      "pattern": "guests of ambassador",
+      "segment": "guest",
+      "note": "Above the ambassador rule: this is the ambassador's guest, not the ambassador."
+    },
+    {
+      "match": "contains",
+      "pattern": "guests of speaker",
+      "segment": "guest",
+      "note": "Above the speaker rule, for the same reason."
+    },
+    {
+      "match": "contains",
+      "pattern": "guests - students",
+      "segment": "guest",
+      "note": "A partner's student allocation reads as a guest ticket; above both the partner-guest and student rules because it matches all three."
+    },
+    {
+      "match": "regex",
+      "pattern": "^tickets ?- ?guests - ",
+      "segment": "partner-guest"
+    },
+    {
+      "match": "contains",
+      "pattern": "sponsored participant",
+      "segment": "guest",
+      "note": "Someone whose ticket a sponsor paid for — an attendee, not a sponsor. Above the sponsor rule."
+    },
+    { "match": "contains", "pattern": "(host)", "segment": "host" },
+    { "match": "contains", "pattern": "sponsors", "segment": "host" },
+    { "match": "contains", "pattern": "ambassador", "segment": "ambassador" },
+    {
+      "match": "contains",
+      "pattern": "ambassdors",
+      "segment": "ambassador",
+      "note": "A misspelling that reached 13 real tickets. Corrected here rather than in the export."
+    },
+    { "match": "contains", "pattern": "speaker", "segment": "speaker" },
+    { "match": "contains", "pattern": "workshop facilitator", "segment": "speaker" },
+    { "match": "contains", "pattern": "mentee", "segment": "mentee" },
+    { "match": "contains", "pattern": "mentor", "segment": "mentor" },
+    { "match": "contains", "pattern": "teacher", "segment": "teacher" },
+    { "match": "contains", "pattern": "volunteer", "segment": "crew" },
+    { "match": "contains", "pattern": "media team", "segment": "crew" },
+    { "match": "contains", "pattern": "judges", "segment": "crew" },
+    { "match": "contains", "pattern": "observer", "segment": "crew" },
+    { "match": "contains", "pattern": "little engineers", "segment": "youth" },
+    { "match": "contains", "pattern": "school student", "segment": "youth" },
+    { "match": "contains", "pattern": "student", "segment": "student" },
+    {
+      "match": "regex",
+      "pattern": "uniclubs?",
+      "segment": "student",
+      "note": "University club allocations, spelled four different ways across events."
+    },
+    { "match": "contains", "pattern": "professional", "segment": "professional" },
+    {
+      "match": "regex",
+      "pattern": "^(monday|tuesday|wednesday|thursday|friday|saturday|sunday)\\b",
+      "segment": "session",
+      "note": "The 2020 STORYTELLERS and Ada Lovelace series sold one ticket type per dated session, each naming that night's speaker."
+    },
+    {
+      "match": "regex",
+      "pattern": "^workshop \"",
+      "segment": "session",
+      "note": "The 2024 hackathon's online workshop slots."
+    },
+    {
+      "match": "regex",
+      "pattern": "^tickets ?- ?(january|february|march|april|may|june|july|august|september|october|november|december) \\d{4}$",
+      "segment": "session",
+      "note": "HER WAKA sold one ticket type per monthly cohort."
+    },
+    { "match": "exact", "pattern": "future ready event", "segment": "session" },
+    { "match": "exact", "pattern": "techweek event", "segment": "session" },
+    {
+      "match": "exact",
+      "pattern": "online event celebrating ada lovelace day",
+      "segment": "session"
+    },
+    { "match": "contains", "pattern": "story tellers", "segment": "session" },
+    { "match": "contains", "pattern": "hackathon winners", "segment": "session" },
+    { "match": "contains", "pattern": "hack_academyex", "segment": "session" },
+    { "match": "exact", "pattern": "general", "segment": "general" },
+    { "match": "exact", "pattern": "tickets", "segment": "general" },
+    { "match": "exact", "pattern": "tickets - online", "segment": "general" },
+    {
+      "match": "exact",
+      "pattern": "tickets - expo",
+      "segment": "general",
+      "note": "An expo booth sells one undifferentiated ticket; there is no audience split to record."
+    },
+    { "match": "exact", "pattern": "girls night out - professionals", "segment": "professional" },
+    { "match": "exact", "pattern": "she sharp guests", "segment": "guest" },
+    { "match": "exact", "pattern": "tickets - guests", "segment": "guest" },
+    {
+      "match": "regex",
+      "pattern": "^tickets ?-? ?[a-z0-9&#. ]+$",
+      "segment": "partner-guest",
+      "note": "The catch-all for 'Tickets - <organisation>' — AUT, MSD, RCSA, Metlifecare, HCLTech, Les Mills, UNESCO, TechwomenNZ, FlexWare, MYOB, WoM. Every one is an allocation held for a named organisation. It sits LAST so that a string naming both an organisation and a kind of person is classified by the person."
+    }
+  ]
+}

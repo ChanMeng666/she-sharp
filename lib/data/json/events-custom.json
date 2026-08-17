@@ -57,7 +57,7 @@
       },
       "detailPageUrl": "https://shesharp.org.nz/events/peyvand-academy-20-june-2026",
       "shortDescription": "A hands-on electronics workshop for young participants aged 12–18, building foundational skills in electronics through practical learning — delivered by SheSharp in collaboration with Peyvand Academy, the Ministry of Education, and Little Engineers.",
-      "attendees": null,
+      "attendees": 26,
       "checkedIn": null,
       "detailPageData": {
         "url": "https://shesharp.org.nz/events/peyvand-academy-20-june-2026",
@@ -156,7 +156,7 @@
       },
       "detailPageUrl": "https://shesharp.org.nz/events/peyvand-academy-13-june-2026",
       "shortDescription": "An interactive workshop for young participants aged 12–18, exploring Artificial Intelligence concepts and basic electronics through hands-on learning — delivered by SheSharp in collaboration with Peyvand Academy and the Ministry of Education.",
-      "attendees": null,
+      "attendees": 24,
       "checkedIn": null,
       "detailPageData": {
         "url": "https://shesharp.org.nz/events/peyvand-academy-13-june-2026",
@@ -280,8 +280,8 @@
       },
       "detailPageUrl": "https://shesharp.org.nz/events/her-waka-june-2026",
       "shortDescription": "The fourth HER WAKA cohort focuses on personal branding and career growth strategy with Andrea Halal — learn to treat your career like a Go-To-Market plan and use LinkedIn to build visibility, credibility, and genuine professional networks.",
-      "attendees": 23,
-      "checkedIn": null,
+      "attendees": 24,
+      "checkedIn": 16,
       "detailPageData": {
         "url": "https://shesharp.org.nz/events/her-waka-june-2026",
         "title": "Her Waka (June 2026) — Personal Branding & Growth Tips",
@@ -388,8 +388,8 @@
       },
       "detailPageUrl": "https://shesharp.org.nz/events/event-aut-linkedin-15-may-2026",
       "shortDescription": "A masterclass to help you build a strong personal brand on LinkedIn and attract the right opportunities.",
-      "attendees": 100,
-      "checkedIn": 0,
+      "attendees": 106,
+      "checkedIn": 70,
       "detailPageData": {
         "url": "https://shesharp.org.nz/events/event-aut-linkedin-15-may-2026",
         "title": "Making LinkedIn Work for You with Stuart Little, presented by She Sharp and AUT",
@@ -1083,8 +1083,8 @@
       },
       "detailPageUrl": "https://shesharp.org.nz/events/her-waka-may-2026",
       "shortDescription": "The third HER WAKA cohort continues with a focus on real-world job readiness, featuring cybersecurity lightning talks and practical insights to help participants navigate their next career step with confidence.",
-      "attendees": 14,
-      "checkedIn": 0,
+      "attendees": 33,
+      "checkedIn": 29,
       "detailPageData": {
         "url": "https://shesharp.org.nz/events/her-waka-may-2026",
         "title": "Her Waka (May 2026) — Navigating Pathways into Sustainable Employment",
@@ -1220,8 +1220,8 @@
       },
       "detailPageUrl": "https://shesharp.org.nz/events/she-sharp-and-myob-working-smarter",
       "shortDescription": "An interactive evening exploring how MYOB teams use AI to work smarter, solve problems faster, and deliver more value — with practical use cases and a hands-on AI problem-solving activity.",
-      "attendees": 86,
-      "checkedIn": 0,
+      "attendees": 87,
+      "checkedIn": 51,
       "detailPageData": {
         "url": "https://shesharp.org.nz/events/she-sharp-and-myob-working-smarter",
         "title": "Working Smarter: AI, MYOB, and the New Delivery Landscape, presented by She Sharp and MYOB",
@@ -2119,8 +2119,8 @@
       },
       "detailPageUrl": "https://shesharp.org.nz/events/event-lesmills-03-september-2026",
       "shortDescription": "A Les Mills x She Sharp panel on diversity and AI for impact — cross-functional perspectives, table discussions, and networking.",
-      "attendees": null,
-      "checkedIn": 0,
+      "attendees": 15,
+      "checkedIn": null,
       "detailPageData": {
         "url": "https://shesharp.org.nz/events/event-lesmills-03-september-2026",
         "title": "No Pain, All Gain – Getting Fit for AI",

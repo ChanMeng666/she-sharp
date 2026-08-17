@@ -293,6 +293,15 @@ and caching. Applications are currently **paused**.
 per-device rate limiting, a 3-day Slack digest, and 12-month anonymisation of
 the personal columns. → `docs/development/EVENT_FEEDBACK.md`
 
+**Humanitix ticketing archive.** The account export (2020→, 62 ticketed
+instances, 5,156 tickets) reduced to aggregates in `lib/data/json/humanitix/`
+and read through `lib/data/humanitix.ts`. The raw CSVs carry names, addresses
+and **124 live access codes**, so they live in a gitignored vault (`/private/`)
+and never in git; a committed manifest keeps their provenance auditable without
+them. Three traps before quoting anything: it starts in **2020**, it covers only
+**57 of the 97 events**, and a `checkedIn` of 0 usually means nobody scanned —
+read `checkInDataPresent`. → `docs/development/HUMANITIX_ARCHIVE.md`
+
 **Presentation decks.** `/present/<slug>`, built from typed slide data with a
 build-failing copy and rhythm linter, per-event skins over a fixed house
 sequence, and a fluid 4:3–21:9 stage. Organisers use `/build-event-slides` and

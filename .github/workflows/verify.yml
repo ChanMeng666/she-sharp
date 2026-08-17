@@ -52,6 +52,16 @@ jobs:
       - name: Verify nothing is left unread
         run: npx tsx .claude/skills/sync-event-from-slack/scripts/audit-read-state.ts
 
+      # Also shares this checkout. The raw Humanitix exports carry 5,156 real
+      # names and 124 live access codes, so they can never be on CI — which is
+      # exactly why the committed archive needs a check that survives without
+      # them. It holds the archive to its own totals, requires every mapped site
+      # slug to resolve to a real event, and refuses to let an address or a
+      # code-shaped value reach lib/data/json/humanitix/. That last one is the
+      # 2026-06-11 leak written down as a test rather than a habit.
+      - name: Verify the Humanitix archive
+        run: npx tsx lib/data/humanitix.test.ts
+
   typecheck-scripts:
     # `scripts/` is excluded from the root tsconfig and `.claude/**` is missed by
     # its `**/*.ts` glob (dot-directories don't match), so neither tree was

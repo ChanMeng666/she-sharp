@@ -1,0 +1,511 @@
+{
+  "metadata": {
+    "authored": true,
+    "note": "HAND-AUTHORED. Says only which self-reported employer strings are the same organisation; all counts live in aggregates.json. The employer is typed freehand at checkout and never verified, so this file corrects spelling and casing and nothing else — it does not judge whether someone still works there. 1,127 distinct strings appear across 4,094 answered rows, so the long tail is real: an unlisted string becomes its own canonical id rather than being folded into a neighbour, and the distinct-organisation count stays honest about that."
+  },
+  "nullish": [
+    "",
+    "-",
+    "--",
+    ".",
+    "NA",
+    "N/A",
+    "Na",
+    "na",
+    "n/a",
+    "None",
+    "none",
+    "nil",
+    "Nil",
+    "N.A",
+    "no",
+    "None.",
+    "x",
+    "Student",
+    "student",
+    "Students",
+    "Self",
+    "self",
+    "Self employed",
+    "Self-employed",
+    "Unemployed",
+    "unemployed",
+    "Freelance",
+    "Independent",
+    "Individual",
+    "Personal",
+    "Private",
+    "MSD client",
+    "MSD Client",
+    "Client",
+    "Beneficiary",
+    "Job seeker",
+    "Jobseeker",
+    "Home",
+    "Retired",
+    "Looking for work",
+    "Private person",
+    "private person",
+    "Myself",
+    "Me",
+    "Community",
+    "Whanau",
+    "Family",
+    "Public",
+    "General public",
+    "N.A.",
+    "-.",
+    "na.",
+    "None at the moment",
+    "S",
+    "s",
+    "A",
+    "a",
+    "N",
+    "T",
+    "X",
+    "?",
+    "??",
+    "...",
+    "0",
+    "1",
+    "Nan",
+    "nan",
+    "TBC",
+    "tbc",
+    "Other",
+    "other"
+  ],
+  "canonical": [
+    {
+      "id": "she-sharp",
+      "name": "She Sharp",
+      "kind": "self",
+      "aliases": [
+        "She Sharp",
+        "SheSharp",
+        "She#",
+        "She Sharp NZ",
+        "SheSharp NZ",
+        "She Sharp Charitable Trust",
+        "Shesharp/Mentoring Program",
+        "She Sharp Mentoring Programme",
+        "She# Ambassador",
+        "She Sharp Ambassador"
+      ],
+      "note": "`She Sharp` (267) and `SheSharp` (86) and `She#` (37) are one organisation — the split is a checkout typo, not three employers. `kind: self` exists so She Sharp's own people can be excluded from an 'employers represented' count, which is otherwise inflated by its own ambassadors and volunteers."
+    },
+    {
+      "id": "aut",
+      "name": "Auckland University of Technology",
+      "kind": "university",
+      "aliases": [
+        "AUT",
+        "Aut",
+        "aut",
+        "A.U.T",
+        "AUT University",
+        "Auckland University of Technology",
+        "AUT Uni"
+      ]
+    },
+    {
+      "id": "university-of-auckland",
+      "name": "University of Auckland",
+      "kind": "university",
+      "aliases": [
+        "University of Auckland",
+        "UoA",
+        "UOA",
+        "The University of Auckland",
+        "Auckland University",
+        "University Of Auckland"
+      ]
+    },
+    {
+      "id": "myob",
+      "name": "MYOB",
+      "kind": "company",
+      "aliases": [
+        "MYOB",
+        "Myob",
+        "myob",
+        "MYOB NZ"
+      ]
+    },
+    {
+      "id": "fonterra",
+      "name": "Fonterra",
+      "kind": "company",
+      "aliases": [
+        "Fonterra",
+        "Fonterra Co-operative Group",
+        "fonterra"
+      ]
+    },
+    {
+      "id": "hcltech",
+      "name": "HCLTech",
+      "kind": "company",
+      "aliases": [
+        "HCLTech",
+        "HCLTECH",
+        "HCL",
+        "HCL Tech",
+        "HCL Technologies",
+        "Hcltech"
+      ]
+    },
+    {
+      "id": "fisher-and-paykel-healthcare",
+      "name": "Fisher & Paykel Healthcare",
+      "kind": "company",
+      "aliases": [
+        "Fisher & Paykel Healthcare",
+        "Fisher and Paykel Healthcare",
+        "F&P Healthcare",
+        "FPH",
+        "Fisher &amp; Paykel Healthcare"
+      ]
+    },
+    {
+      "id": "woolworths-nz",
+      "name": "Woolworths NZ",
+      "kind": "company",
+      "aliases": [
+        "Woolworths NZ",
+        "Woolworths",
+        "Woolworths New Zealand",
+        "Countdown",
+        "Countdown NZ"
+      ],
+      "note": "Countdown was renamed Woolworths NZ in 2023. The two strings are the same employer across the archive's span, and separating them would invent a change of job for 27 people."
+    },
+    {
+      "id": "2degrees",
+      "name": "2degrees",
+      "kind": "company",
+      "aliases": [
+        "2degrees",
+        "2Degrees",
+        "2 degrees",
+        "Two Degrees"
+      ]
+    },
+    {
+      "id": "deloitte",
+      "name": "Deloitte",
+      "kind": "company",
+      "aliases": [
+        "Deloitte",
+        "deloitte",
+        "Deloitte NZ"
+      ]
+    },
+    {
+      "id": "kiwibank",
+      "name": "Kiwibank",
+      "kind": "company",
+      "aliases": [
+        "Kiwibank",
+        "kiwibank",
+        "Kiwi Bank"
+      ]
+    },
+    {
+      "id": "fiserv",
+      "name": "Fiserv",
+      "kind": "company",
+      "aliases": [
+        "Fiserv",
+        "fiserv"
+      ]
+    },
+    {
+      "id": "msd",
+      "name": "Ministry of Social Development",
+      "kind": "government",
+      "aliases": [
+        "MSD",
+        "Ministry of Social Development",
+        "msd",
+        "Msd",
+        "MSD - Ministry of Social Development",
+        "Work and Income",
+        "Work and income",
+        "WINZ",
+        "Winz",
+        "Work & Income",
+        "Work and Income NZ",
+        "Via MSD",
+        "via MSD",
+        "MSD referral",
+        "Referred by MSD",
+        "Work and Income MSD",
+        "Work and Income / MSD",
+        "MSD Work and Income"
+      ],
+      "note": "Work and Income (and its old WINZ branding) is MSD's service arm, not a separate employer. Folding them matters because the HER WAKA cohorts are MSD referrals and the three spellings would otherwise report as three organisations. `MSD client` is deliberately NOT folded in — it is a status, not an employer, and sits in `nullish`."
+    },
+    {
+      "id": "datacom",
+      "name": "Datacom",
+      "kind": "company",
+      "aliases": [
+        "Datacom",
+        "datacom"
+      ]
+    },
+    {
+      "id": "vector",
+      "name": "Vector",
+      "kind": "company",
+      "aliases": [
+        "Vector",
+        "vector",
+        "Vector Limited"
+      ]
+    },
+    {
+      "id": "xero",
+      "name": "Xero",
+      "kind": "company",
+      "aliases": [
+        "Xero",
+        "xero"
+      ]
+    },
+    {
+      "id": "les-mills",
+      "name": "Les Mills International",
+      "kind": "company",
+      "aliases": [
+        "Les Mills International",
+        "Les Mills",
+        "LesMills",
+        "Les Mills NZ"
+      ]
+    },
+    {
+      "id": "anz",
+      "name": "ANZ",
+      "kind": "company",
+      "aliases": [
+        "ANZ",
+        "anz",
+        "ANZ Bank",
+        "ANZ Bank New Zealand"
+      ]
+    },
+    {
+      "id": "flexware",
+      "name": "FlexWare",
+      "kind": "company",
+      "aliases": [
+        "FlexWare Ltd",
+        "FlexWare",
+        "Flexware",
+        "Flexware Ltd"
+      ]
+    },
+    {
+      "id": "ey",
+      "name": "EY",
+      "kind": "company",
+      "aliases": [
+        "EY",
+        "Ernst & Young",
+        "Ernst and Young"
+      ]
+    },
+    {
+      "id": "academyex",
+      "name": "academyEX",
+      "kind": "university",
+      "aliases": [
+        "academyEX",
+        "AcademyEX",
+        "Academy EX",
+        "academyex",
+        "Mind Lab",
+        "AcademyEx"
+      ]
+    },
+    {
+      "id": "asb",
+      "name": "ASB",
+      "kind": "company",
+      "aliases": [
+        "ASB",
+        "asb",
+        "ASB Bank"
+      ]
+    },
+    {
+      "id": "aws",
+      "name": "Amazon Web Services",
+      "kind": "company",
+      "aliases": [
+        "AWS",
+        "aws",
+        "Amazon Web Services",
+        "Amazon"
+      ]
+    },
+    {
+      "id": "microsoft",
+      "name": "Microsoft",
+      "kind": "company",
+      "aliases": [
+        "Microsoft",
+        "microsoft",
+        "Microsoft NZ"
+      ]
+    },
+    {
+      "id": "ibm",
+      "name": "IBM",
+      "kind": "company",
+      "aliases": [
+        "IBM",
+        "ibm"
+      ]
+    },
+    {
+      "id": "beca",
+      "name": "Beca",
+      "kind": "company",
+      "aliases": [
+        "Beca",
+        "beca"
+      ]
+    },
+    {
+      "id": "fergus",
+      "name": "Fergus",
+      "kind": "company",
+      "aliases": [
+        "Fergus",
+        "fergus"
+      ]
+    },
+    {
+      "id": "talent-international",
+      "name": "Talent International",
+      "kind": "company",
+      "aliases": [
+        "Talent International",
+        "Talent"
+      ]
+    },
+    {
+      "id": "massey-university",
+      "name": "Massey University",
+      "kind": "university",
+      "aliases": [
+        "Massey University",
+        "Massey",
+        "Massey Uni",
+        "Massey university"
+      ]
+    },
+    {
+      "id": "unitec",
+      "name": "Unitec",
+      "kind": "university",
+      "aliases": [
+        "Unitec",
+        "unitec",
+        "Unitec Institute of Technology"
+      ]
+    },
+    {
+      "id": "wintec",
+      "name": "Wintec",
+      "kind": "university",
+      "aliases": [
+        "Wintec",
+        "wintec"
+      ]
+    },
+    {
+      "id": "developers-institute",
+      "name": "Developers Institute",
+      "kind": "university",
+      "aliases": [
+        "Developers Institute",
+        "Developers institute"
+      ]
+    },
+    {
+      "id": "nzse",
+      "name": "New Zealand School of Education",
+      "kind": "university",
+      "aliases": [
+        "NZSE",
+        "nzse"
+      ]
+    },
+    {
+      "id": "acc",
+      "name": "Accident Compensation Corporation",
+      "kind": "government",
+      "aliases": [
+        "ACC",
+        "acc"
+      ]
+    },
+    {
+      "id": "rcsa",
+      "name": "RCSA",
+      "kind": "nonprofit",
+      "aliases": [
+        "RCSA",
+        "rcsa"
+      ]
+    },
+    {
+      "id": "metlifecare",
+      "name": "Metlifecare",
+      "kind": "company",
+      "aliases": [
+        "Metlifecare",
+        "MetLifecare",
+        "Metlife Care",
+        "Metlifecar",
+        "MetLifeCare",
+        "Metlife care"
+      ]
+    },
+    {
+      "id": "peyvand-academy",
+      "name": "Peyvand Academy",
+      "kind": "school",
+      "aliases": [
+        "Peyvand Academy",
+        "Peyvand",
+        "Peyvand academy",
+        "Peyvan academy",
+        "Paivand",
+        "Payvand Farsi School",
+        "Peyvand Farsi School",
+        "Payvand Academy",
+        "Paywand Persian Academy",
+        "Paiwand",
+        "Peyvand Persian Academy",
+        "Payvand Persian Academy",
+        "Paivand Academy",
+        "Peyvand academy ",
+        "Payvand"
+      ],
+      "note": "Attendees spelled this eight different ways — Peyvand, Payvand, Paivand, Paiwand and combinations with Academy, Persian Academy and Farsi School. It is one Auckland community school and the youth workshops were delivered with it, so leaving the spellings apart would report eight partners where there is one."
+    }
+  ],
+  "matching": {
+    "caseSensitive": false,
+    "collapseWhitespace": true,
+    "stripPunctuation": true,
+    "note": "Comparison lowercases and strips every non-alphanumeric character, so casing and punctuation variants (`AUT` / `Aut`, `Les Mills` / `LesMills`) collide without needing an alias. Anything that differs by a WORD still needs one — `Fisher & Paykel Healthcare` and `Fisher and Paykel Healthcare` do not collide, because stripping the ampersand leaves `and` behind in only one of them. `stripStudentPrefix` retries `Student, AUT` and `Student - UoA` as the institution alone: the prefix says what the person does there, not who they belong to, and the institution is genuinely represented either way. An unlisted string becomes its own canonical id, derived by the same slug rule as an event name.",
+    "stripStudentPrefix": true
+  }
+}

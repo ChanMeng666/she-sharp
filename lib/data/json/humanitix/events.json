@@ -1,0 +1,6056 @@
+{
+  "metadata": {
+    "generatedBy": "scripts/humanitix/build-archive.ts",
+    "exportId": "2026-08-17",
+    "generatedFrom": [
+      "additional-donation-report-(exported-2026-08-17@10.11.45).csv",
+      "attendee-report-(exported-2026-08-17@10.02.37).csv",
+      "attendee-report-(exported-2026-08-17@10.03.45).csv",
+      "earnings-by-ticket-type-report-(exported-2026-08-17@10.05.16).csv",
+      "events-report-(exported-2026-08-17@12.37.50).csv",
+      "order-report-(exported-2026-08-17@09.59.31).csv",
+      "order-report-(exported-2026-08-17@10.00.44).csv",
+      "order-report-(exported-2026-08-17@10.01.24).csv",
+      "payout-report-(exported-2026-08-17@10.08.15).csv"
+    ],
+    "instances": 62,
+    "eventNames": 59,
+    "currency": "NZD",
+    "note": "GENERATED — do not hand-edit; run scripts/humanitix/build-archive.ts. The mapping to site event slugs lives in crosswalk.json, which IS hand-authored and is never written by the builder."
+  },
+  "instances": [
+    {
+      "key": "2020-03-05--she-sharp-ey",
+      "eventName": "She Sharp@ EY",
+      "eventNameRaw": [
+        "She Sharp@ EY"
+      ],
+      "eventDate": "2020-03-05",
+      "eventTime": "5:30 pm - 8:00 pm",
+      "timezone": "NZDT",
+      "humanitixEventId": "Y08IWX1J",
+      "venue": "Takutai Square",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 50,
+      "cancelled": 0,
+      "checkedIn": 0,
+      "checkInDataPresent": false,
+      "capacity": 77,
+      "sold": 50,
+      "available": 27,
+      "earnings": 160,
+      "orders": 39,
+      "firstOrderAt": "2020-01-31",
+      "lastOrderAt": "2020-03-05",
+      "ticketTypes": [
+        {
+          "ticketType": "She Sharp ambassadors",
+          "segment": "ambassador",
+          "tickets": 5,
+          "capacity": 12,
+          "sold": 5,
+          "earnings": 0
+        },
+        {
+          "ticketType": "She Sharp Guests",
+          "segment": "guest",
+          "tickets": 21,
+          "capacity": 25,
+          "sold": 21,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Professionals Ticket",
+          "segment": "professional",
+          "tickets": 16,
+          "capacity": 20,
+          "sold": 16,
+          "earnings": 120
+        },
+        {
+          "ticketType": "Students Ticket",
+          "segment": "student",
+          "tickets": 8,
+          "capacity": 20,
+          "sold": 8,
+          "earnings": 40
+        }
+      ],
+      "salesChannels": {
+        "Online": 50
+      },
+      "discountCodeUses": 15,
+      "accessCodeUses": 26,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 23,
+      "questionsAnswered": {
+        "company": 50,
+        "dateOfBirth": 14,
+        "dietary": 50
+      }
+    },
+    {
+      "key": "2020-05-07--storytellers-series",
+      "eventName": "STORYTELLERS SERIES",
+      "eventNameRaw": [
+        "STORYTELLERS SERIES"
+      ],
+      "eventDate": "2020-05-07",
+      "eventTime": "5:30 pm - 6:30 pm",
+      "timezone": "NZST",
+      "humanitixEventId": "4XC3M1WP",
+      "venue": "Zoom call",
+      "organiser": "She Sharp",
+      "seriesKey": "storytellers-series",
+      "sessionOrdinal": 1,
+      "registered": 220,
+      "cancelled": 0,
+      "checkedIn": 0,
+      "checkInDataPresent": false,
+      "capacity": 350,
+      "sold": 220,
+      "available": 130,
+      "earnings": 0,
+      "orders": 125,
+      "firstOrderAt": "2020-05-02",
+      "lastOrderAt": "2020-05-28",
+      "ticketTypes": [
+        {
+          "ticketType": "She# Story Tellers Series",
+          "segment": "session",
+          "tickets": 1,
+          "capacity": null,
+          "sold": null,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Thursday 14th May 5.30 pm featuring Tash Bettridge (Vodafone)",
+          "segment": "session",
+          "tickets": 57,
+          "capacity": 70,
+          "sold": 57,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Thursday 21st May 5:30pm featuring Lena Waizenegger (AUT)",
+          "segment": "session",
+          "tickets": 53,
+          "capacity": 70,
+          "sold": 53,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Thursday 28th May 5:30pm featuring Alisa Edwards (Gravity Lab)",
+          "segment": "session",
+          "tickets": 40,
+          "capacity": 70,
+          "sold": 40,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Thursday 4th June 5.30 pm featuring Paola Golledge (Google)",
+          "segment": "session",
+          "tickets": 21,
+          "capacity": null,
+          "sold": null,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Thursday 7th May 5.30 pm featuring Saba Samiei (Microsoft)",
+          "segment": "session",
+          "tickets": 48,
+          "capacity": 70,
+          "sold": 49,
+          "earnings": 0
+        }
+      ],
+      "salesChannels": {
+        "Online": 220
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 0,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 0,
+      "questionsAnswered": {}
+    },
+    {
+      "key": "2020-05-14--storytellers-series",
+      "eventName": "STORYTELLERS SERIES",
+      "eventNameRaw": [
+        "STORYTELLERS SERIES"
+      ],
+      "eventDate": "2020-05-14",
+      "eventTime": "5:30 pm - 6:30 pm",
+      "timezone": "NZST",
+      "humanitixEventId": "4XC3M1WP",
+      "venue": "Zoom call",
+      "organiser": "She Sharp",
+      "seriesKey": "storytellers-series",
+      "sessionOrdinal": 2,
+      "registered": 9,
+      "cancelled": 0,
+      "checkedIn": 0,
+      "checkInDataPresent": false,
+      "capacity": null,
+      "sold": null,
+      "available": null,
+      "earnings": 0,
+      "orders": 8,
+      "firstOrderAt": "2020-05-02",
+      "lastOrderAt": "2020-05-05",
+      "ticketTypes": [
+        {
+          "ticketType": "Thursday 14th May 5.30 pm featuring Tash Bettridge (Vodafone)",
+          "segment": "session",
+          "tickets": 8,
+          "capacity": null,
+          "sold": null,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Thursday 7th May 5.30 pm featuring Saba Samiei (Microsoft)",
+          "segment": "session",
+          "tickets": 1,
+          "capacity": null,
+          "sold": null,
+          "earnings": 0
+        }
+      ],
+      "salesChannels": {
+        "Online": 9
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 0,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 0,
+      "questionsAnswered": {}
+    },
+    {
+      "key": "2020-05-29--storytellers-series",
+      "eventName": "STORYTELLERS SERIES",
+      "eventNameRaw": [
+        "STORYTELLERS SERIES"
+      ],
+      "eventDate": "2020-05-29",
+      "eventTime": "10:41 am - 6:30 pm",
+      "timezone": "NZST",
+      "humanitixEventId": "4XC3M1WP",
+      "venue": "Zoom call",
+      "organiser": "She Sharp",
+      "seriesKey": "storytellers-series",
+      "sessionOrdinal": 3,
+      "registered": 40,
+      "cancelled": 0,
+      "checkedIn": 0,
+      "checkInDataPresent": false,
+      "capacity": null,
+      "sold": null,
+      "available": null,
+      "earnings": 0,
+      "orders": 39,
+      "firstOrderAt": "2020-05-29",
+      "lastOrderAt": "2020-06-04",
+      "ticketTypes": [
+        {
+          "ticketType": "Thursday 4th June 6.00 pm featuring Paola Golledge (Google)",
+          "segment": "session",
+          "tickets": 40,
+          "capacity": null,
+          "sold": null,
+          "earnings": 0
+        }
+      ],
+      "salesChannels": {
+        "Online": 40
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 0,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 0,
+      "questionsAnswered": {}
+    },
+    {
+      "key": "2020-07-29--she-sharp-techweek-envision-the-future-how-to-create-a-more-diverse-inclusive-and-sustainable-future-through-technology-and-human-centered-innovation",
+      "eventName": "She Sharp Techweek: Envision The Future: How to Create A More Diverse, Inclusive & Sustainable Future through Technology & Human-Centered Innovation",
+      "eventNameRaw": [
+        "She Sharp Techweek: Envision The Future: How to Create A More Diverse, Inclusive & Sustainable Future through Technology & Human-Centered Innovation"
+      ],
+      "eventDate": "2020-07-29",
+      "eventTime": "5:30 pm - 7:00 pm",
+      "timezone": "NZST",
+      "humanitixEventId": "F60Y8UJX",
+      "venue": null,
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 109,
+      "cancelled": 0,
+      "checkedIn": 0,
+      "checkInDataPresent": false,
+      "capacity": 200,
+      "sold": 109,
+      "available": 91,
+      "earnings": 0,
+      "orders": 107,
+      "firstOrderAt": "2020-06-30",
+      "lastOrderAt": "2020-07-29",
+      "ticketTypes": [
+        {
+          "ticketType": "Techweek Event",
+          "segment": "session",
+          "tickets": 109,
+          "capacity": 200,
+          "sold": 109,
+          "earnings": 0
+        }
+      ],
+      "salesChannels": {
+        "Online": 109
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 0,
+      "donations": {
+        "orders": 7,
+        "amount": 109
+      },
+      "organisationsRepresented": 0,
+      "questionsAnswered": {}
+    },
+    {
+      "key": "2020-08-13--she-sharp-future-ready",
+      "eventName": "She Sharp Future Ready!",
+      "eventNameRaw": [
+        "She Sharp Future Ready!"
+      ],
+      "eventDate": "2020-08-13",
+      "eventTime": "12:00 pm - 1:00 pm",
+      "timezone": "NZST",
+      "humanitixEventId": "3TAQ6QNV",
+      "venue": null,
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 168,
+      "cancelled": 0,
+      "checkedIn": 0,
+      "checkInDataPresent": false,
+      "capacity": 300,
+      "sold": 168,
+      "available": 132,
+      "earnings": 0,
+      "orders": 162,
+      "firstOrderAt": "2020-07-31",
+      "lastOrderAt": "2020-08-13",
+      "ticketTypes": [
+        {
+          "ticketType": "Future Ready event",
+          "segment": "session",
+          "tickets": 168,
+          "capacity": 300,
+          "sold": 168,
+          "earnings": 0
+        }
+      ],
+      "salesChannels": {
+        "Online": 168
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 0,
+      "donations": {
+        "orders": 4,
+        "amount": 18
+      },
+      "organisationsRepresented": 0,
+      "questionsAnswered": {}
+    },
+    {
+      "key": "2020-09-24--storytellers-series-2-0",
+      "eventName": "STORYTELLERS SERIES 2.0",
+      "eventNameRaw": [
+        "STORYTELLERS SERIES  2.0"
+      ],
+      "eventDate": "2020-09-24",
+      "eventTime": "6:30 pm - 7:30 pm",
+      "timezone": "NZST",
+      "humanitixEventId": "8PUP9RV2",
+      "venue": "Zoom call",
+      "organiser": "She Sharp",
+      "seriesKey": "storytellers-series-2-0",
+      "sessionOrdinal": 1,
+      "registered": 30,
+      "cancelled": 0,
+      "checkedIn": 0,
+      "checkInDataPresent": false,
+      "capacity": 350,
+      "sold": 30,
+      "available": 320,
+      "earnings": 0,
+      "orders": 19,
+      "firstOrderAt": "2020-09-13",
+      "lastOrderAt": "2020-09-24",
+      "ticketTypes": [
+        {
+          "ticketType": "Thursday 1st October 5.30 pm featuring Divya Kataria (Transmission Gully, Graduate Civil Engineer)",
+          "segment": "session",
+          "tickets": 11,
+          "capacity": 70,
+          "sold": 11,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Thursday 24th Sep 5.30 pm featuring Sai Honig (ANZ Bank, Senior Security Consultant)",
+          "segment": "session",
+          "tickets": 19,
+          "capacity": 70,
+          "sold": 19,
+          "earnings": 0
+        }
+      ],
+      "salesChannels": {
+        "Online": 30
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 0,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 0,
+      "questionsAnswered": {}
+    },
+    {
+      "key": "2020-10-01--storytellers-series-2-0",
+      "eventName": "STORYTELLERS SERIES 2.0",
+      "eventNameRaw": [
+        "STORYTELLERS SERIES  2.0"
+      ],
+      "eventDate": "2020-10-01",
+      "eventTime": "6:30 pm - 7:30 pm",
+      "timezone": "NZDT",
+      "humanitixEventId": "8PUP9RV2",
+      "venue": "Zoom call",
+      "organiser": "She Sharp",
+      "seriesKey": "storytellers-series-2-0",
+      "sessionOrdinal": 2,
+      "registered": 7,
+      "cancelled": 0,
+      "checkedIn": 0,
+      "checkInDataPresent": false,
+      "capacity": 350,
+      "sold": 7,
+      "available": 343,
+      "earnings": 0,
+      "orders": 6,
+      "firstOrderAt": "2020-09-23",
+      "lastOrderAt": "2020-09-30",
+      "ticketTypes": [
+        {
+          "ticketType": "Thursday 1st October 5.30 pm featuring Divya Kataria (Transmission Gully, Graduate Civil Engineer)",
+          "segment": "session",
+          "tickets": 5,
+          "capacity": 70,
+          "sold": 5,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Thursday 24th Sep 5.30 pm featuring Sai Honig (ANZ Bank, Senior Security Consultant)",
+          "segment": "session",
+          "tickets": 2,
+          "capacity": 70,
+          "sold": 2,
+          "earnings": 0
+        }
+      ],
+      "salesChannels": {
+        "Online": 7
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 0,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 0,
+      "questionsAnswered": {}
+    },
+    {
+      "key": "2020-10-15--online-event-celebrating-ada-lovelace-day",
+      "eventName": "ONLINE EVENT CELEBRATING ADA LOVELACE DAY",
+      "eventNameRaw": [
+        "ONLINE EVENT CELEBRATING ADA LOVELACE DAY"
+      ],
+      "eventDate": "2020-10-15",
+      "eventTime": "6:30 pm - 7:30 pm",
+      "timezone": "NZDT",
+      "humanitixEventId": "ICC92FIA",
+      "venue": null,
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 31,
+      "cancelled": 0,
+      "checkedIn": 0,
+      "checkInDataPresent": false,
+      "capacity": 50,
+      "sold": 31,
+      "available": 19,
+      "earnings": 0,
+      "orders": 31,
+      "firstOrderAt": "2020-10-05",
+      "lastOrderAt": "2020-10-15",
+      "ticketTypes": [
+        {
+          "ticketType": "ONLINE EVENT CELEBRATING ADA LOVELACE DAY",
+          "segment": "session",
+          "tickets": 31,
+          "capacity": 50,
+          "sold": 31,
+          "earnings": 0
+        }
+      ],
+      "salesChannels": {
+        "Online": 31
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 0,
+      "donations": {
+        "orders": 1,
+        "amount": 15
+      },
+      "organisationsRepresented": 0,
+      "questionsAnswered": {}
+    },
+    {
+      "key": "2020-11-26--girls-night-out-xero",
+      "eventName": "Girls Night Out @Xero",
+      "eventNameRaw": [
+        "Girls Night Out @Xero"
+      ],
+      "eventDate": "2020-11-26",
+      "eventTime": "5:30 pm - 8:00 pm",
+      "timezone": "NZDT",
+      "humanitixEventId": "4LFOF27I",
+      "venue": "Xero office",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 75,
+      "cancelled": 0,
+      "checkedIn": 1,
+      "checkInDataPresent": false,
+      "capacity": 80,
+      "sold": 75,
+      "available": 5,
+      "earnings": 415,
+      "orders": 69,
+      "firstOrderAt": "2020-11-04",
+      "lastOrderAt": "2020-11-25",
+      "ticketTypes": [
+        {
+          "ticketType": "Girls Night Out - Professionals",
+          "segment": "professional",
+          "tickets": 45,
+          "capacity": 50,
+          "sold": 45,
+          "earnings": 300
+        },
+        {
+          "ticketType": "Girls Night Out - Students",
+          "segment": "student",
+          "tickets": 30,
+          "capacity": 30,
+          "sold": 30,
+          "earnings": 115
+        }
+      ],
+      "salesChannels": {
+        "Online": 75
+      },
+      "discountCodeUses": 22,
+      "accessCodeUses": 0,
+      "donations": {
+        "orders": 3,
+        "amount": 14
+      },
+      "organisationsRepresented": 0,
+      "questionsAnswered": {}
+    },
+    {
+      "key": "2021-03-18--she-international-women-s-day-event-with-myob-thursday-18th-march-2021",
+      "eventName": "She# International Women's Day event with MYOB - Thursday 18th March 2021",
+      "eventNameRaw": [
+        "She# International Women's Day event with MYOB - Thursday 18th March 2021"
+      ],
+      "eventDate": "2021-03-18",
+      "eventTime": "5:30 pm - 8:00 pm",
+      "timezone": "NZDT",
+      "humanitixEventId": "UF9DMXM5",
+      "venue": "MYOB office",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 76,
+      "cancelled": 1,
+      "checkedIn": 0,
+      "checkInDataPresent": false,
+      "capacity": 190,
+      "sold": 76,
+      "available": 114,
+      "earnings": 195,
+      "orders": 73,
+      "firstOrderAt": "2021-02-23",
+      "lastOrderAt": "2021-03-18",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 62,
+          "capacity": 80,
+          "sold": 62,
+          "earnings": 140
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 14,
+          "capacity": 50,
+          "sold": 14,
+          "earnings": 55
+        }
+      ],
+      "salesChannels": {
+        "Online": 76
+      },
+      "discountCodeUses": 51,
+      "accessCodeUses": 0,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 28,
+      "questionsAnswered": {
+        "company": 76,
+        "dietary": 76,
+        "mobile": 38
+      }
+    },
+    {
+      "key": "2021-04-29--she-sharp-fergus-women-in-tech-and-trades",
+      "eventName": "She Sharp @ Fergus: Women in Tech & Trades",
+      "eventNameRaw": [
+        "She Sharp @ Fergus: Women in Tech & Trades"
+      ],
+      "eventDate": "2021-04-29",
+      "eventTime": "6:00 pm - 8:00 pm",
+      "timezone": "NZST",
+      "humanitixEventId": "HEWP8H36",
+      "venue": "Fergus Software Ltd",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 52,
+      "cancelled": 0,
+      "checkedIn": 0,
+      "checkInDataPresent": false,
+      "capacity": 170,
+      "sold": 52,
+      "available": 118,
+      "earnings": 190,
+      "orders": 45,
+      "firstOrderAt": "2021-04-08",
+      "lastOrderAt": "2021-04-29",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 45,
+          "capacity": 60,
+          "sold": 45,
+          "earnings": 170
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 7,
+          "capacity": 50,
+          "sold": 7,
+          "earnings": 20
+        }
+      ],
+      "salesChannels": {
+        "Online": 52
+      },
+      "discountCodeUses": 31,
+      "accessCodeUses": 0,
+      "donations": {
+        "orders": 1,
+        "amount": 5
+      },
+      "organisationsRepresented": 19,
+      "questionsAnswered": {
+        "company": 52,
+        "dietary": 52,
+        "mobile": 21
+      }
+    },
+    {
+      "key": "2021-05-25--the-truths-to-gaming-and-start-up-presented-by-she-sharp-and-geo-ar-games",
+      "eventName": "The Truths to Gaming and Start-up - presented by She Sharp & Geo AR Games",
+      "eventNameRaw": [
+        "The Truths to Gaming and Start-up - presented by She Sharp & Geo AR Games"
+      ],
+      "eventDate": "2021-05-25",
+      "eventTime": "6:00 pm - 8:00 pm",
+      "timezone": "NZST",
+      "humanitixEventId": null,
+      "venue": "GridAKL / John Lysaght",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 53,
+      "cancelled": 0,
+      "checkedIn": 0,
+      "checkInDataPresent": false,
+      "capacity": 190,
+      "sold": 53,
+      "available": 137,
+      "earnings": 195,
+      "orders": 41,
+      "firstOrderAt": "2021-05-02",
+      "lastOrderAt": "2021-05-25",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 40,
+          "capacity": 80,
+          "sold": 40,
+          "earnings": 150
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 13,
+          "capacity": 50,
+          "sold": 13,
+          "earnings": 45
+        }
+      ],
+      "salesChannels": {
+        "Online": 53
+      },
+      "discountCodeUses": 29,
+      "accessCodeUses": 0,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 27,
+      "questionsAnswered": {
+        "company": 53,
+        "dietary": 53,
+        "mobile": 21
+      }
+    },
+    {
+      "key": "2021-09-15--iamremarkable",
+      "eventName": "IamRemarkable",
+      "eventNameRaw": [
+        "IamRemarkable"
+      ],
+      "eventDate": "2021-09-15",
+      "eventTime": "6:00 pm - 7:30 pm",
+      "timezone": "NZST",
+      "humanitixEventId": null,
+      "venue": "The Mind Lab",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 61,
+      "cancelled": 0,
+      "checkedIn": 0,
+      "checkInDataPresent": false,
+      "capacity": 100,
+      "sold": 61,
+      "available": 39,
+      "earnings": 0,
+      "orders": 53,
+      "firstOrderAt": "2021-08-28",
+      "lastOrderAt": "2021-09-12",
+      "ticketTypes": [
+        {
+          "ticketType": "General",
+          "segment": "general",
+          "tickets": 61,
+          "capacity": 100,
+          "sold": 61,
+          "earnings": 0
+        }
+      ],
+      "salesChannels": {
+        "Online": 61
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 0,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 43,
+      "questionsAnswered": {
+        "company": 61,
+        "dietary": 58,
+        "mobile": 47
+      }
+    },
+    {
+      "key": "2021-10-11--ada-lovelace-day-celebration",
+      "eventName": "Ada Lovelace Day Celebration",
+      "eventNameRaw": [
+        "Ada Lovelace Day  Celebration"
+      ],
+      "eventDate": "2021-10-11",
+      "eventTime": "6:00 pm - 7:30 pm",
+      "timezone": "NZDT",
+      "humanitixEventId": null,
+      "venue": "The Mind Lab",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 31,
+      "cancelled": 0,
+      "checkedIn": 0,
+      "checkInDataPresent": false,
+      "capacity": 100,
+      "sold": 31,
+      "available": 69,
+      "earnings": 0,
+      "orders": 25,
+      "firstOrderAt": "2021-09-27",
+      "lastOrderAt": "2021-10-11",
+      "ticketTypes": [
+        {
+          "ticketType": "General",
+          "segment": "general",
+          "tickets": 31,
+          "capacity": 100,
+          "sold": 31,
+          "earnings": 0
+        }
+      ],
+      "salesChannels": {
+        "Online": 31
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 0,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 21,
+      "questionsAnswered": {
+        "company": 31,
+        "dietary": 11
+      }
+    },
+    {
+      "key": "2021-11-30--women-in-data-and-analytics",
+      "eventName": "Women in Data and Analytics",
+      "eventNameRaw": [
+        "Women in Data and Analytics"
+      ],
+      "eventDate": "2021-11-30",
+      "eventTime": "6:30 pm - 8:00 pm",
+      "timezone": "NZDT",
+      "humanitixEventId": null,
+      "venue": "The Mind Lab",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 60,
+      "cancelled": 3,
+      "checkedIn": 0,
+      "checkInDataPresent": false,
+      "capacity": 190,
+      "sold": 60,
+      "available": 130,
+      "earnings": 395,
+      "orders": 57,
+      "firstOrderAt": "2021-07-16",
+      "lastOrderAt": "2021-11-30",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 47,
+          "capacity": 80,
+          "sold": 47,
+          "earnings": 350
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 13,
+          "capacity": 50,
+          "sold": 13,
+          "earnings": 45
+        }
+      ],
+      "salesChannels": {
+        "Online": 60
+      },
+      "discountCodeUses": 16,
+      "accessCodeUses": 0,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 34,
+      "questionsAnswered": {
+        "company": 60,
+        "dietary": 60,
+        "mobile": 43
+      }
+    },
+    {
+      "key": "2022-03-10--she-sharp-and-aws-international-women-s-day-event-breakthebias",
+      "eventName": "She Sharp & AWS International Women's Day Event #BreakTheBias",
+      "eventNameRaw": [
+        "She Sharp & AWS International Women's Day Event #BreakTheBias"
+      ],
+      "eventDate": "2022-03-10",
+      "eventTime": "6:30 pm - 8:00 pm",
+      "timezone": "NZDT",
+      "humanitixEventId": null,
+      "venue": "The Mind Lab",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 86,
+      "cancelled": 0,
+      "checkedIn": 0,
+      "checkInDataPresent": false,
+      "capacity": 190,
+      "sold": 86,
+      "available": 104,
+      "earnings": 305,
+      "orders": 85,
+      "firstOrderAt": "2022-02-22",
+      "lastOrderAt": "2022-03-10",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 75,
+          "capacity": 80,
+          "sold": 75,
+          "earnings": 260
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 11,
+          "capacity": 50,
+          "sold": 11,
+          "earnings": 45
+        }
+      ],
+      "salesChannels": {
+        "Online": 86
+      },
+      "discountCodeUses": 51,
+      "accessCodeUses": 0,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 43,
+      "questionsAnswered": {
+        "address": 32,
+        "company": 86,
+        "mobile": 86
+      }
+    },
+    {
+      "key": "2022-04-28--she-sharp-and-myob-mind-your-own-career",
+      "eventName": "She Sharp & MYOB - Mind Your Own Career",
+      "eventNameRaw": [
+        "She Sharp & MYOB - Mind Your Own Career"
+      ],
+      "eventDate": "2022-04-28",
+      "eventTime": "6:30 pm - 8:00 pm",
+      "timezone": "NZST",
+      "humanitixEventId": null,
+      "venue": "The Mind Lab",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 73,
+      "cancelled": 0,
+      "checkedIn": 0,
+      "checkInDataPresent": false,
+      "capacity": 190,
+      "sold": 73,
+      "available": 117,
+      "earnings": 105,
+      "orders": 73,
+      "firstOrderAt": "2022-03-22",
+      "lastOrderAt": "2022-04-28",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 59,
+          "capacity": 80,
+          "sold": 59,
+          "earnings": 60
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 14,
+          "capacity": 50,
+          "sold": 14,
+          "earnings": 45
+        }
+      ],
+      "salesChannels": {
+        "Online": 73
+      },
+      "discountCodeUses": 58,
+      "accessCodeUses": 0,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 19,
+      "questionsAnswered": {
+        "company": 73,
+        "mobile": 21
+      }
+    },
+    {
+      "key": "2022-05-20--women-igniting-a-passion-for-tech-sold-out",
+      "eventName": "Women Igniting a Passion for Tech - SOLD OUT",
+      "eventNameRaw": [
+        "Women Igniting a Passion for Tech - SOLD OUT"
+      ],
+      "eventDate": "2022-05-20",
+      "eventTime": "7:30 am - 9:30 am",
+      "timezone": "NZST",
+      "humanitixEventId": null,
+      "venue": "Countdown Ponsonby",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 67,
+      "cancelled": 5,
+      "checkedIn": 0,
+      "checkInDataPresent": false,
+      "capacity": 180,
+      "sold": 67,
+      "available": 113,
+      "earnings": 440,
+      "orders": 55,
+      "firstOrderAt": "2022-04-27",
+      "lastOrderAt": "2022-05-19",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - Guests",
+          "segment": "guest",
+          "tickets": 2,
+          "capacity": 20,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Countdown",
+          "segment": "partner-guest",
+          "tickets": 4,
+          "capacity": 20,
+          "sold": 4,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 55,
+          "capacity": 65,
+          "sold": 55,
+          "earnings": 410
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 6,
+          "capacity": 60,
+          "sold": 6,
+          "earnings": 25
+        }
+      ],
+      "salesChannels": {
+        "Manual": 2,
+        "Online": 65
+      },
+      "discountCodeUses": 14,
+      "accessCodeUses": 6,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 34,
+      "questionsAnswered": {
+        "accessibility": 2,
+        "company": 67,
+        "dietary": 51,
+        "mobile": 50
+      }
+    },
+    {
+      "key": "2022-06-17--women-in-security-reshaping-the-future",
+      "eventName": "Women in Security - Reshaping the Future",
+      "eventNameRaw": [
+        "Women in Security - Reshaping the Future"
+      ],
+      "eventDate": "2022-06-17",
+      "eventTime": "6:00 pm - 8:00 pm",
+      "timezone": "NZST",
+      "humanitixEventId": null,
+      "venue": "AWS Offce, Commercial Bay, Auckland",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 98,
+      "cancelled": 12,
+      "checkedIn": 0,
+      "checkInDataPresent": false,
+      "capacity": 370,
+      "sold": 98,
+      "available": 272,
+      "earnings": 510,
+      "orders": 92,
+      "firstOrderAt": "2022-05-17",
+      "lastOrderAt": "2022-06-17",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 13,
+          "capacity": 15,
+          "sold": 13,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Media Team",
+          "segment": "crew",
+          "tickets": 2,
+          "capacity": 5,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests",
+          "segment": "guest",
+          "tickets": 10,
+          "capacity": 20,
+          "sold": 10,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - AWS",
+          "segment": "partner-guest",
+          "tickets": 1,
+          "capacity": 15,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - MYOB",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 3,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 41,
+          "capacity": 90,
+          "sold": 41,
+          "earnings": 410
+        },
+        {
+          "ticketType": "Tickets - Speakers",
+          "segment": "speaker",
+          "tickets": 7,
+          "capacity": 10,
+          "sold": 7,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Speakers (Online)",
+          "segment": "speaker",
+          "tickets": 3,
+          "capacity": 10,
+          "sold": 3,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 19,
+          "capacity": 90,
+          "sold": 19,
+          "earnings": 95
+        }
+      ],
+      "salesChannels": {
+        "Manual": 15,
+        "Online": 83
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 23,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 56,
+      "questionsAnswered": {
+        "accessibility": 1,
+        "company": 98,
+        "dietary": 98,
+        "mobile": 45
+      }
+    },
+    {
+      "key": "2022-07-21--she-sharp-and-anz-navigating-the-workplace-as-a-woman",
+      "eventName": "She Sharp & ANZ: Navigating the Workplace as a Woman",
+      "eventNameRaw": [
+        "She Sharp & ANZ: Navigating the Workplace as a Woman"
+      ],
+      "eventDate": "2022-07-21",
+      "eventTime": "6:00 pm - 7:30 pm",
+      "timezone": "NZST",
+      "humanitixEventId": null,
+      "venue": "ANZ Atrium",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 87,
+      "cancelled": 0,
+      "checkedIn": 0,
+      "checkInDataPresent": false,
+      "capacity": 285,
+      "sold": 87,
+      "available": 198,
+      "earnings": 575,
+      "orders": 64,
+      "firstOrderAt": "2022-06-16",
+      "lastOrderAt": "2022-07-21",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 8,
+          "capacity": 15,
+          "sold": 8,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests",
+          "segment": "guest",
+          "tickets": 4,
+          "capacity": 20,
+          "sold": 4,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - ANZ",
+          "segment": "partner-guest",
+          "tickets": 4,
+          "capacity": 15,
+          "sold": 4,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - AUT",
+          "segment": "partner-guest",
+          "tickets": 1,
+          "capacity": 3,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 53,
+          "capacity": 60,
+          "sold": 53,
+          "earnings": 520
+        },
+        {
+          "ticketType": "Tickets - Speakers",
+          "segment": "speaker",
+          "tickets": 6,
+          "capacity": 10,
+          "sold": 6,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 11,
+          "capacity": 50,
+          "sold": 11,
+          "earnings": 55
+        }
+      ],
+      "salesChannels": {
+        "Online": 87
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 23,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 53,
+      "questionsAnswered": {
+        "accessibility": 4,
+        "company": 87,
+        "dietary": 87,
+        "mobile": 49
+      }
+    },
+    {
+      "key": "2022-09-03--she-sharp-ai-for-the-environment-female-led-hackathon-aienvirohack",
+      "eventName": "She Sharp - AI for the Environment Female-Led Hackathon #AIEnviroHack",
+      "eventNameRaw": [
+        "She Sharp - AI for the Environment Female-Led Hackathon #AIEnviroHack"
+      ],
+      "eventDate": "2022-09-03",
+      "eventTime": "8:00 am - 5:00 pm",
+      "timezone": "NZST",
+      "humanitixEventId": null,
+      "venue": "AUT WZ Buliding - Engineering, Computer and Mathematical Sciences Department",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 105,
+      "cancelled": 12,
+      "checkedIn": 80,
+      "checkInDataPresent": true,
+      "capacity": 265,
+      "sold": 105,
+      "available": 160,
+      "earnings": 1260,
+      "orders": 114,
+      "firstOrderAt": "2022-08-02",
+      "lastOrderAt": "2022-09-03",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 11,
+          "capacity": 15,
+          "sold": 11,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Judges",
+          "segment": "crew",
+          "tickets": 4,
+          "capacity": 5,
+          "sold": 4,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Observers",
+          "segment": "crew",
+          "tickets": 4,
+          "capacity": 20,
+          "sold": 4,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Volunteers",
+          "segment": "crew",
+          "tickets": 3,
+          "capacity": 20,
+          "sold": 3,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Sponsored Participants",
+          "segment": "guest",
+          "tickets": 3,
+          "capacity": 20,
+          "sold": 3,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Mentors",
+          "segment": "mentor",
+          "tickets": 19,
+          "capacity": 20,
+          "sold": 19,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 22,
+          "capacity": 80,
+          "sold": 22,
+          "earnings": 660
+        },
+        {
+          "ticketType": "Tickets - Professionals (Late Registration)",
+          "segment": "professional",
+          "tickets": 3,
+          "capacity": 10,
+          "sold": 3,
+          "earnings": 90
+        },
+        {
+          "ticketType": "Tickets - Speakers",
+          "segment": "speaker",
+          "tickets": 2,
+          "capacity": 5,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 32,
+          "capacity": 60,
+          "sold": 32,
+          "earnings": 480
+        },
+        {
+          "ticketType": "Tickets - Students (Late Registration)",
+          "segment": "student",
+          "tickets": 2,
+          "capacity": 10,
+          "sold": 2,
+          "earnings": 30
+        }
+      ],
+      "salesChannels": {
+        "Manual": 3,
+        "Online": 102
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 41,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 59,
+      "questionsAnswered": {
+        "accessibility": 7,
+        "company": 105,
+        "dietary": 105,
+        "mobile": 105
+      }
+    },
+    {
+      "key": "2022-10-20--she-sharp-and-google-shaping-the-future-with-ai",
+      "eventName": "She Sharp & Google - Shaping the Future with AI",
+      "eventNameRaw": [
+        "She Sharp & Google - Shaping the Future with AI"
+      ],
+      "eventDate": "2022-10-20",
+      "eventTime": "4:30 pm - 7:15 pm",
+      "timezone": "NZDT",
+      "humanitixEventId": null,
+      "venue": "10 Madden Street",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 115,
+      "cancelled": 12,
+      "checkedIn": 28,
+      "checkInDataPresent": true,
+      "capacity": 189,
+      "sold": 115,
+      "available": 74,
+      "earnings": 995,
+      "orders": 107,
+      "firstOrderAt": "2022-09-10",
+      "lastOrderAt": "2022-10-20",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 12,
+          "capacity": 15,
+          "sold": 12,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests",
+          "segment": "guest",
+          "tickets": 8,
+          "capacity": 15,
+          "sold": 8,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - AUT",
+          "segment": "partner-guest",
+          "tickets": 3,
+          "capacity": 3,
+          "sold": 3,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Countdown",
+          "segment": "partner-guest",
+          "tickets": 4,
+          "capacity": 4,
+          "sold": 4,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Flexware",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 3,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Google",
+          "segment": "partner-guest",
+          "tickets": 4,
+          "capacity": 20,
+          "sold": 4,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - MYOB",
+          "segment": "partner-guest",
+          "tickets": 3,
+          "capacity": 3,
+          "sold": 3,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 45,
+          "capacity": 60,
+          "sold": 45,
+          "earnings": 645
+        },
+        {
+          "ticketType": "Tickets - Speakers",
+          "segment": "speaker",
+          "tickets": 6,
+          "capacity": 10,
+          "sold": 6,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 28,
+          "capacity": 50,
+          "sold": 28,
+          "earnings": 270
+        }
+      ],
+      "salesChannels": {
+        "Manual": 8,
+        "Online": 107
+      },
+      "discountCodeUses": 3,
+      "accessCodeUses": 29,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 58,
+      "questionsAnswered": {
+        "accessibility": 5,
+        "company": 115,
+        "dietary": 115,
+        "mobile": 70
+      }
+    },
+    {
+      "key": "2022-12-05--she-sharp-and-aws-presents-she-celebrates-end-of-year-event",
+      "eventName": "She Sharp & AWS presents: She Celebrates - End of Year Event",
+      "eventNameRaw": [
+        "She Sharp & AWS presents: She Celebrates - End of Year Event"
+      ],
+      "eventDate": "2022-12-05",
+      "eventTime": "6:00 pm - 8:00 pm",
+      "timezone": "NZDT",
+      "humanitixEventId": null,
+      "venue": "AWS Offce, Commercial Bay, Auckland",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 102,
+      "cancelled": 0,
+      "checkedIn": 0,
+      "checkInDataPresent": false,
+      "capacity": 192,
+      "sold": 102,
+      "available": 90,
+      "earnings": 920,
+      "orders": 77,
+      "firstOrderAt": "2022-11-02",
+      "lastOrderAt": "2022-12-05",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 11,
+          "capacity": 15,
+          "sold": 11,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests",
+          "segment": "guest",
+          "tickets": 9,
+          "capacity": 15,
+          "sold": 9,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - ANZ",
+          "segment": "partner-guest",
+          "tickets": 3,
+          "capacity": 3,
+          "sold": 3,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - AUT",
+          "segment": "partner-guest",
+          "tickets": 1,
+          "capacity": 3,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Flexware",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 58,
+          "capacity": 60,
+          "sold": 58,
+          "earnings": 810
+        },
+        {
+          "ticketType": "Tickets - Speakers",
+          "segment": "speaker",
+          "tickets": 7,
+          "capacity": 10,
+          "sold": 7,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 11,
+          "capacity": 60,
+          "sold": 11,
+          "earnings": 110
+        }
+      ],
+      "salesChannels": {
+        "Manual": 2,
+        "Online": 100
+      },
+      "discountCodeUses": 4,
+      "accessCodeUses": 31,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 56,
+      "questionsAnswered": {
+        "accessibility": 1,
+        "company": 102,
+        "dietary": 102,
+        "mobile": 51
+      }
+    },
+    {
+      "key": "2023-03-08--she-sharp-and-countdown-international-women-s-day",
+      "eventName": "She Sharp & Countdown: International Women's Day",
+      "eventNameRaw": [
+        "She Sharp & Countdown: International Women's Day"
+      ],
+      "eventDate": "2023-03-08",
+      "eventTime": "7:30 am - 9:00 am",
+      "timezone": "NZDT",
+      "humanitixEventId": "F3VUOO1C",
+      "venue": "Countdown Ponsonby",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 96,
+      "cancelled": 1,
+      "checkedIn": 73,
+      "checkInDataPresent": true,
+      "capacity": 191,
+      "sold": 96,
+      "available": 95,
+      "earnings": 1175,
+      "orders": 73,
+      "firstOrderAt": "2023-02-14",
+      "lastOrderAt": "2023-03-07",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 14,
+          "capacity": 15,
+          "sold": 14,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests",
+          "segment": "guest",
+          "tickets": 4,
+          "capacity": 15,
+          "sold": 4,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - AUT",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Countdown",
+          "segment": "partner-guest",
+          "tickets": 8,
+          "capacity": 15,
+          "sold": 8,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Fonterra",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Kiwibank",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 58,
+          "capacity": 60,
+          "sold": 58,
+          "earnings": 1100
+        },
+        {
+          "ticketType": "Tickets - Speakers",
+          "segment": "speaker",
+          "tickets": 1,
+          "capacity": 10,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 5,
+          "capacity": 60,
+          "sold": 5,
+          "earnings": 75
+        }
+      ],
+      "salesChannels": {
+        "Manual": 1,
+        "Online": 95
+      },
+      "discountCodeUses": 2,
+      "accessCodeUses": 32,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 45,
+      "questionsAnswered": {
+        "accessibility": 3,
+        "company": 96,
+        "dietary": 96,
+        "mobile": 63
+      }
+    },
+    {
+      "key": "2023-04-28--she-sharp-and-myob-kickstart-your-career-in-tech",
+      "eventName": "She Sharp & MYOB: Kickstart Your Career in Tech",
+      "eventNameRaw": [
+        "She Sharp & MYOB: Kickstart Your Career in Tech"
+      ],
+      "eventDate": "2023-04-28",
+      "eventTime": "5:00 pm - 7:30 pm",
+      "timezone": "NZST",
+      "humanitixEventId": "UTJ4TDIR",
+      "venue": "MYOB",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 86,
+      "cancelled": 1,
+      "checkedIn": 0,
+      "checkInDataPresent": false,
+      "capacity": 202,
+      "sold": 86,
+      "available": 116,
+      "earnings": 905,
+      "orders": 73,
+      "firstOrderAt": "2023-03-24",
+      "lastOrderAt": "2023-04-28",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 8,
+          "capacity": 15,
+          "sold": 8,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Volunteers",
+          "segment": "crew",
+          "tickets": 4,
+          "capacity": 15,
+          "sold": 4,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests",
+          "segment": "guest",
+          "tickets": 6,
+          "capacity": 15,
+          "sold": 6,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Deloitte",
+          "segment": "partner-guest",
+          "tickets": 1,
+          "capacity": 2,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Fonterra",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Kiwibank",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - MYOB",
+          "segment": "partner-guest",
+          "tickets": 7,
+          "capacity": 15,
+          "sold": 7,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 28,
+          "capacity": 60,
+          "sold": 28,
+          "earnings": 560
+        },
+        {
+          "ticketType": "Tickets - Speakers",
+          "segment": "speaker",
+          "tickets": 5,
+          "capacity": 10,
+          "sold": 5,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 23,
+          "capacity": 60,
+          "sold": 23,
+          "earnings": 345
+        }
+      ],
+      "salesChannels": {
+        "Online": 86
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 35,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 34,
+      "questionsAnswered": {
+        "accessibility": 4,
+        "company": 86,
+        "dietary": 86,
+        "mobile": 59
+      }
+    },
+    {
+      "key": "2023-06-20--she-sharp-and-deloitte-innovation-unleashed",
+      "eventName": "She Sharp & Deloitte: Innovation Unleashed",
+      "eventNameRaw": [
+        "She Sharp & Deloitte: Innovation Unleashed"
+      ],
+      "eventDate": "2023-06-20",
+      "eventTime": "5:00 pm - 7:30 pm",
+      "timezone": "NZST",
+      "humanitixEventId": "QMU6PI5P",
+      "venue": "Deloitte Auckland",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 90,
+      "cancelled": 0,
+      "checkedIn": 62,
+      "checkInDataPresent": true,
+      "capacity": 212,
+      "sold": 90,
+      "available": 122,
+      "earnings": 795,
+      "orders": 71,
+      "firstOrderAt": "2023-05-17",
+      "lastOrderAt": "2023-06-19",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 7,
+          "capacity": 15,
+          "sold": 7,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Volunteers",
+          "segment": "crew",
+          "tickets": 5,
+          "capacity": 15,
+          "sold": 5,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests",
+          "segment": "guest",
+          "tickets": 13,
+          "capacity": 25,
+          "sold": 13,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - AUT",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Countdown",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Deloitte",
+          "segment": "partner-guest",
+          "tickets": 14,
+          "capacity": 15,
+          "sold": 14,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Kiwibank",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - MYOB",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 30,
+          "capacity": 60,
+          "sold": 30,
+          "earnings": 600
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 13,
+          "capacity": 60,
+          "sold": 13,
+          "earnings": 195
+        }
+      ],
+      "salesChannels": {
+        "Online": 90
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 47,
+      "donations": {
+        "orders": 3,
+        "amount": 11
+      },
+      "organisationsRepresented": 45,
+      "questionsAnswered": {
+        "accessibility": 2,
+        "company": 90,
+        "dietary": 90,
+        "mobile": 49
+      }
+    },
+    {
+      "key": "2023-07-25--she-sharp-and-kiwibank-the-buzz-about-banking",
+      "eventName": "She Sharp & Kiwibank: The Buzz about Banking",
+      "eventNameRaw": [
+        "She Sharp & Kiwibank: The Buzz about Banking"
+      ],
+      "eventDate": "2023-07-25",
+      "eventTime": "5:30 pm - 7:30 pm",
+      "timezone": "NZST",
+      "humanitixEventId": "QLFM1UY9",
+      "venue": "Kiwibank Head Office - Te Kupenga",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 90,
+      "cancelled": 0,
+      "checkedIn": 52,
+      "checkInDataPresent": true,
+      "capacity": 227,
+      "sold": 90,
+      "available": 137,
+      "earnings": 570,
+      "orders": 60,
+      "firstOrderAt": "2023-06-20",
+      "lastOrderAt": "2023-07-24",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 11,
+          "capacity": 15,
+          "sold": 11,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Volunteers",
+          "segment": "crew",
+          "tickets": 2,
+          "capacity": 15,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests",
+          "segment": "guest",
+          "tickets": 14,
+          "capacity": 25,
+          "sold": 14,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - AUT",
+          "segment": "partner-guest",
+          "tickets": 1,
+          "capacity": 2,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Countdown",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Fonterra",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - HCL",
+          "segment": "partner-guest",
+          "tickets": 1,
+          "capacity": 2,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Kiwibank",
+          "segment": "partner-guest",
+          "tickets": 23,
+          "capacity": 30,
+          "sold": 23,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 18,
+          "capacity": 60,
+          "sold": 18,
+          "earnings": 360
+        },
+        {
+          "ticketType": "Tickets - Speakers",
+          "segment": "speaker",
+          "tickets": 2,
+          "capacity": 10,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 14,
+          "capacity": 60,
+          "sold": 14,
+          "earnings": 210
+        }
+      ],
+      "salesChannels": {
+        "Online": 90
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 58,
+      "donations": {
+        "orders": 2,
+        "amount": 25
+      },
+      "organisationsRepresented": 37,
+      "questionsAnswered": {
+        "accessibility": 2,
+        "company": 90,
+        "dietary": 90,
+        "mobile": 48
+      }
+    },
+    {
+      "key": "2023-08-24--she-sharp-and-fonterra-a-legendairy-career",
+      "eventName": "She Sharp & Fonterra : A Legendairy Career",
+      "eventNameRaw": [
+        " She Sharp & Fonterra : A Legendairy Career"
+      ],
+      "eventDate": "2023-08-24",
+      "eventTime": "5:30 pm - 8:30 pm",
+      "timezone": "NZST",
+      "humanitixEventId": "1855G6K5",
+      "venue": "Fonterra Centre",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 120,
+      "cancelled": 0,
+      "checkedIn": 100,
+      "checkInDataPresent": true,
+      "capacity": 214,
+      "sold": 120,
+      "available": 94,
+      "earnings": 735,
+      "orders": 102,
+      "firstOrderAt": "2023-07-25",
+      "lastOrderAt": "2023-08-24",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 21,
+          "capacity": 25,
+          "sold": 21,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Volunteers",
+          "segment": "crew",
+          "tickets": 2,
+          "capacity": 3,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests",
+          "segment": "guest",
+          "tickets": 22,
+          "capacity": 25,
+          "sold": 22,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Deloitte",
+          "segment": "partner-guest",
+          "tickets": 3,
+          "capacity": 3,
+          "sold": 3,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Fonterra",
+          "segment": "partner-guest",
+          "tickets": 7,
+          "capacity": 20,
+          "sold": 7,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - HCL",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 3,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - MYOB",
+          "segment": "partner-guest",
+          "tickets": 4,
+          "capacity": 4,
+          "sold": 4,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - WoM Tickets",
+          "segment": "partner-guest",
+          "tickets": 4,
+          "capacity": 10,
+          "sold": 4,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 24,
+          "capacity": 50,
+          "sold": 24,
+          "earnings": 480
+        },
+        {
+          "ticketType": "Tickets - Speakers",
+          "segment": "speaker",
+          "tickets": 13,
+          "capacity": 15,
+          "sold": 13,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 18,
+          "capacity": 50,
+          "sold": 18,
+          "earnings": 255
+        }
+      ],
+      "salesChannels": {
+        "Online": 120
+      },
+      "discountCodeUses": 1,
+      "accessCodeUses": 78,
+      "donations": {
+        "orders": 1,
+        "amount": 10
+      },
+      "organisationsRepresented": 41,
+      "questionsAnswered": {
+        "accessibility": 2,
+        "company": 120,
+        "dietary": 120,
+        "mobile": 66
+      }
+    },
+    {
+      "key": "2023-09-20--she-sharp-and-techwomen-nz-from-burnout-to-balance",
+      "eventName": "She Sharp & TechWomen NZ: From Burnout to Balance",
+      "eventNameRaw": [
+        "She Sharp & TechWomen NZ: From Burnout to Balance"
+      ],
+      "eventDate": "2023-09-20",
+      "eventTime": "7:30 am - 9:00 am",
+      "timezone": "NZST",
+      "humanitixEventId": "2EDAO66U",
+      "venue": "Level 12 (AWS)",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 106,
+      "cancelled": 0,
+      "checkedIn": 75,
+      "checkInDataPresent": true,
+      "capacity": 246,
+      "sold": 106,
+      "available": 140,
+      "earnings": 1320,
+      "orders": 88,
+      "firstOrderAt": "2023-08-25",
+      "lastOrderAt": "2023-09-16",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 12,
+          "capacity": 26,
+          "sold": 12,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Volunteers",
+          "segment": "crew",
+          "tickets": 1,
+          "capacity": 15,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests",
+          "segment": "guest",
+          "tickets": 12,
+          "capacity": 30,
+          "sold": 12,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Deloitte",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Fonterra",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Kiwibank",
+          "segment": "partner-guest",
+          "tickets": 1,
+          "capacity": 2,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - MYOB",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - TechwomenNZ",
+          "segment": "partner-guest",
+          "tickets": 3,
+          "capacity": 20,
+          "sold": 3,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 61,
+          "capacity": 65,
+          "sold": 61,
+          "earnings": 1200
+        },
+        {
+          "ticketType": "Tickets - Speakers",
+          "segment": "speaker",
+          "tickets": 2,
+          "capacity": 5,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 8,
+          "capacity": 60,
+          "sold": 8,
+          "earnings": 120
+        }
+      ],
+      "salesChannels": {
+        "Online": 106
+      },
+      "discountCodeUses": 1,
+      "accessCodeUses": 37,
+      "donations": {
+        "orders": 2,
+        "amount": 55
+      },
+      "organisationsRepresented": 62,
+      "questionsAnswered": {
+        "accessibility": 8,
+        "company": 106,
+        "dietary": 106,
+        "mobile": 76
+      }
+    },
+    {
+      "key": "2023-10-11--inspire-her-te-whakatipuranga-wahine",
+      "eventName": "Inspire Her: Te Whakatipuranga Wahine",
+      "eventNameRaw": [
+        "Inspire Her: Te Whakatipuranga Wahine"
+      ],
+      "eventDate": "2023-10-11",
+      "eventTime": "9:00 am - 3:00 pm",
+      "timezone": "NZDT",
+      "humanitixEventId": "139U19A6",
+      "venue": "AUT South Campus",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 126,
+      "cancelled": 0,
+      "checkedIn": 58,
+      "checkInDataPresent": true,
+      "capacity": 130,
+      "sold": 126,
+      "available": 4,
+      "earnings": 0,
+      "orders": 32,
+      "firstOrderAt": "2023-09-13",
+      "lastOrderAt": "2023-10-10",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 8,
+          "capacity": 8,
+          "sold": 8,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Volunteers",
+          "segment": "crew",
+          "tickets": 2,
+          "capacity": 1,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Expo",
+          "segment": "general",
+          "tickets": 18,
+          "capacity": 20,
+          "sold": 18,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Speakers",
+          "segment": "speaker",
+          "tickets": 10,
+          "capacity": 10,
+          "sold": 10,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 79,
+          "capacity": 80,
+          "sold": 79,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Teachers",
+          "segment": "teacher",
+          "tickets": 9,
+          "capacity": 10,
+          "sold": 9,
+          "earnings": 0
+        }
+      ],
+      "salesChannels": {
+        "Online": 126
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 38,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 0,
+      "questionsAnswered": {}
+    },
+    {
+      "key": "2023-11-03--she-sharp-and-hcl-technological-change-workplace-and-workforce-impacts",
+      "eventName": "She Sharp & HCL: Technological change - workplace & workforce impacts",
+      "eventNameRaw": [
+        "She Sharp & HCL: Technological change - workplace & workforce impacts"
+      ],
+      "eventDate": "2023-11-03",
+      "eventTime": "4:30 pm - 6:30 pm",
+      "timezone": "NZDT",
+      "humanitixEventId": "E4SPVMAK",
+      "venue": "The Pa Multifunction Room",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 88,
+      "cancelled": 0,
+      "checkedIn": 71,
+      "checkInDataPresent": true,
+      "capacity": 266,
+      "sold": 88,
+      "available": 178,
+      "earnings": 555,
+      "orders": 64,
+      "firstOrderAt": "2023-09-22",
+      "lastOrderAt": "2023-11-02",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 10,
+          "capacity": 26,
+          "sold": 10,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Volunteers",
+          "segment": "crew",
+          "tickets": 2,
+          "capacity": 15,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests",
+          "segment": "guest",
+          "tickets": 8,
+          "capacity": 30,
+          "sold": 8,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Fonterra",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - HCL",
+          "segment": "partner-guest",
+          "tickets": 21,
+          "capacity": 40,
+          "sold": 21,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Kiwibank",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - MYOB",
+          "segment": "partner-guest",
+          "tickets": 1,
+          "capacity": 5,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - WoM Tickets",
+          "segment": "partner-guest",
+          "tickets": 4,
+          "capacity": 10,
+          "sold": 4,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 18,
+          "capacity": 60,
+          "sold": 18,
+          "earnings": 360
+        },
+        {
+          "ticketType": "Tickets - Speakers",
+          "segment": "speaker",
+          "tickets": 7,
+          "capacity": 10,
+          "sold": 7,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 13,
+          "capacity": 60,
+          "sold": 13,
+          "earnings": 195
+        }
+      ],
+      "salesChannels": {
+        "Online": 88
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 57,
+      "donations": {
+        "orders": 1,
+        "amount": 10
+      },
+      "organisationsRepresented": 47,
+      "questionsAnswered": {
+        "accessibility": 1,
+        "company": 88,
+        "dietary": 88,
+        "mobile": 47
+      }
+    },
+    {
+      "key": "2023-11-17--google-educators-conference",
+      "eventName": "Google Educators Conference",
+      "eventNameRaw": [
+        "Google Educators Conference"
+      ],
+      "eventDate": "2023-11-17",
+      "eventTime": "8:00 am - 6:00 pm",
+      "timezone": "NZDT",
+      "humanitixEventId": "K6FMV4VW",
+      "venue": "Google Auckland",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 123,
+      "cancelled": 0,
+      "checkedIn": 91,
+      "checkInDataPresent": true,
+      "capacity": 202,
+      "sold": 123,
+      "available": 79,
+      "earnings": 0,
+      "orders": 93,
+      "firstOrderAt": "2023-09-18",
+      "lastOrderAt": "2023-11-15",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 13,
+          "capacity": 26,
+          "sold": 13,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Volunteers",
+          "segment": "crew",
+          "tickets": 8,
+          "capacity": 15,
+          "sold": 8,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests",
+          "segment": "guest",
+          "tickets": 2,
+          "capacity": 25,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Speakers/ Workshop facilitators",
+          "segment": "speaker",
+          "tickets": 21,
+          "capacity": 21,
+          "sold": 21,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Teachers",
+          "segment": "teacher",
+          "tickets": 79,
+          "capacity": 90,
+          "sold": 79,
+          "earnings": 0
+        }
+      ],
+      "salesChannels": {
+        "Online": 123
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 34,
+      "donations": {
+        "orders": 1,
+        "amount": 50
+      },
+      "organisationsRepresented": 0,
+      "questionsAnswered": {
+        "dietary": 123
+      }
+    },
+    {
+      "key": "2023-12-14--she-celebrates-end-of-year-event",
+      "eventName": "She celebrates - End of Year Event",
+      "eventNameRaw": [
+        "She celebrates - End of Year Event"
+      ],
+      "eventDate": "2023-12-14",
+      "eventTime": "6:00 pm - 8:00 pm",
+      "timezone": "NZDT",
+      "humanitixEventId": "K59XNS1W",
+      "venue": "Google",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 100,
+      "cancelled": 0,
+      "checkedIn": 74,
+      "checkInDataPresent": true,
+      "capacity": 230,
+      "sold": 100,
+      "available": 130,
+      "earnings": 945,
+      "orders": 74,
+      "firstOrderAt": "2023-11-07",
+      "lastOrderAt": "2023-12-14",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 16,
+          "capacity": 26,
+          "sold": 16,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Volunteers",
+          "segment": "crew",
+          "tickets": 1,
+          "capacity": 15,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests",
+          "segment": "guest",
+          "tickets": 22,
+          "capacity": 30,
+          "sold": 22,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - AUT",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Deloitte",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 4,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Kiwibank",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - MYOB",
+          "segment": "partner-guest",
+          "tickets": 1,
+          "capacity": 5,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 42,
+          "capacity": 60,
+          "sold": 42,
+          "earnings": 840
+        },
+        {
+          "ticketType": "Tickets - Speakers",
+          "segment": "speaker",
+          "tickets": 5,
+          "capacity": 10,
+          "sold": 5,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 7,
+          "capacity": 60,
+          "sold": 7,
+          "earnings": 105
+        }
+      ],
+      "salesChannels": {
+        "Online": 100
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 51,
+      "donations": {
+        "orders": 1,
+        "amount": 5
+      },
+      "organisationsRepresented": 56,
+      "questionsAnswered": {
+        "accessibility": 5,
+        "company": 100,
+        "dietary": 100,
+        "mobile": 59
+      }
+    },
+    {
+      "key": "2024-03-07--she-sharp-and-woolworths-international-women-s-day",
+      "eventName": "She Sharp & Woolworths: International Women's Day",
+      "eventNameRaw": [
+        "She Sharp & Woolworths: International Women's Day"
+      ],
+      "eventDate": "2024-03-07",
+      "eventTime": "7:30 am - 9:30 am",
+      "timezone": "NZDT",
+      "humanitixEventId": "W53PVQ8V",
+      "venue": "Level 8 (WooliesX)",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 108,
+      "cancelled": 0,
+      "checkedIn": 70,
+      "checkInDataPresent": true,
+      "capacity": 241,
+      "sold": 108,
+      "available": 133,
+      "earnings": 1055,
+      "orders": 83,
+      "firstOrderAt": "2024-02-08",
+      "lastOrderAt": "2024-03-06",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 24,
+          "capacity": 29,
+          "sold": 24,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Volunteers",
+          "segment": "crew",
+          "tickets": 1,
+          "capacity": 15,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Fiserv",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Fonterra",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - MYOB",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Woolworths",
+          "segment": "partner-guest",
+          "tickets": 22,
+          "capacity": 25,
+          "sold": 22,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 49,
+          "capacity": 60,
+          "sold": 49,
+          "earnings": 980
+        },
+        {
+          "ticketType": "Tickets - Speakers",
+          "segment": "speaker",
+          "tickets": 1,
+          "capacity": 10,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 5,
+          "capacity": 60,
+          "sold": 5,
+          "earnings": 75
+        }
+      ],
+      "salesChannels": {
+        "Online": 108
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 54,
+      "donations": {
+        "orders": 5,
+        "amount": 46.5
+      },
+      "organisationsRepresented": 47,
+      "questionsAnswered": {
+        "accessibility": 5,
+        "company": 108,
+        "dietary": 108,
+        "mobile": 58
+      }
+    },
+    {
+      "key": "2024-04-18--she-sharp-and-myob-embracing-bias",
+      "eventName": "She Sharp & MYOB: Embracing Bias",
+      "eventNameRaw": [
+        "She Sharp & MYOB: Embracing Bias"
+      ],
+      "eventDate": "2024-04-18",
+      "eventTime": "5:30 pm - 7:30 pm",
+      "timezone": "NZST",
+      "humanitixEventId": "P9VAH2RC",
+      "venue": "Level 5 (MYOB office)",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 74,
+      "cancelled": 0,
+      "checkedIn": 50,
+      "checkInDataPresent": true,
+      "capacity": 232,
+      "sold": 74,
+      "available": 158,
+      "earnings": 540,
+      "orders": 63,
+      "firstOrderAt": "2024-03-07",
+      "lastOrderAt": "2024-04-17",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 13,
+          "capacity": 29,
+          "sold": 13,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Volunteers",
+          "segment": "crew",
+          "tickets": 1,
+          "capacity": 15,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests",
+          "segment": "guest",
+          "tickets": 9,
+          "capacity": 15,
+          "sold": 9,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Fiserv",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Fonterra",
+          "segment": "partner-guest",
+          "tickets": 3,
+          "capacity": 3,
+          "sold": 3,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - FPH",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 5,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Kiwibank",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - LesMills",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - MYOB",
+          "segment": "partner-guest",
+          "tickets": 8,
+          "capacity": 20,
+          "sold": 8,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 25,
+          "capacity": 60,
+          "sold": 25,
+          "earnings": 480
+        },
+        {
+          "ticketType": "Tickets - Speakers",
+          "segment": "speaker",
+          "tickets": 3,
+          "capacity": 10,
+          "sold": 3,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 4,
+          "capacity": 60,
+          "sold": 4,
+          "earnings": 60
+        }
+      ],
+      "salesChannels": {
+        "Online": 74
+      },
+      "discountCodeUses": 1,
+      "accessCodeUses": 45,
+      "donations": {
+        "orders": 4,
+        "amount": 31
+      },
+      "organisationsRepresented": 37,
+      "questionsAnswered": {
+        "accessibility": 1,
+        "company": 74,
+        "dietary": 74,
+        "mobile": 43
+      }
+    },
+    {
+      "key": "2024-05-09--she-sharp-and-les-mills-own-the-unexpected",
+      "eventName": "She Sharp & Les Mills: Own The Unexpected",
+      "eventNameRaw": [
+        "She Sharp & Les Mills: Own The Unexpected "
+      ],
+      "eventDate": "2024-05-09",
+      "eventTime": "5:30 pm - 7:30 pm",
+      "timezone": "NZST",
+      "humanitixEventId": "7DNLGAFE",
+      "venue": "Les Mills International",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 109,
+      "cancelled": 0,
+      "checkedIn": 95,
+      "checkInDataPresent": true,
+      "capacity": 244,
+      "sold": 109,
+      "available": 135,
+      "earnings": 715,
+      "orders": 96,
+      "firstOrderAt": "2024-04-18",
+      "lastOrderAt": "2024-05-09",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 16,
+          "capacity": 29,
+          "sold": 16,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Volunteers",
+          "segment": "crew",
+          "tickets": 1,
+          "capacity": 15,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests",
+          "segment": "guest",
+          "tickets": 17,
+          "capacity": 17,
+          "sold": 17,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Fiserv",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Fonterra",
+          "segment": "partner-guest",
+          "tickets": 3,
+          "capacity": 3,
+          "sold": 3,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Kiwibank",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - LesMills",
+          "segment": "partner-guest",
+          "tickets": 21,
+          "capacity": 30,
+          "sold": 21,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 30,
+          "capacity": 60,
+          "sold": 30,
+          "earnings": 580
+        },
+        {
+          "ticketType": "Tickets - Speakers",
+          "segment": "speaker",
+          "tickets": 8,
+          "capacity": 10,
+          "sold": 8,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 9,
+          "capacity": 60,
+          "sold": 9,
+          "earnings": 135
+        }
+      ],
+      "salesChannels": {
+        "Online": 109
+      },
+      "discountCodeUses": 1,
+      "accessCodeUses": 70,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 43,
+      "questionsAnswered": {
+        "accessibility": 2,
+        "company": 109,
+        "dietary": 109,
+        "mobile": 67
+      }
+    },
+    {
+      "key": "2024-06-26--she-sharp-and-fiserv-bank-on-yourself",
+      "eventName": "She Sharp & Fiserv: Bank on yourself",
+      "eventNameRaw": [
+        "She Sharp & Fiserv: Bank on yourself"
+      ],
+      "eventDate": "2024-06-26",
+      "eventTime": "5:30 pm - 7:30 pm",
+      "timezone": "NZST",
+      "humanitixEventId": "NJQ7DPM7",
+      "venue": "Fiserv Office, Level 6",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 96,
+      "cancelled": 0,
+      "checkedIn": 77,
+      "checkInDataPresent": true,
+      "capacity": 239,
+      "sold": 96,
+      "available": 143,
+      "earnings": 730,
+      "orders": 88,
+      "firstOrderAt": "2024-05-03",
+      "lastOrderAt": "2024-06-25",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 14,
+          "capacity": 29,
+          "sold": 14,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Volunteers",
+          "segment": "crew",
+          "tickets": 3,
+          "capacity": 15,
+          "sold": 3,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests",
+          "segment": "guest",
+          "tickets": 12,
+          "capacity": 15,
+          "sold": 12,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Fiserv",
+          "segment": "partner-guest",
+          "tickets": 17,
+          "capacity": 20,
+          "sold": 17,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Fonterra",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Kiwibank",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - LesMills",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Woolworths",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 10,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 29,
+          "capacity": 60,
+          "sold": 29,
+          "earnings": 580
+        },
+        {
+          "ticketType": "Tickets - Speakers",
+          "segment": "speaker",
+          "tickets": 3,
+          "capacity": 10,
+          "sold": 3,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 10,
+          "capacity": 60,
+          "sold": 10,
+          "earnings": 150
+        }
+      ],
+      "salesChannels": {
+        "Online": 96
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 57,
+      "donations": {
+        "orders": 2,
+        "amount": 6.88
+      },
+      "organisationsRepresented": 40,
+      "questionsAnswered": {
+        "accessibility": 5,
+        "company": 96,
+        "dietary": 96,
+        "mobile": 57
+      }
+    },
+    {
+      "key": "2024-07-26--f-and-p-hackathon-with-she",
+      "eventName": "F&P Hackathon with She#",
+      "eventNameRaw": [
+        "F&P Hackathon with She#"
+      ],
+      "eventDate": "2024-07-26",
+      "eventTime": "5:30 pm - 6:00 pm",
+      "timezone": "NZST",
+      "humanitixEventId": "SGQU52FD",
+      "venue": "Fisher & Paykel Healthcare Campus",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 259,
+      "cancelled": 2,
+      "checkedIn": 101,
+      "checkInDataPresent": true,
+      "capacity": 509,
+      "sold": 259,
+      "available": 250,
+      "earnings": 1115,
+      "orders": 145,
+      "firstOrderAt": "2024-06-18",
+      "lastOrderAt": "2024-07-26",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 17,
+          "capacity": 20,
+          "sold": 17,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Judges",
+          "segment": "crew",
+          "tickets": 6,
+          "capacity": 7,
+          "sold": 6,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Observer (Sunday Presentation 2-6pm)",
+          "segment": "crew",
+          "tickets": 4,
+          "capacity": 15,
+          "sold": 4,
+          "earnings": 40
+        },
+        {
+          "ticketType": "Tickets - Observer (Sunday)",
+          "segment": "crew",
+          "tickets": 5,
+          "capacity": 25,
+          "sold": 5,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Volunteers",
+          "segment": "crew",
+          "tickets": 3,
+          "capacity": 15,
+          "sold": 3,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests",
+          "segment": "guest",
+          "tickets": 14,
+          "capacity": 15,
+          "sold": 14,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Mentors",
+          "segment": "mentor",
+          "tickets": 26,
+          "capacity": 27,
+          "sold": 26,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - FPH",
+          "segment": "partner-guest",
+          "tickets": 4,
+          "capacity": 10,
+          "sold": 4,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 29,
+          "capacity": 50,
+          "sold": 29,
+          "earnings": 580
+        },
+        {
+          "ticketType": "Workshop \"Build your own AI Powered Web App\" (Thursday, July 17th, 12-2pm NZT, online)",
+          "segment": "session",
+          "tickets": 13,
+          "capacity": null,
+          "sold": null,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Workshop \"Build your own AI Powered Web App\" (Thursday, July 18th, 12-2pm NZT, online)",
+          "segment": "session",
+          "tickets": 1,
+          "capacity": null,
+          "sold": null,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Workshop \"Build your own AI Powered Web App\" (Tuesday, July 16th, 12-2pm NZT, online, Part 1)",
+          "segment": "session",
+          "tickets": 6,
+          "capacity": 70,
+          "sold": 38,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Workshop \"Build your own AI Powered Web App\" (Tuesday, July 16th, 12-2pm NZT, online)",
+          "segment": "session",
+          "tickets": 32,
+          "capacity": null,
+          "sold": null,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Workshop \"Build your own AI Powered Web App\" (Wednesday, July 17th, 12-2pm NZT, online, Part 2)",
+          "segment": "session",
+          "tickets": 7,
+          "capacity": 70,
+          "sold": 37,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Workshop \"Build your own AI Powered Web App\" (Wednesday, July 17th, 12-2pm NZT, online)",
+          "segment": "session",
+          "tickets": 16,
+          "capacity": null,
+          "sold": null,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Workshop \"Iterative process and strategies for prompt development\" (Monday, July 22nd, 6-7pm NZT, online)",
+          "segment": "session",
+          "tickets": 41,
+          "capacity": 70,
+          "sold": 41,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Speakers",
+          "segment": "speaker",
+          "tickets": 2,
+          "capacity": 10,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 33,
+          "capacity": 50,
+          "sold": 33,
+          "earnings": 495
+        }
+      ],
+      "salesChannels": {
+        "Online": 259
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 77,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 51,
+      "questionsAnswered": {
+        "accessibility": 9,
+        "company": 259,
+        "dietary": 259,
+        "mobile": 184
+      }
+    },
+    {
+      "key": "2024-08-29--she-sharp-and-fonterra-harness-the-power-of-generative-al",
+      "eventName": "She Sharp & Fonterra: Harness The Power of Generative Al",
+      "eventNameRaw": [
+        "She Sharp & Fonterra: Harness The Power of Generative Al"
+      ],
+      "eventDate": "2024-08-29",
+      "eventTime": "5:30 pm - 7:30 pm",
+      "timezone": "NZST",
+      "humanitixEventId": "E6P5M3N2",
+      "venue": "Fonterra Centre",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 165,
+      "cancelled": 4,
+      "checkedIn": 112,
+      "checkInDataPresent": true,
+      "capacity": 321,
+      "sold": 165,
+      "available": 156,
+      "earnings": 1170,
+      "orders": 116,
+      "firstOrderAt": "2024-06-26",
+      "lastOrderAt": "2024-08-28",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 16,
+          "capacity": 29,
+          "sold": 16,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Volunteers",
+          "segment": "crew",
+          "tickets": 3,
+          "capacity": 15,
+          "sold": 3,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests",
+          "segment": "guest",
+          "tickets": 18,
+          "capacity": 18,
+          "sold": 18,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Mentees-She#",
+          "segment": "mentee",
+          "tickets": 13,
+          "capacity": 25,
+          "sold": 13,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Mentors",
+          "segment": "mentor",
+          "tickets": 3,
+          "capacity": 25,
+          "sold": 3,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Mentors-She#",
+          "segment": "mentor",
+          "tickets": 20,
+          "capacity": 25,
+          "sold": 20,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Fonterra",
+          "segment": "partner-guest",
+          "tickets": 20,
+          "capacity": 20,
+          "sold": 20,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - HCL",
+          "segment": "partner-guest",
+          "tickets": 3,
+          "capacity": 3,
+          "sold": 3,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Kiwibank",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Woolworths",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 54,
+          "capacity": 60,
+          "sold": 54,
+          "earnings": 1080
+        },
+        {
+          "ticketType": "Tickets - Hack_AcademyEx",
+          "segment": "session",
+          "tickets": 1,
+          "capacity": 10,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Hackathon Winners",
+          "segment": "session",
+          "tickets": 1,
+          "capacity": 6,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Speakers",
+          "segment": "speaker",
+          "tickets": 3,
+          "capacity": 3,
+          "sold": 3,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 6,
+          "capacity": 60,
+          "sold": 6,
+          "earnings": 90
+        }
+      ],
+      "salesChannels": {
+        "Online": 165
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 105,
+      "donations": {
+        "orders": 1,
+        "amount": 5
+      },
+      "organisationsRepresented": 66,
+      "questionsAnswered": {
+        "accessibility": 2,
+        "company": 165,
+        "dietary": 165,
+        "mobile": 66
+      }
+    },
+    {
+      "key": "2024-10-18--she-sharp-10-year-anniversary",
+      "eventName": "She Sharp 10-Year Anniversary",
+      "eventNameRaw": [
+        "She Sharp 10-Year Anniversary"
+      ],
+      "eventDate": "2024-10-18",
+      "eventTime": "5:30 pm - 8:00 pm",
+      "timezone": "NZDT",
+      "humanitixEventId": "UUHSSTQC",
+      "venue": "Deloitte Auckland (Level 20)",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 127,
+      "cancelled": 5,
+      "checkedIn": 95,
+      "checkInDataPresent": true,
+      "capacity": 280,
+      "sold": 127,
+      "available": 153,
+      "earnings": 1120,
+      "orders": 96,
+      "firstOrderAt": "2024-09-11",
+      "lastOrderAt": "2024-10-15",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 17,
+          "capacity": 29,
+          "sold": 17,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - She# EX Ambassadors",
+          "segment": "ambassador",
+          "tickets": 5,
+          "capacity": 29,
+          "sold": 5,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Volunteers",
+          "segment": "crew",
+          "tickets": 1,
+          "capacity": 15,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets",
+          "segment": "general",
+          "tickets": 56,
+          "capacity": 70,
+          "sold": 56,
+          "earnings": 1120
+        },
+        {
+          "ticketType": "Tickets - Guests",
+          "segment": "guest",
+          "tickets": 21,
+          "capacity": 25,
+          "sold": 21,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Fiserv",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Fonterra",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - FPH",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 5,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - HCL",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Kiwibank",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - LesMills",
+          "segment": "partner-guest",
+          "tickets": 1,
+          "capacity": 2,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - MYOB",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Woolworths",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets- She# Deloitte",
+          "segment": "partner-guest",
+          "tickets": 4,
+          "capacity": 5,
+          "sold": 4,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Hack_AcademyEx",
+          "segment": "session",
+          "tickets": 1,
+          "capacity": 10,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Speakers",
+          "segment": "speaker",
+          "tickets": 5,
+          "capacity": 5,
+          "sold": 5,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - UniClubs Tickets",
+          "segment": "student",
+          "tickets": 2,
+          "capacity": 5,
+          "sold": 2,
+          "earnings": 0
+        }
+      ],
+      "salesChannels": {
+        "Online": 127
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 71,
+      "donations": {
+        "orders": 1,
+        "amount": 10
+      },
+      "organisationsRepresented": 66,
+      "questionsAnswered": {
+        "accessibility": 4,
+        "company": 127,
+        "dietary": 127,
+        "mobile": 61
+      }
+    },
+    {
+      "key": "2024-11-15--she-sharp-and-hcltech",
+      "eventName": "She Sharp & HCLTech",
+      "eventNameRaw": [
+        "She Sharp & HCLTech"
+      ],
+      "eventDate": "2024-11-15",
+      "eventTime": "4:30 pm - 6:30 pm",
+      "timezone": "NZDT",
+      "humanitixEventId": "U5N5E5W6",
+      "venue": "Gallagher Academy of Performing Arts, Te Whare Tāpere Iti",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 78,
+      "cancelled": 0,
+      "checkedIn": 49,
+      "checkInDataPresent": true,
+      "capacity": 313,
+      "sold": 78,
+      "available": 235,
+      "earnings": 175,
+      "orders": 57,
+      "firstOrderAt": "2024-09-30",
+      "lastOrderAt": "2024-11-14",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 5,
+          "capacity": 29,
+          "sold": 5,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Volunteers",
+          "segment": "crew",
+          "tickets": 2,
+          "capacity": 15,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Fonterra",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - HCL",
+          "segment": "partner-guest",
+          "tickets": 40,
+          "capacity": 40,
+          "sold": 40,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - MYOB",
+          "segment": "partner-guest",
+          "tickets": 1,
+          "capacity": 2,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 8,
+          "capacity": 60,
+          "sold": 8,
+          "earnings": 160
+        },
+        {
+          "ticketType": "Tickets - Speakers",
+          "segment": "speaker",
+          "tickets": 5,
+          "capacity": 5,
+          "sold": 5,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 1,
+          "capacity": 60,
+          "sold": 1,
+          "earnings": 15
+        },
+        {
+          "ticketType": "Tickets - School Students",
+          "segment": "youth",
+          "tickets": 14,
+          "capacity": 20,
+          "sold": 14,
+          "earnings": 0
+        }
+      ],
+      "salesChannels": {
+        "Online": 78
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 55,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 29,
+      "questionsAnswered": {
+        "company": 78,
+        "dietary": 78,
+        "mobile": 18
+      }
+    },
+    {
+      "key": "2024-11-21--2024-google-educator-conference",
+      "eventName": "2024 Google Educator Conference",
+      "eventNameRaw": [
+        "2024 Google Educator Conference"
+      ],
+      "eventDate": "2024-11-21",
+      "eventTime": "8:00 am - 6:00 pm",
+      "timezone": "NZDT",
+      "humanitixEventId": "PWV4XN7S",
+      "venue": "GridAKL / Futures Lab / Level 4, 12 Madden St / Wynyard Qtr",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 122,
+      "cancelled": 1,
+      "checkedIn": 76,
+      "checkInDataPresent": true,
+      "capacity": 224,
+      "sold": 122,
+      "available": 102,
+      "earnings": 0,
+      "orders": 112,
+      "firstOrderAt": "2024-08-20",
+      "lastOrderAt": "2024-11-18",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 7,
+          "capacity": 26,
+          "sold": 7,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests",
+          "segment": "guest",
+          "tickets": 1,
+          "capacity": 25,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Speakers/ Workshop facilitators",
+          "segment": "speaker",
+          "tickets": 19,
+          "capacity": 20,
+          "sold": 19,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Teachers",
+          "segment": "teacher",
+          "tickets": 95,
+          "capacity": 95,
+          "sold": 95,
+          "earnings": 0
+        }
+      ],
+      "salesChannels": {
+        "Online": 122
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 27,
+      "donations": {
+        "orders": 7,
+        "amount": 300
+      },
+      "organisationsRepresented": 0,
+      "questionsAnswered": {
+        "dietary": 122
+      }
+    },
+    {
+      "key": "2025-03-14--she-sharp-and-academy-ex-international-women-s-day",
+      "eventName": "She Sharp & Academy EX: International Women's Day",
+      "eventNameRaw": [
+        "She Sharp & Academy EX: International Women's Day"
+      ],
+      "eventDate": "2025-03-14",
+      "eventTime": "5:00 pm - 7:00 pm",
+      "timezone": "NZDT",
+      "humanitixEventId": "MDJN9SK6",
+      "venue": "AcademyEX",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 75,
+      "cancelled": 2,
+      "checkedIn": 57,
+      "checkInDataPresent": true,
+      "capacity": 216,
+      "sold": 75,
+      "available": 141,
+      "earnings": 495,
+      "orders": 64,
+      "firstOrderAt": "2025-02-28",
+      "lastOrderAt": "2025-03-14",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 15,
+          "capacity": 20,
+          "sold": 15,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Volunteers",
+          "segment": "crew",
+          "tickets": 2,
+          "capacity": 3,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests",
+          "segment": "guest",
+          "tickets": 17,
+          "capacity": 25,
+          "sold": 17,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - FlexWare",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - AcademyEX",
+          "segment": "partner-guest",
+          "tickets": 1,
+          "capacity": 20,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Cosgrove",
+          "segment": "partner-guest",
+          "tickets": 1,
+          "capacity": 5,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Fonterra",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - MYOB",
+          "segment": "partner-guest",
+          "tickets": 3,
+          "capacity": 20,
+          "sold": 3,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 21,
+          "capacity": 50,
+          "sold": 21,
+          "earnings": 420
+        },
+        {
+          "ticketType": "Tickets - Speakers",
+          "segment": "speaker",
+          "tickets": 4,
+          "capacity": 10,
+          "sold": 4,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 5,
+          "capacity": 50,
+          "sold": 5,
+          "earnings": 75
+        },
+        {
+          "ticketType": "Tickets - UniClubs",
+          "segment": "student",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        }
+      ],
+      "salesChannels": {
+        "Online": 75
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 49,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 34,
+      "questionsAnswered": {
+        "accessibility": 4,
+        "company": 75,
+        "dietary": 75,
+        "mobile": 29
+      }
+    },
+    {
+      "key": "2025-04-16--she-sharp-iamremarkable",
+      "eventName": "She Sharp: #IAmRemarkable",
+      "eventNameRaw": [
+        "She Sharp: #IAmRemarkable"
+      ],
+      "eventDate": "2025-04-16",
+      "eventTime": "12:00 pm - 1:00 pm",
+      "timezone": "NZST",
+      "humanitixEventId": "TCG7GXSK",
+      "venue": "AcademyEX",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 63,
+      "cancelled": 0,
+      "checkedIn": 24,
+      "checkInDataPresent": true,
+      "capacity": 319,
+      "sold": 63,
+      "available": 256,
+      "earnings": 0,
+      "orders": 50,
+      "firstOrderAt": "2025-03-13",
+      "lastOrderAt": "2025-04-11",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 2,
+          "capacity": 20,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Online",
+          "segment": "general",
+          "tickets": 54,
+          "capacity": 150,
+          "sold": 54,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Mentees",
+          "segment": "mentee",
+          "tickets": 7,
+          "capacity": 10,
+          "sold": 7,
+          "earnings": 0
+        }
+      ],
+      "salesChannels": {
+        "Online": 63
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 9,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 38,
+      "questionsAnswered": {
+        "accessibility": 1,
+        "company": 63,
+        "dietary": 63,
+        "mobile": 27
+      }
+    },
+    {
+      "key": "2025-05-22--she-sharp-and-myob-tech-that-matches-your-vibe-find-your-perfect-fit",
+      "eventName": "She Sharp & MYOB: Tech That Matches Your Vibe - Find Your Perfect Fit",
+      "eventNameRaw": [
+        "She Sharp & MYOB: Tech That Matches Your Vibe - Find Your Perfect Fit"
+      ],
+      "eventDate": "2025-05-22",
+      "eventTime": "5:00 pm - 7:30 pm",
+      "timezone": "NZST",
+      "humanitixEventId": "LYT4QWKC",
+      "venue": "MYOB Office",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 63,
+      "cancelled": 0,
+      "checkedIn": 45,
+      "checkInDataPresent": true,
+      "capacity": 224,
+      "sold": 63,
+      "available": 161,
+      "earnings": 475,
+      "orders": 54,
+      "firstOrderAt": "2025-04-09",
+      "lastOrderAt": "2025-05-22",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 11,
+          "capacity": 20,
+          "sold": 11,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests",
+          "segment": "guest",
+          "tickets": 4,
+          "capacity": 20,
+          "sold": 4,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Fonterra",
+          "segment": "partner-guest",
+          "tickets": 5,
+          "capacity": 5,
+          "sold": 5,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - MYOB",
+          "segment": "partner-guest",
+          "tickets": 4,
+          "capacity": 20,
+          "sold": 4,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 20,
+          "capacity": 50,
+          "sold": 20,
+          "earnings": 400
+        },
+        {
+          "ticketType": "Tickets - Speakers",
+          "segment": "speaker",
+          "tickets": 5,
+          "capacity": 10,
+          "sold": 5,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 5,
+          "capacity": 50,
+          "sold": 5,
+          "earnings": 75
+        },
+        {
+          "ticketType": "Tickets - UniClubs",
+          "segment": "student",
+          "tickets": 9,
+          "capacity": 30,
+          "sold": 9,
+          "earnings": 0
+        }
+      ],
+      "salesChannels": {
+        "Online": 63
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 38,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 28,
+      "questionsAnswered": {
+        "accessibility": 1,
+        "company": 63,
+        "dietary": 63,
+        "mobile": 33
+      }
+    },
+    {
+      "key": "2025-07-30--she-sharp-and-techbabesnz-thrive-your-career-your-story",
+      "eventName": "She Sharp & TechBabesNZ: THRIVE: YOUR CAREER, YOUR STORY",
+      "eventNameRaw": [
+        " She Sharp & TechBabesNZ: THRIVE: YOUR CAREER, YOUR STORY"
+      ],
+      "eventDate": "2025-07-30",
+      "eventTime": "5:00 pm - 8:00 pm",
+      "timezone": "NZST",
+      "humanitixEventId": "65AHKJY3",
+      "venue": "HPE, Level 19 PWC Tower",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 98,
+      "cancelled": 1,
+      "checkedIn": 68,
+      "checkInDataPresent": true,
+      "capacity": 128,
+      "sold": 98,
+      "available": 30,
+      "earnings": 460,
+      "orders": 79,
+      "firstOrderAt": "2025-06-28",
+      "lastOrderAt": "2025-07-28",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 16,
+          "capacity": 20,
+          "sold": 16,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests",
+          "segment": "guest",
+          "tickets": 29,
+          "capacity": 29,
+          "sold": 29,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - FPH",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 2,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - HPE",
+          "segment": "partner-guest",
+          "tickets": 3,
+          "capacity": 10,
+          "sold": 3,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - MYOB",
+          "segment": "partner-guest",
+          "tickets": 1,
+          "capacity": 5,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - TECHBABES",
+          "segment": "partner-guest",
+          "tickets": 11,
+          "capacity": 11,
+          "sold": 11,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 17,
+          "capacity": 17,
+          "sold": 17,
+          "earnings": 340
+        },
+        {
+          "ticketType": "Tickets - Speakers",
+          "segment": "speaker",
+          "tickets": 6,
+          "capacity": null,
+          "sold": null,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Speakers /Mentors",
+          "segment": "speaker",
+          "tickets": 5,
+          "capacity": 11,
+          "sold": 11,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 8,
+          "capacity": 8,
+          "sold": 8,
+          "earnings": 120
+        }
+      ],
+      "salesChannels": {
+        "Online": 98
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 73,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 54,
+      "questionsAnswered": {
+        "accessibility": 1,
+        "company": 98,
+        "dietary": 98,
+        "mobile": 39
+      }
+    },
+    {
+      "key": "2025-09-03--she-sharp-and-fonterra-business-and-technology-transformation-through-platforms-and-products",
+      "eventName": "She Sharp & Fonterra:Business and Technology Transformation Through Platforms and Products",
+      "eventNameRaw": [
+        "She Sharp & Fonterra:Business and Technology Transformation Through Platforms and Products "
+      ],
+      "eventDate": "2025-09-03",
+      "eventTime": "5:30 pm - 7:30 pm",
+      "timezone": "NZST",
+      "humanitixEventId": "MYM4W36C",
+      "venue": "Fonterra",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 96,
+      "cancelled": 2,
+      "checkedIn": 61,
+      "checkInDataPresent": true,
+      "capacity": 171,
+      "sold": 96,
+      "available": 75,
+      "earnings": 575,
+      "orders": 69,
+      "firstOrderAt": "2025-08-04",
+      "lastOrderAt": "2025-09-03",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 15,
+          "capacity": 20,
+          "sold": 15,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests",
+          "segment": "guest",
+          "tickets": 21,
+          "capacity": 50,
+          "sold": 21,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Fonterra",
+          "segment": "partner-guest",
+          "tickets": 16,
+          "capacity": 20,
+          "sold": 16,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - FPH",
+          "segment": "partner-guest",
+          "tickets": 4,
+          "capacity": 5,
+          "sold": 4,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - MYOB",
+          "segment": "partner-guest",
+          "tickets": 1,
+          "capacity": 5,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 25,
+          "capacity": 25,
+          "sold": 25,
+          "earnings": 500
+        },
+        {
+          "ticketType": "Tickets - Speakers / Mentors",
+          "segment": "speaker",
+          "tickets": 9,
+          "capacity": 11,
+          "sold": 9,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 5,
+          "capacity": 5,
+          "sold": 5,
+          "earnings": 75
+        }
+      ],
+      "salesChannels": {
+        "Box Office": 1,
+        "Online": 95
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 65,
+      "donations": {
+        "orders": 1,
+        "amount": 10
+      },
+      "organisationsRepresented": 38,
+      "questionsAnswered": {
+        "company": 95,
+        "dietary": 95,
+        "mobile": 34
+      }
+    },
+    {
+      "key": "2025-10-03--she-sharp-securecodewarrior-xero-code-secure-lead-the-future-women-in-cybersecurity-workshop",
+      "eventName": "She Sharp, SecureCodeWarrior, Xero: Code Secure. Lead the Future: Women in Cybersecurity Workshop",
+      "eventNameRaw": [
+        "She Sharp, SecureCodeWarrior, Xero: Code Secure. Lead the Future: Women in Cybersecurity Workshop"
+      ],
+      "eventDate": "2025-10-03",
+      "eventTime": "9:30 am - 2:00 pm",
+      "timezone": "NZDT",
+      "humanitixEventId": "T8MNTHVM",
+      "venue": "Xero Office (Level 2)",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 62,
+      "cancelled": 0,
+      "checkedIn": 52,
+      "checkInDataPresent": true,
+      "capacity": 118,
+      "sold": 62,
+      "available": 56,
+      "earnings": 455,
+      "orders": 58,
+      "firstOrderAt": "2025-09-01",
+      "lastOrderAt": "2025-10-01",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 8,
+          "capacity": 8,
+          "sold": 8,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Volunteers",
+          "segment": "crew",
+          "tickets": 2,
+          "capacity": 3,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests",
+          "segment": "guest",
+          "tickets": 9,
+          "capacity": 9,
+          "sold": 9,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - SCW",
+          "segment": "partner-guest",
+          "tickets": 3,
+          "capacity": 3,
+          "sold": 3,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Vector",
+          "segment": "partner-guest",
+          "tickets": 4,
+          "capacity": 4,
+          "sold": 4,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Xero",
+          "segment": "partner-guest",
+          "tickets": 1,
+          "capacity": 1,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 15,
+          "capacity": 15,
+          "sold": 15,
+          "earnings": 300
+        },
+        {
+          "ticketType": "Tickets - Professionals (Additional)",
+          "segment": "professional",
+          "tickets": 1,
+          "capacity": 1,
+          "sold": 1,
+          "earnings": 20
+        },
+        {
+          "ticketType": "Tickets - Speakers / Mentors",
+          "segment": "speaker",
+          "tickets": 3,
+          "capacity": 11,
+          "sold": 3,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 9,
+          "capacity": 9,
+          "sold": 9,
+          "earnings": 135
+        },
+        {
+          "ticketType": "Tickets - UniClubs",
+          "segment": "student",
+          "tickets": 7,
+          "capacity": 7,
+          "sold": 7,
+          "earnings": 0
+        }
+      ],
+      "salesChannels": {
+        "Online": 62
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 38,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 26,
+      "questionsAnswered": {
+        "accessibility": 2,
+        "company": 62,
+        "dietary": 62,
+        "mobile": 29,
+        "photoConsent": 62
+      }
+    },
+    {
+      "key": "2025-11-12--she-sharp-and-vector-future-ready-data-ai-digital-innovation-and-inclusive-careers-at-vector",
+      "eventName": "She Sharp & Vector: Future-Ready: Data, AI, Digital Innovation & Inclusive Careers at Vector",
+      "eventNameRaw": [
+        "She Sharp & Vector: Future-Ready: Data, AI, Digital Innovation & Inclusive Careers at Vector"
+      ],
+      "eventDate": "2025-11-12",
+      "eventTime": "5:00 pm - 8:00 pm",
+      "timezone": "NZDT",
+      "humanitixEventId": "QZQHPPXR",
+      "venue": "Vector’s office",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 93,
+      "cancelled": 0,
+      "checkedIn": 67,
+      "checkInDataPresent": true,
+      "capacity": 231,
+      "sold": 93,
+      "available": 138,
+      "earnings": 615,
+      "orders": 65,
+      "firstOrderAt": "2025-10-05",
+      "lastOrderAt": "2025-11-11",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 15,
+          "capacity": 20,
+          "sold": 15,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests",
+          "segment": "guest",
+          "tickets": 13,
+          "capacity": 50,
+          "sold": 13,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - MYOB",
+          "segment": "partner-guest",
+          "tickets": 1,
+          "capacity": 5,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Vector",
+          "segment": "partner-guest",
+          "tickets": 20,
+          "capacity": 40,
+          "sold": 20,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Xero",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 5,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 21,
+          "capacity": 25,
+          "sold": 21,
+          "earnings": 420
+        },
+        {
+          "ticketType": "Tickets - Speakers / Mentors",
+          "segment": "speaker",
+          "tickets": 4,
+          "capacity": 11,
+          "sold": 4,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 13,
+          "capacity": 20,
+          "sold": 13,
+          "earnings": 195
+        },
+        {
+          "ticketType": "Tickets - UniClubs",
+          "segment": "student",
+          "tickets": 4,
+          "capacity": 30,
+          "sold": 4,
+          "earnings": 0
+        }
+      ],
+      "salesChannels": {
+        "Manual": 1,
+        "Online": 92
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 58,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 47,
+      "questionsAnswered": {
+        "accessibility": 2,
+        "company": 93,
+        "dietary": 93,
+        "jobTitle": 89,
+        "mobile": 37,
+        "photoConsent": 90
+      }
+    },
+    {
+      "key": "2025-11-21--she-sharp-and-hcltech-ai-empowerment-shaping-an-inclusive-digital-future",
+      "eventName": "She Sharp & HCLTech: AI Empowerment: Shaping an Inclusive Digital Future",
+      "eventNameRaw": [
+        "She Sharp & HCLTech: AI Empowerment: Shaping an Inclusive Digital Future"
+      ],
+      "eventDate": "2025-11-21",
+      "eventTime": "4:30 pm - 7:30 pm",
+      "timezone": "NZDT",
+      "humanitixEventId": "9RWPAL97",
+      "venue": "University Union Building, University of Otago",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 68,
+      "cancelled": 0,
+      "checkedIn": 55,
+      "checkInDataPresent": true,
+      "capacity": 241,
+      "sold": 68,
+      "available": 173,
+      "earnings": 95,
+      "orders": 32,
+      "firstOrderAt": "2025-10-09",
+      "lastOrderAt": "2025-11-20",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 7,
+          "capacity": 20,
+          "sold": 7,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests",
+          "segment": "guest",
+          "tickets": 29,
+          "capacity": 50,
+          "sold": 29,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Students",
+          "segment": "guest",
+          "tickets": 3,
+          "capacity": null,
+          "sold": null,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - Dunedin Council",
+          "segment": "partner-guest",
+          "tickets": 4,
+          "capacity": 20,
+          "sold": 4,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - HCLTech",
+          "segment": "partner-guest",
+          "tickets": 14,
+          "capacity": 20,
+          "sold": 14,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 4,
+          "capacity": 25,
+          "sold": 4,
+          "earnings": 80
+        },
+        {
+          "ticketType": "Tickets - Speakers / Mentors",
+          "segment": "speaker",
+          "tickets": 6,
+          "capacity": 11,
+          "sold": 6,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 1,
+          "capacity": 20,
+          "sold": 1,
+          "earnings": 15
+        }
+      ],
+      "salesChannels": {
+        "Online": 68
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 63,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 30,
+      "questionsAnswered": {
+        "company": 68,
+        "dietary": 68,
+        "mobile": 7
+      }
+    },
+    {
+      "key": "2026-03-06--she-sharp-and-academyex-international-women-s-day-2026",
+      "eventName": "She Sharp & academyEX: International Women's Day 2026",
+      "eventNameRaw": [
+        "She Sharp & academyEX: International Women's Day 2026"
+      ],
+      "eventDate": "2026-03-06",
+      "eventTime": "5:00 pm - 7:30 pm",
+      "timezone": "NZDT",
+      "humanitixEventId": "QW8UA6W7",
+      "venue": "academyEX",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 103,
+      "cancelled": 5,
+      "checkedIn": 72,
+      "checkInDataPresent": true,
+      "capacity": 207,
+      "sold": 103,
+      "available": 104,
+      "earnings": 475,
+      "orders": 87,
+      "firstOrderAt": "2026-02-12",
+      "lastOrderAt": "2026-03-05",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 15,
+          "capacity": 20,
+          "sold": 15,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests",
+          "segment": "guest",
+          "tickets": 35,
+          "capacity": 40,
+          "sold": 35,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - She Sharp Sponsors",
+          "segment": "host",
+          "tickets": 2,
+          "capacity": 30,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests - AcademyEX",
+          "segment": "partner-guest",
+          "tickets": 12,
+          "capacity": 20,
+          "sold": 12,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 20,
+          "capacity": 20,
+          "sold": 20,
+          "earnings": 400
+        },
+        {
+          "ticketType": "Tickets - Speakers",
+          "segment": "speaker",
+          "tickets": 6,
+          "capacity": 7,
+          "sold": 6,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 5,
+          "capacity": 50,
+          "sold": 5,
+          "earnings": 75
+        },
+        {
+          "ticketType": "Tickets - Uniclubs",
+          "segment": "student",
+          "tickets": 8,
+          "capacity": 20,
+          "sold": 8,
+          "earnings": 0
+        }
+      ],
+      "salesChannels": {
+        "Manual": 5,
+        "Online": 98
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 71,
+      "donations": {
+        "orders": 2,
+        "amount": 10
+      },
+      "organisationsRepresented": 60,
+      "questionsAnswered": {
+        "accessibility": 7,
+        "company": 103,
+        "dietary": 103,
+        "mobile": 52
+      }
+    },
+    {
+      "key": "2026-03-25--her-waka",
+      "eventName": "Her Waka",
+      "eventNameRaw": [
+        "Her Waka"
+      ],
+      "eventDate": "2026-03-25",
+      "eventTime": "12:00 pm - 2:00 pm",
+      "timezone": "NZDT",
+      "humanitixEventId": "RFYJCQTQ",
+      "venue": "academyEX - Pikopiko Room",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 39,
+      "cancelled": 0,
+      "checkedIn": 27,
+      "checkInDataPresent": true,
+      "capacity": 45,
+      "sold": 39,
+      "available": 6,
+      "earnings": 0,
+      "orders": 38,
+      "firstOrderAt": "2026-02-20",
+      "lastOrderAt": "2026-03-25",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - Ambassadors",
+          "segment": "ambassador",
+          "tickets": 4,
+          "capacity": 5,
+          "sold": 4,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - MSD",
+          "segment": "partner-guest",
+          "tickets": 5,
+          "capacity": 5,
+          "sold": 5,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - RCSA",
+          "segment": "partner-guest",
+          "tickets": 4,
+          "capacity": 5,
+          "sold": 4,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - March 2026",
+          "segment": "session",
+          "tickets": 25,
+          "capacity": 25,
+          "sold": 25,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Speakers",
+          "segment": "speaker",
+          "tickets": 1,
+          "capacity": 5,
+          "sold": 1,
+          "earnings": 0
+        }
+      ],
+      "salesChannels": {
+        "Online": 39
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 39,
+      "donations": {
+        "orders": 7,
+        "amount": 30
+      },
+      "organisationsRepresented": 9,
+      "questionsAnswered": {
+        "accessibility": 1,
+        "company": 39,
+        "dietary": 39,
+        "mobile": 24
+      }
+    },
+    {
+      "key": "2026-04-07--her-waka-april-2026",
+      "eventName": "Her Waka (April 2026)",
+      "eventNameRaw": [
+        "Her Waka (April 2026)"
+      ],
+      "eventDate": "2026-04-07",
+      "eventTime": "12:00 pm - 2:00 pm",
+      "timezone": "NZST",
+      "humanitixEventId": "5KFAFQAB",
+      "venue": "academyEX",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 32,
+      "cancelled": 1,
+      "checkedIn": 24,
+      "checkInDataPresent": true,
+      "capacity": 45,
+      "sold": 32,
+      "available": 13,
+      "earnings": 0,
+      "orders": 36,
+      "firstOrderAt": "2026-03-16",
+      "lastOrderAt": "2026-04-06",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - Ambassadors",
+          "segment": "ambassador",
+          "tickets": 3,
+          "capacity": 5,
+          "sold": 3,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - RCSA",
+          "segment": "partner-guest",
+          "tickets": 3,
+          "capacity": 5,
+          "sold": 3,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - April 2026",
+          "segment": "session",
+          "tickets": 25,
+          "capacity": 25,
+          "sold": 25,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Speakers",
+          "segment": "speaker",
+          "tickets": 1,
+          "capacity": 5,
+          "sold": 1,
+          "earnings": 0
+        }
+      ],
+      "salesChannels": {
+        "Online": 32
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 32,
+      "donations": {
+        "orders": 5,
+        "amount": 30.33
+      },
+      "organisationsRepresented": 7,
+      "questionsAnswered": {
+        "accessibility": 3,
+        "company": 32,
+        "dietary": 32,
+        "mobile": 21
+      }
+    },
+    {
+      "key": "2026-04-16--own-your-energy-with-candice-murray-presented-by-she-sharp-and-metlifecare",
+      "eventName": "Own Your Energy with Candice Murray - Presented by She Sharp & Metlifecare",
+      "eventNameRaw": [
+        "Own Your Energy with Candice Murray - Presented by She Sharp & Metlifecare"
+      ],
+      "eventDate": "2026-04-16",
+      "eventTime": "5:00 pm - 7:30 pm",
+      "timezone": "NZST",
+      "humanitixEventId": "6NMYS92X",
+      "venue": "Metlifecare",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 81,
+      "cancelled": 4,
+      "checkedIn": 60,
+      "checkInDataPresent": true,
+      "capacity": 186,
+      "sold": 81,
+      "available": 105,
+      "earnings": 385,
+      "orders": 73,
+      "firstOrderAt": "2026-03-06",
+      "lastOrderAt": "2026-04-20",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 12,
+          "capacity": 20,
+          "sold": 12,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests",
+          "segment": "guest",
+          "tickets": 14,
+          "capacity": null,
+          "sold": null,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests of Ambassadors",
+          "segment": "guest",
+          "tickets": 11,
+          "capacity": 40,
+          "sold": 25,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests Of Speakers",
+          "segment": "guest",
+          "tickets": 1,
+          "capacity": null,
+          "sold": null,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Metlifecare (Host)",
+          "segment": "host",
+          "tickets": 1,
+          "capacity": 20,
+          "sold": 5,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - AUT",
+          "segment": "partner-guest",
+          "tickets": 1,
+          "capacity": 3,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - HCLTech",
+          "segment": "partner-guest",
+          "tickets": 1,
+          "capacity": 3,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Metlifecare",
+          "segment": "partner-guest",
+          "tickets": 4,
+          "capacity": null,
+          "sold": null,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - MSD",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 3,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - UNESCO",
+          "segment": "partner-guest",
+          "tickets": 3,
+          "capacity": 10,
+          "sold": 3,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 11,
+          "capacity": 20,
+          "sold": 11,
+          "earnings": 220
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 11,
+          "capacity": 25,
+          "sold": 11,
+          "earnings": 165
+        },
+        {
+          "ticketType": "Tickets - Uniclubs",
+          "segment": "student",
+          "tickets": 9,
+          "capacity": 20,
+          "sold": 9,
+          "earnings": 0
+        }
+      ],
+      "salesChannels": {
+        "Manual": 7,
+        "Online": 74
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 47,
+      "donations": {
+        "orders": 1,
+        "amount": 10
+      },
+      "organisationsRepresented": 39,
+      "questionsAnswered": {
+        "accessibility": 12,
+        "company": 81,
+        "dietary": 81,
+        "mobile": 52
+      }
+    },
+    {
+      "key": "2026-05-05--her-waka-may-2026",
+      "eventName": "Her Waka (May 2026)",
+      "eventNameRaw": [
+        "Her Waka (May 2026)"
+      ],
+      "eventDate": "2026-05-05",
+      "eventTime": "12:00 pm - 2:00 pm",
+      "timezone": "NZST",
+      "humanitixEventId": "3TWU47XN",
+      "venue": "academyEX",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 33,
+      "cancelled": 0,
+      "checkedIn": 29,
+      "checkInDataPresent": true,
+      "capacity": 45,
+      "sold": 33,
+      "available": 12,
+      "earnings": 0,
+      "orders": 30,
+      "firstOrderAt": "2026-02-20",
+      "lastOrderAt": "2026-05-05",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - Ambassadors",
+          "segment": "ambassador",
+          "tickets": 3,
+          "capacity": 5,
+          "sold": 3,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - MSD",
+          "segment": "partner-guest",
+          "tickets": 5,
+          "capacity": 5,
+          "sold": 5,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - RCSA",
+          "segment": "partner-guest",
+          "tickets": 3,
+          "capacity": 5,
+          "sold": 3,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - May 2026",
+          "segment": "session",
+          "tickets": 20,
+          "capacity": 25,
+          "sold": 20,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Speakers",
+          "segment": "speaker",
+          "tickets": 2,
+          "capacity": 5,
+          "sold": 2,
+          "earnings": 0
+        }
+      ],
+      "salesChannels": {
+        "Online": 33
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 33,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 6,
+      "questionsAnswered": {
+        "accessibility": 2,
+        "company": 33,
+        "dietary": 33,
+        "mobile": 20
+      }
+    },
+    {
+      "key": "2026-05-15--making-linkedin-work-for-you",
+      "eventName": "Making LinkedIn Work for You",
+      "eventNameRaw": [
+        "Making LinkedIn Work for You"
+      ],
+      "eventDate": "2026-05-15",
+      "eventTime": "5:00 pm - 7:30 pm",
+      "timezone": "NZST",
+      "humanitixEventId": "XYHMSYJG",
+      "venue": "AUT, Building WZ416",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 106,
+      "cancelled": 1,
+      "checkedIn": 70,
+      "checkInDataPresent": true,
+      "capacity": 207,
+      "sold": 106,
+      "available": 101,
+      "earnings": 340,
+      "orders": 96,
+      "firstOrderAt": "2026-04-22",
+      "lastOrderAt": "2026-05-18",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 17,
+          "capacity": 20,
+          "sold": 17,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests of Ambassadors",
+          "segment": "guest",
+          "tickets": 22,
+          "capacity": 40,
+          "sold": 22,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests Of Speaker",
+          "segment": "guest",
+          "tickets": 1,
+          "capacity": 10,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - AUT",
+          "segment": "partner-guest",
+          "tickets": 46,
+          "capacity": 50,
+          "sold": 46,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - MYOB",
+          "segment": "partner-guest",
+          "tickets": 1,
+          "capacity": 3,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 11,
+          "capacity": 20,
+          "sold": 11,
+          "earnings": 220
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 8,
+          "capacity": 25,
+          "sold": 8,
+          "earnings": 120
+        }
+      ],
+      "salesChannels": {
+        "Manual": 6,
+        "Online": 100
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 82,
+      "donations": {
+        "orders": 4,
+        "amount": 54.51
+      },
+      "organisationsRepresented": 30,
+      "questionsAnswered": {
+        "accessibility": 2,
+        "company": 106,
+        "dietary": 106,
+        "mobile": 53
+      }
+    },
+    {
+      "key": "2026-06-02--her-waka-june-2026",
+      "eventName": "Her Waka (June 2026)",
+      "eventNameRaw": [
+        "Her Waka (June 2026)"
+      ],
+      "eventDate": "2026-06-02",
+      "eventTime": "12:00 am - 2:00 pm",
+      "timezone": "NZST",
+      "humanitixEventId": "H93SB6AU",
+      "venue": "academyEX - Pikopiko Room",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 24,
+      "cancelled": 0,
+      "checkedIn": 16,
+      "checkInDataPresent": true,
+      "capacity": 50,
+      "sold": 24,
+      "available": 26,
+      "earnings": 0,
+      "orders": 24,
+      "firstOrderAt": "2026-02-20",
+      "lastOrderAt": "2026-06-02",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - Ambassadors",
+          "segment": "ambassador",
+          "tickets": 4,
+          "capacity": 5,
+          "sold": 4,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - MSD",
+          "segment": "partner-guest",
+          "tickets": 3,
+          "capacity": 10,
+          "sold": 3,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - RCSA",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 5,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - June 2026",
+          "segment": "session",
+          "tickets": 14,
+          "capacity": 25,
+          "sold": 14,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Speakers",
+          "segment": "speaker",
+          "tickets": 1,
+          "capacity": 5,
+          "sold": 1,
+          "earnings": 0
+        }
+      ],
+      "salesChannels": {
+        "Online": 24
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 24,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 6,
+      "questionsAnswered": {
+        "accessibility": 3,
+        "company": 24,
+        "dietary": 24,
+        "mobile": 17
+      }
+    },
+    {
+      "key": "2026-06-13--youth-tech-series-ai-and-electronics-workshop",
+      "eventName": "Youth Tech Series - AI & Electronics Workshop",
+      "eventNameRaw": [
+        "Youth Tech Series - AI & Electronics Workshop"
+      ],
+      "eventDate": "2026-06-13",
+      "eventTime": "2:30 pm - 4:30 pm",
+      "timezone": "NZST",
+      "humanitixEventId": "YQHM9RVP",
+      "venue": "Fruitvale Primary School",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 24,
+      "cancelled": 1,
+      "checkedIn": 0,
+      "checkInDataPresent": false,
+      "capacity": 42,
+      "sold": 24,
+      "available": 18,
+      "earnings": 0,
+      "orders": 25,
+      "firstOrderAt": "2026-05-29",
+      "lastOrderAt": "2026-06-13",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - Ambassdors",
+          "segment": "ambassador",
+          "tickets": 7,
+          "capacity": 7,
+          "sold": 7,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 17,
+          "capacity": 20,
+          "sold": 17,
+          "earnings": 0
+        }
+      ],
+      "salesChannels": {
+        "Online": 24
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 24,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 10,
+      "questionsAnswered": {
+        "accessibility": 1,
+        "company": 24,
+        "dietary": 24,
+        "mobile": 14
+      }
+    },
+    {
+      "key": "2026-06-20--youth-tech-series-electronics-workshop",
+      "eventName": "Youth Tech Series - Electronics Workshop",
+      "eventNameRaw": [
+        "Youth Tech Series - Electronics Workshop"
+      ],
+      "eventDate": "2026-06-20",
+      "eventTime": "2:30 pm - 4:30 pm",
+      "timezone": "NZST",
+      "humanitixEventId": "K5QL56XG",
+      "venue": "Fruitvale Primary School",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 26,
+      "cancelled": 1,
+      "checkedIn": 0,
+      "checkInDataPresent": false,
+      "capacity": 41,
+      "sold": 26,
+      "available": 15,
+      "earnings": 0,
+      "orders": 26,
+      "firstOrderAt": "2026-06-10",
+      "lastOrderAt": "2026-06-19",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - Ambassdors",
+          "segment": "ambassador",
+          "tickets": 6,
+          "capacity": 6,
+          "sold": 6,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 15,
+          "capacity": 20,
+          "sold": 15,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Little Engineers",
+          "segment": "youth",
+          "tickets": 5,
+          "capacity": 5,
+          "sold": 5,
+          "earnings": 0
+        }
+      ],
+      "salesChannels": {
+        "Online": 26
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 26,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 9,
+      "questionsAnswered": {
+        "accessibility": 5,
+        "company": 26,
+        "dietary": 26,
+        "mobile": 16
+      }
+    },
+    {
+      "key": "2026-07-30--she-sharp-and-myob-working-smarter-ai-myob-and-the-new-delivery-landscape",
+      "eventName": "She Sharp & MYOB: Working Smarter: AI, MYOB, and the New Delivery Landscape",
+      "eventNameRaw": [
+        "She Sharp & MYOB: Working Smarter: AI, MYOB, and the New Delivery Landscape"
+      ],
+      "eventDate": "2026-07-30",
+      "eventTime": "5:00 pm - 7:30 pm",
+      "timezone": "NZST",
+      "humanitixEventId": "5AUT3LDY",
+      "venue": "MYOB Office",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 87,
+      "cancelled": 0,
+      "checkedIn": 51,
+      "checkInDataPresent": true,
+      "capacity": 149,
+      "sold": 87,
+      "available": 62,
+      "earnings": 475,
+      "orders": 72,
+      "firstOrderAt": "2026-06-08",
+      "lastOrderAt": "2026-07-30",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 18,
+          "capacity": 20,
+          "sold": 18,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests of Ambassadors",
+          "segment": "guest",
+          "tickets": 22,
+          "capacity": 25,
+          "sold": 22,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - MYOB (Host)",
+          "segment": "host",
+          "tickets": 10,
+          "capacity": 20,
+          "sold": 10,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - AUT",
+          "segment": "partner-guest",
+          "tickets": 1,
+          "capacity": 3,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - HCLTech",
+          "segment": "partner-guest",
+          "tickets": 3,
+          "capacity": 3,
+          "sold": 3,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Lesmills",
+          "segment": "partner-guest",
+          "tickets": 1,
+          "capacity": 3,
+          "sold": 1,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - MSD",
+          "segment": "partner-guest",
+          "tickets": 2,
+          "capacity": 3,
+          "sold": 2,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 17,
+          "capacity": 25,
+          "sold": 17,
+          "earnings": 340
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 9,
+          "capacity": 20,
+          "sold": 9,
+          "earnings": 135
+        },
+        {
+          "ticketType": "Tickets - UNICLUBS",
+          "segment": "student",
+          "tickets": 4,
+          "capacity": 15,
+          "sold": 4,
+          "earnings": 0
+        }
+      ],
+      "salesChannels": {
+        "Box Office": 1,
+        "Online": 86
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 60,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 38,
+      "questionsAnswered": {
+        "accessibility": 11,
+        "company": 86,
+        "dietary": 86,
+        "mobile": 44
+      }
+    },
+    {
+      "key": "2026-09-03--she-sharp-and-les-mills-no-pain-all-gain-getting-fit-for-ai",
+      "eventName": "She Sharp & Les Mills: No Pain, All Gain - Getting fit for AI",
+      "eventNameRaw": [
+        "She Sharp & Les Mills: No Pain, All Gain - Getting fit for AI"
+      ],
+      "eventDate": "2026-09-03",
+      "eventTime": "5:00 pm - 7:30 pm",
+      "timezone": "NZST",
+      "humanitixEventId": "K5SJHRMS",
+      "venue": "Les Mills Office",
+      "organiser": "She Sharp",
+      "seriesKey": null,
+      "sessionOrdinal": null,
+      "registered": 15,
+      "cancelled": 0,
+      "checkedIn": 0,
+      "checkInDataPresent": false,
+      "capacity": 132,
+      "sold": 15,
+      "available": 117,
+      "earnings": 55,
+      "orders": 15,
+      "firstOrderAt": "2026-08-05",
+      "lastOrderAt": "2026-08-17",
+      "ticketTypes": [
+        {
+          "ticketType": "Tickets - She# Ambassadors",
+          "segment": "ambassador",
+          "tickets": 4,
+          "capacity": 20,
+          "sold": 4,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Guests of Ambassadors",
+          "segment": "guest",
+          "tickets": 3,
+          "capacity": 20,
+          "sold": 3,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Les Mills",
+          "segment": "partner-guest",
+          "tickets": 5,
+          "capacity": 20,
+          "sold": 5,
+          "earnings": 0
+        },
+        {
+          "ticketType": "Tickets - Professionals",
+          "segment": "professional",
+          "tickets": 2,
+          "capacity": 25,
+          "sold": 2,
+          "earnings": 40
+        },
+        {
+          "ticketType": "Tickets - Students",
+          "segment": "student",
+          "tickets": 1,
+          "capacity": 20,
+          "sold": 1,
+          "earnings": 15
+        }
+      ],
+      "salesChannels": {
+        "Online": 15
+      },
+      "discountCodeUses": 0,
+      "accessCodeUses": 12,
+      "donations": {
+        "orders": 0,
+        "amount": 0
+      },
+      "organisationsRepresented": 10,
+      "questionsAnswered": {
+        "accessibility": 2,
+        "company": 15,
+        "dietary": 15,
+        "mobile": 12
+      }
+    }
+  ]
+}

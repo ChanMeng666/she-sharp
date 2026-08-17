@@ -92,44 +92,50 @@
       "lib/data/json/events-custom.json — event ids 85 and 87–94, the nine records dated between 6 March and 20 June 2026. Id 86 is a 2023 event and is excluded.",
     ),
 
-    // Registration and attendance totals mix four reconciled events with five
-    // that are not yet reconciled, so the totals are estimates, not counts.
-    registered: e(
-      408,
-      "Sum across the nine H1 events. Only four are verified from lib/data/json/events-custom.json (103 + 39 + 32 + 81 = 255); the May 5 HER WAKA figure is a suspect partial export and four events carry placeholder registrations. Replace with the Humanitix export before FINAL.",
+    // All nine events are now reconciled against the Humanitix account export
+    // taken 2026-08-17, which is also what corrected the May 5 HER WAKA figure
+    // below. See docs/development/HUMANITIX_ARCHIVE.md.
+    registered: v(
+      468,
+      "Sum of `registered` across the nine Humanitix instances dated 2026-01-01..2026-06-30. Source: lib/data/json/humanitix/events.json (export 2026-08-17, attendee spine sha256 4bbac21d8239d5a7…).",
     ),
-    checked-in: e(
-      297,
-      "Sum across the nine H1 events. Verified component is 183 across the four reconciled events; the remainder is placeholder or, for May 5, a suspect zero. Replace with the Humanitix export before FINAL.",
+    checked-in: v(
+      298,
+      "Sum of `checkedIn` across the SEVEN of nine instances that ran a check-in. The two Youth Tech sessions scanned nobody, so this is not a total over all nine and the check-in rate below is not 298 ÷ 468. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
     ),
 
-    // The verified subset — safe to quote on its own, and the only attendance
-    // claim in this report that survives a FINAL build unchanged.
+    // These four kept their names when the archive landed: they used to mean
+    // "the subset we could stand behind", and they now mean the whole
+    // half-year, because the export reconciled the other five. Every page that
+    // reads them gets a bigger true number, not a differently-caveated one.
     registered-verified: v(
-      255,
-      "Sum of the four reconciled H1 events in lib/data/json/events-custom.json: IWD 2026 (103), HER WAKA March (39), HER WAKA April (32), Own Your Energy (81).",
+      468,
+      "All nine H1 events are reconciled against the Humanitix export; this is identical to `registered` and is kept so the pages quoting a verified-only figure need no rewiring. Source: lib/data/json/humanitix/events.json.",
     ),
     checked-in-verified: v(
-      183,
-      "Sum of `checkedIn` for the same four reconciled events in lib/data/json/events-custom.json: 72 + 27 + 24 + 60.",
+      298,
+      "As `checked-in`: the sum across the seven instances that recorded check-ins. Source: lib/data/json/humanitix/events.json.",
     ),
     events-verified: v(
-      4,
-      "Of the nine H1 events in lib/data/json/events-custom.json, four carry complete non-null attendees and checkedIn values.",
+      9,
+      "All nine H1 events in lib/data/json/events-custom.json now carry registration figures reconciled against the Humanitix export.",
     ),
     check-in-rate-verified: v(
-      72,
-      "183 ÷ 255 across the four reconciled H1 events in lib/data/json/events-custom.json, rounded to the nearest percent. Compares with the 67% average reported for 2025 in public/docs/she-sharp-impact-report-2025.pdf, p.3.",
+      71,
+      "298 ÷ 418 — check-ins over the registrations of the seven instances that RAN a check-in, not over all 468. Including the two Youth Tech sessions, which scanned nobody, would report 64% and would be measuring the absence of a scanner rather than attendance. Compares with the 67% average reported for 2025 in public/docs/she-sharp-impact-report-2025.pdf, p.3.",
     ),
 
-    avg-registered: e(
-      45,
-      "408 ÷ 9. Inherits the placeholder registrations in five of the nine events; the equivalent 2025 figure was 74 (public/docs/she-sharp-impact-report-2025.pdf, p.5), but 2025 held no small-cohort programme sessions, so the two are not like-for-like.",
+    avg-registered: v(
+      52,
+      "468 ÷ 9 events. The equivalent 2025 figure was 74 (public/docs/she-sharp-impact-report-2025.pdf, p.5), but 2025 held no small-cohort programme sessions, so the two are not like-for-like. Source: lib/data/json/humanitix/events.json.",
     ),
 
-    // Unique employers represented by attendees. Not collected in the repo at
-    // all — the 2025 equivalent came from the Humanitix checkout field.
-    companies: p(96),
+    // Unique employers represented by attendees, from the Humanitix checkout
+    // field — the same source as the 2025 equivalent.
+    companies: v(
+      113,
+      "Distinct canonical employers among H1 2026 attendees who answered the Company/Organisation question at checkout, normalised by lib/data/json/humanitix/organisations.json (which folds `Work and Income` and `WINZ` into MSD, and the three spellings of She Sharp into one). Self-reported and never verified. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+    ),
 
     // Programme shape.
     cohorts: v(
@@ -144,9 +150,9 @@
       2,
       "lib/data/json/events-custom.json — peyvand-academy-13-june-2026 and peyvand-academy-20-june-2026.",
     ),
-    rangatahi-reached: e(
-      46,
-      "Sum of the two Youth Tech Series workshops, both of which have null attendee fields in lib/data/json/events-custom.json. Placeholder cohort sizes consistent with a school-hall workshop; reconcile against the Peyvand Academy roll before FINAL.",
+    rangatahi-reached: v(
+      50,
+      "24 + 26 registrations across the two Youth Tech Series workshops (13 and 20 June 2026). REGISTRATIONS, not distinct rangatahi: the same 50 tickets belong to 30 unique registering addresses, because these are youth workshops booked by a parent. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
     ),
 
     // Mentorship. "Onboarded", never "applied" — see D.platform.mentor-submissions.
@@ -185,50 +191,74 @@
     she-sharp-and-academyex-international-womens-day-2026: (
       registered: v(
         103,
-        "lib/data/json/events-custom.json — event id 85, `attendees`.",
+        "Humanitix instance dated 2026-03-06. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
       ),
       checked-in: v(
         72,
-        "lib/data/json/events-custom.json — event id 85, `checkedIn`.",
+        "Humanitix instance dated 2026-03-06. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
       ),
-      returning: p(18),
-      companies: p(38),
+      returning: v(
+        38,
+        "Attendees whose first She Sharp registration in the Humanitix archive predates this event. Counts repeat REGISTRATION, and the archive holds nothing before 2020, so it undercounts anyone whose first event was earlier. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+      ),
+      companies: v(
+        60,
+        "Distinct canonical employers among the attendees who answered the Company/Organisation question at checkout, normalised by lib/data/json/humanitix/organisations.json. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+      ),
     ),
     her-waka: (
       registered: v(
         39,
-        "lib/data/json/events-custom.json — event id 88, `attendees`.",
+        "Humanitix instance dated 2026-03-25. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
       ),
       checked-in: v(
         27,
-        "lib/data/json/events-custom.json — event id 88, `checkedIn`.",
+        "Humanitix instance dated 2026-03-25. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
       ),
-      returning: p(4),
-      companies: p(9),
+      returning: v(
+        6,
+        "Attendees whose first She Sharp registration in the Humanitix archive predates this event. Counts repeat REGISTRATION, and the archive holds nothing before 2020, so it undercounts anyone whose first event was earlier. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+      ),
+      companies: v(
+        9,
+        "Distinct canonical employers among the attendees who answered the Company/Organisation question at checkout, normalised by lib/data/json/humanitix/organisations.json. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+      ),
     ),
     her-waka-april-2026: (
       registered: v(
         32,
-        "lib/data/json/events-custom.json — event id 89, `attendees`.",
+        "Humanitix instance dated 2026-04-07. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
       ),
       checked-in: v(
         24,
-        "lib/data/json/events-custom.json — event id 89, `checkedIn`.",
+        "Humanitix instance dated 2026-04-07. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
       ),
-      returning: p(11),
-      companies: p(8),
+      returning: v(
+        10,
+        "Attendees whose first She Sharp registration in the Humanitix archive predates this event. Counts repeat REGISTRATION, and the archive holds nothing before 2020, so it undercounts anyone whose first event was earlier. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+      ),
+      companies: v(
+        7,
+        "Distinct canonical employers among the attendees who answered the Company/Organisation question at checkout, normalised by lib/data/json/humanitix/organisations.json. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+      ),
     ),
     she-sharp-candice-murray-own-your-energy: (
       registered: v(
         81,
-        "lib/data/json/events-custom.json — event id 87, `attendees`.",
+        "Humanitix instance dated 2026-04-16. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
       ),
       checked-in: v(
         60,
-        "lib/data/json/events-custom.json — event id 87, `checkedIn`.",
+        "Humanitix instance dated 2026-04-16. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
       ),
-      returning: p(21),
-      companies: p(31),
+      returning: v(
+        34,
+        "Attendees whose first She Sharp registration in the Humanitix archive predates this event. Counts repeat REGISTRATION, and the archive holds nothing before 2020, so it undercounts anyone whose first event was earlier. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+      ),
+      companies: v(
+        39,
+        "Distinct canonical employers among the attendees who answered the Company/Organisation question at checkout, normalised by lib/data/json/humanitix/organisations.json. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+      ),
     ),
     // ---- THE DANGEROUS ONE -------------------------------------------------
     // 5 registered / 0 checked in sits in the right field, in the right file,
@@ -237,41 +267,103 @@
     // a published photo gallery) and the surrounding cohorts drew 32 and 39.
     // Do NOT let this reach print as a fact.
     her-waka-may-2026: (
-      registered: e(
-        5,
-        "lib/data/json/events-custom.json — event id 90, `attendees`. ALMOST CERTAINLY AN INCOMPLETE EXPORT: the session ran to completion with five speakers and a published gallery, and the adjacent cohorts drew 39 and 32. MUST be reconciled against Humanitix before FINAL.",
+      registered: v(
+        33,
+        "Humanitix instance dated 2026-05-05. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
       ),
-      checked-in: e(
-        0,
-        "lib/data/json/events-custom.json — event id 90, `checkedIn`. A zero check-in for a session that demonstrably took place. Treat as missing, not as zero. MUST be reconciled against Humanitix before FINAL.",
+      checked-in: v(
+        29,
+        "Humanitix instance dated 2026-05-05. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
       ),
-      returning: p(9),
-      companies: p(7),
+      returning: v(
+        13,
+        "Attendees whose first She Sharp registration in the Humanitix archive predates this event. Counts repeat REGISTRATION, and the archive holds nothing before 2020, so it undercounts anyone whose first event was earlier. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+      ),
+      companies: v(
+        7,
+        "Distinct canonical employers among the attendees who answered the Company/Organisation question at checkout, normalised by lib/data/json/humanitix/organisations.json. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+      ),
     ),
     // ------------------------------------------------------------------------
     making-linkedin-work-for-you-with-stuart-little: (
-      registered: p(68),
-      checked-in: p(47),
-      returning: p(16),
-      companies: p(26),
+      registered: v(
+        106,
+        "Humanitix instance dated 2026-05-15. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+      ),
+      checked-in: v(
+        70,
+        "Humanitix instance dated 2026-05-15. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+      ),
+      returning: v(
+        45,
+        "Attendees whose first She Sharp registration in the Humanitix archive predates this event. Counts repeat REGISTRATION, and the archive holds nothing before 2020, so it undercounts anyone whose first event was earlier. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+      ),
+      companies: v(
+        30,
+        "Distinct canonical employers among the attendees who answered the Company/Organisation question at checkout, normalised by lib/data/json/humanitix/organisations.json. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+      ),
     ),
     her-waka-june-2026: (
-      registered: p(34),
-      checked-in: p(25),
-      returning: p(12),
-      companies: p(8),
+      registered: v(
+        24,
+        "Humanitix instance dated 2026-06-02. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+      ),
+      checked-in: v(
+        16,
+        "Humanitix instance dated 2026-06-02. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+      ),
+      returning: v(
+        17,
+        "Attendees whose first She Sharp registration in the Humanitix archive predates this event. Counts repeat REGISTRATION, and the archive holds nothing before 2020, so it undercounts anyone whose first event was earlier. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+      ),
+      companies: v(
+        6,
+        "Distinct canonical employers among the attendees who answered the Company/Organisation question at checkout, normalised by lib/data/json/humanitix/organisations.json. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+      ),
     ),
     peyvand-academy-13-june-2026: (
-      registered: p(24),
-      checked-in: p(22),
-      returning: p(3),
-      companies: p(2),
+      registered: v(
+        24,
+        "Humanitix instance dated 2026-06-13. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+      ),
+      // NO CHECK-IN WAS RUN at this session, so there is no attendance
+      // figure — not a zero. A 0 here would read as nobody turning up to a
+      // workshop that demonstrably happened, with a published gallery. Left
+      // as an estimate so a FINAL build has to make the call deliberately.
+      checked-in: e(
+        0,
+        "NOT RECORDED. The session ran no check-in; Humanitix scanned nobody. Treat as missing, never as zero. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+      ),
+      returning: v(
+        6,
+        "Attendees whose first She Sharp registration in the Humanitix archive predates this event. Counts repeat REGISTRATION, and the archive holds nothing before 2020, so it undercounts anyone whose first event was earlier. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+      ),
+      companies: v(
+        10,
+        "Distinct canonical employers among the attendees who answered the Company/Organisation question at checkout, normalised by lib/data/json/humanitix/organisations.json. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+      ),
     ),
     peyvand-academy-20-june-2026: (
-      registered: p(22),
-      checked-in: p(20),
-      returning: p(14),
-      companies: p(2),
+      registered: v(
+        26,
+        "Humanitix instance dated 2026-06-20. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+      ),
+      // NO CHECK-IN WAS RUN at this session, so there is no attendance
+      // figure — not a zero. A 0 here would read as nobody turning up to a
+      // workshop that demonstrably happened, with a published gallery. Left
+      // as an estimate so a FINAL build has to make the call deliberately.
+      checked-in: e(
+        0,
+        "NOT RECORDED. The session ran no check-in; Humanitix scanned nobody. Treat as missing, never as zero. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+      ),
+      returning: v(
+        17,
+        "Attendees whose first She Sharp registration in the Humanitix archive predates this event. Counts repeat REGISTRATION, and the archive holds nothing before 2020, so it undercounts anyone whose first event was earlier. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+      ),
+      companies: v(
+        9,
+        "Distinct canonical employers among the attendees who answered the Company/Organisation question at checkout, normalised by lib/data/json/humanitix/organisations.json. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+      ),
     ),
   ),
 
@@ -374,21 +466,21 @@
         25,
         "\"Each two-hour programme brings together up to 25 participants\" — lib/data/json/events-custom.json, detailPageData.fullDescription for event id 88.",
       ),
-      registered: e(
-        110,
-        "39 + 32 + 5 + 34 across the four cohorts. Two of the four inputs are unreliable: May 5 is a suspect export and June 2 is a placeholder. Reconcile before FINAL.",
+      registered: v(
+        128,
+        "39 + 32 + 33 + 24 across the four cohorts, all four now reconciled. The May 5 figure was the suspect one and is 33, not 5. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
       ),
-      checked-in: e(
-        76,
-        "27 + 24 + 0 + 25 across the four cohorts, with the same two unreliable inputs as `registered`.",
+      checked-in: v(
+        96,
+        "27 + 24 + 29 + 16 across the four cohorts. Every cohort ran a check-in, so this is a total over all four. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
       ),
       registered-verified: v(
-        71,
-        "39 + 32 — the two HER WAKA cohorts (March and April) with complete data in lib/data/json/events-custom.json.",
+        128,
+        "All four cohorts are reconciled against the Humanitix export, so this is identical to `registered`. Across those 128 registrations there are 93 distinct registering addresses — participants who came back for a later cohort are counted once per cohort here. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
       ),
       checked-in-verified: v(
-        51,
-        "27 + 24 — the two HER WAKA cohorts (March and April) with complete data in lib/data/json/events-custom.json.",
+        96,
+        "As `checked-in`: all four cohorts recorded check-ins. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
       ),
       // 16, not 14. Recounted directly from the source: the four cohort records
       // (ids 88, 89, 90, 92) hold 7 + 5 + 5 + 1 = 18 speaker entries, of which
@@ -412,9 +504,9 @@
         "lib/data/json/events-custom.json — peyvand-academy-13-june-2026 and peyvand-academy-20-june-2026.",
       ),
       age-range: "12–18",
-      rangatahi: e(
-        46,
-        "Sum of two workshops whose attendee fields are null in lib/data/json/events-custom.json. Placeholder cohort sizes; reconcile against the Peyvand Academy roll before FINAL.",
+      rangatahi: v(
+        50,
+        "24 + 26 registrations across the two workshops. Registrations, not distinct rangatahi — 30 unique registering addresses, most of them a parent's. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
       ),
       session-hours: v(
         2,
@@ -424,7 +516,10 @@
         3,
         "Peyvand Academy, the Ministry of Education and Little Engineers — lib/data/json/events-custom.json, detailPageData.sponsors for ids 93 and 94.",
       ),
-      first-time-participants: p(31),
+      first-time-participants: v(
+        22,
+        "Of the 30 unique addresses that registered for the two Youth Tech workshops, 22 appear nowhere earlier in the Humanitix archive. The archive starts in 2020, so this cannot undercount for a 12-18 year old. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+      ),
     ),
     mentorship: (
       mentors-onboarded: v(
