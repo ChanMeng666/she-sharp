@@ -302,6 +302,18 @@ them. Three traps before quoting anything: it starts in **2020**, it covers only
 **57 of the 97 events**, and a `checkedIn` of 0 usually means nobody scanned —
 read `checkInDataPresent`. → `docs/development/HUMANITIX_ARCHIVE.md`
 
+**Mailchimp audience archive.** The `She#` audience export (2019→, 3,689
+contacts, 229 tags) reduced to counts in `lib/data/json/mailchimp/` and read
+through `lib/data/mailchimp.ts`. Same split as Humanitix: the raw CSVs are
+*entirely* addresses — names, phones, and 1,586 sign-up IPs — so they live in the
+gitignored vault (`/private/`) and in the private archive repo, never in git.
+Three traps before quoting anything: the list is **1,560**, not 3,689 (the rest
+left, bounced, or never subscribed); Mailchimp's own dashboard says **3,145**
+because it excludes the 544 hard-bounced; and a `Ticket Type:`/`Event:` tag is a
+pasted ticket list, **not attendance** — Humanitix is authoritative for that.
+The 2,129 non-subscribers are hashed into `email-suppression-hashes.json` so no
+future import can re-add them. → `docs/development/MAILCHIMP_ARCHIVE.md`
+
 **Presentation decks.** `/present/<slug>`, built from typed slide data with a
 build-failing copy and rhythm linter, per-event skins over a fixed house
 sequence, and a fluid 4:3–21:9 stage. Organisers use `/build-event-slides` and
@@ -360,14 +372,18 @@ connection. → `docs/deployment/`, `docs/ARCHITECTURE.md` §8
 `npx tsx <file>`; each prints `ok - …` and exits non-zero on failure.
 
 CI (`.github/workflows/verify.yml`, PRs to `main`) runs five jobs: image-path
-verification (plus the hackathon-facts and Slack read-state checks), `typecheck`,
-`typecheck:scripts`, `lint`, and the deck checks.
+verification (plus the hackathon-facts, Slack read-state, and Humanitix and
+Mailchimp archive checks), `typecheck`, `typecheck:scripts`, `lint`, and the deck
+checks. The two archive checks are leak guards as much as data checks — they
+fail the build if an address, an IP or a code-shaped value reaches
+`lib/data/json/`.
 
 Not in CI — run these locally before pushing:
 
 ```bash
 npx tsx lib/email/hardening.test.ts       # unsubscribe tokens, senders, gates, Svix
 npx tsx lib/deck/deck.test.ts             # slide schema, copy + rhythm, feedback codes
+npx tsx scripts/mailchimp/verify-export.ts --export 2026-08-17   # needs the vault
 npx tsx lib/data/sponsors.test.ts         # sponsor registry
 for f in lib/newsletter/*.test.ts; do npx tsx "$f"; done
 npx tsx scripts/deck/lint-deck.ts [slug]  # organiser-readable deck report

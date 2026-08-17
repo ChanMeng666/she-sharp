@@ -500,22 +500,62 @@ Bounces and complaints spike on your first Resend send, against a domain
 reputation that has no Resend history to absorb it. This is how ESP migrations
 fail, and it fails on send one.
 
+**Status: done, on 18 August 2026.** The export was taken on 2026-08-17 and is
+archived — see `docs/development/MAILCHIMP_ARCHIVE.md`. The real numbers, which
+this section previously had to guess at:
+
+| Mailchimp status | Contacts | What it is |
+|---|---|---|
+| `Subscribed` | **1,560** | The list. The only file that may be imported |
+| `Unsubscribed` | 803 | Left. 7 of them by filing a spam complaint |
+| `Nonsubscribed` | 782 | **Never subscribed at all** — see below |
+| `Cleaned` | 544 | Hard-bounced. Mailchimp's word for dead |
+
+Note the fourth. Mailchimp exports **four** statuses, not three, and
+`Nonsubscribed` is not a lapse in consent but an absence of one: transactional
+contacts the account holds and may not market to. Left out of the suppression
+register they would look like fresh addresses to the next import.
+
 Before importing anything:
 
-1. In Mailchimp, export **three** segments, not one: `Subscribed`,
-   `Unsubscribed`, and `Cleaned` (Mailchimp's word for hard-bounced).
+1. In Mailchimp, export **all four** statuses, not one. (Audience → All contacts
+   → Export Contacts produces one file per status.)
 2. Import **only** `Subscribed` into Resend, through
    `/update-mailing-list` — its consent gate is the point.
-3. Feed the other two into the suppression register so nothing can re-add them:
+3. Feed the other three into the suppression register so nothing can re-add
+   them. `add-file` exists for exactly this: 2,129 addresses is not a job for
+   `add`, and a half-finished suppression list is worse than none because it
+   reads as complete.
    ```powershell
-   npx tsx scripts/email/normalize-recipients.ts <unsubscribed.csv> --key mc-unsub
-   # then, per address, or scripted over the normalized output:
-   npx tsx scripts/email/suppression.ts add <email> --reason "mailchimp-unsubscribed"
-   npx tsx scripts/email/suppression.ts add <email> --reason "mailchimp-cleaned"
+   $V = "private/mailchimp/2026-08-17"
+   npx tsx scripts/email/suppression.ts add-file "$V/unsubscribed_....csv"  --column "Email Address" --reason "mailchimp-unsubscribed"    --dry-run
+   npx tsx scripts/email/suppression.ts add-file "$V/cleaned_....csv"       --column "Email Address" --reason "mailchimp-cleaned"         --dry-run
+   npx tsx scripts/email/suppression.ts add-file "$V/nonsubscribed_....csv" --column "Email Address" --reason "mailchimp-never-subscribed" --dry-run
+   # then again without --dry-run, and confirm by round-trip:
+   npx tsx scripts/email/suppression.ts list                     # expect 2129
+   npx tsx scripts/email/suppression.ts check <an unsubscribed address>   # exit 0
+   npx tsx scripts/email/suppression.ts check <a subscribed address>      # exit 1
    ```
+   Only hashes are written; no address reaches disk or the terminal.
 4. Also set those contacts `unsubscribed` in Resend if they are ever imported by
    another route — the local register protects the scripts, the Resend flag
    protects broadcasts.
+
+Three things the import session will otherwise have to rediscover:
+
+- **Consent** is route 1 of `consent-rules.md`. Record `--consent-source
+  "Mailchimp audience 'She#' — website newsletter sign-up; per-contact
+  OPTIN_TIME preserved in the 2026-08-17 export archive"`, `--consent-date
+  2026-08-17`.
+- **`--for-import` will not drop rows.** It filters on an opt-in column only
+  when one is mapped, and the export has none — the file *is* the opt-in.
+- **`--column-map` is mandatory**: the export uses `Email Address`,
+  `First Name`, `Last Name`.
+
+And one decision to take before, not after: `RESEND_NEWSLETTER_SEGMENT_ID` today
+points at a segment named **"Newsletter Pilot"**, which is the name 1,560 real
+subscribers would land under. Resend has no segment update endpoint, so renaming
+means delete and recreate — which drops membership.
 
 ### The subscribe funnel is Mailchimp too — not just the sending
 
@@ -655,7 +695,7 @@ forgotten or deliberately skipped unless it says so.
 | 5 | **Stage 2b — Google DKIM** | ⚠️ **Workspace super-admin.** `website@` cannot open `admin.google.com`. Request text is in Stage 2. | Whenever an admin is available |
 | 6 | **Stage 4 — `p=reject`** + root SPF `-all` | **hard-gated on #5** | Not before #5 |
 | 7 | **Decide the legacy SPF include** — drop `include:_spf.1stdomains.co.nz` if reports show nothing sends from those IPs (budget 4/10 → 1/10) | the reports from #1 | With #4 |
-| 8 | **Migrate the newsletter sending off Mailchimp** — see the section above. Export `Subscribed` / `Unsubscribed` / `Cleaned` separately; only the first gets imported. | must NOT share a month with #2/#4 | A month with no DMARC change |
+| 8 | **Migrate the newsletter sending off Mailchimp** — see the section above. **List hygiene is done** (18 Aug 2026): all four statuses exported and archived, and the 2,129 non-subscribers are in the suppression register. What remains is importing the 1,560 `Subscribed` through `/update-mailing-list`. | must NOT share a month with #2/#4 | A month with no DMARC change |
 | 8b | **Migrate the subscribe funnel** — wire `/api/newsletter/subscribe` (exists, **nothing calls it**) to a form and repoint the 16 `MAILCHIMP_CONFIG.subscribeUrl` links. Without this, new sign-ups keep going to Mailchimp and never get the Resend send. | — | With #8, not after |
 | 8c | **Decide `MAILCHIMP_CONFIG.archiveUrl`'s replacement.** Partly done: since 2026-08 each new issue is listed in `lib/data/newsletters-manual.ts` pointing at its on-site render (still `noindex`, by design). What remains is the "Open full archive" button, which is the only route to the pre-2026-08 back catalogue. | the back catalogue re-hosted, or the button repointed at `/resources/newsletters` | With #8 |
 | 9 | **Retire the Mailchimp DNS records** (`k2`/`k3._domainkey`) | 2–3 clean Resend sends **and** #8b | After #8 proves out |

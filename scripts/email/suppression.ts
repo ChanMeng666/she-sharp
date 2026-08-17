@@ -17,16 +17,22 @@
  * Usage:
  *   npx tsx scripts/email/suppression.ts list
  *   npx tsx scripts/email/suppression.ts add <email> [--reason "bounced"]
+ *   npx tsx scripts/email/suppression.ts add-file <csv> --column "Email Address" [--reason "…"] [--dry-run]
  *   npx tsx scripts/email/suppression.ts remove <email>
  *   npx tsx scripts/email/suppression.ts check <email>
  *   npx tsx scripts/email/suppression.ts sync [--dry-run]
  *
  * Output:
- *   list   — one line per entry: `<hash[0:12]>…  <reason>  <YYYY-MM-DD>`, then a total.
- *   add    — confirms, or reports the address was already suppressed (exit 0 either way).
- *   remove — confirms, or exits 1 if the address was not on the list.
- *   check  — prints SUPPRESSED / not suppressed; exit 0 if suppressed, 1 if not,
- *            so it can be used in a shell conditional.
+ *   list     — one line per entry: `<hash[0:12]>…  <reason>  <YYYY-MM-DD>`, then a total.
+ *   add      — confirms, or reports the address was already suppressed (exit 0 either way).
+ *   add-file — reads one column of a CSV and suppresses every address in it, for
+ *              the case `add` cannot serve: an ESP export of everyone who has
+ *              unsubscribed or hard-bounced. Mailchimp's is 2,129 rows across
+ *              three files, and typing that by hand is not a plan. Prints counts
+ *              and never an address.
+ *   remove   — confirms, or exits 1 if the address was not on the list.
+ *   check    — prints SUPPRESSED / not suppressed; exit 0 if suppressed, 1 if not,
+ *              so it can be used in a shell conditional.
  *   sync   — folds the runtime `email_optouts` table (one-click unsubscribes,
  *            bounces and spam complaints captured by the Resend webhook) into
  *            this file. Both sides key on the same `hashEmail()`, so it is a
@@ -39,6 +45,7 @@
  */
 
 import { readFileSync, writeFileSync } from "node:fs";
+import { parse } from "csv-parse/sync";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { hashEmail } from "../../lib/email/hash";
@@ -149,6 +156,12 @@ function looksLikeEmail(value: string): boolean {
   return /^[^\s@]+@[^\s@.]+(?:\.[^\s@.]+)+$/.test(value.trim());
 }
 
+/** `--flag value` lookup, matching the hand-rolled convention used across scripts/. */
+function argValue(argv: string[], flag: string): string | undefined {
+  const index = argv.indexOf(flag);
+  return index === -1 ? undefined : argv[index + 1];
+}
+
 /** Reads `--reason "…"`, defaulting to a neutral value. */
 function readReason(argv: string[]): string {
   const index = argv.indexOf("--reason");
@@ -165,6 +178,9 @@ function usage(): void {
   console.error("Usage:");
   console.error("  npx tsx scripts/email/suppression.ts list");
   console.error('  npx tsx scripts/email/suppression.ts add <email> [--reason "bounced"]');
+  console.error(
+    '  npx tsx scripts/email/suppression.ts add-file <csv> --column "Email Address" [--reason "…"] [--dry-run]'
+  );
   console.error("  npx tsx scripts/email/suppression.ts remove <email>");
   console.error("  npx tsx scripts/email/suppression.ts check <email>");
   console.error("  npx tsx scripts/email/suppression.ts sync [--dry-run]");
@@ -218,6 +234,116 @@ function commandAdd(email: string, reason: string): void {
   writeSuppressionFile(file);
   console.log(`Suppressed ${hash.slice(0, 12)}… (${reason}).`);
   console.log(`${file.entries.length} entr(ies) now in ${SUPPRESSION_PATH}`);
+}
+
+/**
+ * Suppresses every address in one column of a CSV.
+ *
+ * Exists for the migration case `add` cannot serve. Moving off an ESP means
+ * importing the subscriber list and, far more importantly, importing the list
+ * of everyone that ESP had already STOPPED mailing — years of unsubscribes,
+ * hard bounces and spam complaints that do not travel with the subscriber
+ * export. Mailchimp's is 2,129 addresses across three files. Adding them one
+ * command at a time is not something anyone would finish, and a half-finished
+ * suppression list is worse than none: it reads as complete.
+ *
+ * Deliberate constraints, both matching the rest of this file:
+ *  - **No address is ever printed**, not even on error. Output is counts and
+ *    truncated hashes, so a pasted terminal log carries nothing.
+ *  - **No address is ever written.** Only `hashEmail()` output reaches disk.
+ *
+ * The CSV is read with the repo's `csv-parse` rather than split on commas: a
+ * Mailchimp export quotes fields and embeds commas inside them, and a naive
+ * split silently shifts every column after the first quoted one.
+ *
+ * @param path CSV to read.
+ * @param column Header of the column holding the addresses.
+ * @param reason Recorded against every address added, e.g. `mailchimp-cleaned`.
+ * @param dryRun Report what would be added and write nothing.
+ */
+function commandAddFile(path: string, column: string, reason: string, dryRun: boolean): void {
+  let raw: string;
+  try {
+    raw = readFileSync(path, "utf8");
+  } catch {
+    console.error(`Error: cannot read ${path}`);
+    process.exit(1);
+  }
+
+  const rows = parse(raw, {
+    columns: true,
+    bom: true,
+    skip_empty_lines: true,
+    relax_column_count: false,
+    trim: false,
+  }) as Record<string, string>[];
+
+  if (rows.length === 0) {
+    console.error(`Error: ${path} has no data rows.`);
+    process.exit(1);
+  }
+  if (!(column in rows[0])) {
+    console.error(
+      `Error: no column named ${JSON.stringify(column)} in ${path}.\n` +
+        `  Columns are: ${Object.keys(rows[0]).join(", ")}`
+    );
+    process.exit(1);
+  }
+
+  const file = readSuppressionFile();
+  const known = new Set(file.entries.map((entry) => entry.hash.toLowerCase()));
+
+  let added = 0;
+  let already = 0;
+  let blank = 0;
+  let malformed = 0;
+  const seen = new Set<string>();
+  const at = new Date().toISOString();
+
+  for (const row of rows) {
+    const value = (row[column] ?? "").trim();
+    if (!value) {
+      blank++;
+      continue;
+    }
+    if (!looksLikeEmail(value)) {
+      malformed++;
+      continue;
+    }
+    const hash = hashEmail(value);
+    // Duplicates within the file are not "already suppressed" — counting them
+    // as such would overstate how much of the list was already on file.
+    if (seen.has(hash)) continue;
+    seen.add(hash);
+
+    if (known.has(hash)) {
+      already++;
+      continue;
+    }
+    known.add(hash);
+    file.entries.push({ hash, reason, at });
+    added++;
+  }
+
+  console.log(`${path}`);
+  console.log(`  ${rows.length} row(s), column ${JSON.stringify(column)}`);
+  console.log(`  ${seen.size} distinct address(es)`);
+  if (blank > 0) console.log(`  ${blank} blank, skipped`);
+  if (malformed > 0) console.log(`  ${malformed} not address-shaped, skipped`);
+  console.log(`  ${already} already suppressed`);
+  console.log(`  ${added} to add, reason ${JSON.stringify(reason)}`);
+
+  if (dryRun) {
+    console.log(`\n--dry-run: nothing written.`);
+    return;
+  }
+  if (added === 0) {
+    console.log(`\nNothing to add. ${file.entries.length} entr(ies) in ${SUPPRESSION_PATH}`);
+    return;
+  }
+
+  writeSuppressionFile(file);
+  console.log(`\nAdded ${added}. ${file.entries.length} entr(ies) now in ${SUPPRESSION_PATH}`);
 }
 
 function commandRemove(email: string): void {
@@ -324,6 +450,25 @@ async function main(): Promise<void> {
     case "add":
       commandAdd(requireEmailArg("add", argv[1]), readReason(argv));
       return;
+    case "add-file": {
+      const path = argv[1];
+      if (!path || path.startsWith("--")) {
+        console.error('Error: "add-file" requires a path to a CSV.');
+        usage();
+        process.exit(1);
+      }
+      const column = argValue(argv, "--column");
+      if (!column) {
+        console.error(
+          'Error: "add-file" requires --column, naming the header of the address column.\n' +
+            "  It is not guessed: picking the wrong column would suppress the wrong people,\n" +
+            "  and hashes cannot be read back to find out who."
+        );
+        process.exit(1);
+      }
+      commandAddFile(path, column, readReason(argv), argv.includes("--dry-run"));
+      return;
+    }
     case "remove":
       commandRemove(requireEmailArg("remove", argv[1]));
       return;

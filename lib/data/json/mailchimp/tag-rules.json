@@ -1,0 +1,96 @@
+{
+  "metadata": {
+    "authored": true,
+    "note": "HAND-AUTHORED. The builder reads this and never writes it, so a regeneration cannot overwrite a judgement made here. Mailchimp tags were typed freehand by several people over seven years, and the account has zero saved segments, so this column is the only structure the audience has. Every real tag in an export MUST match a rule: the builder fails and lists the unmatched ones, which is what stops a new export's tags from being silently bucketed as 'other'. There is deliberately NO catch-all rule. Fragments are NOT listed here — a tag is classified `fragment` by provenance, when every one of its occurrences came from a cell that failed the CSV round-trip check, so Mailchimp's truncation wreckage never needs a pattern written for it."
+  },
+  "kinds": [
+    {
+      "id": "event",
+      "label": "Event",
+      "definition": "Applied with the `Event: ` prefix, the convention adopted around 2022. Says the contact is associated with that event — usually because a ticket list was pasted in. It does NOT say they attended; Humanitix is authoritative for that."
+    },
+    {
+      "id": "ticket-type",
+      "label": "Ticket type",
+      "definition": "Applied with the `Ticket Type: ` prefix. Which ticket the person held at some event, but the tag does not say which event, so on its own it identifies a category of person and not an occasion."
+    },
+    {
+      "id": "campaign-segment",
+      "label": "Campaign pasted segment",
+      "definition": "`Campaign Pasted Segment - <date>`. Mailchimp's own artefact: it stamps this on everyone who was in an ad-hoc list pasted into a campaign's recipient box. It records a send, not a property of the person, and 23 of them exist."
+    },
+    {
+      "id": "cohort-year",
+      "label": "Import cohort year",
+      "definition": "A bare four-digit year. Marks a bulk import done in that year — not the year the person joined, and not a year they were active."
+    },
+    {
+      "id": "label",
+      "label": "Hand-typed label",
+      "definition": "A label from before the `Event: ` convention. These name events, partners, campaigns and audiences without distinguishing between them; one bucket on purpose, because inventing four kinds to sort 36 freehand strings would claim a structure the tagger never applied. Each rule's note says which it is."
+    },
+    {
+      "id": "fragment",
+      "label": "Export artefact",
+      "definition": "Not a tag anybody applied. Mailchimp truncates a tag at 100 characters and, when the cut lands inside a quoted tag, does not re-close the quote — corrupting the rest of the cell. Assigned by provenance rather than by any rule below."
+    }
+  ],
+  "rules": [
+    {
+      "match": "prefix",
+      "pattern": "Event:",
+      "kind": "event",
+      "note": "Must stay above every rule below: several event titles begin with a partner name that also appears as a bare label, e.g. `Event: She Sharp & Deloitte: …` versus the plain `Deloitte` tag."
+    },
+    {
+      "match": "prefix",
+      "pattern": "Ticket Type:",
+      "kind": "ticket-type"
+    },
+    {
+      "match": "prefix",
+      "pattern": "Campaign Pasted Segment",
+      "kind": "campaign-segment",
+      "note": "Prefix, not exact: every one carries its own timestamp."
+    },
+    {
+      "match": "regex",
+      "pattern": "^(19|20)\\d{2}$",
+      "kind": "cohort-year",
+      "note": "A bare year only. `2023Survey`, `Tech22` and `Techweek 2020` are labels and are matched separately below."
+    },
+
+    { "match": "exact", "pattern": "10 Anniversary", "kind": "label", "note": "The 10-year anniversary event. The site records it as `She Sharp 10-Year Anniversary`; both spellings exist as tags." },
+    { "match": "exact", "pattern": "2023Survey", "kind": "label", "note": "Campaign — the 2023 community survey." },
+    { "match": "exact", "pattern": "AI Enviro Hackathon", "kind": "label", "note": "Event — the AI for the Environment female-led hackathon." },
+    { "match": "exact", "pattern": "AI Forum 2021", "kind": "label", "note": "Event." },
+    { "match": "exact", "pattern": "ANZ Navigating the Workplace", "kind": "label", "note": "Event, with the partner in the title." },
+    { "match": "exact", "pattern": "AWS", "kind": "label", "note": "Partner. Broader than the AWS event tag below — do not treat the two as the same set." },
+    { "match": "exact", "pattern": "AWS Women in Security", "kind": "label", "note": "Event." },
+    { "match": "exact", "pattern": "Centrality", "kind": "label", "note": "Partner." },
+    { "match": "exact", "pattern": "Countdown IWD", "kind": "label", "note": "Event — International Women's Day with Countdown, the supermarket chain since renamed Woolworths NZ. The site's own record uses the newer name." },
+    { "match": "exact", "pattern": "CountdownX", "kind": "label", "note": "Partner programme, same partner as above under its innovation-arm name." },
+    { "match": "exact", "pattern": "Deloitte", "kind": "label", "note": "Partner." },
+    { "match": "exact", "pattern": "EY March 2020", "kind": "label", "note": "Event." },
+    { "match": "exact", "pattern": "Future Ready", "kind": "label", "note": "Event — the She Sharp Future Ready! programme. Also exists as an `Event:` tag and as a ticket type, so the three overlap and must not be summed." },
+    { "match": "exact", "pattern": "Google 2019", "kind": "label", "note": "Event." },
+    { "match": "exact", "pattern": "Google AI Event", "kind": "label", "note": "Event." },
+    { "match": "exact", "pattern": "Google Educators Teacher Email", "kind": "label", "note": "Campaign — an outreach send to teachers, not an event audience." },
+    { "match": "exact", "pattern": "High School Student", "kind": "label", "note": "Audience descriptor, and the only tag in the export that describes the person rather than something that happened to them." },
+    { "match": "exact", "pattern": "MOTAT STEM Fair 2021", "kind": "label", "note": "Event." },
+    { "match": "exact", "pattern": "MYOB Kickstart Your Career in Tech", "kind": "label", "note": "Event." },
+    { "match": "exact", "pattern": "MYOB Mind Your Own Career", "kind": "label", "note": "Event." },
+    { "match": "exact", "pattern": "Nyriad", "kind": "label", "note": "Partner." },
+    { "match": "exact", "pattern": "Sep23TeacherOutReach", "kind": "label", "note": "Campaign — September 2023 teacher outreach." },
+    { "match": "exact", "pattern": "She Celebrates", "kind": "label", "note": "Event — the end-of-year celebration." },
+    { "match": "exact", "pattern": "Storytellers Series", "kind": "label", "note": "Event series, three sessions in 2020. Counting the sessions separately triple-counts the series; see the Humanitix crosswalk, which handles the same trap." },
+    { "match": "exact", "pattern": "Tech22", "kind": "label", "note": "Event." },
+    { "match": "exact", "pattern": "Tech22 Exhibitor", "kind": "label", "note": "Role at the event above." },
+    { "match": "exact", "pattern": "Techweek 2018", "kind": "label", "note": "Event. The earliest occasion any tag refers to — note it predates the earliest OPTIN_TIME in the export by a year, because the tag was applied retrospectively." },
+    { "match": "exact", "pattern": "Techweek 2020", "kind": "label", "note": "Event." },
+    { "match": "exact", "pattern": "Techweek 2022", "kind": "label", "note": "Event." },
+    { "match": "exact", "pattern": "Wahine Kakano", "kind": "label", "note": "Programme." },
+    { "match": "exact", "pattern": "Website", "kind": "label", "note": "Sign-up source — the person came through the website form. Only 3 contacts carry it, so it is not usable as a consent record; the OPTIN_TIME and OPTIN_IP columns are." },
+    { "match": "exact", "pattern": "Workday", "kind": "label", "note": "Partner." }
+  ]
+}

@@ -1,0 +1,698 @@
+{
+  "metadata": {
+    "generatedBy": "scripts/mailchimp/build-archive.ts",
+    "exportId": "2026-08-17",
+    "definitionsDoc": "docs/development/MAILCHIMP_ARCHIVE.md#metric-definitions",
+    "personHash": "None written. Addresses are lowercased and put in a Set to count distinct people, then discarded. Not even a hash is committed: 3,689 unsalted sha256 digests of email addresses are trivially reversible by anyone holding a candidate address list, and every count below survives without them. The one place a hash of a She Sharp address is legitimately committed is lib/data/json/email-suppression-hashes.json, where it answers a question that cannot be answered any other way."
+  },
+  "totals": {
+    "contacts": 3689,
+    "contactsPerMailchimpUi": 3145,
+    "subscribed": 1560,
+    "suppressed": 2129,
+    "distinctTags": 229,
+    "distinctDomains": 660,
+    "firstOptin": "2019-07-15 22:08:52",
+    "lastOptin": "2026-08-17 06:35:58"
+  },
+  "byStatus": [
+    {
+      "key": "subscribed",
+      "contacts": 1560
+    },
+    {
+      "key": "unsubscribed",
+      "contacts": 803
+    },
+    {
+      "key": "nonsubscribed",
+      "contacts": 782
+    },
+    {
+      "key": "cleaned",
+      "contacts": 544
+    }
+  ],
+  "byOptinYear": [
+    {
+      "key": "2019",
+      "contacts": 297
+    },
+    {
+      "key": "2020",
+      "contacts": 346
+    },
+    {
+      "key": "2021",
+      "contacts": 323
+    },
+    {
+      "key": "2022",
+      "contacts": 594
+    },
+    {
+      "key": "2023",
+      "contacts": 820
+    },
+    {
+      "key": "2024",
+      "contacts": 347
+    },
+    {
+      "key": "2025",
+      "contacts": 322
+    },
+    {
+      "key": "2026",
+      "contacts": 41
+    }
+  ],
+  "byLastChangedYear": [
+    {
+      "key": "2019",
+      "contacts": 72
+    },
+    {
+      "key": "2020",
+      "contacts": 8
+    },
+    {
+      "key": "2021",
+      "contacts": 65
+    },
+    {
+      "key": "2022",
+      "contacts": 87
+    },
+    {
+      "key": "2023",
+      "contacts": 135
+    },
+    {
+      "key": "2024",
+      "contacts": 177
+    },
+    {
+      "key": "2025",
+      "contacts": 1441
+    },
+    {
+      "key": "2026",
+      "contacts": 357
+    }
+  ],
+  "memberRating": [
+    {
+      "key": "1",
+      "contacts": 744
+    },
+    {
+      "key": "2",
+      "contacts": 2603
+    },
+    {
+      "key": "3",
+      "contacts": 168
+    },
+    {
+      "key": "4",
+      "contacts": 90
+    },
+    {
+      "key": "5",
+      "contacts": 84
+    }
+  ],
+  "unsubReasons": [
+    {
+      "key": "not given",
+      "contacts": 392
+    },
+    {
+      "key": "NORMAL",
+      "contacts": 353
+    },
+    {
+      "key": "NOSIGNUP",
+      "contacts": 32
+    },
+    {
+      "key": "OTHER",
+      "contacts": 17
+    },
+    {
+      "key": "SPAM",
+      "contacts": 7
+    },
+    {
+      "key": "INAPPROPRIATE",
+      "contacts": 2
+    }
+  ],
+  "geo": {
+    "countries": [
+      {
+        "key": "nz",
+        "contacts": 1313
+      },
+      {
+        "key": "au",
+        "contacts": 105
+      },
+      {
+        "key": "us",
+        "contacts": 49
+      },
+      {
+        "key": "sg",
+        "contacts": 13
+      },
+      {
+        "key": "uk",
+        "contacts": 10
+      },
+      {
+        "key": "cn",
+        "contacts": 8
+      },
+      {
+        "key": "nl",
+        "contacts": 8
+      },
+      {
+        "key": "in",
+        "contacts": 6
+      },
+      {
+        "key": "jp",
+        "contacts": 5
+      }
+    ],
+    "regions": [
+      {
+        "key": "auk",
+        "contacts": 946
+      },
+      {
+        "key": "wko",
+        "contacts": 85
+      },
+      {
+        "key": "nsw",
+        "contacts": 72
+      },
+      {
+        "key": "wgn",
+        "contacts": 58
+      },
+      {
+        "key": "can",
+        "contacts": 54
+      },
+      {
+        "key": "bop",
+        "contacts": 34
+      },
+      {
+        "key": "ntl",
+        "contacts": 32
+      },
+      {
+        "key": "ota",
+        "contacts": 25
+      },
+      {
+        "key": "vic",
+        "contacts": 22
+      },
+      {
+        "key": "mwt",
+        "contacts": 19
+      },
+      {
+        "key": "hkb",
+        "contacts": 18
+      },
+      {
+        "key": "01",
+        "contacts": 13
+      },
+      {
+        "key": "tki",
+        "contacts": 13
+      },
+      {
+        "key": "mbh",
+        "contacts": 11
+      },
+      {
+        "key": "ga",
+        "contacts": 10
+      },
+      {
+        "key": "ca",
+        "contacts": 8
+      },
+      {
+        "key": "qld",
+        "contacts": 8
+      },
+      {
+        "key": "tas",
+        "contacts": 6
+      },
+      {
+        "key": "nsn",
+        "contacts": 5
+      },
+      {
+        "key": "ny",
+        "contacts": 5
+      }
+    ]
+  },
+  "domains": {
+    "floor": 5,
+    "distinct": 660,
+    "belowFloor": 568,
+    "top": [
+      {
+        "key": "gmail.com",
+        "contacts": 1396
+      },
+      {
+        "key": "hotmail.com",
+        "contacts": 113
+      },
+      {
+        "key": "my.westlakegirls.school.nz",
+        "contacts": 75
+      },
+      {
+        "key": "fonterra.com",
+        "contacts": 70
+      },
+      {
+        "key": "yahoo.com",
+        "contacts": 57
+      },
+      {
+        "key": "myob.com",
+        "contacts": 56
+      },
+      {
+        "key": "aucklanduni.ac.nz",
+        "contacts": 54
+      },
+      {
+        "key": "outlook.com",
+        "contacts": 52
+      },
+      {
+        "key": "deloitte.co.nz",
+        "contacts": 45
+      },
+      {
+        "key": "autuni.ac.nz",
+        "contacts": 44
+      },
+      {
+        "key": "kiwibank.co.nz",
+        "contacts": 40
+      },
+      {
+        "key": "aut.ac.nz",
+        "contacts": 38
+      },
+      {
+        "key": "countdown.co.nz",
+        "contacts": 34
+      },
+      {
+        "key": "lesmills.com",
+        "contacts": 28
+      },
+      {
+        "key": "hpps.school.nz",
+        "contacts": 27
+      },
+      {
+        "key": "waitakereprimary.school.nz",
+        "contacts": 27
+      },
+      {
+        "key": "xero.com",
+        "contacts": 22
+      },
+      {
+        "key": "amazon.com",
+        "contacts": 21
+      },
+      {
+        "key": "fphcare.co.nz",
+        "contacts": 21
+      },
+      {
+        "key": "riverhead.school.nz",
+        "contacts": 21
+      },
+      {
+        "key": "auckland.ac.nz",
+        "contacts": 20
+      },
+      {
+        "key": "fiserv.com",
+        "contacts": 19
+      },
+      {
+        "key": "icloud.com",
+        "contacts": 19
+      },
+      {
+        "key": "academyex.com",
+        "contacts": 16
+      },
+      {
+        "key": "anz.com",
+        "contacts": 16
+      },
+      {
+        "key": "flexware.co.nz",
+        "contacts": 16
+      },
+      {
+        "key": "xtra.co.nz",
+        "contacts": 16
+      },
+      {
+        "key": "hcltech.com",
+        "contacts": 15
+      },
+      {
+        "key": "google.com",
+        "contacts": 14
+      },
+      {
+        "key": "hotmail.co.nz",
+        "contacts": 14
+      },
+      {
+        "key": "sehc.school.nz",
+        "contacts": 14
+      },
+      {
+        "key": "live.com",
+        "contacts": 13
+      },
+      {
+        "key": "2degrees.nz",
+        "contacts": 12
+      },
+      {
+        "key": "fergus.com",
+        "contacts": 12
+      },
+      {
+        "key": "hds.school.nz",
+        "contacts": 12
+      },
+      {
+        "key": "kelstongirls.school.nz",
+        "contacts": 12
+      },
+      {
+        "key": "spark.co.nz",
+        "contacts": 12
+      },
+      {
+        "key": "fvhs.school.nz",
+        "contacts": 11
+      },
+      {
+        "key": "hcl.com",
+        "contacts": 11
+      },
+      {
+        "key": "nyriad.com",
+        "contacts": 11
+      }
+    ]
+  },
+  "organisations": {
+    "floor": 5,
+    "rowsAnswered": 1247,
+    "rowsNullish": 69,
+    "distinctCanonical": 511,
+    "top": [
+      {
+        "key": "aut",
+        "contacts": 71,
+        "label": "Auckland University of Technology"
+      },
+      {
+        "key": "university-of-auckland",
+        "contacts": 51,
+        "label": "University of Auckland"
+      },
+      {
+        "key": "myob",
+        "contacts": 49,
+        "label": "MYOB"
+      },
+      {
+        "key": "she-sharp",
+        "contacts": 40,
+        "label": "She Sharp"
+      },
+      {
+        "key": "hobsonville-point-primary-school",
+        "contacts": 28,
+        "label": "hobsonville-point-primary-school"
+      },
+      {
+        "key": "waitakere-primary-school",
+        "contacts": 26,
+        "label": "waitakere-primary-school"
+      },
+      {
+        "key": "xero",
+        "contacts": 25,
+        "label": "Xero"
+      },
+      {
+        "key": "fonterra",
+        "contacts": 23,
+        "label": "Fonterra"
+      },
+      {
+        "key": "riverhead-school",
+        "contacts": 21,
+        "label": "riverhead-school"
+      },
+      {
+        "key": "anz",
+        "contacts": 17,
+        "label": "ANZ"
+      },
+      {
+        "key": "woolworths-nz",
+        "contacts": 16,
+        "label": "Woolworths NZ"
+      },
+      {
+        "key": "aws",
+        "contacts": 15,
+        "label": "Amazon Web Services"
+      },
+      {
+        "key": "kelston-girls-college",
+        "contacts": 15,
+        "label": "kelston-girls-college"
+      },
+      {
+        "key": "fisher-and-paykel-healthcare",
+        "contacts": 14,
+        "label": "Fisher & Paykel Healthcare"
+      },
+      {
+        "key": "developers-institute",
+        "contacts": 13,
+        "label": "Developers Institute"
+      },
+      {
+        "key": "datacom",
+        "contacts": 12,
+        "label": "Datacom"
+      },
+      {
+        "key": "huapai-district-school",
+        "contacts": 12,
+        "label": "huapai-district-school"
+      },
+      {
+        "key": "deloitte",
+        "contacts": 11,
+        "label": "Deloitte"
+      },
+      {
+        "key": "flexware",
+        "contacts": 11,
+        "label": "FlexWare"
+      },
+      {
+        "key": "marina-view-school",
+        "contacts": 11,
+        "label": "marina-view-school"
+      },
+      {
+        "key": "asb",
+        "contacts": 10,
+        "label": "ASB"
+      },
+      {
+        "key": "2degrees",
+        "contacts": 9,
+        "label": "2degrees"
+      },
+      {
+        "key": "aorere-college",
+        "contacts": 9,
+        "label": "aorere-college"
+      },
+      {
+        "key": "taupaki-school",
+        "contacts": 9,
+        "label": "taupaki-school"
+      },
+      {
+        "key": "hobsonville-point-secondary-school",
+        "contacts": 7,
+        "label": "hobsonville-point-secondary-school"
+      },
+      {
+        "key": "pacific-advance-secondary-school",
+        "contacts": 7,
+        "label": "pacific-advance-secondary-school"
+      },
+      {
+        "key": "rangitoto-college",
+        "contacts": 7,
+        "label": "rangitoto-college"
+      },
+      {
+        "key": "she-sharp-mentee",
+        "contacts": 7,
+        "label": "she-sharp-mentee"
+      },
+      {
+        "key": "unitec",
+        "contacts": 7,
+        "label": "Unitec"
+      },
+      {
+        "key": "whenuapai-school",
+        "contacts": 7,
+        "label": "whenuapai-school"
+      },
+      {
+        "key": "alfriston-college",
+        "contacts": 6,
+        "label": "alfriston-college"
+      },
+      {
+        "key": "exhibit-group",
+        "contacts": 6,
+        "label": "exhibit-group"
+      },
+      {
+        "key": "ezyvet",
+        "contacts": 6,
+        "label": "ezyvet"
+      },
+      {
+        "key": "firn-analytics-ltd",
+        "contacts": 6,
+        "label": "firn-analytics-ltd"
+      },
+      {
+        "key": "fletcher-building",
+        "contacts": 6,
+        "label": "fletcher-building"
+      },
+      {
+        "key": "hobsonville-school",
+        "contacts": 6,
+        "label": "hobsonville-school"
+      },
+      {
+        "key": "marcellin-school",
+        "contacts": 6,
+        "label": "marcellin-school"
+      },
+      {
+        "key": "nz-super-fund",
+        "contacts": 6,
+        "label": "nz-super-fund"
+      },
+      {
+        "key": "serko",
+        "contacts": 6,
+        "label": "serko"
+      },
+      {
+        "key": "james-cook-high-school",
+        "contacts": 5,
+        "label": "james-cook-high-school"
+      }
+    ]
+  },
+  "tagCoverage": {
+    "tagged": 3146,
+    "untagged": 543,
+    "byKind": [
+      {
+        "key": "event",
+        "contacts": 2146
+      },
+      {
+        "key": "ticket-type",
+        "contacts": 2134
+      },
+      {
+        "key": "label",
+        "contacts": 1778
+      },
+      {
+        "key": "cohort-year",
+        "contacts": 1118
+      },
+      {
+        "key": "campaign-segment",
+        "contacts": 362
+      },
+      {
+        "key": "fragment",
+        "contacts": 45
+      }
+    ]
+  },
+  "consentSignals": {
+    "subscribed": 1560,
+    "withOptinIp": 861,
+    "optinEqualsConfirm": 1431,
+    "withConfirmIp": 0,
+    "taggedEventOrTicketOnly": 373,
+    "untagged": 346,
+    "caveat": "Counts, not a verdict. CONFIRM_IP is empty for every contact in the export and OPTIN_TIME equals CONFIRM_TIME for the large majority, which is the signature of a single-opt-in import rather than a confirmed double opt-in. That does not make the consent invalid — Mailchimp records a single opt-in this way too — but it does mean this export cannot be cited as evidence of double opt-in. The gate on any send remains .claude/skills/update-mailing-list/references/consent-rules.md."
+  },
+  "caveats": [
+    "Mailchimp's own dashboard reports 3145 contacts, this archive 3689. Both are right: the UI figure EXCLUDES the 544 cleaned (hard-bounced) contacts.",
+    "Only 1560 of the 3689 may be emailed. The other 2129 left, bounced, or never subscribed, and are recorded as hashes in lib/data/json/email-suppression-hashes.json so no future import can re-add them.",
+    "The record starts at 2019-07-15. She Sharp was founded in 2014; anything earlier is not in this data, and one tag (Techweek 2018) refers to an occasion that predates the earliest opt-in because it was applied retrospectively.",
+    "A `Ticket Type:` or `Event:` tag records a ticket list pasted into Mailchimp, not a scanned check-in. Humanitix is authoritative for attendance.",
+    "45 of the tag cells are malformed: Mailchimp truncates a tag at 100 characters and does not re-close the quote when the cut lands mid-tag, which corrupts the rest of that cell. The 14 resulting strings are marked kind \"fragment\" in tags.json and were never applied by anyone.",
+    "byOptinYear is sign-ups per year, not list size in that year. Subtracting departures is not possible from this export: an unsubscribe records when someone left, not which year's cohort they were in.",
+    "byLastChangedYear is not engagement. A bulk tag operation moves LAST_CHANGED for thousands of contacts who did nothing at all.",
+    "Domains and employers below 5 contacts are counted but never named — a bucket of one is a person."
+  ]
+}

@@ -1,0 +1,155 @@
+{
+  "metadata": {
+    "note": "Provenance for the raw Mailchimp audience exports. The raw CSVs are never committed (see /private/ in .gitignore); this file exists so their provenance stays auditable when the data itself is not present, which is the normal case and always the case on CI. Unlike a ticketing report, a Mailchimp export is a SNAPSHOT of subscription status — so an old exports[] entry is not superseded by a newer one, it is the only remaining evidence of anyone deleted from the account since.",
+    "vaultEnvVar": "MAILCHIMP_VAULT_DIR",
+    "piiClasses": {
+      "none": "No personal data of any kind.",
+      "aggregate": "Counts and totals only; no row describes one person.",
+      "email-only": "Email addresses, with no other identifying attribute.",
+      "person-identifying": "Name, email or phone — enough to identify someone.",
+      "person-sensitive": "Identity plus attributes a person would not expect published: street address, date of birth, employer, and the tags saying which events they came through.",
+      "person-network": "Network and location metadata: the IP address a person signed up from, their timezone, country and region. An IP plus a timestamp is a location record for the moment someone joined a women-in-tech mailing list, which is not what any of them thought they were giving."
+    }
+  },
+  "exports": [
+    {
+      "exportId": "2026-08-17",
+      "source": "Mailchimp → Audience → All contacts → Export Contacts (one file per status), plus Audience → Archived contacts → Export",
+      "exportedAtLocal": "2026-08-17T21:00:00",
+      "timezone": "Pacific/Auckland",
+      "vaultPath": "private/mailchimp/2026-08-17/",
+      "fileCount": 5,
+      "files": [
+        {
+          "file": "archived_export_05fd8bc7fa.csv",
+          "report": "archived",
+          "scope": "audience:She#",
+          "status": "archived",
+          "hasHeaderRow": true,
+          "piiClass": "none",
+          "role": "reference",
+          "redundantWith": null,
+          "note": "Archived contacts. All five are August 2020 test rows (`@getnada.com`, `Test Name`) — kept so that 'we checked, and there was nothing here' is recorded rather than reasoned about again later. Feeds nothing.",
+          "exportedAt": "2026-08-17",
+          "bytes": 951,
+          "sha256": "9fde1e66f842481f3c594cf55125adf8f6fd07cb35de0d2ebd23974b9ef18109",
+          "rows": 5,
+          "columns": 23
+        },
+        {
+          "file": "cleaned_email_audience_export_1a10653875.csv",
+          "report": "audience",
+          "scope": "audience:She#",
+          "status": "cleaned",
+          "hasHeaderRow": true,
+          "piiClass": "person-network",
+          "role": "primary",
+          "redundantWith": null,
+          "note": "Hard-bounced addresses, with the campaign that bounced them. `cleaned` is Mailchimp's word for dead. EXCLUDED from the contact count Mailchimp's own UI reports, which is why the dashboard says 3,145 and the files total 3,689.",
+          "exportedAt": "2026-08-17",
+          "bytes": 146758,
+          "sha256": "cce629b18525f9e5337566e5aa5767947572eb5b1cb2a9df3389eb6e0f3d2c45",
+          "rows": 544,
+          "columns": 25
+        },
+        {
+          "file": "nonsubscribed_email_audience_export_1a10653875.csv",
+          "report": "audience",
+          "scope": "audience:She#",
+          "status": "nonsubscribed",
+          "hasHeaderRow": true,
+          "piiClass": "person-network",
+          "role": "primary",
+          "redundantWith": null,
+          "note": "Contacts who NEVER subscribed — transactional-only records Mailchimp holds but may not market to. Not a lapse in consent; an absence of it. Feeds the suppression register.",
+          "exportedAt": "2026-08-17",
+          "bytes": 204583,
+          "sha256": "bf41273d263da998c28dce2228a83cc4635b219b299c252546be81a3582576f6",
+          "rows": 782,
+          "columns": 23
+        },
+        {
+          "file": "subscribed_email_audience_export_1a10653875.csv",
+          "report": "audience",
+          "scope": "audience:She#",
+          "status": "subscribed",
+          "hasHeaderRow": true,
+          "piiClass": "person-network",
+          "role": "spine",
+          "redundantWith": null,
+          "note": "THE LIST. Contacts subscribed at export time — the only file that may ever be imported into Resend, and then only through /update-mailing-list. Authoritative for list size, the tag vocabulary's live half, and every consent signal.",
+          "exportedAt": "2026-08-17",
+          "bytes": 471520,
+          "sha256": "b03424040b7f367e92361280cea22a0a2dfecc8e450014df24b39f932d1bfd81",
+          "rows": 1560,
+          "columns": 23
+        },
+        {
+          "file": "unsubscribed_email_audience_export_1a10653875.csv",
+          "report": "audience",
+          "scope": "audience:She#",
+          "status": "unsubscribed",
+          "hasHeaderRow": true,
+          "piiClass": "person-network",
+          "role": "primary",
+          "redundantWith": null,
+          "note": "People who left, with the campaign that prompted it and, for about half, a reason. Feeds the suppression register. A later export showing one of them subscribed again is a new decision by that person; a later file is never a newer permission on its own.",
+          "exportedAt": "2026-08-17",
+          "bytes": 265799,
+          "sha256": "281cf67a7f9a429b6cc860ca200721afa5752b72e058d32a4adb4c5be98efd71",
+          "rows": 803,
+          "columns": 27
+        }
+      ]
+    }
+  ],
+  "knownGaps": [
+    {
+      "report": "account-export-zip",
+      "scope": "account",
+      "claimedExported": true,
+      "present": false,
+      "reason": "Triggered on 2026-08-17 via Settings → Manage my data → Export data, with all 8 categories ticked (Emails, Audiences, Reports, Templates, Gallery, Events, Appointments, Ecommerce) and range = All data. Mailchimp emails a download link to the organisation's newsletter mailbox (named in docs/development/EMAIL_ADDRESSES.md — no address is written into this file, because the leak guard that keeps 3,689 real addresses out of it does not get an exception) and may take up to 24 hours. It had not arrived when this manifest was first written.",
+      "impact": "Campaign-level statistics for the 209 campaigns — sends, opens, clicks, bounces per campaign — exist only inside it. Without it this archive can say who was on the list but nothing about how the list behaved.",
+      "action": "Collect the link from the newsletter mailbox and add it as mailchimp/<date>-account/ in the private repo, then a second exports[] entry here. NOTE: Mailchimp allows one account export per 24 hours, so a link left to expire costs another day.",
+      "blocks": [
+        "campaign send/open/click/bounce statistics",
+        "the historical audience-size series",
+        "template and landing-page content"
+      ]
+    },
+    {
+      "report": "per-campaign-recipient-activity",
+      "scope": "per-campaign",
+      "claimedExported": false,
+      "present": false,
+      "reason": "Mailchimp exports per-recipient open and click detail one campaign at a time — 209 manual operations. Skipped by decision on 2026-08-17.",
+      "impact": "No per-person engagement history. This is what would be needed to build the 'most engaged recent openers' sub-segment the Resend migration runbook recommends sending to first.",
+      "action": "Only if the ramped first send is judged to need it. The campaign-level summaries in the account ZIP are the cheaper substitute.",
+      "blocks": [
+        "a recent-openers segment for the first Resend broadcast"
+      ]
+    },
+    {
+      "report": "saved-segments",
+      "scope": "audience:She#",
+      "claimedExported": false,
+      "present": false,
+      "reason": "There are none to export. The account has 214 tags and zero saved segments.",
+      "impact": "None. All of the audience's structure is in the TAGS column, which is exported in full.",
+      "action": "None."
+    },
+    {
+      "report": "automations-forms-landing-pages",
+      "scope": "account",
+      "claimedExported": false,
+      "present": false,
+      "reason": "Mailchimp's export does not include automation workflows, signup-form designs, or landing-page and website content. No export option produces them.",
+      "impact": "If the account is closed, the design of the signup form that collected most of this consent is lost, and with it the wording people agreed to.",
+      "action": "Screenshot or save them by hand BEFORE the Mailchimp account is closed. An export taken afterwards will not bring them back.",
+      "blocks": [
+        "the exact opt-in wording shown on the website signup form"
+      ]
+    }
+  ]
+}

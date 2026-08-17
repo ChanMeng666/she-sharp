@@ -62,6 +62,16 @@ jobs:
       - name: Verify the Humanitix archive
         run: npx tsx lib/data/humanitix.test.ts
 
+      # Also shares this checkout, and the same argument applies harder. The
+      # Humanitix export contains addresses; the Mailchimp audience export is
+      # nothing but addresses — 3,689 of them, with names, phone numbers and the
+      # IP each person signed up from. So the committed archive is counts only,
+      # and this is the check that keeps it that way: no address, no IP, no
+      # per-contact identifier, and no named bucket holding fewer than five
+      # people, because a bucket of one is a person.
+      - name: Verify the Mailchimp archive
+        run: npx tsx lib/data/mailchimp.test.ts
+
   typecheck-scripts:
     # `scripts/` is excluded from the root tsconfig and `.claude/**` is missed by
     # its `**/*.ts` glob (dot-directories don't match), so neither tree was

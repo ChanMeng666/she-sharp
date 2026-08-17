@@ -1,0 +1,486 @@
+{
+  "metadata": {
+    "authored": true,
+    "verifiedAt": "2026-08-18",
+    "verifiedAgainst": "lib/data/events.ts getAllEvents(), and lib/data/json/humanitix/crosswalk.json",
+    "note": "HAND-AUTHORED AND HAND-VERIFIED. The builder reads this and never writes it, so a regeneration cannot overwrite a judgement made here. Rows were proposed by scripts/mailchimp/propose-crosswalk.ts and every one was read before landing. 55 of the 64 were settled through the Humanitix crosswalk rather than by title similarity: the Event: tags were pasted into Mailchimp from Humanitix ticket lists, so they carry Humanitix listing names, and those names were already tied to site events by date and registration count. That is why `She Sharp@ EY` resolves to `robotic-process-automation` — two names for one event on 5 March 2020 — which no amount of string matching would have found. A `match` of `hand-verified` means a person read the row; it does not mean the tag proves attendance. It does not. Humanitix is authoritative for who turned up; a tag records a list somebody pasted."
+  },
+  "links": [
+    {
+      "tag": "Event:  She Sharp & Fonterra : A Legendairy Career",
+      "siteSlug": "fonterra-a-legendairy-career",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event:  She Sharp & TechBabesNZ: THRIVE: YOUR CAREER, YOUR STORY",
+      "siteSlug": "thrive-your-career-your-story",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: 2024 Google Educator Conference",
+      "siteSlug": "google-educator-conference-2024",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: Ada Lovelace Day  Celebration",
+      "siteSlug": "ada-lovelace-day",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: F&P Hackathon with She#",
+      "siteSlug": "f-p-hackathon",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: Girls Night Out @Xero",
+      "siteSlug": "girls-night-out",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: Google Educators Conference",
+      "siteSlug": "google-educator-conference-2023",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: Her Waka",
+      "siteSlug": "her-waka",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: Her Waka (April 2026)",
+      "siteSlug": "her-waka-april-2026",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: Her Waka (June 2026)",
+      "siteSlug": "her-waka-june-2026",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: Her Waka (May 2026)",
+      "siteSlug": "her-waka-may-2026",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: IamRemarkable",
+      "siteSlug": "2021-iamremarkable",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: Inspire Her: Te Whakatipuranga Wahine",
+      "siteSlug": "inspire-her-te-whakatipuranga-wahine",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: Making LinkedIn Work for You",
+      "siteSlug": "making-linkedin-work-for-you-with-stuart-little",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: ONLINE EVENT CELEBRATING ADA LOVELACE DAY",
+      "siteSlug": "online-quiz-night-celebrating-ada-lovelace-day",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: Own Your Energy with Candice Murray - Presented by She Sharp & Metlifecare",
+      "siteSlug": "she-sharp-candice-murray-own-your-energy",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: STORYTELLERS SERIES",
+      "siteSlug": "she-storytellers-series",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "The first Storytellers Series, 28 May 2020. The 2.0 run of September 2020 carries its own tag (`Event: STORYTELLERS SERIES  2.0`), so this one is unambiguous despite the identical wording. Note the Humanitix archive records the first series as three sessions summed into one site record."
+    },
+    {
+      "tag": "Event: STORYTELLERS SERIES  2.0",
+      "siteSlug": "she-storytellers-series-2-0",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "The second Storytellers Series, 24 September 2020. Distinct from `Event: STORYTELLERS SERIES`, which is the May run."
+    },
+    {
+      "tag": "Event: She Sharp & ANZ: Navigating the Workplace as a Woman",
+      "siteSlug": "2022-navigating-the-workplace-as-a-woman",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She Sharp & AWS International Women's Day Event #BreakTheBias",
+      "siteSlug": "2022-break-the-bias",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She Sharp & AWS presents: She Celebrates - End of Year Event",
+      "siteSlug": "2022-she-celebrates",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She Sharp & Academy EX: International Women's Day",
+      "siteSlug": "she-sharp-academy-ex-international-womens-day",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She Sharp & Candice Murray: Own your Energy!",
+      "siteSlug": "she-sharp-candice-murray-own-your-energy",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "The site title names the same speaker and the same talk, with Metlifecare as host: \"Own Your Energy with Candice Murray - Presented by She Sharp & Metlifecare\", 16 April 2026. The export also carries the full site wording as a separate tag, so both spellings point here."
+    },
+    {
+      "tag": "Event: She Sharp & Countdown: International Women's Day",
+      "siteSlug": "2023-international-womens-day",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She Sharp & Deloitte: Innovation Unleashed",
+      "siteSlug": "2023-innovation-unleashed",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She Sharp & Fiserv: Bank on yourself",
+      "siteSlug": "bank-on-yourself",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She Sharp & Fonterra: Harness The Power of Generative Al",
+      "siteSlug": "harness-the-power-of-data-and-ai",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She Sharp & Fonterra:Business and Technology Transformation Through Platforms and Products",
+      "siteSlug": "business-and-technology-transformation-through-platforms-and-products",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She Sharp & Google - Shaping the Future with AI",
+      "siteSlug": "2022-shaping-the-future-with-ai",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She Sharp & HCL: Technological change - workplace & workforce impacts",
+      "siteSlug": "technological-change-workplace-workforce-impacts",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She Sharp & HCLTech",
+      "siteSlug": "the-role-of-technology-in-sustainable-development",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She Sharp & HCLTech: AI Empowerment: Shaping an Inclusive Digital Future",
+      "siteSlug": "she-sharp-hcltech-ai-empowerment-shaping-an-inclusive-digital-future",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She Sharp & Kiwibank: The Buzz about Banking",
+      "siteSlug": "2023-the-buzz-about-banking",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She Sharp & Les Mills: No Pain, All Gain - Getting fit for AI",
+      "siteSlug": "event-lesmills-03-september-2026",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She Sharp & Les Mills: Own The Unexpected",
+      "siteSlug": "own-the-unexpected",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She Sharp & MYOB - Mind Your Own Career",
+      "siteSlug": "2022-mind-your-own-career",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She Sharp & MYOB: Embracing Bias",
+      "siteSlug": "embracing-bias",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She Sharp & MYOB: Kickstart Your Career in Tech",
+      "siteSlug": "2023-kickstart-your-career-in-tech-with-myob",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She Sharp & MYOB: Tech That Matches Your Vibe - Find Your Perfect Fit",
+      "siteSlug": "tech-that-matches-your-vibe-find-your-perfect-fit",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She Sharp & MYOB: Working Smarter: AI, MYOB, and the New Delivery Landscape",
+      "siteSlug": "she-sharp-and-myob-working-smarter",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She Sharp & TechWomen NZ: From Burnout to Balance",
+      "siteSlug": "from-burnout-to-balance",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She Sharp & Vector: Future-Ready: Data, AI, Digital Innovation & Inclusive Careers at Vector",
+      "siteSlug": "she-sharp-vector-future-ready-data-ai-digital-innovation-inclusive-careers-at-vector",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She Sharp & Woolworths: International Women's Day",
+      "siteSlug": "international-womens-day-2",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She Sharp & academyEX: International Women's Day 2026",
+      "siteSlug": "she-sharp-and-academyex-international-womens-day-2026",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She Sharp - AI for the Environment Female-Led Hackathon #AIEnviroHack",
+      "siteSlug": "2022-ai-enviro-hack",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She Sharp 10-Year Anniversary",
+      "siteSlug": "she-sharp-10-year-anniversary",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She Sharp @ Fergus: Women in Tech & Trades",
+      "siteSlug": "women-in-tech-and-trades",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She Sharp Future Ready!",
+      "siteSlug": "shesharp-future-ready",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She Sharp Techweek: Envision The Future: How to Create A More Diverse, Inclusive & Sustainabl",
+      "siteSlug": "she-sharp-techweek-envision-the-future",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Truncated at Mailchimp's 100-character tag limit, mid-word in \"Sustainable\". The surviving prefix matches the 29 July 2020 event exactly. Not to be confused with `she-sharp-techweek`, a different event in 2018."
+    },
+    {
+      "tag": "Event: She Sharp, Ministry of Social Development, academyEX: Her Waka",
+      "siteSlug": "her-waka",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "The undated Her Waka tag, and the site's undated Her Waka record: \"HER WAKA - Navigating Pathways into Sustainable Employment\", 25 March 2026. The three dated sessions each carry their own tag, so this one is the programme launch rather than a session."
+    },
+    {
+      "tag": "Event: She Sharp, Ministry of Social Development, academyEX: Her Waka (April 2026)",
+      "siteSlug": "her-waka-april-2026",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Month named in the tag. The site records one Her Waka session per month; this is April's."
+    },
+    {
+      "tag": "Event: She Sharp, Ministry of Social Development, academyEX: Her Waka (June 2026)",
+      "siteSlug": "her-waka-june-2026",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Month named in the tag."
+    },
+    {
+      "tag": "Event: She Sharp, Ministry of Social Development, academyEX: Her Waka (May 2026)",
+      "siteSlug": "her-waka-may-2026",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Month named in the tag."
+    },
+    {
+      "tag": "Event: She Sharp, SecureCodeWarrior, Xero: Code Secure. Lead the Future: Women in Cybersecurity Work",
+      "siteSlug": "code-secure",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Truncated at the 100-character limit, mid-word in \"Workshop\". The site title is \"Code Secure. Lead the Future: Women in Cybersecurity Workshop\", 3 October 2025. Not `2022-women-in-security`, which the fuzzy matcher ranked second and which is three years earlier."
+    },
+    {
+      "tag": "Event: She Sharp: #IAmRemarkable",
+      "siteSlug": "iamremarkable",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She Sharp@ EY",
+      "siteSlug": "robotic-process-automation",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She celebrates - End of Year Event",
+      "siteSlug": "google-end-of-year-event",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: She# International Women's Day event with MYOB - Thursday 18th March 2021",
+      "siteSlug": "2021-international-womens-day",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: The Truths to Gaming and Start-up - presented by She Sharp & Geo AR Games",
+      "siteSlug": "the-truths-to-gaming-and-start-up",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: Women Igniting a Passion for Tech - SOLD OUT",
+      "siteSlug": "2022-women-igniting-tech",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: Women in Data and Analytics",
+      "siteSlug": "women-in-data-and-analytics",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: Women in Security - Reshaping the Future",
+      "siteSlug": "2022-women-in-security",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: Youth Tech Series - AI & Electronics Workshop",
+      "siteSlug": "peyvand-academy-13-june-2026",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    },
+    {
+      "tag": "Event: Youth Tech Series - Electronics Workshop",
+      "siteSlug": "peyvand-academy-20-june-2026",
+      "match": "hand-verified",
+      "confidence": "high",
+      "note": "Matched through lib/data/json/humanitix/crosswalk.json: the same listing name, already tied to this site event by date and registration count."
+    }
+  ],
+  "unmatched": [],
+  "multiTagEvents": [
+    {
+      "siteSlug": "her-waka",
+      "tags": 2,
+      "note": "More than one Mailchimp tag points at this event — usually an early tag and a later, fuller one. Counting the tags would double-count the people."
+    },
+    {
+      "siteSlug": "her-waka-april-2026",
+      "tags": 2,
+      "note": "More than one Mailchimp tag points at this event — usually an early tag and a later, fuller one. Counting the tags would double-count the people."
+    },
+    {
+      "siteSlug": "her-waka-june-2026",
+      "tags": 2,
+      "note": "More than one Mailchimp tag points at this event — usually an early tag and a later, fuller one. Counting the tags would double-count the people."
+    },
+    {
+      "siteSlug": "her-waka-may-2026",
+      "tags": 2,
+      "note": "More than one Mailchimp tag points at this event — usually an early tag and a later, fuller one. Counting the tags would double-count the people."
+    },
+    {
+      "siteSlug": "she-sharp-candice-murray-own-your-energy",
+      "tags": 2,
+      "note": "More than one Mailchimp tag points at this event — usually an early tag and a later, fuller one. Counting the tags would double-count the people."
+    }
+  ]
+}

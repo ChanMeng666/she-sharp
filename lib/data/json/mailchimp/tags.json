@@ -1,0 +1,2620 @@
+{
+  "metadata": {
+    "generatedBy": "scripts/mailchimp/build-archive.ts",
+    "exportId": "2026-08-17",
+    "note": "GENERATED — do not hand-edit. Classification rules live in tag-rules.json, which IS hand-authored and is never written by the builder. `contacts` counts CONTACTS, not tag applications: a contact carrying a tag twice is counted once. Tags of kind `fragment` are artefacts of Mailchimp's own broken quoting and were never applied by anyone."
+  },
+  "distinct": 243,
+  "distinctReal": 229,
+  "tags": [
+    {
+      "tag": "10 Anniversary",
+      "kind": "label",
+      "contacts": 110,
+      "byStatus": {
+        "subscribed": 81,
+        "unsubscribed": 16,
+        "nonsubscribed": 5,
+        "cleaned": 8
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "12-2pm NZT",
+      "kind": "fragment",
+      "contacts": 33,
+      "byStatus": {
+        "subscribed": 8,
+        "unsubscribed": 2,
+        "nonsubscribed": 23
+      },
+      "fromMalformedCellOnly": true
+    },
+    {
+      "tag": "2020",
+      "kind": "cohort-year",
+      "contacts": 130,
+      "byStatus": {
+        "subscribed": 19,
+        "unsubscribed": 68,
+        "nonsubscribed": 17,
+        "cleaned": 26
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "2021",
+      "kind": "cohort-year",
+      "contacts": 239,
+      "byStatus": {
+        "subscribed": 53,
+        "unsubscribed": 46,
+        "nonsubscribed": 2,
+        "cleaned": 138
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "2022",
+      "kind": "cohort-year",
+      "contacts": 650,
+      "byStatus": {
+        "subscribed": 316,
+        "unsubscribed": 170,
+        "nonsubscribed": 49,
+        "cleaned": 115
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "2023",
+      "kind": "cohort-year",
+      "contacts": 164,
+      "byStatus": {
+        "subscribed": 75,
+        "unsubscribed": 42,
+        "nonsubscribed": 24,
+        "cleaned": 23
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "2023Survey",
+      "kind": "label",
+      "contacts": 288,
+      "byStatus": {
+        "subscribed": 144,
+        "unsubscribed": 60,
+        "nonsubscribed": 17,
+        "cleaned": 67
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "AI Enviro Hackathon",
+      "kind": "label",
+      "contacts": 103,
+      "byStatus": {
+        "subscribed": 60,
+        "unsubscribed": 26,
+        "nonsubscribed": 13,
+        "cleaned": 4
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "AI Forum 2021",
+      "kind": "label",
+      "contacts": 74,
+      "byStatus": {
+        "subscribed": 33,
+        "unsubscribed": 21,
+        "nonsubscribed": 2,
+        "cleaned": 18
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "ANZ Navigating the Workplace",
+      "kind": "label",
+      "contacts": 83,
+      "byStatus": {
+        "subscribed": 42,
+        "unsubscribed": 20,
+        "nonsubscribed": 7,
+        "cleaned": 14
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "AWS",
+      "kind": "label",
+      "contacts": 38,
+      "byStatus": {
+        "subscribed": 17,
+        "unsubscribed": 11,
+        "nonsubscribed": 2,
+        "cleaned": 8
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "AWS Women in Security",
+      "kind": "label",
+      "contacts": 96,
+      "byStatus": {
+        "subscribed": 39,
+        "unsubscribed": 35,
+        "nonsubscribed": 8,
+        "cleaned": 14
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Campaign Pasted Segment - 10 Mar 2021 09:09:50 pm",
+      "kind": "campaign-segment",
+      "contacts": 1,
+      "byStatus": {
+        "unsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Campaign Pasted Segment - 10 Mar 2021 09:12:47 pm",
+      "kind": "campaign-segment",
+      "contacts": 9,
+      "byStatus": {
+        "subscribed": 7,
+        "unsubscribed": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Campaign Pasted Segment - 10 Mar 2021 09:20:21 pm",
+      "kind": "campaign-segment",
+      "contacts": 9,
+      "byStatus": {
+        "subscribed": 7,
+        "unsubscribed": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Campaign Pasted Segment - 10 Mar 2021 09:21:32 pm",
+      "kind": "campaign-segment",
+      "contacts": 10,
+      "byStatus": {
+        "subscribed": 8,
+        "unsubscribed": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Campaign Pasted Segment - 10 Mar 2021 09:23:46 pm",
+      "kind": "campaign-segment",
+      "contacts": 10,
+      "byStatus": {
+        "subscribed": 8,
+        "unsubscribed": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Campaign Pasted Segment - 10 Mar 2021 09:26:01 pm",
+      "kind": "campaign-segment",
+      "contacts": 10,
+      "byStatus": {
+        "subscribed": 8,
+        "unsubscribed": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Campaign Pasted Segment - 10 Mar 2021 09:37:54 pm",
+      "kind": "campaign-segment",
+      "contacts": 20,
+      "byStatus": {
+        "subscribed": 12,
+        "unsubscribed": 7,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Campaign Pasted Segment - 10 Mar 2021 09:38:09 pm",
+      "kind": "campaign-segment",
+      "contacts": 20,
+      "byStatus": {
+        "subscribed": 12,
+        "unsubscribed": 7,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Campaign Pasted Segment - 15 Oct 2020 03:38:01 pm",
+      "kind": "campaign-segment",
+      "contacts": 15,
+      "byStatus": {
+        "subscribed": 10,
+        "unsubscribed": 4,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Campaign Pasted Segment - 15 Oct 2020 03:40:57 pm",
+      "kind": "campaign-segment",
+      "contacts": 15,
+      "byStatus": {
+        "subscribed": 10,
+        "unsubscribed": 4,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Campaign Pasted Segment - 15 Oct 2020 03:48:04 pm",
+      "kind": "campaign-segment",
+      "contacts": 15,
+      "byStatus": {
+        "subscribed": 10,
+        "unsubscribed": 4,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Campaign Pasted Segment - 15 Oct 2020 04:06:18 pm",
+      "kind": "campaign-segment",
+      "contacts": 2,
+      "byStatus": {
+        "subscribed": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Campaign Pasted Segment - 15 Oct 2020 04:07:06 pm",
+      "kind": "campaign-segment",
+      "contacts": 2,
+      "byStatus": {
+        "subscribed": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Campaign Pasted Segment - 18 Sep 2023 11:10:17 am",
+      "kind": "campaign-segment",
+      "contacts": 4,
+      "byStatus": {
+        "subscribed": 2,
+        "nonsubscribed": 1,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Campaign Pasted Segment - 18 Sep 2023 11:20:25 am",
+      "kind": "campaign-segment",
+      "contacts": 4,
+      "byStatus": {
+        "subscribed": 2,
+        "nonsubscribed": 1,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Campaign Pasted Segment - 24 Sep 2020 05:36:44 pm",
+      "kind": "campaign-segment",
+      "contacts": 342,
+      "byStatus": {
+        "subscribed": 121,
+        "unsubscribed": 140,
+        "nonsubscribed": 39,
+        "cleaned": 42
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Campaign Pasted Segment - 24 Sep 2020 06:55:53 pm",
+      "kind": "campaign-segment",
+      "contacts": 7,
+      "byStatus": {
+        "subscribed": 4,
+        "unsubscribed": 3
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Campaign Pasted Segment - 24 Sep 2020 11:15:51 am",
+      "kind": "campaign-segment",
+      "contacts": 9,
+      "byStatus": {
+        "subscribed": 5,
+        "unsubscribed": 4
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Campaign Pasted Segment - 24 Sep 2020 11:21:23 am",
+      "kind": "campaign-segment",
+      "contacts": 9,
+      "byStatus": {
+        "subscribed": 5,
+        "unsubscribed": 4
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Campaign Pasted Segment - 29 Sep 2020 06:49:17 pm",
+      "kind": "campaign-segment",
+      "contacts": 10,
+      "byStatus": {
+        "subscribed": 6,
+        "unsubscribed": 4
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Campaign Pasted Segment - 30 Sep 2020 11:23:48 pm",
+      "kind": "campaign-segment",
+      "contacts": 10,
+      "byStatus": {
+        "subscribed": 6,
+        "unsubscribed": 4
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Campaign Pasted Segment - 30 Sep 2020 11:25:11 pm",
+      "kind": "campaign-segment",
+      "contacts": 1,
+      "byStatus": {
+        "unsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Campaign Pasted Segment - 30 Sep 2020 11:25:40 pm",
+      "kind": "campaign-segment",
+      "contacts": 2,
+      "byStatus": {
+        "subscribed": 1,
+        "unsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Centrality",
+      "kind": "label",
+      "contacts": 50,
+      "byStatus": {
+        "subscribed": 23,
+        "unsubscribed": 20,
+        "nonsubscribed": 1,
+        "cleaned": 6
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Countdown IWD",
+      "kind": "label",
+      "contacts": 93,
+      "byStatus": {
+        "subscribed": 40,
+        "unsubscribed": 24,
+        "nonsubscribed": 17,
+        "cleaned": 12
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "CountdownX",
+      "kind": "label",
+      "contacts": 64,
+      "byStatus": {
+        "subscribed": 25,
+        "unsubscribed": 16,
+        "nonsubscribed": 12,
+        "cleaned": 11
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Deloitte",
+      "kind": "label",
+      "contacts": 52,
+      "byStatus": {
+        "subscribed": 20,
+        "unsubscribed": 17,
+        "nonsubscribed": 1,
+        "cleaned": 14
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event:  She Sharp & Fonterra : A Legendairy Career",
+      "kind": "event",
+      "contacts": 85,
+      "byStatus": {
+        "subscribed": 55,
+        "unsubscribed": 18,
+        "nonsubscribed": 10,
+        "cleaned": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event:  She Sharp & TechBabesNZ: THRIVE: YOUR CAREER, YOUR STORY",
+      "kind": "event",
+      "contacts": 66,
+      "byStatus": {
+        "subscribed": 59,
+        "unsubscribed": 5,
+        "nonsubscribed": 1,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: 2024 Google Educator Conference",
+      "kind": "event",
+      "contacts": 105,
+      "byStatus": {
+        "subscribed": 25,
+        "unsubscribed": 6,
+        "nonsubscribed": 72,
+        "cleaned": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: Ada Lovelace Day  Celebration",
+      "kind": "event",
+      "contacts": 24,
+      "byStatus": {
+        "subscribed": 18,
+        "unsubscribed": 4,
+        "nonsubscribed": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: F&P Hackathon with She#",
+      "kind": "event",
+      "contacts": 106,
+      "byStatus": {
+        "subscribed": 26,
+        "unsubscribed": 7,
+        "nonsubscribed": 72,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: Girls Night Out @Xero",
+      "kind": "event",
+      "contacts": 54,
+      "byStatus": {
+        "subscribed": 14,
+        "unsubscribed": 11,
+        "nonsubscribed": 28,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: Google Educators Conference",
+      "kind": "event",
+      "contacts": 74,
+      "byStatus": {
+        "subscribed": 46,
+        "unsubscribed": 12,
+        "nonsubscribed": 10,
+        "cleaned": 6
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: Her Waka",
+      "kind": "event",
+      "contacts": 34,
+      "byStatus": {
+        "subscribed": 5,
+        "nonsubscribed": 29
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: Her Waka (April 2026)",
+      "kind": "event",
+      "contacts": 32,
+      "byStatus": {
+        "subscribed": 4,
+        "nonsubscribed": 28
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: Her Waka (June 2026)",
+      "kind": "event",
+      "contacts": 20,
+      "byStatus": {
+        "subscribed": 5,
+        "nonsubscribed": 15
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: Her Waka (May 2026)",
+      "kind": "event",
+      "contacts": 26,
+      "byStatus": {
+        "subscribed": 5,
+        "nonsubscribed": 21
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: IamRemarkable",
+      "kind": "event",
+      "contacts": 52,
+      "byStatus": {
+        "subscribed": 30,
+        "unsubscribed": 19,
+        "nonsubscribed": 2,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: Inspire Her: Te Whakatipuranga Wahine",
+      "kind": "event",
+      "contacts": 27,
+      "byStatus": {
+        "subscribed": 17,
+        "unsubscribed": 3,
+        "nonsubscribed": 5,
+        "cleaned": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: Making LinkedIn Work for You",
+      "kind": "event",
+      "contacts": 78,
+      "byStatus": {
+        "subscribed": 22,
+        "nonsubscribed": 55,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: ONLINE EVENT CELEBRATING ADA LOVELACE DAY",
+      "kind": "event",
+      "contacts": 31,
+      "byStatus": {
+        "subscribed": 16,
+        "unsubscribed": 4,
+        "nonsubscribed": 10,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: Own Your Energy with Candice Murray - Presented by She Sharp & Metlifecare",
+      "kind": "event",
+      "contacts": 29,
+      "byStatus": {
+        "subscribed": 13,
+        "nonsubscribed": 16
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She celebrates - End of Year Event",
+      "kind": "event",
+      "contacts": 66,
+      "byStatus": {
+        "subscribed": 47,
+        "unsubscribed": 10,
+        "nonsubscribed": 7,
+        "cleaned": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp - AI for the Environment Female-Led Hackathon #AIEnviroHack",
+      "kind": "event",
+      "contacts": 101,
+      "byStatus": {
+        "subscribed": 56,
+        "unsubscribed": 26,
+        "nonsubscribed": 17,
+        "cleaned": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp @ Fergus: Women in Tech & Trades",
+      "kind": "event",
+      "contacts": 21,
+      "byStatus": {
+        "subscribed": 7,
+        "unsubscribed": 2,
+        "nonsubscribed": 12
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp & Academy EX: International Women's Day",
+      "kind": "event",
+      "contacts": 57,
+      "byStatus": {
+        "subscribed": 45,
+        "unsubscribed": 10,
+        "nonsubscribed": 1,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp & academyEX: International Women's Day 2026",
+      "kind": "event",
+      "contacts": 68,
+      "byStatus": {
+        "subscribed": 28,
+        "unsubscribed": 1,
+        "nonsubscribed": 39
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp & ANZ: Navigating the Workplace as a Woman",
+      "kind": "event",
+      "contacts": 57,
+      "byStatus": {
+        "subscribed": 30,
+        "unsubscribed": 16,
+        "nonsubscribed": 9,
+        "cleaned": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp & AWS International Women's Day Event #BreakTheBias",
+      "kind": "event",
+      "contacts": 35,
+      "byStatus": {
+        "subscribed": 25,
+        "unsubscribed": 8,
+        "nonsubscribed": 1,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp & AWS presents: She Celebrates - End of Year Event",
+      "kind": "event",
+      "contacts": 66,
+      "byStatus": {
+        "subscribed": 40,
+        "unsubscribed": 16,
+        "nonsubscribed": 9,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp & Candice Murray: Own your Energy!",
+      "kind": "event",
+      "contacts": 29,
+      "byStatus": {
+        "subscribed": 14,
+        "nonsubscribed": 15
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp & Countdown: International Women's Day",
+      "kind": "event",
+      "contacts": 67,
+      "byStatus": {
+        "subscribed": 28,
+        "unsubscribed": 20,
+        "nonsubscribed": 15,
+        "cleaned": 4
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp & Deloitte: Innovation Unleashed",
+      "kind": "event",
+      "contacts": 66,
+      "byStatus": {
+        "subscribed": 34,
+        "unsubscribed": 15,
+        "nonsubscribed": 16,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp & Fiserv: Bank on yourself",
+      "kind": "event",
+      "contacts": 80,
+      "byStatus": {
+        "subscribed": 37,
+        "unsubscribed": 6,
+        "nonsubscribed": 35,
+        "cleaned": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp & Fonterra: Harness The Power of Generative Al",
+      "kind": "event",
+      "contacts": 91,
+      "byStatus": {
+        "subscribed": 48,
+        "unsubscribed": 7,
+        "nonsubscribed": 34,
+        "cleaned": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp & Fonterra:Business and Technology Transformation Through Platforms and Products",
+      "kind": "event",
+      "contacts": 53,
+      "byStatus": {
+        "subscribed": 45,
+        "unsubscribed": 4,
+        "nonsubscribed": 4
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp & Google - Shaping the Future with AI",
+      "kind": "event",
+      "contacts": 95,
+      "byStatus": {
+        "subscribed": 66,
+        "unsubscribed": 15,
+        "nonsubscribed": 14
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp & HCL: Technological change - workplace & workforce impacts",
+      "kind": "event",
+      "contacts": 58,
+      "byStatus": {
+        "subscribed": 40,
+        "unsubscribed": 12,
+        "nonsubscribed": 4,
+        "cleaned": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp & HCLTech",
+      "kind": "event",
+      "contacts": 47,
+      "byStatus": {
+        "subscribed": 15,
+        "unsubscribed": 2,
+        "nonsubscribed": 29,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp & HCLTech: AI Empowerment: Shaping an Inclusive Digital Future",
+      "kind": "event",
+      "contacts": 12,
+      "byStatus": {
+        "subscribed": 5,
+        "nonsubscribed": 7
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp & Kiwibank: The Buzz about Banking",
+      "kind": "event",
+      "contacts": 47,
+      "byStatus": {
+        "subscribed": 29,
+        "unsubscribed": 9,
+        "nonsubscribed": 4,
+        "cleaned": 5
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp & Les Mills: No Pain, All Gain - Getting fit for AI",
+      "kind": "event",
+      "contacts": 13,
+      "byStatus": {
+        "subscribed": 6,
+        "nonsubscribed": 7
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp & Les Mills: Own The Unexpected",
+      "kind": "event",
+      "contacts": 84,
+      "byStatus": {
+        "subscribed": 58,
+        "unsubscribed": 16,
+        "nonsubscribed": 8,
+        "cleaned": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp & MYOB - Mind Your Own Career",
+      "kind": "event",
+      "contacts": 16,
+      "byStatus": {
+        "subscribed": 10,
+        "unsubscribed": 3,
+        "nonsubscribed": 1,
+        "cleaned": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp & MYOB: Embracing Bias",
+      "kind": "event",
+      "contacts": 59,
+      "byStatus": {
+        "subscribed": 46,
+        "unsubscribed": 4,
+        "nonsubscribed": 5,
+        "cleaned": 4
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp & MYOB: Kickstart Your Career in Tech",
+      "kind": "event",
+      "contacts": 66,
+      "byStatus": {
+        "subscribed": 33,
+        "unsubscribed": 15,
+        "nonsubscribed": 12,
+        "cleaned": 6
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp & MYOB: Tech That Matches Your Vibe - Find Your Perfect Fit",
+      "kind": "event",
+      "contacts": 53,
+      "byStatus": {
+        "subscribed": 46,
+        "unsubscribed": 5,
+        "nonsubscribed": 1,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp & MYOB: Working Smarter: AI, MYOB, and the New Delivery Landscape",
+      "kind": "event",
+      "contacts": 58,
+      "byStatus": {
+        "subscribed": 33,
+        "nonsubscribed": 25
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp & TechWomen NZ: From Burnout to Balance",
+      "kind": "event",
+      "contacts": 81,
+      "byStatus": {
+        "subscribed": 51,
+        "unsubscribed": 16,
+        "nonsubscribed": 8,
+        "cleaned": 6
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp & Vector: Future-Ready: Data, AI, Digital Innovation & Inclusive Careers at Vector",
+      "kind": "event",
+      "contacts": 48,
+      "byStatus": {
+        "subscribed": 24,
+        "unsubscribed": 1,
+        "nonsubscribed": 23
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp & Woolworths: International Women's Day",
+      "kind": "event",
+      "contacts": 79,
+      "byStatus": {
+        "subscribed": 52,
+        "unsubscribed": 11,
+        "nonsubscribed": 12,
+        "cleaned": 4
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp 10-Year Anniversary",
+      "kind": "event",
+      "contacts": 83,
+      "byStatus": {
+        "subscribed": 65,
+        "unsubscribed": 9,
+        "nonsubscribed": 7,
+        "cleaned": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp Future Ready!",
+      "kind": "event",
+      "contacts": 158,
+      "byStatus": {
+        "subscribed": 37,
+        "unsubscribed": 76,
+        "nonsubscribed": 18,
+        "cleaned": 27
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp Techweek: Envision The Future: How to Create A More Diverse, Inclusive & Sustainabl",
+      "kind": "event",
+      "contacts": 105,
+      "byStatus": {
+        "subscribed": 48,
+        "unsubscribed": 35,
+        "nonsubscribed": 9,
+        "cleaned": 13
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp, Ministry of Social Development, academyEX: Her Waka",
+      "kind": "event",
+      "contacts": 2,
+      "byStatus": {
+        "subscribed": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp, Ministry of Social Development, academyEX: Her Waka (April 2026)",
+      "kind": "event",
+      "contacts": 2,
+      "byStatus": {
+        "subscribed": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp, Ministry of Social Development, academyEX: Her Waka (June 2026)",
+      "kind": "event",
+      "contacts": 1,
+      "byStatus": {
+        "subscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp, Ministry of Social Development, academyEX: Her Waka (May 2026)",
+      "kind": "event",
+      "contacts": 1,
+      "byStatus": {
+        "subscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp, SecureCodeWarrior, Xero: Code Secure. Lead the Future: Women in Cybersecurity Work",
+      "kind": "event",
+      "contacts": 50,
+      "byStatus": {
+        "subscribed": 45,
+        "unsubscribed": 3,
+        "nonsubscribed": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp: #IAmRemarkable",
+      "kind": "event",
+      "contacts": 48,
+      "byStatus": {
+        "subscribed": 40,
+        "unsubscribed": 6,
+        "cleaned": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She Sharp@ EY",
+      "kind": "event",
+      "contacts": 36,
+      "byStatus": {
+        "subscribed": 17,
+        "unsubscribed": 11,
+        "nonsubscribed": 8
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: She# International Women's Day event with MYOB - Thursday 18th March 2021",
+      "kind": "event",
+      "contacts": 38,
+      "byStatus": {
+        "subscribed": 17,
+        "unsubscribed": 9,
+        "nonsubscribed": 11,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: STORYTELLERS SERIES",
+      "kind": "event",
+      "contacts": 137,
+      "byStatus": {
+        "subscribed": 56,
+        "unsubscribed": 51,
+        "nonsubscribed": 25,
+        "cleaned": 5
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: STORYTELLERS SERIES  2.0",
+      "kind": "event",
+      "contacts": 22,
+      "byStatus": {
+        "subscribed": 8,
+        "unsubscribed": 6,
+        "nonsubscribed": 8
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: The Truths to Gaming and Start-up - presented by She Sharp & Geo AR Games",
+      "kind": "event",
+      "contacts": 21,
+      "byStatus": {
+        "subscribed": 6,
+        "unsubscribed": 4,
+        "nonsubscribed": 11
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: Women Igniting a Passion for Tech - SOLD OUT",
+      "kind": "event",
+      "contacts": 45,
+      "byStatus": {
+        "subscribed": 15,
+        "unsubscribed": 15,
+        "nonsubscribed": 11,
+        "cleaned": 4
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: Women in Data and Analytics",
+      "kind": "event",
+      "contacts": 42,
+      "byStatus": {
+        "subscribed": 22,
+        "unsubscribed": 12,
+        "nonsubscribed": 5,
+        "cleaned": 3
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: Women in Security - Reshaping the Future",
+      "kind": "event",
+      "contacts": 64,
+      "byStatus": {
+        "subscribed": 32,
+        "unsubscribed": 18,
+        "nonsubscribed": 12,
+        "cleaned": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: Youth Tech Series - AI & Electronics Workshop",
+      "kind": "event",
+      "contacts": 20,
+      "byStatus": {
+        "subscribed": 5,
+        "nonsubscribed": 15
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Event: Youth Tech Series - Electronics Workshop",
+      "kind": "event",
+      "contacts": 18,
+      "byStatus": {
+        "subscribed": 5,
+        "nonsubscribed": 13
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "EY March 2020",
+      "kind": "label",
+      "contacts": 21,
+      "byStatus": {
+        "subscribed": 9,
+        "unsubscribed": 7,
+        "nonsubscribed": 5
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Future Ready",
+      "kind": "label",
+      "contacts": 130,
+      "byStatus": {
+        "subscribed": 19,
+        "unsubscribed": 68,
+        "nonsubscribed": 17,
+        "cleaned": 26
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Google 2019",
+      "kind": "label",
+      "contacts": 54,
+      "byStatus": {
+        "subscribed": 23,
+        "unsubscribed": 21,
+        "cleaned": 10
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Google AI Event",
+      "kind": "label",
+      "contacts": 104,
+      "byStatus": {
+        "subscribed": 71,
+        "unsubscribed": 15,
+        "nonsubscribed": 13,
+        "cleaned": 5
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Google Educators Teacher Email",
+      "kind": "label",
+      "contacts": 102,
+      "byStatus": {
+        "subscribed": 37,
+        "unsubscribed": 14,
+        "nonsubscribed": 40,
+        "cleaned": 11
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "High School Student",
+      "kind": "label",
+      "contacts": 59,
+      "byStatus": {
+        "subscribed": 17,
+        "unsubscribed": 8,
+        "cleaned": 34
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "July 16th",
+      "kind": "fragment",
+      "contacts": 22,
+      "byStatus": {
+        "subscribed": 8,
+        "unsubscribed": 1,
+        "nonsubscribed": 13
+      },
+      "fromMalformedCellOnly": true
+    },
+    {
+      "tag": "July 17th",
+      "kind": "fragment",
+      "contacts": 11,
+      "byStatus": {
+        "unsubscribed": 1,
+        "nonsubscribed": 10
+      },
+      "fromMalformedCellOnly": true
+    },
+    {
+      "tag": "MOTAT STEM Fair 2021",
+      "kind": "label",
+      "contacts": 14,
+      "byStatus": {
+        "subscribed": 7,
+        "unsubscribed": 7
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "MYOB Kickstart Your Career in Tech",
+      "kind": "label",
+      "contacts": 79,
+      "byStatus": {
+        "subscribed": 40,
+        "unsubscribed": 18,
+        "nonsubscribed": 10,
+        "cleaned": 11
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "MYOB Mind Your Own Career",
+      "kind": "label",
+      "contacts": 73,
+      "byStatus": {
+        "subscribed": 35,
+        "unsubscribed": 14,
+        "nonsubscribed": 4,
+        "cleaned": 20
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Nyriad",
+      "kind": "label",
+      "contacts": 46,
+      "byStatus": {
+        "subscribed": 12,
+        "unsubscribed": 17,
+        "nonsubscribed": 1,
+        "cleaned": 16
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "online",
+      "kind": "fragment",
+      "contacts": 13,
+      "byStatus": {
+        "subscribed": 3,
+        "unsubscribed": 1,
+        "nonsubscribed": 9
+      },
+      "fromMalformedCellOnly": true
+    },
+    {
+      "tag": "online)",
+      "kind": "fragment",
+      "contacts": 1,
+      "byStatus": {
+        "nonsubscribed": 1
+      },
+      "fromMalformedCellOnly": true
+    },
+    {
+      "tag": "online)\"",
+      "kind": "fragment",
+      "contacts": 19,
+      "byStatus": {
+        "subscribed": 5,
+        "unsubscribed": 1,
+        "nonsubscribed": 13
+      },
+      "fromMalformedCellOnly": true
+    },
+    {
+      "tag": "Sep23TeacherOutReach",
+      "kind": "label",
+      "contacts": 41,
+      "byStatus": {
+        "subscribed": 1,
+        "nonsubscribed": 39,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "She Celebrates",
+      "kind": "label",
+      "contacts": 94,
+      "byStatus": {
+        "subscribed": 54,
+        "unsubscribed": 24,
+        "nonsubscribed": 7,
+        "cleaned": 9
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Storytellers Series",
+      "kind": "label",
+      "contacts": 90,
+      "byStatus": {
+        "subscribed": 41,
+        "unsubscribed": 37,
+        "nonsubscribed": 7,
+        "cleaned": 5
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Tech22",
+      "kind": "label",
+      "contacts": 59,
+      "byStatus": {
+        "subscribed": 17,
+        "unsubscribed": 8,
+        "cleaned": 34
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Tech22 Exhibitor",
+      "kind": "label",
+      "contacts": 3,
+      "byStatus": {
+        "subscribed": 1,
+        "unsubscribed": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Techweek 2018",
+      "kind": "label",
+      "contacts": 50,
+      "byStatus": {
+        "subscribed": 18,
+        "unsubscribed": 23,
+        "cleaned": 9
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Techweek 2020",
+      "kind": "label",
+      "contacts": 102,
+      "byStatus": {
+        "subscribed": 48,
+        "unsubscribed": 33,
+        "nonsubscribed": 8,
+        "cleaned": 13
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Techweek 2022",
+      "kind": "label",
+      "contacts": 64,
+      "byStatus": {
+        "subscribed": 25,
+        "unsubscribed": 16,
+        "nonsubscribed": 12,
+        "cleaned": 11
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Donation",
+      "kind": "ticket-type",
+      "contacts": 61,
+      "byStatus": {
+        "subscribed": 30,
+        "unsubscribed": 10,
+        "nonsubscribed": 19,
+        "cleaned": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Future Ready event",
+      "kind": "ticket-type",
+      "contacts": 156,
+      "byStatus": {
+        "subscribed": 36,
+        "unsubscribed": 75,
+        "nonsubscribed": 18,
+        "cleaned": 27
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: General",
+      "kind": "ticket-type",
+      "contacts": 73,
+      "byStatus": {
+        "subscribed": 45,
+        "unsubscribed": 23,
+        "nonsubscribed": 4,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Girls Night Out  - Students",
+      "kind": "ticket-type",
+      "contacts": 23,
+      "byStatus": {
+        "subscribed": 4,
+        "unsubscribed": 4,
+        "nonsubscribed": 15
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Girls Night Out - Professionals",
+      "kind": "ticket-type",
+      "contacts": 33,
+      "byStatus": {
+        "subscribed": 11,
+        "unsubscribed": 8,
+        "nonsubscribed": 13,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: ONLINE EVENT CELEBRATING ADA LOVELACE DAY",
+      "kind": "ticket-type",
+      "contacts": 31,
+      "byStatus": {
+        "subscribed": 16,
+        "unsubscribed": 4,
+        "nonsubscribed": 10,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Professionals Ticket",
+      "kind": "ticket-type",
+      "contacts": 16,
+      "byStatus": {
+        "subscribed": 6,
+        "unsubscribed": 6,
+        "nonsubscribed": 4
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: She Sharp ambassadors",
+      "kind": "ticket-type",
+      "contacts": 5,
+      "byStatus": {
+        "subscribed": 4,
+        "unsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: She Sharp Guests",
+      "kind": "ticket-type",
+      "contacts": 8,
+      "byStatus": {
+        "subscribed": 2,
+        "unsubscribed": 3,
+        "nonsubscribed": 3
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: She# Story Tellers  Series",
+      "kind": "ticket-type",
+      "contacts": 1,
+      "byStatus": {
+        "subscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Students Ticket",
+      "kind": "ticket-type",
+      "contacts": 8,
+      "byStatus": {
+        "subscribed": 5,
+        "unsubscribed": 2,
+        "nonsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Techweek Event",
+      "kind": "ticket-type",
+      "contacts": 103,
+      "byStatus": {
+        "subscribed": 48,
+        "unsubscribed": 33,
+        "nonsubscribed": 9,
+        "cleaned": 13
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Thursday 14th May 5.30 pm featuring Tash Bettridge (Vodafone)",
+      "kind": "ticket-type",
+      "contacts": 63,
+      "byStatus": {
+        "subscribed": 33,
+        "unsubscribed": 24,
+        "nonsubscribed": 5,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Thursday 1st October 5.30 pm featuring Divya Kataria (Transmission Gully, Graduate Civi",
+      "kind": "ticket-type",
+      "contacts": 16,
+      "byStatus": {
+        "subscribed": 7,
+        "unsubscribed": 3,
+        "nonsubscribed": 6
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Thursday 21st May 5:30pm featuring Lena Waizenegger (AUT)",
+      "kind": "ticket-type",
+      "contacts": 52,
+      "byStatus": {
+        "subscribed": 20,
+        "unsubscribed": 22,
+        "nonsubscribed": 6,
+        "cleaned": 4
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Thursday 24th Sep 5.30 pm featuring Sai Honig (ANZ Bank, Senior Security Consultant)",
+      "kind": "ticket-type",
+      "contacts": 20,
+      "byStatus": {
+        "subscribed": 8,
+        "unsubscribed": 6,
+        "nonsubscribed": 6
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Thursday 28th May 5:30pm featuring Alisa Edwards (Gravity Lab)",
+      "kind": "ticket-type",
+      "contacts": 40,
+      "byStatus": {
+        "subscribed": 16,
+        "unsubscribed": 21,
+        "nonsubscribed": 3
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Thursday 4th June 5.30 pm featuring Paola Golledge (Google)",
+      "kind": "ticket-type",
+      "contacts": 21,
+      "byStatus": {
+        "subscribed": 7,
+        "unsubscribed": 13,
+        "nonsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Thursday 4th June 6.00 pm featuring Paola Golledge (Google)",
+      "kind": "ticket-type",
+      "contacts": 38,
+      "byStatus": {
+        "subscribed": 13,
+        "unsubscribed": 10,
+        "nonsubscribed": 15
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Thursday 7th May 5.30 pm featuring Saba Samiei (Microsoft)",
+      "kind": "ticket-type",
+      "contacts": 49,
+      "byStatus": {
+        "subscribed": 22,
+        "unsubscribed": 19,
+        "nonsubscribed": 6,
+        "cleaned": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets",
+      "kind": "ticket-type",
+      "contacts": 37,
+      "byStatus": {
+        "subscribed": 32,
+        "unsubscribed": 4,
+        "nonsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets -  Uniclubs",
+      "kind": "ticket-type",
+      "contacts": 15,
+      "byStatus": {
+        "subscribed": 1,
+        "nonsubscribed": 14
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Ambassadors",
+      "kind": "ticket-type",
+      "contacts": 4,
+      "byStatus": {
+        "subscribed": 3,
+        "nonsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Ambassdors",
+      "kind": "ticket-type",
+      "contacts": 9,
+      "byStatus": {
+        "subscribed": 6,
+        "nonsubscribed": 3
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - April 2026",
+      "kind": "ticket-type",
+      "contacts": 24,
+      "byStatus": {
+        "subscribed": 1,
+        "nonsubscribed": 23
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - AUT",
+      "kind": "ticket-type",
+      "contacts": 41,
+      "byStatus": {
+        "subscribed": 1,
+        "nonsubscribed": 40
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Expo",
+      "kind": "ticket-type",
+      "contacts": 5,
+      "byStatus": {
+        "subscribed": 3,
+        "nonsubscribed": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - FlexWare",
+      "kind": "ticket-type",
+      "contacts": 1,
+      "byStatus": {
+        "unsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Guests",
+      "kind": "ticket-type",
+      "contacts": 166,
+      "byStatus": {
+        "subscribed": 95,
+        "unsubscribed": 25,
+        "nonsubscribed": 40,
+        "cleaned": 6
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Guests - AcademyEX",
+      "kind": "ticket-type",
+      "contacts": 12,
+      "byStatus": {
+        "subscribed": 1,
+        "unsubscribed": 1,
+        "nonsubscribed": 10
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Guests - ANZ",
+      "kind": "ticket-type",
+      "contacts": 3,
+      "byStatus": {
+        "subscribed": 1,
+        "unsubscribed": 1,
+        "nonsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Guests - AUT",
+      "kind": "ticket-type",
+      "contacts": 9,
+      "byStatus": {
+        "subscribed": 5,
+        "unsubscribed": 4
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Guests - AWS",
+      "kind": "ticket-type",
+      "contacts": 2,
+      "byStatus": {
+        "nonsubscribed": 1,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Guests - Cosgrove",
+      "kind": "ticket-type",
+      "contacts": 1,
+      "byStatus": {
+        "nonsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Guests - Countdown",
+      "kind": "ticket-type",
+      "contacts": 11,
+      "byStatus": {
+        "subscribed": 3,
+        "unsubscribed": 1,
+        "nonsubscribed": 6,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Guests - Deloitte",
+      "kind": "ticket-type",
+      "contacts": 15,
+      "byStatus": {
+        "subscribed": 5,
+        "unsubscribed": 2,
+        "nonsubscribed": 7,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Guests - Dunedin Council",
+      "kind": "ticket-type",
+      "contacts": 2,
+      "byStatus": {
+        "subscribed": 1,
+        "nonsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Guests - Fiserv",
+      "kind": "ticket-type",
+      "contacts": 18,
+      "byStatus": {
+        "subscribed": 3,
+        "nonsubscribed": 14,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Guests - Flexware",
+      "kind": "ticket-type",
+      "contacts": 2,
+      "byStatus": {
+        "subscribed": 1,
+        "nonsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Guests - Fonterra",
+      "kind": "ticket-type",
+      "contacts": 13,
+      "byStatus": {
+        "subscribed": 9,
+        "unsubscribed": 2,
+        "nonsubscribed": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Guests - FPH",
+      "kind": "ticket-type",
+      "contacts": 8,
+      "byStatus": {
+        "subscribed": 4,
+        "nonsubscribed": 4
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Guests - Google",
+      "kind": "ticket-type",
+      "contacts": 1,
+      "byStatus": {
+        "subscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Guests - HCL",
+      "kind": "ticket-type",
+      "contacts": 36,
+      "byStatus": {
+        "subscribed": 12,
+        "nonsubscribed": 24
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Guests - HCLTech",
+      "kind": "ticket-type",
+      "contacts": 1,
+      "byStatus": {
+        "nonsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Guests - HPE",
+      "kind": "ticket-type",
+      "contacts": 3,
+      "byStatus": {
+        "subscribed": 3
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Guests - Kiwibank",
+      "kind": "ticket-type",
+      "contacts": 1,
+      "byStatus": {
+        "subscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Guests - LesMills",
+      "kind": "ticket-type",
+      "contacts": 20,
+      "byStatus": {
+        "subscribed": 8,
+        "unsubscribed": 8,
+        "nonsubscribed": 4
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Guests - MYOB",
+      "kind": "ticket-type",
+      "contacts": 20,
+      "byStatus": {
+        "subscribed": 10,
+        "unsubscribed": 1,
+        "nonsubscribed": 7,
+        "cleaned": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Guests - SCW",
+      "kind": "ticket-type",
+      "contacts": 3,
+      "byStatus": {
+        "subscribed": 2,
+        "unsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Guests - Students",
+      "kind": "ticket-type",
+      "contacts": 1,
+      "byStatus": {
+        "subscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Guests - TECHBABES",
+      "kind": "ticket-type",
+      "contacts": 11,
+      "byStatus": {
+        "subscribed": 10,
+        "unsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Guests - Vector",
+      "kind": "ticket-type",
+      "contacts": 4,
+      "byStatus": {
+        "subscribed": 2,
+        "nonsubscribed": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Guests - Woolworths",
+      "kind": "ticket-type",
+      "contacts": 18,
+      "byStatus": {
+        "subscribed": 7,
+        "unsubscribed": 3,
+        "nonsubscribed": 6,
+        "cleaned": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Guests - Xero",
+      "kind": "ticket-type",
+      "contacts": 2,
+      "byStatus": {
+        "subscribed": 1,
+        "nonsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Guests of Ambassadors",
+      "kind": "ticket-type",
+      "contacts": 31,
+      "byStatus": {
+        "subscribed": 17,
+        "nonsubscribed": 14
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Guests Of Speaker",
+      "kind": "ticket-type",
+      "contacts": 1,
+      "byStatus": {
+        "nonsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Guests Of Speakers",
+      "kind": "ticket-type",
+      "contacts": 1,
+      "byStatus": {
+        "nonsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Hack_AcademyEx",
+      "kind": "ticket-type",
+      "contacts": 1,
+      "byStatus": {
+        "subscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Hackathon Winners",
+      "kind": "ticket-type",
+      "contacts": 1,
+      "byStatus": {
+        "nonsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - HCLTech",
+      "kind": "ticket-type",
+      "contacts": 4,
+      "byStatus": {
+        "subscribed": 2,
+        "nonsubscribed": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Judges",
+      "kind": "ticket-type",
+      "contacts": 5,
+      "byStatus": {
+        "subscribed": 3,
+        "unsubscribed": 1,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - June 2026",
+      "kind": "ticket-type",
+      "contacts": 13,
+      "byStatus": {
+        "subscribed": 1,
+        "nonsubscribed": 12
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Les Mills",
+      "kind": "ticket-type",
+      "contacts": 5,
+      "byStatus": {
+        "subscribed": 1,
+        "nonsubscribed": 4
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Lesmills",
+      "kind": "ticket-type",
+      "contacts": 1,
+      "byStatus": {
+        "nonsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Little Engineers",
+      "kind": "ticket-type",
+      "contacts": 3,
+      "byStatus": {
+        "nonsubscribed": 3
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - March 2026",
+      "kind": "ticket-type",
+      "contacts": 25,
+      "byStatus": {
+        "subscribed": 1,
+        "nonsubscribed": 24
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - May 2026",
+      "kind": "ticket-type",
+      "contacts": 20,
+      "byStatus": {
+        "subscribed": 1,
+        "nonsubscribed": 19
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Media Team",
+      "kind": "ticket-type",
+      "contacts": 1,
+      "byStatus": {
+        "nonsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Mentees",
+      "kind": "ticket-type",
+      "contacts": 1,
+      "byStatus": {
+        "subscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Mentees-She#",
+      "kind": "ticket-type",
+      "contacts": 13,
+      "byStatus": {
+        "subscribed": 6,
+        "unsubscribed": 1,
+        "nonsubscribed": 6
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Mentors",
+      "kind": "ticket-type",
+      "contacts": 49,
+      "byStatus": {
+        "subscribed": 13,
+        "unsubscribed": 11,
+        "nonsubscribed": 25
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Mentors-She#",
+      "kind": "ticket-type",
+      "contacts": 1,
+      "byStatus": {
+        "subscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Metlifecare",
+      "kind": "ticket-type",
+      "contacts": 3,
+      "byStatus": {
+        "subscribed": 2,
+        "nonsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Metlifecare (Host)",
+      "kind": "ticket-type",
+      "contacts": 1,
+      "byStatus": {
+        "subscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - MSD",
+      "kind": "ticket-type",
+      "contacts": 3,
+      "byStatus": {
+        "subscribed": 2,
+        "nonsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - MYOB",
+      "kind": "ticket-type",
+      "contacts": 1,
+      "byStatus": {
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - MYOB (Host)",
+      "kind": "ticket-type",
+      "contacts": 8,
+      "byStatus": {
+        "subscribed": 5,
+        "nonsubscribed": 3
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Observer (Sunday Presentation 2-6pm)",
+      "kind": "ticket-type",
+      "contacts": 2,
+      "byStatus": {
+        "nonsubscribed": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Observer (Sunday)",
+      "kind": "ticket-type",
+      "contacts": 2,
+      "byStatus": {
+        "subscribed": 1,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Observers",
+      "kind": "ticket-type",
+      "contacts": 1,
+      "byStatus": {
+        "subscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Online",
+      "kind": "ticket-type",
+      "contacts": 45,
+      "byStatus": {
+        "subscribed": 37,
+        "unsubscribed": 6,
+        "cleaned": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Professionals",
+      "kind": "ticket-type",
+      "contacts": 646,
+      "byStatus": {
+        "subscribed": 347,
+        "unsubscribed": 128,
+        "nonsubscribed": 152,
+        "cleaned": 19
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Professionals (Additional)",
+      "kind": "ticket-type",
+      "contacts": 1,
+      "byStatus": {
+        "subscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Professionals (Late Registration)",
+      "kind": "ticket-type",
+      "contacts": 4,
+      "byStatus": {
+        "subscribed": 2,
+        "unsubscribed": 1,
+        "nonsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - RCSA",
+      "kind": "ticket-type",
+      "contacts": 1,
+      "byStatus": {
+        "nonsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - School Students",
+      "kind": "ticket-type",
+      "contacts": 7,
+      "byStatus": {
+        "subscribed": 2,
+        "nonsubscribed": 5
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - She Sharp Sponsors",
+      "kind": "ticket-type",
+      "contacts": 1,
+      "byStatus": {
+        "subscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - She# Ambassadors",
+      "kind": "ticket-type",
+      "contacts": 91,
+      "byStatus": {
+        "subscribed": 56,
+        "unsubscribed": 18,
+        "nonsubscribed": 13,
+        "cleaned": 4
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - She# EX Ambassadors",
+      "kind": "ticket-type",
+      "contacts": 5,
+      "byStatus": {
+        "subscribed": 5
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Speakers",
+      "kind": "ticket-type",
+      "contacts": 70,
+      "byStatus": {
+        "subscribed": 45,
+        "unsubscribed": 9,
+        "nonsubscribed": 12,
+        "cleaned": 4
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Speakers (Online)",
+      "kind": "ticket-type",
+      "contacts": 2,
+      "byStatus": {
+        "subscribed": 1,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Speakers / Mentors",
+      "kind": "ticket-type",
+      "contacts": 5,
+      "byStatus": {
+        "subscribed": 3,
+        "unsubscribed": 1,
+        "nonsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Speakers /Mentors",
+      "kind": "ticket-type",
+      "contacts": 2,
+      "byStatus": {
+        "subscribed": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Speakers/ Workshop facilitators",
+      "kind": "ticket-type",
+      "contacts": 16,
+      "byStatus": {
+        "subscribed": 2,
+        "unsubscribed": 1,
+        "nonsubscribed": 12,
+        "cleaned": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Sponsored Participants",
+      "kind": "ticket-type",
+      "contacts": 3,
+      "byStatus": {
+        "subscribed": 2,
+        "nonsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Students",
+      "kind": "ticket-type",
+      "contacts": 323,
+      "byStatus": {
+        "subscribed": 171,
+        "unsubscribed": 52,
+        "nonsubscribed": 91,
+        "cleaned": 9
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Students (Late Registration)",
+      "kind": "ticket-type",
+      "contacts": 2,
+      "byStatus": {
+        "unsubscribed": 1,
+        "nonsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Teachers",
+      "kind": "ticket-type",
+      "contacts": 134,
+      "byStatus": {
+        "subscribed": 50,
+        "unsubscribed": 10,
+        "nonsubscribed": 68,
+        "cleaned": 6
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - TechwomenNZ",
+      "kind": "ticket-type",
+      "contacts": 3,
+      "byStatus": {
+        "subscribed": 2,
+        "nonsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - UNESCO",
+      "kind": "ticket-type",
+      "contacts": 2,
+      "byStatus": {
+        "subscribed": 1,
+        "nonsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - UniClubs",
+      "kind": "ticket-type",
+      "contacts": 20,
+      "byStatus": {
+        "subscribed": 20
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - UniClubs Tickets",
+      "kind": "ticket-type",
+      "contacts": 1,
+      "byStatus": {
+        "unsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - Volunteers",
+      "kind": "ticket-type",
+      "contacts": 26,
+      "byStatus": {
+        "subscribed": 19,
+        "unsubscribed": 4,
+        "nonsubscribed": 1,
+        "cleaned": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets - WoM Tickets",
+      "kind": "ticket-type",
+      "contacts": 8,
+      "byStatus": {
+        "subscribed": 6,
+        "unsubscribed": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Tickets- She# Deloitte",
+      "kind": "ticket-type",
+      "contacts": 5,
+      "byStatus": {
+        "subscribed": 3,
+        "nonsubscribed": 2
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Workshop \"Build your own AI Powered Web App\" (Thursday, July 17th, 12-2pm NZT, online)",
+      "kind": "fragment",
+      "contacts": 8,
+      "byStatus": {
+        "subscribed": 3,
+        "nonsubscribed": 5
+      },
+      "fromMalformedCellOnly": true
+    },
+    {
+      "tag": "Ticket Type: Workshop \"Build your own AI Powered Web App\" (Thursday, July 17th, 12-2pm NZT, online),",
+      "kind": "fragment",
+      "contacts": 2,
+      "byStatus": {
+        "subscribed": 2
+      },
+      "fromMalformedCellOnly": true
+    },
+    {
+      "tag": "Ticket Type: Workshop \"Build your own AI Powered Web App\" (Thursday, July 18th, 12-2pm NZT, online)",
+      "kind": "fragment",
+      "contacts": 1,
+      "byStatus": {
+        "nonsubscribed": 1
+      },
+      "fromMalformedCellOnly": true
+    },
+    {
+      "tag": "Ticket Type: Workshop \"Build your own AI Powered Web App\" (Tuesday, July 16th, 12-2pm NZT, online, ,",
+      "kind": "fragment",
+      "contacts": 3,
+      "byStatus": {
+        "nonsubscribed": 3
+      },
+      "fromMalformedCellOnly": true
+    },
+    {
+      "tag": "Ticket Type: Workshop \"Build your own AI Powered Web App\" (Tuesday, July 16th, 12-2pm NZT, online)",
+      "kind": "ticket-type",
+      "contacts": 6,
+      "byStatus": {
+        "subscribed": 2,
+        "nonsubscribed": 4
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Ticket Type: Workshop \"Build your own AI Powered Web App\" (Wednesday, July 17th, 12-2pm NZT, online",
+      "kind": "fragment",
+      "contacts": 9,
+      "byStatus": {
+        "subscribed": 1,
+        "nonsubscribed": 8
+      },
+      "fromMalformedCellOnly": true
+    },
+    {
+      "tag": "Ticket Type: Workshop \"Build your own AI Powered Web App\" (Wednesday, July 17th, 12-2pm NZT, online,",
+      "kind": "fragment",
+      "contacts": 3,
+      "byStatus": {
+        "subscribed": 3
+      },
+      "fromMalformedCellOnly": true
+    },
+    {
+      "tag": "Ticket Type: Workshop \"Iterative process and strategies for prompt development\" (Monday, July 22nd,",
+      "kind": "fragment",
+      "contacts": 2,
+      "byStatus": {
+        "nonsubscribed": 2
+      },
+      "fromMalformedCellOnly": true
+    },
+    {
+      "tag": "Ticket Type: Workshop \"Iterative process and strategies for prompt development\" (Monday, July 22nd,,",
+      "kind": "fragment",
+      "contacts": 33,
+      "byStatus": {
+        "subscribed": 9,
+        "unsubscribed": 2,
+        "nonsubscribed": 22
+      },
+      "fromMalformedCellOnly": true
+    },
+    {
+      "tag": "Wahine Kakano",
+      "kind": "label",
+      "contacts": 11,
+      "byStatus": {
+        "subscribed": 2,
+        "unsubscribed": 5,
+        "cleaned": 4
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Website",
+      "kind": "label",
+      "contacts": 3,
+      "byStatus": {
+        "subscribed": 2,
+        "unsubscribed": 1
+      },
+      "fromMalformedCellOnly": false
+    },
+    {
+      "tag": "Workday",
+      "kind": "label",
+      "contacts": 46,
+      "byStatus": {
+        "subscribed": 21,
+        "unsubscribed": 18,
+        "cleaned": 7
+      },
+      "fromMalformedCellOnly": false
+    }
+  ]
+}
