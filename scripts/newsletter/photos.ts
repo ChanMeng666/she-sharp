@@ -11,6 +11,12 @@
  * Email images MUST be JPEG (never WebP — Outlook renders WebP as broken images),
  * which is why local `.webp` archive photos are transcoded rather than linked.
  *
+ * `--from-dir` replaces candidate gathering with a hand-picked local folder, for a
+ * month whose photographs arrive as a directory of originals rather than as on-page
+ * assets or a public album. It also turns OFF the landscape-first re-sort: the folder
+ * has already been curated by a human, so its filename order IS the editorial order
+ * and reordering it would throw that decision away.
+ *
  * `--placeholders` is a separate mode for issues whose recap event has not happened
  * yet (or whose album has not arrived): it skips candidate gathering entirely and
  * generates six branded gradient cards — hero, photo of the month, and four strip
@@ -19,6 +25,7 @@
  *
  * Usage:
  *   npx tsx scripts/newsletter/photos.ts <path-to-issue.json> [--max 4] [--dry-run]
+ *   npx tsx scripts/newsletter/photos.ts <path-to-issue.json> --from-dir <dir> [--slug <eventSlug>] [--max 15] [--dry-run]
  *   npx tsx scripts/newsletter/photos.ts <path-to-issue.json> --placeholders [--dry-run]
  *
  * BLOB_READ_WRITE_TOKEN is read from the environment or, failing that, parsed from
@@ -31,7 +38,9 @@ import {
   existsSync,
   mkdirSync,
   readFileSync,
+  readdirSync,
   rmSync,
+  statSync,
   writeFileSync,
 } from "node:fs";
 import path from "node:path";
@@ -159,7 +168,7 @@ interface Candidate {
   /** Absolute path to the local source file to feed ffmpeg. */
   sourcePath: string;
   /** Short provenance label for the summary table. */
-  source: "on-page" | "archive" | "harvest" | "placeholder";
+  source: "on-page" | "archive" | "harvest" | "placeholder" | "from-dir";
   width: number;
   height: number;
 }
@@ -283,14 +292,62 @@ async function gatherCandidates(slug: string): Promise<Candidate[]> {
   return candidates;
 }
 
+/** Image extensions ffmpeg will happily transcode from a hand-picked folder. */
+const FROM_DIR_EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".webp"]);
+
+/**
+ * Gather candidates from a hand-curated local folder, attributed to `slug`.
+ *
+ * Files are taken in filename order and NOT re-sorted — see `selectPhotos`. The
+ * convention this exists to serve is a folder whose names carry the running
+ * order (`01-…`, `02-…`), because the slot a photo lands in (cover, photo of the
+ * month, the strip's full-width lead, then the paired rows) is a judgement about
+ * the photographs, and no ratio test can make it.
+ *
+ * A file ffprobe cannot read is skipped with a warning rather than failing the
+ * run: one unreadable original should not cost the other fourteen.
+ */
+function gatherFromDir(dir: string, slug: string, eventTitle: string): Candidate[] {
+  const entries = readdirSync(dir)
+    .filter((name) => FROM_DIR_EXTENSIONS.has(path.extname(name).toLowerCase()))
+    .sort((a, b) => a.localeCompare(b, "en"));
+
+  const candidates: Candidate[] = [];
+  for (const name of entries) {
+    const abs = path.join(dir, name);
+    const size = probeSize(abs);
+    if (!size) {
+      console.warn(`[photos] could not probe "${name}", skipping`);
+      continue;
+    }
+    candidates.push({
+      eventSlug: slug,
+      eventTitle,
+      sourcePath: abs,
+      source: "from-dir",
+      ...size,
+    });
+  }
+  return candidates;
+}
+
 /**
  * Select up to `max` photos across events: spread round-robin over events, taking
  * landscape shots before others within each event, and de-duplicating by source file.
+ *
+ * `preserveOrder` skips the landscape-first sort. It is set only by `--from-dir`,
+ * where the folder's filename order is a human's running order and must survive.
  */
-function selectPhotos(byEvent: Candidate[][], max: number): Candidate[] {
+function selectPhotos(
+  byEvent: Candidate[][],
+  max: number,
+  preserveOrder = false
+): Candidate[] {
   // Sort each event's list so in-band landscape shots come first.
   const queues = byEvent.map((list) =>
-    [...list].sort((a, b) => Number(isLandscape(b)) - Number(isLandscape(a)))
+    preserveOrder
+      ? [...list]
+      : [...list].sort((a, b) => Number(isLandscape(b)) - Number(isLandscape(a)))
   );
 
   const selected: Candidate[] = [];
@@ -575,6 +632,16 @@ async function runPlaceholders(
 // Main
 // ---------------------------------------------------------------------------
 
+/** Reads `argv[index]` as a flag's value, exiting when it is absent. */
+function requireValue(argv: string[], index: number, flag: string): string {
+  const value = argv[index];
+  if (!value || value.startsWith("--")) {
+    console.error(`Error: ${flag} needs a value.`);
+    process.exit(1);
+  }
+  return value;
+}
+
 async function main(): Promise<void> {
   const argv = process.argv.slice(2);
   const positional: string[] = [];
@@ -582,9 +649,16 @@ async function main(): Promise<void> {
   let dryRun = false;
   let placeholders = false;
   let maxGiven = false;
+  let fromDir: string | null = null;
+  let slugOverride: string | null = null;
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === "--dry-run") dryRun = true;
     else if (argv[i] === "--placeholders") placeholders = true;
+    // A value-taking flag whose value is missing must fail loudly: swallowing it
+    // as `null` would silently fall back to the normal candidate-gathering path
+    // and upload the wrong photographs.
+    else if (argv[i] === "--from-dir") fromDir = requireValue(argv, ++i, "--from-dir");
+    else if (argv[i] === "--slug") slugOverride = requireValue(argv, ++i, "--slug");
     else if (argv[i] === "--max") {
       max = parseInt(argv[++i], 10) || max;
       maxGiven = true;
@@ -595,6 +669,7 @@ async function main(): Promise<void> {
   if (!issuePath) {
     console.error(
       "Usage: npx tsx scripts/newsletter/photos.ts <path-to-issue.json> [--max 4] [--dry-run]\n" +
+        "       npx tsx scripts/newsletter/photos.ts <path-to-issue.json> --from-dir <dir> [--slug <eventSlug>] [--max 15] [--dry-run]\n" +
         "       npx tsx scripts/newsletter/photos.ts <path-to-issue.json> --placeholders [--dry-run]"
     );
     process.exit(1);
@@ -603,6 +678,20 @@ async function main(): Promise<void> {
   if (placeholders && maxGiven) {
     console.error(
       "Error: --max has no meaning with --placeholders (the six slots are fixed). Drop it."
+    );
+    process.exit(1);
+  }
+
+  if (placeholders && fromDir) {
+    console.error(
+      "Error: --from-dir and --placeholders are opposite modes (real photos vs generated cards). Pick one."
+    );
+    process.exit(1);
+  }
+
+  if (!fromDir && slugOverride) {
+    console.error(
+      "Error: --slug only applies to --from-dir; without it the slug comes from the issue's recap events."
     );
     process.exit(1);
   }
@@ -631,15 +720,51 @@ async function main(): Promise<void> {
   // Prepare a clean scratch area for transcoded output.
   mkdirSync(OUT_DIR, { recursive: true });
 
-  // Gather candidates per event.
+  // Gather candidates — from the hand-picked folder, or per event from site data.
   const byEvent: Candidate[][] = [];
-  for (const slug of recapSlugs) {
-    byEvent.push(await gatherCandidates(slug));
+  if (fromDir) {
+    const absDir = path.resolve(process.cwd(), fromDir);
+    if (!existsSync(absDir) || !statSync(absDir).isDirectory()) {
+      console.error(`Error: --from-dir "${fromDir}" is not a directory.`);
+      process.exit(1);
+    }
+
+    // The slug decides the caption and the blob pathname, so it has to be
+    // unambiguous. One recap event is the normal case and needs no flag; more
+    // than one is a real fork in the road that only a human can settle.
+    const slug = slugOverride ?? recapSlugs[0];
+    if (!slug) {
+      console.error(
+        "Error: the issue has no recap events, so --from-dir has no event to attribute the photos to. Pass --slug <eventSlug>."
+      );
+      process.exit(1);
+    }
+    if (!slugOverride && recapSlugs.length > 1) {
+      console.error(
+        `Error: ${recapSlugs.length} recap events (${recapSlugs.join(", ")}) — pass --slug to say which one the folder belongs to.`
+      );
+      process.exit(1);
+    }
+
+    const event = getEventBySlug(slug);
+    if (!event) {
+      console.error(`Error: no event found for slug "${slug}".`);
+      process.exit(1);
+    }
+
+    byEvent.push(gatherFromDir(absDir, slug, event.title));
+    console.log(
+      `Reading ${byEvent[0].length} photo(s) from ${absDir} as "${slug}" (filename order preserved).`
+    );
+  } else {
+    for (const slug of recapSlugs) {
+      byEvent.push(await gatherCandidates(slug));
+    }
   }
   const totalCandidates = byEvent.reduce((n, list) => n + list.length, 0);
   console.log(`Gathered ${totalCandidates} candidate photo(s) across events.`);
 
-  const selected = selectPhotos(byEvent, max);
+  const selected = selectPhotos(byEvent, max, Boolean(fromDir));
   console.log(`Selected ${selected.length} photo(s) (max ${max}).`);
 
   // Transcode selected photos.

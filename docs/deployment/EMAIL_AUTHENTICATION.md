@@ -537,10 +537,16 @@ order:
 
 1. Wire the existing `/api/newsletter/subscribe` route to a real form.
 2. Repoint the 16 `MAILCHIMP_CONFIG.subscribeUrl` links at it.
-3. Decide what `archiveUrl` becomes — the on-site
-   `/(site)/resources/newsletters/[issue]` pages are the natural replacement,
-   but they are `noindex` during the pilot and issues are not yet added to
-   `lib/data/newsletters-manual.ts` (the public archive).
+3. Decide what `archiveUrl` becomes. **Half-settled as of the August 2026
+   issue:** issues built in this repo now get a card in
+   `lib/data/newsletters-manual.ts` whose `url` is the on-site
+   `/resources/newsletters/<id>` render, so the public archive grid no longer
+   depends on Mailchimp for new months. What is still open is the
+   `MAILCHIMP_CONFIG.archiveUrl` button ("Open full archive") — it remains the
+   only way to reach the pre-2026-08 back catalogue, so it cannot be dropped
+   until those issues are re-hosted or the button is repointed at
+   `/resources/newsletters` itself. The per-issue route stays `noindex` and out
+   of `app/sitemap.ts` deliberately; that is not a blocker.
 4. Only then retire the Mailchimp records.
 
 ### Keep the Mailchimp DNS records
@@ -651,7 +657,7 @@ forgotten or deliberately skipped unless it says so.
 | 7 | **Decide the legacy SPF include** — drop `include:_spf.1stdomains.co.nz` if reports show nothing sends from those IPs (budget 4/10 → 1/10) | the reports from #1 | With #4 |
 | 8 | **Migrate the newsletter sending off Mailchimp** — see the section above. Export `Subscribed` / `Unsubscribed` / `Cleaned` separately; only the first gets imported. | must NOT share a month with #2/#4 | A month with no DMARC change |
 | 8b | **Migrate the subscribe funnel** — wire `/api/newsletter/subscribe` (exists, **nothing calls it**) to a form and repoint the 16 `MAILCHIMP_CONFIG.subscribeUrl` links. Without this, new sign-ups keep going to Mailchimp and never get the Resend send. | — | With #8, not after |
-| 8c | **Decide `MAILCHIMP_CONFIG.archiveUrl`'s replacement** — the on-site `/resources/newsletters/[issue]` pages, once they come off `noindex` and get added to `lib/data/newsletters-manual.ts` | end of the pilot | With #8 |
+| 8c | **Decide `MAILCHIMP_CONFIG.archiveUrl`'s replacement.** Partly done: since 2026-08 each new issue is listed in `lib/data/newsletters-manual.ts` pointing at its on-site render (still `noindex`, by design). What remains is the "Open full archive" button, which is the only route to the pre-2026-08 back catalogue. | the back catalogue re-hosted, or the button repointed at `/resources/newsletters` | With #8 |
 | 9 | **Retire the Mailchimp DNS records** (`k2`/`k3._domainkey`) | 2–3 clean Resend sends **and** #8b | After #8 proves out |
 | 10 | **Confirm someone reads `newsletter@`** — it accepts mail (tested, no bounce), but whether a human opens it is unknown. It is both the From and the Reply-To on every newsletter. | someone with Workspace visibility | Before #8 |
 | 11 | **`EMAIL_UNSUBSCRIBE_MAILTO`** — deliberately left **empty**. Only set it once someone confirms the target inbox is real and monitored; an unverified one bounces, which is worse than offering none. | a verified inbox | Optional |

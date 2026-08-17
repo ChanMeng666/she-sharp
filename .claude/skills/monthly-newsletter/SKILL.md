@@ -25,9 +25,9 @@ template. **Read it first, every month.** It defines the tone, the founder
 signature, the cover/POM/strip photo curation, and the pulse shape you are
 reproducing. Match its structure and warmth; do not invent new sections.
 
-During the **pilot** the newsletter is unlisted: the web version is `noindex`
-and issues are NOT added to the public archive (`lib/data/newsletters-manual.ts`).
-Keep it that way until told otherwise.
+The web version stays `noindex` — it is not published to search. But since the
+August 2026 issue it IS listed: every issue gets a card in the public archive
+(`lib/data/newsletters-manual.ts`) pointing at its on-site render. See Step 7b.
 
 All commands below are PowerShell-first (this repo's primary shell on Windows).
 
@@ -95,10 +95,10 @@ photos. It uploads email-safe JPEGs to Vercel Blob and populates `auto.photoStri
 
 ```powershell
 # Preview the selection + conversion plan (no upload, no write):
-npx tsx scripts/newsletter/photos.ts lib/data/json/newsletter-issues/2026-08.json --max 6 --dry-run
+npx tsx scripts/newsletter/photos.ts lib/data/json/newsletter-issues/2026-08.json --max 15 --dry-run
 
 # Looks good → run for real (uploads JPEGs to Blob, writes photoStrip + album URL back):
-npx tsx scripts/newsletter/photos.ts lib/data/json/newsletter-issues/2026-08.json --max 6
+npx tsx scripts/newsletter/photos.ts lib/data/json/newsletter-issues/2026-08.json --max 15
 ```
 
 For each recap event it gathers candidates in priority order — on-page
@@ -108,18 +108,49 @@ album — selects a landscape-leaning spread across events, transcodes each to a
 **email-safe JPEG** (≤1200px, metadata stripped, <200KB), uploads to Blob under
 `newsletter/<issueId>/photos/…`, and writes the strip + album URL.
 
+### Step 3a — When the photos arrive as a folder
+
+A big event's photography usually turns up as a folder of originals — a
+photographer's export, a WhatsApp dump — with no album URL and nothing on the
+event page yet. `--from-dir` takes that folder as the candidate set:
+
+```powershell
+npx tsx scripts/newsletter/photos.ts lib/data/json/newsletter-issues/2026-08.json `
+  --from-dir "D:\path\to\picks" --max 15 --dry-run
+```
+
+Curate the folder BEFORE pointing the script at it — hundreds of raw frames are
+not a selection. Copy the shots you want into a fresh directory and name them in
+running order (`01-cover…`, `02-photo-of-the-month…`, `03-…`), because
+`--from-dir` **preserves filename order** and skips the landscape-first sort: the
+folder's order is your editorial decision and the script will not second-guess
+it. Slot 01 is the cover, 02 the photo of the month, 03 the strip's full-width
+lead, and the rest pair up. Contact sheets built with `sharp` are the fastest way
+to review a large folder. `--slug` is only needed when the issue has more than
+one recap event.
+
 Then **hand-curate into three disjoint slots** (never rely on the renderer's
 dedupe guard — curate so it never has to fire):
 
 - **Cover** (`editorial.heroImageUrl`) — the best landscape people-shot. Move its
   Blob URL up from `photoStrip` into `editorial.heroImageUrl` and delete it from
-  the strip.
+  the strip. A panoramic group shot works especially well here: it sits under the
+  masthead as a wide band rather than a deep block.
 - **Photo of the month** (`editorial.photoOfTheMonth`) — the second-best shot,
-  **from a different event**, with a `caption` that names the real venue and an
-  optional `eventSlug`. Move its Blob URL into `photoOfTheMonth.src` and delete
-  it from the strip.
-- **Strip** (`auto.photoStrip`) — 4–6 varied remaining shots spanning ≥2 events.
-  Fix each `alt` if needed. Caps at 6.
+  **from a different event where the month has more than one**, with a `caption`
+  that names the real venue and an optional `eventSlug`. Move its Blob URL into
+  `photoOfTheMonth.src` and delete it from the strip.
+- **Strip** (`auto.photoStrip`) — the varied remaining shots. **Caps at 13**, and
+  an ODD count is what you want: the first photo runs full width and the rest
+  pair into rows of two, so `1 + 2n` fills every row and an even count leaves a
+  gap in the last one. Write a real `alt` for each — see the caption note below.
+
+**Captions.** `PhotoStrip` overrides a photo's `alt` with
+"&lt;event&gt; · &lt;location&gt;" whenever its `eventSlug` resolves to a recap event. That
+is right when the strip spans several events and wrong when it does not: a
+single-event month would print the same caption up to thirteen times. In that
+case **drop `eventSlug` from the strip entries** and write the venue into the
+`alt` yourself, one line per photo, describing what is actually in the frame.
 
 All photo URLs must be **absolute Blob JPEGs** — never WebP, never Google-hotlinked,
 never site-relative. If the month's recap events have no photos and no album, all
@@ -270,6 +301,23 @@ Wait for the GitHub Actions deploy (this repo deploys via prebuilt Actions on pu
 to `main`, not a Vercel Git connection). Spot-check the web version:
 `https://www.shesharp.org.nz/resources/newsletters/2026-08`.
 
+### Step 7b — Add the archive card
+
+Add ONE entry to `NEWSLETTER_MANUAL` in `lib/data/newsletters-manual.ts`, with
+`url` pointing at the on-site render rather than a Mailchimp campaign:
+
+```ts
+{ id: "2026-08", month: 8, year: 2026, url: "/resources/newsletters/2026-08" },
+```
+
+`components/resources/newsletters-grid.tsx` needs no change — it opens whatever
+`url` holds in a new tab, internal or not.
+
+**The route stays `noindex` and stays out of `app/sitemap.ts`.** Those two travel
+together (see CLAUDE.md), and listing a noindex URL in the sitemap is what earns
+a "Submitted URL marked 'noindex'" in Search Console. Linked-but-unindexed is the
+deliberate state: the archive is for people who follow the link, not for search.
+
 ## Step 8 — Approve and schedule
 
 ### Step 8a — Deliverability check (before approving)
@@ -327,22 +375,23 @@ Confirm the Slack "scheduled" message landed.
 
 - Set `meta.status` to `"sent"` and `meta.broadcastId` to the id from Step 8.
 - `git commit -m "chore(newsletter): mark 2026-08 sent"` + push.
-
-During the pilot **do NOT** add the issue to `lib/data/newsletters-manual.ts` —
-it stays unlisted.
+- Confirm the archive card from Step 7b opens the right issue on
+  `https://www.shesharp.org.nz/resources/newsletters`.
 
 ---
 
 ## Guardrails (USER-APPROVED — hard rules)
 
-1. **Photos are the product.** Run `scripts/newsletter/photos.ts <issue.json>
-   --max 6` on every issue. Photos must be email-safe JPEG on Blob — NEVER WebP,
-   never Google-hotlinked, never site-relative.
+1. **Photos are the product.** Run `scripts/newsletter/photos.ts <issue.json>`
+   on every issue (`--from-dir` when they arrive as a folder). Photos must be
+   email-safe JPEG on Blob — NEVER WebP, never Google-hotlinked, never
+   site-relative.
 2. **Zero photo repeats.** Cover, photo of the month, strip, and recap thumbnails
    must all be disjoint. Curate them apart (Step 3); never rely on the renderer's
-   dedupe guard. Cover = best landscape people-shot; POM = second-best from a
-   different event with a venue-named caption; strip = 4–6 varied others across
-   ≥2 events; `photoAlbumUrl` = the month's album.
+   dedupe guard. Cover = best landscape people-shot; POM = second-best, from a
+   different event where the month has one, with a venue-named caption; strip =
+   an ODD number of varied others up to 13, so every paired row is full;
+   `photoAlbumUrl` = the month's album.
 3. **Founder signature is fixed.** `founderNote.signature` = exactly
    `"Dr. Mahsa McCauley, Founder & Chair, She Sharp"`, always paired with
    `founderNote.photoUrl` =
@@ -373,7 +422,8 @@ Also non-negotiable:
   each time — never widen on your own initiative, and never to a segment.
 - **Approve reads the deployed bundle, not Redis** — always commit + deploy
   (Step 7) before approving (Step 8).
-- **Keep it unlisted during the pilot** — no archive entry, `noindex` stays.
+- **Listed, but not indexed.** Every issue gets an archive card (Step 7b); the
+  web version keeps `noindex` and stays out of `app/sitemap.ts`.
 
 ## Flexible sections — decision table
 
@@ -382,7 +432,7 @@ Also non-negotiable:
 | Cover | `editorial.heroImageUrl` | a strong landscape shot exists | best photo, promoted out of the strip (Blob JPEG) |
 | Founder note | `editorial.founderNote` | always | hand-written; fixed signature + photoUrl |
 | Headline event | `editorial.headline` | ONE upcoming event deserves top billing | human curation; facts read from the matching `auto.upcomingEvents` entry |
-| Photo strip | `auto.photoStrip` | ≥1 real event photo | `photos.ts` upload, then human-pruned |
+| Photo strip | `auto.photoStrip` | ≥1 real event photo | `photos.ts` upload, then human-pruned to an odd count ≤13 |
 | Photo of the month | `editorial.photoOfTheMonth` | a second good shot exists | second-best photo (different event) + venue caption |
 | Last-month recap | recap cards | recap events exist OR POM set | `auto.recapEvents` + `editorial.eventBlurbs` |
 | Upcoming + CTA | `auto.upcomingEvents`, `editorial.primaryCta` | upcoming events exist | event data; CTA = next event's registration link. The promoted headline event is filtered out of this list, and the button is suppressed here when a headline block is present (that block carries the issue's one CTA) |
@@ -400,4 +450,4 @@ Also non-negotiable:
 - Generate the AI draft itself (the monthly cron / the `force` POST does).
 - Manage Resend segments/topics/contacts (see `scripts/newsletter/` setup).
 - Send transactional or auth email.
-- Add the issue to the public newsletter archive during the pilot.
+- Publish the web version to search — the archive card links it, `noindex` stays.

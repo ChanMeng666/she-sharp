@@ -1,0 +1,167 @@
+{
+  "id": "2026-08",
+  "meta": {
+    "status": "draft",
+    "generatedAt": "2026-08-17T00:00:00.000Z",
+    "broadcastId": null,
+    "scheduledAt": null
+  },
+  "editorial": {
+    "subjectLine": "Twelve teams, two days, one AI hackathon",
+    "previewText": "The venue prize went to kailine — and on 3 September we're at Les Mills Auckland City for the next one.",
+    "founderNote": {
+      "heading": "A note from our founder",
+      "bodyMd": "We opened the Aotearoa AI Hackathon Festival on Friday 7 August in the Sir Paul Reeves Building at AUT City Campus. By Saturday morning the wall outside the team rooms was covered in hand-written sheets, a team name and an idea on each one. The one I keep thinking about read: \"AI-based form-fill assistant for visually impaired people\".\n\nTwelve teams pitched on Saturday afternoon in WG308, five minutes each, to a judging panel that had to take in a dozen unfamiliar ideas in one sitting. The venue prize went to kailine, with kaitiakidata and kpi-kaitiaki-positive-impact as runners-up. That winning pitch, recorded on the day, now goes to the national panel, and the national finalists pitch at the [Aotearoa AI Summit](https://aotearoaai.nz) in Wellington on 8–9 September.\n\nWhat stays with me is how ordinary it looked by the end. People who had not met before Friday evening stood up together on Saturday and explained something they had built in two days. That is the whole reason we keep putting these rooms together.",
+      "signature": "Dr. Mahsa McCauley, Founder & Chair, She Sharp",
+      "photoUrl": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/people/mahsa-mccauley.jpg"
+    },
+    "headline": {
+      "eventSlug": "event-lesmills-03-september-2026",
+      "eyebrow": "Next up · 3 September",
+      "dateBadge": {
+        "day": "3",
+        "month": "SEP"
+      },
+      "blurb": "An evening at Les Mills Auckland City on diversity and AI for impact: a cross-functional panel, table discussions, and enough time afterwards to actually meet the people in the room.",
+      "ctaLabel": "Register for 3 September",
+      "ctaHref": "https://events.humanitix.com/she-sharp-and-lesmills"
+    },
+    "photoOfTheMonth": {
+      "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-08/photos/aotearoa-ai-hackathon-festival-2026-2-Du1rcfQlM0JiJ6NUPXZjsPSgMeyPdD.jpg",
+      "caption": "The winning team, kailine, on stage at AUT City Campus as the venue result went up behind them.",
+      "eventSlug": "aotearoa-ai-hackathon-festival-2026"
+    },
+    "recapIntro": "August was a single event that filled two whole days — here is how it went at AUT.",
+    "eventBlurbs": {
+      "aotearoa-ai-hackathon-festival-2026": "Twelve teams took on the AI for Good brief across Friday evening and all of Saturday, then pitched for five minutes each to a local judging panel. kailine won the venue prize, ahead of kaitiakidata and kpi-kaitiaki-positive-impact."
+    },
+    "primaryCta": {
+      "label": "Register for 3 September",
+      "href": "https://events.humanitix.com/she-sharp-and-lesmills"
+    },
+    "opportunities": [
+      {
+        "title": "Become a mentor",
+        "body": "The mentors at the hackathon did not build anything for anyone. They asked better questions, and teams got unstuck. That is most of the job, and a few hours a month is enough to do it.",
+        "href": "https://www.shesharp.org.nz/mentorship/mentor"
+      },
+      {
+        "title": "Volunteer with us",
+        "body": "Two days at AUT ran on people who set up rooms, kept the kai coming, and noticed the person standing on their own. September's panel is the next one that needs you.",
+        "href": "https://www.shesharp.org.nz/join-our-team"
+      },
+      {
+        "title": "Support the mahi",
+        "body": "Our events are free to attend, which is a decision someone has to pay for. A donation of any size keeps the door open for the next person walking through it.",
+        "href": "https://www.shesharp.org.nz/donate"
+      }
+    ],
+    "sponsorThanks": "Two days at AUT City Campus took a lot of people. Thank you to AUT for the building and the rooms, to AI Forum New Zealand for running the festival nationally, and to AWS behind the prizes. Thank you also to Fisher & Paykel Healthcare, Woolworths New Zealand with Kai Commitment, and My Life My Voice for putting real problems in front of the teams, and to Seen Ventures for the free Hack Fit training in the weeks beforehand.",
+    "heroImageUrl": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-08/photos/aotearoa-ai-hackathon-festival-2026-1-mRfoFeub6zYF3tEr6MZBfZDFPPR8NM.jpg",
+    "pulse": {
+      "heroStat": {
+        "value": "3.7%",
+        "label": "of NZ job ads now reference AI skills",
+        "context": "3.7% of job ads reference AI skills in New Zealand, compared to 2.1% in Australia.",
+        "sourceLabel": "SEEK NZ Employment Report",
+        "sourceUrl": "https://www.seek.co.nz/about/news/article/seek-nz-employment-report-july26"
+      },
+      "newsBite": null,
+      "didYouKnow": {
+        "text": "60% of New Zealand's top 200 tech companies are based in Auckland — chances are the one you want to work for is just down the road.",
+        "sourceLabel": "Tātaki Auckland Unlimited",
+        "sourceUrl": "https://aucklandeconomicdevelopment.com/invest/key-industries/technology"
+      }
+    }
+  },
+  "auto": {
+    "recapEvents": [
+      {
+        "slug": "aotearoa-ai-hackathon-festival-2026",
+        "title": "Aotearoa AI Hackathon Festival 2026 — AUT City Campus",
+        "dateLabel": "Friday, August 7",
+        "startIso": "2026-08-07T20:00:00+12:00",
+        "timeLabel": "Fri 7 Aug 5:00–8:00pm · Sat 8 Aug 7:30am–8:00pm (NZST)",
+        "locationLabel": "AUT City Campus, Auckland",
+        "coverImageUrl": "https://www.shesharp.org.nz/img/events/aotearoa-ai-hackathon-festival-2026-cover.webp",
+        "url": "https://www.shesharp.org.nz/events/aotearoa-ai-hackathon-festival-2026",
+        "registrationUrl": "https://aihackathon.nz/",
+        "shortDescription": "A two-day hackathon at AUT City Campus building AI solutions for UN SDG challenges. Free pre-event training, venue prizes, and a path to pitch at the Aotearoa AI Summit 2026."
+      }
+    ],
+    "upcomingEvents": [
+      {
+        "slug": "event-lesmills-03-september-2026",
+        "title": "No Pain, All Gain – Getting Fit for AI",
+        "dateLabel": "Thursday, September 3",
+        "startIso": "2026-09-03T17:00:00+12:00",
+        "timeLabel": "5:00pm – 7:30pm NZST",
+        "locationLabel": "Les Mills Auckland City, Auckland",
+        "coverImageUrl": "https://www.shesharp.org.nz/img/events/event-lesmills-03-september-2026-cover.webp",
+        "url": "https://www.shesharp.org.nz/events/event-lesmills-03-september-2026",
+        "registrationUrl": "https://events.humanitix.com/she-sharp-and-lesmills",
+        "shortDescription": "A Les Mills x She Sharp panel on diversity and AI for impact — cross-functional perspectives, table discussions, and networking."
+      }
+    ],
+    "stats": {
+      "members": "3500+",
+      "sponsors": "50+",
+      "events": "96+"
+    },
+    "photoStrip": [
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-08/photos/aotearoa-ai-hackathon-festival-2026-3-4xYuI9Hlwu8kDz4g0pFTBbY1D6JPHv.jpg",
+        "alt": "Saturday afternoon in WG308: the room watching a team present its solution"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-08/photos/aotearoa-ai-hackathon-festival-2026-4-RJ05VSA9IgPJAA1NcnrEEm5wa4VOPQ.jpg",
+        "alt": "Friday evening, and the two days begin at AUT City Campus"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-08/photos/aotearoa-ai-hackathon-festival-2026-5-hzUK2fhp5akKXcqn3JlLtm75LL551W.jpg",
+        "alt": "The mentors on stage at the start, before a single team had formed"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-08/photos/aotearoa-ai-hackathon-festival-2026-6-PE0SSWIGubgbkLlKSuCDv5COE5KHMI.jpg",
+        "alt": "The Friday-night keynote, under a screen reading KNOW THYSELF"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-08/photos/aotearoa-ai-hackathon-festival-2026-7-QjF03ilsTOpo0j3wYk7gXa4m44INvv.jpg",
+        "alt": "A team set up in one of the WG lecture theatres"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-08/photos/aotearoa-ai-hackathon-festival-2026-8-eMhpN4vqQixT0F72Ig6scJ6wjOVC3R.jpg",
+        "alt": "A mentor leaning in over a laptop — asking questions, not building it for them"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-08/photos/aotearoa-ai-hackathon-festival-2026-9-kxaYqgQ9DI7Di3MJRstXmPrtbvrF8U.jpg",
+        "alt": "Two days of this: laptops, snacks, and an idea being argued into shape"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-08/photos/aotearoa-ai-hackathon-festival-2026-10-UbvniJzmu6H9xfNaNhsJcoys8C4Tx6.jpg",
+        "alt": "The hall on Saturday with a Sustainable Development Goal brief on the screen"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-08/photos/aotearoa-ai-hackathon-festival-2026-11-gbO4SpxUdZiCyLOkcSkTgbYkWfqurz.jpg",
+        "alt": "The judging panel, twelve pitches to sit through in one afternoon"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-08/photos/aotearoa-ai-hackathon-festival-2026-12-0ZBx8CydHI8KLkgOs77nM8sqCkIxWy.jpg",
+        "alt": "Five minutes each, in front of the Sustainable Development Goals board"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-08/photos/aotearoa-ai-hackathon-festival-2026-13-1sX13HqNEVpdmnxv08Dtn7nMVSs10k.jpg",
+        "alt": "AI for Good, building solutions that matter — on the shirt and in the pitch"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-08/photos/aotearoa-ai-hackathon-festival-2026-14-gCiRIDjDQI88Z9UTS7Ll2MCuD4UW9O.jpg",
+        "alt": "Runner-up: kaitiakidata, on stage at AUT City Campus"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-08/photos/aotearoa-ai-hackathon-festival-2026-15-3xE6Xn1wmg6clCHg22U3T1Ae9LSzEZ.jpg",
+        "alt": "Runner-up: kpi-kaitiaki-positive-impact"
+      }
+    ],
+    "photoAlbumUrl": null
+  }
+}
