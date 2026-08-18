@@ -29,7 +29,7 @@
 import { readdirSync, existsSync } from "fs";
 import { join, relative } from "path";
 
-import { collectReferences, groupByPath, REPO_ROOT, type Reference } from "./assets/refs";
+import { collectReferences, groupByPath, isNonUseSource, REPO_ROOT, type Reference } from "./assets/refs";
 import { resolveOwner } from "./assets/event-assets";
 
 /**
@@ -54,6 +54,12 @@ export const KNOWN_UNREFERENCED: Array<{ path: string; reason: string }> = [
   { path: "/img/events/event-lesmills-03-september-2026-story-v2.jpg", reason: "regenerated poster set, pending a keep-or-drop decision" },
   { path: "/img/events/event-lesmills-03-september-2026-story-v2.webp", reason: "regenerated poster set, pending a keep-or-drop decision" },
 
+  // The Slack event sync duplicates a shared speaker photo per event rather
+  // than sharing one file across events (docs/development/SLACK_APP_DEVELOPMENT_GUIDE.md).
+  // The April 2026 Her Waka page never used this copy — only the March one is
+  // on a page — so the duplicate has been sitting here unread since it landed.
+  { path: "/img/events/her-waka-april-2026-chan-meng.png", reason: "per-event duplicate of her-waka-chan-meng.png that no page ever referenced; delete once someone confirms the April event does not want it" },
+
   { path: "/img/team/Alyssa.png", reason: "departed team member, removed from lib/data/team.ts; pending deletion" },
   { path: "/img/team/Isha.webp", reason: "departed team member; the entry is commented out in lib/data/team.ts rather than deleted, so the photo is kept alongside it" },
 
@@ -64,7 +70,7 @@ export const KNOWN_UNREFERENCED: Array<{ path: string; reason: string }> = [
 
   // The Webflow scrape recorded this podcast cover under `localPath` only —
   // the `url` field for that episode is empty, so no page ever renders it.
-  { path: "/img/scraped/podcasts/65a9cbb3c67fedb1bc802f30_Podcast_Template_1_bc8e5114.png", reason: "scraped podcast cover with an empty `url` in shesharp_podcasts_with_local_images.json; reachable only via the legacy `localPath` field" },
+  { path: "/img/legacy-site/podcasts/65a9cbb3c67fedb1bc802f30_Podcast_Template_1_bc8e5114.png", reason: "scraped podcast cover with an empty `url` in shesharp_podcasts_with_local_images.json; reachable only via the legacy `localPath` field" },
 ];
 
 /**
@@ -78,7 +84,14 @@ export const KNOWN_UNREFERENCED: Array<{ path: string; reason: string }> = [
  */
 const FORWARD_EXEMPT_SOURCES: Array<{ match: RegExp; reason: string }> = [
   { match: /\.md:/, reason: "markdown documentation writes example paths" },
-  { match: /\.test\.ts:/, reason: "test fixtures invent paths on purpose" },
+  {
+    // Named exactly, not as a `*.test.ts` pattern. `lib/deck/deck.test.ts`
+    // names two real assets and one of them is an event photo the move will
+    // rename, so a pattern that exempted every test would quietly stop
+    // checking the file most likely to break.
+    match: /^scripts\/assets\/event-assets\.test\.ts:/,
+    reason: "asserts what resolveOwner() does with paths that do not exist",
+  },
   {
     match: /^scripts\/audit-event-images\.ts:/,
     reason: "a one-off audit script keyed by pre-rename filenames that no longer exist",
@@ -91,17 +104,6 @@ function isForwardExempt(source: string): boolean {
 
 /** Basenames under `public/img/` that are not assets. */
 const NON_ASSET_FILES = new Set(["README.md", "index.ts"]);
-
-/**
- * This file is inside a scan root, so `KNOWN_UNREFERENCED` above is itself
- * picked up as a set of references — and would then prove that every path in
- * it is referenced. Naming a file in the allow-list is not a use of it.
- */
-const SELF = "scripts/verify-image-paths.ts:";
-
-function isSelfReference(source: string): boolean {
-  return source.startsWith(SELF);
-}
 
 /** Every image under `public/img/`, as a site-relative path. */
 function listPublicImages(): string[] {
@@ -155,8 +157,10 @@ function reverseCheck(byPath: Map<string, Reference[]>): boolean {
   const known = new Map(KNOWN_UNREFERENCED.map((entry) => [entry.path, entry.reason]));
   const onDisk = new Set(files);
 
+  // A file named by the allow-list above, or by the ownership test, is named
+  // rather than used — see NON_USE_SOURCES in scripts/assets/refs.ts.
   const used = (path: string): boolean =>
-    (byPath.get(path) ?? []).some((ref) => !isSelfReference(ref.source));
+    (byPath.get(path) ?? []).some((ref) => !isNonUseSource(ref.source));
 
   const orphans = files.filter((file) => !used(file) && !known.has(file));
   const stale = [...known.keys()].filter((path) => !onDisk.has(path) || used(path));

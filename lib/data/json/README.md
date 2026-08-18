@@ -41,7 +41,7 @@ the exported `eventsV3` is the **un**-normalised merge.)
 | `newsletter-issues/` | 36K | One `YYYY-MM.json` per monthly issue | `/monthly-newsletter`; read by `lib/newsletter/issues-registry.ts` | Yes, via the skill |
 
 `shesharp_*_with_local_images` names record a one-time migration step (images
-were pulled off Webflow into `public/img/scraped/`), not the content. They are
+were pulled off Webflow into `public/img/legacy-site/`), not the content. They are
 podcast and press listings; every record still carries both the remote `url` it
 came from and a stale `localPath` that no code reads.
 

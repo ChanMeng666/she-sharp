@@ -19,12 +19,12 @@ const EDITIONS = [
   {
     year: "2023",
     href: "/events/google-educator-conference-2023",
-    image: "/img/scraped/conference/hub/gec-2023-tile.jpg",
+    image: "/img/legacy-site/conference/hub/gec-2023-tile.jpg",
   },
   {
     year: "2024",
     href: "/events/google-educator-conference-2024",
-    image: "/img/scraped/conference/hub/gec-2024-tile.webp",
+    image: "/img/legacy-site/conference/hub/gec-2024-tile.webp",
   },
 ];
 

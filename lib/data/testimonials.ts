@@ -57,12 +57,12 @@ export const testimonialsByPage: {
       mentee: {
         name: "Fay Fialho",
         journey: "6 months in the programme",
-        image: "/img/scraped/avatars/dicebear-fay.svg",
+        image: "/img/legacy-site/avatars/dicebear-fay.svg",
       },
       mentor: {
         name: "Meeta Patel",
         role: "Technical Advisor",
-        image: "/img/scraped/avatars/dicebear-meeta.svg",
+        image: "/img/legacy-site/avatars/dicebear-meeta.svg",
       },
       quote:
         "From the first meeting with Meeta, she was inspiring, both personally and professionally. Her humble yet professional attitude made me comfortable with a feeling of being heard.",
@@ -76,14 +76,14 @@ export const testimonialsByPage: {
         name: "Shweta Sharma",
         role: "Product Owner",
         journey: "Completed 2024 Cohort",
-        image: "/img/scraped/avatars/dicebear-shweta.svg",
+        image: "/img/legacy-site/avatars/dicebear-shweta.svg",
       },
       mentor: {
         name: "Anshu Maharaj",
         role: "Product Manager",
         company: "MYOB",
         image:
-          "/img/scraped/site/mentorship/65f7d581ab77ff98f436f102_Anshu_Photo_59560633.jpg",
+          "/img/legacy-site/site/mentorship/65f7d581ab77ff98f436f102_Anshu_Photo_59560633.jpg",
       },
       quote:
         "This initiative has truly been a taonga (treasure) for both mentors and mentees, offering invaluable opportunities for growth, guidance, and connection.",

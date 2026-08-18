@@ -22,7 +22,7 @@ has to be sharp and big, and a tile in a wall does not.
 | Speaker headshots, event posters | `public/img/events/` — usually already there |
 | Sponsor and partner logos | `public/img/sponsors/` — usually already there |
 | Past-event photography (the fallback) | `public/img/curated/` |
-| The wider archive | `public/img/scraped/photos/` |
+| The wider archive | `public/img/legacy-site/photos/` |
 | Generated backgrounds for karakia and chapter breaks | `public/img/plates/` |
 | QR codes | `public/img/decks/<event-slug>/qr-<what-it-does>.png` |
 
@@ -96,7 +96,7 @@ facts that will change what you can promise the author.
 
 Only two groups clear 1920 pixels wide: the **47 curated images** (the
 `*-1920.webp` files) and **about sixty** of the files in
-`public/img/scraped/photos/`. **Everything else is capped between 1200 and
+`public/img/legacy-site/photos/`. **Everything else is capped between 1200 and
 1368 pixels**, and — this is the part that surprises people — that includes most
 of the 2023–2026 photography. The newer the photo, the more likely it came off
 a social post at whatever size the platform served.

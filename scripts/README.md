@@ -54,7 +54,7 @@ send: they write files and print the `resend` command a human runs.
 
 | Script | Purpose | Status |
 | --- | --- | --- |
-| `verify-image-paths.ts` | Asserts every image path referenced in data/components resolves under `public/`. | Ongoing — CI gate. |
+| `verify-image-paths.ts` | Three checks over `public/img/`: `--forward` (every referenced path resolves), `--reverse` (every file is referenced, allow-list in `KNOWN_UNREFERENCED`), `--ownership` (every event image belongs to an event). No flag runs all three. | Ongoing — CI gate. |
 | `check-hackathon-facts.ts` | Asserts this repo still contains every shared fact the Q&A assistant repo also asserts. | Ongoing — CI gate; added 2026-08-04, event-scoped. |
 | `audit-event-images.ts` | Read-only orphan/broken/duplicate report over event and sponsor imagery. | Ongoing — writes `audit-report.json`; added 2026-04-21. |
 | `build-event-archive.mts` | Harvests a past event's Google Photos album into `public/img/events/archive/<slug>/`, incremental and additive. | Ongoing. |
@@ -82,7 +82,7 @@ send: they write files and print the `resend` command a human runs.
   path on one developer's machine** —
   `"D:/Temp/claude/D--github-repository-she-sharp/849ecf8e-.../scratchpad/picks-proposed.json"`.
   The header suggests `scripts/curated-picks.json` as the confirmed file; that
-  file does not exist. So the `public/img/scraped/` → `public/img/curated/`
+  file does not exist. So the `public/img/legacy-site/` → `public/img/curated/`
   provenance cannot be reproduced from the repo alone.
 - **`renew-expired-invitations.ts` was deleted on 2026-08-19.** It renewed five
   named people's invitation codes on 2026-04-14 and was never re-runnable: it

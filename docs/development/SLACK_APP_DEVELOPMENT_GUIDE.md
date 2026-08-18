@@ -165,7 +165,7 @@ Risk-reduction framework applied to every cleanup PR:
 3. **Path integrity CI gate** (`scripts/verify-image-paths.ts`) that asserts every image reference resolves to a real file. Runs on every PR against `main`.
 4. **Per-PR visual verification** on Vercel production after merge (PR previews were not configured).
 5. **Atomic rollback** via `git revert <sha> && git push`.
-6. **Hard scope boundaries**: `public/img/scraped/` and unrelated `public/img/*` stayed untouched.
+6. **Hard scope boundaries**: `public/img/scraped/` (renamed `public/img/legacy-site/` in 2026-08) and unrelated `public/img/*` stayed untouched.
 7. **Audit-first sequencing**: M0-A produced the machine-generated rename/delete map; M0-B/C/D executed it without human transcription.
 
 ### M1 — Slack Event Bot implementation

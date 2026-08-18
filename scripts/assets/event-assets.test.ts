@@ -113,7 +113,7 @@ check("an unowned file resolves to null rather than guessing", () => {
 check("paths outside /img/events/ are not owned", () => {
   assert.equal(resolveOwner("/img/team/Chan.webp"), null);
   assert.equal(resolveOwner("/img/sponsors/myob.svg"), null);
-  assert.equal(resolveOwner("/img/scraped/photos/x.jpg"), null);
+  assert.equal(resolveOwner("/img/legacy-site/photos/x.jpg"), null);
 });
 
 // --- plannedPath ------------------------------------------------------------

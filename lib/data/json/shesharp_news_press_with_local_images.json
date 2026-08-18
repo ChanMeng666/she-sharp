@@ -30,7 +30,7 @@
         "isoDate": "2024-01-01"
       },
       "coverImage": {
-        "url": "/img/scraped/news/65a49c11fa8bb9093855aebd_nzcommunityAward_576c1336.webp",
+        "url": "/img/legacy-site/news/65a49c11fa8bb9093855aebd_nzcommunityAward_576c1336.webp",
         "alt": "",
         "localPath": "assets/images/news/65a49c11fa8bb9093855aebd_nzcommunityAward_576c1336.png"
       },
@@ -40,7 +40,7 @@
         "heading": "2024 New Zealand Community of the Year Semi-Finalists",
         "date": "",
         "image": {
-          "url": "/img/scraped/news/65a49c11fa8bb9093855aebd_nzcommunityAward_576c1336.webp",
+          "url": "/img/legacy-site/news/65a49c11fa8bb9093855aebd_nzcommunityAward_576c1336.webp",
           "alt": "Award Photo",
           "localPath": "assets/images/news/65a49c11fa8bb9093855aebd_nzcommunityAward_576c1336.png"
         },
@@ -59,9 +59,9 @@
         "isoDate": "2023-11-01"
       },
       "coverImage": {
-        "url": "/img/scraped/news/65bb25d48049d4f4ebdd3094_IMG_1468_77585e90.jpg",
+        "url": "/img/legacy-site/news/65bb25d48049d4f4ebdd3094_IMG_1468_77585e90.jpg",
         "alt": "",
-        "srcset": "/img/scraped/misc/65bb25d48049d4f4ebdd3094_IMG_1468-p-500.jpg 500w, /img/scraped/misc/65bb25d48049d4f4ebdd3094_IMG_1468-p-800.jpg 800w, /img/scraped/misc/65bb25d48049d4f4ebdd3094_IMG_1468-p-1080.jpg 1080w, /img/scraped/news/65bb25d48049d4f4ebdd3094_IMG_1468_77585e90.jpg 1132w",
+        "srcset": "/img/legacy-site/misc/65bb25d48049d4f4ebdd3094_IMG_1468-p-500.jpg 500w, /img/legacy-site/misc/65bb25d48049d4f4ebdd3094_IMG_1468-p-800.jpg 800w, /img/legacy-site/misc/65bb25d48049d4f4ebdd3094_IMG_1468-p-1080.jpg 1080w, /img/legacy-site/news/65bb25d48049d4f4ebdd3094_IMG_1468_77585e90.jpg 1132w",
         "localPath": "assets/images/news/65bb25d48049d4f4ebdd3094_IMG_1468_77585e90.jpg"
       },
       "shortDescription": "",
@@ -70,7 +70,7 @@
         "heading": "Women in Security Award 2023",
         "date": "",
         "image": {
-          "url": "/img/scraped/news/65bb25d48049d4f4ebdd3094_IMG_1468_77585e90.jpg",
+          "url": "/img/legacy-site/news/65bb25d48049d4f4ebdd3094_IMG_1468_77585e90.jpg",
           "alt": "Card image",
           "localPath": "assets/images/news/65bb25d48049d4f4ebdd3094_IMG_1468_77585e90.jpg"
         },
@@ -89,9 +89,9 @@
         "isoDate": "2023-08-01"
       },
       "coverImage": {
-        "url": "/img/scraped/news/65a49c7147224ebbb474faaa_Diversity_Award_f4a21fdb.webp",
+        "url": "/img/legacy-site/news/65a49c7147224ebbb474faaa_Diversity_Award_f4a21fdb.webp",
         "alt": "",
-        "srcset": "/img/scraped/misc/65a49c7147224ebbb474faaa_Diversity_Award-p-500.webp 500w, /img/scraped/news/65a49c7147224ebbb474faaa_Diversity_Award_f4a21fdb.webp 601w",
+        "srcset": "/img/legacy-site/misc/65a49c7147224ebbb474faaa_Diversity_Award-p-500.webp 500w, /img/legacy-site/news/65a49c7147224ebbb474faaa_Diversity_Award_f4a21fdb.webp 601w",
         "localPath": "assets/images/news/65a49c7147224ebbb474faaa_Diversity_Award_f4a21fdb.png"
       },
       "shortDescription": "",
@@ -100,7 +100,7 @@
         "heading": "Finalists of Diversity Awards NZ",
         "date": "",
         "image": {
-          "url": "/img/scraped/news/65a49c7147224ebbb474faaa_Diversity_Award_f4a21fdb.webp",
+          "url": "/img/legacy-site/news/65a49c7147224ebbb474faaa_Diversity_Award_f4a21fdb.webp",
           "alt": "Collage of event photo",
           "localPath": "assets/images/news/65a49c7147224ebbb474faaa_Diversity_Award_f4a21fdb.png"
         },
@@ -119,7 +119,7 @@
         "isoDate": "2023-03-01"
       },
       "coverImage": {
-        "url": "/img/scraped/news/64938f0ed0bd98ba0f7a1c90_finalist-metor_5e334265.webp",
+        "url": "/img/legacy-site/news/64938f0ed0bd98ba0f7a1c90_finalist-metor_5e334265.webp",
         "alt": "",
         "localPath": "assets/images/news/64938f0ed0bd98ba0f7a1c90_finalist-metor_5e334265.png"
       },
@@ -129,7 +129,7 @@
         "heading": "Finalist in the Women Leading Tech Awards in the Mentor category",
         "date": "",
         "image": {
-          "url": "/img/scraped/news/64938f0ed0bd98ba0f7a1c90_finalist-metor_5e334265.webp",
+          "url": "/img/legacy-site/news/64938f0ed0bd98ba0f7a1c90_finalist-metor_5e334265.webp",
           "alt": "Award dinner presentation",
           "localPath": "assets/images/news/64938f0ed0bd98ba0f7a1c90_finalist-metor_5e334265.png"
         },
@@ -153,7 +153,7 @@
         "isoDate": "2022-11-01"
       },
       "coverImage": {
-        "url": "/img/scraped/news/64938e649e000b0c78a541b4_Image_4_3_51675d55.webp",
+        "url": "/img/legacy-site/news/64938e649e000b0c78a541b4_Image_4_3_51675d55.webp",
         "alt": "",
         "localPath": "assets/images/news/64938e649e000b0c78a541b4_Image_4_3_51675d55.png"
       },
@@ -163,7 +163,7 @@
         "heading": "NZ Women in Security Awards",
         "date": "",
         "image": {
-          "url": "/img/scraped/news/64938e649e000b0c78a541b4_Image_4_3_51675d55.webp",
+          "url": "/img/legacy-site/news/64938e649e000b0c78a541b4_Image_4_3_51675d55.webp",
           "alt": "She Sharp, Best industry initiative supporting diversity and inclusion winner",
           "localPath": "assets/images/news/64938e649e000b0c78a541b4_Image_4_3_51675d55.png"
         },
@@ -191,9 +191,9 @@
         "isoDate": "2021-10-01"
       },
       "coverImage": {
-        "url": "/img/scraped/news/64938ce7a663b5f88ba36ea3_Press_Tile_1_2021_28485f93.webp",
+        "url": "/img/legacy-site/news/64938ce7a663b5f88ba36ea3_Press_Tile_1_2021_28485f93.webp",
         "alt": "",
-        "srcset": "/img/scraped/misc/64938ce7a663b5f88ba36ea3_Press_Tile_1_2021-p-500.webp 500w, /img/scraped/misc/64938ce7a663b5f88ba36ea3_Press_Tile_1_2021-p-800.webp 800w, /img/scraped/news/64938ce7a663b5f88ba36ea3_Press_Tile_1_2021_28485f93.webp 1200w",
+        "srcset": "/img/legacy-site/misc/64938ce7a663b5f88ba36ea3_Press_Tile_1_2021-p-500.webp 500w, /img/legacy-site/misc/64938ce7a663b5f88ba36ea3_Press_Tile_1_2021-p-800.webp 800w, /img/legacy-site/news/64938ce7a663b5f88ba36ea3_Press_Tile_1_2021_28485f93.webp 1200w",
         "localPath": "assets/images/news/64938ce7a663b5f88ba36ea3_Press_Tile_1_2021_28485f93.png"
       },
       "shortDescription": "",
@@ -202,7 +202,7 @@
         "heading": "Finalist in Community Tech Champions at CIO Awards NZ",
         "date": "",
         "image": {
-          "url": "/img/scraped/news/64938ce7a663b5f88ba36ea3_Press_Tile_1_2021_28485f93.webp",
+          "url": "/img/legacy-site/news/64938ce7a663b5f88ba36ea3_Press_Tile_1_2021_28485f93.webp",
           "alt": "A group of five women, with one holding an award certificate",
           "localPath": "assets/images/news/64938ce7a663b5f88ba36ea3_Press_Tile_1_2021_28485f93.png"
         },
@@ -221,9 +221,9 @@
         "isoDate": "2019-10-01"
       },
       "coverImage": {
-        "url": "/img/scraped/news/649cb3689f78cd4c6f728bc6_Diversity_Awards_photo-mi_c02498ff.jpg",
+        "url": "/img/legacy-site/news/649cb3689f78cd4c6f728bc6_Diversity_Awards_photo-mi_c02498ff.jpg",
         "alt": "",
-        "srcset": "/img/scraped/misc/649cb3689f78cd4c6f728bc6_Diversity_Awards_photo-min-p-500.jpg 500w, /img/scraped/misc/649cb3689f78cd4c6f728bc6_Diversity_Awards_photo-min-p-800.jpg 800w, /img/scraped/misc/649cb3689f78cd4c6f728bc6_Diversity_Awards_photo-min-p-1080.jpg 1080w, /img/scraped/misc/649cb3689f78cd4c6f728bc6_Diversity_Awards_photo-min-p-1600.jpg 1600w, /img/scraped/misc/649cb3689f78cd4c6f728bc6_Diversity_Awards_photo-min-p-2000.jpg 2000w, /img/scraped/news/649cb3689f78cd4c6f728bc6_Diversity_Awards_photo-mi_c02498ff.jpg 2048w",
+        "srcset": "/img/legacy-site/misc/649cb3689f78cd4c6f728bc6_Diversity_Awards_photo-min-p-500.jpg 500w, /img/legacy-site/misc/649cb3689f78cd4c6f728bc6_Diversity_Awards_photo-min-p-800.jpg 800w, /img/legacy-site/misc/649cb3689f78cd4c6f728bc6_Diversity_Awards_photo-min-p-1080.jpg 1080w, /img/legacy-site/misc/649cb3689f78cd4c6f728bc6_Diversity_Awards_photo-min-p-1600.jpg 1600w, /img/legacy-site/misc/649cb3689f78cd4c6f728bc6_Diversity_Awards_photo-min-p-2000.jpg 2000w, /img/legacy-site/news/649cb3689f78cd4c6f728bc6_Diversity_Awards_photo-mi_c02498ff.jpg 2048w",
         "localPath": "assets/images/news/649cb3689f78cd4c6f728bc6_Diversity_Awards_photo-mi_c02498ff.jpg"
       },
       "shortDescription": "",
@@ -232,7 +232,7 @@
         "heading": "Diversity Awards NZ 2019: Small Organisation Excellence Award",
         "date": "",
         "image": {
-          "url": "/img/scraped/news/649cb3689f78cd4c6f728bc6_Diversity_Awards_photo-mi_c02498ff.jpg",
+          "url": "/img/legacy-site/news/649cb3689f78cd4c6f728bc6_Diversity_Awards_photo-mi_c02498ff.jpg",
           "alt": "She Sharp ambassadors posing for a group photo with the Diversity Award",
           "localPath": "assets/images/news/649cb3689f78cd4c6f728bc6_Diversity_Awards_photo-mi_c02498ff.jpg"
         },

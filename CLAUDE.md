@@ -57,8 +57,8 @@ lib/             api, auth, chatbot, cloudinary, config, data, db, deck, email,
                  newsletter, programmes, recruitment, seo, slack, slack-bot,
                  stripe, user  (+ utils.ts, fonts.ts, design-system.ts)
 hooks/ types/ styles/ emails/
-public/          site imagery; img/scraped/ is LIVE legacy-site content, not
-                 leftovers — see public/img/scraped/README.md before touching it
+public/          site imagery; img/legacy-site/ is LIVE content served to every
+                 pre-2026 event page — see its README.md before touching it
 scripts/         ~90 scripts, only one wired to package.json — scripts/README.md
                  indexes them and flags the destructive ones
 docs/            docs/README.md indexes every doc; start at docs/ARCHITECTURE.md

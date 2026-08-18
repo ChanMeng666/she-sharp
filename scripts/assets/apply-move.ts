@@ -23,7 +23,7 @@ import { execFileSync } from "child_process";
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmdirSync, writeFileSync } from "fs";
 import { dirname, isAbsolute, join } from "path";
 
-import { REPO_ROOT } from "./refs";
+import { PROTECTED_SOURCES, REPO_ROOT } from "./refs";
 import type { MovePlan } from "./plan-move";
 
 function parseArgs(argv: string[]): { plan: string; apply: boolean } {
@@ -127,10 +127,8 @@ function rewriteFile(relPath: string, rewrites: Rewrite[]): number {
  * is a real asset it expects to resolve on disk — exempting it would leave a
  * dangling fixture the deck suite then fails on.
  */
-const REWRITE_EXEMPT = ["scripts/assets/event-assets.test.ts"];
-
 function isRewriteExempt(file: string): boolean {
-  return REWRITE_EXEMPT.includes(file);
+  return PROTECTED_SOURCES.has(file);
 }
 
 /** Groups the plan's rewrites by the source file that has to change. */

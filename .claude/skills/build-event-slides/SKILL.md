@@ -388,7 +388,7 @@ covers a multitude of sins. Most of the archive can only ever be the second kind
 **Two things about the archive that will catch you out:**
 
 1. **Almost nothing is big enough to fill a screen.** Only the 47 curated images
-   and about sixty files in `public/img/scraped/photos/` clear 1920px; everything
+   and about sixty files in `public/img/legacy-site/photos/` clear 1920px; everything
    else stops between 1200 and 1368, *including* most of the 2023–2026
    photography. Want a full-bleed hero? Look in `public/img/curated/` first.
 2. **There is no photograph of a mentor and a mentee together** anywhere in the
