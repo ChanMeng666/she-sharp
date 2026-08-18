@@ -51,7 +51,7 @@ export default function ForgotPasswordPage() {
       <div 
         className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative"
         style={{
-          backgroundImage: 'url(/img/bauhaus-1755865242427.svg)',
+          backgroundImage: 'url(/img/bauhaus-account-recovery.svg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
@@ -118,7 +118,7 @@ export default function ForgotPasswordPage() {
     <div 
       className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative"
       style={{
-        backgroundImage: 'url(/img/bauhaus-1755865242427.svg)',
+        backgroundImage: 'url(/img/bauhaus-account-recovery.svg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat'

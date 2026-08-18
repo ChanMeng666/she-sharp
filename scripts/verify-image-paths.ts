@@ -60,7 +60,6 @@ export const KNOWN_UNREFERENCED: Array<{ path: string; reason: string }> = [
   // on a page — so the duplicate has been sitting here unread since it landed.
   { path: "/img/events/her-waka-april-2026/chan-meng.png", reason: "per-event duplicate of her-waka-chan-meng.png that no page ever referenced; delete once someone confirms the April event does not want it" },
 
-  { path: "/img/team/Alyssa.png", reason: "departed team member, removed from lib/data/team.ts; pending deletion" },
   { path: "/img/team/Isha.webp", reason: "departed team member; the entry is commented out in lib/data/team.ts rather than deleted, so the photo is kept alongside it" },
 
   // Not a supporter's logo and deliberately not on the sponsor wall: it is She

@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Image from "next/image";
 import { GeoHead, GEO_INSTRUCTIONS } from "@/components/seo/geo-head";
 import { DonateForm } from "@/components/donate/donate-form";
-import { DonateHero } from "@/components/sections/donate/donate-hero";
+import { DonateHero } from "@/components/donate/donate-hero";
 import { Section } from "@/components/layout/section";
 import { Container } from "@/components/layout/container";
 import { Reveal, CurtainReveal } from "@/components/ui/reveal";

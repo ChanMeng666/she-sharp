@@ -28,7 +28,7 @@ export function VerifyInvitationForm({ userEmail, userName }: VerifyInvitationFo
     <div
       className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative"
       style={{
-        backgroundImage: 'url(/img/bauhaus-1755865025052.svg)',
+        backgroundImage: 'url(/img/bauhaus-invitation.svg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat'

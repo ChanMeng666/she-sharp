@@ -293,7 +293,7 @@ export default function MentorApplyPage() {
       <div
         className="min-h-screen pt-24 md:pt-32 pb-16 relative"
         style={{
-          backgroundImage: "url(/img/bauhaus-1764928803893.svg)",
+          backgroundImage: "url(/img/bauhaus-mentorship.svg)",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",

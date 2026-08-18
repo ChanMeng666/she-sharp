@@ -110,7 +110,7 @@ export function buildHomeImpactData(eventsHeld: number): ImpactItem[] {
       title: "Partner Companies",
       value: `${globalStats.sponsors.current}+`,
       desc: "Leading tech companies supporting our mission.",
-      icon: "/icons/parnership.svg",
+      icon: "/icons/partnership.svg",
     },
     {
       title: "Career Success Stories",
