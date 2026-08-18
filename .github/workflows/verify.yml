@@ -28,6 +28,14 @@ jobs:
       - name: Verify image path integrity
         run: npx tsx scripts/verify-image-paths.ts
 
+      # The gate above is generated from resolveOwner(), which decides the event
+      # each of the ~170 files belongs to. A wrong answer there is silent — the
+      # file lands under the wrong event and every path still resolves — so the
+      # ownership rules carry their own tests, built from the six real slug
+      # prefix collisions rather than invented examples.
+      - name: Verify event asset ownership rules
+        run: npx tsx scripts/assets/event-assets.test.ts
+
       # Shares this job's checkout and install rather than paying for its own —
       # the check is pure data and takes under a second. It asserts the AI
       # Hackathon facts this repo publishes still match the shared list that the

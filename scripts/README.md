@@ -38,6 +38,8 @@ send: they write files and print the `resend` command a human runs.
 
 | Directory | For | Entry point |
 | --- | --- | --- |
+| `assets/` | Moving image assets without breaking the ~1,400 references to them. `refs.ts` is the single definition of "a reference", shared with the CI gate so the two cannot drift; `event-assets.ts` decides which event owns a file and has its own adversarial test. | `plan-move.ts --scope events\|scraped` to generate a map, `apply-move.ts --plan <file>` (dry run; `--apply` to execute). |
+| `lib/` | Shared helpers for scripts. | `destructive.ts` — the dry-run / host-confirmation gate the two database-wiping scripts go through. |
 | `data/` | One-off corrections to `events-custom.json` / `shesharp_events_v3.json`, each carrying its finding id and its authority. | `json-format.ts` is the shared safe read/write; each fix script is its own entry point and is idempotent. |
 | `deck/` | Building and checking `/present/<slug>` slide decks. | `new-deck.ts` to scaffold, `lint-deck.ts` for the organiser-readable report, `sync-registry.ts` to regenerate `registry.ts` + `index-meta.ts`. |
 | `email/` | The outbound-mail pipeline behind the four email skills: audience inventory, recipient normalisation, render, gate, batch. | `render-message.ts` (spec → HTML), `build-batch.ts` (list → chunked JSON). `suppression.ts` is the do-not-contact register. |
