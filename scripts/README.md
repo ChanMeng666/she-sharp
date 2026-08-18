@@ -82,7 +82,7 @@ send: they write files and print the `resend` command a human runs.
   path on one developer's machine** —
   `"D:/Temp/claude/D--github-repository-she-sharp/849ecf8e-.../scratchpad/picks-proposed.json"`.
   The header suggests `scripts/curated-picks.json` as the confirmed file; that
-  file does not exist. So the `public/img/scraped/` → `public/img/curated/`
+  file does not exist. So the `public/img/legacy-site/` → `public/img/curated/`
   provenance cannot be reproduced from the repo alone.
 - **`renew-expired-invitations.ts` was deleted on 2026-08-19.** It renewed five
   named people's invitation codes on 2026-04-14 and was never re-runnable: it

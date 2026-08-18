@@ -18,10 +18,10 @@
 import { readdirSync, writeFileSync, mkdirSync } from "fs";
 import { join, relative, dirname, isAbsolute } from "path";
 
-import { collectReferences, groupByPath, REPO_ROOT } from "./refs";
+import { collectReferences, groupByPath, PROTECTED_SOURCES, REPO_ROOT } from "./refs";
 import { plannedPath } from "./event-assets";
 
-export type Scope = "events" | "scraped";
+export type Scope = "events";
 
 export type FileMove = { from: string; to: string };
 export type RefRewrite = { path: string; newPath: string; sources: string[] };
@@ -37,23 +37,11 @@ export type MovePlan = {
 /** Where each scope's files live, site-relative. */
 const SCOPE_ROOTS: Record<Scope, string> = {
   events: "/img/events/",
-  scraped: "/img/scraped/",
 };
 
 /** Basenames that are not assets. Re-filing images leaves them where they are;
  *  renaming a whole directory takes them along. */
 const NON_ASSET_FILES = new Set(["README.md", "index.ts"]);
-
-/**
- * Files whose image paths must survive the move unchanged.
- *
- * `event-assets.test.ts` asserts that a flat filename resolves to an event:
- * rewriting its inputs into the nested form it is asserting turns every one of
- * those cases into `x === x`. The test would still pass, and would no longer
- * test anything — which is worse than failing, because the next person to
- * change `resolveOwner()` would trust it.
- */
-export const PROTECTED_SOURCES = new Set(["scripts/assets/event-assets.test.ts"]);
 
 /** Every file under a site-relative directory, as site-relative paths. */
 function listUnder(siteDir: string, includeNonAssets: boolean): string[] {
@@ -73,19 +61,8 @@ function listUnder(siteDir: string, includeNonAssets: boolean): string[] {
   return out.sort((a, b) => a.localeCompare(b));
 }
 
-/**
- * The scraped rename is a literal prefix swap, not an ownership question.
- *
- * `public/img/scraped/` is the Webflow-era harvest of the previous site; the
- * name describes how the files arrived rather than what they are, and nothing
- * about the 903 files inside changes.
- */
-function scrapedTarget(sitePath: string): string {
-  return sitePath.replace(/^\/img\/scraped\//, "/img/legacy-site/");
-}
-
 export function buildPlan(scope: Scope): MovePlan {
-  const target = scope === "events" ? plannedPath : scrapedTarget;
+  const target = plannedPath;
 
   const files: FileMove[] = [];
   const unmatched: Unmatched[] = [];
@@ -93,7 +70,7 @@ export function buildPlan(scope: Scope): MovePlan {
   const claimedBy = new Map<string, string>();
 
   // A directory rename takes the README with it; re-filing images does not.
-  for (const sitePath of listUnder(SCOPE_ROOTS[scope], scope === "scraped")) {
+  for (const sitePath of listUnder(SCOPE_ROOTS[scope], false)) {
     const to = target(sitePath);
     if (!to) {
       unmatched.push({ path: sitePath, reason: "no event owns this file" });
@@ -146,8 +123,8 @@ function parseArgs(argv: string[]): { scope: Scope; out: string | null } {
   for (let i = 0; i < argv.length; i += 1) {
     if (argv[i] === "--scope") {
       const value = argv[i + 1];
-      if (value !== "events" && value !== "scraped") {
-        throw new Error(`--scope must be "events" or "scraped", got ${value ?? "nothing"}`);
+      if (value !== "events") {
+        throw new Error(`--scope must be "events", got ${value ?? "nothing"}`);
       }
       scope = value;
       i += 1;

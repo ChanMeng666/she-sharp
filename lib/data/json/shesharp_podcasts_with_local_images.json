@@ -50,7 +50,7 @@
       },
       "spotifyUrl": "https://open.spotify.com/episode/6adaUENgRCtCRl5AsTSjFu?si=VXm96TvdQLuocmiCm_rXfw",
       "coverImage": {
-        "url": "/img/scraped/podcasts/656449f3d01f2e91e441cff0_Podcast_Template_79e82070.webp",
+        "url": "/img/legacy-site/podcasts/656449f3d01f2e91e441cff0_Podcast_Template_79e82070.webp",
         "alt": "",
         "localPath": "assets/images/podcasts/656449f3d01f2e91e441cff0_Podcast_Template_79e82070.png"
       },
@@ -70,9 +70,9 @@
       },
       "spotifyUrl": "https://open.spotify.com/episode/5LdpXQRWdzkBOwix7jYG2v?si=b3f0a40653f74347",
       "coverImage": {
-        "url": "/img/scraped/podcasts/65509ac5a0623d92b00799c5_Group_480965680_1_4cf329c9.webp",
+        "url": "/img/legacy-site/podcasts/65509ac5a0623d92b00799c5_Group_480965680_1_4cf329c9.webp",
         "alt": "Banner with two students",
-        "srcset": "/img/scraped/misc/65509ac5a0623d92b00799c5_Group_480965680_(1)-p-500.webp 500w, /img/scraped/podcasts/65509ac5a0623d92b00799c5_Group_480965680_1_4cf329c9.webp 800w",
+        "srcset": "/img/legacy-site/misc/65509ac5a0623d92b00799c5_Group_480965680_(1)-p-500.webp 500w, /img/legacy-site/podcasts/65509ac5a0623d92b00799c5_Group_480965680_1_4cf329c9.webp 800w",
         "localPath": "assets/images/podcasts/65509ac5a0623d92b00799c5_Group_480965680_1_4cf329c9.png"
       },
       "platform": "Spotify",
@@ -91,9 +91,9 @@
       },
       "spotifyUrl": "https://open.spotify.com/episode/3fS98C8166pKyaLeFCIZnJ?si=dAnFGyL2Qrq3Qy5HSGcJiw",
       "coverImage": {
-        "url": "/img/scraped/podcasts/6516caff046b6bee332a81b9_Group_480965692_83c08c80.webp",
+        "url": "/img/legacy-site/podcasts/6516caff046b6bee332a81b9_Group_480965692_83c08c80.webp",
         "alt": "Banner of a hand pulling toast out of a toaster",
-        "srcset": "/img/scraped/misc/6516caff046b6bee332a81b9_Group_480965692-p-500.webp 500w, /img/scraped/misc/6516caff046b6bee332a81b9_Group_480965692-p-800.webp 800w, /img/scraped/misc/6516caff046b6bee332a81b9_Group_480965692-p-1080.webp 1080w, /img/scraped/podcasts/6516caff046b6bee332a81b9_Group_480965692_83c08c80.webp 1200w",
+        "srcset": "/img/legacy-site/misc/6516caff046b6bee332a81b9_Group_480965692-p-500.webp 500w, /img/legacy-site/misc/6516caff046b6bee332a81b9_Group_480965692-p-800.webp 800w, /img/legacy-site/misc/6516caff046b6bee332a81b9_Group_480965692-p-1080.webp 1080w, /img/legacy-site/podcasts/6516caff046b6bee332a81b9_Group_480965692_83c08c80.webp 1200w",
         "localPath": "assets/images/podcasts/6516caff046b6bee332a81b9_Group_480965692_83c08c80.png"
       },
       "platform": "Spotify",
@@ -112,9 +112,9 @@
       },
       "spotifyUrl": "https://open.spotify.com/episode/4M1z06uxrpetXgbK8nwE8T",
       "coverImage": {
-        "url": "/img/scraped/podcasts/64f48bfd055ab00edf0c9575_Event_Tile_BGs_1_ccf767f1.webp",
+        "url": "/img/legacy-site/podcasts/64f48bfd055ab00edf0c9575_Event_Tile_BGs_1_ccf767f1.webp",
         "alt": "Graphic with woman holding a beaker",
-        "srcset": "/img/scraped/misc/64f48bfd055ab00edf0c9575_Event_Tile_BGs_(1)-p-500.webp 500w, /img/scraped/misc/64f48bfd055ab00edf0c9575_Event_Tile_BGs_(1)-p-800.webp 800w, /img/scraped/misc/64f48bfd055ab00edf0c9575_Event_Tile_BGs_(1)-p-1080.webp 1080w, /img/scraped/podcasts/64f48bfd055ab00edf0c9575_Event_Tile_BGs_1_ccf767f1.webp 1200w",
+        "srcset": "/img/legacy-site/misc/64f48bfd055ab00edf0c9575_Event_Tile_BGs_(1)-p-500.webp 500w, /img/legacy-site/misc/64f48bfd055ab00edf0c9575_Event_Tile_BGs_(1)-p-800.webp 800w, /img/legacy-site/misc/64f48bfd055ab00edf0c9575_Event_Tile_BGs_(1)-p-1080.webp 1080w, /img/legacy-site/podcasts/64f48bfd055ab00edf0c9575_Event_Tile_BGs_1_ccf767f1.webp 1200w",
         "localPath": "assets/images/podcasts/64f48bfd055ab00edf0c9575_Event_Tile_BGs_1_ccf767f1.png"
       },
       "platform": "Spotify",
@@ -133,9 +133,9 @@
       },
       "spotifyUrl": "https://open.spotify.com/episode/7xwZoJrW1N2O53q82Ox7zu?si=YfB_aFGQRve-XH2a2yHZEw",
       "coverImage": {
-        "url": "/img/scraped/podcasts/64bb8ab537717a195533fc8a_Podcast_Template_3_e84474fe.webp",
+        "url": "/img/legacy-site/podcasts/64bb8ab537717a195533fc8a_Podcast_Template_3_e84474fe.webp",
         "alt": "Woman speaking in front of two people ",
-        "srcset": "/img/scraped/misc/64bb8ab537717a195533fc8a_Podcast_Template_(3)-p-500.webp 500w, /img/scraped/podcasts/64bb8ab537717a195533fc8a_Podcast_Template_3_e84474fe.webp 800w",
+        "srcset": "/img/legacy-site/misc/64bb8ab537717a195533fc8a_Podcast_Template_(3)-p-500.webp 500w, /img/legacy-site/podcasts/64bb8ab537717a195533fc8a_Podcast_Template_3_e84474fe.webp 800w",
         "localPath": "assets/images/podcasts/64bb8ab537717a195533fc8a_Podcast_Template_3_e84474fe.png"
       },
       "platform": "Spotify",
@@ -154,9 +154,9 @@
       },
       "spotifyUrl": "https://open.spotify.com/episode/6PoBMkylOLasUa8sS4f1GM?si=3152dd76ba1d444f&nd=1",
       "coverImage": {
-        "url": "/img/scraped/podcasts/64926803e40138d6dc0e5c02_Podcast_Tile_Kickstart_Yo_c1a6cb69.webp",
+        "url": "/img/legacy-site/podcasts/64926803e40138d6dc0e5c02_Podcast_Tile_Kickstart_Yo_c1a6cb69.webp",
         "alt": "A young women relaxing on a couch in the sunshine with a laptop",
-        "srcset": "/img/scraped/misc/64926803e40138d6dc0e5c02_Podcast_Tile_Kickstart_Your_Career_in_Tech_with_MYOB-p-500.webp 500w, /img/scraped/misc/64926803e40138d6dc0e5c02_Podcast_Tile_Kickstart_Your_Career_in_Tech_with_MYOB-p-800.webp 800w, /img/scraped/podcasts/64926803e40138d6dc0e5c02_Podcast_Tile_Kickstart_Yo_c1a6cb69.webp 1200w",
+        "srcset": "/img/legacy-site/misc/64926803e40138d6dc0e5c02_Podcast_Tile_Kickstart_Your_Career_in_Tech_with_MYOB-p-500.webp 500w, /img/legacy-site/misc/64926803e40138d6dc0e5c02_Podcast_Tile_Kickstart_Your_Career_in_Tech_with_MYOB-p-800.webp 800w, /img/legacy-site/podcasts/64926803e40138d6dc0e5c02_Podcast_Tile_Kickstart_Yo_c1a6cb69.webp 1200w",
         "localPath": "assets/images/podcasts/64926803e40138d6dc0e5c02_Podcast_Tile_Kickstart_Yo_c1a6cb69.png"
       },
       "platform": "Spotify",
@@ -175,9 +175,9 @@
       },
       "spotifyUrl": "https://open.spotify.com/episode/1dSfuPifLzq4Uu6sougpxi?si=3d027606230848a7&nd=1",
       "coverImage": {
-        "url": "/img/scraped/podcasts/64926899d771e6ed62e9f52b_Podcast_Tile_A_Chat_with__bd179af2.webp",
+        "url": "/img/legacy-site/podcasts/64926899d771e6ed62e9f52b_Podcast_Tile_A_Chat_with__bd179af2.webp",
         "alt": "Decorative",
-        "srcset": "/img/scraped/misc/64926899d771e6ed62e9f52b_Podcast_Tile_A_Chat_with_Fiona_Webby-p-500.webp 500w, /img/scraped/misc/64926899d771e6ed62e9f52b_Podcast_Tile_A_Chat_with_Fiona_Webby-p-800.webp 800w, /img/scraped/podcasts/64926899d771e6ed62e9f52b_Podcast_Tile_A_Chat_with__bd179af2.webp 1200w",
+        "srcset": "/img/legacy-site/misc/64926899d771e6ed62e9f52b_Podcast_Tile_A_Chat_with_Fiona_Webby-p-500.webp 500w, /img/legacy-site/misc/64926899d771e6ed62e9f52b_Podcast_Tile_A_Chat_with_Fiona_Webby-p-800.webp 800w, /img/legacy-site/podcasts/64926899d771e6ed62e9f52b_Podcast_Tile_A_Chat_with__bd179af2.webp 1200w",
         "localPath": "assets/images/podcasts/64926899d771e6ed62e9f52b_Podcast_Tile_A_Chat_with__bd179af2.png"
       },
       "platform": "Spotify",
@@ -196,9 +196,9 @@
       },
       "spotifyUrl": "https://open.spotify.com/episode/3x5nHASoOHsYY3mlbJZEQX?si=5ec634b0921145bd&nd=1",
       "coverImage": {
-        "url": "/img/scraped/podcasts/649268ebdac5954a754425d5_Podcast_Tile_IWD_EmbraceE_80619de6.webp",
+        "url": "/img/legacy-site/podcasts/649268ebdac5954a754425d5_Podcast_Tile_IWD_EmbraceE_80619de6.webp",
         "alt": "A group of women sitting around a table",
-        "srcset": "/img/scraped/podcasts/649268ebdac5954a754425d5_Podcast_Tile_IWD_EmbraceE_80619de6.webp 500w, /img/scraped/podcasts/649268ebdac5954a754425d5_Podcast_Tile_IWD_EmbraceE_80619de6.webp 800w, /img/scraped/podcasts/649268ebdac5954a754425d5_Podcast_Tile_IWD_EmbraceE_80619de6.webp 1200w",
+        "srcset": "/img/legacy-site/podcasts/649268ebdac5954a754425d5_Podcast_Tile_IWD_EmbraceE_80619de6.webp 500w, /img/legacy-site/podcasts/649268ebdac5954a754425d5_Podcast_Tile_IWD_EmbraceE_80619de6.webp 800w, /img/legacy-site/podcasts/649268ebdac5954a754425d5_Podcast_Tile_IWD_EmbraceE_80619de6.webp 1200w",
         "localPath": "assets/images/podcasts/649268ebdac5954a754425d5_Podcast_Tile_IWD_EmbraceE_80619de6.png"
       },
       "platform": "Spotify",
@@ -217,9 +217,9 @@
       },
       "spotifyUrl": "https://open.spotify.com/episode/5X8tMqIj5ADZVVDOBKv0ZO?si=03df8d189ed24750&nd=1",
       "coverImage": {
-        "url": "/img/scraped/podcasts/64926d5dbfcc54669c5e7d7c_Podcast_Tile_She_Sharp_By_c188f735.webp",
+        "url": "/img/legacy-site/podcasts/64926d5dbfcc54669c5e7d7c_Podcast_Tile_She_Sharp_By_c188f735.webp",
         "alt": "Decorative",
-        "srcset": "/img/scraped/misc/64926d5dbfcc54669c5e7d7c_Podcast_Tile_She_Sharp_Bytes_into_Software_Development_with_Security_in_Mind-p-500.webp 500w, /img/scraped/misc/64926d5dbfcc54669c5e7d7c_Podcast_Tile_She_Sharp_Bytes_into_Software_Development_with_Security_in_Mind-p-800.webp 800w, /img/scraped/podcasts/64926d5dbfcc54669c5e7d7c_Podcast_Tile_She_Sharp_By_c188f735.webp 1200w",
+        "srcset": "/img/legacy-site/misc/64926d5dbfcc54669c5e7d7c_Podcast_Tile_She_Sharp_Bytes_into_Software_Development_with_Security_in_Mind-p-500.webp 500w, /img/legacy-site/misc/64926d5dbfcc54669c5e7d7c_Podcast_Tile_She_Sharp_Bytes_into_Software_Development_with_Security_in_Mind-p-800.webp 800w, /img/legacy-site/podcasts/64926d5dbfcc54669c5e7d7c_Podcast_Tile_She_Sharp_By_c188f735.webp 1200w",
         "localPath": "assets/images/podcasts/64926d5dbfcc54669c5e7d7c_Podcast_Tile_She_Sharp_By_c188f735.png"
       },
       "platform": "Spotify",
@@ -238,9 +238,9 @@
       },
       "spotifyUrl": "https://open.spotify.com/episode/7ftBVksRgrYGBTbg0l9HO6?si=d3cb5f47f6a044f9",
       "coverImage": {
-        "url": "/img/scraped/podcasts/6494ce4d9ebcd7fa78ec60b0_Podcast_Tile_Shaping_the__28d8bc10.webp",
+        "url": "/img/legacy-site/podcasts/6494ce4d9ebcd7fa78ec60b0_Podcast_Tile_Shaping_the__28d8bc10.webp",
         "alt": "woman smiling",
-        "srcset": "/img/scraped/misc/6494ce4d9ebcd7fa78ec60b0_Podcast_Tile_Shaping_the_Future_with_AI_-_Using_AI_to_Shape_Your_World-p-500.webp 500w, /img/scraped/misc/6494ce4d9ebcd7fa78ec60b0_Podcast_Tile_Shaping_the_Future_with_AI_-_Using_AI_to_Shape_Your_World-p-800.webp 800w, /img/scraped/podcasts/6494ce4d9ebcd7fa78ec60b0_Podcast_Tile_Shaping_the__28d8bc10.webp 1200w",
+        "srcset": "/img/legacy-site/misc/6494ce4d9ebcd7fa78ec60b0_Podcast_Tile_Shaping_the_Future_with_AI_-_Using_AI_to_Shape_Your_World-p-500.webp 500w, /img/legacy-site/misc/6494ce4d9ebcd7fa78ec60b0_Podcast_Tile_Shaping_the_Future_with_AI_-_Using_AI_to_Shape_Your_World-p-800.webp 800w, /img/legacy-site/podcasts/6494ce4d9ebcd7fa78ec60b0_Podcast_Tile_Shaping_the__28d8bc10.webp 1200w",
         "localPath": "assets/images/podcasts/6494ce4d9ebcd7fa78ec60b0_Podcast_Tile_Shaping_the__28d8bc10.png"
       },
       "platform": "Spotify",
@@ -259,9 +259,9 @@
       },
       "spotifyUrl": "https://open.spotify.com/episode/7MCUwNbUAoAexkS9LeEHBN?si=c0e74101101b48f0",
       "coverImage": {
-        "url": "/img/scraped/podcasts/6494cf5d644246ba02e79ed4_Podcast_Tile_AI_for_the_E_80bb51d3.webp",
+        "url": "/img/legacy-site/podcasts/6494cf5d644246ba02e79ed4_Podcast_Tile_AI_for_the_E_80bb51d3.webp",
         "alt": "hackathon",
-        "srcset": "/img/scraped/misc/6494cf5d644246ba02e79ed4_Podcast_Tile_AI_for_the_Environment_-_Female_Led_Hackathon-p-500.webp 500w, /img/scraped/misc/6494cf5d644246ba02e79ed4_Podcast_Tile_AI_for_the_Environment_-_Female_Led_Hackathon-p-800.webp 800w, /img/scraped/podcasts/6494cf5d644246ba02e79ed4_Podcast_Tile_AI_for_the_E_80bb51d3.webp 1200w",
+        "srcset": "/img/legacy-site/misc/6494cf5d644246ba02e79ed4_Podcast_Tile_AI_for_the_Environment_-_Female_Led_Hackathon-p-500.webp 500w, /img/legacy-site/misc/6494cf5d644246ba02e79ed4_Podcast_Tile_AI_for_the_Environment_-_Female_Led_Hackathon-p-800.webp 800w, /img/legacy-site/podcasts/6494cf5d644246ba02e79ed4_Podcast_Tile_AI_for_the_E_80bb51d3.webp 1200w",
         "localPath": "assets/images/podcasts/6494cf5d644246ba02e79ed4_Podcast_Tile_AI_for_the_E_80bb51d3.png"
       },
       "platform": "Spotify",
@@ -280,9 +280,9 @@
       },
       "spotifyUrl": "https://open.spotify.com/episode/3ZmaHzKEf9qL0HiUQQE72P?si=bbeb0cf0f312485f",
       "coverImage": {
-        "url": "/img/scraped/podcasts/6494cfb10feb550729ee1c33_Podcast_Tile_Sharing_a_Ca_2d8a8787.webp",
+        "url": "/img/legacy-site/podcasts/6494cfb10feb550729ee1c33_Podcast_Tile_Sharing_a_Ca_2d8a8787.webp",
         "alt": "nicole lin headshot",
-        "srcset": "/img/scraped/podcasts/6494cfb10feb550729ee1c33_Podcast_Tile_Sharing_a_Ca_2d8a8787.webp 500w, /img/scraped/podcasts/6494cfb10feb550729ee1c33_Podcast_Tile_Sharing_a_Ca_2d8a8787.webp 800w, /img/scraped/podcasts/6494cfb10feb550729ee1c33_Podcast_Tile_Sharing_a_Ca_2d8a8787.webp 1200w",
+        "srcset": "/img/legacy-site/podcasts/6494cfb10feb550729ee1c33_Podcast_Tile_Sharing_a_Ca_2d8a8787.webp 500w, /img/legacy-site/podcasts/6494cfb10feb550729ee1c33_Podcast_Tile_Sharing_a_Ca_2d8a8787.webp 800w, /img/legacy-site/podcasts/6494cfb10feb550729ee1c33_Podcast_Tile_Sharing_a_Ca_2d8a8787.webp 1200w",
         "localPath": "assets/images/podcasts/6494cfb10feb550729ee1c33_Podcast_Tile_Sharing_a_Ca_2d8a8787.png"
       },
       "platform": "Spotify",
@@ -301,9 +301,9 @@
       },
       "spotifyUrl": "https://open.spotify.com/episode/40ctM08sUvNdAMuoq34LwM?si=5833e9c58e174610",
       "coverImage": {
-        "url": "/img/scraped/podcasts/6494cfe00feb550729ee4a7b_Podcast_Tile_Mind_Your_ow_fd9e2b66.webp",
+        "url": "/img/legacy-site/podcasts/6494cfe00feb550729ee4a7b_Podcast_Tile_Mind_Your_ow_fd9e2b66.webp",
         "alt": "woman at desk",
-        "srcset": "/img/scraped/misc/6494cfe00feb550729ee4a7b_Podcast_Tile_Mind_Your_own_career-p-500.webp 500w, /img/scraped/misc/6494cfe00feb550729ee4a7b_Podcast_Tile_Mind_Your_own_career-p-800.webp 800w, /img/scraped/podcasts/6494cfe00feb550729ee4a7b_Podcast_Tile_Mind_Your_ow_fd9e2b66.webp 1200w",
+        "srcset": "/img/legacy-site/misc/6494cfe00feb550729ee4a7b_Podcast_Tile_Mind_Your_own_career-p-500.webp 500w, /img/legacy-site/misc/6494cfe00feb550729ee4a7b_Podcast_Tile_Mind_Your_own_career-p-800.webp 800w, /img/legacy-site/podcasts/6494cfe00feb550729ee4a7b_Podcast_Tile_Mind_Your_ow_fd9e2b66.webp 1200w",
         "localPath": "assets/images/podcasts/6494cfe00feb550729ee4a7b_Podcast_Tile_Mind_Your_ow_fd9e2b66.png"
       },
       "platform": "Spotify",
@@ -322,9 +322,9 @@
       },
       "spotifyUrl": "https://open.spotify.com/episode/1cvcsFbhEHcXRaaTHsGom8?si=b3a980e1b92f4a5f&nd=1",
       "coverImage": {
-        "url": "/img/scraped/podcasts/6494f876e09c314b47369d47_Podcast_Tile_What_is_this_704d879d.webp",
+        "url": "/img/legacy-site/podcasts/6494f876e09c314b47369d47_Podcast_Tile_What_is_this_704d879d.webp",
         "alt": "Young woman listening to a podcast on She Sharp Spotify podcast platform",
-        "srcset": "/img/scraped/misc/6494f876e09c314b47369d47_Podcast_Tile_What_is_this_podcast_about_-p-500.webp 500w, /img/scraped/misc/6494f876e09c314b47369d47_Podcast_Tile_What_is_this_podcast_about_-p-800.webp 800w, /img/scraped/misc/6494f876e09c314b47369d47_Podcast_Tile_What_is_this_podcast_about_-p-1080.webp 1080w, /img/scraped/podcasts/6494f876e09c314b47369d47_Podcast_Tile_What_is_this_704d879d.webp 1200w",
+        "srcset": "/img/legacy-site/misc/6494f876e09c314b47369d47_Podcast_Tile_What_is_this_podcast_about_-p-500.webp 500w, /img/legacy-site/misc/6494f876e09c314b47369d47_Podcast_Tile_What_is_this_podcast_about_-p-800.webp 800w, /img/legacy-site/misc/6494f876e09c314b47369d47_Podcast_Tile_What_is_this_podcast_about_-p-1080.webp 1080w, /img/legacy-site/podcasts/6494f876e09c314b47369d47_Podcast_Tile_What_is_this_704d879d.webp 1200w",
         "localPath": "assets/images/podcasts/6494f876e09c314b47369d47_Podcast_Tile_What_is_this_704d879d.png"
       },
       "platform": "Spotify",

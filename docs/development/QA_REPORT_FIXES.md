@@ -437,9 +437,9 @@ completed one-shots — see the note in §3.bis. The assets remain.)*
 - `scripts/patch_sponsor_descriptions.py` *(new, 2026-04-25)* — heuristic sponsor bio extractor
 - `scripts/patch_manual_fixes.py` · `patch_manual_fixes2.py` · `patch_manual_fixes3.py` · `patch_manual_fixes4.py` *(new, 2026-04-25)* — curated backfill scripts
 - `scripts/patch_her_waka.py` · `patch_final_cleanup.py` · `patch_fp_hackathon.py` · `patch_fp_extras.py` · `patch_fp_readiness.py` *(new, 2026-04-25)* — event-specific patches
-- `public/img/scraped/photos/*` (133 new event photos)
-- `public/img/scraped/speakers/google-educator-conference-2023/*` (6 headshots)
-- `public/img/scraped/sponsors/*` (AUT + AI Forum NZ logos)
+- `public/img/legacy-site/photos/*` (133 new event photos)
+- `public/img/legacy-site/speakers/google-educator-conference-2023/*` (6 headshots)
+- `public/img/legacy-site/sponsors/*` (AUT + AI Forum NZ logos)
 
 ---
 

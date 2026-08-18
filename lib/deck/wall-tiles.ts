@@ -9,7 +9,7 @@
  * one of them is a room that filled up.
  *
  * These are 520px WebP renditions, generated from the originals under
- * img/curated, img/gallery and img/scraped/photos. At source resolution one wall
+ * img/curated, img/gallery and img/legacy-site/photos. At source resolution one wall
  * slide cost about 31 MB of transfer and a gigabyte of decoded bitmap — a
  * 4898x3265 photograph drawn into a tile 259px wide — which a venue laptop does
  * not survive. Nothing in a wall is ever looked at as a picture, so the full

@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
               name: "Donation to She Sharp",
               description: `One-time donation of $${amount} NZD to support women in STEM`,
               images: [
-                `${baseUrl}/img/scraped/misc/donate-banner.webp`,
+                `${baseUrl}/img/legacy-site/misc/donate-banner.webp`,
               ],
             },
             unit_amount: amount * 100, // Convert to cents

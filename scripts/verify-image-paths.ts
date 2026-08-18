@@ -70,7 +70,7 @@ export const KNOWN_UNREFERENCED: Array<{ path: string; reason: string }> = [
 
   // The Webflow scrape recorded this podcast cover under `localPath` only —
   // the `url` field for that episode is empty, so no page ever renders it.
-  { path: "/img/scraped/podcasts/65a9cbb3c67fedb1bc802f30_Podcast_Template_1_bc8e5114.png", reason: "scraped podcast cover with an empty `url` in shesharp_podcasts_with_local_images.json; reachable only via the legacy `localPath` field" },
+  { path: "/img/legacy-site/podcasts/65a9cbb3c67fedb1bc802f30_Podcast_Template_1_bc8e5114.png", reason: "scraped podcast cover with an empty `url` in shesharp_podcasts_with_local_images.json; reachable only via the legacy `localPath` field" },
 ];
 
 /**

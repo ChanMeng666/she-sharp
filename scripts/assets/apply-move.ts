@@ -23,8 +23,7 @@ import { execFileSync } from "child_process";
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmdirSync, writeFileSync } from "fs";
 import { dirname, isAbsolute, join } from "path";
 
-import { REPO_ROOT } from "./refs";
-import { PROTECTED_SOURCES } from "./plan-move";
+import { PROTECTED_SOURCES, REPO_ROOT } from "./refs";
 import type { MovePlan } from "./plan-move";
 
 function parseArgs(argv: string[]): { plan: string; apply: boolean } {

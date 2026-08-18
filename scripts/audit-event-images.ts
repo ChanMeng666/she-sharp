@@ -520,7 +520,7 @@ function main() {
 
   /* broken — verify via direct fs check, NOT the limited disk scan,
      because referenced paths may live in directories outside our scan scope
-     (e.g., /img/scraped/ is intentionally not scanned). */
+     (e.g., /img/legacy-site/ is intentionally not scanned). */
   const refsByPath = new Map<string, string[]>();
   for (const r of allRefs) {
     const arr = refsByPath.get(r.path) ?? [];

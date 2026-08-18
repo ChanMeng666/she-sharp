@@ -1,8 +1,8 @@
-# `public/img/scraped/` — live production imagery. Do not delete.
+# `public/img/legacy-site/` — live production imagery. Do not delete.
 
-**These 902 files (109 MB) are shipped assets, not scraper leftovers.** The name
-records where they came from — the old Webflow site — not what they are for.
-Deleting this tree breaks event pages, speaker portraits, sponsor logos, podcast
+**These 902 files (109 MB) are shipped assets.** They came off the old Webflow
+site, which is all the name records; it says nothing about whether they are in
+use. They are — deleting this tree breaks event pages, speaker portraits, sponsor logos, podcast
 tiles and the photo gallery.
 
 ## How they reach a page
@@ -40,7 +40,7 @@ here is orphaned.
 ## Filenames cannot be guessed
 
 Most read `<24-hex Webflow CMS id>_<original name, truncated mid-word>_<8-hex>.<ext>`:
-`public/img/scraped/speakers/670c9279065093d7fd6b92ec_Paul_Savage_Workshop_Spea_eb2624c7.webp`
+`public/img/legacy-site/speakers/670c9279065093d7fd6b92ec_Paul_Savage_Workshop_Spea_eb2624c7.webp`
 — `Spea` is `Speakers`, cut off. No path is derivable from a person or an event;
 every lookup is a grep for the CMS id or a name fragment.
 
@@ -48,7 +48,7 @@ every lookup is a grep for the CMS id or a name fragment.
 
 - **28 filenames contain literal spaces**, some commas and parentheses too —
   e.g. `photos/654aa33edd99fce2e9a4e1dc_Hero Image, Centrality.jpg`. Naive
-  globbing and a naive `grep -o '/img/scraped/[^)]*'` both split these, so a
+  globbing and a naive `grep -o '/img/legacy-site/[^)]*'` both split these, so a
   hand-rolled orphan audit reports files as unused that are not. Quote paths.
 - **The same person appears twice under different conventions.**
   `conference/<year>/speakers/` uses kebab slugs
@@ -66,5 +66,10 @@ every lookup is a grep for the CMS id or a name fragment.
   survives only in `public/img/curated/index.ts`. Delete a source here and its
   curated variant becomes unreproducible.
 
-**Planned rename:** this folder is slated to become `public/img/legacy-site/`.
-Not done yet — if you find that name, it is this tree.
+**Renamed 2026-08-19** from `public/img/scraped/`. The old name said "scraper
+leftovers" and invited exactly the wrong conclusion; `legacy-site` says where the
+files came from without implying they are spent. Anything written before that
+date — `QA_REPORT_FIXES.md`, the M0 scope note in
+`docs/development/SLACK_APP_DEVELOPMENT_GUIDE.md` — is talking about this tree.
+The word *archive* was deliberately avoided: this repo already overloads it three
+ways (`events/<slug>/archive/`, `curated/archive/`, and the deck wall).

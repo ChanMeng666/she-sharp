@@ -108,7 +108,7 @@ const HEAD = String.raw`(?:(?<![\w.\-])public\/|(?<![A-Za-z0-9.\-_:])\/)(?:img|s
  * Inside a string literal, where the delimiter has already bounded the text.
  *
  * Spaces, apostrophes, commas and parentheses are all legal here — 35 files
- * under `public/img/scraped/` have one in the name, and
+ * under `public/img/legacy-site/` have one in the name, and
  * `060_International_Woman's_Day.png` has an apostrophe inside a JSON string.
  * The match is lazy, so a `srcset` holding several paths yields each of them in
  * turn rather than one run from the first path to the last extension.
@@ -424,7 +424,7 @@ export function collectReferences(): Reference[] {
  *
  * This is about the reverse check only. The mover still rewrites the gate (its
  * allow-list has to follow the files it names); whether a file may be rewritten
- * is a separate question, answered by PROTECTED_SOURCES in plan-move.ts.
+ * is a separate question, answered by PROTECTED_SOURCES just below.
  */
 export const NON_USE_SOURCES: ReadonlySet<string> = new Set([
   "scripts/verify-image-paths.ts",
@@ -434,6 +434,22 @@ export const NON_USE_SOURCES: ReadonlySet<string> = new Set([
 /** True when a `file:line` source label points at one of NON_USE_SOURCES. */
 export function isNonUseSource(source: string): boolean {
   return NON_USE_SOURCES.has(source.split(":")[0]);
+}
+
+/**
+ * Files whose image paths must survive the move unchanged.
+ *
+ * `event-assets.test.ts` asserts that a flat filename resolves to an event:
+ * rewriting its inputs into the nested form it is asserting turns every one of
+ * those cases into `x === x`. The test would still pass, and would no longer
+ * test anything — which is worse than failing, because the next person to
+ * change `resolveOwner()` would trust it.
+ */
+export const PROTECTED_SOURCES = new Set(["scripts/assets/event-assets.test.ts"]);
+
+/** True when a `file:line` source label points at one of PROTECTED_SOURCES. */
+export function isProtectedSource(source: string): boolean {
+  return PROTECTED_SOURCES.has(source.split(":")[0]);
 }
 
 /** Groups references by site path, preserving source order. */
