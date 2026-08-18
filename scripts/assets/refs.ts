@@ -414,6 +414,28 @@ export function collectReferences(): Reference[] {
   return refs;
 }
 
+/**
+ * Files that name image paths in order to reason about them, not to use them.
+ *
+ * Both are inside a scan root and both would otherwise prove themselves right:
+ * the gate's own allow-list of unreferenced files would make every file in it
+ * referenced, and the ownership test naming a flat filename would make that
+ * file look used by the site. Nothing renders either one.
+ *
+ * This is about the reverse check only. The mover still rewrites the gate (its
+ * allow-list has to follow the files it names); whether a file may be rewritten
+ * is a separate question, answered by PROTECTED_SOURCES in plan-move.ts.
+ */
+export const NON_USE_SOURCES: ReadonlySet<string> = new Set([
+  "scripts/verify-image-paths.ts",
+  "scripts/assets/event-assets.test.ts",
+]);
+
+/** True when a `file:line` source label points at one of NON_USE_SOURCES. */
+export function isNonUseSource(source: string): boolean {
+  return NON_USE_SOURCES.has(source.split(":")[0]);
+}
+
 /** Groups references by site path, preserving source order. */
 export function groupByPath(refs: Reference[]): Map<string, Reference[]> {
   const byPath = new Map<string, Reference[]>();

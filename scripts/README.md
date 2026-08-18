@@ -54,7 +54,7 @@ send: they write files and print the `resend` command a human runs.
 
 | Script | Purpose | Status |
 | --- | --- | --- |
-| `verify-image-paths.ts` | Asserts every image path referenced in data/components resolves under `public/`. | Ongoing — CI gate. |
+| `verify-image-paths.ts` | Three checks over `public/img/`: `--forward` (every referenced path resolves), `--reverse` (every file is referenced, allow-list in `KNOWN_UNREFERENCED`), `--ownership` (every event image belongs to an event). No flag runs all three. | Ongoing — CI gate. |
 | `check-hackathon-facts.ts` | Asserts this repo still contains every shared fact the Q&A assistant repo also asserts. | Ongoing — CI gate; added 2026-08-04, event-scoped. |
 | `audit-event-images.ts` | Read-only orphan/broken/duplicate report over event and sponsor imagery. | Ongoing — writes `audit-report.json`; added 2026-04-21. |
 | `build-event-archive.mts` | Harvests a past event's Google Photos album into `public/img/events/archive/<slug>/`, incremental and additive. | Ongoing. |

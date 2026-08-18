@@ -44,6 +44,17 @@ const SCOPE_ROOTS: Record<Scope, string> = {
  *  renaming a whole directory takes them along. */
 const NON_ASSET_FILES = new Set(["README.md", "index.ts"]);
 
+/**
+ * Files whose image paths must survive the move unchanged.
+ *
+ * `event-assets.test.ts` asserts that a flat filename resolves to an event:
+ * rewriting its inputs into the nested form it is asserting turns every one of
+ * those cases into `x === x`. The test would still pass, and would no longer
+ * test anything — which is worse than failing, because the next person to
+ * change `resolveOwner()` would trust it.
+ */
+export const PROTECTED_SOURCES = new Set(["scripts/assets/event-assets.test.ts"]);
+
 /** Every file under a site-relative directory, as site-relative paths. */
 function listUnder(siteDir: string, includeNonAssets: boolean): string[] {
   const publicDir = join(REPO_ROOT, "public");
@@ -112,11 +123,11 @@ export function buildPlan(scope: Scope): MovePlan {
       continue;
     }
     if (newPath === path) continue;
-    refs.push({
-      path,
-      newPath,
-      sources: [...new Set(group.map((ref) => ref.source))].sort((a, b) => a.localeCompare(b)),
-    });
+    const sources = [...new Set(group.map((ref) => ref.source))]
+      .filter((source) => !PROTECTED_SOURCES.has(source.split(":")[0]))
+      .sort((a, b) => a.localeCompare(b));
+    if (sources.length === 0) continue;
+    refs.push({ path, newPath, sources });
   }
   refs.sort((a, b) => a.path.localeCompare(b.path));
 
