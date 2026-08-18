@@ -45,20 +45,20 @@ export const KNOWN_UNREFERENCED: Array<{ path: string; reason: string }> = [
   // A second poster set generated for the Les Mills evening. The event page
   // still points at the originals; keep or drop is an unmade decision, not an
   // accident, so they are neither wired up nor deleted.
-  { path: "/img/events/event-lesmills-03-september-2026-humanitix-v2.jpg", reason: "regenerated poster set, pending a keep-or-drop decision" },
-  { path: "/img/events/event-lesmills-03-september-2026-poster-v2.webp", reason: "regenerated poster set, pending a keep-or-drop decision" },
-  { path: "/img/events/event-lesmills-03-september-2026-social-v2.jpg", reason: "regenerated poster set, pending a keep-or-drop decision" },
-  { path: "/img/events/event-lesmills-03-september-2026-social-v2.webp", reason: "regenerated poster set, pending a keep-or-drop decision" },
-  { path: "/img/events/event-lesmills-03-september-2026-square-v2.jpg", reason: "regenerated poster set, pending a keep-or-drop decision" },
-  { path: "/img/events/event-lesmills-03-september-2026-square-v2.webp", reason: "regenerated poster set, pending a keep-or-drop decision" },
-  { path: "/img/events/event-lesmills-03-september-2026-story-v2.jpg", reason: "regenerated poster set, pending a keep-or-drop decision" },
-  { path: "/img/events/event-lesmills-03-september-2026-story-v2.webp", reason: "regenerated poster set, pending a keep-or-drop decision" },
+  { path: "/img/events/event-lesmills-03-september-2026/humanitix-v2.jpg", reason: "regenerated poster set, pending a keep-or-drop decision" },
+  { path: "/img/events/event-lesmills-03-september-2026/poster-v2.webp", reason: "regenerated poster set, pending a keep-or-drop decision" },
+  { path: "/img/events/event-lesmills-03-september-2026/social-v2.jpg", reason: "regenerated poster set, pending a keep-or-drop decision" },
+  { path: "/img/events/event-lesmills-03-september-2026/social-v2.webp", reason: "regenerated poster set, pending a keep-or-drop decision" },
+  { path: "/img/events/event-lesmills-03-september-2026/square-v2.jpg", reason: "regenerated poster set, pending a keep-or-drop decision" },
+  { path: "/img/events/event-lesmills-03-september-2026/square-v2.webp", reason: "regenerated poster set, pending a keep-or-drop decision" },
+  { path: "/img/events/event-lesmills-03-september-2026/story-v2.jpg", reason: "regenerated poster set, pending a keep-or-drop decision" },
+  { path: "/img/events/event-lesmills-03-september-2026/story-v2.webp", reason: "regenerated poster set, pending a keep-or-drop decision" },
 
   // The Slack event sync duplicates a shared speaker photo per event rather
   // than sharing one file across events (docs/development/SLACK_APP_DEVELOPMENT_GUIDE.md).
   // The April 2026 Her Waka page never used this copy — only the March one is
   // on a page — so the duplicate has been sitting here unread since it landed.
-  { path: "/img/events/her-waka-april-2026-chan-meng.png", reason: "per-event duplicate of her-waka-chan-meng.png that no page ever referenced; delete once someone confirms the April event does not want it" },
+  { path: "/img/events/her-waka-april-2026/chan-meng.png", reason: "per-event duplicate of her-waka-chan-meng.png that no page ever referenced; delete once someone confirms the April event does not want it" },
 
   { path: "/img/team/Alyssa.png", reason: "departed team member, removed from lib/data/team.ts; pending deletion" },
   { path: "/img/team/Isha.webp", reason: "departed team member; the entry is commented out in lib/data/team.ts rather than deleted, so the photo is kept alongside it" },
@@ -85,16 +85,19 @@ export const KNOWN_UNREFERENCED: Array<{ path: string; reason: string }> = [
 const FORWARD_EXEMPT_SOURCES: Array<{ match: RegExp; reason: string }> = [
   { match: /\.md:/, reason: "markdown documentation writes example paths" },
   {
+    // The bot prompt teaches by contrast: it shows the flat path it must NOT
+    // emit next to the folder path it must. The wrong half is required to not
+    // exist, which is exactly what the forward check would flag.
+    match: /^lib\/slack-bot\/conventions\.ts:/,
+    reason: "OpenAI prompt text, including deliberate counter-examples",
+  },
+  {
     // Named exactly, not as a `*.test.ts` pattern. `lib/deck/deck.test.ts`
     // names two real assets and one of them is an event photo the move will
     // rename, so a pattern that exempted every test would quietly stop
     // checking the file most likely to break.
     match: /^scripts\/assets\/event-assets\.test\.ts:/,
     reason: "asserts what resolveOwner() does with paths that do not exist",
-  },
-  {
-    match: /^scripts\/audit-event-images\.ts:/,
-    reason: "a one-off audit script keyed by pre-rename filenames that no longer exist",
   },
 ];
 
@@ -186,21 +189,51 @@ function reverseCheck(byPath: Map<string, Reference[]>): boolean {
   return false;
 }
 
+/**
+ * Nothing may sit loose at the top of `public/img/events/`.
+ *
+ * This is the check that stops the old layout growing back. Ownership alone
+ * does not: `her-waka-june-2026-cover.webp` dropped in the root still resolves
+ * to its event, so every other gate stays green while the flat directory
+ * quietly refills one event at a time. Requiring directories makes the
+ * regression impossible rather than merely discouraged.
+ */
+function layoutCheck(): boolean {
+  const eventsDir = join(REPO_ROOT, "public", "img", "events");
+  if (!existsSync(eventsDir)) return true;
+
+  const stray = readdirSync(eventsDir, { withFileTypes: true })
+    .filter((entry) => !entry.isDirectory() && entry.name !== "README.md")
+    .map((entry) => entry.name);
+  if (stray.length === 0) return true;
+
+  console.error(`\n\u2717 ${stray.length} file(s) loose at the top of public/img/events/:`);
+  for (const name of stray) console.error(`  ${name}`);
+  console.error(
+    "\nEvery asset belongs to exactly one event and lives in that event's folder:\n" +
+      "  public/img/events/<event-slug>/<what-it-is>.<ext>\n" +
+      "Drop the slug prefix from the filename when you move it in."
+  );
+  return false;
+}
+
 function ownershipCheck(): boolean {
   const files = listPublicImages().filter((file) => file.startsWith("/img/events/"));
   const unowned = files.filter((file) => resolveOwner(file) === null);
 
-  console.log(`▶ ownership: ${files.length} files under public/img/events/.`);
+  console.log(`\u25b6 ownership: ${files.length} files under public/img/events/.`);
+
+  const layoutOk = layoutCheck();
   if (unowned.length === 0) {
-    console.log("✓ Every event image resolves to an event.");
-    return true;
+    if (layoutOk) console.log("\u2713 Every event image sits in its own event's folder.");
+    return layoutOk;
   }
 
-  console.error(`\n✗ ${unowned.length} event image${unowned.length === 1 ? "" : "s"} that no event owns:`);
+  console.error(`\n\u2717 ${unowned.length} event image(s) that no event owns:`);
   for (const path of unowned) console.error(`  ${path}`);
   console.error(
-    "\nEach needs the event's slug as its filename prefix, an entry in ALIASES\n" +
-      "(scripts/assets/event-assets.ts), or to be moved out of public/img/events/."
+    "\nEach needs to move into its event's folder, gain an entry in ALIASES\n" +
+      "(scripts/assets/event-assets.ts), or leave public/img/events/ entirely."
   );
   return false;
 }

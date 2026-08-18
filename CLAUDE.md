@@ -57,8 +57,8 @@ lib/             api, auth, chatbot, cloudinary, config, data, db, deck, email,
                  newsletter, programmes, recruitment, seo, slack, slack-bot,
                  stripe, user  (+ utils.ts, fonts.ts, design-system.ts)
 hooks/ types/ styles/ emails/
-public/          site imagery; img/legacy-site/ is LIVE content served to every
-                 pre-2026 event page — see its README.md before touching it
+public/          site imagery; img/events/<slug>/ per event, img/legacy-site/ is
+                 LIVE content on every pre-2026 event page — read their READMEs
 scripts/         ~90 scripts, only one wired to package.json — scripts/README.md
                  indexes them and flags the destructive ones
 docs/            docs/README.md indexes every doc; start at docs/ARCHITECTURE.md
@@ -225,6 +225,25 @@ User uploads (profile photos, CVs) go to Cloudinary. Images are WebP, ≤1600px
 (≤2560px where a deck references them); AVIF is enabled in `next.config.ts`.
 See `docs/ARCHITECTURE.md` §6.
 
+**One folder per event.** Every asset belonging to an event lives at
+`public/img/events/<event-slug>/<what-it-is>.<ext>` — the slug is the directory,
+never a filename prefix, and nothing sits loose at the top of `events/`.
+`<slug>/archive/` is the one sub-folder, owned by
+`scripts/build-event-archive.mts`, which **wipes it before every rebuild**; a
+hand-made photo goes beside it as `photo-<n>.webp`, never inside. The flat
+`<slug>-<name>.ext` rule was replaced on 2026-08-19 because `her-waka` is a
+proper prefix of `her-waka-april-2026` (five other slug pairs collide the same
+way) and because two events used aliases rather than slugs — `EVENT_ALIASES`
+existed only to paper over that and is gone. Full reasoning:
+`public/img/events/README.md`.
+
+**Moving any image is a tooling job, not a `git mv`.** About 1,400 references
+across 37 files point into `public/img/`, and a third of them sit in places the
+old gate never read — `report/assets/*.json`, `report/data/*.typ`, `scripts/`,
+`docs/`. Use `scripts/assets/plan-move.ts` then `apply-move.ts`, and let
+`scripts/verify-image-paths.ts` confirm it: it checks that every reference
+resolves, that every file is referenced, and that the events layout holds.
+
 ## Deck CSS: four rules that fail silently
 
 Inside `.deck-stage` (`styles/components/deck.css`):
@@ -260,7 +279,7 @@ one, or infer current behaviour from one.
 |---|---|---|
 | `tmp/` | `scripts/email/*`, `scripts/events/*`, `scripts/*/propose-crosswalk.ts`, `build-event-archive.mts`, and four email/poster skills | `emails/`, `specs/`, `plates/`, `poster-review/`, `humanitix/`, `mailchimp/`, `event-archive-harvest/` |
 | `.cache/` | `sync-event-from-slack`, `reply-to-contact-messages` | Slack channel dumps, `triage.json`, `contact-notifications.json`, plus dead 2026-04 audit leftovers |
-| `scripts/.cache/` | `audit-event-images.ts` and the old-site scrape | cached Webflow HTML |
+| `scripts/.cache/` | the old-site scrape | cached Webflow HTML; nothing tracked reads it any more |
 | `.recommendations/` | `scripts/slack-recommendations/` (itself gitignored, though present on disk) | generated LinkedIn recommendations, named after real people |
 | `.playwright-cli/` | browser automation | session scratch |
 | `report/out/` | `report/build.ps1` | the draft PDF and page previews |

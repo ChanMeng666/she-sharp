@@ -158,12 +158,16 @@ numbers.
 
 Say plainly which file goes where — they are uploading these by hand:
 
-> Five files, all in `public/img/events/`:
-> - `…-humanitix.jpg` → the banner on the Humanitix event page
-> - `…-social.webp` → LinkedIn, Instagram and Facebook posts
-> - `…-story.webp` → Instagram and Facebook stories
-> - `…-square.webp` → a square Instagram tile if you want one
-> - `…-poster.webp` → the website and printing
+> Five files, all in this event's own folder,
+> `public/img/events/<event-slug>/` (e.g. `public/img/events/event-lesmills-03-september-2026/`):
+> - `humanitix.jpg` → the banner on the Humanitix event page
+> - `social.webp` → LinkedIn, Instagram and Facebook posts
+> - `story.webp` → Instagram and Facebook stories
+> - `square.webp` → a square Instagram tile if you want one
+> - `poster.webp` → the website and printing
+
+The slug is the folder, so the filename is only the format — `--suffix v2` gives
+`poster-v2.webp` beside `poster.webp`, in the same folder.
 
 If the `social` file is also replacing the website's cover image, that is a
 second change: point `coverImage.url` in `events-custom.json` at it and update

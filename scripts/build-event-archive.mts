@@ -2,7 +2,7 @@
  * build-event-archive.mts — incremental generator for event archive photos.
  *
  * Harvests a past event's public Google Photos album (its `galleryUrl`),
- * transcodes a small set to WebP under public/img/events/archive/<slug>/, and
+ * transcodes a small set to WebP under public/img/events/<slug>/archive/, and
  * merges the entries into lib/data/event-archive-photos.ts. The detail page
  * injects these only for events that ship no on-page photos of their own, and
  * the resources gallery reuses the first two as album thumbnails.
@@ -39,7 +39,11 @@ import type { EventArchivePhoto } from "../lib/data/event-archive-photos";
 // Config
 // ---------------------------------------------------------------------------
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const OUT_IMG_ROOT = path.join(ROOT, "public/img/events/archive");
+/** Each event's harvested set lives at <slug>/archive/ inside the event's own
+ *  folder. `archive/` stays a separate sub-folder because this script wipes it
+ *  before every rebuild — merging it with the hand-curated photo-N.webp files
+ *  beside it would put those in reach of the rmSync below. */
+const OUT_IMG_ROOT = path.join(ROOT, "public/img/events");
 const OUT_DATA_PATH = path.join(ROOT, "lib/data/event-archive-photos.ts");
 const WORK_ROOT = path.join(ROOT, "tmp/event-archive-harvest");
 
@@ -231,7 +235,7 @@ async function buildEvent(
   }
 
   const photos: EventArchivePhoto[] = [];
-  const outDir = path.join(OUT_IMG_ROOT, slug);
+  const outDir = path.join(OUT_IMG_ROOT, slug, "archive");
   if (!dryRun) {
     // Only this slug's directory is cleared, so other events are never touched.
     fs.rmSync(outDir, { recursive: true, force: true });
@@ -255,7 +259,7 @@ async function buildEvent(
 
     if (!dryRun) fs.writeFileSync(path.join(outDir, `${n}.webp`), data);
     photos.push({
-      src: `/img/events/archive/${slug}/${n}.webp`,
+      src: `/img/events/${slug}/archive/${n}.webp`,
       width: info.width,
       height: info.height,
       alt: `${title} — She Sharp event photo ${n}`,

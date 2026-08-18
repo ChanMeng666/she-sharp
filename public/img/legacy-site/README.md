@@ -56,10 +56,10 @@ every lookup is a grep for the CMS id or a name fragment.
   some of the same people
   (`speakers/670c79e4bcb72874bd74433a_Alliv_Samson_Keynote_d15fed8d.jpg`). At
   least 7 such pairs exist — one is not a stale copy of the other.
-- **`scripts/audit-event-images.ts` deliberately excludes this folder** from its
-  disk scan, so absence from its orphan report proves nothing.
-  `scripts/verify-image-paths.ts` (CI) catches a *missing* file, never an
-  unreferenced one.
+- **The orphan check covers this folder, but only just.** Most of these files
+  are referenced from exactly one place, `shesharp_events_v3.json`. If that file
+  is ever retired, 99.6 MB becomes orphaned in a single commit with no other
+  signal.
 - **`public/img/curated/` is derived from these** by `scripts/optimize-images.mts`,
   which reads a picks JSON of source paths. That picks file is **not committed**
   (the script defaults to a scratchpad path), so the source→output mapping

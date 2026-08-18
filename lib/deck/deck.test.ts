@@ -513,7 +513,7 @@ const cycleSlide = (id: string, cycle?: string): Slide => ({
   type: "team-photo",
   cycle,
   team: id,
-  image: { src: "/img/events/aotearoa-ai-hackathon-festival-2026-team-arara.webp", alt: id },
+  image: { src: "/img/events/aotearoa-ai-hackathon-festival-2026/team-arara.webp", alt: id },
   note: "Test fixture.",
 });
 

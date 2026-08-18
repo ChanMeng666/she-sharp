@@ -6,7 +6,7 @@ import type { EventV3 } from "@/types/event";
 
 /** A single image file the admin needs to place locally. */
 export interface ImageTask {
-  /** Public path where the image should be placed (e.g., /img/events/<slug>-<desc>.<ext>). */
+  /** Public path where the image should be placed (e.g., /img/events/<slug>/<desc>.<ext>). */
   path: string;
   /** Human-readable purpose (e.g., "Speaker photo: Danubia Paim"). */
   description: string;

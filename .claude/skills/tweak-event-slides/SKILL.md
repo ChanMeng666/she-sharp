@@ -57,7 +57,8 @@ longer but it gets a preview and a review"* — and stop.
 
 - `lib/deck/decks/<slug>.ts` — the one deck being changed
 - `lib/deck/index-meta.ts` — **only** via `scripts/deck/sync-registry.ts`
-- `public/img/events/<slug>-*` — a new or replaced image for this event
+- `public/img/events/<slug>/*` — a new or replaced image for this event
+  (every asset an event owns lives in its own slug-named folder)
 - `lib/data/json/events-custom.json` — a fact correction, in its own commit
 
 **Stop and hand over if the change needs:**

@@ -79,6 +79,15 @@ const JSON_DATA_DIR = "lib/data/json";
 const EVENTS_JSON_PATH = "lib/data/json/events-custom.json";
 
 /** Directories never worth walking: build output, caches, dependencies. */
+/**
+ * Files inside a scan root that git does not track.
+ *
+ * `collect-event-from-slack.py` is gitignored and superseded by the
+ * `sync-event-from-slack` skill, so it exists on some machines and not in CI.
+ * Scanning it makes the gate's answer depend on who is running it.
+ */
+const IGNORED_FILES = new Set(["scripts/collect-event-from-slack.py"]);
+
 const IGNORED_DIRS = new Set([
   "node_modules",
   ".next",
@@ -291,7 +300,9 @@ export function listFiles(root: ScanRoot): string[] {
 
   const consider = (full: string) => {
     if (!exts.has(extname(full).toLowerCase())) return;
-    out.push(relative(REPO_ROOT, full).replace(/\\/g, "/"));
+    const rel = relative(REPO_ROOT, full).replace(/\\/g, "/");
+    if (IGNORED_FILES.has(rel)) return;
+    out.push(rel);
   };
 
   if (statSync(abs).isFile()) {

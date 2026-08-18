@@ -8,32 +8,53 @@
  *
  * When the conventions change, edit this file and nothing else — the bot
  * will pick up the new rules on its next invocation.
+ *
+ * The prompt spells the folder rule out at length on purpose. The model has
+ * seen years of the previous flat scheme (`/img/events/<slug>-cover.webp`) in
+ * its training data and in this repo's history, so a one-line statement of the
+ * new rule loses to that prior; the explicit "NEVER repeat the slug" line and
+ * the wrong/right pair are what actually stop it emitting flat paths.
  */
 
 export const IMAGE_CONVENTIONS = `
 Image path conventions for She Sharp event assets:
 
-1. Event images (cover, speakers, event-specific sponsor logos):
-   /img/events/<event-slug>-<descriptive-slug>.<ext>
+1. ONE FOLDER PER EVENT. Every asset an event owns lives in that event's
+   own folder:
+   /img/events/<event-slug>/<role>.<ext>
 
    Where:
-   - <event-slug> is the event's "slug" field (lowercase kebab-case)
-   - <descriptive-slug> describes the asset: "cover" for the main banner,
-     "<speaker-name>" for speaker photos, "<sponsor-slug>-logo" for
-     event-specific sponsor logos.
+   - <event-slug> is the event's "slug" field, EXACTLY (lowercase kebab-case,
+     no abbreviation, no shortening). There are NO aliases: a long slug such as
+     "she-sharp-and-academyex-international-womens-day-2026" is used in full as
+     the folder name.
+   - <role> describes the asset and NEVER repeats the slug: "cover" for the main
+     banner, "<speaker-name>" for speaker photos, "<sponsor-slug>-logo" for
+     event-specific sponsor logos, "photo-<n>" for post-event gallery photos.
    - <ext> must match the actual file format (jpg, png, svg, webp, gif).
      NEVER rename a .png to .svg without format conversion.
 
-2. Cover image: /img/events/<event-slug>-cover.<ext>
+   WRONG: /img/events/her-waka-june-2026-cover.webp
+   WRONG: /img/events/her-waka-june-2026/her-waka-june-2026-cover.webp
+   RIGHT: /img/events/her-waka-june-2026/cover.webp
 
-3. Speaker photo: /img/events/<event-slug>-<speaker-slug>.<ext>
+   The folder is the rule because the slug is unambiguous as a directory and was
+   not as a prefix ("her-waka" is a proper prefix of "her-waka-april-2026"), and
+   because one flat directory grew by 3-50 files per event.
+
+2. Cover image: /img/events/<event-slug>/cover.<ext>
+
+3. Speaker photo: /img/events/<event-slug>/<speaker-slug>.<ext>
    - Per-event copy. If the same person speaks at multiple events, the
-     image is DUPLICATED per event (not shared). This keeps the naming
-     rule strictly one-slug-per-file.
+     image is DUPLICATED into each event's folder (not shared). There is no
+     /img/events/shared/ folder and must not be one.
 
-4. Slug format: lowercase kebab-case, ASCII only.
-   Examples: "iwd-2026", "her-waka-april-2026",
-             "she-sharp-candice-murray-own-your-energy"
+4. The only sub-folder is /img/events/<event-slug>/archive/, which belongs to
+   scripts/build-event-archive.mts. NEVER propose a path inside it.
+
+5. Slug format: lowercase kebab-case, ASCII only.
+   Examples: "her-waka-june-2026", "aotearoa-ai-hackathon-festival-2026",
+             "event-lesmills-03-september-2026"
 `.trim();
 
 export const SPONSOR_LOOKUP_RULES = `
@@ -47,26 +68,26 @@ Sponsor logo selection (apply in order):
    to imageChecklist — it already exists.
 
 2. If the sponsor is NOT in the inventory, generate a placeholder path
-   "/img/events/<event-slug>-<sponsor-slug>-logo.svg" and ADD it to
+   "/img/events/<event-slug>/<sponsor-slug>-logo.svg" and ADD it to
    imageChecklist with description "Sponsor logo for <sponsor-name>
    (consider promoting to /img/sponsors/<sponsor-slug>.svg if reusable)".
 
 3. NEVER place a sponsor logo in /img/events/ when a canonical exists in
    /img/sponsors/. The canonical version should always be preferred.
-`.trim();
 
-export const EVENT_ALIASES = `
-Some long event slugs have a shorter accepted alias used in filenames:
-- "she-sharp-and-academyex-international-womens-day-2026" → alias "iwd-2026"
-
-When generating image paths for an event with an alias, you MAY use the
-alias prefix in filenames. Treat both the full slug and the alias as
-valid for the same event.
+4. /img/sponsors/ is a flat directory of reusable marks and is NOT affected by
+   the per-event folder rule above — do not invent /img/sponsors/<event-slug>/.
 `.trim();
 
 /**
  * Compose the full system prompt section about conventions.
+ *
+ * There used to be a third block, EVENT_ALIASES, permitting a short filename
+ * prefix ("iwd-2026") for events whose slug was too long to make a readable
+ * filename. Per-event folders removed the problem it solved, so it was deleted
+ * rather than updated: two accepted spellings for one event meant every
+ * consumer had to know the mapping. Do not reintroduce it.
  */
 export function conventionsBlock(): string {
-  return [IMAGE_CONVENTIONS, "", SPONSOR_LOOKUP_RULES, "", EVENT_ALIASES].join("\n");
+  return [IMAGE_CONVENTIONS, "", SPONSOR_LOOKUP_RULES].join("\n");
 }

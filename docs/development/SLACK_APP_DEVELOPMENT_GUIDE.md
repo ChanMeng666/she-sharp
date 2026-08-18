@@ -19,7 +19,7 @@ A Slack slash command `/event <free-form text>` that:
 4. Writes the patched JSON as a single commit to a `slack-bot-drafts/<id>` Git branch (no PR yet).
 5. Sends the admin an ephemeral Block Kit preview with JSON diff, image placement checklist, and Confirm/Cancel buttons.
 6. On Confirm: opens a PR from the draft branch to `main`. On Cancel: deletes the draft branch.
-7. Admin locally checks out the PR, drops any listed images into `public/img/events/`, pushes, and merges. Vercel auto-deploys.
+7. Admin locally checks out the PR, drops any listed images into `public/img/events/<event-slug>/`, pushes, and merges. Vercel auto-deploys.
 
 ---
 
@@ -125,8 +125,8 @@ graph TD
 | **HMAC-signed button payloads** | Unsigned IDs, opaque session tokens | Button `value` is client-visible; a naïve ID could be tampered with to promote somebody else's draft. HMAC (using the Slack signing secret) costs nothing and prevents replay/swap attacks. |
 | **Import `events-custom.json` (not `readFileSync`)** | Read at runtime from lib path | Next.js's webpack traces `import` statements and bundles the file into the lambda. `readFileSync` of a `lib/` path is unreliable on Vercel because the tracer doesn't know the file is needed. |
 | **Static sponsor slug list** | Runtime `fs.readdirSync('public/img/sponsors')` | The tracer pulls the entire `public/` tree into the lambda when it sees a dynamic `public/…` fs read, busting the 300 MB function size limit. A hand-maintained list (40 slugs) costs nothing to update. |
-| **Per-event image duplication for shared speakers** | `public/img/events/shared/<speaker>.<ext>` with symlinks or alias rules | One rule (`<event-slug>-<descriptive>.<ext>`) with no exceptions is drastically simpler for the AI and for future maintainers. Disk cost is negligible. |
-| **Event aliases** (e.g. `iwd-2026` for a 53-char slug) | Force the full slug in filenames | Long slugs produce unusable filenames (`she-sharp-and-academyex-international-womens-day-2026-ana-ivanovic-tongue.jpg`). `EVENT_ALIASES` config in the audit/conventions modules lets us keep short prefixes while enforcing the rule. |
+| **Per-event image duplication for shared speakers** | `public/img/events/shared/<speaker>.<ext>` with symlinks or alias rules | One rule with no exceptions is drastically simpler for the AI and for future maintainers. Disk cost is negligible. **Still the decision** — there is no `shared/` folder and a speaker who appears at two events gets two copies. Only the shape of the rule changed (August 2026): the slug is now a *directory*, `public/img/events/<event-slug>/<descriptive>.<ext>`, where it used to be a filename prefix. That was about foldering, not about sharing, and did not reopen this. |
+| ~~**Event aliases** (e.g. `iwd-2026` for a 53-char slug)~~ **— reversed August 2026** | Force the full slug in filenames | Long slugs produced unusable *filenames*, so `EVENT_ALIASES` allowed a short prefix. Moving assets into `public/img/events/<event-slug>/` removed the problem the aliases solved — a 53-character *directory* name is unremarkable — so `EVENT_ALIASES` was deleted. See P-4 for why not to re-add it. |
 | **Non-strict OpenAI JSON schema + Zod validation** | OpenAI strict mode | Strict mode requires `additionalProperties: false` on every object — incompatible with our `fields` / `event` properties that hold arbitrary EventV3 subsets. Zod on the output is the real safety net. |
 
 ---
@@ -198,15 +198,19 @@ Each of the following was discovered during this project. Each is numbered for r
 
 ### P-3. Shared image referenced by multiple events
 
-**Symptom**: `HerWaka-ChanMeng.png` was referenced by two events (`her-waka` and `her-waka-april-2026`). The convention `<event-slug>-<descriptive>.<ext>` can't describe a shared file.
+**Symptom**: `HerWaka-ChanMeng.png` was referenced by two events (`her-waka` and `her-waka-april-2026`). A convention that ties an asset to exactly one event slug can't describe a shared file.
 
-**Solution (chosen)**: Duplicate the file per event (`her-waka-chan-meng.png` + `her-waka-april-2026-chan-meng.png`). Disk cost is trivial; rule stays unconditional. Alternatives considered (sub-directory for shared, alias table) added complexity for no real benefit.
+**Solution (chosen)**: Duplicate the file per event. Under today's folder rule that is `her-waka/chan-meng.webp` + `her-waka-april-2026/chan-meng.png`; under the flat rule it was `her-waka-chan-meng.png` + `her-waka-april-2026-chan-meng.png`. Disk cost is trivial; rule stays unconditional. Alternatives considered (a `shared/` sub-directory, an alias table) added complexity for no real benefit — **that conclusion still holds**, and the folder migration did not reopen it.
 
-### P-4. Long event slugs produce ugly filenames
+### P-4. Long event slugs produce ugly filenames — *resolved, aliases removed*
 
-**Symptom**: The IWD 2026 event has slug `she-sharp-and-academyex-international-womens-day-2026`. Enforcing `<slug>-<descriptive>.<ext>` would produce 70+-character filenames like `she-sharp-and-academyex-international-womens-day-2026-ana-ivanovic-tongue.jpg`.
+**Symptom**: The IWD 2026 event has slug `she-sharp-and-academyex-international-womens-day-2026`. Enforcing `<slug>-<descriptive>.<ext>` produced 70+-character filenames like `she-sharp-and-academyex-international-womens-day-2026-ana-ivanovic-tongue.jpg`.
 
-**Solution**: Added `EVENT_ALIASES` to the audit script and conventions constants. Event files may use any registered alias as the prefix (IWD uses `iwd-2026`). Both the full slug and the alias are accepted as convention-compliant.
+**Original solution (August 2026: removed)**: `EVENT_ALIASES` in the audit script and the conventions constants let a file use a short registered alias as its prefix (IWD used `iwd-2026`), with both the full slug and the alias accepted as convention-compliant.
+
+**Current state**: the problem no longer exists. Event assets moved to one folder per event, `public/img/events/<event-slug>/<descriptive>.<ext>`, and a 53-character slug is a perfectly ordinary *directory* name — `she-sharp-and-academyex-international-womens-day-2026/ana-ivanovic-tongue.jpg` reads fine. `EVENT_ALIASES` was deleted from `lib/slack-bot/conventions.ts` along with its section of the system prompt.
+
+**Do not re-add aliases.** They bought shorter filenames at the cost of two accepted spellings for the same event, which meant every consumer — the bot prompt, the audit script, anyone grepping — had to know the mapping. The folder rule gives the same readability with one spelling and, unlike a prefix, a directory boundary cannot be ambiguous (`her-waka` is a proper prefix of `her-waka-april-2026`; `her-waka/` is not `her-waka-april-2026/`). If a slug is genuinely too long to live with, shorten **the slug** — it is the URL as well as the folder — rather than adding a second name for it.
 
 ### P-5. `readFileSync` of `lib/` JSON fails in Vercel lambda
 
@@ -588,7 +592,7 @@ The following modules from `lib/slack-bot/` are designed to be reused by future 
 | `errors.ts` | Yes — the base `SlackBotError` class is the pattern | Add your own typed subclasses |
 | `allowlist.ts` | Yes | You want a different env var name per app |
 
-Shared infrastructure like `verify-image-paths.ts` and `audit-event-images.ts` (under `scripts/`) is event-specific and probably doesn't generalise to other Slack apps.
+Shared infrastructure like `verify-image-paths.ts` (under `scripts/`) is event-specific and probably doesn't generalise to other Slack apps.
 
 ---
 

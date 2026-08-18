@@ -16,7 +16,7 @@
  *          [--only social,humanitix] [--suffix v2] [--accent "#c846ab"]
  *          [--spark "#5ee7f5"] [--strapline "..."] [--no-gate]
  *
- * Writes `public/img/events/<slug>-<format>[-<suffix>].<ext>` and the crop
+ * Writes `public/img/events/<slug>/<format>[-<suffix>].<ext>` and the crop
  * previews that matter into `tmp/poster-review/`.
  */
 
@@ -40,7 +40,8 @@ import {
 import { assertFamiliesDistinct, renderLayer, type TextBox } from "./poster-type";
 
 const ROOT = process.cwd();
-const OUT_DIR = path.join(ROOT, "public/img/events");
+/** Every asset for an event lives in its own folder; see the events README. */
+const EVENTS_ROOT = path.join(ROOT, "public/img/events");
 const REVIEW_DIR = path.join(ROOT, "tmp/poster-review");
 
 /* -------------------------------------------------------------------- copy */
@@ -377,7 +378,7 @@ async function main(): Promise<void> {
   }
 
   assertFamiliesDistinct();
-  mkdirSync(OUT_DIR, { recursive: true });
+  mkdirSync(path.join(EVENTS_ROOT, slug), { recursive: true });
 
   console.log(`${slug}\n  plate: ${plate}`);
   const theme = themeFor(slug, {
@@ -413,8 +414,10 @@ async function main(): Promise<void> {
     // and a WebP for anywhere on the website. Same pixels, different door.
     for (const kind of format.encode) {
       const ext = kind === "jpeg" ? "jpg" : "webp";
-      const name = `${slug}-${format.key}${suffix ? `-${suffix}` : ""}.${ext}`;
-      await encode(composed, format, kind, path.join(OUT_DIR, name));
+      // The slug is the directory now, not a filename prefix, so the name is
+      // just the role: poster.webp, social.jpg, story.webp.
+      const name = `${format.key}${suffix ? `-${suffix}` : ""}.${ext}`;
+      await encode(composed, format, kind, path.join(EVENTS_ROOT, slug, name));
     }
 
     if (format.key === "social") await previews(composed, slug);
