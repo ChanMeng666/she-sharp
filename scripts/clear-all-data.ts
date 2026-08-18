@@ -4,11 +4,17 @@
  * This script clears ALL data from the database without creating any new records.
  * Use this when you need to reset the database to a clean state.
  *
- * Run with: npx tsx scripts/clear-all-data.ts
+ * Dry run by default. To actually wipe:
+ *   npx tsx scripts/clear-all-data.ts --apply                       (local only)
+ *   npx tsx scripts/clear-all-data.ts --apply --confirm-host=<host>  (anything else)
+ *
+ * The guard lives in scripts/lib/destructive.ts; that file explains why naming
+ * the host is required rather than a y/n prompt.
  */
 
 import { db } from '../lib/db/drizzle';
 import { sql } from 'drizzle-orm';
+import { authorizeDestructive } from './lib/destructive';
 
 /**
  * All tables in the database that need to be cleared.
@@ -89,6 +95,8 @@ async function clearAllData() {
   console.log('  • All other application data');
   console.log('\nDatabase structure (tables) will remain intact.');
   console.log('═══════════════════════════════════════════════════════════════\n');
+
+  if (!authorizeDestructive('truncate every table listed above')) return;
 
   console.log('🗑️  Starting database clear operation...\n');
 

@@ -2,7 +2,13 @@
  * Database Reset and Admin Creation Script
  *
  * This script clears all data from the database and creates an initial admin user.
- * Run with: npx tsx scripts/reset-db-and-create-admin.ts
+ * Dry run by default. To actually wipe and seed:
+ *   ADMIN_SEED_PASSWORD=... npx tsx scripts/reset-db-and-create-admin.ts --apply
+ * and, against any non-local database, also --confirm-host=<host>.
+ *
+ * The password used to be the literal 'Admin123!', which meant a successful run
+ * against a hosted database left a known-credential admin account on it. It is
+ * now required from the environment and never defaulted.
  */
 
 import { db } from '../lib/db/drizzle';
@@ -14,6 +20,7 @@ import { db } from '../lib/db/drizzle';
 import { users, userRoles, userMemberships } from '../lib/db/schema';
 import { hashPassword } from '../lib/auth/session';
 import { sql } from 'drizzle-orm';
+import { authorizeDestructive } from './lib/destructive';
 
 async function resetDatabase() {
   console.log('🗑️  Clearing database tables...');
@@ -60,8 +67,13 @@ async function resetDatabase() {
 async function createAdminUser() {
   console.log('👤 Creating admin user...');
 
-  const adminEmail = 'admin@shesharp.org.nz';
-  const adminPassword = 'Admin123!';  // Change this in production!
+  const adminEmail = process.env.ADMIN_SEED_EMAIL ?? 'admin@shesharp.org.nz';
+  // Required, never defaulted: a literal here means every run of this script
+  // leaves an account whose password is public knowledge in the repo.
+  const adminPassword = process.env.ADMIN_SEED_PASSWORD;
+  if (!adminPassword) {
+    throw new Error('ADMIN_SEED_PASSWORD is not set — refusing to seed an admin with a known password.');
+  }
   const adminName = 'System Admin';
 
   // Hash password
@@ -115,6 +127,15 @@ async function createAdminUser() {
 async function main() {
   console.log('\n🚀 Database Reset and Admin Creation Script\n');
   console.log('═══════════════════════════════════════════\n');
+
+  // Checked before the wipe, not inside createAdminUser(): failing this after
+  // resetDatabase() has run would leave an empty database with no way in.
+  if (!process.env.ADMIN_SEED_PASSWORD) {
+    console.error('ADMIN_SEED_PASSWORD is not set — refusing to wipe a database it could not then seed an admin for.');
+    process.exit(1);
+  }
+
+  if (!authorizeDestructive('clear every table and seed a fresh admin')) return;
 
   try {
     await resetDatabase();
