@@ -731,56 +731,64 @@
 // WebP and must be converted to JPEG for Typst; the report references the KEY,
 // never the path.
 //
+// HAND-MAINTAINED, and nothing checks it. These paths sit in `//` comments, so
+// scripts/assets/refs.ts deliberately reads them as documentation rather than
+// as references - which means scripts/assets/apply-move.ts does not rewrite
+// them and scripts/verify-image-paths.ts does not notice when they rot. They
+// went stale in the 2026-08-19 move to per-event folders and were corrected by
+// hand afterwards. If you move an event asset, fix this block yourself. The
+// build inputs that ARE checked live in report/assets/photos.manifest.json.
+//
 //   she-sharp-and-academyex-international-womens-day-2026-hero
-//       → public/img/events/archive/she-sharp-and-academyex-international-womens-day-2026/1.webp
+//       → public/img/events/she-sharp-and-academyex-international-womens-day-2026/archive/1.webp
 //   she-sharp-and-academyex-international-womens-day-2026-2
-//       → public/img/events/archive/she-sharp-and-academyex-international-womens-day-2026/2.webp
+//       → public/img/events/she-sharp-and-academyex-international-womens-day-2026/archive/2.webp
 //   she-sharp-and-academyex-international-womens-day-2026-3
-//       → public/img/events/archive/she-sharp-and-academyex-international-womens-day-2026/3.webp
+//       → public/img/events/she-sharp-and-academyex-international-womens-day-2026/archive/3.webp
 //
-//   her-waka-hero    → public/img/events/archive/her-waka/1.webp
-//   her-waka-2       → public/img/events/archive/her-waka/2.webp
-//   her-waka-3       → public/img/events/archive/her-waka/3.webp
+//   her-waka-hero    → public/img/events/her-waka/archive/1.webp
+//   her-waka-2       → public/img/events/her-waka/archive/2.webp
+//   her-waka-3       → public/img/events/her-waka/archive/3.webp
 //
-//   her-waka-april-2026-hero → public/img/events/archive/her-waka-april-2026/1.webp
-//   her-waka-april-2026-2    → public/img/events/archive/her-waka-april-2026/2.webp
-//   her-waka-april-2026-3    → public/img/events/archive/her-waka-april-2026/3.webp
+//   her-waka-april-2026-hero → public/img/events/her-waka-april-2026/archive/1.webp
+//   her-waka-april-2026-2    → public/img/events/her-waka-april-2026/archive/2.webp
+//   her-waka-april-2026-3    → public/img/events/her-waka-april-2026/archive/3.webp
 //
 //   she-sharp-candice-murray-own-your-energy-hero
-//       → public/img/events/archive/she-sharp-candice-murray-own-your-energy/1.webp
+//       → public/img/events/she-sharp-candice-murray-own-your-energy/archive/1.webp
 //   she-sharp-candice-murray-own-your-energy-2
-//       → public/img/events/archive/she-sharp-candice-murray-own-your-energy/2.webp
+//       → public/img/events/she-sharp-candice-murray-own-your-energy/archive/2.webp
 //   she-sharp-candice-murray-own-your-energy-3
-//       → public/img/events/archive/she-sharp-candice-murray-own-your-energy/3.webp
+//       → public/img/events/she-sharp-candice-murray-own-your-energy/archive/3.webp
 //
-//   her-waka-may-2026-hero → public/img/events/archive/her-waka-may-2026/1.webp
-//   her-waka-may-2026-2    → public/img/events/archive/her-waka-may-2026/2.webp
-//   her-waka-may-2026-3    → public/img/events/archive/her-waka-may-2026/3.webp
+//   her-waka-may-2026-hero → public/img/events/her-waka-may-2026/archive/1.webp
+//   her-waka-may-2026-2    → public/img/events/her-waka-may-2026/archive/2.webp
+//   her-waka-may-2026-3    → public/img/events/her-waka-may-2026/archive/3.webp
 //
 //   making-linkedin-work-for-you-with-stuart-little-hero
-//       → public/img/events/archive/making-linkedin-work-for-you-with-stuart-little/1.webp
+//       → public/img/events/making-linkedin-work-for-you-with-stuart-little/archive/1.webp
 //   making-linkedin-work-for-you-with-stuart-little-2
-//       → public/img/events/archive/making-linkedin-work-for-you-with-stuart-little/2.webp
+//       → public/img/events/making-linkedin-work-for-you-with-stuart-little/archive/2.webp
 //   making-linkedin-work-for-you-with-stuart-little-3
-//       → public/img/events/archive/making-linkedin-work-for-you-with-stuart-little/3.webp
+//       → public/img/events/making-linkedin-work-for-you-with-stuart-little/archive/3.webp
 //
-//   her-waka-june-2026-hero → public/img/events/archive/her-waka-june-2026/1.webp
-//   her-waka-june-2026-2    → public/img/events/archive/her-waka-june-2026/2.webp
-//   her-waka-june-2026-3    → public/img/events/archive/her-waka-june-2026/3.webp
+//   her-waka-june-2026-hero → public/img/events/her-waka-june-2026/archive/1.webp
+//   her-waka-june-2026-2    → public/img/events/her-waka-june-2026/archive/2.webp
+//   her-waka-june-2026-3    → public/img/events/her-waka-june-2026/archive/3.webp
 //
 //   peyvand-academy-13-june-2026-hero
-//       → public/img/events/peyvand-academy-13-june-2026-photo-1.webp
+//       → public/img/events/peyvand-academy-13-june-2026/photo-1.webp
 //   peyvand-academy-13-june-2026-2
-//       → public/img/events/peyvand-academy-13-june-2026-photo-2.webp
+//       → public/img/events/peyvand-academy-13-june-2026/photo-2.webp
 //   peyvand-academy-13-june-2026-3
-//       → public/img/events/peyvand-academy-13-june-2026-photo-3.webp
+//       → public/img/events/peyvand-academy-13-june-2026/photo-3.webp
 //
 //   peyvand-academy-20-june-2026-hero
-//       → public/img/events/peyvand-academy-20-june-2026-photo-1.webp
+//       → public/img/events/peyvand-academy-20-june-2026/photo-1.webp
 //   peyvand-academy-20-june-2026-2
-//       → public/img/events/peyvand-academy-20-june-2026-photo-2.webp
+//       → public/img/events/peyvand-academy-20-june-2026/photo-2.webp
 //   peyvand-academy-20-june-2026-3
-//       → public/img/events/peyvand-academy-20-june-2026-photo-3.webp
+//       → public/img/events/peyvand-academy-20-june-2026/photo-3.webp
 //
 // Spare frames available if a layout needs a fourth image: `4.webp` exists in
 // each of the seven archive directories above, and the two Peyvand slugs have
