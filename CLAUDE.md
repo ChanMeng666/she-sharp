@@ -56,7 +56,12 @@ lib/             api, auth, chatbot, cloudinary, config, data, db, deck, email,
                  export, forms, funding, invitations, matching, mentorship,
                  newsletter, programmes, recruitment, seo, slack, slack-bot,
                  stripe, user  (+ utils.ts, fonts.ts, design-system.ts)
-hooks/ types/ styles/ emails/ public/ scripts/ docs/
+hooks/ types/ styles/ emails/
+public/          site imagery; img/scraped/ is LIVE legacy-site content, not
+                 leftovers — see public/img/scraped/README.md before touching it
+scripts/         ~90 scripts, only one wired to package.json — scripts/README.md
+                 indexes them and flags the destructive ones
+docs/            docs/README.md indexes every doc; start at docs/ARCHITECTURE.md
 proxy.ts         the middleware (see below) — there is no middleware.ts
 report/          Typst funder-report project; NOT part of the Next.js build
 .claude/skills/  guided workflows for non-technical teammates
@@ -239,6 +244,37 @@ rhythm linter, skins, motion, host controls — is in
 `docs/development/DECK_SYSTEM.md`. Read it before editing a deck or a slide
 layout.
 
+## Working directories are gitignored, not invisible
+
+Six paths hold regenerable scratch. They are gitignored — so `git ls-files` and
+`git status` never mention them — but Grep, Glob and `find` read them exactly
+like source. That asymmetry is the trap: `.cache/` still contains April-2026
+files named `events-custom-final.json`, `final-with-all-updates.json`,
+`current.json` and `planned.json`, none of which is the live event data, and
+`tmp/` holds loose `.ts` that reads as real source.
+
+**Nothing under these paths is ever a source of truth.** Do not cite one, edit
+one, or infer current behaviour from one.
+
+| Path | Written by | Holds |
+|---|---|---|
+| `tmp/` | `scripts/email/*`, `scripts/events/*`, `scripts/*/propose-crosswalk.ts`, `build-event-archive.mts`, and four email/poster skills | `emails/`, `specs/`, `plates/`, `poster-review/`, `humanitix/`, `mailchimp/`, `event-archive-harvest/` |
+| `.cache/` | `sync-event-from-slack`, `reply-to-contact-messages` | Slack channel dumps, `triage.json`, `contact-notifications.json`, plus dead 2026-04 audit leftovers |
+| `scripts/.cache/` | `audit-event-images.ts` and the old-site scrape | cached Webflow HTML |
+| `.recommendations/` | `scripts/slack-recommendations/` (itself gitignored, though present on disk) | generated LinkedIn recommendations, named after real people |
+| `.playwright-cli/` | browser automation | session scratch |
+| `report/out/` | `report/build.ps1` | the draft PDF and page previews |
+
+`tmp/` is a **contract**, not litter — those exact paths appear in skill
+instructions and script defaults, so do not relocate or rename it. Do clear it
+before a local `CI=true npx next build`: stray files under `tmp/` break the
+build.
+
+Separately, `/private/` is the gitignored vault for the raw Humanitix and
+Mailchimp exports. It carries real names, addresses, sign-up IPs and live access
+codes. Read it only when a task requires it, and never copy its contents into
+`lib/data/json/` — CI has leak guards for exactly that.
+
 ## Conventions
 
 - **All UI text in English.** No Chinese characters in page content, components
@@ -250,8 +286,11 @@ layout.
 - **Comments**: function-level, Google open-source style. Explain *why*, since
   the rules in these docs exist because the code alone did not say.
 - **No proactive documentation.** Do not create `.md` files unless asked. When
-  asked, they go under `docs/{architecture,api,deployment,security,development,database,features}/`
-  — never the repo root.
+  asked, they go under `docs/{deployment,development,database,features}/` — never
+  the repo root. `docs/ARCHITECTURE.md` is the deliberate exception: it is the
+  entry point and stays at `docs/` root. `docs/README.md` indexes every doc;
+  `docs/showcase/` is not prose but the images the root `README.md` embeds, and
+  `docs/marketing/` holds dated campaign artifacts.
 - **Focused changes.** Address the request; do not add unrequested features.
 
 ---
@@ -274,7 +313,10 @@ fine-grained admin permissions. → `lib/auth/`, `docs/ARCHITECTURE.md` §1–2
 
 **Site content.** Events, team, sponsors, stats, press, podcasts, galleries all
 live in `lib/data/` (TS adapters over `lib/data/json/`), single-source and
-derived everywhere. Editing one file updates every page.
+derived everywhere. Editing one file updates every page. The event list is two
+files merged in `lib/data/events.ts` — `shesharp_events_v3.json` (scraped
+history, do not hand-edit) and `events-custom.json` (the edit target); which
+file owns what is in `lib/data/json/README.md`.
 → `docs/development/ADD_EVENTS.md`
 
 **Content and brand rules.** Twelve years of counting traps, naming traps,

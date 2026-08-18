@@ -3,8 +3,12 @@
 > **Last Updated**: 2025-12-15
 > **Database**: PostgreSQL 16 (Neon)
 > **ORM**: Drizzle ORM
-> **Total Tables**: 45
-> **Total Enums**: 24
+> **Total Tables**: 37
+> **Total Enums**: 32
+>
+> Counts re-verified against `lib/db/schema/` on 2026-08-19 (they read 45 and 24,
+> from before the barrel split). Only the counts were checked — the table detail
+> below still carries its 2025-12-15 date and may lag the schema.
 
 ## Overview
 
@@ -25,7 +29,7 @@ The She Sharp platform uses a PostgreSQL database hosted on Neon with comprehens
 DATABASE_URL="postgresql://user:password@ep-xxx.neon.tech/neondb?sslmode=require"
 ```
 
-## Enum Types (24 Total)
+## Enum Types (32 Total)
 
 | Enum Name | Values |
 |-----------|--------|
