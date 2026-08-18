@@ -2,7 +2,7 @@ import { Metadata } from "next";
 
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { DeckArchiveCard } from "@/components/slides/deck-archive-card";
+import { DeckArchiveCard } from "@/components/deck/deck-archive-card";
 import { getEventBySlug } from "@/lib/data/events";
 import { formatEventDate, parseDateString } from "@/lib/data/event-utils";
 import { DECK_INDEX } from "@/lib/deck/index-meta";

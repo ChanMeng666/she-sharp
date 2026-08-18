@@ -118,7 +118,7 @@ function PaymentContent() {
       <div
         className="min-h-screen flex items-center justify-center relative"
         style={{
-          backgroundImage: 'url(/img/bauhaus-1764928803893.svg)',
+          backgroundImage: 'url(/img/bauhaus-mentorship.svg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
@@ -138,7 +138,7 @@ function PaymentContent() {
       <div
         className="min-h-screen pt-24 md:pt-32 pb-16 relative"
         style={{
-          backgroundImage: 'url(/img/bauhaus-1764928803893.svg)',
+          backgroundImage: 'url(/img/bauhaus-mentorship.svg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
@@ -168,7 +168,7 @@ function PaymentContent() {
     <div
       className="min-h-screen pt-24 md:pt-32 pb-12 relative"
       style={{
-        backgroundImage: 'url(/img/bauhaus-1764928803893.svg)',
+        backgroundImage: 'url(/img/bauhaus-mentorship.svg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat'
@@ -299,7 +299,7 @@ export default function PaymentPage() {
         <div
           className="min-h-screen flex items-center justify-center relative"
           style={{
-            backgroundImage: 'url(/img/bauhaus-1764928803893.svg)',
+            backgroundImage: 'url(/img/bauhaus-mentorship.svg)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat'

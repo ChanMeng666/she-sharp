@@ -87,7 +87,7 @@ function VerifyEmailContent() {
         <div 
           className="flex min-h-screen items-center justify-center p-4 relative"
           style={{
-            backgroundImage: 'url(/img/bauhaus-1755865242427.svg)',
+            backgroundImage: 'url(/img/bauhaus-account-recovery.svg)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat'
@@ -114,7 +114,7 @@ function VerifyEmailContent() {
       <div 
         className="flex min-h-screen items-center justify-center p-4 relative"
         style={{
-          backgroundImage: 'url(/img/bauhaus-1755865242427.svg)',
+          backgroundImage: 'url(/img/bauhaus-account-recovery.svg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
@@ -159,7 +159,7 @@ function VerifyEmailContent() {
     <div 
       className="flex min-h-screen items-center justify-center p-4 relative"
       style={{
-        backgroundImage: 'url(/img/bauhaus-1755865242427.svg)',
+        backgroundImage: 'url(/img/bauhaus-account-recovery.svg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat'
