@@ -82,11 +82,11 @@ const FIELD = 205;
 const ROOT = process.cwd();
 const SRC = path.join(
   ROOT,
-  "public/img/events/aotearoa-ai-hackathon-festival-2026-rach-monks.jpg",
+  "public/img/events/aotearoa-ai-hackathon-festival-2026/rach-monks.jpg",
 );
 const OUT = path.join(
   ROOT,
-  "public/img/events/aotearoa-ai-hackathon-festival-2026-rach-monks-plate.jpg",
+  "public/img/events/aotearoa-ai-hackathon-festival-2026/rach-monks-plate.jpg",
 );
 
 /** Keys the flat field out of the headshot and returns straight RGBA. */

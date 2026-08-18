@@ -1,14 +1,21 @@
 ---
 name: sync-event-from-slack
-description: Fully-automated sync of a Slack event-planning channel into the She Sharp Next.js codebase (`lib/data/json/events-custom.json` + `public/img/events/`). Use this skill whenever the user wants to create, update, or refresh an event on the She Sharp website from a Slack channel — phrases like "sync the AUT LinkedIn event from Slack", "pull the latest event info from #event-…", "update the event page from the planning channel", "create a new event from Slack", or anything involving turning Slack channel content about an event into a code change. Handles messages, thread replies, pinned items, bookmarks, speaker `.docx` bios, cover posters, and speaker headshots — downloading, renaming, and placing every asset automatically, then running the `verify-image-paths` CI gate and offering to open a PR or commit directly. Replaces the earlier `/event` Slack-bot flow, which required the developer to download and rename images by hand.
+description: Fully-automated sync of a Slack event-planning channel into the She Sharp Next.js codebase (`lib/data/json/events-custom.json` + `public/img/events/<event-slug>/`). Use this skill whenever the user wants to create, update, or refresh an event on the She Sharp website from a Slack channel — phrases like "sync the AUT LinkedIn event from Slack", "pull the latest event info from #event-…", "update the event page from the planning channel", "create a new event from Slack", or anything involving turning Slack channel content about an event into a code change. Handles messages, thread replies, pinned items, bookmarks, speaker `.docx` bios, cover posters, and speaker headshots — downloading, renaming, and placing every asset automatically, then running the `verify-image-paths` CI gate and offering to open a PR or commit directly. Replaces the earlier `/event` Slack-bot flow, which required the developer to download and rename images by hand.
 ---
 
 # Sync an event from a Slack channel to the repo
 
 This skill turns a Slack event-planning channel into a correct,
 up-to-date entry in `lib/data/json/events-custom.json` plus all the
-event's image assets under `public/img/events/` — with no manual
-download-and-rename work from the developer.
+event's image assets in the event's own folder,
+`public/img/events/<event-slug>/` — with no manual download-and-rename
+work from the developer.
+
+**Every asset for an event lives in `public/img/events/<event-slug>/`, and the
+filename is only the role** — `cover.webp`, `stuart-little.jpg`, `photo-1.webp`.
+The slug is the folder, so it is never repeated in the filename, and there are no
+short aliases for long slugs any more. `references/image-conventions.md` is the
+rulebook and explains why.
 
 It uses the **She Sharp Event Collector** app (read-only), which has two
 tokens in `.env`. Which one is present decides what the skill can see, and
@@ -353,15 +360,18 @@ Core fields to produce:
 
 ### Step 5 — Classify and plan image downloads
 
-See `references/image-conventions.md` for the heuristic. Produce a
-concrete plan like:
+See `references/image-conventions.md` for the heuristic. Every target path is
+`public/img/events/<slug>/<role>.<ext>` — create the folder if this is the
+event's first asset. Produce a concrete plan like:
 
 ```
-Cover:    event-aut-linkedin-15-may-2026-cover.png
+public/img/events/event-lesmills-03-september-2026/
+
+Cover:    cover.webp
   ← file F0AUCJSPCQM (IMG_1509.jpg, 109 kB), shared in #38 with text
     "Attaching the poster he has shared to use"
 
-Speaker:  event-aut-linkedin-15-may-2026-stuart-little.jpg
+Speaker:  ben-sullivan.jpg
   ← file F0AU0HQC8UF (IMG_1508.jpg, 40 kB), shared in #38 with text
     "Pic - Attached"
 ```
@@ -408,14 +418,17 @@ full plan just adds noise.
 When the user approves:
 
 1. Download the images (Bearer-auth via `download-file.ts`) to
-   their final paths under `public/img/events/`.
+   their final paths under `public/img/events/<slug>/`, creating that
+   folder on a CREATE. Nothing an event owns belongs outside it.
 2. Patch `lib/data/json/events-custom.json`. Preserve existing
    entries exactly — only touch the target event. Use `id =
    max(existing) + 1` for creates; keep the existing `id` for
    updates. If the patch changes any image path (extension change,
    filename change, slug change), `git rm` the old file so an
    orphan doesn't linger — the CI gate only catches broken
-   references forward, not stale files left behind.
+   references forward, not stale files left behind. A **slug change is a
+   folder move**: `git mv public/img/events/<old-slug> public/img/events/<new-slug>`
+   and rewrite every reference, rather than renaming files one by one.
 3. Run the CI gate:
    ```
    npx tsx scripts/verify-image-paths.ts

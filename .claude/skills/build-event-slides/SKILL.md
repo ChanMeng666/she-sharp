@@ -372,12 +372,16 @@ settling either.
 
 Read `references/assets.md` for the full detail. In summary:
 
-- Event photos go in `public/img/decks/<event-slug>/`, named for what they show:
-  `group-photo.jpg`, `venue-atrium.jpg`, `judges-panel.jpg`.
+- **An event owns one folder and the deck shares it**: everything for this event
+  goes in `public/img/events/<event-slug>/`, named for what it shows —
+  `group-photo.jpg`, `venue.webp`, `judges-panel.jpg`. The slug is the folder, so
+  it is never repeated in the filename, and there is no separate deck directory.
 - JPEG, WebP, PNG and SVG all work. Logos should be SVG when there is one.
 - Ask for the biggest version they have — the deck runs at 1920×1080 and up.
-- Sponsor and speaker artwork usually already exists under `public/img/sponsors/`
-  and `public/img/events/`. Check before asking for a re-send.
+- Sponsor artwork usually already exists under `public/img/sponsors/`, and the
+  poster and speaker headshots are already in
+  `public/img/events/<event-slug>/` — `sync-event-from-slack` put them there
+  when it built the event page. Check before asking for a re-send.
 
 **Decide what each photograph is for before you go looking.** A picture the room
 is meant to look at has to be sharp and big. A picture that is one tile among
@@ -668,7 +672,7 @@ git checkout -b feat/deck-aut-panel-night-2026
 git add lib/data/json/events-custom.json
 git commit -m "fix(events): correct Gemma Lynskey's title for the Les Mills panel"
 
-git add lib/deck/decks/aut-panel-night-2026.ts lib/deck/registry.ts lib/deck/index-meta.ts public/img/decks/aut-panel-night-2026
+git add lib/deck/decks/aut-panel-night-2026.ts lib/deck/registry.ts lib/deck/index-meta.ts public/img/events/aut-panel-night-2026
 git commit -m "feat(deck): add slides for AUT panel night 2026"
 git push -u origin feat/deck-aut-panel-night-2026
 gh pr create --fill

@@ -26,7 +26,7 @@ export const REQUIRED_EVENT_FIELDS: ReadonlyArray<FieldDescriptor> = [
   { name: "slug", description: "kebab-case identifier, e.g. \"she-sharp-candice-murray-own-your-energy\"" },
   { name: "title", description: "Full human-readable title" },
   { name: "date", description: "Human-readable date, e.g. \"April 16, 2026\"" },
-  { name: "coverImage", description: "{ url: \"/img/events/<slug>-cover.png\", alt: \"<descriptive alt>\" }" },
+  { name: "coverImage", description: "{ url: \"/img/events/<slug>/cover.png\", alt: \"<descriptive alt>\" }" },
   { name: "detailPageUrl", description: "https://shesharp.org.nz/events/{slug}" },
   { name: "shortDescription", description: "One-sentence summary (< 300 chars)" },
   { name: "attendees", description: "Registered count (number|null)" },
@@ -78,7 +78,7 @@ PATTERN (a) — Mark an event as completed (post-event wrap):
 PATTERN (b) — Add a keynote speaker. Arrays are REPLACED by deep-merge, so
 you must include the CURRENT list plus the new entry. If you don't have the
 current list, return op="clarify" asking admin to confirm who is already listed:
-  { "detailPageData": { "speakers": { "keynote_speakers": { "heading": "Meet Our Speakers", "speakers": [ /* existing speakers */, { "name": "...", "title": "...", "company": "...", "bio": "...", "image": "/img/events/<slug>-<first-last>.jpg", "linkedin": "" } ] } } } }
+  { "detailPageData": { "speakers": { "keynote_speakers": { "heading": "Meet Our Speakers", "speakers": [ /* existing speakers */, { "name": "...", "title": "...", "company": "...", "bio": "...", "image": "/img/events/<slug>/<first-last>.jpg", "linkedin": "" } ] } } } }
 
 PATTERN (c) — Add / replace a main sponsor (arrays are REPLACED, include all):
   { "detailPageData": { "sponsors": { "main": [ /* existing */, { "name": "Metlifecare", "logo": "/img/sponsors/metlifecare.svg" } ] } } }

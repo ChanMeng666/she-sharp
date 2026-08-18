@@ -2,33 +2,61 @@
 
 ## Target directory
 
-All event images live at:
+Every asset for an event lives in **its own folder, named for the event slug**:
 
 ```
-public/img/events/
+public/img/events/<event-slug>/
 ```
 
-Relative path as stored in `events-custom.json` is always `/img/events/<filename>`.
+`<event-slug>` is the slug exactly as it appears in the merged event list — no
+abbreviation, no alias. Relative path as stored in `events-custom.json` is
+always `/img/events/<event-slug>/<filename>`.
+
+Three reasons the folder is the rule, all of them things that used to bite:
+
+- **The owning event is unambiguous.** Under the old flat scheme the filename
+  began with the slug, and `her-waka` is a proper prefix of `her-waka-april-2026`
+  — so "which event owns this file" was a guess. A directory boundary cannot be
+  a prefix of another directory.
+- **It kills the alias table.** A 53-character slug made an unusable *filename*
+  (`she-sharp-and-academyex-international-womens-day-2026-ana-ivanovic-tongue.jpg`),
+  which is why short aliases like `iwd-2026` existed. It makes a perfectly
+  ordinary *directory* name, so the aliases are gone and must not come back.
+- **One directory stops growing.** Each event adds 3–50 files. Flat, that was a
+  single directory nobody could scan; foldered, an event is one `ls`.
 
 ## File naming
 
-Naming is derived from the event `slug` to keep search/grep easy and avoid
-collisions. Lower-case, kebab-case, ASCII only.
-
-The prefix is the event **`slug`** (newer slugs do not start with `event-`, e.g.
-`peyvand-academy-20-june-2026`). Substitute the real slug for `<slug>` below.
+Inside the event's folder the filename is just the role — the slug is the folder,
+so **never repeat it in the filename**. Lower-case, kebab-case, ASCII only.
 
 | Role | Pattern | Example |
 |---|---|---|
-| Cover poster | `<slug>-cover.<ext>` | `peyvand-academy-20-june-2026-cover.png` |
-| Speaker photo | `<slug>-<kebab-speaker-name>.<ext>` | `event-aut-linkedin-15-may-2026-stuart-little.jpg` |
-| Gallery photo (post-event) | `<slug>-photo-<n>.webp` | `peyvand-academy-20-june-2026-photo-1.webp` |
-| Sponsor-specific asset (rare) | `<slug>-<sponsor>.<ext>` | `event-aut-linkedin-15-may-2026-aut.png` |
+| Cover poster | `<slug>/cover.<ext>` | `her-waka-june-2026/cover.webp` |
+| Speaker photo | `<slug>/<kebab-speaker-name>.<ext>` | `aotearoa-ai-hackathon-festival-2026/mahsa-mohaghegh.jpg` |
+| Gallery photo (post-event) | `<slug>/photo-<n>.webp` | `aotearoa-ai-hackathon-festival-2026/photo-1.webp` |
+| Sponsor-specific asset (rare) | `<slug>/<sponsor>-logo.<ext>` | `she-sharp-and-academyex-international-womens-day-2026/academyex-logo.svg` |
+
+Rare because a sponsor mark almost always belongs in `/img/sponsors/`, which is a
+flat directory of reusable logos and is **not** affected by the per-event folder
+rule. Only put a logo in an event folder when no canonical exists.
+
+Publishing artwork from `/make-event-poster` uses the same folder with its own
+fixed names — `poster.webp`, `social.webp`, `story.webp`, `square.webp`,
+`humanitix.jpg`.
 
 The skill already receives `<slug>` from the user. Speaker-name kebab-case
 should match the speaker's full name (first + last), lowercased with hyphens
 and any diacritics stripped — e.g., `Stuart Little` → `stuart-little`,
 `Sofía García` → `sofia-garcia`.
+
+### The one sub-folder
+
+`<event-slug>/archive/` is reserved for the output of
+`scripts/build-event-archive.mts` — script-owned, disposable, regenerable. Never
+hand-place a file there, and never reference one from anywhere the script does
+not generate. No other sub-folder exists; in particular there is **no
+`events/shared/`** (see "Forbidden image sources").
 
 ## Extension is derived from Slack, not from the current JSON
 
@@ -105,7 +133,8 @@ target.
 When an event's date has passed (discovery flags `stale-status`) and a photo
 album exists, run a gallery pass — mirror a sibling event already in this shape:
 
-1. Download + curate + convert as above → `<slug>-photo-<n>.webp`.
+1. Download + curate + convert as above → `public/img/events/<slug>/photo-<n>.webp`
+   (create the event's folder if this is its first asset).
 2. In the event's `detailPageData`: set `status` to `"past"`, set `galleryUrl`
    to the public album link, and populate `photos[]` with one
    `{ url, alt }` per webp (descriptive alt text).
@@ -115,8 +144,10 @@ album exists, run a gallery pass — mirror a sibling event already in this shap
 ## Forbidden image sources
 
 - Do **not** pull images from `scripts/` scratch areas or temp paths.
-- Do **not** re-use images from other events' slugs. Every event gets its
-  own assets even if visually similar.
+- Do **not** re-use images from another event's folder, and do **not** invent a
+  `public/img/events/shared/` for a speaker who appears twice. Every event gets
+  its own copy even when the bytes are identical — one rule with no exceptions is
+  cheaper to follow than a sharing scheme, and disk cost is negligible.
 - Do **not** embed an external URL as a photo's `url`/`src` (Canva links, CDN
   links) — always download, convert, rename, and commit the bytes. (The separate
   `galleryUrl` field is the one place a public album link is allowed.)
@@ -130,3 +161,13 @@ files, not missing references → orphan files sitting in the repo.
 
 Always pair a path change with `git rm <old_path>`. List the removals
 in the dry-run plan so the user can veto before they happen.
+
+A **slug change now moves a folder**, not a set of prefixes: `git mv
+public/img/events/<old-slug> public/img/events/<new-slug>` and update every
+`/img/events/<old-slug>/…` reference in `events-custom.json`. Do not leave the
+old folder behind as a redirect — nothing reads it, and an empty-ish folder of
+stale bytes is exactly the orphan this section is about. If the rename empties a
+folder completely, remove the folder too. `<slug>/archive/` is the one part you
+never hand-edit: re-run `npx tsx scripts/build-event-archive.mts --slug <new-slug>`
+instead, which rewrites the folder and merges the new paths into
+`lib/data/event-archive-photos.ts` — the module that references them.

@@ -531,7 +531,7 @@ const UPCOMING_SNAPSHOT = [
        The layout fits it whole rather than cropping it to a landscape slot —
        see `upcoming-slide.tsx`. */
     image: {
-      src: "/img/events/event-lesmills-03-september-2026-poster.webp",
+      src: "/img/events/event-lesmills-03-september-2026/poster.webp",
       alt: "Poster for No Pain, All Gain – Getting Fit for AI, a Les Mills x She Sharp panel on 3 September 2026.",
     },
   },
@@ -579,7 +579,7 @@ const AUT_WELCOME: Slide = {
       // to keep a role legible at 38px from the back of a lecture theatre.
       role: "Head of School",
       org: "Engineering, Computer & Mathematical Sciences — Design & Creative Technologies",
-      image: "/img/events/aotearoa-ai-hackathon-festival-2026-tek-tjing-lie.jpg",
+      image: "/img/events/aotearoa-ai-hackathon-festival-2026/tek-tjing-lie.jpg",
     },
   ],
   density: "lg",
@@ -600,7 +600,7 @@ const AUT_WELCOME: Slide = {
  * re-render those three and look at them; the geometry is the whole point.
  */
 const KEYNOTE_PLATE: DeckImage = {
-  src: "/img/events/aotearoa-ai-hackathon-festival-2026-rach-monks-plate.jpg",
+  src: "/img/events/aotearoa-ai-hackathon-festival-2026/rach-monks-plate.jpg",
   alt: "Rach Monks, founder of AI for X and X-Bot Games, keynote speaker for the hackathon",
   focus: "50% 50%",
 };
@@ -912,62 +912,62 @@ const TEAMS: { index: string; name: string; photo: string | null }[] = [
   {
     index: "01",
     name: "kpi-kaitiaki-positive-impact",
-    photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-kpi-kaitiaki-positive-impact.webp",
+    photo: "/img/events/aotearoa-ai-hackathon-festival-2026/team-kpi-kaitiaki-positive-impact.webp",
   },
   {
     index: "02",
     name: "caffeine",
-    photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-caffeine.webp",
+    photo: "/img/events/aotearoa-ai-hackathon-festival-2026/team-caffeine.webp",
   },
   {
     index: "03",
     name: "kailine",
-    photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-kailine.webp",
+    photo: "/img/events/aotearoa-ai-hackathon-festival-2026/team-kailine.webp",
   },
   {
     index: "04",
     name: "arara",
-    photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-arara.webp",
+    photo: "/img/events/aotearoa-ai-hackathon-festival-2026/team-arara.webp",
   },
   {
     index: "05",
     name: "route",
-    photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-route.webp",
+    photo: "/img/events/aotearoa-ai-hackathon-festival-2026/team-route.webp",
   },
   {
     index: "06",
     name: "devacces",
-    photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-devacces.webp",
+    photo: "/img/events/aotearoa-ai-hackathon-festival-2026/team-devacces.webp",
   },
   {
     index: "07",
     name: "kanorao",
-    photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-kanorao.webp",
+    photo: "/img/events/aotearoa-ai-hackathon-festival-2026/team-kanorao.webp",
   },
   {
     index: "08",
     name: "fantastic6",
-    photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-fantastic6.webp",
+    photo: "/img/events/aotearoa-ai-hackathon-festival-2026/team-fantastic6.webp",
   },
   {
     index: "09",
     name: "kaitiakidata",
-    photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-kaitiakidata.webp",
+    photo: "/img/events/aotearoa-ai-hackathon-festival-2026/team-kaitiakidata.webp",
   },
   {
     index: "10",
     name: "kai-sense-ai",
-    photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-kai-sense-ai.webp",
+    photo: "/img/events/aotearoa-ai-hackathon-festival-2026/team-kai-sense-ai.webp",
   },
   {
     index: "11",
     name: "super-6",
-    photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-super-6.webp",
+    photo: "/img/events/aotearoa-ai-hackathon-festival-2026/team-super-6.webp",
   },
   {
     index: "12",
     name: "5-senses",
-    photo: "/img/events/aotearoa-ai-hackathon-festival-2026-team-5-senses.webp",
+    photo: "/img/events/aotearoa-ai-hackathon-festival-2026/team-5-senses.webp",
   },
 ];
 
@@ -1518,7 +1518,7 @@ export const aotearoaAiHackathonFestival2026Deck: Deck = {
       title: "The UN Sustainable Development Goals",
       lead: "Every theme tonight comes from one of these",
       image: {
-        src: "/img/events/aotearoa-ai-hackathon-festival-2026-sdg-goals.webp",
+        src: "/img/events/aotearoa-ai-hackathon-festival-2026/sdg-goals.webp",
         alt: "The seventeen United Nations Sustainable Development Goals, each with its number, title and icon, under the Sustainable Development Goals wordmark.",
       },
       note: "Point at the four the themes map onto — 2 zero hunger, 4 quality education, 10 reduced inequalities, 15 life on land — then move on. Do not read the list.",

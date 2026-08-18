@@ -56,7 +56,6 @@ send: they write files and print the `resend` command a human runs.
 | --- | --- | --- |
 | `verify-image-paths.ts` | Three checks over `public/img/`: `--forward` (every referenced path resolves), `--reverse` (every file is referenced, allow-list in `KNOWN_UNREFERENCED`), `--ownership` (every event image belongs to an event). No flag runs all three. | Ongoing — CI gate. |
 | `check-hackathon-facts.ts` | Asserts this repo still contains every shared fact the Q&A assistant repo also asserts. | Ongoing — CI gate; added 2026-08-04, event-scoped. |
-| `audit-event-images.ts` | Read-only orphan/broken/duplicate report over event and sponsor imagery. | Ongoing — writes `audit-report.json`; added 2026-04-21. |
 | `build-event-archive.mts` | Harvests a past event's Google Photos album into `public/img/events/archive/<slug>/`, incremental and additive. | Ongoing. |
 | `optimize-images.mts` | Builds responsive WebP variants for the curated hero set. | Ongoing, but see gotchas. |
 | `smoke-test-funding-sources.ts` | Exercises each funding crawler standalone, prints top 3. | Ongoing debug aid. |
@@ -91,9 +90,13 @@ send: they write files and print the `resend` command a human runs.
   named the pre-migration `shesharpnz.vercel.app` origin. Re-running it would
   have mailed whoever now holds ids 6, 8, 22, 31 and 33. A future renewal should
   select its targets by query, not by literal.
-- **`audit-report.json` is generated output sitting beside source.** It is
-  gitignored (`.gitignore:106`), so it is untracked litter rather than a
-  committed artefact — but it is in the directory listing and looks like input.
+- **`audit-event-images.ts` was deleted on 2026-08-19**, along with its
+  `audit-report.json` output. Every heuristic in it assumed the flat
+  `<event-slug>-<name>.ext` layout, so after the move to per-event folders it
+  reported all 83 event images as "legacy named" and proposed 83 renames that
+  would have undone the migration. Its orphan and broken-path checks are now in
+  `verify-image-paths.ts`, over a much wider corpus. A tool that answers
+  confidently and wrongly is worse than no tool.
 - **`scripts/.cache/old-site-html/` is 17 MB of 88 scraped Webflow pages**,
   gitignored, and nothing in the tracked tree reads or writes it. The scraper
   that produced it is gone.

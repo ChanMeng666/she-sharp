@@ -62,7 +62,7 @@ automatically affect:
   "title": "My New Event",
   "date": "March 5, 2026",
   "coverImage": {
-    "url": "/img/my-new-event.webp",
+    "url": "/img/events/my-new-event/cover.webp",
     "alt": "My New Event poster"
   },
   "detailPageUrl": "https://www.shesharp.org.nz/events/my-new-event",
@@ -113,7 +113,7 @@ automatically affect:
 | `slug` | URL-safe identifier, lowercase with hyphens | `women-in-ai-2026` |
 | `title` | Event title shown on cards and detail page | `Women in AI 2026` |
 | `date` | Format: `Month Day, Year` | `March 5, 2026` |
-| `coverImage.url` | Poster image path (WebP) | `/img/my-event.webp` |
+| `coverImage.url` | Poster image path (WebP) | `/img/events/women-in-ai-2026/cover.webp` |
 | `shortDescription` | One sentence for event cards | |
 | `detailPageData.time` | Include timezone | `5:30pm - 7:00pm NZDT` |
 | `detailPageData.location` | Venue details | See example above |
@@ -152,9 +152,25 @@ renders it** — it is a leftover from the scraped data. Leave it as `[]`.
 
 ### Image rules
 
+- **One folder per event.** Every asset an event owns — cover, poster, social
+  artwork, speaker headshots, on-page photos, art the slide deck uses — lives in
+  `public/img/events/<event-slug>/` and is referenced as
+  `/img/events/<event-slug>/<filename>`. `<event-slug>` is the `slug` field
+  exactly; the filename is only the role, never the slug repeated:
+  `/img/events/her-waka-june-2026/cover.webp`,
+  `/img/events/aotearoa-ai-hackathon-festival-2026/mahsa-mohaghegh.jpg`,
+  `/img/events/event-lesmills-03-september-2026/poster.webp`.
+
+  Assets used to be flat, with the slug as a filename prefix. The folder is
+  better for three reasons: the owning event is unambiguous (`her-waka` is a
+  proper prefix of `her-waka-april-2026`, so a prefix never identified one
+  event); it removed the alias table that existed only because a 53-character
+  slug made an unusable filename; and it stops one directory growing by 3–50
+  files per event. Do not create any other sub-folder — `<event-slug>/archive/`
+  is reserved for `scripts/build-event-archive.mts` output and is regenerated,
+  not hand-edited.
 - **Format and size**: images are **WebP, ≤1600px** on the long edge (≤2560px
-  only where a presentation deck references the same file). Place files in
-  `public/img/` and reference them as `/img/filename.webp`.
+  only where a presentation deck references the same file).
 - **After changing any image reference, run
   `npx tsx scripts/verify-image-paths.ts`.** It checks that every path in
   `events-custom.json` resolves to a real file under `public/`, and it **gates

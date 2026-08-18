@@ -16,35 +16,62 @@ has to be sharp and big, and a tile in a wall does not.
 
 ## Where things go
 
+**An event owns one folder, and the deck shares it.** Everything for an event —
+its poster, its speaker headshots, its on-page photos and the pictures that only
+the slides use — lives in `public/img/events/<event-slug>/`. There is no separate
+deck directory. A folder per event means the owning event is unambiguous
+(`her-waka` is a proper prefix of `her-waka-april-2026`, so a filename prefix
+never was), and it stops one flat directory growing by 3–50 files an event.
+
 | What | Where |
 |---|---|
-| Photos for this event | `public/img/decks/<event-slug>/` |
-| Speaker headshots, event posters | `public/img/events/` — usually already there |
+| Photos for this event | `public/img/events/<event-slug>/` |
+| Speaker headshots, event posters | `public/img/events/<event-slug>/` — usually already there |
 | Sponsor and partner logos | `public/img/sponsors/` — usually already there |
 | Past-event photography (the fallback) | `public/img/curated/` |
 | The wider archive | `public/img/legacy-site/photos/` |
 | Generated backgrounds for karakia and chapter breaks | `public/img/plates/` |
-| QR codes | `public/img/decks/<event-slug>/qr-<what-it-does>.png` |
+| QR codes | drawn in the browser from `qr.url` — no file (see below) |
 
-**Check `public/img/events/` and `public/img/sponsors/` before asking the author
-for anything.** `sync-event-from-slack` has usually already downloaded the
-poster, the speaker headshots and the sponsor marks when it built the event
-page. Asking someone to re-send a file they already sent is a small thing that
-makes a tool feel like work.
+**Look in `public/img/events/<event-slug>/` and `public/img/sponsors/` before
+asking the author for anything.** `sync-event-from-slack` has usually already
+downloaded the poster, the speaker headshots and the sponsor marks into that
+same folder when it built the event page. Asking someone to re-send a file they
+already sent is a small thing that makes a tool feel like work.
+
+`<event-slug>/archive/` is the one sub-folder, and it belongs to
+`scripts/build-event-archive.mts` — a harvested, regenerable gallery. Read from
+it if a shot is genuinely the right one, but never hand-place a file there: the
+script wipes the folder on every rebuild.
+
+**QR codes need no file.** `deck-qr.tsx` draws the code in the browser from the
+`url` on the slide's `qr` block, so it is always the link it claims to be and
+never depends on venue wi-fi. `qr.image` and a committed PNG only come into it
+when `DECK_QR_MODE` in `lib/deck/theme.ts` is switched to `"image"` — which it
+is not — to reproduce somebody else's pre-made code verbatim. If that day comes,
+the PNG goes in the event's folder like everything else.
 
 ## Naming
 
 Lowercase, hyphens, and named for **what the photo shows** — not the camera's
 filename, not the date.
 
+The slug is already the folder, so **never repeat it in the filename**.
+`aotearoa-ai-hackathon-festival-2026/cover.webp`, not
+`aotearoa-ai-hackathon-festival-2026/aotearoa-ai-hackathon-festival-2026-cover.webp`.
+
 ```
-public/img/decks/aut-panel-night-2026/
-  group-photo.jpg
-  venue-atrium.jpg
-  panel-in-progress.jpg
-  qr-feedback.png
-  qr-ambassador.png
+public/img/events/aotearoa-ai-hackathon-festival-2026/
+  cover.webp
+  poster.webp
+  mahsa-mohaghegh.jpg        speaker headshot
+  photo-1.webp               on-page gallery
+  team-arara.webp            deck-only artwork
+  venue.webp
 ```
+
+(`her-waka-june-2026/` additionally has an `archive/` — that folder appears only
+where `build-event-archive.mts` has harvested an album.)
 
 `IMG_4471.jpg` is unfindable in six months. `panel-in-progress.jpg` is
 self-documenting, and the next person to update the deck knows what they are
@@ -419,8 +446,11 @@ order of frequency:
   though Windows will happily open the file locally. This one passes on your
   machine and fails in CI.
 - **A photo that was described in the conversation but never actually sent.**
-- **A file committed to the wrong folder** — `public/img/<slug>/` instead of
-  `public/img/decks/<slug>/`.
+- **A file committed outside the event's folder** — `public/img/<slug>/`, or a
+  flat `public/img/events/<slug>-cover.webp` with the slug as a filename prefix
+  instead of `public/img/events/<slug>/cover.webp`. The flat form is how event
+  assets were named until August 2026; it still looks plausible and no longer
+  resolves.
 
 The gate only catches broken references *forward*. If you rename or replace an
 image, `git rm` the old file too — an orphaned photo sits in the repository

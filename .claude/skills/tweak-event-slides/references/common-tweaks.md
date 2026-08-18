@@ -39,7 +39,7 @@ Images are `DeckImage`:
 
 ```ts
 {
-  src: "/img/events/event-lesmills-03-september-2026-poster.webp",
+  src: "/img/events/event-lesmills-03-september-2026/poster.webp",
   alt: "The panel poster: four speakers against a navy ground",
   focus: "50% 30%",   // object-position, for a full-bleed crop
 }
@@ -47,9 +47,10 @@ Images are `DeckImage`:
 
 - `src` is **site-relative** and the file must exist under `public/`.
   `verify-image-paths.ts` is the check.
-- Put a new file at `public/img/events/<event-slug>-<what-it-is>.webp`. WebP,
-  ≤1600px on the long edge. Keep the existing naming — the event slug prefix is
-  how the ~50 hackathon assets stay findable.
+- Put a new file at `public/img/events/<event-slug>/<what-it-is>.webp`. WebP,
+  ≤1600px on the long edge. Every asset an event owns lives in that one
+  slug-named folder, and the slug is **not** repeated in the filename — it is
+  what keeps the ~50 hackathon assets findable as a set.
 - `alt` is required and is real alt text, not a filename.
 - **`focus` is the only way to move a crop.** `object-position` cannot be set
   from `deck-skins.css` — `DeckImage` writes it inline and inline beats any
@@ -128,7 +129,7 @@ representative, a judge added on the day — do they go straight onto a
   lead: "Joining the panel for the second half",
   people: [
     { name: "Ada Lovelace", role: "Principal Engineer", org: "Acme",
-      image: "/img/events/<event-slug>-ada-lovelace.webp" },
+      image: "/img/events/<event-slug>/ada-lovelace.webp" },
   ],
   density: "lg",
   shape: "card",
@@ -142,6 +143,6 @@ representative, a judge added on the day — do they go straight onto a
   slide.
 - `image` is optional; without one the layout draws an initials tile, which is
   much better than a stretched photo grabbed from LinkedIn.
-- Headshots go to `public/img/events/<event-slug>-<firstname-lastname>.webp`.
+- Headshots go to `public/img/events/<event-slug>/<firstname-lastname>.webp`.
 - Bios do not go on the slide. Long-form material stays on the event page and is
   reached by a QR slide.

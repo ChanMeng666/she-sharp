@@ -19,8 +19,8 @@ The hosted bot lives on the existing Vercel deployment. Admin types
 4. Posts an ephemeral preview with JSON diff, image checklist, and
    `Confirm & Open PR` / `Cancel` buttons.
 5. On Confirm: opens a PR to `main`. Admin locally checks out the
-   branch, drops any listed images in `public/img/events/`, pushes, and
-   merges. Vercel auto-deploys.
+   branch, drops any listed images in `public/img/events/<event-slug>/`,
+   pushes, and merges. Vercel auto-deploys.
 
 ### One-time Slack app setup
 
@@ -62,12 +62,18 @@ The GitHub PAT should be a **fine-grained** token scoped to the
 See `lib/slack-bot/conventions.ts` for the authoritative rules loaded
 into the AI system prompt. Summary:
 
-- Event images: `/img/events/<event-slug>-<descriptive>.<ext>`
-- Cover: `/img/events/<event-slug>-cover.<ext>`
+- **One folder per event**: every asset lives in
+  `/img/events/<event-slug>/`, and the filename is only the role — the slug is
+  the folder and is never repeated in it.
+- Event images: `/img/events/<event-slug>/<descriptive>.<ext>`
+- Cover: `/img/events/<event-slug>/cover.<ext>`
+- Speaker photo: `/img/events/<event-slug>/<firstname-lastname>.<ext>`
 - Sponsor logos: prefer canonical `/img/sponsors/<sponsor-slug>.svg`;
-  only fall back to `/img/events/<event-slug>-<sponsor-slug>-logo.svg`
+  only fall back to `/img/events/<event-slug>/<sponsor-slug>-logo.svg`
   when no canonical exists. Image checklist tells the admin which files
   to place locally.
+- There are **no slug aliases**. A long slug is fine as a directory name, which
+  is what removed the reason they existed.
 
 ---
 
@@ -92,7 +98,7 @@ User runs the Python script with a Slack channel ID
 User tells Claude Code: "Update the website from <output-folder>"
   → Claude Code reads event.json
   → Claude Code merges into events-custom.json
-  → Claude Code copies images to public/img/events/
+  → Claude Code copies images to public/img/events/<event-slug>/
   → Claude Code runs pnpm build to verify
 ```
 
@@ -205,7 +211,7 @@ lib/data/json/events-custom.json
 1. **Read the existing file** to find the current `events` array and the highest `id`.
 2. **Assign a new `id`** to the extracted event: `highest_existing_id + 1`.
 3. **Check for duplicates**: If an event with the same `slug` already exists, update it instead of adding a duplicate.
-4. **Fix the `coverImage.url`**: The script leaves this empty. Set it to `/img/events/<slug>-banner.<ext>` or `/img/events/<slug>-poster.<ext>` based on the downloaded cover image filename.
+4. **Fix the `coverImage.url`**: The script leaves this empty. Set it to `/img/events/<slug>/cover.<ext>` (or `/img/events/<slug>/poster.<ext>`, whichever the downloaded cover image became) — the slug is the folder, so it is not repeated in the filename.
 5. **Prepend the new event** to the beginning of the `events` array (newest events first).
 6. **Validate the JSON** before saving — ensure no trailing commas, proper nesting.
 
@@ -238,18 +244,22 @@ Given the extracted event has `"id": null` and the existing highest id is 85:
 ### Target directory
 
 ```
-public/img/events/
+public/img/events/<event-slug>/
 ```
+
+Every asset an event owns lives in that one folder — create it if this is the
+event's first image. Nothing else in `public/img/events/` is a file.
 
 ### Process
 
 1. **List all files** in `<output-folder>/images/`.
-2. **Copy each file** to `public/img/events/` preserving the filename from the script.
+2. **Copy each file** to `public/img/events/<event-slug>/`, stripping the slug
+   prefix the script puts on filenames — the folder carries the slug now.
 3. **Verify image paths** in the event JSON match the copied filenames:
    - Speaker images: referenced in `detailPageData.speakers.*.speakers[].image`
    - Sponsor logos: referenced in `detailPageData.sponsors.main[].logo` and `detailPageData.sponsors.other[].logo`
    - Cover image: referenced in `coverImage.url`
-4. **Rename if needed**: If the JSON references `/img/events/foo.jpg` but the downloaded file is named `foo.png`, either rename the file or update the JSON path.
+4. **Rename if needed**: If the JSON references `/img/events/<slug>/foo.jpg` but the downloaded file is named `foo.png`, either rename the file or update the JSON path.
 5. **Skip non-image files**: PDFs, documents, or other files marked as type `"other"` in the manifest may not need to be copied to the project. Check the download manifest to decide.
 
 ### Image path convention
@@ -257,13 +267,18 @@ public/img/events/
 All event images use this pattern:
 
 ```
-/img/events/<slug>-<descriptive-name>.<ext>
+/img/events/<event-slug>/<descriptive-name>.<ext>
 ```
 
+`<event-slug>` is the slug exactly as it appears in `events-custom.json`, with no
+abbreviation — the aliases that once shortened long slugs are gone, because a
+53-character slug is a perfectly ordinary directory name. `<descriptive-name>`
+never repeats the slug.
+
 Examples:
-- `/img/events/iwd-2026-ana-ivanovic-tongue.jpg`
-- `/img/events/iwd-2026-academyex-logo.svg`
-- `/img/events/iwd-2026-banner.webp`
+- `/img/events/she-sharp-and-academyex-international-womens-day-2026/ana-ivanovic-tongue.jpg`
+- `/img/events/she-sharp-and-academyex-international-womens-day-2026/academyex-logo.svg`
+- `/img/events/her-waka-june-2026/cover.webp`
 
 ---
 
@@ -300,7 +315,7 @@ pnpm build
 
 This verifies:
 - The JSON is valid and parseable
-- Image paths referenced in the JSON exist in `public/img/events/`
+- Image paths referenced in the JSON exist under `public/img/events/<event-slug>/`
 - No TypeScript errors from the event data structure
 
 ---
@@ -327,7 +342,7 @@ This verifies:
 | `scripts/collect-event-from-slack.py` | The extraction script (local only, gitignored) |
 | `scripts/requirements-slack.txt` | Python dependencies (local only, gitignored) |
 | `lib/data/json/events-custom.json` | Website event data (update target) |
-| `public/img/events/` | Event images directory (copy target) |
+| `public/img/events/<event-slug>/` | This event's asset folder (copy target) |
 | `types/event.ts` | EventV3 TypeScript type definitions |
 | `docs/development/ADD_EVENTS.md` | Manual event addition guide |
 
@@ -345,7 +360,7 @@ Claude Code should:
 3. `Read lib/data/json/events-custom.json` — find highest ID, check for duplicate slugs
 4. Assign new ID, fix `coverImage.url`, review data quality
 5. Merge the event into `events-custom.json` (prepend to `events` array)
-6. Copy images from the output `images/` folder to `public/img/events/`
+6. Copy images from the output `images/` folder to `public/img/events/<event-slug>/`
 7. Verify image paths in the JSON match the copied files
 8. Run `pnpm build` to verify everything compiles
 9. Report to the user: what was added, any issues found, any manual actions needed
