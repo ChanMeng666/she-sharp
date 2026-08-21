@@ -112,13 +112,21 @@ const CODE_KEYWORDS = ["code", "promo", "voucher", "discount", "access", "passco
 /**
  * Artwork stems worth using as an email cover, best first.
  *
- * `humanitix` leads because the announcement template renders the cover at the
- * container's full width with `height="auto"`: a 2:1 ticketing banner lands as a
- * 600x300 slab, while the 4:5 feed post is 600x750 and pushes the date, the
- * venue and the button below the first screen. Speaker files are excluded by
- * construction — none of them begins with a stem listed here.
+ * The shape rule is why anything 2:1 leads: the announcement template renders
+ * the cover at the container's full width with `height="auto"`, so a 2:1 banner
+ * lands as a 600x300 slab, while the 4:5 feed post is 600x750 and pushes the
+ * date, the venue and the button below the first screen. Speaker files are
+ * excluded by construction — none of them begins with a stem listed here.
+ *
+ * `email` beats `humanitix` even though they are the same composition, because
+ * the ticketing banner is drawn 3200px wide for a page that displays it that
+ * large. Here it is 400 kB to fill a 600px slot, on whatever data plan the
+ * reader is on, and no gate would ever say so: `size-100kb` measures the
+ * rendered HTML, and a linked image is not in it. `build-event-poster.ts
+ * --only email` writes the same artwork at 1200x600.
  */
 const COVER_STEMS = [
+  "email",
   "humanitix",
   "social",
   "lineup-social",
@@ -464,7 +472,7 @@ function build(
       : `it holds no poster artwork in an email-safe format`;
     coverNote =
       `no cover: public/img/events/${event.slug}/ — ${reason}. Produce a JPEG ` +
-      `with: npx tsx scripts/events/build-event-poster.ts ${event.slug} --only social`;
+      `with: npx tsx scripts/events/build-event-poster.ts ${event.slug} --only email`;
     omissions.push(coverNote);
   }
 

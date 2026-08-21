@@ -265,17 +265,28 @@ npx tsx .../fetch-sheet.ts '<url>' --json              # machine-readable
 ```
 
 No credential is involved: She Sharp's run sheets are link-viewable and Google
-serves those over the plain CSV export endpoint. A link with `#gid=` reads that
-tab; a link without one enumerates and reads **every** tab. A genuinely private
-sheet fails loudly with what to ask for — never guess at a sheet you cannot
-open, and never let a stale digest stand in for one.
+serves those over the plain CSV export endpoint. **Every tab is read**, whether
+or not the link names one — a `#gid=` records which tab somebody's browser was
+showing when they copied the URL, and every link pasted into Slack carries one,
+so treating it as a scope is how a workbook comes to look like a single table.
+The linked tab is simply listed first. Narrow deliberately with `--tab <name>`.
+A genuinely private sheet fails loudly with what to ask for — never guess at a
+sheet you cannot open, and never let a stale digest stand in for one.
 
-This exists because of a real miss. On 5 Aug 2026 the events lead asked by DM to
+It cost the same event twice. On 5 Aug 2026 the events lead asked by DM to
 "update Carolina Lobos' profile" and attached the run sheet. Her bio and a
 corrected job title had been sitting in its Speakers tab for days while the
 event's digest said "STILL OWED BY LES MILLS: Carolina Lobos's bio and
 photograph". Nobody was withholding anything — nothing in this skill could open
 a sheet, so nobody looked.
+
+Then it happened to the same woman again. On 19 Aug 2026 Nirmala posted "kindly
+change the photo of Carolina in website" in `#website-team` and attached the
+same run sheet, where she had put Carolina's own headshot the night before. The
+sheet could be opened by then — but the link carried `#gid=`, so only its
+Speakers tab was ever read, and the six other tabs (Run Sheet, Agenda, Event
+Checklist, Website & Humanitix, Marketing, Meeting Notes) were invisible. The
+page kept a snapshot lifted from her LinkedIn for thirteen days.
 
 **A run sheet can contradict the digest, and when it does the sheet wins.** It
 is also the first place to look when a digest lists something as owed.

@@ -227,6 +227,51 @@ check("a mapped event that was never read at all is unread", () => {
   assert.deepStrictEqual(unreadConversations(m).map((c) => c.id), ["C9"]);
 });
 
+check("a conversation the triage has never scanned is UNKNOWN, not clean", () => {
+  // THE 19 AUGUST WORK ORDER. #website-team was declared the intake for website
+  // work on 6 August and flagged alwaysRead, because "please change a photo"
+  // names no venue, date or ticket and scores zero on the signal gate. On
+  // 19 August exactly that request arrived. It had no scannedTs, so
+  // scannedPosition() fell back to the read position, the gap was zero by
+  // construction, and the audit called the whole workspace clean while the
+  // request sat there for thirteen days. 90 of 207 conversations were in that
+  // state.
+  const m = manifestOf({
+    W1: channel({
+      mapping: { kind: "skip", reason: "intake for website work", alwaysRead: true },
+      watermarkTs: "100",
+      // no scannedTs — never triaged
+    }),
+  });
+  const out = unreadConversations(m);
+  assert.deepStrictEqual(out.map((c) => c.id), ["W1"]);
+  assert.strictEqual(out[0].reason, "never-triaged");
+});
+
+check("a mapped event with no scan position is never-triaged too", () => {
+  const m = manifestOf({
+    C1: channel({ mapping: { kind: "event", events: [{ slug: "s", eventId: 1 }] }, watermarkTs: "100" }),
+  });
+  assert.strictEqual(unreadConversations(m)[0]?.reason, "never-triaged");
+});
+
+check("a settled skip with no scan position is still not a backlog", () => {
+  // The exemption has to survive this change, or the audit reports every bot
+  // channel in the workspace and stops being read — which is the one failure
+  // mode a gate cannot recover from.
+  const m = manifestOf({
+    C2: channel({ mapping: { kind: "skip", reason: "bot noise" }, watermarkTs: "100" }),
+  });
+  assert.strictEqual(unreadConversations(m).length, 0);
+});
+
+check("a scanned, caught-up conversation carries no reason to complain", () => {
+  const m = manifestOf({
+    C3: channel({ mapping: { kind: "event", events: [{ slug: "s", eventId: 1 }] }, watermarkTs: "200", scannedTs: "200" }),
+  });
+  assert.strictEqual(unreadConversations(m).length, 0);
+});
+
 check("caught up means not unread", () => {
   const m = manifestOf({
     C3: channel({ mapping: { kind: "event", events: [{ slug: "s", eventId: 1 }] }, watermarkTs: "200", scannedTs: "200" }),

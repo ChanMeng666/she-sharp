@@ -188,7 +188,15 @@ export function carryReadReceipt(
  */
 export function unreadConversations(
   m: Manifest,
-): { id: string; name: string; type: ChannelType; watermarkTs: string; scannedTs: string }[] {
+): {
+  id: string;
+  name: string;
+  type: ChannelType;
+  watermarkTs: string;
+  scannedTs: string;
+  /** Why it is on this list — they need different fixes. */
+  reason: "never-read" | "never-triaged" | "behind";
+}[] {
   const out = [];
   for (const [id, c] of Object.entries(m.channels)) {
     const scanned = scannedPosition(c);
@@ -221,8 +229,48 @@ export function unreadConversations(
      */
     const settledSkip =
       c.mapping?.kind === "skip" && !c.mapping.alwaysRead;
-    if (neverRead || (!settledSkip && Number(scanned) > Number(c.watermarkTs))) {
-      out.push({ id, name: c.name, type: c.type, watermarkTs: c.watermarkTs, scannedTs: scanned });
+    /*
+     * NEVER TRIAGED IS UNKNOWN, NOT CLEAN — and this is the hole that hid a
+     * work order for thirteen days.
+     *
+     * `scannedPosition()` falls back to `watermarkTs` when a conversation has
+     * no `scannedTs`, which is right for ordering and wrong here: it makes the
+     * scan position EQUAL the read position, so the gap is zero by
+     * construction however much Slack is holding. A conversation the triage
+     * has never scanned came out indistinguishable from one read to the end.
+     *
+     * On 19 August 2026 Nirmala posted "please change Carolina's photo" in
+     * #website-team — the channel declared the intake for website work two
+     * weeks earlier, and flagged `alwaysRead` precisely because a request like
+     * that names no venue, date or ticket and scores zero on the signal gate.
+     * It had no `scannedTs`, so the audit reported the whole workspace clean
+     * while it sat there. 90 of 207 conversations were in that state, 11 of
+     * them conversations where being behind is the thing that matters.
+     *
+     * Only asked of conversations that matter, for the same reason the scan
+     * gap is: a bot channel nobody has triaged is not a backlog.
+     */
+    const neverTriaged = !settledSkip && !c.scannedTs;
+
+    const reason = neverRead
+      ? ("never-read" as const)
+      : neverTriaged
+        ? ("never-triaged" as const)
+        : ("behind" as const);
+
+    if (
+      neverRead ||
+      neverTriaged ||
+      (!settledSkip && Number(scanned) > Number(c.watermarkTs))
+    ) {
+      out.push({
+        id,
+        name: c.name,
+        type: c.type,
+        watermarkTs: c.watermarkTs,
+        scannedTs: scanned,
+        reason,
+      });
     }
   }
   return out.sort((a, b) => a.name.localeCompare(b.name));

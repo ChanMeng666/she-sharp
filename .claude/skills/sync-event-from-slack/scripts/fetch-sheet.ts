@@ -142,11 +142,31 @@ async function main() {
     process.exit(2);
   }
 
-  let tabs = parsed.gid
-    ? [{ gid: parsed.gid, name: `gid ${parsed.gid}` }]
-    : await listTabs(parsed.id);
+  /*
+   * A GID IN THE LINK IS NOT A SCOPE.
+   *
+   * It records which tab somebody's browser happened to be showing when they
+   * copied the URL, and every link pasted into Slack carries one. Treating it
+   * as an instruction to read that tab ALONE is why the Les Mills run sheet
+   * looked like a single Speakers table for weeks: it has seven tabs, and the
+   * other six — Run Sheet, Agenda, Event Checklist, Website & Humanitix,
+   * Marketing, Meeting Notes — were never once read, while SKILL.md said the
+   * run sheet outranks the chat.
+   *
+   * So every tab is read, and the linked one is simply put first. Narrowing is
+   * something you ask for with --tab, which is explicit and says so.
+   */
+  let tabs = await listTabs(parsed.id);
 
-  // No gid in the link and enumeration failed — the default tab still exports.
+  if (parsed.gid) {
+    const named = tabs.findIndex((t) => t.gid === parsed.gid);
+    if (named > 0) tabs.unshift(...tabs.splice(named, 1));
+    // Enumeration can miss a tab the switcher did not render; never drop the
+    // one the link actually named.
+    if (named < 0) tabs.unshift({ gid: parsed.gid, name: `gid ${parsed.gid}` });
+  }
+
+  // Enumeration failed altogether — the default tab still exports.
   if (!tabs.length) tabs = [{ gid: "0", name: "first tab" }];
 
   const out: { name: string; gid: string; rows: string[][] }[] = [];

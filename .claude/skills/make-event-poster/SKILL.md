@@ -16,14 +16,17 @@ Four things shape everything below.
   then set in code. Ask a generator for a poster and you get invented signage and
   lettering that is the right shape from three metres and gibberish from one —
   and it cannot be corrected when the venue changes. Type set in code is exact,
-  re-runnable, and identical across all five sizes.
+  re-runnable, and identical across all six sizes.
 - **The facts come from the event record, never from the person.** Title, date,
   time, venue and the partner logo are read from
   `lib/data/json/events-custom.json`. So a poster cannot disagree with the
   website, and a correction goes into the event data where both read it.
-- **Each size is its own design, not a crop.** A 2:1 Humanitix banner, a 4:5 feed
-  post and a 9:16 story cannot be one composition — satisfying one loses the
-  headline or the facts in the others. That is why there are five layouts.
+- **Each ASPECT is its own design, not a crop.** A 2:1 Humanitix banner, a 4:5
+  feed post and a 9:16 story cannot be one composition — satisfying one loses the
+  headline or the facts in the others. That is why there are five layouts for six
+  sizes: the rule is about shape, not pixel count, so `email` and `humanitix`
+  share one 2:1 composition drawn at 3200 and downscaled. Two hand-placed copies
+  of the same picture would drift apart, and drift is not art direction.
 - **Legibility is enforced, not eyeballed.** Every line of type is measured
   against the ground it will actually sit on, and the build fails rather than
   shipping a headline nobody can read.
@@ -32,7 +35,7 @@ Four things shape everything below.
 
 There are **two** pieces of work here and most requests want both eventually.
 
-**The event set** — five sizes announcing the evening. It goes out once.
+**The event set** — six sizes announcing the evening. It goes out once.
 
 **The speaker set** — one poster per person, posted one at a time across the
 weeks before the event. This is what keeps an event in a feed without repeating
@@ -43,7 +46,7 @@ post still looks like the first.
 The event set is step 1–6 below. The speaker set is step 7, and
 `references/speaker-posters.md` is its manual — read it before making one.
 
-## The five sizes
+## The six sizes
 
 | Key | Size | Files | Where it goes |
 |---|---|---|---|
@@ -52,9 +55,25 @@ The event set is step 1–6 below. The speaker set is step 7, and
 | `story` | 1080×1920 | `.jpg` + `.webp` | Instagram and Facebook stories |
 | `square` | 1080×1080 | `.jpg` + `.webp` | A square Instagram grid tile |
 | `poster` | 1400×1980 | `.webp` | The event page and print. The only one carrying the street address |
+| `email` | 1200×600 | `.jpg` | The mailing-list announcement `/promote-event` builds. Never the website's cover |
 
 One image serves LinkedIn, Instagram and Facebook because all three now favour
 4:5 portrait — it is the tallest thing that is not cropped in a mobile feed.
+
+**`email` exists because a mailing list is not a web page.** The announcement
+template renders its cover at the container's full width — 600 CSS px — so the
+`humanitix` banner would be 3200px and 400 kB downloaded on someone's mobile
+data to fill a slot 600px wide, and no gate would ever object: `size-100kb` in
+`lib/email/gates.ts` measures the rendered HTML, and a linked image is not in it.
+1200 is 2× what it displays at, which is the retina target, and 2:1 is what keeps
+the date, the venue and the Register button on the first screen — the 4:5 `social`
+file at container width is a 600×750 slab that pushes the button under the fold.
+It is JPEG-only for the same reason the ticketing banner is: Outlook draws a
+broken-image box for WebP, which is a hard failure of the `image-format` gate.
+
+**Do not point the website's `coverImage` at `email.jpg`.** The cover is the
+`social` WebP, and the reason is the safe band: `social` is checked against five
+card crops down to 21:9, a 2:1 banner is checked against none of them.
 
 **File format here is an upload constraint, not a quality preference**, and two
 platforms disagree with what the web would prefer:
@@ -160,7 +179,8 @@ headline that survives that band has cleared the hardest constraint in the set.
 
 Then the full sizes. Specifically check:
 
-- the **Humanitix banner** — type on the leading edge, picture open on the right
+- the **Humanitix banner** — type on the leading edge, picture open on the right.
+  `email.jpg` is the same composition at 1200×600, so checking one checks both
 - the **story** — nothing important in the top or bottom 250px, where Instagram
   and Facebook draw their own interface over your artwork
 - the **poster** — the display lines should land on the same right edge, because
@@ -173,20 +193,29 @@ numbers.
 
 Say plainly which file goes where — they are uploading these by hand:
 
-> Five files, all in this event's own folder,
+> Six files, all in this event's own folder,
 > `public/img/events/<event-slug>/` (e.g. `public/img/events/event-lesmills-03-september-2026/`):
 > - `humanitix.jpg` → the banner on the Humanitix event page
 > - `social.webp` → LinkedIn, Instagram and Facebook posts
 > - `story.webp` → Instagram and Facebook stories
 > - `square.webp` → a square Instagram tile if you want one
 > - `poster.webp` → the website and printing
+> - `email.jpg` → nothing to upload; `/promote-event` picks it up automatically
 
 The slug is the folder, so the filename is only the format — `--suffix v2` gives
 `poster-v2.webp` beside `poster.webp`, in the same folder.
 
+`email.jpg` is the one nobody has to do anything with, and it is worth saying so:
+`scripts/email/event-announcement-spec.ts` looks for it by name and prefers it
+over every other file in the folder. It also has to stay committed — no page
+renders it, so the generated `index.ts` manifest beside it is the only thing
+naming it, and deleting either fails `verify-image-paths.ts`.
+
 If the `social` file is also replacing the website's cover image, that is a
 second change: point `coverImage.url` in `events-custom.json` at it and update
 the `alt` text. Say so rather than doing it silently — it changes a public page.
+Point it at `social`, never at `email.jpg`: the cover is cropped to five aspect
+ratios down to 21:9 and only `social` is checked against them.
 
 ### 7. Make the speaker set
 
