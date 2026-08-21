@@ -240,8 +240,12 @@ positions and not the archive's, so it drifts every time. Until Step 7.6 existed
 nothing in any step list moved it at all — and all three gates in the sync
 skill's Step 7.5 stayed green throughout, because none of them looks at it.
 
-**As of 2026-08-21 the archive is 15 conversations behind**, four of them event
-channels. `refresh-archive.ts --archive <path>` (dry run by default) reports it.
+It had drifted 15 conversations behind by 2026-08-21 — four of them event
+channels, two behind on thread replies rather than top-level messages. All 15
+were refetched that day and the archive is level again.
+`refresh-archive.ts --archive <path>` (dry run by default) is what reports and
+closes the gap; run it after a sync rather than trusting the three gates above,
+none of which can see the archive.
 
 **Nothing from the archive may be copied into this repo.** It holds verbatim
 DMs, attendee spreadsheets, a storeroom door code and a `SHE#…` ticket-code
