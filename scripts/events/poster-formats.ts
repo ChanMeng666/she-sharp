@@ -20,6 +20,8 @@
  * the decks made before they had skins.
  */
 
+import { contrastRatio } from "@/lib/deck/theme";
+
 import {
   BODY,
   DISPLAY,
@@ -277,17 +279,50 @@ function buildStack(o: StackOptions): StackResult {
 }
 
 /**
+ * The pill's label colour, chosen against the pill's own fill.
+ *
+ * THE INK IS CHECKED, NOT ASSUMED, and that is a correction. The pill drew its
+ * label in `INK` unconditionally because it was "white on a solid fill of known
+ * contrast" — and the contrast stopped being known the day `themeFor()` began
+ * reusing an event's DECK accent. A deck accent is tuned for that deck's canvas,
+ * which may be light: the Les Mills evening carries `#b1f6e9`, a mint chosen at
+ * 12.98:1 on navy, and **white on that mint is 1.22:1**. The pill rendered as an
+ * empty lozenge and nothing in the pipeline said so, because the one component
+ * deliberately exempt from the legibility gate was the one that had broken.
+ *
+ * TWO THINGS ABOUT THE NUMBER, and both were measured rather than reasoned.
+ *
+ * It is a FLOOR, not a comparison. Brand magenta `#c846ab` measures 4.27:1
+ * against white and 4.62:1 against the canvas, so "pick the higher" would flip
+ * the label on every poster this repo has ever shipped, to fix nothing.
+ *
+ * And the floor is 3:1, not the gate's 4.5:1, which is the one place in this
+ * pipeline where a lower number is the correct one. 4.5 is the WCAG ratio for
+ * body-size text; this is a 32–42pt display word inside a solid fill of known
+ * colour, which is unambiguously large text at 3:1. Set at 4.5 the check flips
+ * brand magenta too — the shipped, reviewed look — while the failure it exists
+ * to catch measures 1.22 and would be caught by either.
+ */
+export const PILL_CONTRAST_FLOOR = 3;
+
+export function pillInk(theme: PosterTheme): string {
+  return contrastRatio(INK, theme.accent) >= PILL_CONTRAST_FLOOR ? INK : theme.canvas;
+}
+
+/**
  * The call to action, as a solid pill.
  *
- * Not gated for legibility, deliberately: it is white on a solid accent fill of
- * known contrast, not ink on an unknown photograph. Gating it would sample the
- * pill rather than the ground and report a number that means nothing.
+ * Not gated for legibility, deliberately: it is ink on a solid fill of known
+ * contrast, not ink on an unknown photograph. Gating it would sample the pill
+ * rather than the ground and report a number that means nothing. `pillInk()` is
+ * what makes "known" true again.
  */
 function pill(
   label: string,
   theme: PosterTheme,
   o: { right: number; y: number; size: number },
 ): string {
+  const ink = pillInk(theme);
   const track = o.size * 0.07;
   const m = measure(label, DISPLAY);
   const textW = (m.width * o.size) / 100 + track * (label.length - 1);
@@ -307,7 +342,7 @@ function pill(
       family: DISPLAY,
       size: o.size,
       letterSpacing: track,
-      fill: INK,
+      fill: ink,
     })
   );
 }
