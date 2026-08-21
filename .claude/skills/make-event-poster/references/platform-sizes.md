@@ -13,6 +13,19 @@ re-check without guessing.
 | `square` | 1080×1080 | 1:1 | JPEG + WebP | Instagram grid |
 | `poster` | 1400×1980 | ~1:1.41 | WebP | Event page, print |
 
+The per-speaker set reuses three of these ratios — 4:5, 9:16 and 1:1 — at the
+same pixel sizes, so nothing below changes for it. Two things do:
+
+- **JPEG only.** No website surface renders a speaker poster, so the WebP that
+  `social`, `story` and `square` carry for the site would be a file with no
+  destination.
+- **No safe band on the 4:5.** `SOCIAL_SAFE` exists only because the event
+  `social` file doubles as the website's `coverImage`. A speaker poster never
+  does, which is what buys it a large portrait — and is why one must never be
+  pointed at `coverImage.url`.
+
+See `speaker-posters.md`.
+
 ## File format is an upload constraint
 
 Two platforms will not reliably take the format the web prefers, and both

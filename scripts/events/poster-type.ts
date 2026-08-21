@@ -38,6 +38,7 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 
 import { Resvg, type ResvgRenderOptions } from "@resvg/resvg-js";
+import sharp from "sharp";
 
 const ROOT = process.cwd();
 
@@ -392,4 +393,107 @@ export function renderLayer(svg: string): Buffer {
 
 function round(n: number): number {
   return Math.round(n * 100) / 100;
+}
+
+/* ------------------------------------------------------------------ people */
+
+/**
+ * A slug for one person's name.
+ *
+ * The same string has to be three things at once — the CLI argument
+ * (`--speaker keryn-mckenzie`), the headshot already on disk
+ * (`keryn-mckenzie.jpg`, the convention in `public/img/events/README.md`) and
+ * the output filename (`speaker-keryn-mckenzie-social.jpg`). Deriving all three
+ * from `speaker.name` is what stops them drifting apart, so the normalisation
+ * has to survive the awkward real names in the record: "Dr. Mahsa Mohaghegh
+ * (McCauley)" is one of them, and NFD-stripping accents first is what keeps a
+ * name like "José" from losing its vowel rather than its diacritic.
+ */
+export function speakerSlug(name: string): string {
+  return name
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+/** A real photograph placed in the artwork, as a circle. */
+export interface PortraitSpec {
+  /** Repo-relative, e.g. `public/img/events/<slug>/keryn-mckenzie.jpg`. */
+  file: string;
+  left: number;
+  top: number;
+  /** Diameter in px. The circle is inscribed in this square. */
+  size: number;
+  /**
+   * Fraction of the radius over which the edge fades to nothing. Default 0.08.
+   *
+   * This is the whole difference between a portrait that belongs to the picture
+   * and one that looks stuck onto it. A hard circular cut leaves the headshot's
+   * own background — an office, a white wall, a window — ending at a crisp
+   * boundary against a near-black cinematic plate, which reads as a sticker. A
+   * short falloff lets that background dissolve into the plate instead.
+   */
+  feather?: number;
+}
+
+/**
+ * A circular, soft-edged portrait as a transparent PNG, ready to composite.
+ *
+ * THIS IS THE ONE RASTER PRIMITIVE IN THE PIPELINE, and it is here rather than
+ * in a layout for the same reason `inlineLogo` is: it knows nothing about any
+ * event. Two traps, both silent.
+ *
+ * **`blend: "dest-in"` does nothing to an image with no alpha channel.** A JPEG
+ * headshot has none, so `ensureAlpha()` is load-bearing — without it the mask
+ * composites as a no-op and the portrait ships as a full square.
+ *
+ * **The resize and the mask are separate `sharp()` calls.** Same family as the
+ * gotcha recorded in `scripts/deck/build-keynote-plate.ts`: sharp keeps only the
+ * LAST `resize()` in a chain, so anything geometric queued behind another
+ * geometric operation is at risk. Render, then measure or mask the render.
+ */
+export async function renderPortrait(spec: PortraitSpec): Promise<Buffer> {
+  const file = path.join(ROOT, spec.file);
+  const size = Math.round(spec.size);
+  const feather = spec.feather ?? 0.08;
+
+  const meta = await sharp(file).metadata();
+  const shortest = Math.min(meta.width ?? 0, meta.height ?? 0);
+  if (shortest > 0 && shortest < size) {
+    // A warning, not a refusal. Headshots arrive at whatever size the speaker
+    // had — three of the Les Mills panel are 800×800 and one is 358×358 — and a
+    // 1.6× lanczos upscale of a face is soft rather than wrong. Silence is what
+    // would be wrong: the softness is invisible on a laptop and obvious in print.
+    console.warn(
+      `  ! ${path.basename(spec.file)} is ${meta.width}×${meta.height} but is drawn at ${size}px ` +
+        `— upscaled ${(size / shortest).toFixed(1)}×. Ask for a larger headshot if it looks soft.`,
+    );
+  }
+
+  /* `position: "top"`, not centre and not sharp's entropy strategy. A headshot
+     frames the head in the upper part of the frame, so a tall source cropped to
+     a square from the top keeps the face and drops the chest; centred, it takes
+     a slice of chin and shoulders. On an already-square source — which most of
+     these are — `cover` is a plain resize and the position is inert. */
+  const filled = await sharp(file)
+    .resize(size, size, { fit: "cover", position: "top", kernel: "lanczos3" })
+    .ensureAlpha()
+    .png()
+    .toBuffer();
+
+  const mask = renderLayer(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+      <defs>
+        <radialGradient id="edge" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="${(1 - feather).toFixed(4)}" stop-color="#ffffff" stop-opacity="1"/>
+          <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <circle cx="${size / 2}" cy="${size / 2}" r="${size / 2}" fill="url(#edge)"/>
+    </svg>`,
+  );
+
+  return sharp(filled).composite([{ input: mask, blend: "dest-in" }]).png().toBuffer();
 }

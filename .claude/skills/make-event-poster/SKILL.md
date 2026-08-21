@@ -1,6 +1,6 @@
 ---
 name: make-event-poster
-description: Design and build the promotional artwork for one She Sharp event, at every size the organisation publishes — the Humanitix ticketing banner, the LinkedIn/Instagram/Facebook feed post, the Instagram story, the square grid tile, and the print/event-page poster. Use this whenever someone needs a poster, a banner, a flyer, a social graphic, a cover image or a "picture for the event" — phrases like "make a poster for the AUT night", "we need a banner for Humanitix", "can you do a LinkedIn graphic for Thursday's panel", "design artwork for the mentorship launch", "I need something to post on Instagram about this event", "给这场活动做个海报", "活动宣传图", "做个领英的图" — and also when someone asks to redesign or refresh an event's existing artwork, or to regenerate it after a date, venue or speaker changed. Works from the event's own record in `lib/data/json/events-custom.json`, so the artwork and the website cannot disagree. The picture is generated with gpt-image-2 as a textless plate and every word is then set in code, which is what makes the type exact, correctable and identical across all five sizes.
+description: Design and build the promotional artwork for one She Sharp event, at every size the organisation publishes — the Humanitix ticketing banner, the LinkedIn/Instagram/Facebook feed post, the Instagram story, the square grid tile, and the print/event-page poster. Use this whenever someone needs a poster, a banner, a flyer, a social graphic, a cover image or a "picture for the event" — phrases like "make a poster for the AUT night", "we need a banner for Humanitix", "can you do a LinkedIn graphic for Thursday's panel", "design artwork for the mentorship launch", "I need something to post on Instagram about this event", "给这场活动做个海报", "活动宣传图", "做个领英的图" — and also when someone asks to redesign or refresh an event's existing artwork, or to regenerate it after a date, venue or speaker changed. Works from the event's own record in `lib/data/json/events-custom.json`, so the artwork and the website cannot disagree. The picture is generated with gpt-image-2 as a textless plate and every word is then set in code, which is what makes the type exact, correctable and identical across every size. It also builds the PER-SPEAKER set that carries an event through the weeks before it — one poster per panellist, keynote, judge, host or mentor, built from that person's own headshot in the event record, plus a line-up tile of the whole group. Use it for those too: "make a poster for each of the speakers", "can we do an individual graphic for Keryn", "something to post about our keynote", "introduce the panel one at a time", "speaker poster", "guest poster", "讲者海报", "嘉宾海报", "给每位讲者做一张宣传图", "分开发几张宣传图".
 ---
 
 # Make the artwork for one event
@@ -27,6 +27,21 @@ Four things shape everything below.
 - **Legibility is enforced, not eyeballed.** Every line of type is measured
   against the ground it will actually sit on, and the build fails rather than
   shipping a headline nobody can read.
+
+## Two sets, one campaign
+
+There are **two** pieces of work here and most requests want both eventually.
+
+**The event set** — five sizes announcing the evening. It goes out once.
+
+**The speaker set** — one poster per person, posted one at a time across the
+weeks before the event. This is what keeps an event in a feed without repeating
+a picture: every post has a new face, a new name and a new reason, while the
+link, the date and the venue stay identical. Same plate underneath, so the fifth
+post still looks like the first.
+
+The event set is step 1–6 below. The speaker set is step 7, and
+`references/speaker-posters.md` is its manual — read it before making one.
 
 ## The five sizes
 
@@ -173,6 +188,63 @@ If the `social` file is also replacing the website's cover image, that is a
 second change: point `coverImage.url` in `events-custom.json` at it and update
 the `alt` text. Say so rather than doing it silently — it changes a public page.
 
+### 7. Make the speaker set
+
+The other half of the campaign, and the reason the event stays visible for six
+weeks. Read `references/speaker-posters.md` first — the copy rules and the role
+derivation are both there.
+
+Three sizes per person, JPEG only: `social` 1080×1350, `story` 1080×1920,
+`square` 1080×1080. Plus `lineup-social`, the whole group on one tile.
+
+**Read the people back with the label each will carry**, and wait for a yes. The
+kicker is the only string on a speaker poster that is *derived* rather than read
+out of the event record — everything else comes straight from
+`events-custom.json` — so it is the one that needs a human:
+
+```
+Meet the Panel — four people, all Les Mills International:
+  Keryn McKenzie   → PANELLIST   (from the heading "Meet the Panel")
+  Carolina Lobos   → PANELLIST
+  Ben Sullivan     → PANELLIST
+  Gemma Lynskey    → PANELLIST
+```
+
+**Then offer a hook for each.** One line, at most nine words, saying what that
+person brings — this is the line that tells a scrolling follower what the
+evening is worth. Draft them from the bios, read all of them back together, and
+set only the ones approved. Write the approved lines to
+`tmp/<slug>-hooks.json` as `{ "<name-slug>": "<hook>" }`.
+
+```powershell
+npx tsx scripts/events/build-event-poster.ts <event-slug> `
+  --plate tmp/plates/<chosen>.png --speaker all --hook-file tmp/<slug>-hooks.json
+
+npx tsx scripts/events/build-event-poster.ts <event-slug> `
+  --plate tmp/plates/<chosen>.png --lineup
+```
+
+`--speaker <name-slug>` for one person, `--role "Judge"` to override a label,
+`--hook "…"` for a single speaker without a file.
+
+`--speaker all` **does not stop at the first refusal.** Somebody with no
+headshot is a per-person problem; everyone who can be built is built and the
+rest are listed at the end. Pass those back plainly — the fix is a photograph in
+the event record, not a workaround.
+
+The build prints **one name size shared by the whole run**, and rebuilding a
+single poster later needs `--name-size <that number>` to match the set it
+belongs to. Say so when handing over.
+
+Hand over per person, because that is how they get posted:
+
+> Keryn's three, in `public/img/events/<event-slug>/`:
+> - `speaker-keryn-mckenzie-social.jpg` → LinkedIn, Instagram, Facebook
+> - `speaker-keryn-mckenzie-story.jpg` → Instagram and Facebook stories
+> - `speaker-keryn-mckenzie-square.jpg` → a square Instagram tile
+>
+> Post `lineup-social.jpg` first — "here's the panel" — then one speaker a week.
+
 ## When the build refuses
 
 It fails rather than shipping something unreadable. Each failure means a specific
@@ -199,6 +271,29 @@ cropped away by an event card on the website. Shorten the title or drop a line.
 **`"…" wanted 195pt … and was capped`** — cosmetic. The line will not quite reach
 the column edge, so the right edges stop aligning. Raise that format's
 `titleMax` in `poster-formats.ts` if it matters.
+
+**`X has no photograph in the event record`** — a speaker poster is a poster of
+a person; there is no version of it without a face. Ask for the headshot and add
+it to `events-custom.json`, where the event page shows it too. Do not substitute
+a stock photo, a logo, or anything generated.
+
+**`The hook for X is 14 words (max 9)`** — the hook is the one line that says
+what the room gets, not a summary of the talk. Cut it. The rest of the thought
+belongs in the caption under the post.
+
+**`X's job title needs 3 lines and this format has 2`** — shorten it in
+`events-custom.json`. It is not truncated automatically on purpose: clipping
+"Head of Finance – LM Media & Automation Lead" to fit produces a different job,
+and the event page carries the same string.
+
+**`X does not fit at 1080×1080: the portrait would be 264px`** — the copy has
+squeezed the circle below the size at which a face is recognisable. The hook is
+dropped first automatically; past that, the job title or the event title is the
+long one.
+
+**`"Meet the Mentors" has 17 people and one tile carries 6`** — a line-up is for
+a panel. Post seventeen mentors one at a time with `--speaker all`; cropping the
+group to fit would drop eleven names without saying so.
 
 ## Adding a platform
 
@@ -227,6 +322,10 @@ Two things to get right, both learned by getting them wrong:
    archive's entire value is that it is true: one convincing fake means nobody
    can trust any of the twelve years of real photographs beside it. Abstract
    subjects are safe precisely because they could never be mistaken for a room.
+   **On a speaker poster the face is that speaker's own photograph from the
+   event record** — never generated, retouched, extended or restyled. A
+   plausibly-fake portrait of a real, named woman is the worst version of this
+   problem, not a milder one.
 3. **No text or logos inside the generated image.** Those are set in code, where
    they can be corrected, kerned and translated.
 4. **Never hand the author a stack trace, a lint rule or a hex code.** Explain in
@@ -234,7 +333,11 @@ Two things to get right, both learned by getting them wrong:
 5. **The legibility gate is not advice.** If it fails, the design changes. Do not
    reach for `--no-gate` to get an image out; it exists for inspecting a failure,
    not for shipping past one.
-6. **Repo conventions apply.** English in all on-screen strings and code
+6. **A speaker poster is never the website's `coverImage`.** The event `social`
+   size carries a safe band because the site re-crops it at five aspect ratios;
+   a speaker poster has none — which is what buys it a large portrait — so as a
+   cover image an event card would crop the person's name away.
+7. **Repo conventions apply.** English in all on-screen strings and code
    comments, Conventional Commits, no new files under `docs/`.
 
 ## Reference
@@ -243,3 +346,6 @@ Two things to get right, both learned by getting them wrong:
   numbers came from, and how to check they are still current.
 - `references/plate-prompts.md` — how to write a gpt-image-2 prompt that leaves
   room for type, with worked examples and the scope rules.
+- `references/speaker-posters.md` — the per-speaker set: why a campaign is
+  drip-fed, the copy rules, the role derivation and the judges trap, how to
+  draft a hook, and the geometry.
