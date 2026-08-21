@@ -8,10 +8,11 @@ public/img/events/<event-slug>/
   poster.webp                 portrait promo artwork       (detailPageData.posters[])
   social.webp story.webp square.webp humanitix.jpg
                               the other make-event-poster sizes
+  email.jpg                   the mailing-list banner       (/promote-event)
   <firstname-lastname>.jpg    speaker and mentor headshots
   speaker-<firstname-lastname>-social.jpg
   lineup-social.jpg           the per-speaker campaign set — see below
-  index.ts                    generated manifest naming that set
+  index.ts                    generated manifest naming the unrendered files
   photo-1.webp                on-page photos, curated      (detailPageData.photos[])
   team-<name>.webp            anything else specific to this event
   archive/1.webp              harvested gallery — see below
@@ -53,24 +54,32 @@ sub-folder rather than merged in.
 The site shows `archive/` photos only when an event ships no `photos[]` of its
 own (`app/(site)/events/[slug]/page.tsx`).
 
-## `speaker-*` and `index.ts` are a generated pair
+## `index.ts` is what lets the unrendered files exist
 
-`scripts/events/build-event-poster.ts --speaker` writes the per-speaker campaign
-artwork — three sizes per person plus a `lineup-*` tile — and then rewrites
-`index.ts` beside it, naming every file it produced.
+`scripts/events/build-event-poster.ts` writes two kinds of file no page on the
+website renders — the per-speaker campaign artwork (`speaker-*`, three sizes per
+person, plus a `lineup-*` tile) and `email.jpg`, the mailing-list banner — and
+then rewrites `index.ts` beside them, naming every one.
 
-**The manifest is why those files are allowed to exist.** Nothing on the website
-renders them: they are uploaded to LinkedIn and Instagram by hand, one a week,
-over the month before the event. The reverse check below fails on any image
-nothing references, and a dozen entries per event in that script's
-`KNOWN_UNREFERENCED` array would make it unreadable. So they are named in code
-instead — the same trick `public/img/curated/index.ts` and
-`public/img/plates/index.ts` already use, and the reason `scripts/assets/refs.ts`
-scans `public/**` for `.ts` at all.
+**The manifest is why those files are allowed to exist.** The speaker set is
+uploaded to LinkedIn and Instagram by hand, one a week, over the month before the
+event; `email.jpg` is linked by absolute URL from a generated `MessageSpec` that
+lives in gitignored `tmp/` and is rebuilt for every send, so no committed file
+ever points at it either. The reverse check below fails on any image nothing
+references, and a dozen entries per event in that script's `KNOWN_UNREFERENCED`
+array would make it unreadable. So they are named in code instead — the same
+trick `public/img/curated/index.ts` and `public/img/plates/index.ts` already use,
+and the reason `scripts/assets/refs.ts` scans `public/**` for `.ts` at all.
 
 It makes the forward check cover them too, which is the point: deleting one now
 fails CI, rather than CI staying green while somebody's scheduled post loses its
-picture. Do not edit `index.ts` by hand — rebuild it by re-running the script.
+picture or an announcement goes out with a hole in it. Do not edit `index.ts` by
+hand — rebuild it by re-running the script.
+
+**None of these is a `coverImage`.** A speaker poster has no safe band, so an
+event card would crop the person's name away; `email.jpg` is 2:1, and the cover
+slot is re-cropped down to 21:9 against bands only the 4:5 `social` file was
+checked against.
 
 ## Checks
 

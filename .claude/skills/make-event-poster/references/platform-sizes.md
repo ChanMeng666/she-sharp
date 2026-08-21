@@ -12,6 +12,12 @@ re-check without guessing.
 | `story` | 1080×1920 | 9:16 | JPEG + WebP | Instagram & Facebook stories |
 | `square` | 1080×1080 | 1:1 | JPEG + WebP | Instagram grid |
 | `poster` | 1400×1980 | ~1:1.41 | WebP | Event page, print |
+| `email` | 1200×600 | 2:1 | **JPEG only** | The mailing-list announcement |
+
+`email` is the only row here whose numbers come from a rendering template rather
+than from a platform, and it is the only one that shares its composition with
+another: it is `humanitix` drawn at 3200 and downscaled. See its own section
+below.
 
 The per-speaker set reuses three of these ratios — 4:5, 9:16 and 1:1 — at the
 same pixel sizes, so nothing below changes for it. Two things do:
@@ -41,6 +47,31 @@ This was missed in the first version of these formats, which emitted WebP for al
 three Instagram sizes. It would not have failed any check — the files were valid
 and the right dimensions — it would simply have handed someone a file their phone
 might refuse.
+
+## Email — the size a platform did not decide
+
+The announcement template renders its cover at the container's full width, and
+that container is **600 CSS px**. Nothing about that is negotiable by a mail
+client, so the only question is what to hand it.
+
+**1200×600.** 1200 is 2× the 600 it displays at — the retina target every client
+assumes — and 2:1 is what keeps the date, the venue and the Register button on
+the first screen. The 4:5 `social` file at container width renders as a 600×750
+slab with `height="auto"` and pushes the button under the fold.
+
+**JPEG only, for the same reason Humanitix is.** Outlook draws a broken-image box
+for WebP, and `image-format` in `lib/email/gates.ts` hard-fails on one.
+
+**Why not simply send `humanitix.jpg`.** It is the same picture, so it is
+tempting, and it was what the generator picked before this size existed. It is
+3200px and ~400 kB downloaded on someone's mobile data to fill a slot 600px wide.
+Nothing catches that: `size-100kb` measures the **rendered HTML**, and a linked
+image is not in it. The size band on `email` is 60–150 kB and a real build lands
+near 100.
+
+**It is not a website cover.** `social` carries a safe band because the site
+re-crops the cover at five aspect ratios down to 21:9; a 2:1 banner is checked
+against none of them. `coverImage.url` stays pointed at the `social` WebP.
 
 ## Humanitix — the one with a hard rule
 

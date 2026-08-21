@@ -110,6 +110,25 @@ export interface Format {
   width: number;
   height: number;
   /**
+   * Draw the layout at THIS size, then downscale the finished frame to
+   * `width`×`height` just before encoding.
+   *
+   * Every `build` below hardcodes its own coordinate system — `humanitixLayout`
+   * opens `const W = 3200` — and the machine resizes the plate to the format's
+   * pixel size before compositing that SVG over it. So a format that wants the
+   * same composition at a different raster size cannot simply state smaller
+   * numbers: 3200-space coordinates over a 1200-wide ground is garbage.
+   *
+   * This is NOT a licence to crop one design into another aspect ratio — the
+   * rule at the top of this file still holds, and it is about ASPECT, not pixel
+   * count. `email` is the banner's own 2:1 composition at a smaller raster, so a
+   * second hand-placed copy of it would be duplication that drifts, not art
+   * direction. Supersampling is a bonus rather than the reason: type drawn at
+   * 3200 and resampled to 1200 has cleaner edges than the same type drawn
+   * straight at 1200.
+   */
+  composeAt?: { width: number; height: number };
+  /**
    * Which files to write. More than one when the same artwork has two jobs.
    *
    * FORMAT IS AN UPLOAD CONSTRAINT, NOT A QUALITY PREFERENCE, and two platforms
@@ -833,6 +852,31 @@ export const FORMATS: Format[] = [
     encode: ["jpeg"],
     bytes: { min: 300 * 1024, max: 3 * 1024 * 1024 },
     usedFor: "The Humanitix ticketing page banner (2:1, their stated minimum).",
+    build: humanitixLayout,
+  },
+  {
+    // The banner composition again, at the size an inbox actually needs.
+    //
+    // WHY NOT JUST SEND THE HUMANITIX BANNER. The announcement template renders
+    // the cover at the container's full width, which is 600 CSS px — so the
+    // ticketing banner is 3200px of somebody's mobile data to fill a 600px slot,
+    // 402 kB where 100 will do. Nothing catches that: the `size-100kb` gate
+    // measures the rendered HTML, and a linked image is not in it.
+    //
+    // 1200 is 2x the 600px it displays at, which is the retina target every mail
+    // client assumes; 2:1 is what keeps the date, the venue and the button on
+    // the first screen, where a 4:5 feed post at container width would be a
+    // 600x750 slab and push the button under the fold.
+    key: "email",
+    width: 1200,
+    height: 600,
+    composeAt: { width: 3200, height: 1600 },
+    // JPEG only, and it is not a preference: Outlook draws a broken-image box
+    // for WebP, which is what `image-format` in `lib/email/gates.ts` hard-fails
+    // on. A WebP here would be a file nobody could ever use.
+    encode: ["jpeg"],
+    bytes: { min: 60 * 1024, max: 150 * 1024 },
+    usedFor: "The mailing-list announcement (/promote-event). Never the website's cover.",
     build: humanitixLayout,
   },
   {
