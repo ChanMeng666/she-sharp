@@ -49,16 +49,43 @@ if (!unread.length) {
   process.exit(0);
 }
 
-console.log(`\nUNREAD — the triage has scored past content nobody has read:\n`);
+/* Three different problems, and only one is "somebody is behind". A
+   never-triaged conversation has an UNKNOWN backlog rather than a measured
+   one, and the fix is to run the triage, not to fetch a delta. */
+const LABEL = {
+  "never-read": "NEVER READ    — no payload has ever been delivered for it",
+  "never-triaged": "NEVER TRIAGED — no scan position, so the backlog is UNKNOWN",
+  behind: "BEHIND        — the triage scored past content nobody has read",
+} as const;
+
+console.log(`\nUNREAD:\n`);
 for (const c of unread) {
   console.log(`  ${c.type.padEnd(7)} ${c.name}`);
+  console.log(`          ${LABEL[c.reason]}`);
   console.log(`          read to ${when(c.watermarkTs)}   scanned to ${when(c.scannedTs)}`);
   console.log(
-    `          npx tsx .claude/skills/sync-event-from-slack/scripts/fetch-channel.ts ${c.id} --state > /tmp/d.json`,
+    c.reason === "never-triaged"
+      ? "          npx tsx .claude/skills/sync-event-from-slack/scripts/discover-channels.ts"
+      : `          npx tsx .claude/skills/sync-event-from-slack/scripts/fetch-channel.ts ${c.id} --state > /tmp/d.json`,
   );
 }
+const counts = unread.reduce<Record<string, number>>((a, c) => {
+  a[c.reason] = (a[c.reason] ?? 0) + 1;
+  return a;
+}, {});
+const part = (k: string, s: string) => (counts[k] ? `${counts[k]} ${s}` : null);
+
 console.log(
-  `\n${unread.length} of ${total} conversation(s) unread. Fetch each, read it with render-delta.ts,` +
-    `\nthen record it with update-state.ts --from <payload>. Nothing else moves the read position.\n`,
+  `\n${unread.length} of ${total} conversation(s): ` +
+    [part("never-triaged", "never triaged"), part("never-read", "never read"), part("behind", "behind")]
+      .filter(Boolean)
+      .join(" · ") +
+    `.` +
+    (counts["never-triaged"]
+      ? `\nRun discover-channels.ts first — a conversation with no scan position has an` +
+        `\nUNKNOWN backlog, not a zero one, and the triage is what measures it.`
+      : "") +
+    `\nFor the rest: fetch with --state, read it with render-delta.ts, then record it` +
+    `\nwith update-state.ts --from <payload>. Nothing else moves the read position.\n`,
 );
 process.exit(1);

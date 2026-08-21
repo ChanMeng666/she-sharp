@@ -619,7 +619,20 @@ async function main() {
         threads[t.ts] = { replyCount: t.replyCount, latestReplyTs: t.latestReplyTs };
       }
       const threadsChanged = r.grownThreads.length > 0;
-      if (prev && scannedPosition(prev) === ts && !threadsChanged) continue;
+      /*
+       * `prev.scannedTs`, NOT `scannedPosition(prev)` — the fallback seals the
+       * blind spot it is meant to paper over.
+       *
+       * `scannedPosition()` returns `scannedTs || watermarkTs`, so a channel
+       * that has never been triaged reports its READ position as its scan
+       * position. A quiet one then compares equal to `ts` here and is skipped,
+       * so no `scannedTs` is ever written — and it stays never-triaged through
+       * every future run. 90 of 207 conversations were in that state, and
+       * because the same fallback made the audit compute a zero gap, nothing
+       * could report it either. Requiring the field itself is what lets a
+       * first triage establish a position at all.
+       */
+      if (prev?.scannedTs && prev.scannedTs === ts && !threadsChanged) continue;
       manifest2.channels[r.id] = {
         name: r.name,
         type: r.type,
