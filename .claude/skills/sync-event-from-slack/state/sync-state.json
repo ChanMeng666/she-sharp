@@ -122,8 +122,9 @@
       "watermarkTs": "1777555703.673489",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.443Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555703.673489",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -683,9 +684,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-07T12:40:26.325Z",
+      "lastSyncedAt": "2026-08-21T12:36:01.774Z",
       "lastSyncedCommit": "",
-      "scannedTs": "1785460260.522289",
+      "scannedTs": "1787043924.063329",
       "readAt": "2026-08-07T12:40:26.325Z",
       "digest": "Newsletter production channel, read in full 7 Aug 2026 (Jan 2021 - Feb 2026, 109 threads). PRODUCTION HISTORY ONLY - nothing in it changes the website, and the two things that looked like they might do not.\n\nNOTHING TO ACTION ON THE SITE. (1) Vic Arce's May 2023 note about two issues both numbered \"Edition 22\" and missing issues 11-14 was about the OLD WEBFLOW SITE's issue numbering. This repo does not use issue numbers: lib/data/newsletters-archive.ts is keyed \"YYYY-MM\" and already documents its own reconciled quirks (the mislabelled July 2024, November 2022 and September 2021 cards). Do not \"fix\" a numbering scheme the repo no longer has. (2) The AUT logo rule Nicole recorded 7 May 2021 - black box logo on white, white box logo on black, and the version WITHOUT \"UNIVERSITY\" - already matches the brand section of CLAUDE.md.\n\nSECURITY, AND IT IS LIVE. A plaintext Mailchimp password was posted in this channel on 25 Feb 2025 and a PINNED MESSAGE points at it (\"Creds to Mailchimp\"). A card expiry date and CVV were posted on 29 Jun 2025. Both are still readable by everyone in the workspace. Rotate the Mailchimp password, unpin, and treat that card as exposed. NEVER copy either value into this repo, a digest or a commit message - they are recorded here by LOCATION only, deliberately.\n\nHOW THE NEWSLETTER HAS ACTUALLY BEEN RUN. Mailchimp throughout, never Resend. Access has been the recurring bottleneck: the account has MFA and the code has repeatedly had to be relayed by hand from whoever held the phone (Shae -> Julia -> Moksha), which is why credentials kept being pasted into the channel. Ownership went Emily/Sarina (2021-22) -> Cassidy/Babra (2023) -> Shae (2024) -> Julia Shmykova (2025) -> Moksha (mid-2025 on), with Marriane Bentigan stepping in to send December 2025. Mahsa reviews and rewrites her own \"word from the founder\" section before every send, and has done since 2021.\n\nTHE RECURRING FAILURE IS THE DATE, NOT THE CONTENT. Five years of the same conversation: Mahsa asking where the issue is, the issue slipping past its intended day, and a request each time to fix a date in the month and hold it. August 2021 escalated. A schedule is the thing this programme has never solved, and it is the strongest argument for the Resend automation.\n\nONE REAL METRIC, AND IT IS OLD. Oct 2022: open rate about 40% of the mailing list, roughly 520 people, comparable to event mail. That is the only engagement figure anywhere in five years of this channel. Do not quote it as current - PUBLIC_CLAIMS_PROVENANCE.md rules apply.\n\nSPONSOR CONTENT WAS SOLICITED MONTHLY AND ALMOST NEVER ARRIVED. 2022 is a run of \"anything from the sponsors?\" answered by silence from everyone except MYOB. The 15th of the month was the stated deadline. Worth knowing before promising sponsors newsletter placement.\n\nCONTENT SOURCES THAT ARE NOT SLACK: the newsletter draft lives in a Google Doc per issue (five different doc links across the channel), and the Oct 2025 issue was drafted by Moksha, appended by Prasanth and rewritten by Mahsa in that order.",
       "digestAt": "2026-08-07T12:40:26.324Z"
@@ -1096,8 +1097,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:48:13.807Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.443Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555705.572599",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -1228,8 +1230,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T13:51:24.040Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.443Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555706.583559",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -1436,8 +1439,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T13:51:24.040Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.443Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555707.556409",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -1492,8 +1496,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:46:03.354Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555708.556449",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "Past event channel, 2021-05-03 → 2021-05-24. No page URL was ever posted in the channel, so none was confirmed from its content (candidates worth checking: /events/imagine-zone-techweek, /events/she-techweek-2017). The 38 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
@@ -1571,8 +1576,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:46:01.957Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555709.517109",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "Past event channel, 2021-06-27 → 2021-08-13. No page URL was ever posted in the channel, so none was confirmed from its content. The 16 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
@@ -1649,8 +1655,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T13:51:24.040Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555710.521179",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -2380,8 +2387,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:48:13.807Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555712.446479",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -3509,8 +3517,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:48:13.807Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1784629854.545499",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -4261,8 +4270,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-06T03:41:46.612Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555714.364369",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -4423,8 +4433,9 @@
       "watermarkTs": "1777555716.285009",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555716.285009",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -4921,8 +4932,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:45:47.691Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555717.226889",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "Ambassador-programme operations, not an event. Named `event-*` by convention only. Read position recorded 2023-03-01 after the 5 Aug 2026 thread-backlog pass, which surfaced 6 historical replies this pipeline had never read. Reopen only if a genuinely new event is proposed here.",
@@ -4962,8 +4974,9 @@
       "watermarkTs": "1777555718.197049",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555718.197049",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -5149,8 +5162,9 @@
       "watermarkTs": "1777555719.170639",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555719.170639",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -5163,8 +5177,9 @@
       "watermarkTs": "1777555720.113049",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555720.113049",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -5242,8 +5257,9 @@
       "watermarkTs": "1777555721.086149",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555721.086149",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -5382,8 +5398,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T13:51:24.040Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555722.150819",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -6016,9 +6033,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-12T02:36:47.249Z",
+      "lastSyncedAt": "2026-08-21T12:36:01.775Z",
       "lastSyncedCommit": "",
-      "scannedTs": "1786305691.860729",
+      "scannedTs": "1786910440.113239",
       "readAt": "2026-08-12T02:36:47.250Z",
       "digest": "Bot channel: the Monday mentorship-stats digest (app A0…/mentorship-weekly-stats) plus occasional ops chat. Scores over the event-signal threshold every run because the digest literally counts 'Registered' mentors - a permanent false positive. Reviewed 2026-07-20 and again 2026-08-05: no event content.",
       "digestAt": "2026-08-05T04:33:14.226Z"
@@ -6031,7 +6048,7 @@
         "reason": "#website-team is the declared intake for website work orders as of 6 Aug 2026 — Chan asked the team in-channel to post update requests here instead of by DM. It is mapped skip because it plans no event of its own, and always-read because that is exactly the traffic the event-signal heuristic cannot see: \"please update Carolina Lobos' profile on the website\" names no venue, no date and no ticket, so it scores zero.",
         "alwaysRead": true
       },
-      "watermarkTs": "1785990598.416129",
+      "watermarkTs": "1787103828.243349",
       "threads": {
         "1693110156.197929": {
           "replyCount": 2,
@@ -7015,12 +7032,12 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-06T04:47:30.803Z",
+      "lastSyncedAt": "2026-08-21T12:40:49.103Z",
       "lastSyncedCommit": "",
-      "readAt": "2026-08-07T12:49:55.008Z",
-      "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
-      "digest": "THE WORK-ORDER INTAKE. On 6 Aug 2026 Chan asked the team, in-channel and by DM, to stop sending website update requests privately and post them here so they can be tracked. Everything before that is internal website/ops coordination (billing, tickets) and planned no event; everything after it should be treated as a queue of page changes to action. Marked always-read for that reason and not because of anything it has said yet — the signal heuristic scores a request like \"please update X's profile\" at zero, which is precisely how the same request went unread for a day in a DM on 5 Aug. Read the delta in full; do not judge this channel from the one-line triage evidence. A request here may point at a Google Sheet run sheet — read it with fetch-sheet.ts rather than trusting a digest that says something is still owed.",
-      "digestAt": "2026-08-06T04:47:30.802Z"
+      "scannedTs": "1787103828.243349",
+      "readAt": "2026-08-21T12:40:49.103Z",
+      "digest": "THE WORK-ORDER INTAKE. On 6 Aug 2026 Chan asked the team, in-channel and by DM, to stop sending website update requests privately and post them here so they can be tracked. Everything before that is internal website/ops coordination (billing, tickets) and planned no event; everything after it is a queue of page changes to action. Marked always-read because the signal heuristic scores \"please update X's profile\" at zero.\n\nDELTA READ 21 Aug 2026 AND ACTIONED. Nirmala, 19 Aug: \"Kindly change the photo of Carolina in website\", with the Les Mills run sheet attached. That was the FIRST work order posted under the new policy and it sat unread for thirteen days, because this channel had no scannedTs and the audit therefore computed a zero backlog for it. Both holes are fixed now (state-lib unreadConversations reports never-triaged; discover-channels writes a first scan position).\n\nACTIONED: carolina-lobos.jpg replaced with her own 800x800 studio headshot from the run sheet's Picture Link, and all four speaker posters plus the line-up tile rebuilt from it — the campaign set is a built artefact and does not follow the record on its own. Titles and bios in the sheet already matched the repo; the photo was the only difference.\n\nTRAP THIS CHANNEL TEACHES: a request here points at a run sheet, and that sheet is a WORKBOOK. The Les Mills one has seven tabs and the pasted link carried #gid=, so only Speakers was ever read. fetch-sheet.ts now reads every tab regardless.\n\nNEXT: nothing outstanding from this channel as of 21 Aug 2026.",
+      "digestAt": "2026-08-21T12:40:49.102Z"
     },
     "C05KXPSSXJP": {
       "name": "events_2023_august_hackthon",
@@ -7139,8 +7156,9 @@
         }
       },
       "fingerprint": "sha256:d5169b40123be1bfff3172ff6c57e167991b02a958e088f8061bbdbc586f9397",
-      "lastSyncedAt": "2026-08-06T06:18:29.832Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1700714961.122199",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "From Burnout to Balance — She Sharp x Tech Women NZ x AWS, September 2023, published as /events/from-burnout-to-balance (eventId 86). Channel archived 23 Nov 2023 by Shae. READ IN FULL 6 Aug 2026, and only because verify-coverage.ts walked Slack rather than trusting the manifest: this channel had been mapped to its event on 9 Jun 2026 with watermarkTs \"0\" — mapped without a fetch payload, then archived — so 173 messages and 20 threads had never been read by anything, and neither the triage (which treats `archived` as settled) nor audit-read-state (where \"never read\" and \"read to the beginning of time\" were both \"0\") could see it. Both now can. Nothing in the content needs the site: sold-out event, run sheet was a Google DOC not a sheet (docs have no CSV export — open them by hand), slides went to Canva and the Drive asset folder. The one loose end is historical: post-event photographs at drive.google.com/drive/folders/1kzPZwNkB0KlrEYftFAl4QXocIGoI0Axr, uploaded by Mike into his personal Drive on 21 Sep 2023 with a note that he would migrate them to the She Sharp Drive later, and a request from Maisie and Shae for a Google Photos album link instead because they did not want to link a Drive folder in the newsletter. If a 2023 gallery is ever wanted, that folder is where it is — assume the migration never happened.",
@@ -7385,8 +7403,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:46:06.167Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555725.120439",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "Past event channel, 2023-08-23 → 2023-10-25. It references the published page(s) /events/technological-change-workplace-workforce-impacts — referenced, not verified as its own. The 243 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
@@ -7840,8 +7859,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:46:04.765Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555726.122139",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "Past event channel, 2023-09-03 → 2023-11-27. It references the published page(s) /events/google-end-of-year-event — referenced, not verified as its own. The 345 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
@@ -7986,8 +8006,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-06T03:43:19.769Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555727.098769",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "Social-media coordination channel (Facebook, Instagram, LinkedIn, TikTok) — post copy, Canva drafts, speaker-quote graphics, who posts what where. Not an event channel and never has been. Read position recorded 6 Aug 2026 after reading the 2023-09 → 2024-03 backlog that the thread-read fix surfaced; every message in it is promotion of events that had already been published, including the 2024 IWD breakfast with Woolworths. Reopen only if a genuinely new event is proposed here rather than promoted from here. Note for anyone reading it later: the channel is the best record of which events got social coverage, so it is worth consulting for a post-event gallery or an impact report even though it drives no site data itself.",
@@ -8002,8 +8023,9 @@
       "watermarkTs": "1777555728.028599",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555728.028599",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -8310,8 +8332,9 @@
       "watermarkTs": "1777555728.996989",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555728.996989",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -8619,8 +8642,9 @@
       "watermarkTs": "1777555729.960279",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555729.960279",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -9232,8 +9256,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:46:08.986Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555730.933779",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "Past event channel, 2024-04-23 → 2024-08-15. It references the published page(s) /events/f-p-hackathon, /events/harness-the-power-of-data-and-ai — referenced, not verified as its own. The 527 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
@@ -9293,8 +9318,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:48:13.808Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555731.901809",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -12488,8 +12514,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T13:51:24.039Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.443Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1785706516.291289",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "Internal team chatter (giveaways, announcements). Not a site event channel. Flagged by general-signal auto-scan 2026-07-20; reviewed and confirmed no event. Un-skip only if a real event planning thread starts here.",
@@ -14533,8 +14560,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T13:51:24.041Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555732.846049",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -14564,8 +14592,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T13:51:24.041Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555733.806359",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -14736,8 +14765,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:46:07.567Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555734.924089",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "Past event channel, 2024-06-24 → 2024-09-04. It references the published page(s) /events/harness-the-power-of-data-and-ai — referenced, not verified as its own. The 151 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
@@ -14790,8 +14820,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:45:46.254Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555735.865789",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "Past event channel, 2024-06-12 → 2025-07-17. No page URL was ever posted in the channel, so none was confirmed from its content (candidates worth checking: /events/she-sharp-and-academyex-international-womens-day-2026, /events/she-sharp-academy-ex-international-womens-day). The 44 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
@@ -14819,8 +14850,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T13:51:24.041Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555736.909559",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -15215,8 +15247,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:46:10.423Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555737.884229",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "Past event channel, 2024-08-08 → 2024-12-02. No page URL was ever posted in the channel, so none was confirmed from its content (candidates worth checking: /events/google-educator-conference-2024, /events/google-educator-conference-2023). The 390 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
@@ -15729,8 +15762,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:46:16.002Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555738.836449",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "Past event channel, 2024-08-12 → 2024-12-12. It references the published page(s) /events/she-sharp-10-year-anniversary, /events/she-evening-with-google — referenced, not verified as its own. The 623 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
@@ -15899,8 +15933,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:46:11.797Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555739.776799",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "Past event channel, 2024-09-03 → 2024-11-18. It references the published page(s) /events/technological-change-workplace-workforce-impacts, /events/the-role-of-technology-in-sustainable-development — referenced, not verified as its own. The 173 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
@@ -15957,8 +15992,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:46:13.205Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555740.754689",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "Past event channel, 2024-09-07 → 2024-09-16. No page URL was ever posted in the channel, so none was confirmed from its content. The 32 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
@@ -15994,8 +16030,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T13:51:24.041Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555741.834869",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -16106,8 +16143,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:46:18.776Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.443Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555696.901349",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "General website-operations channel, not an event. Its unread traffic is Webflow/WordPress admin and template questions. Read position recorded 2023-10-26 after the 5 Aug 2026 thread-backlog pass, which surfaced 82 historical replies this pipeline had never read. Reopen only if a genuinely new event is proposed here.",
@@ -16348,8 +16386,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:45:54.823Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555742.937039",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "Past event channel, 2025-02-25 → 2025-03-20. It references the published page(s) /events/iamremarkable — referenced, not verified as its own. The 255 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
@@ -16506,8 +16545,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:45:56.254Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555743.912699",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "Past event channel, 2025-03-31 → 2025-09-08. No page URL was ever posted in the channel, so none was confirmed from its content (candidates worth checking: /events/she-sharp-and-myob-working-smarter, /events/2023-kickstart-your-career-in-tech-with-myob). The 151 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
@@ -16612,8 +16652,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:45:53.398Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555744.926479",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "Past event channel, 2025-03-10 → 2025-04-30. It references the published page(s) /events/iamremarkable — referenced, not verified as its own. The 132 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
@@ -16628,8 +16669,9 @@
       "watermarkTs": "1777555746.328899",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555746.328899",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -16688,8 +16730,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:45:49.095Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555747.336369",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "Past event channel, 2025-05-27 → 2025-07-01. It references the published page(s) /events/ethnic-advantage-conference — referenced, not verified as its own. The 44 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
@@ -17006,8 +17049,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:46:00.519Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555748.359119",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "Past event channel, 2025-06-30 → 2025-10-13. It references the published page(s) /events/code-secure — referenced, not verified as its own. The 449 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
@@ -17168,8 +17212,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:45:51.959Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555749.230179",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "Past event channel, 2025-06-26 → 2025-11-26. It references the published page(s) /events/she-sharp-hcltech-ai-empowerment-shaping-an-inclusive-digital-future — referenced, not verified as its own. The 293 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
@@ -17334,8 +17379,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:45:50.519Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555750.232799",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "Past event channel, 2025-06-23 → 2025-09-09. No page URL was ever posted in the channel, so none was confirmed from its content (candidates worth checking: /events/fonterra-a-legendairy-career). The 237 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
@@ -17524,8 +17570,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:45:57.687Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555751.195599",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "Past event channel, 2025-06-23 → 2025-08-17. It references the published page(s) /events/thrive-your-career-your-story — referenced, not verified as its own. The 223 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
@@ -17775,9 +17822,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-12T02:36:48.835Z",
+      "lastSyncedAt": "2026-08-21T12:36:01.775Z",
       "lastSyncedCommit": "",
-      "scannedTs": "1786309290.441759",
+      "scannedTs": "1786914058.725669",
       "readAt": "2026-08-12T02:36:48.836Z"
     },
     "C096M3GC3BL": {
@@ -17903,8 +17950,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:45:59.099Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555754.321859",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "Past event channel, 2025-07-20 → 2025-11-14. It references the published page(s) /events/she-sharp-vector-future-ready-data-ai-digital-innovation-inclusive-careers-at-vector — referenced, not verified as its own. The 189 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
@@ -17935,8 +17983,9 @@
       "watermarkTs": "1777555755.372069",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555755.372069",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -17949,8 +17998,9 @@
       "watermarkTs": "1755578516.056179",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1755578516.056179",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -17969,8 +18019,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T04:31:20.628Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1757996474.067209",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "Summer of Tech employer expo, Tue 16 Sep 2025, The Cloud, Auckland - She Sharp had a BOOTH; the event was not ours to publish and it is long past. Contents are booth logistics: banner pickup from a member's office, travel arrangements, printing, lollies. Full of personal addresses and movements - nothing here belongs in the repo. Re-open only if She Sharp decides to publish booth appearances as events, which it does not today.",
@@ -17985,8 +18036,9 @@
       "watermarkTs": "1759538918.623659",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1759538918.623659",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -18004,8 +18056,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T13:51:24.041Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1782122962.877649",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -18276,8 +18329,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T13:51:24.041Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1782366961.018289",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -18328,8 +18382,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:04:39.947Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777003016.597469",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -18342,8 +18397,9 @@
       "watermarkTs": "1777555758.311579",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.444Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555758.311579",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -18992,8 +19048,9 @@
       "watermarkTs": "1773042266.268899",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.445Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1773042266.268899",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -19040,8 +19097,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T13:51:24.041Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.445Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1779691339.445969",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -19586,8 +19644,9 @@
       "watermarkTs": "1781735505.874969",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.445Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1781735505.874969",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -19702,8 +19761,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-06T04:17:28.685Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.445Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1785272548.448119",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "Hackathon 2026 mentor-recruitment working group. Everything here is upstream of the page: F&P mentor confirmations from Nicholas Fourie, chasing mentors to submit bio+photo+availability, Discord setup (a PUBLIC intro invite and a PRIVATE mentors-only invite - only the participant one is on the site), Red Hat swag. Mentor names reach the page only after a bio and photo arrive. Contains the mentor Runsheet Google Sheet link and mentor PII - keep out.",
@@ -19760,8 +19820,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-06T04:18:02.221Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.445Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1785185514.766339",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "Split off from the mentor-recruitment group DM on 27 Jul. Records two roster facts the page depends on: Lesley Gao WITHDREW as mentor (27 Jul, family commitment on 8 Aug) - she was never listed, so no action; Sara Ghafoor AGREED to mentor (27 Jul) but has never supplied bio/photo, so she is deliberately NOT listed. Also guest-code ticket purchases for named individuals - internal, never publish.",
@@ -19857,8 +19918,9 @@
       "watermarkTs": "1777555697.838329",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-06-09T01:06:45.086Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.443Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555697.838329",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -19876,8 +19938,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T13:51:24.040Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.443Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555698.818079",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -20253,8 +20316,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T13:51:24.040Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.443Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555699.781849",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -22048,8 +22112,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:46:17.385Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.443Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1780114226.689319",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "Industry-partnership channel — leads, intros and sponsor conversations, not an event of its own. Its 2026 IWD thread concerns the academyex International Women's Day event, which is already published. Read position recorded 2026-05-12 after the 5 Aug 2026 thread-backlog pass, which surfaced 324 historical replies this pipeline had never read. Reopen only if a genuinely new event is proposed here.",
@@ -22094,8 +22159,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T14:46:14.589Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.443Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1777555702.716959",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "Past event channel, 2020-01-15 → 2020-02-24. No page URL was ever posted in the channel, so none was confirmed from its content. The 9 messages read in the 5 Aug 2026 backlog pass are planning chatter for an event that has already happened — nothing the site needs. Un-skip only if someone wants this skill to take ownership of the legacy page, which would mean migrating it into events-custom.json.",
@@ -22139,8 +22205,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T13:51:24.041Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.445Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1781826159.264339",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -22167,8 +22234,9 @@
       "watermarkTs": "1757817757.643049",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.445Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1757817757.643049",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -22181,8 +22249,9 @@
       "watermarkTs": "1751939954.787369",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.445Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1751939954.787369",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -22200,8 +22269,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T13:51:24.041Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.445Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1768989765.177879",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -22221,8 +22291,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-06T04:17:25.730Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.445Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1768970329.124609",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "Development-thread DM: auth/login logic changes, review logs, feature walkthroughs dating to late 2025. Scores on the event-signal heuristic because dev logs quote words like 'registration' and dates - that is a FALSE POSITIVE, not event content. Still read the delta rather than trusting this note if it ever surfaces again.",
@@ -22237,8 +22308,9 @@
       "watermarkTs": "1784762797.040199",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.445Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1784762797.040199",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -22251,8 +22323,9 @@
       "watermarkTs": "1783933655.158579",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.445Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1783933655.158579",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -22265,8 +22338,9 @@
       "watermarkTs": "1758421784.028399",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.445Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1758421784.028399",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -22326,8 +22400,9 @@
       "watermarkTs": "1759440818.325219",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.445Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1759440818.325219",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -22431,8 +22506,9 @@
       "watermarkTs": "1760149265.766199",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.445Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1760149265.766199",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -22445,8 +22521,9 @@
       "watermarkTs": "1772435417.460129",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.445Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1772435417.460129",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -22516,8 +22593,9 @@
       "watermarkTs": "1778417324.210039",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.445Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1778417324.210039",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -22530,8 +22608,9 @@
       "watermarkTs": "1783398762.417009",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-05T07:11:53.294Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.445Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1783398762.417009",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
     },
@@ -22546,8 +22625,9 @@
       "watermarkTs": "1785374818.222099",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-06T04:17:22.809Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.445Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1785374818.222099",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "READ IN FULL. Nikita sends page edits straight here rather than to the event channel. 2026-08-05 sync applied her 29 Jul request: keynote row merged to '5:50-6:10pm Keynote speaker session' (no name, no separate Q&A) - a previous pass removed the name but kept a Q&A row, which was not what she asked for. Her 19 Jun request (Peyvand 20 June About us / What to Expect rewrite) is already live. She also confirms registration counts and closures here.",
@@ -22564,8 +22644,9 @@
       "watermarkTs": "1785990559.616139",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-06T04:47:47.574Z",
+      "lastSyncedAt": "2026-08-21T12:39:34.445Z",
       "lastSyncedCommit": "",
+      "scannedTs": "1785990559.616139",
       "readAt": "2026-08-07T12:49:55.008Z",
       "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
       "digest": "READ IN FULL. Nirmala asks for page changes here as well as in channel. 2026-08-04: 'Can you publish the Les Mills event live? I have updated the banner in humanitix page' + 'give the above url to Register Now button' -> registrationUrl applied 5 Aug. 13 Jul: the four AI Hackathon judge profiles, sourced from the private Runsheet Google Sheet - already live. 3 Aug she asked where the published mentor list came from. Her outstanding ask is Les Mills SPEAKER profiles, still blocked on that private Sheet.",
