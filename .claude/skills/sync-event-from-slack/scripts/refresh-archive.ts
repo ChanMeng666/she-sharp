@@ -91,7 +91,7 @@ interface DiffReport {
 interface Target {
   id: string;
   name: string;
-  kind: "stale" | "new";
+  kind: "stale" | "new" | "rename";
   why: string;
 }
 
@@ -308,8 +308,30 @@ function parseReport(text: string, source: string): DiffReport {
 // the plan
 // ---------------------------------------------------------------------------
 
-const selected = (t: { id: string; name: string }): boolean =>
-  only.size === 0 || only.has(t.id.toLowerCase()) || only.has(t.name.toLowerCase());
+/**
+ * True when a reported rename is a naming disagreement rather than a rename.
+ *
+ * `conversationName()` names a DM from the workspace user directory and falls
+ * back to the raw user id when the directory has no entry. `users.list` omits
+ * Slackbot, so the triage computes `dm:USLACK` while the stored payload says
+ * `dm:Slack` — resolved there from the message authors the fetch actually saw.
+ * Nothing was renamed and a refetch cannot change it: the new payload is
+ * byte-identical and the next run reports the same rename again, forever.
+ *
+ * The test is directional. id → name is a real improvement and must refetch
+ * (two DMs became `dm:annamigdalek` and `dm:gowrislokesh12` that way). Only
+ * name → id is the directory failing, and that one is skipped and explained.
+ */
+const UNRESOLVED_DM = /^dm:U[A-Z0-9]{4,}$/;
+const isPhantomRename = (r: { archiveName: string; slackName: string }): boolean =>
+  UNRESOLVED_DM.test(r.slackName) && !UNRESOLVED_DM.test(r.archiveName);
+
+const selected = (t: { id: string; name?: string; archiveName?: string; slackName?: string }): boolean => {
+  if (only.size === 0) return true;
+  // A rename carries two names, and --only may reasonably use either of them.
+  const names = [t.name, t.archiveName, t.slackName].filter(Boolean) as string[];
+  return only.has(t.id.toLowerCase()) || names.some((n) => only.has(n.toLowerCase()));
+};
 
 function today(): string {
   return new Date().toISOString().slice(0, 10);
@@ -337,6 +359,27 @@ function main(): void {
         why: `${n.messages} message(s), not in the archive`,
       }),
     ),
+    /*
+     * A rename is a refetch, not a rebuild.
+     *
+     * `build-archive.ts` names each transcript from the name inside
+     * `raw/<id>.json`, so a conversation whose only change is its name keeps
+     * the old filename through any number of rebuilds — the payload still
+     * says what it always said. This step used to print "the rebuild moves
+     * the transcript file", which was simply untrue: a full --apply on
+     * 21 August 2026 rebuilt everything and left `dm-U07B80HRBGW--…md`
+     * exactly where it was, with the rename still reported afterwards. Left
+     * alone it is permanent: the report never clears, and a DM stays filed
+     * under a user id nobody can grep for.
+     */
+    ...report.renamed.filter((r) => selected(r) && !isPhantomRename(r)).map(
+      (r): Target => ({
+        id: r.id,
+        name: r.slackName,
+        kind: "rename",
+        why: `renamed in Slack: ${r.archiveName} → ${r.slackName}`,
+      }),
+    ),
   ];
 
   if (only.size) {
@@ -356,15 +399,19 @@ function main(): void {
     `\nplan${apply ? "" : " (dry run — nothing will be written)"}: ` +
       `${targets.filter((t) => t.kind === "stale").length} stale · ` +
       `${targets.filter((t) => t.kind === "new").length} new · ` +
+      `${targets.filter((t) => t.kind === "rename").length} renamed · ` +
       `${refused.length} refused · ` +
       `${report.fresh.length} already current`,
   );
   for (const t of targets) {
-    console.error(`  ${t.kind === "stale" ? "REFETCH" : "ADD    "} ${t.name} (${t.id}) — ${t.why}`);
+    const label = t.kind === "stale" ? "REFETCH" : t.kind === "rename" ? "RENAME " : "ADD    ";
+    console.error(`  ${label} ${t.name} (${t.id}) — ${t.why}`);
   }
-  for (const r of report.renamed) {
+  for (const r of report.renamed.filter(isPhantomRename)) {
     console.error(
-      `  RENAME  ${r.archiveName} → ${r.slackName} (${r.id}) — the rebuild moves the transcript file`,
+      `  NAMING  ${r.archiveName} (${r.id}) — the triage calls this ${r.slackName}; ` +
+        `not a rename, and not refetched. \`users.list\` has no entry for that id, ` +
+        `so the archive's name is the better one.`,
     );
   }
   for (const v of report.vanished) {
@@ -450,12 +497,17 @@ function main(): void {
    * exactly right, because nothing should exist yet and re-running after a
    * rate-limit abort then costs only what actually failed.
    */
-  const stale = targets.filter((t) => t.kind === "stale");
+  // A rename goes on the stale pass: its payload exists and must be OVERWRITTEN
+  // with one carrying the new name, which --skip-existing would refuse to do.
+  const stale = targets.filter((t) => t.kind === "stale" || t.kind === "rename");
   const fresh = targets.filter((t) => t.kind === "new");
 
   if (stale.length) {
     const file = writeIdsFile("refresh-stale.txt", stale);
-    console.error(`\nrefresh-archive: step 2/3 — refetching ${stale.length} stale conversation(s)…`);
+    console.error(
+      `
+refresh-archive: step 2/3 — refetching ${stale.length} stale or renamed conversation(s)…`,
+    );
     failures += runFetch(["--many", file, "--out-dir", rawDir]);
   }
   if (fresh.length) {
@@ -494,7 +546,7 @@ function main(): void {
     }
     // Only meaningful for stale targets: a new one may legitimately have been
     // skipped by --skip-existing because an earlier run already wrote it.
-    if (t.kind === "stale" && statSync(dest).mtimeMs < startedAt) {
+    if (t.kind !== "new" && statSync(dest).mtimeMs < startedAt) {
       untouched.push(`${t.name} (${t.id})`);
     }
   }
