@@ -576,7 +576,7 @@ Ask the user to pick one, with sensible defaults:
 In both cases include a commit trailer:
 
 ```
-Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>
+Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
 ```
 
 ### Step 9 — Report back

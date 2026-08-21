@@ -169,7 +169,7 @@ reaches a projector or a poster.
 | When | Gate — true before you start | Run | Produces |
 |---|---|---|---|
 | T-6w | a Slack planning channel exists | `/sync-event-from-slack` | the event in `events-custom.json`, assets in `public/img/events/<slug>/` |
-| T-6w | the fetch payload was recorded | its **Step 7.6** archive refresh | the verbatim archive level with Slack |
+| T-6w | the fetch payload was recorded | its **Step 7.6** archive refresh | the verbatim archive level with Slack — **committed to the private archive repo, never to this one** |
 | T-5w | date, venue, title confirmed **in the event record** | `/make-event-poster` | `poster`, `social`, `story`, `square`, `humanitix` |
 | T-4w | every speaker has a headshot in the event record | `/make-event-poster --speaker all --lineup` | one poster per person + the line-up tile |
 | T-3w | the Resend segment has contacts | `/promote-event` → `/email-the-community` | one scheduled broadcast |
@@ -181,12 +181,22 @@ reaches a projector or a poster.
 | **T+0** | — | project the deck; the `/f/<code>` QR is on the feedback slide | — |
 | T+1d | a feedback form URL | `/send-event-emails thank-you` | a ledger entry |
 | T+3d | — | **nothing — the cron does it** | the feedback digest in Slack |
-| T+1w | the photo album URL is known | set `galleryUrl`, `build-event-archive.mts --slug <slug>`, `apply-humanitix-attendance.ts` | a past-event page with photos and figures |
+| T+1w | the photo album URL is known | set `galleryUrl`, then `build-event-archive.mts --slug <slug>` | a past-event page with its photos |
 | T+2w | — | `/monthly-newsletter` | the event in the month's issue |
 
 **Four emails about a two-hour evening is too many.** For a single-session
 event, `welcome` + `day-before` is usually the whole programme. A stage nobody
 asked for is not sent.
+
+**The attendance figures are not part of close-out, and there is no one-liner.**
+`scripts/data/apply-humanitix-attendance.ts` takes no `--slug` — it is a
+whole-dataset pass, dry-run by default, and it reads every change it makes out
+of `lib/data/json/humanitix/crosswalk.json`, which a **human** writes. So a new
+event's `attendees` and `checkedIn` land only after a fresh Humanitix export is
+built into the private vault (`scripts/humanitix/build-archive.ts --export
+<YYYY-MM-DD>`), a crosswalk row is proposed
+(`scripts/humanitix/propose-crosswalk.ts`) and somebody signs it off. Expect
+that to happen on the archive's own cadence, not the event's.
 
 ---
 

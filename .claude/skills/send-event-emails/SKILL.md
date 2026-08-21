@@ -9,8 +9,10 @@ Three facts shape everything below.
 
 - **The event lives in the repo** — title, date, time, venue, registration link,
   in `lib/data/json/events-custom.json` via `lib/data/events.ts`. Read it only
-  through `scripts/resolve-event.ts`, which handles the fuzzy name, the timezone
-  and the local-calendar date this repo has drifted on before.
+  through this skill's `scripts/resolve-event.ts`, which handles the fuzzy name,
+  the timezone and the local-calendar date this repo has drifted on before. It is
+  a shim over `scripts/events/resolve-event.ts`, where the implementation lives so
+  the announcement generator can share it — either path behaves identically.
 - **The recipients do not.** `event_registrations` is empty; registration runs on
   **Humanitix**. The list arrives as a CSV a human exports. Nothing about who is
   coming is discoverable from this codebase.
