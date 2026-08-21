@@ -134,7 +134,7 @@ Write the spec to `tmp/specs/announce-<slug>.json` (shape in
   "key": "announce-mentoring-round-open",
   "engine": "react",
   "category": "marketing",
-  "from": "She Sharp <hello@shesharp.org.nz>",
+  "from": "She Sharp <newsletter@shesharp.org.nz>",
   "replyTo": "mentoring@shesharp.org.nz",
   "subject": "Mentoring applications are open again",
   "preheader": "Six months, one mentor, and a room of women in tech behind you.",
@@ -187,7 +187,7 @@ Email gates — 13.9KB rendered
 
 Next — create the broadcast as a draft (no API call with --dry-run):
 resend broadcasts create `
-  --from "She Sharp <hello@shesharp.org.nz>" `
+  --from "She Sharp <newsletter@shesharp.org.nz>" `
   --subject "Mentoring applications are open again" `
   --preview-text "Six months, one mentor, and a room of women in tech…" `
   --name "announce-mentoring-round-open" --reply-to "mentoring@shesharp.org.nz" `
@@ -250,7 +250,7 @@ skill's convention. Send the **broadcast-mode** HTML — the bytes that will shi
 
 ```powershell
 resend emails send `
-  --from "She Sharp <hello@shesharp.org.nz>" `
+  --from "She Sharp <newsletter@shesharp.org.nz>" `
   --to "<the address the user gave you>" `
   --reply-to "mentoring@shesharp.org.nz" `
   --subject "[TEST] Mentoring applications are open again" `
@@ -283,7 +283,7 @@ Audience     : segment "Newsletter Pilot" (c0041ec5-…) — 1 contact
 Topic        : "Monthly Newsletter" (301e1e64-…) — scopes what unsubscribe opts out of
 Subject      : Mentoring applications are open again            (37 chars)
 Preview text : Six months, one mentor, and a room of women in tech behind you.  (63)
-From         : She Sharp <hello@shesharp.org.nz>
+From         : She Sharp <newsletter@shesharp.org.nz>
 Reply-To     : mentoring@shesharp.org.nz
 Body         : 2 paragraphs + 1 details table + 1 button → https://www.shesharp.org.nz/mentorship/mentee
 Render       : tmp/emails/announce-mentoring-round-open.broadcast.html (13.9KB, all gates passed)

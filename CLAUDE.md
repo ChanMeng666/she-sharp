@@ -338,6 +338,15 @@ history, do not hand-edit) and `events-custom.json` (the edit target); which
 file owns what is in `lib/data/json/README.md`.
 → `docs/development/ADD_EVENTS.md`
 
+**The event lifecycle.** One regular evening event is eleven skills in a fixed
+order — Slack channel → event record → poster → speaker campaign → announcement
+→ registrant email → deck → the night → feedback → gallery → newsletter. Each
+skill knows only its own job; the order, the gate in front of each step and the
+state file each one writes live in one place, and
+`npx tsx scripts/events/event-status.ts --slug <slug>` answers "where has this
+event got to?" offline. `/run-event-playbook` is the same thing as a skill.
+→ `docs/development/EVENT_LIFECYCLE_SOP.md`
+
 **Content and brand rules.** Twelve years of counting traps, naming traps,
 decisions not to roll back, and editorial rules — every one recorded because it
 was broken at least once. Read before publishing a number or naming a person.

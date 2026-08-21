@@ -43,7 +43,7 @@ send: they write files and print the `resend` command a human runs.
 | `data/` | One-off corrections to `events-custom.json` / `shesharp_events_v3.json`, each carrying its finding id and its authority. | `json-format.ts` is the shared safe read/write; each fix script is its own entry point and is idempotent. |
 | `deck/` | Building and checking `/present/<slug>` slide decks. | `new-deck.ts` to scaffold, `lint-deck.ts` for the organiser-readable report, `sync-registry.ts` to regenerate `registry.ts` + `index-meta.ts`. |
 | `email/` | The outbound-mail pipeline behind the four email skills: audience inventory, recipient normalisation, render, gate, batch. | `render-message.ts` (spec → HTML), `build-batch.ts` (list → chunked JSON). `suppression.ts` is the do-not-contact register. |
-| `events/` | Event poster generation (plate → the event's five layouts, or a per-speaker campaign set) and feedback tooling. | `generate-poster-plate.ts` then `build-event-poster.ts` (`--speaker`/`--lineup` for the campaign set); design lives in `poster-formats.ts`, `poster-speaker-formats.ts` and `poster-type.ts`; `poster-speaker.test.ts` checks the layouts without a plate. |
+| `events/` | The event lifecycle report, event poster generation (plate → the event's five layouts, or a per-speaker campaign set) and feedback tooling. | `event-status.ts` — offline, read-only, writes nothing: for each event it prints where the Slack channel, event record, artwork, deck, feedback code, announcement, attendee emails and photos have got to, and names the command or skill that fixes every gap (`--slug`, `--upcoming`, `--past [N]`, `--all`, `--json`; CI runs `event-status.test.ts`). Then `generate-poster-plate.ts` → `build-event-poster.ts` (`--speaker`/`--lineup` for the campaign set); design lives in `poster-formats.ts`, `poster-speaker-formats.ts` and `poster-type.ts`; `poster-speaker.test.ts` checks the layouts without a plate. |
 | `humanitix/` | Reducing the gitignored ticketing vault to committed aggregates. | `verify-export.ts` → `manifest.ts --append` → `build-archive.ts`. |
 | `mailchimp/` | The same split for the audience export: addresses in the vault, counts in the repo. | `verify-export.ts` → `build-archive.ts`. |
 | `newsletter/` | Monthly newsletter: photo strip, local preview, test send, approve. | `preview.ts` for review, `approve.ts` to ship. |
@@ -117,7 +117,7 @@ send: they write files and print the `resend` command a human runs.
 
 | Job | Runs |
 | --- | --- |
-| `verify-image-paths` | `scripts/verify-image-paths.ts`, `scripts/check-hackathon-facts.ts`, `.claude/skills/sync-event-from-slack/scripts/state-lib.test.ts`, `.claude/skills/sync-event-from-slack/scripts/audit-read-state.ts`, `lib/data/humanitix.test.ts`, `lib/data/mailchimp.test.ts` |
+| `verify-image-paths` | `scripts/verify-image-paths.ts`, `scripts/check-hackathon-facts.ts`, `.claude/skills/sync-event-from-slack/scripts/state-lib.test.ts`, `.claude/skills/sync-event-from-slack/scripts/audit-read-state.ts`, `scripts/events/event-status.test.ts`, `lib/data/humanitix.test.ts`, `lib/data/mailchimp.test.ts` |
 | `typecheck-scripts` | `pnpm typecheck:scripts` — covers this directory and `.claude/`, which the root tsconfig skips |
 | `typecheck` | `pnpm typecheck` |
 | `lint` | `pnpm lint` (errors only) |

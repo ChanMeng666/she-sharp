@@ -530,6 +530,37 @@ itself.
 Run `verify-coverage.ts` after any bulk change, before trusting a quiet table,
 and whenever someone says a message was missed.
 
+### Step 7.6 — Refresh the archive
+
+```
+npx tsx .../refresh-archive.ts --archive D:/github_repository/she-sharp-slack-archive
+npx tsx .../refresh-archive.ts --archive D:/…/she-sharp-slack-archive --apply
+```
+
+- **Dry run is the default and writes nothing.** It runs `diff-archive.ts` and
+  prints what would be refetched; `--apply` then does the archive README's
+  three-step recipe — diff, refetch the stale and new conversations **in full**,
+  rebuild `conversations/`, `manifest.json` and `INDEX.md` from `raw/`. It never
+  passes `--state`/`--since` and never shell-redirects, because either one turns
+  a full transcript into a handful of messages that looks like a good refresh.
+  A conversation whose payload holds messages Slack no longer has is **refused,
+  not refetched**: on 9 August 2026 one channel had eight messages deleted and
+  nine added in the same window, so the count went *up* while eight records
+  stopped existing anywhere but in `raw/`. The script prints the `mv` into
+  `raw/superseded/` a human must do first and carries on with the rest.
+- **The manifest and the archive are two positions, on purpose.**
+  `state/sync-state.json` records what the model has READ; the archive's `raw/`
+  records what has been TRANSCRIBED. Every sync moves the first and not the
+  second, and until this step existed nothing in any step list moved the second
+  at all — so the archive aged silently while all three gates in Step 7.5 stayed
+  green, because none of them looks at it.
+- **Nothing from the archive may be copied into this repo.** It is private and
+  stays private: verbatim DMs, attendee spreadsheets, a storeroom door code, and
+  a `SHE#…` ticket-code series some of which is still live. Carry the *fact*,
+  never the text — the same rule as "Never copy internal codes" above. The
+  archive is a different repository: commit it there, separately, never as part
+  of the event PR.
+
 ### Step 8 — Commit
 
 Ask the user to pick one, with sensible defaults:
@@ -545,7 +576,7 @@ Ask the user to pick one, with sensible defaults:
 In both cases include a commit trailer:
 
 ```
-Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>
+Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
 ```
 
 ### Step 9 — Report back

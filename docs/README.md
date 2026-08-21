@@ -33,13 +33,14 @@ happened, **dormant** is a runbook for a state the site is not in.
 | Doc | What it is | Status |
 |---|---|---|
 | `ADD_EVENTS.md` | Editing events, stats, sponsors, podcasts and press in `lib/data/` | current |
-| `AI_SKILLS_GUIDE.md` | Non-technical walkthrough of the seven `.claude/skills/` workflows | current |
+| `AI_SKILLS_GUIDE.md` | Non-technical walkthrough of the eleven `.claude/skills/` workflows | current |
 | `CHATBOT_AI_AGENT.md` | The visitor chatbot: knowledge context, tools, rate limiting | current |
 | `CONTENT_RULES.md` | Counting and naming traps; read before publishing a number or a name | current |
 | `DECK_SYSTEM.md` | The `/present/*` deck system in full — data model, skins, linter, host controls | current |
 | `EMAIL_ADDRESSES.md` | Every `@shesharp.org.nz` address, and which are mailboxes vs sending identities | current |
 | `EMAIL_OPERATIONS.md` | The four sending streams, unsubscribe handling, newsletter loop | current |
 | `EVENT_FEEDBACK.md` | The `/f/<code>` QR form: codes, rate limiting, digest, anonymisation | current |
+| `EVENT_LIFECYCLE_SOP.md` | One regular event end to end — the phase order, every gate, who writes which state file, and the six things that look like bugs | current |
 | `FUNDER_REPORTS.md` | Why `report/` is a separate Typst project and what gates a final build | current |
 | `GEO_SEO_MONITORING.md` | What SEO/GEO surfaces exist, the Search Console properties, the baseline | current |
 | `GEO_SEO_IMPLEMENTATION_GUIDE.md` | Reusable playbook for adding SEO/GEO to a Next.js 15 site | current |
