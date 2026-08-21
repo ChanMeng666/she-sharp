@@ -12,32 +12,64 @@
  * one loses either the headline or the facts in the others. The design lives in
  * `poster-formats.ts`; this file is the machine that drives it.
  *
+ * TWO SETS OF ARTWORK, ONE CAMPAIGN. Without a flag this builds the EVENT set —
+ * the five sizes that announce the evening, and that can be posted once.
+ * `--speaker` builds the per-person set instead, and `--lineup` the whole group
+ * on one tile. Those exist because She Sharp promotes an event for weeks: the
+ * speaker posters are what keeps it in a feed without repeating a picture, and
+ * every one of them reads its date and venue from the same record, so a
+ * six-week campaign cannot drift away from the website. Their design lives in
+ * `poster-speaker-formats.ts`.
+ *
  *   npx tsx scripts/events/build-event-poster.ts <event-slug> --plate <file.png>
  *          [--only social,humanitix] [--suffix v2] [--accent "#c846ab"]
  *          [--spark "#5ee7f5"] [--strapline "..."] [--no-gate]
+ *          [--speaker <name-slug>|all] [--lineup] [--role "Panellist"]
+ *          [--hook "..."] [--hook-file <json>] [--name-size 128]
  *
- * Writes `public/img/events/<slug>/<format>[-<suffix>].<ext>` and the crop
- * previews that matter into `tmp/poster-review/`.
+ * Writes `public/img/events/<slug>/<format>[-<suffix>].<ext>`, the crop
+ * previews that matter into `tmp/poster-review/`, and — for the speaker set —
+ * a generated `index.ts` manifest beside the files.
  */
 
-import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 import sharp from "sharp";
 
 import { formatEventDate } from "@/lib/data/events";
-import { loadEventForDeck, partnerLogosFrom } from "@/lib/deck/event-source";
+import {
+  SPEAKER_GROUP_ORDER,
+  loadEventForDeck,
+  partnerLogosFrom,
+} from "@/lib/deck/event-source";
 import { getAllDecks } from "@/lib/deck/registry";
 import { contrastRatio, relativeLuminance } from "@/lib/deck/theme";
+import type { EventSpeakerGroup, EventSpeakerV3, EventV3 } from "@/types/event";
 import {
   FORMATS,
   SHE_SHARP_THEME,
-  type Format,
   type Layout,
   type PosterCopy,
   type PosterTheme,
 } from "./poster-formats";
-import { assertFamiliesDistinct, renderLayer, type TextBox } from "./poster-type";
+import {
+  LINEUP_FORMATS,
+  SPEAKER_FORMATS,
+  assertHook,
+  roleLabelFor,
+  solveNameSize,
+  type LineupCopy,
+  type SpeakerCopy,
+} from "./poster-speaker-formats";
+import {
+  assertFamiliesDistinct,
+  renderLayer,
+  renderPortrait,
+  speakerSlug,
+  type TextBox,
+} from "./poster-type";
 
 const ROOT = process.cwd();
 /** Every asset for an event lives in its own folder; see the events README. */
@@ -146,7 +178,188 @@ function themeFor(slug: string, override: Partial<PosterTheme>): PosterTheme {
   return theme;
 }
 
+/* ---------------------------------------------------------------- speakers */
+
+/** One person, plus the group they were listed under. */
+export interface RosterEntry {
+  person: EventSpeakerV3;
+  groupKey: string;
+  heading: string;
+  slug: string;
+}
+
+/**
+ * Everyone on the event, in a stable order, with their fields untruncated.
+ *
+ * NOT `speakerGroupsFrom()`, and the reason is written at `SPEAKER_GROUP_ORDER`
+ * in `lib/deck/event-source.ts`: that accessor clamps a job title to six words
+ * for a slide, and a poster has a whole column to set it in. The ORDER is
+ * imported rather than restated, because two lists of the same ten group keys
+ * would drift and the drift would be invisible — the same event would simply
+ * produce a different first poster on a later run.
+ */
+export function rosterFor(event: EventV3): RosterEntry[] {
+  const groups = (event.detailPageData.speakers ?? {}) as Record<
+    string,
+    EventSpeakerGroup | undefined
+  >;
+
+  return SPEAKER_GROUP_ORDER.flatMap((groupKey) => {
+    const group = groups[groupKey];
+    return (group?.speakers ?? [])
+      .filter((person) => person?.name?.trim())
+      .map((person) => ({
+        person,
+        groupKey,
+        heading: group?.heading?.trim() || "",
+        slug: speakerSlug(person.name),
+      }));
+  });
+}
+
+/**
+ * One person, as a poster's copy — or a refusal naming them.
+ *
+ * THE HEADSHOT IS NOT OPTIONAL AND HAS NO FALLBACK. Two of the fifty-nine
+ * speakers in `events-custom.json` carry `image: ""`, and a path that IS in the
+ * JSON whose file was never committed is just as common, because the record and
+ * the file are written by different steps of `sync-event-from-slack`. Either way
+ * the failure without this check happens deep inside sharp as `Input file is
+ * missing` — a stack trace, which the skill's fourth guardrail forbids handing
+ * to an organiser. And a speaker poster with no face is not a degraded speaker
+ * poster; it is the event poster with somebody's name on it.
+ */
+export function speakerCopyFor(
+  entry: RosterEntry,
+  opts: { role?: string; hook?: string; nameSize: number },
+): SpeakerCopy {
+  const image = entry.person.image?.trim();
+  if (!image) {
+    throw new Error(
+      `${entry.person.name} has no photograph in the event record.\n` +
+        "Add one to lib/data/json/events-custom.json — the event page shows the same file, " +
+        "so it is worth having either way. Headshots live beside the event's other assets " +
+        "as public/img/events/<slug>/<firstname-lastname>.jpg.",
+    );
+  }
+  const file = path.join("public", image.replace(/^\//, ""));
+  if (!existsSync(path.join(ROOT, file))) {
+    throw new Error(
+      `${entry.person.name}'s photograph is listed as "${image}" but there is no file there.\n` +
+        "Either the image was never committed or the path in events-custom.json is stale.",
+    );
+  }
+
+  const role = roleLabelFor(entry.groupKey, entry.heading, opts.role);
+  return {
+    slug: entry.slug,
+    role: role.label,
+    name: entry.person.name.trim(),
+    title: entry.person.title?.trim() || undefined,
+    company: entry.person.company?.trim() || undefined,
+    portrait: file,
+    hook: opts.hook ? assertHook(opts.hook, entry.person.name) : undefined,
+    nameSize: opts.nameSize,
+  };
+}
+
+/**
+ * The generated manifest that keeps the campaign out of the orphan list.
+ *
+ * WHY A FILE RATHER THAN AN ENTRY IN `KNOWN_UNREFERENCED`. A dozen files per
+ * event cannot be hand-listed in that array and have the array stay read, and a
+ * regex allow-list would be worse: its whole virtue is that an entry which stops
+ * being true FAILS, and a pattern never goes stale — it would quietly become the
+ * place broken things go to be forgotten, which is exactly what its own comment
+ * warns about.
+ *
+ * `scripts/assets/refs.ts` already scans `public/**` for `.ts`, precisely
+ * because `public/img/curated/index.ts` and `public/img/plates/index.ts` are
+ * generated manifests inside the asset tree and are the sole reference for ~143
+ * images. This is the same shape of thing, so it needs no change to any gate —
+ * and it makes the FORWARD check cover these too, so deleting a poster fails CI
+ * instead of CI staying green while somebody's scheduled post loses its picture.
+ *
+ * Per-event rather than one global list, so deleting an event's folder deletes
+ * its manifest with it and a stale entry is structurally impossible. Rebuilt by
+ * scanning the directory, so it is idempotent and self-healing after a rename.
+ */
+function writeSpeakerManifest(slug: string, event: EventV3): void {
+  const dir = path.join(EVENTS_ROOT, slug);
+  const files = readdirSync(dir)
+    .filter((f) => /^(speaker-.+|lineup)-[a-z0-9-]+\.jpg$/.test(f))
+    .sort();
+  const manifest = path.join(dir, "index.ts");
+
+  if (files.length === 0) return;
+
+  const roster = new Map(rosterFor(event).map((e) => [e.slug, e]));
+  const rows = files.map((file) => {
+    const speaker = file.startsWith("speaker-")
+      ? [...roster.keys()].find((s) => file.startsWith(`speaker-${s}-`))
+      : undefined;
+    const person = speaker ? roster.get(speaker) : undefined;
+    const group = [...roster.values()][0];
+    const who = person ? person.person.name : group?.heading || "The speakers";
+    const alt = person
+      ? `${who} — a She Sharp promotional graphic for ${event.title}.`
+      : `${who}: every speaker at ${event.title}, on one She Sharp promotional graphic.`;
+    return (
+      `  {\n` +
+      `    file: "/img/events/${slug}/${file}",\n` +
+      `    subject: ${JSON.stringify(who)},\n` +
+      `    alt: ${JSON.stringify(alt)},\n` +
+      `  },`
+    );
+  });
+
+  writeFileSync(
+    manifest,
+    `// AUTO-GENERATED by scripts/events/build-event-poster.ts — do not edit by hand.\n` +
+      `//\n` +
+      `// Promotional graphics for this event's speakers. They have no page on the\n` +
+      `// website by design: they are posted to LinkedIn and Instagram one at a time\n` +
+      `// over the weeks before the event, so nothing renders them. Naming them here\n` +
+      `// rather than in scripts/verify-image-paths.ts means the forward check guards\n` +
+      `// them too — delete one and CI fails, instead of CI staying green while a\n` +
+      `// scheduled post loses its picture.\n` +
+      `//\n` +
+      `// NEVER point coverImage.url at one of these. A speaker poster has no safe\n` +
+      `// band, so an event card would crop the person's name away.\n` +
+      `\n` +
+      `export interface SpeakerPoster {\n` +
+      `  file: string;\n` +
+      `  subject: string;\n` +
+      `  alt: string;\n` +
+      `}\n` +
+      `\n` +
+      `export const speakerPosters: SpeakerPoster[] = [\n${rows.join("\n")}\n];\n`,
+    "utf8",
+  );
+  console.log(`  → ${path.relative(ROOT, manifest)} — ${files.length} files named`);
+}
+
 /* ---------------------------------------------------------------- pipeline */
+
+/**
+ * What the machine needs to know about a format, whatever kind it is.
+ *
+ * `Format`, `SpeakerFormat` and `LineupFormat` differ only in what their `build`
+ * takes; everything from the crop to the encoder is the same job. Naming that
+ * shared shape is what lets one pipeline drive all three rather than three
+ * pipelines drifting apart — which they would, because the interesting bugs in
+ * here (`stats()` ignoring the queued pipeline, sharp keeping only the last
+ * `resize()`, `toFile()` re-encoding an encoded buffer) are all in the part that
+ * would have been copied.
+ */
+interface RenderSpec {
+  key: string;
+  width: number;
+  height: number;
+  encode: readonly ("webp" | "jpeg")[];
+  bytes: { min: number; max: number };
+  usedFor: string;
+}
 
 /**
  * Plate → ground, at the format's exact pixel size.
@@ -156,7 +369,7 @@ function themeFor(slug: string, override: Partial<PosterTheme>): PosterTheme {
  * `resize()` in a chain, so a crop followed by a scale silently discards the
  * crop; the safest reading is never to put the two in one chain at all.
  */
-async function ground(plate: string, format: Format, layout: Layout): Promise<Buffer> {
+async function ground(plate: string, format: RenderSpec, layout: Layout): Promise<Buffer> {
   const meta = await sharp(plate).metadata();
   const srcW = meta.width ?? 0;
   const srcH = meta.height ?? 0;
@@ -282,7 +495,7 @@ async function gate(image: Buffer, boxes: TextBox[], quiet: boolean): Promise<vo
  */
 async function encode(
   image: Buffer,
-  format: Format,
+  format: RenderSpec,
   kind: "webp" | "jpeg",
   file: string,
 ): Promise<number> {
@@ -340,7 +553,81 @@ async function previews(social: Buffer, slug: string): Promise<void> {
   console.log(`  → ${path.relative(ROOT, REVIEW_DIR)}/ (4 cover crop previews)`);
 }
 
+/**
+ * One layout → the files on disk.
+ *
+ * PLATE → SCRIM → PORTRAIT → GATE → TYPE, and every arrow is load-bearing.
+ *
+ * The gate sits between the scrim and the type because the ground it is asked
+ * about is the scrimmed one; built into a single layer it measured the bare
+ * plate and reported the same number however far the scrim was deepened.
+ *
+ * The PORTRAIT sits in front of the gate for the mirror-image reason. A real
+ * photograph is part of the ground a line of type lands on, so a name that
+ * strays onto a lit cheek has to be measured against the face rather than
+ * against the wash behind it. Composited after the gate it would pass every
+ * check and ship unreadable.
+ */
+async function renderFormat(args: {
+  plate: string;
+  spec: RenderSpec;
+  layout: Layout;
+  slug: string;
+  /** The filename without its extension. */
+  stem: string;
+  gate: boolean;
+  previews: boolean;
+}): Promise<void> {
+  const { spec, layout } = args;
+  console.log(`\n${args.stem} — ${spec.width}×${spec.height}, ${spec.usedFor}`);
+
+  layout.assert?.(layout.boxes);
+
+  let base = await sharp(await ground(args.plate, spec, layout))
+    .composite([{ input: renderLayer(layout.scrim) }])
+    .png()
+    .toBuffer();
+
+  for (const portrait of layout.portraits ?? []) {
+    base = await sharp(base)
+      .composite([
+        { input: await renderPortrait(portrait), left: portrait.left, top: portrait.top },
+      ])
+      .png()
+      .toBuffer();
+  }
+
+  if (args.gate) await gate(base, layout.boxes, true);
+
+  const composed = await sharp(base)
+    .composite([{ input: renderLayer(layout.type) }])
+    .png()
+    .toBuffer();
+
+  // One artwork, one file per encoding it needs. Several event formats need two:
+  // a JPEG that an Instagram or Humanitix uploader will definitely accept, and a
+  // WebP for anywhere on the website. Same pixels, different door.
+  for (const kind of spec.encode) {
+    const ext = kind === "jpeg" ? "jpg" : "webp";
+    await encode(composed, spec, kind, path.join(EVENTS_ROOT, args.slug, `${args.stem}.${ext}`));
+  }
+
+  if (args.previews) await previews(composed, args.slug);
+}
+
 /* --------------------------------------------------------------------- cli */
+
+/** `{ "keryn-mckenzie": "Where AI meets the finance team" }` */
+function readHooks(file: string): Record<string, string> {
+  const parsed = JSON.parse(readFileSync(path.resolve(file), "utf8")) as unknown;
+  if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+    throw new Error(
+      `${file} should be a JSON object mapping a speaker's name-slug to their one-line hook, ` +
+        'e.g. { "keryn-mckenzie": "Where AI meets the finance team" }.',
+    );
+  }
+  return parsed as Record<string, string>;
+}
 
 async function main(): Promise<void> {
   const argv = process.argv.slice(2);
@@ -351,6 +638,9 @@ async function main(): Promise<void> {
   const slug = argv.find((a, i) => !a.startsWith("--") && !argv[i - 1]?.startsWith("--"));
   const plate = flag("plate");
   const suffix = flag("suffix");
+  const speaker = flag("speaker");
+  const lineup = argv.includes("--lineup");
+  const runGate = !argv.includes("--no-gate");
   const only = flag("only")
     ?.split(",")
     .map((k) => k.trim())
@@ -360,20 +650,17 @@ async function main(): Promise<void> {
     console.error(
       "Usage: npx tsx scripts/events/build-event-poster.ts <event-slug> --plate <file.png>\n" +
         `       [--only ${FORMATS.map((f) => f.key).join(",")}] [--suffix v2]\n` +
-        "       [--accent '#rrggbb'] [--spark '#rrggbb'] [--strapline '...'] [--no-gate]",
+        "       [--accent '#rrggbb'] [--spark '#rrggbb'] [--strapline '...'] [--no-gate]\n" +
+        "\n" +
+        "  The speaker set, for the weeks before the event:\n" +
+        "       [--speaker <name-slug>|all] [--role 'Panellist']\n" +
+        "       [--hook '...'] [--hook-file <json>] [--name-size 128]\n" +
+        "       [--lineup]  the whole group on one tile",
     );
     process.exit(1);
   }
   if (!existsSync(plate)) {
     console.error(`Plate not found: ${plate}`);
-    process.exit(1);
-  }
-
-  const chosen = only ? FORMATS.filter((f) => only.includes(f.key)) : FORMATS;
-  if (chosen.length === 0) {
-    console.error(
-      `No format matched --only. Known: ${FORMATS.map((f) => f.key).join(", ")}`,
-    );
     process.exit(1);
   }
 
@@ -386,41 +673,47 @@ async function main(): Promise<void> {
     ...(flag("spark") ? { spark: flag("spark") as string } : {}),
   });
   const copy = copyFor(slug, flag("strapline"));
+  const stem = (name: string) => `${name}${suffix ? `-${suffix}` : ""}`;
+
+  if (speaker || lineup) {
+    await buildSpeakerSet({
+      slug,
+      plate,
+      copy,
+      theme,
+      speaker,
+      lineup,
+      only,
+      stem,
+      gate: runGate,
+      role: flag("role"),
+      hook: flag("hook"),
+      hookFile: flag("hook-file"),
+      nameSize: flag("name-size") ? Number(flag("name-size")) : undefined,
+    });
+    return;
+  }
+
+  const chosen = only ? FORMATS.filter((f) => only.includes(f.key)) : FORMATS;
+  if (chosen.length === 0) {
+    console.error(
+      `No format matched --only. Known: ${FORMATS.map((f) => f.key).join(", ")}`,
+    );
+    process.exit(1);
+  }
 
   for (const format of chosen) {
-    console.log(`\n${format.key} ${format.width}×${format.height} — ${format.usedFor}`);
-
-    const layout = format.build(copy, theme);
-    layout.assert?.(layout.boxes);
-
-    // Plate → scrim → GATE → type. The gate has to sit between the scrim and the
-    // type, because the ground it is asked about is the scrimmed one. Built into
-    // one layer, it measured the bare plate and reported the same value however
-    // far the scrim was deepened.
-    const base = await sharp(await ground(plate, format, layout))
-      .composite([{ input: renderLayer(layout.scrim) }])
-      .png()
-      .toBuffer();
-
-    if (!argv.includes("--no-gate")) await gate(base, layout.boxes, true);
-
-    const composed = await sharp(base)
-      .composite([{ input: renderLayer(layout.type) }])
-      .png()
-      .toBuffer();
-
-    // One artwork, one file per encoding it needs. Several formats need two:
-    // a JPEG that an Instagram or Humanitix uploader will definitely accept,
-    // and a WebP for anywhere on the website. Same pixels, different door.
-    for (const kind of format.encode) {
-      const ext = kind === "jpeg" ? "jpg" : "webp";
+    await renderFormat({
+      plate,
+      spec: format,
+      layout: format.build(copy, theme),
+      slug,
       // The slug is the directory now, not a filename prefix, so the name is
       // just the role: poster.webp, social.jpg, story.webp.
-      const name = `${format.key}${suffix ? `-${suffix}` : ""}.${ext}`;
-      await encode(composed, format, kind, path.join(EVENTS_ROOT, slug, name));
-    }
-
-    if (format.key === "social") await previews(composed, slug);
+      stem: stem(format.key),
+      gate: runGate,
+      previews: format.key === "social",
+    });
   }
 
   console.log(
@@ -428,7 +721,172 @@ async function main(): Promise<void> {
   );
 }
 
-main().catch((error) => {
-  console.error(`\n${(error as Error).message}`);
-  process.exit(1);
-});
+/**
+ * The campaign set: one poster per person, and optionally the whole line-up.
+ *
+ * `--speaker all` DOES NOT STOP AT THE FIRST REFUSAL. A missing headshot is a
+ * per-person problem, and dying on it would hand back one poster out of four
+ * with no way to tell whether the other three were fine. Everyone who can be
+ * built is built, everything that could not is listed at the end, and the exit
+ * code is non-zero so a script still knows. A single named speaker fails
+ * immediately, because there the refusal IS the answer.
+ */
+async function buildSpeakerSet(o: {
+  slug: string;
+  plate: string;
+  copy: PosterCopy;
+  theme: PosterTheme;
+  speaker?: string;
+  lineup: boolean;
+  only?: string[];
+  stem: (name: string) => string;
+  gate: boolean;
+  role?: string;
+  hook?: string;
+  hookFile?: string;
+  nameSize?: number;
+}): Promise<void> {
+  const event = loadEventForDeck(o.slug);
+  const roster = rosterFor(event);
+  if (roster.length === 0) {
+    throw new Error(
+      `${o.slug} lists no speakers, so there is nobody to make a poster of.\n` +
+        "Speakers live under detailPageData.speakers in lib/data/json/events-custom.json; " +
+        "/sync-event-from-slack is what normally fills them in.",
+    );
+  }
+
+  const wanted =
+    !o.speaker || o.speaker === "all"
+      ? roster
+      : roster.filter((entry) => entry.slug === o.speaker);
+  if (o.speaker && o.speaker !== "all" && wanted.length === 0) {
+    throw new Error(
+      `No speaker on ${o.slug} is called "${o.speaker}".\n` +
+        `This event has: ${roster.map((e) => e.slug).join(", ")}`,
+    );
+  }
+
+  const hooks = o.hookFile ? readHooks(o.hookFile) : {};
+  const formats = o.only
+    ? SPEAKER_FORMATS.filter((f) => o.only?.includes(f.key))
+    : SPEAKER_FORMATS;
+
+  /* One display size for every name in the run — see `SpeakerCopy.nameSize`.
+     Solved against the narrowest column and the smallest cap in the set, so the
+     one number is safe in all three formats. `--name-size` is for the case where
+     one poster is rebuilt later and has to match the set it belongs to; without
+     it a solo rebuild would set that name larger than its four neighbours. */
+  const column = Math.min(...formats.map((f) => f.column));
+  const nameMax = Math.min(...formats.map((f) => f.nameMax));
+  const nameSize =
+    o.nameSize ?? solveNameSize(wanted.map((e) => e.person.name), column, nameMax);
+  console.log(`  name size: ${nameSize.toFixed(0)}pt, shared by all ${wanted.length} poster(s)`);
+
+  const single = Boolean(o.speaker && o.speaker !== "all");
+  const refused: string[] = [];
+  const built: string[] = [];
+  const people: SpeakerCopy[] = [];
+
+  for (const entry of wanted) {
+    let person: SpeakerCopy;
+    try {
+      person = speakerCopyFor(entry, {
+        role: o.role,
+        hook: o.hook && single ? o.hook : hooks[entry.slug],
+        nameSize,
+      });
+    } catch (error) {
+      if (single) throw error;
+      refused.push(`${entry.person.name} — ${(error as Error).message.split("\n")[0]}`);
+      continue;
+    }
+    people.push(person);
+
+    const label = roleLabelFor(entry.groupKey, entry.heading, o.role);
+    console.log(
+      `\n${person.name} — kicker "${person.role}" (from the ${label.from}` +
+        (label.from === "heading" ? ` "${label.heading}"` : "") +
+        `)${person.hook ? `, hook "${person.hook}"` : ""}`,
+    );
+
+    if (o.speaker) {
+      for (const format of formats) {
+        try {
+          await renderFormat({
+            plate: o.plate,
+            spec: format,
+            layout: format.build(o.copy, person, o.theme),
+            slug: o.slug,
+            stem: o.stem(`speaker-${person.slug}-${format.key}`),
+            gate: o.gate,
+            previews: false,
+          });
+          built.push(`speaker-${person.slug}-${format.key}`);
+        } catch (error) {
+          if (single) throw error;
+          refused.push(`${person.name} at ${format.key} — ${(error as Error).message.split("\n")[0]}`);
+        }
+      }
+    }
+  }
+
+  if (o.lineup) {
+    // The line-up carries one group, not everyone: "Meet the Panel" and "Meet
+    // the Mentors" are two posts, and merging them produces a tile with a
+    // heading that is true of half the faces on it.
+    const first = wanted[0];
+    const group = wanted.filter((e) => e.groupKey === first.groupKey);
+    const lineupCopy: LineupCopy = {
+      heading: first.heading || "Our speakers",
+      people: people.filter((p) => group.some((e) => e.slug === p.slug)),
+    };
+    for (const format of o.only
+      ? LINEUP_FORMATS.filter((f) => o.only?.includes(f.key))
+      : LINEUP_FORMATS) {
+      await renderFormat({
+        plate: o.plate,
+        spec: format,
+        layout: format.build(o.copy, lineupCopy, o.theme),
+        slug: o.slug,
+        stem: o.stem(`lineup-${format.key}`),
+        gate: o.gate,
+        previews: false,
+      });
+      built.push(`lineup-${format.key}`);
+    }
+  }
+
+  writeSpeakerManifest(o.slug, event);
+
+  console.log(`\n${built.length} file(s) built.`);
+  if (refused.length) {
+    console.error(`\n${refused.length} could not be built:`);
+    for (const line of refused) console.error(`  ${line}`);
+    process.exitCode = 1;
+    return;
+  }
+  console.log(
+    "Post the line-up first, then one speaker a week. Every one of them reads its date " +
+      "and venue from the event record, so the set cannot drift away from the website.",
+  );
+}
+
+/**
+ * Run only when this file IS the command, so the module can also be imported.
+ *
+ * `poster-speaker.test.ts` needs `rosterFor()` and `speakerCopyFor()`, which are
+ * the machine's reading of the event record and belong here beside `copyFor()`
+ * rather than in the design layer. Without this guard, importing them would run
+ * the CLI, print a usage error and exit 1 — so the test would be untestable for
+ * the sake of three lines.
+ */
+if (
+  process.argv[1] &&
+  path.resolve(process.argv[1]) === path.resolve(fileURLToPath(import.meta.url))
+) {
+  main().catch((error) => {
+    console.error(`\n${(error as Error).message}`);
+    process.exit(1);
+  });
+}

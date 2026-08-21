@@ -20,6 +20,8 @@
  * the decks made before they had skins.
  */
 
+import { contrastRatio } from "@/lib/deck/theme";
+
 import {
   BODY,
   DISPLAY,
@@ -29,10 +31,11 @@ import {
   measure,
   textLine,
   wrapBalanced,
+  type PortraitSpec,
   type TextBox,
 } from "./poster-type";
 
-const SHE_SHARP_LOGO = "public/logos/she-sharp-logo.svg";
+export const SHE_SHARP_LOGO = "public/logos/she-sharp-logo.svg";
 
 /* ------------------------------------------------------------------ theme */
 
@@ -85,6 +88,19 @@ export interface Layout {
   boxes: TextBox[];
   /** Rows of the plate to keep, as fractions of its height. */
   crop: { top: number; bottom: number };
+  /**
+   * Real photographs of real people, composited BETWEEN the scrim and the type.
+   *
+   * The ordering is the point and it is enforced in `build-event-poster.ts`, not
+   * here: plate → scrim → portrait → **gate** → type. With the portrait behind
+   * the gate, the gate measures the ground a line of type actually sits on,
+   * including a lit face; put it after the gate and a name laid across someone's
+   * cheek measures the scrim, passes, and ships.
+   *
+   * Empty for every event format. A speaker format has one; the line-up has
+   * several.
+   */
+  portraits?: PortraitSpec[];
   /** Extra assertions this format owes, run after layout. */
   assert?: (boxes: TextBox[]) => void;
 }
@@ -118,7 +134,7 @@ export interface Format {
 
 /* ------------------------------------------------------- the stack builder */
 
-interface StackOptions {
+export interface StackOptions {
   x: number;
   y: number;
   column: number;
@@ -146,7 +162,7 @@ interface StackOptions {
   tailInSpark?: boolean;
 }
 
-interface StackResult {
+export interface StackResult {
   parts: string[];
   boxes: TextBox[];
   /** Where the next element may start. */
@@ -166,7 +182,7 @@ interface StackResult {
  * mechanism by which their right edges align. No size is written down; change
  * the title in the event data and the block re-solves.
  */
-function buildStack(o: StackOptions): StackResult {
+export function buildStack(o: StackOptions): StackResult {
   const parts: string[] = [];
   const boxes: TextBox[] = [];
   let y = o.y;
@@ -277,25 +293,73 @@ function buildStack(o: StackOptions): StackResult {
 }
 
 /**
+ * The pill's label colour, chosen against the pill's own fill.
+ *
+ * THE INK IS CHECKED, NOT ASSUMED, and that is a correction. The pill drew its
+ * label in `INK` unconditionally because it was "white on a solid fill of known
+ * contrast" — and the contrast stopped being known the day `themeFor()` began
+ * reusing an event's DECK accent. A deck accent is tuned for that deck's canvas,
+ * which may be light: the Les Mills evening carries `#b1f6e9`, a mint chosen at
+ * 12.98:1 on navy, and **white on that mint is 1.22:1**. The pill rendered as an
+ * empty lozenge and nothing in the pipeline said so, because the one component
+ * deliberately exempt from the legibility gate was the one that had broken.
+ *
+ * TWO THINGS ABOUT THE NUMBER, and both were measured rather than reasoned.
+ *
+ * It is a FLOOR, not a comparison. Brand magenta `#c846ab` measures 4.27:1
+ * against white and 4.62:1 against the canvas, so "pick the higher" would flip
+ * the label on every poster this repo has ever shipped, to fix nothing.
+ *
+ * And the floor is 3:1, not the gate's 4.5:1, which is the one place in this
+ * pipeline where a lower number is the correct one. 4.5 is the WCAG ratio for
+ * body-size text; this is a 32–42pt display word inside a solid fill of known
+ * colour, which is unambiguously large text at 3:1. Set at 4.5 the check flips
+ * brand magenta too — the shipped, reviewed look — while the failure it exists
+ * to catch measures 1.22 and would be caught by either.
+ */
+export const PILL_CONTRAST_FLOOR = 3;
+
+export function pillInk(theme: PosterTheme): string {
+  return contrastRatio(INK, theme.accent) >= PILL_CONTRAST_FLOOR ? INK : theme.canvas;
+}
+
+/**
+ * The pill's own box, so a layout can budget the space it occupies.
+ *
+ * A `<rect>` is not a `TextBox` and so is invisible to the safe-area asserts
+ * that walk `layout.boxes`. A format that has to keep the call to action clear
+ * of Instagram's reply bar needs the number, and re-deriving it at the call site
+ * is how the two come to disagree.
+ */
+export function pillBox(label: string, size: number): { width: number; height: number } {
+  const track = size * 0.07;
+  const m = measure(label, DISPLAY);
+  return {
+    width: (m.width * size) / 100 + track * (label.length - 1) + size * 1.3 * 2,
+    height: (m.height * size) / 100 + size * 0.72 * 2,
+  };
+}
+
+/**
  * The call to action, as a solid pill.
  *
- * Not gated for legibility, deliberately: it is white on a solid accent fill of
- * known contrast, not ink on an unknown photograph. Gating it would sample the
- * pill rather than the ground and report a number that means nothing.
+ * Not gated for legibility, deliberately: it is ink on a solid fill of known
+ * contrast, not ink on an unknown photograph. Gating it would sample the pill
+ * rather than the ground and report a number that means nothing. `pillInk()` is
+ * what makes "known" true again.
  */
-function pill(
+export function pill(
   label: string,
   theme: PosterTheme,
   o: { right: number; y: number; size: number },
 ): string {
+  const ink = pillInk(theme);
   const track = o.size * 0.07;
   const m = measure(label, DISPLAY);
-  const textW = (m.width * o.size) / 100 + track * (label.length - 1);
   const capH = (m.height * o.size) / 100;
   const padX = o.size * 1.3;
   const padY = o.size * 0.72;
-  const boxW = textW + padX * 2;
-  const boxH = capH + padY * 2;
+  const { width: boxW, height: boxH } = pillBox(label, o.size);
   const boxX = o.right - boxW;
 
   return (
@@ -307,13 +371,13 @@ function pill(
       family: DISPLAY,
       size: o.size,
       letterSpacing: track,
-      fill: INK,
+      fill: ink,
     })
   );
 }
 
 /** A logo lockup: She Sharp, a hairline, the partner. */
-function lockup(
+export function lockup(
   copy: PosterCopy,
   x: number,
   y: number,
@@ -340,7 +404,7 @@ function lockup(
   return { markup: she.markup + rule + partner.markup, height: she.height };
 }
 
-function frame(w: number, h: number, body: string): string {
+export function frame(w: number, h: number, body: string): string {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">\n${body}\n</svg>`;
 }
 
@@ -360,7 +424,7 @@ function frame(w: number, h: number, body: string): string {
  * looks almost right and drops a highlight straight through the kicker; the
  * gate caught exactly that when these three were briefly one gradient.
  */
-function washDefs(theme: PosterTheme, direction: "up" | "left" | "band"): string {
+export function washDefs(theme: PosterTheme, direction: "up" | "left" | "band"): string {
   const stops =
     direction === "up"
       ? `<linearGradient id="wash" x1="0" y1="0" x2="0" y2="1">

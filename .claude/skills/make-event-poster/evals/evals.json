@@ -8,10 +8,10 @@
       "expected_output": "A 3200x1600 JPEG for Humanitix and a 1080x1350 image for LinkedIn, both carrying the correct event title, date, time and venue read from events-custom.json.",
       "files": [],
       "assertions": [
-        "Produced a 3200\u00d71600 Humanitix banner",
+        "Produced a 3200×1600 Humanitix banner",
         "Humanitix banner is JPEG or PNG, not WebP (Humanitix rejects WebP)",
         "Humanitix banner is under Humanitix's 10 MB limit",
-        "Produced a 1080\u00d71350 (4:5) image for LinkedIn",
+        "Produced a 1080×1350 (4:5) image for LinkedIn",
         "Told the user which file goes to which platform"
       ]
     },
@@ -22,9 +22,9 @@
       "expected_output": "A 1080x1920 image whose text all sits clear of the top and bottom ~250px where Instagram draws its UI.",
       "files": [],
       "assertions": [
-        "Produced a 1080\u00d71920 (9:16) story image",
-        "Top 250px (Instagram's account row) carries no type \u2014 heuristic: <0.4% near-white pixels",
-        "Bottom 250px (Instagram's reply bar) carries no type \u2014 heuristic: <0.4% near-white pixels",
+        "Produced a 1080×1920 (9:16) story image",
+        "Top 250px (Instagram's account row) carries no type — heuristic: <0.4% near-white pixels",
+        "Bottom 250px (Instagram's reply bar) carries no type — heuristic: <0.4% near-white pixels",
         "Explained how the safe area was respected"
       ]
     },
@@ -36,10 +36,51 @@
       "files": [],
       "assertions": [
         "Generated a new plate image from scratch",
-        "Produced a 3200\u00d71600 Humanitix banner",
+        "Produced a 3200×1600 Humanitix banner",
         "Humanitix banner is JPEG or PNG, not WebP",
-        "Produced an Instagram-native size (1080\u00d71350 or 1080\u00d71920)",
+        "Produced an Instagram-native size (1080×1350 or 1080×1920)",
         "Stated the visual concept"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "one-poster-per-speaker",
+      "prompt": "the les mills event (event-lesmills-03-september-2026) is 6 weeks out and I don't want to keep posting the same picture. can you make me a separate poster for each of the four panellists so I can post one a week?",
+      "expected_output": "One 1080x1350 JPEG per speaker, each carrying that speaker's real headshot from the event record, their name, their job title, and the event's date, time and venue read from events-custom.json.",
+      "files": [],
+      "assertions": [
+        "Produced one image per speaker, four in total",
+        "Each is 1080×1350 (4:5) and a JPEG",
+        "Each carries a different speaker's name",
+        "The face on each is the speaker's real headshot from the event record, not a generated person",
+        "Every poster carries the same event date, time and venue as events-custom.json",
+        "Told the user which file belongs to which speaker"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "speaker-role-read-back",
+      "prompt": "can you make a poster for each of the judges on the hackathon (aotearoa-ai-hackathon-festival-2026)? just the judges, not the mentors",
+      "expected_output": "Speaker posters for the four people under the group headed 'Meet the Judges', each labelled JUDGE rather than PANELLIST, with the label confirmed with the user before building.",
+      "files": [],
+      "assertions": [
+        "Labelled the four people as judges, not panellists (the group key is `panelists`)",
+        "Read the derived role label back to the user before building",
+        "Did not build posters for the 17 mentors",
+        "Produced one image per judge"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "speaker-without-a-headshot",
+      "prompt": "make me speaker posters for every person on her-waka",
+      "expected_output": "Posters for everyone with a headshot in the event record, and a plain-English explanation for anyone without one — not a stack trace, not a generated or substituted face.",
+      "files": [],
+      "assertions": [
+        "Built posters for the speakers who do have a headshot rather than stopping at the first failure",
+        "Named anyone who could not be built and said a photograph is needed in events-custom.json",
+        "Did not generate, substitute or invent a face for a missing headshot",
+        "Did not show the user a stack trace"
       ]
     }
   ]

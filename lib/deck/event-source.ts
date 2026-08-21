@@ -280,8 +280,15 @@ export interface SpeakerGroup {
  * `Object.keys()` would return whatever order the Slack sync happened to
  * write, so the same event could produce a different slide order on a later
  * run. Hosts open, mentors close.
+ *
+ * Exported because the poster pipeline walks the same groups in the same order
+ * but cannot use `speakerGroupsFrom()` below: `personFrom()` clamps a job title
+ * to `COPY_LIMITS.personRoleWords` for a slide, where a person is one card in a
+ * grid of four, and a poster gives the same string a whole column. Truncating
+ * "Head of Finance – LM Media & Automation Lead" to six words is not a shorter
+ * title, it is a wrong one. One order, two readings of the same rows.
  */
-const SPEAKER_GROUP_ORDER = [
+export const SPEAKER_GROUP_ORDER = [
   "hosts",
   "keynote_speakers",
   "panel_speakers",

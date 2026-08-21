@@ -9,6 +9,9 @@ public/img/events/<event-slug>/
   social.webp story.webp square.webp humanitix.jpg
                               the other make-event-poster sizes
   <firstname-lastname>.jpg    speaker and mentor headshots
+  speaker-<firstname-lastname>-social.jpg
+  lineup-social.jpg           the per-speaker campaign set — see below
+  index.ts                    generated manifest naming that set
   photo-1.webp                on-page photos, curated      (detailPageData.photos[])
   team-<name>.webp            anything else specific to this event
   archive/1.webp              harvested gallery — see below
@@ -49,6 +52,25 @@ sub-folder rather than merged in.
 
 The site shows `archive/` photos only when an event ships no `photos[]` of its
 own (`app/(site)/events/[slug]/page.tsx`).
+
+## `speaker-*` and `index.ts` are a generated pair
+
+`scripts/events/build-event-poster.ts --speaker` writes the per-speaker campaign
+artwork — three sizes per person plus a `lineup-*` tile — and then rewrites
+`index.ts` beside it, naming every file it produced.
+
+**The manifest is why those files are allowed to exist.** Nothing on the website
+renders them: they are uploaded to LinkedIn and Instagram by hand, one a week,
+over the month before the event. The reverse check below fails on any image
+nothing references, and a dozen entries per event in that script's
+`KNOWN_UNREFERENCED` array would make it unreadable. So they are named in code
+instead — the same trick `public/img/curated/index.ts` and
+`public/img/plates/index.ts` already use, and the reason `scripts/assets/refs.ts`
+scans `public/**` for `.ts` at all.
+
+It makes the forward check cover them too, which is the point: deleting one now
+fails CI, rather than CI staying green while somebody's scheduled post loses its
+picture. Do not edit `index.ts` by hand — rebuild it by re-running the script.
 
 ## Checks
 
