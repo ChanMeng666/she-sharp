@@ -17,15 +17,26 @@
  */
 
 import assert from "node:assert/strict";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 
 import { getAllEvents, getEventBySlug } from "@/lib/data/events";
 import { loadEventForDeck } from "@/lib/deck/event-source";
 import { contrastRatio } from "@/lib/deck/theme";
 
-import { rosterFor, speakerCopyFor } from "./build-event-poster";
-import { INK, SHE_SHARP_THEME, pillBox, pillInk, type PosterTheme } from "./poster-formats";
+import { copyFor, rosterFor, speakerCopyFor } from "./build-event-poster";
+import {
+  FORMATS,
+  SHE_SHARP_LIGHT_THEME,
+  SHE_SHARP_THEME,
+  SOCIAL_BAND,
+  lockup,
+  lockupBudget,
+  pillBox,
+  pillInk,
+  type PosterCopy,
+  type PosterTheme,
+} from "./poster-formats";
 import {
   HOOK_MAX_WORDS,
   LINEUP_FORMATS,
@@ -42,6 +53,8 @@ import { speakerSlug } from "./poster-type";
 
 const TRIAL = "event-lesmills-03-september-2026";
 const HACKATHON = "aotearoa-ai-hackathon-festival-2026";
+/** The first event She Sharp ran with two co-hosts rather than one partner. */
+const TWO_HOSTS = "code-secure-2026";
 
 let failures = 0;
 
@@ -157,11 +170,13 @@ function posterCopyFor() {
   const event = loadEventForDeck(TRIAL);
   const detail = event.detailPageData;
   return {
+    event: TRIAL,
     titleLead: "No Pain, All Gain",
     titleTail: "Getting Fit for AI",
     date: "Thursday, 3 September 2026",
     time: (detail.time ?? "").trim(),
     venue: detail.location?.venueName?.trim() ?? "",
+    partners: [{ name: "Les Mills", logo: "/img/sponsors/lesmills_logo.svg" }],
     hasRsvp: true,
   };
 }
@@ -338,7 +353,7 @@ check("the RSVP pill's label is readable on whatever accent it is given", () => 
   // large-text one, which is the right question for a 32pt word in a solid fill;
   // it is also the look that has shipped for every poster so far, and flipping
   // it would change published artwork to fix nothing.
-  assert.equal(pillInk(SHE_SHARP_THEME), INK);
+  assert.equal(pillInk(SHE_SHARP_THEME), SHE_SHARP_THEME.ink);
 
   // The Les Mills deck's accent is a mint tuned for navy slides. White on it is
   // 1.22:1 — the pill rendered as an empty lozenge, and the one component
@@ -346,6 +361,168 @@ check("the RSVP pill's label is readable on whatever accent it is given", () => 
   const mint: PosterTheme = { ...SHE_SHARP_THEME, accent: "#b1f6e9" };
   assert.equal(pillInk(mint), SHE_SHARP_THEME.canvas);
   assert.ok(contrastRatio(pillInk(mint), mint.accent) >= 4.5);
+});
+
+
+/* ------------------------------------------------------------------ hosts */
+
+/**
+ * A slice of a mark's own path data, as proof that mark was actually drawn.
+ *
+ * Counting `<g>` elements would not do: two of these logos carry their own inner
+ * groups, and the failure being guarded against is a host silently missing from
+ * the artwork — which is a count that looks plausible either way.
+ */
+function markFingerprint(logo: string): string {
+  const raw = readFileSync(path.join(process.cwd(), "public", logo.replace(/^\//, "")), "utf8");
+  const d = raw.match(/ d="([^"]{80,})"/)?.[1];
+  assert.ok(d, `${logo} has no path long enough to fingerprint`);
+  return (d as string).slice(0, 60);
+}
+
+/** The widest wordmark in the repo — the one that makes a lockup run out of room. */
+const WIDEST = { name: "Les Mills", logo: "/img/sponsors/lesmills_logo.svg" };
+
+check("every host on the record reaches the artwork, at every size", () => {
+  // THE DEFECT THIS FILE EXISTS FOR, in its newest form. code-secure-2026 has two
+  // co-hosts; the lockup took `partnerLogosFrom(event)[0]` and the poster that
+  // shipped showed one of them. Nothing failed, because a lockup is a `<g>` and
+  // every assert in this pipeline walks TextBoxes.
+  const copy = copyFor(TWO_HOSTS);
+  assert.equal(copy.partners.length, 2, `${TWO_HOSTS} should be billed with two hosts`);
+
+  const prints = copy.partners.map((partner) => markFingerprint(partner.logo));
+  for (const format of FORMATS) {
+    const layout = format.build(copy, theme);
+    for (const [i, print] of prints.entries()) {
+      assert.ok(
+        layout.type.includes(print),
+        `${format.key} drew no mark for ${copy.partners[i].name}`,
+      );
+    }
+  }
+});
+
+check("the marks scale to the budget, and an impossible line-up is refused", () => {
+  const base = copyFor(TWO_HOSTS);
+  // The square's band is the tightest of the event formats: 150pt She Sharp mark
+  // in a 912px column.
+  const box = { x: 84, y: 0, sheSharpWidth: 150, maxWidth: 912 };
+
+  for (const n of [1, 2, 3, 4]) {
+    const copy: PosterCopy = { ...base, partners: Array.from({ length: n }, () => WIDEST) };
+    const mark = lockup(copy, theme, box);
+    assert.ok(
+      mark.width <= box.maxWidth + 0.5,
+      `${n} hosts made a ${Math.round(mark.width)}px lockup in a ${box.maxWidth}px budget`,
+    );
+    // …and every one of them is still on the poster. Fitting by dropping the
+    // last host would satisfy the width check and be the original bug.
+    const drawn = mark.markup.match(/transform="translate\(/g) ?? [];
+    assert.equal(drawn.length, n + 1, `${n} hosts should draw ${n + 1} marks`);
+  }
+
+  // Eight wordmarks cannot be set at a readable size in that column, and the
+  // refusal has to say whose poster it is and how many hosts it was given —
+  // the person reading it is an organiser, not the author of this file.
+  const crowd: PosterCopy = { ...base, partners: Array.from({ length: 8 }, () => WIDEST) };
+  assert.throws(
+    () => lockup(crowd, theme, box),
+    (error: Error) =>
+      error.message.includes(TWO_HOSTS) && error.message.includes("8 host logos"),
+    "expected a refusal naming the event and the number of hosts",
+  );
+});
+
+check("a bottom band leaves the lockup and the call to action clear of each other", () => {
+  // Both are chrome — a `<g>` and a `<rect>` — so nothing else in the pipeline
+  // would notice two co-hosts sliding under the RSVP pill.
+  const pill = pillBox("RSVP TODAY", SOCIAL_BAND.pill);
+  const budget = lockupBudget({
+    left: 72,
+    right: 1080 - 72,
+    sheSharpWidth: SOCIAL_BAND.logo,
+    pillWidth: pill.width,
+  });
+  assert.ok(budget < 1080 - 144, "the pill's side of the band was not subtracted");
+
+  const mark = lockup(copyFor(TWO_HOSTS), theme, {
+    x: 72,
+    y: SOCIAL_BAND.y,
+    sheSharpWidth: SOCIAL_BAND.logo,
+    maxWidth: budget,
+  });
+  assert.ok(
+    72 + mark.width <= 1080 - 72 - pill.width,
+    `the lockup ends at ${Math.round(72 + mark.width)} and the pill starts at ${
+      Math.round(1080 - 72 - pill.width)
+    }`,
+  );
+});
+
+check("a host's own brand colours do not survive into the lockup", () => {
+  // Xero and Secure Code Warrior both declare their fills, and an explicit fill
+  // beats an inherited one — so the wrapper's ink never reached them. Xero came
+  // out in brand cyan beside a cyan spark; Secure Code Warrior's `#202A42`
+  // wordmark came out invisible on a near-black poster, which is the missing
+  // host all over again.
+  const mark = lockup(copyFor(TWO_HOSTS), theme, {
+    x: 96,
+    y: 108,
+    sheSharpWidth: 208,
+    maxWidth: 1208,
+  });
+  assert.ok(!/#202A42/i.test(mark.markup), "Secure Code Warrior kept its navy");
+  assert.ok(!/#13B5EA/i.test(mark.markup), "Xero kept its cyan");
+  assert.ok(mark.markup.includes(theme.ink), "the marks are not set in the poster's ink");
+  // The shield is drawn through a luminance mask whose path is `fill="white"`.
+  // Repaint that and the mask stops passing light and the mark disappears —
+  // which is why the repaint is a scan rather than one String.replace.
+  assert.match(mark.markup, /<mask[\s\S]{0,400}?fill="white"/);
+});
+
+/* ------------------------------------------------------------------ light */
+
+check("the light palette clears the same floor the gate applies, in reverse", () => {
+  // Measured against the ground the gate actually samples — the canvas laid over
+  // a near-black plate at the wash's own 0.94 — not against the canvas.
+  const ground = "#e6e3df";
+  assert.ok(
+    contrastRatio(SHE_SHARP_LIGHT_THEME.ink, ground) >= 4.5,
+    "the light theme's ink does not clear the gate on its own ground",
+  );
+  assert.ok(
+    contrastRatio(SHE_SHARP_LIGHT_THEME.spark, ground) >= 4.5,
+    "the light theme's spark does not clear the gate on its own ground",
+  );
+  // And this is why --light is one named palette rather than an --ink flag: the
+  // dark theme's spark measures 1.28:1 here, so a half-swapped theme would be a
+  // poster with an invisible kicker and no way for a flag to know.
+  assert.ok(contrastRatio(SHE_SHARP_THEME.spark, ground) < 4.5);
+  assert.equal(pillInk(SHE_SHARP_LIGHT_THEME), SHE_SHARP_LIGHT_THEME.ink);
+});
+
+check("no format writes a colour of its own instead of the theme's", () => {
+  // The whole of Task B in one assertion: `INK = "#ffffff"` was a module
+  // constant, and one line of it left behind anywhere would ship white type on a
+  // pale poster — legible in the file, invisible on the wall.
+  const light = SHE_SHARP_LIGHT_THEME;
+  const allowed = new Set([light.ink, light.spark]);
+  const { copy, poster } = trialSpeakers("Where AI meets the finance team");
+  const lightPoster: PosterCopy = { ...poster };
+
+  const layouts = [
+    ...FORMATS.map((f) => f.build(lightPoster, light)),
+    ...SPEAKER_FORMATS.map((f) => f.build(lightPoster, copy[0], light)),
+    ...LINEUP_FORMATS.map((f) =>
+      f.build(lightPoster, { heading: "Meet the Panel", people: copy }, light),
+    ),
+  ];
+  for (const layout of layouts) {
+    for (const box of layout.boxes) {
+      assert.ok(allowed.has(box.ink), `"${box.name}" is set in ${box.ink}, not a theme colour`);
+    }
+  }
 });
 
 if (failures > 0) {
