@@ -32,25 +32,43 @@ can say "stop" or "show me that again" at any point.
 
 ## 1. What you'll be able to do
 
-Seven skills live inside this project. Each one is a written procedure the AI
+Eleven skills live inside this project. Each one is a written procedure the AI
 follows, so it does the task the same careful way every time.
+
+**If you only remember one, remember `/run-event-playbook`.** It is the way in:
+it works out where your event has got to and tells you which of the others to
+run next, so you never have to hold the order in your head.
 
 | Skill | What it does | Who usually needs it |
 |---|---|---|
-| `/reply-to-contact-messages` | Answers the people who filled in the contact form on the website | Anyone doing comms |
-| `/update-mailing-list` | Shows who is on the mailing list, and adds people who agreed to join | Anyone managing the list |
-| `/send-event-emails` | Emails the people who registered for one event — reminders, joining details, thank-yous | Event organisers |
-| `/email-the-community` | Sends one announcement to the whole mailing list | Anyone doing comms |
-| `/monthly-newsletter` | Builds and schedules the monthly newsletter | Newsletter editor |
+| `/run-event-playbook` | Walks one event from the planning channel to the photographs, calling the others in order | Event organisers |
 | `/sync-event-from-slack` | Turns an event-planning Slack channel into a page on the website | Event organisers |
+| `/make-event-poster` | Makes the artwork — the ticketing banner, the social posts, the print poster, and one graphic per speaker | Event organisers |
+| `/build-event-slides` | Builds the slide deck the room sees, at `/present/<event>` | Event organisers |
 | `/tweak-event-slides` | Makes one small change to slides that already exist, and puts it live in about four minutes | Event organisers, on the day |
+| `/send-event-emails` | Emails the people who registered for one event — reminders, joining details, thank-yous | Event organisers |
+| `/promote-event` | Tells the mailing list about an event that has not happened yet | Anyone doing comms |
+| `/email-the-community` | Sends one announcement to the whole mailing list | Anyone doing comms |
+| `/update-mailing-list` | Shows who is on the mailing list, and adds people who agreed to join | Anyone managing the list |
+| `/monthly-newsletter` | Builds and schedules the monthly newsletter | Newsletter editor |
+| `/reply-to-contact-messages` | Answers the people who filled in the contact form on the website | Anyone doing comms |
 
-The first four are the email skills and are the focus of this guide. The last
-three are included because they are part of the same toolkit — and because
-`/send-event-emails` depends on `/sync-event-from-slack` having put the event on
-the website first. `/tweak-event-slides` is the odd one out: it is the only skill
-here that changes the live website without stopping to ask, which is deliberate,
-and it is only for the small change you need on screen in the next five minutes.
+The four email skills are the focus of this guide. The event skills are included
+because they are one toolkit and they depend on each other in a fixed order —
+`/send-event-emails`, `/make-event-poster` and `/build-event-slides` all read the
+date and venue from the website, so `/sync-event-from-slack` has to have put the
+event there first. `/run-event-playbook` exists so you do not have to remember
+that; the order, with every gate and what goes wrong, is written down in
+`docs/development/EVENT_LIFECYCLE_SOP.md`.
+
+`/tweak-event-slides` is the odd one out: it is the only skill here that changes
+the live website without stopping to ask, which is deliberate, and it is only for
+the small change you need on screen in the next five minutes.
+
+**One skill cannot finish today, and that is expected.** `/promote-event` needs a
+mailing list in Resend, and the newsletter still goes out through Mailchimp, so
+the Resend list is effectively empty. Run `/update-mailing-list` first. The skill
+says so itself rather than failing in a confusing way.
 
 ---
 
