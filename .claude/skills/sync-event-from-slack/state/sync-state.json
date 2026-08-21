@@ -208,7 +208,7 @@
       "mapping": {
         "kind": "none"
       },
-      "watermarkTs": "1785460260.522289",
+      "watermarkTs": "1787043924.063329",
       "threads": {
         "1611043608.000300": {
           "replyCount": 1,
@@ -684,12 +684,12 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-21T12:36:01.774Z",
+      "lastSyncedAt": "2026-08-21T12:53:04.733Z",
       "lastSyncedCommit": "",
       "scannedTs": "1787043924.063329",
-      "readAt": "2026-08-07T12:40:26.325Z",
-      "digest": "Newsletter production channel, read in full 7 Aug 2026 (Jan 2021 - Feb 2026, 109 threads). PRODUCTION HISTORY ONLY - nothing in it changes the website, and the two things that looked like they might do not.\n\nNOTHING TO ACTION ON THE SITE. (1) Vic Arce's May 2023 note about two issues both numbered \"Edition 22\" and missing issues 11-14 was about the OLD WEBFLOW SITE's issue numbering. This repo does not use issue numbers: lib/data/newsletters-archive.ts is keyed \"YYYY-MM\" and already documents its own reconciled quirks (the mislabelled July 2024, November 2022 and September 2021 cards). Do not \"fix\" a numbering scheme the repo no longer has. (2) The AUT logo rule Nicole recorded 7 May 2021 - black box logo on white, white box logo on black, and the version WITHOUT \"UNIVERSITY\" - already matches the brand section of CLAUDE.md.\n\nSECURITY, AND IT IS LIVE. A plaintext Mailchimp password was posted in this channel on 25 Feb 2025 and a PINNED MESSAGE points at it (\"Creds to Mailchimp\"). A card expiry date and CVV were posted on 29 Jun 2025. Both are still readable by everyone in the workspace. Rotate the Mailchimp password, unpin, and treat that card as exposed. NEVER copy either value into this repo, a digest or a commit message - they are recorded here by LOCATION only, deliberately.\n\nHOW THE NEWSLETTER HAS ACTUALLY BEEN RUN. Mailchimp throughout, never Resend. Access has been the recurring bottleneck: the account has MFA and the code has repeatedly had to be relayed by hand from whoever held the phone (Shae -> Julia -> Moksha), which is why credentials kept being pasted into the channel. Ownership went Emily/Sarina (2021-22) -> Cassidy/Babra (2023) -> Shae (2024) -> Julia Shmykova (2025) -> Moksha (mid-2025 on), with Marriane Bentigan stepping in to send December 2025. Mahsa reviews and rewrites her own \"word from the founder\" section before every send, and has done since 2021.\n\nTHE RECURRING FAILURE IS THE DATE, NOT THE CONTENT. Five years of the same conversation: Mahsa asking where the issue is, the issue slipping past its intended day, and a request each time to fix a date in the month and hold it. August 2021 escalated. A schedule is the thing this programme has never solved, and it is the strongest argument for the Resend automation.\n\nONE REAL METRIC, AND IT IS OLD. Oct 2022: open rate about 40% of the mailing list, roughly 520 people, comparable to event mail. That is the only engagement figure anywhere in five years of this channel. Do not quote it as current - PUBLIC_CLAIMS_PROVENANCE.md rules apply.\n\nSPONSOR CONTENT WAS SOLICITED MONTHLY AND ALMOST NEVER ARRIVED. 2022 is a run of \"anything from the sponsors?\" answered by silence from everyone except MYOB. The 15th of the month was the stated deadline. Worth knowing before promising sponsors newsletter placement.\n\nCONTENT SOURCES THAT ARE NOT SLACK: the newsletter draft lives in a Google Doc per issue (five different doc links across the channel), and the Oct 2025 issue was drafted by Moksha, appended by Prasanth and rewritten by Mahsa in that order.",
-      "digestAt": "2026-08-07T12:40:26.324Z"
+      "readAt": "2026-08-21T12:53:04.733Z",
+      "digest": "The newsletter channel. Carries the Mailchimp credentials and a pinned 2FA QR — item 1 in the archive's SECURITY/credentials-to-rotate.md, and the worst item on it. Never quote anything credential-shaped from here.\n\nDELTA READ 21 Aug 2026: 3 messages, 17-18 Aug. The August 2026 issue was built in code and sent through RESEND to the weekly-meeting addresses, and is published at /resources/newsletters/2026-08 — so the Resend pilot has now actually gone out to people, which the roster state file does not show. Chan walked Mahsa through upgrading Resend to the $20/mo plan, signing in with the website@shesharp.org.nz Google account; Mahsa asked for that password again in-channel on 18 Aug, which is why it is now item 7c in the rotation list.\n\nNOTHING TO ACTION on an event page. Open question for /monthly-newsletter and /promote-event: whether the Resend upgrade happened, because the mailing-list gate in both skills assumes the free tier and an empty roster.",
+      "digestAt": "2026-08-21T12:53:04.732Z"
     },
     "C01K9PJ3ZQC": {
       "name": "team-meeting-minutes",
@@ -17778,7 +17778,7 @@
       "mapping": {
         "kind": "none"
       },
-      "watermarkTs": "1786309290.441759",
+      "watermarkTs": "1786914058.725669",
       "threads": {
         "1751929031.755199": {
           "replyCount": 1,
@@ -17822,10 +17822,12 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-21T12:36:01.775Z",
+      "lastSyncedAt": "2026-08-21T12:53:02.127Z",
       "lastSyncedCommit": "",
       "scannedTs": "1786914058.725669",
-      "readAt": "2026-08-12T02:36:48.836Z"
+      "readAt": "2026-08-21T12:53:02.127Z",
+      "digest": "Bot channel: the weekly NZ funding-opportunity digest posted by the cron in app/api/cron/weekly-funding-crawl. Scores for event signal because grant copy is full of dates and venues, but it plans no She Sharp event and feeds no page.\n\nDELTA READ 21 Aug 2026: 1 message, 16 Aug — one weekly digest, 10 opportunities from 146 scanned feed items. NOTHING TO ACTION.",
+      "digestAt": "2026-08-21T12:53:02.125Z"
     },
     "C096M3GC3BL": {
       "name": "event-vector-nov12-2025",
@@ -18598,11 +18600,13 @@
           "latestReplyTs": "1776921258.707979"
         }
       },
-      "fingerprint": "sha256:f22eb4a17e71a9a52d0507d54819409ce71072125e95414cd37a242e41281a97",
-      "lastSyncedAt": "2026-06-09T01:45:13.080Z",
+      "fingerprint": "sha256:e0fea8d599789fd05077f571ec31910bd67b31c311a71ac524dfda1eb9c04385",
+      "lastSyncedAt": "2026-08-21T12:53:20.823Z",
       "lastSyncedCommit": "",
-      "readAt": "2026-08-07T12:49:55.008Z",
-      "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07"
+      "scannedTs": "1777003028.579359",
+      "readAt": "2026-08-21T12:53:20.823Z",
+      "digest": "She Sharp x Candice Murray \"Own Your Energy\", 16 Apr 2026 — EVENT HAS RUN and the page is complete at /events/she-sharp-candice-murray-own-your-energy.\n\nDELTA READ 21 Aug 2026: 0 new messages. It surfaced only because it had no scan position, not because anything changed. NOTHING TO ACTION.",
+      "digestAt": "2026-08-21T12:53:20.822Z"
     },
     "C0AFVNS9FEW": {
       "name": "event-msd-march-2026",
@@ -19737,13 +19741,13 @@
           "latestReplyTs": "1785285691.311099"
         }
       },
-      "fingerprint": "sha256:8e18dacc067755013d50136dc80f9a1fda713f630a7778341c41af55eb74da28",
-      "lastSyncedAt": "2026-08-05T04:29:41.908Z",
+      "fingerprint": "sha256:fdada144979b42e5059dd6d7522cacf876b21d68727302712d4ea3073b7f0a46",
+      "lastSyncedAt": "2026-08-21T12:53:23.382Z",
       "lastSyncedCommit": "",
-      "readAt": "2026-08-07T12:49:55.008Z",
-      "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
-      "digest": "She Sharp x MYOB 'Working Smarter: AI, MYOB, and the New Delivery Landscape', 30 July 2026 - EVENT HAS RUN. Page complete: status 'completed', galleryUrl set, speakers/agenda/venue all verified. 2026-08-05 sync: NO public-facing change - the 27-message delta was all internal execution (slide deck, paper survey design, LinkedIn scheduling, gear drop-off, label printing). Registrations CLOSED 29 Jul at 86 registered (Mike asked for the final CSV). 'attendees' deliberately left null: the sidebar renders it as 'N attended' for past events, and 86 is the REGISTERED count - fill attendees + checkedIn together once real check-in numbers exist, the way from-burnout-to-balance (106/75) does. Displayed time stays 5:00-7:30pm to match Humanitix even though the run sheet ran networking to 8:00pm (user decision). REDACTION LANDMINES: 12 Humanitix ?accesscode= links in the pinned message, Slido link, survey Google Form, the run-sheet Google Sheet (contains attendee PII).",
-      "digestAt": "2026-08-05T04:29:41.907Z"
+      "scannedTs": "1785545264.974599",
+      "readAt": "2026-08-21T12:53:23.382Z",
+      "digest": "She Sharp x MYOB \"Working Smarter: AI, MYOB, and the New Delivery Landscape\", 30 Jul 2026 — EVENT HAS RUN. Page complete: status completed, gallery published, attendance 87 registered / 51 checked in.\n\nDELTA READ 21 Aug 2026: 0 new messages. It surfaced only because it had no scan position, not because anything changed. NOTHING TO ACTION.",
+      "digestAt": "2026-08-21T12:53:23.380Z"
     },
     "C0BD786U0FP": {
       "name": "mpdm-nirmalac0503--prasanth.pavithran--chanmeng6666--lesleygao.it--nikitakumari0318-1",
@@ -22358,6 +22362,10 @@
           "replyCount": 1,
           "latestReplyTs": "1774007370.007559"
         },
+        "1777884423.875039": {
+          "replyCount": 1,
+          "latestReplyTs": "1787049515.710139"
+        },
         "1780451669.313409": {
           "replyCount": 1,
           "latestReplyTs": "1780466397.055669"
@@ -22384,12 +22392,12 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-06T04:17:27.197Z",
+      "lastSyncedAt": "2026-08-21T12:52:59.596Z",
       "lastSyncedCommit": "",
-      "readAt": "2026-08-07T12:49:55.008Z",
-      "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
-      "digest": "Founder DM. Content is platform strategy - Resend vs Mailchimp quota (she declined in Jul 2026: not a priority, Discord is the hackathon comms channel), website visual design sign-off, tooling demos. Note for the newsletter work: her 15 Jul reply is the standing decision on why Mailchimp has not been replaced. No event-page edits have come through here, but she does approve them elsewhere.",
-      "digestAt": "2026-08-05T04:31:27.014Z"
+      "scannedTs": "1785410334.970819",
+      "readAt": "2026-08-21T12:52:59.597Z",
+      "digest": "Founder DM. Content is platform strategy — Resend vs Mailchimp quota (she declined in Jul 2026: not a priority, Discord is the hackathon comms channel), website visual design sign-off, tooling demos. Her 15 Jul reply is the standing decision on why Mailchimp has not been replaced. No event-page edits come through here, though she approves them elsewhere.\n\nDELTA READ 21 Aug 2026: 1 message, 4 May, which is a PLAINTEXT PASSWORD for website@shesharp.org.nz, sent in answer to a direct request for it. Recorded as item 7c in the archive's SECURITY/credentials-to-rotate.md — location only, never the value, and it must never be repeated into this repo, a page, a commit message or a digest. That account also gates Webflow and the Resend login, so it is not one inbox.\n\nNOTHING TO ACTION on any event page.",
+      "digestAt": "2026-08-21T12:52:59.595Z"
     },
     "D09C8T1124E": {
       "name": "dm:Prasanth Pavithran",
@@ -22535,7 +22543,7 @@
         "reason": "1:1 DM with Len Estioko (marketing). Not an event channel, but DOES carry ad-hoc page-change instructions - read the delta in full every run.",
         "alwaysRead": true
       },
-      "watermarkTs": "1785836362.872489",
+      "watermarkTs": "1786532702.146019",
       "threads": {
         "1773291671.639489": {
           "replyCount": 1,
@@ -22547,12 +22555,12 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-06T04:17:24.269Z",
+      "lastSyncedAt": "2026-08-21T12:52:57.030Z",
       "lastSyncedCommit": "",
-      "readAt": "2026-08-07T12:49:55.008Z",
-      "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
-      "digest": "READ IN FULL, NEVER FROM THE DISCOVERY SNIPPET. On 2026-08-05 this DM was the ONLY place carrying 'Please take out Christine Yip as a mentor, she pulled out today' (4 Aug 21:34 NZST) - it appeared in no channel, and a first pass that judged this DM from its one-line discovery evidence ('dev work, not events') missed it and left a withdrawn mentor on a page due to be projected two days later. Len also relays hackathon slide feedback here. Mostly personal otherwise (a job referral and CVs) - that content is private, never quote or commit it.",
-      "digestAt": "2026-08-05T04:30:40.720Z"
+      "scannedTs": "1786532702.146019",
+      "readAt": "2026-08-21T12:52:57.030Z",
+      "digest": "READ IN FULL, NEVER FROM THE DISCOVERY SNIPPET. On 2026-08-05 this DM was the ONLY place carrying \"Please take out Christine Yip as a mentor, she pulled out today\" (4 Aug 21:34 NZST) — it appeared in no channel, and a first pass that judged this DM from its one-line evidence (\"dev work, not events\") left a withdrawn mentor on a page due to be projected two days later. Len also relays hackathon slide feedback here.\n\nDELTA READ 21 Aug 2026: 6 messages, 12 Aug, entirely personal — a job referral. NOTHING TO ACTION, and nothing from it may be quoted, summarised into an event page, or committed anywhere. That is the standing rule for this conversation and the delta does not change it.\n\nKeep always-read. The value of this DM is not its average content; it is that one line in August that existed nowhere else.",
+      "digestAt": "2026-08-21T12:52:57.028Z"
     },
     "D0AHBGJ57CK": {
       "name": "dm:Tharaneetharan Thavarasan",
