@@ -684,12 +684,12 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-21T12:53:04.733Z",
+      "lastSyncedAt": "2026-08-21T13:20:46.858Z",
       "lastSyncedCommit": "",
       "scannedTs": "1787043924.063329",
-      "readAt": "2026-08-21T12:53:04.733Z",
-      "digest": "The newsletter channel. Carries the Mailchimp credentials and a pinned 2FA QR — item 1 in the archive's SECURITY/credentials-to-rotate.md, and the worst item on it. Never quote anything credential-shaped from here.\n\nDELTA READ 21 Aug 2026: 3 messages, 17-18 Aug. The August 2026 issue was built in code and sent through RESEND to the weekly-meeting addresses, and is published at /resources/newsletters/2026-08 — so the Resend pilot has now actually gone out to people, which the roster state file does not show. Chan walked Mahsa through upgrading Resend to the $20/mo plan, signing in with the website@shesharp.org.nz Google account; Mahsa asked for that password again in-channel on 18 Aug, which is why it is now item 7c in the rotation list.\n\nNOTHING TO ACTION on an event page. Open question for /monthly-newsletter and /promote-event: whether the Resend upgrade happened, because the mailing-list gate in both skills assumes the free tier and an empty roster.",
-      "digestAt": "2026-08-21T12:53:04.732Z"
+      "readAt": "2026-08-21T13:20:46.858Z",
+      "digest": "The newsletter channel. Carries the Mailchimp credentials and a pinned 2FA QR — item 1 in the archive's SECURITY/credentials-to-rotate.md, and the worst item on it. Never quote anything credential-shaped from here.\n\nDELTA READ 21 Aug 2026: 3 messages, 17-18 Aug. The August 2026 issue was built in code and delivered through RESEND to the weekly-meeting addresses, and is published at /resources/newsletters/2026-08. Chan walked Mahsa through upgrading Resend to the $20/mo plan, signing in with the website@shesharp.org.nz Google account; Mahsa asked for that password again in-channel on 18 Aug, which is why it is now item 7c in the rotation list.\n\nRESEND HAS NOT BEEN UPGRADED — confirmed by the user 22 Aug 2026. So the free tier and its limits still apply, and the empty Resend roster that /promote-event and /email-the-community both gate on is real rather than a stale state file. The August issue reaching inboxes was a send to a handful of known addresses, not a broadcast to a list. Do not read it as evidence the mailing list exists.",
+      "digestAt": "2026-08-21T13:20:46.857Z"
     },
     "C01K9PJ3ZQC": {
       "name": "team-meeting-minutes",
@@ -18846,18 +18846,23 @@
       "name": "event-security-xero-october-2026",
       "type": "event",
       "mapping": {
-        "kind": "skip",
-        "reason": "still insufficient data as of 2026-06-22; only a planning-session scheduling note"
+        "kind": "event",
+        "events": [
+          {
+            "slug": "code-secure-2026",
+            "eventId": 98
+          }
+        ]
       },
-      "watermarkTs": "1781841605.185089",
+      "watermarkTs": "1787313883.704289",
       "threads": {},
-      "fingerprint": "",
-      "lastSyncedAt": "2026-06-21T14:04:40.367Z",
+      "fingerprint": "sha256:3f09dc7fd8e4cd3ef5af276cd3bbebd172acab0c1652073a9608d5c78653a15f",
+      "lastSyncedAt": "2026-08-21T13:20:17.822Z",
       "lastSyncedCommit": "",
-      "readAt": "2026-08-07T12:49:55.008Z",
-      "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
-      "digest": "Security/Xero workshop tentatively October 2026. As of 2026-06-22 only planning-session scheduling chatter — no confirmed date, speaker, or poster. Keep skipped until a poster/date/speaker lands.",
-      "digestAt": "2026-06-21T14:04:40.367Z"
+      "scannedTs": "1787313883.704289",
+      "readAt": "2026-08-21T13:20:17.822Z",
+      "digest": "She Sharp x Xero x Secure Code Warrior, \"Code Secure. Lead the Future: Women in Cybersecurity\" — Thu 8 Oct 2026, 5:00-9:00pm NZDT, Xero Office (Level 2), 96 Saint Georges Bay Road, Parnell. PUBLISHED at /events/code-secure-2026 on 21 Aug 2026. Feedback code cs26.\n\nPROVENANCE OF EVERY PUBLISHED FACT. Date, venue-timing and format come from Mahsa's 20 Aug planning summary, posted in this channel AND in #marketing. \"Same venue as last year\" was resolved to last year's `code-secure` address (3 Oct 2025) and confirmed by the user. Title, subtitle and the workshop framing are carried from that 2025 entry because Nikita's words in #marketing were \"Event would be same as last year... Rinse and repeat\" — they are NOT independently confirmed, so if a brief lands, the title is the first thing to re-check.\n\nCLEARANCE. On 18 Aug Mahsa wrote in #marketing: \"we need to get clearance from Xero before Lesmills event as we announce the event then\" — i.e. the public announcement was timed to the Les Mills evening (3 Sep). The user took that call explicitly on 21 Aug and published now. Do not treat the page as evidence the clearance arrived.\n\nSTILL OPEN, and each blocks a specific next step:\n- No brief. Len asked \"Do we have the brief?\" on 18 Aug and none has appeared. fullDescription is written from the meeting notes, not from a brief.\n- No Humanitix page, so registrationUrl is empty and no ticket link exists anywhere.\n- Fatemah Beydoun (SCW) is confirmed as a speaker but has NO bio, title or photograph in the record, so her speaker poster cannot be built.\n- Panel vs single keynote is undecided (\"final call to be made with She Sharp\").\n- Marriane posted Canva poster options here on 21 Aug; the site does NOT use them. The published artwork is a fresh plate built with make-event-poster.\n\nARTWORK: all six sizes at public/img/events/code-secure-2026/. The logo lockup carries She# and Xero only — lockup() takes one partner — so Secure Code Warrior is named in the strapline instead. Flagged to the user; a second-partner lockup is unbuilt.\n\nREDACTIONS: none. The channel carries no access codes or private links.",
+      "digestAt": "2026-08-21T13:20:17.821Z"
     },
     "C0AG1BM4UMU": {
       "name": "event-msd-april7--2026",
@@ -20383,7 +20388,7 @@
         "kind": "skip",
         "reason": "Marketing coordination channel: posters, captions, social scheduling. Carries event COPY but is not itself an event channel."
       },
-      "watermarkTs": "1786495782.378049",
+      "watermarkTs": "1787199333.869879",
       "threads": {
         "1581735176.002100": {
           "replyCount": 2,
@@ -21612,15 +21617,27 @@
         "1785101808.949619": {
           "replyCount": 4,
           "latestReplyTs": "1785200888.153689"
+        },
+        "1786955640.400339": {
+          "replyCount": 7,
+          "latestReplyTs": "1786959008.602859"
+        },
+        "1786959250.594379": {
+          "replyCount": 1,
+          "latestReplyTs": "1786959794.677989"
+        },
+        "1787041041.927629": {
+          "replyCount": 5,
+          "latestReplyTs": "1787188629.180869"
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-12T02:36:45.619Z",
+      "lastSyncedAt": "2026-08-21T13:20:44.199Z",
       "lastSyncedCommit": "",
-      "scannedTs": "1786495782.378049",
-      "readAt": "2026-08-12T02:36:45.619Z",
-      "digest": "READ THIS ONE, DO NOT SKIM. #marketing is where organisers post the authoritative event BLURB before a poster exists, so it can be the best source of copy for an event whose own channel only has logistics. 2026-08-05: the Les Mills fullDescription now on the site came from Nirmala's 24 Jul brief HERE (title, date, time, full address, two-paragraph blurb) - the event channel never carried it. Also here: Judge Spotlight captions for the hackathon, Les Mills poster iterations (option 2 chosen), and yesha's impact figures (86+ events, 5,800+ registrations, 3,673+ active members, 33+ partners, 12 years) which CONTRADICT lib/data/stats.ts - not reconciled, flagged only. Xero and HCLTech are named as later-2026 events with kickoff meetings pending: no dates, no content, not creatable yet - watch for them.",
-      "digestAt": "2026-08-05T04:30:12.945Z"
+      "scannedTs": "1787199333.869879",
+      "readAt": "2026-08-21T13:20:44.199Z",
+      "digest": "READ THIS ONE, DO NOT SKIM. #marketing is where organisers post the authoritative event BLURB before a poster exists, so it can be the best source of copy for an event whose own channel only has logistics. 2026-08-05: the Les Mills fullDescription now on the site came from Nirmala's 24 Jul brief HERE — the event channel never carried it. Also here: Judge Spotlight captions for the hackathon, Les Mills poster iterations (option 2 chosen), and yesha's impact figures (86+ events, 5,800+ registrations, 3,673+ active members, 33+ partners, 12 years) which CONTRADICT lib/data/stats.ts — not reconciled, flagged only.\n\nDELTA READ 21 Aug 2026. The Xero event is no longer \"not creatable yet\": Mahsa's 20 Aug planning summary is duplicated here, and the event is now PUBLISHED at /events/code-secure-2026 (id 98). Two things in this delta matter more than the summary itself:\n\n1. 18 Aug, Mahsa: \"Remember we need to get clearance from Xero before Lesmills event as we announce the event then.\" The public announcement was timed to the Les Mills evening on 3 Sep and gated on Xero's clearance. The user took that call explicitly and published on 21 Aug. Anyone reading this later should not infer the clearance arrived.\n2. 18 Aug, Len: \"Do we have the brief?\" — still unanswered. There is no brief for the Xero event, so its fullDescription is written from meeting notes.\n\nHCLTech is still named here as a later-2026 event with no date and no content — not creatable.",
+      "digestAt": "2026-08-21T13:20:44.198Z"
     },
     "CKDB6T6SG": {
       "name": "project-diversity-works-award",

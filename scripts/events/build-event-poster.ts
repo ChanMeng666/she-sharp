@@ -274,6 +274,18 @@ const UNRENDERED = [
      reverse check can see — and the spec is rebuilt for every send, so it never
      will be. Naming it here is what stops it reading as an orphan. */
   /^email(-[a-z0-9]+)?\.jpg$/,
+  /* The sizes a human uploads by hand: the Humanitix banner, and the Instagram
+     and Facebook files. Nothing on the website renders them — the page shows
+     `social.webp` as its cover and `poster.webp` in its posters block, and
+     those two are the only ones deliberately left out of this list.
+
+     They went unnoticed until code-secure-2026, the first event to build a
+     clean base-named set: Les Mills had regenerated its own with --suffix v2,
+     and that set went into KNOWN_UNREFERENCED as an undecided leftover, which
+     hid the fact that the base names had no home either. */
+  /^humanitix(-[a-z0-9]+)?\.jpg$/,
+  /^social(-[a-z0-9]+)?\.jpg$/,
+  /^(story|square)(-[a-z0-9]+)?\.(jpg|webp)$/,
 ];
 
 /**
