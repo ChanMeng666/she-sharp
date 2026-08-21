@@ -298,8 +298,10 @@ is.
 
 ## 8. Things that are true and look like bugs
 
-Each of these was checked against the code on 2026-08-21. Every one of them has
-sent somebody looking for a fault that was not there.
+Each of these was checked against the code on 2026-08-21 — the last one against
+this machine on 2026-08-22, since it is an environment fact rather than a code
+one. Every one of them has sent somebody looking for a fault that was not
+there.
 
 **`detailPageData.status` is never read by the website.** `getUpcomingEvents()`
 and `getPastEvents()` filter on the **date** alone, and no component renders
@@ -331,6 +333,27 @@ perfectly correct from the front of the room, which is why
 destination already parsing as `_meta.mode: "full"` — which every stale payload
 is. It prints `skip … (already full)` down the whole list and exits 0.
 `refresh-archive.ts` runs stale and new as separate passes for this reason.
+
+**"Another git process seems to be running" usually means GitHub Desktop, and
+usually there is no process.** It watches this repository in the background and
+leaves a **zero-byte `.git/index.lock`** behind, which blocks the next
+command-line `git add` or `git commit` with that message. It interrupted two
+commits on 2026-08-21 alone.
+
+Do not delete the lock on the strength of the message. Check both of these
+first, and only then remove it:
+
+```bash
+ls -la .git/index.lock          # zero bytes and minutes old = stale
+tasklist | grep -i "^git"       # a real git.exe means WAIT, not delete
+rm -f .git/index.lock           # only when both say stale
+```
+
+A lock held by a **live** `git.exe` is doing its job, and deleting it during a
+write can corrupt the index. The tell is that GitHub Desktop's leftovers are
+empty and stay put — a real operation holds a lock for a moment, not for forty
+minutes. Nothing is lost either way: a blocked `git add` writes nothing, so the
+working tree still holds every edit when you retry.
 
 ---
 
