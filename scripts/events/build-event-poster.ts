@@ -317,36 +317,39 @@ export function speakerCopyFor(
   };
 }
 
-/** Artwork this event ships that no page renders, so nothing else points at it. */
-const UNRENDERED = [
+/**
+ * Artwork this event's live campaign ships that no page renders.
+ *
+ * BASE NAMES ONLY, and the omission of `--suffix` builds is the point.
+ *
+ * There are two homes for an unreferenced file and they mean different
+ * things. This manifest means "the campaign ships this, guard it" — delete one
+ * and CI fails instead of a scheduled post losing its picture.
+ * `KNOWN_UNREFERENCED` in scripts/verify-image-paths.ts means "somebody built
+ * this and has not decided whether to keep it", which is what its own entries
+ * say. A `--suffix` build is by definition the second kind: it exists precisely
+ * because someone wanted a variant beside the live one rather than over it.
+ *
+ * Claiming both put the Les Mills `-v2` set in both lists at once, and
+ * verify-image-paths fails an allow-list entry that has become referenced —
+ * so the next rebuild of that event would have turned CI red for a set nobody
+ * had touched. `posterAssets.test.ts` now asserts the two lists cannot overlap.
+ */
+export const UNRENDERED = [
   /* One person, or the whole group, on a tile that gets posted by hand. */
   /^(speaker-.+|lineup)-[a-z0-9-]+\.jpg$/,
   /* The mailing-list banner. Referenced by an absolute https URL inside a
      generated MessageSpec under gitignored `tmp/`, which is not a reference the
      reverse check can see — and the spec is rebuilt for every send, so it never
      will be. Naming it here is what stops it reading as an orphan. */
-  /^email(-[a-z0-9]+)?\.jpg$/,
+  /^email\.jpg$/,
   /* The sizes a human uploads by hand: the Humanitix banner, and the Instagram
      and Facebook files. Nothing on the website renders them — the page shows
      `social.webp` as its cover and `poster.webp` in its posters block, and
-     those two are the only ones deliberately left out of this list.
-
-     They went unnoticed until code-secure-2026, the first event to build a
-     clean base-named set: Les Mills had regenerated its own with --suffix v2,
-     and that set went into KNOWN_UNREFERENCED as an undecided leftover, which
-     hid the fact that the base names had no home either. */
-  /^humanitix(-[a-z0-9]+)?\.jpg$/,
-  /^social(-[a-z0-9]+)?\.jpg$/,
-  /^(story|square)(-[a-z0-9]+)?\.(jpg|webp)$/,
-  /* A SUFFIX MEANS NO PAGE RENDERS IT, and that finishes the rule above rather
-     than adding a new one. `poster.webp` and `social.webp` are the two files the
-     event page reads, by those exact names — so `--suffix` produces, by
-     definition, artwork nothing points at: a second take, a light-ground
-     variant, a version kept while somebody decides. Those went into
-     `KNOWN_UNREFERENCED` one at a time, which is the list this manifest exists
-     to stop growing. */
-  /^poster-[a-z0-9]+\.webp$/,
-  /^social-[a-z0-9]+\.webp$/,
+     those two are the only ones deliberately left out of this list. */
+  /^humanitix\.jpg$/,
+  /^social\.jpg$/,
+  /^(story|square)\.(jpg|webp)$/,
 ];
 
 /**

@@ -27,7 +27,8 @@
  */
 
 import { readdirSync, existsSync } from "fs";
-import { join, relative } from "path";
+import { join, relative, resolve } from "path";
+import { fileURLToPath } from "url";
 
 import { collectReferences, groupByPath, isNonUseSource, REPO_ROOT, type Reference } from "./assets/refs";
 import { resolveOwner } from "./assets/event-assets";
@@ -45,7 +46,10 @@ export const KNOWN_UNREFERENCED: Array<{ path: string; reason: string }> = [
   // A second poster set generated for the Les Mills evening. The event page
   // still points at the originals; keep or drop is an unmade decision, not an
   // accident, so they are neither wired up nor deleted.
-  { path: "/img/events/event-lesmills-03-september-2026/humanitix-v2.jpg", reason: "regenerated poster set, pending a keep-or-drop decision" },
+  { path: "/img/events/event-lesmills-03-september-2026/humanitix-v2.jpg", reason: "regenerated poster set, pending a keep-or-drop decision — NOT approved, and NOT to be deleted "
+    + "while that decision is open. This list is the right home for it precisely because it is undecided: "
+    + "the generated index.ts manifest claims base-named files only, and scripts/events/poster-assets.test.ts "
+    + "asserts the two can never claim the same file." },
   { path: "/img/events/event-lesmills-03-september-2026/poster-v2.webp", reason: "regenerated poster set, pending a keep-or-drop decision" },
   { path: "/img/events/event-lesmills-03-september-2026/social-v2.jpg", reason: "regenerated poster set, pending a keep-or-drop decision" },
   { path: "/img/events/event-lesmills-03-september-2026/social-v2.webp", reason: "regenerated poster set, pending a keep-or-drop decision" },
@@ -266,4 +270,18 @@ function main() {
   process.exit(1);
 }
 
-main();
+/*
+ * Guarded so `KNOWN_UNREFERENCED` can be imported without running the gate.
+ * `scripts/events/poster-assets.test.ts` reads that list to assert it never
+ * overlaps the generated per-event manifest; without this, importing it ran
+ * all three checks and called process.exit, so the test could not report.
+ *
+ * Same shape as build-event-poster.ts's guard. `npx tsx scripts/verify-image-paths.ts`
+ * is unaffected — argv[1] is this file — and so is every CI invocation.
+ */
+if (
+  process.argv[1] &&
+  resolve(process.argv[1]) === resolve(fileURLToPath(import.meta.url))
+) {
+  main();
+}
