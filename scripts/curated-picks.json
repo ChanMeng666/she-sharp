@@ -1,6 +1,9 @@
 {
   "$comment": "Source of truth for public/img/curated. Regenerate with: npx tsx scripts/optimize-images.mts",
-  "sourceRoots": {},
+  "sourceRoots": {
+    "hackathon2026": "C:/Users/0/Downloads/Aotearoa AI Hackathon 2026 Photos",
+    "hackathon2026-groups": "C:/Users/0/Downloads/1-Aotearoa AI Hackathon 2026 photos"
+  },
   "picks": [
     {
       "name": "hero-conference-crowd",
@@ -1176,6 +1179,750 @@
         ]
       },
       "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "workshop-hackathon-roundtable",
+      "role": "card",
+      "alt": "A participant speaks with an open hand across a round table while her teammates listen, printed prompt cards spread on the black tablecloth.",
+      "source": "hackathon2026:Hackathon-5.jpg",
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      }
+    },
+    {
+      "name": "workshop-hackathon-laptops",
+      "role": "card",
+      "alt": "Three participants sit shoulder to shoulder over open laptops, concentrating, against a warm timber slat wall.",
+      "source": "hackathon2026:Hackathon-6.jpg",
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      }
+    },
+    {
+      "name": "audience-hackathon-smiles",
+      "role": "card",
+      "alt": "A round table of participants, several of them smiling, turn towards a speaker in a room hung with dark curtains.",
+      "source": "hackathon2026:Hackathon-10.jpg",
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      }
+    },
+    {
+      "name": "connection-hackathon-smile",
+      "role": "card",
+      "alt": "A participant in a cream puffer jacket laughs broadly across her table in a crowded working hall.",
+      "source": "hackathon2026:Hackathon-16.jpg",
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      }
+    },
+    {
+      "name": "speaker-hackathon-keynote",
+      "role": "card",
+      "alt": "A keynote speaker raises both hands mid-sentence at a wooden AUT lectern, a classical marble bust and the words KNOW THYSELF projected behind her.",
+      "source": "hackathon2026:Hackathon-29.jpg",
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      }
+    },
+    {
+      "name": "workshop-hackathon-laughter",
+      "role": "card",
+      "alt": "A woman in a blue puffer jacket laughs mid-conversation with two teammates working over notes at their table.",
+      "source": "hackathon2026:Hackathon-44.jpg",
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      }
+    },
+    {
+      "name": "connection-hackathon-introductions",
+      "role": "card",
+      "alt": "A woman in a hijab smiles while talking with another attendee, a printed handout in her hand, in a room full of people meeting each other.",
+      "source": "hackathon2026:Hackathon-46.jpg",
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      }
+    },
+    {
+      "name": "divider-hackathon-group",
+      "role": "divider",
+      "alt": "The whole festival gathered for a group photograph in the campus atrium, some kneeling at the front around a chalkboard sign.",
+      "source": "hackathon2026:Hackathon-73.jpg",
+      "prebuilt": {
+        "width": 1920,
+        "height": 667,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      }
+    },
+    {
+      "name": "workshop-hackathon-discussion",
+      "role": "card",
+      "alt": "Five participants sit around a round table with coffee cups, one taking notes while another explains something to the group.",
+      "source": "hackathon2026:Hackathon-80.jpg",
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      }
+    },
+    {
+      "name": "mentoring-hackathon-table",
+      "role": "card",
+      "alt": "A woman gestures with an open hand as she explains something across a table of open laptops to two listening teammates.",
+      "source": "hackathon2026:Hackathon-84.jpg",
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      }
+    },
+    {
+      "name": "hero-hackathon-laughter",
+      "role": "hero",
+      "alt": "A participant laughs with her arms folded during a conversation, a second person smiling in the background of a sunlit room.",
+      "source": "hackathon2026:Hackathon-109.jpg",
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      }
+    },
+    {
+      "name": "workshop-hackathon-explain",
+      "role": "card",
+      "alt": "A participant gestures at a laptop screen as she explains something to a teammate, who leans in with a hand at her chin.",
+      "source": "hackathon2026:Hackathon-124.jpg",
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      }
+    },
+    {
+      "name": "mentoring-hackathon-screen",
+      "role": "card",
+      "alt": "A mentor wearing an I'm a mentor badge reaches across the table to point at a teammate's laptop screen showing a team's pitch slide.",
+      "source": "hackathon2026:Hackathon-126.jpg",
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      }
+    },
+    {
+      "name": "connection-hackathon-break",
+      "role": "card",
+      "alt": "Attendees help themselves from a tiered catering stand during the break, plates in hand and conversation running across the table.",
+      "source": "hackathon2026:Hackathon-291.jpg",
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      }
+    },
+    {
+      "name": "connection-hackathon-laughter",
+      "role": "card",
+      "alt": "An attendee laughs mid-conversation during the break, a drink in one hand, in the timber-lined foyer.",
+      "source": "hackathon2026:Hackathon-293.jpg",
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      }
+    },
+    {
+      "name": "divider-hackathon-hall",
+      "role": "divider",
+      "alt": "Around ninety participants and organisers massed together for a whole-festival photograph, a neon She# sign glowing at the centre of the front row.",
+      "source": "hackathon2026:Hackathon-323.jpg",
+      "prebuilt": {
+        "width": 1920,
+        "height": 663,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      }
+    },
+    {
+      "name": "mentoring-hackathon-explaining",
+      "role": "card",
+      "alt": "A woman in a red cardigan gestures with both hands as she explains something to two people listening beside a plate of pastries.",
+      "source": "hackathon2026-groups:Hackathon-Groups-8.jpg",
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      }
+    },
+    {
+      "name": "workshop-hackathon-focus",
+      "role": "card",
+      "alt": "Two women lean in over a laptop in concentration at a table strewn with sticky notes, pens and snack wrappers.",
+      "source": "hackathon2026-groups:Hackathon-Groups-14.jpg",
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      }
+    },
+    {
+      "name": "speaker-hackathon-lectern",
+      "role": "card",
+      "alt": "A speaker at an AUT lectern mid-sentence, a projected slide beginning 'Imag...' glowing on the screen beside her.",
+      "source": "hackathon2026-groups:Hackathon-Groups-23.jpg",
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      }
+    },
+    {
+      "name": "workshop-hackathon-worksheet",
+      "role": "card",
+      "alt": "Two women lean together over a printed worksheet, pens in hand, smiling at what they are reading.",
+      "source": "hackathon2026:Hackathon-43.jpg",
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      }
+    },
+    {
+      "name": "mentoring-hackathon-scarf",
+      "role": "card",
+      "alt": "A mentor in a bright orange scarf leans in mid-sentence to talk with a seated participant whose T-shirt back reads Aotearoa AI Hackathon Festival.",
+      "source": "hackathon2026:Hackathon-90.jpg",
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      }
+    },
+    {
+      "name": "workshop-hackathon-window",
+      "role": "card",
+      "alt": "A participant types at her laptop in profile while a teammate in a pink shirt smiles over her notes at the next seat, a deep blue wall behind them.",
+      "source": "hackathon2026:Hackathon-133.jpg",
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      }
+    },
+    {
+      "name": "audience-hackathon-keynote",
+      "role": "card",
+      "alt": "Rows of seated attendees watch the stage in front of a timber-slatted wall, several of them smiling at what they are hearing.",
+      "source": "hackathon2026:Hackathon-164.jpg",
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      }
+    },
+    {
+      "name": "speaker-hackathon-mic",
+      "role": "card",
+      "alt": "A young woman with long dark hair speaks into a handheld microphone against a plain white wall, her phone held in her other hand as she presents.",
+      "source": "hackathon2026:Hackathon-207.jpg",
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      }
+    },
+    {
+      "name": "panel-hackathon-judges",
+      "role": "card",
+      "alt": "A judge at a long table lifts a microphone to speak, name cards and notepads spread across the black tablecloth and the rest of the panel listening alongside.",
+      "source": "hackathon2026:Hackathon-212.jpg",
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      }
+    },
+    {
+      "name": "speaker-hackathon-duo",
+      "role": "card",
+      "alt": "Two women present together on stage, one gesturing with a microphone as she speaks while the other holds their notes.",
+      "source": "hackathon2026:Hackathon-267.jpg",
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      }
+    },
+    {
+      "name": "divider-hackathon-crew",
+      "role": "divider",
+      "alt": "Eight attendees in AI Forum t-shirts pose together in the foyer, one crouched at the front with arms out, all grinning at the camera.",
+      "source": "hackathon2026:Hackathon-302.jpg",
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      }
+    },
+    {
+      "name": "celebration-hackathon-smiles",
+      "role": "card",
+      "alt": "Five people in matching 'AI FOR GOOD' t-shirts stand together smiling, two of them making peace signs.",
+      "source": "hackathon2026:Hackathon-330.jpg",
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      }
+    },
+    {
+      "name": "connection-hackathon-talk",
+      "role": "card",
+      "alt": "A man in a black turban gestures mid-sentence as he talks with three other attendees against a plain white wall.",
+      "source": "hackathon2026-groups:Hackathon-Groups-13.jpg",
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      }
+    },
+    {
+      "name": "celebration-hackathon-photobooth",
+      "role": "card",
+      "alt": "Three teammates hug and pull faces together in front of a pink photo-booth backdrop draped with gold and pink tinsel.",
+      "source": "hackathon2026-groups:Hackathon-Groups-18.jpg",
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      }
+    },
+    {
+      "name": "mentoring-hackathon-laptop",
+      "role": "support",
+      "alt": "A standing participant holds an open laptop out towards a seated teammate, who listens with a hand over his mouth in thought.",
+      "source": "hackathon2026:Hackathon-93.jpg",
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      }
     }
   ]
 }
