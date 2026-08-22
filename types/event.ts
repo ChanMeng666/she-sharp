@@ -287,6 +287,15 @@ export interface EventDetailPageData {
   humanitixUrl?: string; // Humanitix registration URL
   hideFeaturedPhoto?: boolean;
   hidePhotosSection?: boolean;
+  /**
+   * Photographer credit for this event's `photos[]`, e.g.
+   * "Photography by VISIONWORKS". Rendered once under the gallery grid, never
+   * per frame. It lives on the event rather than in a lookup table in code
+   * because it is a fact about the event, and because the Slack sync writes
+   * this record — a credit kept elsewhere would be lost the next time an
+   * organiser refreshed the event from its channel.
+   */
+  photoCredit?: string;
 }
 
 // Main V3 Event interface (matches JSON structure)
