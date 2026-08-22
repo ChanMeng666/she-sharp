@@ -23,6 +23,9 @@ Keyed by **channel id** (stable across renames). One entry per channel:
         //  | { "kind": "none" }                  (scanned, no site event)
       },
       "watermarkTs": "1780954764.500039",    // latest top-level ts already processed
+      "pendingTs": "1787049715.026849",      // optional; newest ts SLACK held when the
+                                             //   triage last looked at a row it could
+                                             //   not clear — see "the backlog marker"
       "threads": { "1780900000.000100": { "replyCount": 4, "latestReplyTs": "1780950000.0001" } },
       "fingerprint": "sha256:…",             // hash of the mapped event(s) salient fields
       "lastSyncedAt": "2026-06-09T…Z",
@@ -113,6 +116,38 @@ permalink.
 Both the triage and the fetch call the same two functions. They diverged in the
 first place because each had its own copy of the question.
 
+### `pendingTs` — the backlog marker, added 22 August 2026
+
+The manifest keeps two positions of our own — `watermarkTs` (READ, moved only by
+`update-state.ts --from <payload>`) and `scannedTs` (TRIAGE, moved only by
+`discover-channels.ts`, and only on QUIET rows). `audit-read-state.ts` measured
+the gap between them and called it the backlog.
+
+**That gap cannot open on a row that has an action.** The triage deliberately
+leaves `scannedTs` alone when a row still needs work — advancing it would mark
+unread content read — so a surfaced-and-never-worked row holds
+`scannedTs === watermarkTs` forever and the measured gap is zero *by
+construction*, however much Slack is holding. On 21 August the audit reported
+the whole workspace clean while #event-ai-forum-ai-hackathon-2026 sat thirteen
+messages behind, among them the Google Photos album its own digest named as the
+one open item, and Les Mills fourteen.
+
+`pendingTs` is the third position and the only one that describes **Slack**:
+the newest ts the triage saw on a row it could not clear — the max of the
+channel head and the newest reply on any grown thread, so a channel behind only
+inside a thread counts too. Written by `discover-channels.ts` on actionable
+rows, deleted when a row goes quiet, and deleted by `update-state.ts` once a
+delivered payload's watermark reaches it. A partial read keeps it.
+
+Existing manifest entries only: a conversation the manifest has never heard of
+is a different question with a different tool (`verify-coverage.ts
+--enumerate-only`), and inventing an entry here would assert a mapping and a
+read position nobody established.
+
+The `settledSkip` exemption is untouched. A bot channel is permanently behind by
+design, and counting it would make the gate cry wolf — the one failure mode a
+gate cannot survive.
+
 ## Fingerprint — the no-op short-circuit
 
 `fingerprint` is a sha256 over the mapped event(s) salient fields in
@@ -139,7 +174,17 @@ writes the full machine triage to `.cache/triage.json`. Each row's `action`:
 | `skip` / `skip→review (new msgs)` | settled skip; the latter has new activity worth a glance |
 | `fingerprint-stale` | the event was edited in the repo since last sync |
 | `stale-status (slug: status)` | mapped event whose date has passed but status is still future → run the post-event gallery pass |
+| `<unread> + <local>` | **both at once**, e.g. `incremental + fingerprint-stale (event edited)`. The two halves answer different questions — Slack is holding unread content, *and* the repo changed out of band — and a row can be either, both, or neither |
 | `archived` | unreadable; ignored |
+
+**A local condition never masks a remote one.** `fingerprint-stale` and
+`stale-status` used to return before `hasNew` was consulted. Every event's image
+paths moved on 19 Aug 2026, so on the 21 Aug run all ten mapped event channels
+printed `fingerprint-stale` — eight of them correctly, and the two holding
+thirteen and fourteen unread messages indistinguishably. Composing is why the
+label now carries both facts; `decideAction()` and `isQuiet()` live in
+`state-lib.ts` with assertions in `state-lib.test.ts`, because the triage module
+runs the whole workspace scan on import and could not be tested where they were.
 
 Settled states (`no-op*`, `archived`, `skip`) are hidden by default; pass `--all`
 to see them. `--propose` suggests fuzzy event matches for unmapped event channels

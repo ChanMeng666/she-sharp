@@ -193,12 +193,27 @@ function applyOne(
       ? prev!.scannedTs!
       : watermarkTs;
 
+  /*
+   * A DELIVERY RETIRES THE BACKLOG MARKER IT SATISFIES.
+   *
+   * `pendingTs` is what the triage saw in Slack on a row it could not clear.
+   * Once a payload has delivered content at least that far, the marker has done
+   * its job and keeping it would leave `audit-read-state.ts` red on a
+   * conversation that was in fact read. A marker still ahead of the delivered
+   * watermark is kept: a partial read is not a read.
+   */
+  const pendingTs =
+    prev?.pendingTs && Number(prev.pendingTs) > Number(watermarkTs)
+      ? prev.pendingTs
+      : undefined;
+
   const next: ChannelState = {
     name,
     type,
     mapping,
     watermarkTs,
     scannedTs,
+    ...(pendingTs ? { pendingTs } : {}),
     threads: mergedThreads,
     fingerprint: fingerprint || (kind === "event" ? prev?.fingerprint ?? "" : ""),
     lastSyncedAt: nowIso(),
@@ -218,7 +233,7 @@ function applyOne(
      conversation is material by definition. Leaving it out made
      `--read-source` a silent no-op. */
   const material = (c?: ChannelState) =>
-    c && JSON.stringify({ n: c.name, t: c.type, m: c.mapping, w: c.watermarkTs, s: c.scannedTs ?? "", r: c.readAt ? "y" : "", rs: c.readAtSource ?? "", th: c.threads, f: c.fingerprint, d: c.digest ?? "" });
+    c && JSON.stringify({ n: c.name, t: c.type, m: c.mapping, w: c.watermarkTs, s: c.scannedTs ?? "", p: c.pendingTs ?? "", r: c.readAt ? "y" : "", rs: c.readAtSource ?? "", th: c.threads, f: c.fingerprint, d: c.digest ?? "" });
   if (prev && material(prev) === material(next)) {
     return { changed: false, label: `${channelId} (${name})` };
   }

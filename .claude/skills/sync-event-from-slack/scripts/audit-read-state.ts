@@ -55,14 +55,23 @@ if (!unread.length) {
 const LABEL = {
   "never-read": "NEVER READ    — no payload has ever been delivered for it",
   "never-triaged": "NEVER TRIAGED — no scan position, so the backlog is UNKNOWN",
-  behind: "BEHIND        — the triage scored past content nobody has read",
+  behind: "BEHIND        — Slack is holding content nobody has read",
 } as const;
 
 console.log(`\nUNREAD:\n`);
 for (const c of unread) {
   console.log(`  ${c.type.padEnd(7)} ${c.name}`);
   console.log(`          ${LABEL[c.reason]}`);
-  console.log(`          read to ${when(c.watermarkTs)}   scanned to ${when(c.scannedTs)}`);
+  /* Name SLACK's position when that is what measured the gap. On a row the
+     triage surfaced and nobody worked, `scannedTs` deliberately did not move,
+     so printing "read to X · scanned to X" would show a zero gap under a line
+     saying the row is behind — which reads as a bug in the audit rather than a
+     backlog in the channel. */
+  console.log(
+    c.pendingTs
+      ? `          read to ${when(c.watermarkTs)}   Slack holds to ${when(c.pendingTs)}`
+      : `          read to ${when(c.watermarkTs)}   scanned to ${when(c.scannedTs)}`,
+  );
   console.log(
     c.reason === "never-triaged"
       ? "          npx tsx .claude/skills/sync-event-from-slack/scripts/discover-channels.ts"
