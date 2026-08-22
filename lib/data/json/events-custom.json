@@ -1565,6 +1565,29 @@
         },
         "specialSections": [
           {
+            "type": "info",
+            "title": "Team Kai Line — National Finalist at the Aotearoa AI Summit",
+            "content": [
+              "Team Kai Line, the winning team at the AUT City Campus venue, has been selected as one of four national finalists to present on stage at the Aotearoa AI Summit in Wellington.",
+              "In under 48 hours the team built a service that makes grocery access effortless for people in need through a single phone call, enhancing digital accessibility for all communities. Congratulations to Sabrina Teoh, Nima Hosseini, Homayoon Zarshenas, Felix Lie and Jimmy Lin."
+            ]
+          },
+          {
+            "type": "youtube",
+            "title": "Festival Recap — AUT City Campus",
+            "content": [
+              "https://youtu.be/D6tnrvlHYn8"
+            ]
+          },
+          {
+            "type": "youtube",
+            "title": "Highlights Reel",
+            "content": [
+              "https://youtube.com/shorts/Rn0JEkj8hMw"
+            ],
+            "orientation": "portrait"
+          },
+          {
             "type": "agenda",
             "title": "Two-Day Format",
             "content": [
@@ -1885,6 +1908,8 @@
             "type": "related-links",
             "title": "Helpful Links",
             "content": [
+              "AUT's story on the festival : https://www.aut.ac.nz/news/stories/ai-hackathons-spark-innovation-at-aut",
+              "Team Kai Line : https://kailine.nz/",
               "AUT City Campus Community Hub : https://tnz-ecosystem-hub.circle.so/c/ai-hackathon-festival-2026/aut-city-campus",
               "Q&A Session 1 recording : https://tnz-ecosystem-hub.circle.so/c/ai-hackathon-festival-2026/q-a-session-1",
               "Q&A Session 2 recording : https://tnz-ecosystem-hub.circle.so/c/ai-hackathon-festival-2026/ai-hackathon-q-a-session-2",
@@ -2100,7 +2125,7 @@
             "alt": "Aotearoa AI Hackathon Festival 2026 poster — AUT City Campus, 7–8 August 2026. Turn ideas into something real; delivered with She Sharp."
           }
         ],
-        "galleryUrl": "",
+        "galleryUrl": "https://photos.app.goo.gl/tnUB2LyiSvmh8Q1JA",
         "registrationUrl": "https://aihackathon.nz/",
         "images": [],
         "category": "hackathon",

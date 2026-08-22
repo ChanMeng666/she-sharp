@@ -98,7 +98,13 @@ function SpecialSectionContent({ content }: { content: string }) {
   return <p className="text-muted-foreground leading-relaxed text-pretty">{content}</p>;
 }
 
-function YouTubeEmbeds({ items }: { items: string[] }) {
+function YouTubeEmbeds({
+  items,
+  portrait = false,
+}: {
+  items: string[];
+  portrait?: boolean;
+}) {
   const videoIds = items
     .map(extractYouTubeId)
     .filter((id): id is string => Boolean(id));
@@ -112,7 +118,13 @@ function YouTubeEmbeds({ items }: { items: string[] }) {
       {videoIds.map((id) => (
         <div
           key={id}
-          className="relative aspect-video w-full overflow-hidden rounded-[var(--radius-card-sm)] bg-black"
+          className={cn(
+            "relative w-full overflow-hidden rounded-[var(--radius-card-sm)] bg-black",
+            // A Short is 9:16. Capped and centred rather than full-width: at
+            // column width a portrait frame would be taller than the viewport
+            // and push everything after it off the page.
+            portrait ? "aspect-[9/16] max-w-[360px] mx-auto" : "aspect-video"
+          )}
         >
           <iframe
             src={`https://www.youtube-nocookie.com/embed/${id}`}
@@ -313,7 +325,10 @@ export function EventSpecialSections({
               }
             >
               {isYouTube ? (
-                <YouTubeEmbeds items={section.content} />
+                <YouTubeEmbeds
+                  items={section.content}
+                  portrait={section.orientation === "portrait"}
+                />
               ) : isVideo ? (
                 <VideoEmbeds items={section.content} />
               ) : isCollaboration ? (
