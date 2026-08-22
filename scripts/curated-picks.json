@@ -1,0 +1,1181 @@
+{
+  "$comment": "Source of truth for public/img/curated. Regenerate with: npx tsx scripts/optimize-images.mts",
+  "sourceRoots": {},
+  "picks": [
+    {
+      "name": "hero-conference-crowd",
+      "role": "hero",
+      "alt": "Large group of She Sharp community members gathered together at a technology conference, smiling for a group photo.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "hero-thrive-speaker",
+      "role": "hero",
+      "alt": "A speaker addresses a She Sharp audience in a darkened room, standing before a large screen reading THRIVE: Your Career, Your Story.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "hero-celebration-handsup",
+      "role": "hero",
+      "alt": "A room full of She Sharp attendees cheering with their hands raised in celebration.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "hero-community-cheer",
+      "role": "hero",
+      "alt": "A large, diverse crowd of She Sharp members celebrating together at a community event.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "hero-anniversary-crowd",
+      "role": "hero",
+      "alt": "A wide shot of the She Sharp community celebrating an anniversary milestone with arms raised.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1039,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "divider-crowd-wide",
+      "role": "divider",
+      "alt": "A large group of She Sharp event attendees posed together in a bright venue.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "divider-community-room",
+      "role": "divider",
+      "alt": "Attendees gathered across a wide event space for a She Sharp community group photo.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1025,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "divider-group-warm",
+      "role": "divider",
+      "alt": "She Sharp attendees seated and standing together for a group photo at a partner venue.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "divider-city-backdrop",
+      "role": "divider",
+      "alt": "A She Sharp group photographed in front of large windows overlooking a city skyline.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "divider-standing-group",
+      "role": "divider",
+      "alt": "Attendees standing together at a She Sharp event beneath a From Burnout to Balance screen.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "speaker-stage-spotlight",
+      "role": "card",
+      "alt": "A She Sharp speaker presenting from a podium on a darkened stage.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "panel-fireside-chat",
+      "role": "card",
+      "alt": "A panel of women seated in armchairs during a She Sharp fireside discussion.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "panel-discussion",
+      "role": "card",
+      "alt": "Panellists in conversation on stage during a She Sharp women in tech discussion.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "panel-mic-moment",
+      "role": "card",
+      "alt": "A panellist speaking into a microphone during a She Sharp panel session.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1088,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "speaker-audience",
+      "role": "card",
+      "alt": "A presenter welcoming a seated audience at the start of a She Sharp event.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "workshop-team-build",
+      "role": "card",
+      "alt": "A diverse team smiling around a hands-on build challenge during a She Sharp workshop.",
+      "source": null,
+      "prebuilt": {
+        "width": 1878,
+        "height": 1270,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1878
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "workshop-tower-focus",
+      "role": "card",
+      "alt": "Two participants concentrating as they build a structure together at a She Sharp workshop.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "workshop-hands-on",
+      "role": "card",
+      "alt": "Participants working hands-on with craft materials during a She Sharp workshop activity.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "workshop-collaboration",
+      "role": "card",
+      "alt": "Attendees collaborating around a table during a She Sharp workshop session.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "mentoring-huddle",
+      "role": "card",
+      "alt": "A small group looking at a tablet together during a She Sharp mentoring moment.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "detail-sketch-hands",
+      "role": "support",
+      "alt": "Close-up of a hand sketching ideas on paper during a She Sharp session.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "connection-smiles",
+      "role": "card",
+      "alt": "Three She Sharp attendees smiling together at an event.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "celebration-group-smiles",
+      "role": "card",
+      "alt": "A group of smiling women wearing event lanyards at a She Sharp gathering.",
+      "source": null,
+      "prebuilt": {
+        "width": 1873,
+        "height": 1061,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1873
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "celebration-swag-bags",
+      "role": "card",
+      "alt": "Attendees holding up colourful She Sharp tote bags at an event.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "celebration-awards",
+      "role": "card",
+      "alt": "A She Sharp group holding awards together at a recognition event.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "hero-inspire-her-crowd",
+      "role": "hero",
+      "alt": "A large gathering of the She Sharp community posed together in rows for a group photo at the Inspire Her event, many wearing pink lanyards.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1026,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "divider-educator-conference",
+      "role": "divider",
+      "alt": "A large, diverse group of She Sharp attendees standing and kneeling together for a group photo at the Google Educator Conference.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1002,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "divider-trademe-group",
+      "role": "divider",
+      "alt": "The She Sharp community gathered in tiered rows for a group photo in front of a lush green living wall at a Trade Me event.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "divider-aws-community",
+      "role": "divider",
+      "alt": "A group of She Sharp members gathered together, seated and standing, in a warmly lit lounge at an Amazon Web Services event.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "hero-diwali-community",
+      "role": "hero",
+      "alt": "A large group in colourful traditional dress gathered for a group photo, with decorative parasols arranged in front, celebrating cultural diversity at a She Sharp event.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "divider-venue-glasshouse",
+      "role": "divider",
+      "alt": "A She Sharp gathering in a bright, glass-walled venue overlooking greenery, with attendees seated at round tables facing a presenter.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "speaker-inspire-her",
+      "role": "card",
+      "alt": "A speaker addressing the audience with a microphone at the She Sharp Inspire Her event, wearing a pink lanyard.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "speaker-her-waka",
+      "role": "card",
+      "alt": "A She Sharp presenter speaking and gesturing beside a screen showing the Her Waka session agenda.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "speaker-own-your-energy",
+      "role": "card",
+      "alt": "A presenter leading the Own Your Energy workshop at the front of the room before a seated She Sharp audience.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "panel-her-waka",
+      "role": "card",
+      "alt": "A panel of three speakers seated on stage during a She Sharp Her Waka session, with a presentation screen behind them.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "panel-women-in-ai",
+      "role": "card",
+      "alt": "Panellists seated on stage during a She Sharp women in AI discussion, facing a seated audience beside Women in Tech banners.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "fireside-centrality",
+      "role": "card",
+      "alt": "A speaker gesturing while addressing a small group seated on couches during an intimate She Sharp fireside session.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "workshop-design-thinking",
+      "role": "card",
+      "alt": "Two participants working together at a laptop during a She Sharp design-thinking workshop, with a countdown timer on the screen behind them.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "workshop-girls-night-build",
+      "role": "card",
+      "alt": "Participants leaning in together to build a spaghetti-and-tape tower during a hands-on She Sharp workshop challenge.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "workshop-rpa-laughter",
+      "role": "card",
+      "alt": "Three She Sharp attendees laughing together around a laptop during a robotic process automation session.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "workshop-fp-hackathon",
+      "role": "card",
+      "alt": "Participants collaborating over materials at a long table during a She Sharp hackathon working session.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "audience-centrality-laughter",
+      "role": "card",
+      "alt": "Four young women laughing together while seated during a She Sharp event.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "audience-inspire-her-theatre",
+      "role": "card",
+      "alt": "Young attendees seated in red theatre seats, listening attentively during the She Sharp Inspire Her event.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "celebration-anniversary-booth",
+      "role": "card",
+      "alt": "Attendees posing playfully with novelty glasses at a pink floral photo-booth wall during She Sharp's 10-year anniversary celebration.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "celebration-imagine-zone",
+      "role": "card",
+      "alt": "A group gathered on the floor in front of a stage decorated with rainbow balloons and bunting at the She Sharp Imagine Zone event.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1440,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "connection-google-aut",
+      "role": "card",
+      "alt": "Three She Sharp volunteers in branded T-shirts standing arm in arm and smiling together at a Google event.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1280,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    },
+    {
+      "name": "connection-ai-hackathon",
+      "role": "card",
+      "alt": "Four smiling women posed closely together at the She Sharp AI for the Environment hackathon.",
+      "source": null,
+      "prebuilt": {
+        "width": 1920,
+        "height": 1440,
+        "variants": [
+          {
+            "label": 1920,
+            "w": 1920
+          },
+          {
+            "label": 1280,
+            "w": 1280
+          },
+          {
+            "label": 768,
+            "w": 768
+          }
+        ]
+      },
+      "note": "original source never committed; the emitted renditions are the archive"
+    }
+  ]
+}

@@ -27,6 +27,7 @@
  */
 import sharp from "sharp";
 import type { OutputInfo } from "sharp";
+import { dHash, hammingDistance } from "./lib/phash";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -144,38 +145,6 @@ function resolveSlugs(slugs: string[]): Target[] {
 // ---------------------------------------------------------------------------
 // Duplicate detection
 // ---------------------------------------------------------------------------
-/**
- * 64-bit difference hash: compare each pixel with its right-hand neighbour on a
- * 9x8 greyscale reduction. Robust to the re-encoding and rescaling that make
- * album renditions of one photo differ byte-for-byte.
- */
-async function dHash(file: string): Promise<bigint> {
-  const raw = await sharp(file)
-    .greyscale()
-    .resize(9, 8, { fit: "fill" })
-    .raw()
-    .toBuffer();
-  let hash = 0n;
-  for (let y = 0; y < 8; y++) {
-    for (let x = 0; x < 8; x++) {
-      const left = raw[y * 9 + x];
-      const right = raw[y * 9 + x + 1];
-      hash = (hash << 1n) | (left > right ? 1n : 0n);
-    }
-  }
-  return hash;
-}
-
-function hammingDistance(a: bigint, b: bigint): number {
-  let diff = a ^ b;
-  let count = 0;
-  while (diff) {
-    count += Number(diff & 1n);
-    diff >>= 1n;
-  }
-  return count;
-}
-
 /** Keeps the first of each visually distinct shot, preserving album order. */
 async function dropVisualDuplicates(files: string[]): Promise<string[]> {
   const kept: { file: string; hash: bigint }[] = [];
