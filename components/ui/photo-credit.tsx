@@ -23,8 +23,13 @@ export interface PhotoCreditProps {
 
 export function PhotoCredit({ children, className }: PhotoCreditProps) {
   return (
-    <p className={cn("text-label text-right text-ink-500", className)}>
-      {children}
+    // `text-label` sits on its own element on purpose. It is a custom utility,
+    // so tailwind-merge inside cn() reads it as a text-COLOUR candidate and
+    // silently drops it in favour of any real `text-*` colour beside it — the
+    // credit rendered as plain body copy until this was split out. Anything
+    // pairing `text-label` with a colour through cn() has the same problem.
+    <p className={cn("text-right text-ink-500", className)}>
+      <span className="text-label">{children}</span>
     </p>
   );
 }

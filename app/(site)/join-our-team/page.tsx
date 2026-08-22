@@ -2,6 +2,8 @@ import { Metadata } from "next";
 import { JoinTeamHeroSection } from "@/components/join-team/join-team-hero-section";
 import { PricingComparison } from "@/components/ui/pricing-section-with-comparison";
 import { JoinTeamTestimonialsSection } from "@/components/join-team/testimonials-section";
+import { PhotoBand } from "@/components/ui/photo-band";
+import { JOIN_TEAM_BAND, toBandPhotos } from "@/lib/data/site-photos";
 import {
   volunteerPaths,
   joinTeamStats,
@@ -24,6 +26,19 @@ export default function JoinOurTeamPage() {
         stats={joinTeamStats}
       />
       <PricingComparison volunteerPaths={volunteerPaths} />
+
+      {/*
+        The comparison table and the testimonials below it are two long runs of
+        type back to back. This is what the volunteering actually looks like,
+        set between them.
+      */}
+      <PhotoBand
+        photos={toBandPhotos(JOIN_TEAM_BAND)}
+        eyebrow="What a shift looks like"
+        tileHeight="sm"
+        className="pb-16 md:pb-24"
+      />
+
       <JoinTeamTestimonialsSection />
     </section>
   );

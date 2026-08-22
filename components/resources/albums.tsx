@@ -32,8 +32,17 @@ const ALBUMS_PER_PAGE = 9;
 
 export function GalleryAlbumsGrid({
   albums: galleryAlbums,
+  showHeader = true,
 }: {
   albums: GalleryAlbum[];
+  /**
+   * Render this component's own title block.
+   *
+   * The gallery page now opens with a photo wall that carries the page's <h1>,
+   * and two <h1>s is a real failure there — scripts/seo/verify-page-metadata.ts
+   * asserts exactly one per page. Defaults true so nothing else changes.
+   */
+  showHeader?: boolean;
 }) {
   // Search and filter state
   const [searchQuery, setSearchQuery] = useState("");
@@ -107,14 +116,16 @@ export function GalleryAlbumsGrid({
     <Section spacing="section" className="py-16 sm:py-20 lg:py-36">
       <Container size="full">
         {/* Header */}
-        <div className="mb-8 sm:mb-10 md:mb-14">
-          <p className="text-label mb-4 text-brand">Photo Gallery</p>
-          <h1 className="text-display-sm text-foreground">Event photos &amp; highlights</h1>
-          <p className="mt-4 max-w-2xl text-base text-ink-600 md:text-lg">
-            Explore highlights from She Sharp events, workshops, and community
-            moments.
-          </p>
-        </div>
+        {showHeader && (
+          <div className="mb-8 sm:mb-10 md:mb-14">
+            <p className="text-label mb-4 text-brand">Photo Gallery</p>
+            <h1 className="text-display-sm text-foreground">Event photos &amp; highlights</h1>
+            <p className="mt-4 max-w-2xl text-base text-ink-600 md:text-lg">
+              Explore highlights from She Sharp events, workshops, and community
+              moments.
+            </p>
+          </div>
+        )}
 
         {/* Search and Filter Controls */}
         <div className="space-y-4 mb-8">

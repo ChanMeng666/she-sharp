@@ -1,6 +1,8 @@
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Reveal } from "@/components/ui/reveal";
+import { PhotoAside } from "@/components/ui/photo-aside";
+import { ABOUT_VALUES_ASIDE, photo } from "@/lib/data/site-photos";
 
 /**
  * She Sharp's three values, as the team defined them.
@@ -34,16 +36,27 @@ export function ValuesSection() {
   return (
     <Section bgColor="white">
       <Container>
-        <div className="max-w-2xl">
-          <p className="text-label text-brand">What we stand for</p>
-          <h2 className="text-display-sm mt-3 text-foreground">
-            Three things we keep coming back to
-          </h2>
-          <p className="mt-4 text-sm leading-relaxed text-ink-600 md:text-base">
-            Our team set these out together in 2018, and they have shaped every
-            event since.
-          </p>
-        </div>
+        {/*
+          Three columns of prose sat between two photographic sections with
+          nothing of its own. The values are about a room full of people, so
+          the section now shows one.
+        */}
+        <PhotoAside
+          image={photo(ABOUT_VALUES_ASIDE)}
+          aspect="4/5"
+          caption="Aotearoa AI Hackathon Festival, AUT City Campus, August 2026."
+        >
+          <div className="max-w-2xl">
+            <p className="text-label text-brand">What we stand for</p>
+            <h2 className="text-display-sm mt-3 text-foreground">
+              Three things we keep coming back to
+            </h2>
+            <p className="mt-4 text-sm leading-relaxed text-ink-600 md:text-base">
+              Our team set these out together in 2018, and they have shaped
+              every event since.
+            </p>
+          </div>
+        </PhotoAside>
 
         <div className="mt-12 grid grid-cols-1 gap-x-10 gap-y-10 md:mt-16 md:grid-cols-3">
           {VALUES.map((value, index) => (

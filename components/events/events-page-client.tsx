@@ -7,6 +7,8 @@ import { Section } from "@/components/layout/section";
 import { EventInflectedCard } from "@/components/events/event-inflected-card";
 import { EventList } from "@/components/events/event-list";
 import { FeaturedEventHero } from "@/components/events/featured-event-hero";
+import { PhotoBand } from "@/components/ui/photo-band";
+import { EVENTS_BAND, toBandPhotos } from "@/lib/data/site-photos";
 import { Reveal } from "@/components/ui/reveal";
 import type { EventListItem } from "@/lib/data/event-list-item";
 import { parseDateString, isFutureDate } from "@/lib/data/event-utils";
@@ -285,6 +287,18 @@ export function EventsPageClient({
 
       {/* Hero Section - Featured event with fallback image */}
       <FeaturedEventHero event={featuredEvent} />
+
+      {/*
+        Between one upcoming event and a filterable list of ninety-seven past
+        ones, twelve years of rooms. Curated keys only — this component is
+        already careful to import the event data as types alone, and
+        lib/data/site-photos reaches for nothing but the curated manifest.
+      */}
+      <PhotoBand
+        photos={toBandPhotos(EVENTS_BAND)}
+        eyebrow="Twelve years of rooms"
+        className="pt-12 md:pt-16"
+      />
 
       {/* All Events Section */}
       <Section id="past-events" spacing="section">

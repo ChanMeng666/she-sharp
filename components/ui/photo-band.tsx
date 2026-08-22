@@ -44,6 +44,14 @@ const TILE_HEIGHT = {
   md: "h-44 md:h-60",
 } as const;
 
+/**
+ * The band runs full-bleed but its words belong to the page, so the eyebrow
+ * and caption sit on the same gutters as `getContainer("full")` in
+ * lib/design-system.ts. Without this they land 8px inside the headings above
+ * them, which reads as a mistake rather than as a full-bleed element.
+ */
+const TEXT_GUTTER = "mx-auto w-full max-w-8xl px-4 sm:px-6 lg:px-8";
+
 /** Widest a tile is ever rendered, so the browser stops at the 768px variant. */
 const TILE_SIZES = "(max-width: 768px) 200px, 360px";
 
@@ -127,7 +135,11 @@ export function PhotoBand({
   return (
     <div className={cn("space-y-4", className)}>
       {eyebrow && (
-        <p className="text-label px-4 text-brand md:px-6">{eyebrow}</p>
+        <p className={cn(TEXT_GUTTER, "text-brand")}>
+          {/* See the note in photo-credit.tsx: cn() drops `text-label` when a
+              real text colour sits beside it, so it gets its own element. */}
+          <span className="text-label">{eyebrow}</span>
+        </p>
       )}
 
       <div
@@ -142,7 +154,7 @@ export function PhotoBand({
       >
         {reduceMotion ? (
           // No animation frame at all — a plain scroller the reader drives.
-          <div className="flex gap-4 overflow-x-auto px-4 pb-2 md:px-6">
+          <div className="flex gap-4 overflow-x-auto px-4 pb-2 sm:px-6 lg:px-8">
             {tiles}
           </div>
         ) : (
@@ -153,7 +165,7 @@ export function PhotoBand({
       </div>
 
       {(caption || credit) && (
-        <div className="space-y-1 px-4 md:px-6">
+        <div className={cn(TEXT_GUTTER, "space-y-1")}>
           {caption && <p className="text-sm text-ink-600">{caption}</p>}
           {credit && <PhotoCredit className="text-left">{credit}</PhotoCredit>}
         </div>

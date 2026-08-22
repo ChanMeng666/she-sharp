@@ -7,6 +7,8 @@ import { ContactForm } from "@/components/contact";
 import { footerConfig } from "@/lib/config/footer";
 import { socialIcons } from "@/components/ui/social-icons";
 import { Mail } from "lucide-react";
+import { PhotoBand } from "@/components/ui/photo-band";
+import { CONTACT_BAND, toBandPhotos } from "@/lib/data/site-photos";
 
 export const metadata: Metadata = {
     title: "Contact Us",
@@ -76,6 +78,17 @@ export default function ContactPage() {
                     </Reveal>
                 </div>
             </Container>
+
+            {/*
+                A page that asks a stranger to write in should show who they
+                would be writing to. Decorative, so the band is aria-hidden and
+                carries no lightbox — the photographs are the tone, not the content.
+            */}
+            <PhotoBand
+                photos={toBandPhotos(CONTACT_BAND)}
+                eyebrow="Faces from our events"
+                reverse
+            />
         </Section>
     );
 }

@@ -27,7 +27,7 @@ type BackdropImage = {
 
 const SCRIM = {
   /** Even wash. Safest under body copy that runs the full width. */
-  dark: "bg-foreground/65",
+  dark: "bg-foreground/75",
   /** Heavier at the bottom, for a heading that sits low in the frame. */
   gradient: "bg-gradient-to-t from-foreground/85 via-foreground/55 to-foreground/25",
   none: "",
@@ -40,6 +40,12 @@ export interface PhotoBackdropProps {
   /** Drift magnitude, forwarded to ParallaxImage. */
   amount?: number;
   priority?: boolean;
+  /**
+   * Layout for the content layer. Defaults to a centred column, which is what a
+   * standalone banner wants; a section that already has its own two-column
+   * arrangement passes its own width instead of being re-centred.
+   */
+  contentClassName?: string;
   children: React.ReactNode;
   className?: string;
 }
@@ -50,6 +56,7 @@ export function PhotoBackdrop({
   scrim = "gradient",
   amount = 0.1,
   priority = false,
+  contentClassName = "w-full max-w-3xl text-center",
   children,
   className,
 }: PhotoBackdropProps) {
@@ -64,10 +71,8 @@ export function PhotoBackdrop({
       {scrim !== "none" && (
         <div aria-hidden className={cn("absolute inset-0", SCRIM[scrim])} />
       )}
-      <div className="absolute inset-0 flex items-center justify-center px-6">
-        <div className="w-full max-w-3xl text-center text-background">
-          {children}
-        </div>
+      <div className="absolute inset-0 flex items-center justify-center px-4 sm:px-6 lg:px-8">
+        <div className={cn("text-background", contentClassName)}>{children}</div>
       </div>
     </ParallaxImage>
   );
