@@ -293,11 +293,26 @@ const PARTNER_LOGOS: DeckLogo[] = detail.sponsors.main.map((sponsor) => ({
  * practice rather than a design slot, and when the organisation's own
  * photograph will do the job, the organisation's own photograph does the job.
  * The generated plates exist for the events that have nothing.
+ *
+ * FOUND BY FILENAME, for the same reason `section()` above finds by title.
+ * This read `detail.photos[0]` and the koru was at `photos[7]`, so the karakia
+ * has in fact been opening on a photograph of teams at round tables. Nothing
+ * failed: `photos[0]` existed, the guard passed, and `deck.test.ts` asserts
+ * nothing about which image lands in which slot. An index into a list the Slack
+ * sync appends to is a fact about one afternoon's file, not about the picture.
+ *
+ * Both lists are searched because the JSON carries this file twice — as an
+ * `infoSections` image and, historically, in `photos[]`. Either home is fine;
+ * the filename is the identity.
  */
-const koru = detail.photos[0];
+const KORU_FILE = "/koru.jpg";
+const koru = [
+  ...(detail.infoSections ?? []).flatMap((section) => section.images ?? []),
+  ...detail.photos,
+].find((image) => image.url.endsWith(KORU_FILE));
 if (!koru) {
   throw new Error(
-    `"${EVENT_SLUG}" has no photos[0]; the opening karakia expects the koru photograph.`,
+    `"${EVENT_SLUG}" has no image ending in "${KORU_FILE}"; the opening karakia expects the koru photograph.`,
   );
 }
 const OPENING_KARAKIA_PLATE: DeckImage = {

@@ -4,6 +4,8 @@ import { ExternalLink, MapPin } from "lucide-react";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Button } from "@/components/ui/button";
+import { PhotoBand } from "@/components/ui/photo-band";
+import { COMMUNITY_BAND, toBandPhotos } from "@/lib/data/site-photos";
 import { getCommunityAppearances } from "@/lib/data/community-appearances";
 
 export const metadata: Metadata = {
@@ -40,7 +42,21 @@ export default function CommunityPage() {
             — people who signed up, students we met — it is noted.
           </p>
         </div>
+      </Container>
 
+      {/*
+        The list below is a decade of turning up to things and, until now, not a
+        single photograph of any of it. Deliberately mixed across the years
+        rather than led by 2026: the argument this page makes is the length of
+        the record, and a band of one weekend would undercut it.
+      */}
+      <PhotoBand
+        photos={toBandPhotos(COMMUNITY_BAND)}
+        eyebrow="Out in the community"
+        className="mb-14 md:mb-20"
+      />
+
+      <Container size="full">
         <ol className="space-y-10 md:space-y-12">
           {appearances.map((appearance) => (
             <li

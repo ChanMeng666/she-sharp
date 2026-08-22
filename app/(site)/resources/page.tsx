@@ -2,6 +2,8 @@ import { Metadata } from "next";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { ResourcesBentoShowcase, ResourcesPageClient } from "@/components/resources";
+import { PhotoBand } from "@/components/ui/photo-band";
+import { RESOURCES_BAND, toBandPhotos } from "@/lib/data/site-photos";
 
 export const metadata: Metadata = {
   title: "Resources",
@@ -25,7 +27,19 @@ export default function ResourcesPage() {
               reports from across the She Sharp community.
             </p>
           </div>
+        </Container>
 
+        {/*
+          The bento grid below is card thumbnails and cover art. One band of the
+          actual events keeps the page from opening on a wall of artwork.
+        */}
+        <PhotoBand
+          photos={toBandPhotos(RESOURCES_BAND)}
+          tileHeight="sm"
+          className="mb-12 md:mb-16"
+        />
+
+        <Container size="full">
           <ResourcesBentoShowcase />
         </Container>
       </Section>

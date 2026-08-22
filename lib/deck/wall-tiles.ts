@@ -1,7 +1,7 @@
 /**
  * The archive wall.
  *
- * 118 photographs from twelve years of She Sharp events, used as texture rather
+ * 148 photographs from twelve years of She Sharp events, used as texture rather
  * than as pictures: tiled, duotoned, and read as a mass. No single frame here is
  * a good photograph — they are group shots in fluorescent-lit meeting rooms with
  * no negative space, and that is precisely the point. What is worth looking at is
@@ -13,12 +13,20 @@
  * slide cost about 31 MB of transfer and a gigabyte of decoded bitmap — a
  * 4898x3265 photograph drawn into a tile 259px wide — which a venue laptop does
  * not survive. Nothing in a wall is ever looked at as a picture, so the full
- * set is now ~2855 KB.
+ * set is now ~3439 KB.
  *
  * Selection: landscape, de-duplicated across the three pools, posters,
  * screenshots and studio headshots excluded, and mean luminance clamped to
  * 47–150 so no single tile blows out or dies under the duotone.
  * Every path is checked by scripts/verify-image-paths.ts in CI.
+ *
+ * The `2026-08-hackathon-*` tiles were added by scripts/deck/build-wall-tiles.mts,
+ * which is the first thing that has ever ENFORCED the selection rules above
+ * rather than merely stating them. Thirty of them, capped there on purpose: the
+ * paragraph above is an argument about twelve years, and one weekend in August
+ * 2026 is already a fifth of the pool. They are interleaved in runs of three
+ * rather than appended, because `pickWallTiles()` walks the array at a fixed
+ * step and a contiguous block would surface as a solid slab of one venue.
  */
 
 import type { DeckImage } from "./types";
@@ -34,6 +42,9 @@ export const wallTiles: string[] = [
   "/img/wall/6562b6287688a3e4760e4772-180626882-101586735591735-17cc9503.webp",
   "/img/wall/64c267164a9b193611121669-20230725192413-img-6500-27d4896b.webp",
   "/img/wall/64c2671964b91d6bd06bbf8a-20230725194201-img-6546-85afc53a.webp",
+  "/img/wall/2026-08-hackathon-01.webp",
+  "/img/wall/2026-08-hackathon-02.webp",
+  "/img/wall/2026-08-hackathon-03.webp",
   "/img/wall/64ec5a06f3b88c6a60200d4d-20230824183646-img-6892-c4f275c3.webp",
   "/img/wall/650cca0fb1bbe26b910365e6-20230920091437-img-7995.webp",
   "/img/wall/650cca442bc2239222f97469-20230920075347-img-7597.webp",
@@ -44,6 +55,9 @@ export const wallTiles: string[] = [
   "/img/wall/650cca44f7099a17d83750bb-20230920073520-img-7569.webp",
   "/img/wall/65471acd33f3f73de074f5d9-20231103153143-img-8021-191abab5.webp",
   "/img/wall/65471b64bf60ab2d04743553-20231103161813-img-8079-da8b489f.webp",
+  "/img/wall/2026-08-hackathon-04.webp",
+  "/img/wall/2026-08-hackathon-05.webp",
+  "/img/wall/2026-08-hackathon-06.webp",
   "/img/wall/654b2ce92f6435d5f3ce7938-28947377-1015549049578851-1882c5f1.webp",
   "/img/wall/654b30aacf7202fb42aa88df-29063956-10155498141678519-29563499.webp",
   "/img/wall/65546481c859ae8f34bf1e90-hero.webp",
@@ -54,6 +68,9 @@ export const wallTiles: string[] = [
   "/img/wall/6562c48c80f3c207d7349233-163781020-101585829729785-2bd80ade.webp",
   "/img/wall/women-in-ai-for-social-good-group-photo.webp",
   "/img/wall/6562ce4680f3c207d73a8691-127658859-101583021763985-7d4b9fb0.webp",
+  "/img/wall/2026-08-hackathon-07.webp",
+  "/img/wall/2026-08-hackathon-08.webp",
+  "/img/wall/2026-08-hackathon-09.webp",
   "/img/wall/6554712fce744f2e9788d715-nyriadlanding.webp",
   "/img/wall/she-pushpay-group-photo.webp",
   "/img/wall/6541a692bf46bad1b9c6df42-img-2047-2020651e.webp",
@@ -64,6 +81,9 @@ export const wallTiles: string[] = [
   "/img/wall/65546b010427d6b98fd5b970-gridhero.webp",
   "/img/wall/65546be80427d6b98fd6973a-36274720-1015571515038351-0fea4a4d.webp",
   "/img/wall/65546be8d29332fb2ff7963b-36227157-1015571515167851-05724d72.webp",
+  "/img/wall/2026-08-hackathon-10.webp",
+  "/img/wall/2026-08-hackathon-11.webp",
+  "/img/wall/2026-08-hackathon-12.webp",
   "/img/wall/6555341ed1504da5026e21a3-21-8f33c553.webp",
   "/img/wall/6555341f1e9e5e9cbd760138-2-bdd71e1a.webp",
   "/img/wall/655d0ffd5852c1e69ae266e8-36339977-1015571514811351-0b2c402f.webp",
@@ -74,6 +94,9 @@ export const wallTiles: string[] = [
   "/img/wall/6563e89af49f14fd0b5acbe6-m-3-551ab0d8.webp",
   "/img/wall/6563e89af49f14fd0b5acbfb-m-4-66e4dd17.webp",
   "/img/wall/celebration-imagine-zone-1280.webp",
+  "/img/wall/2026-08-hackathon-13.webp",
+  "/img/wall/2026-08-hackathon-14.webp",
+  "/img/wall/2026-08-hackathon-15.webp",
   "/img/wall/connection-ai-hackathon-1280.webp",
   "/img/wall/6580d0d43581f1c0c27d11a6-1-a25c3abc.webp",
   "/img/wall/6580d0d43581f1c0c27d11c8-4-971da937.webp",
@@ -84,6 +107,9 @@ export const wallTiles: string[] = [
   "/img/wall/65ba0b458acbe47294621842-hero.webp",
   "/img/wall/656465bd2facc454d6849645-t2-dfba8065.webp",
   "/img/wall/656465bbc76d08cd73a0f97b-t1-c069a1bb.webp",
+  "/img/wall/2026-08-hackathon-16.webp",
+  "/img/wall/2026-08-hackathon-17.webp",
+  "/img/wall/2026-08-hackathon-18.webp",
   "/img/wall/workshop-team-build-1280.webp",
   "/img/wall/652b5a86745dfcd7b88431f0-l18opc3a-ba19c66d.webp",
   "/img/wall/652b5ada64423114e5bf5bbd-kx7281ha-ca5bdc8d.webp",
@@ -94,6 +120,9 @@ export const wallTiles: string[] = [
   "/img/wall/celebration-swag-bags-1280.webp",
   "/img/wall/connection-google-aut-1280.webp",
   "/img/wall/divider-aws-community-1280.webp",
+  "/img/wall/2026-08-hackathon-19.webp",
+  "/img/wall/2026-08-hackathon-20.webp",
+  "/img/wall/2026-08-hackathon-21.webp",
   "/img/wall/divider-crowd-wide-1280.webp",
   "/img/wall/divider-group-warm-1280.webp",
   "/img/wall/divider-trademe-group-1280.webp",
@@ -104,6 +133,9 @@ export const wallTiles: string[] = [
   "/img/wall/speaker-stage-spotlight-1280.webp",
   "/img/wall/655b023af7eb2bb1368c00bd-1-64da56f2.webp",
   "/img/wall/655b023cc76f59dedfca2077-2-c146664e.webp",
+  "/img/wall/2026-08-hackathon-22.webp",
+  "/img/wall/2026-08-hackathon-23.webp",
+  "/img/wall/2026-08-hackathon-24.webp",
   "/img/wall/655d0a4549e047f69b5c27bb-pushpay-c4ffcbf5.webp",
   "/img/wall/64dc61661bb0399ff81776f0-img-9046-b5b101c8.webp",
   "/img/wall/671b32eca4bc707cb9917240-20241018-170104-497742d0.webp",
@@ -114,6 +146,9 @@ export const wallTiles: string[] = [
   "/img/wall/6554716daa1f871ebaa26e93-37981277-1015578832343851-4a17df33.webp",
   "/img/wall/655ae7b035c4aaeea893fe35-wit2-eeb998e2.webp",
   "/img/wall/655bd3f002f9416aa3f8f524-14-bfbb834c.webp",
+  "/img/wall/2026-08-hackathon-25.webp",
+  "/img/wall/2026-08-hackathon-26.webp",
+  "/img/wall/2026-08-hackathon-27.webp",
   "/img/wall/655d09d99cad7d74fd8b20fa-tech-grand-tour-61f3cea0.webp",
   "/img/wall/65645fdb6f03289b84a791e1-12068784-1015470707393350-b3a43589.webp",
   "/img/wall/66d456166a015f57e5c91bc6-img-9823-425d85f0.webp",
@@ -124,6 +159,9 @@ export const wallTiles: string[] = [
   "/img/wall/69263683f6ab48e4e61287b0-img-1473-991751d0.webp",
   "/img/wall/2025-11-hcltech-dunedin.webp",
   "/img/wall/66a953aa9ccf0dbd14588bae-hero-hackathon.webp",
+  "/img/wall/2026-08-hackathon-28.webp",
+  "/img/wall/2026-08-hackathon-29.webp",
+  "/img/wall/2026-08-hackathon-30.webp",
   "/img/wall/celebration-group-smiles-1280.webp",
   "/img/wall/panel-mic-moment-1280.webp",
   "/img/wall/6563e88031018c5d48551c4c-m-hero.webp",
