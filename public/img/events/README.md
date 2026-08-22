@@ -54,6 +54,24 @@ sub-folder rather than merged in.
 The site shows `archive/` photos only when an event ships no `photos[]` of its
 own (`app/(site)/events/[slug]/page.tsx`).
 
+### Why one event has 24 `photo-<n>.webp` and everything else has five
+
+`aotearoa-ai-hackathon-festival-2026` is the deliberate outlier, and it is not
+a precedent to copy by default.
+
+`CONTENT_RULES.md` is right that the Google Photos album, not the repo, is the
+home of event photography, and for a regular evening event five curated frames
+plus a `galleryUrl` is the correct amount. Two things made this one different:
+it was a two-day festival with a professional shoot large enough to tell the
+whole story in sequence, and 31 of its frames also went into
+`public/img/curated/` — the pool that dresses `/community`, `/contact`,
+`/mentorship` and the home page — where the alternative was carrying on with
+photographs scraped off the old Webflow site.
+
+So the test for the next event is not "how many did the hackathon get" but
+"does this shoot have to carry surfaces beyond its own page". Usually it does
+not.
+
 ## `index.ts` is what lets the unrendered files exist
 
 `scripts/events/build-event-poster.ts` writes two kinds of file no page on the

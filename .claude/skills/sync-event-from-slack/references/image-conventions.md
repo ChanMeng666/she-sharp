@@ -115,10 +115,22 @@ only handles Slack files, so for these:
   the actual files from the matching Drive folder (or ask the user for one). But
   it **is the preferred `galleryUrl`** (see below): a curated album is far more
   visitor-friendly than a raw Drive folder of mixed photos + videos.
-- **Convert to `.webp`** before committing (the project ships no `sharp`/`cwebp`
-  binary — use Python `Pillow`): resize to ≤1600px wide, quality ≈82,
-  `ImageOps.exif_transpose` first so phone photos aren't sideways. Target
-  ~100–250 kB each.
+- **Screen for children before anything else.** No frame in which a child is
+  the identifiable subject, and never a child's name in `alt` text. A youth
+  event runs under the host school's media consent — see
+  `docs/development/PHOTOGRAPHING_MINORS.md`. This is the one rejection reason
+  that cannot be undone after publishing, because `/img/*` is cached immutable
+  for a year and the album copy is outside the repo.
+- **Convert to `.webp`** before committing, with **`sharp`** — it is a project
+  dependency (`sharp@^0.35.3`) and six scripts already use it, including
+  `scripts/optimize-images.mts` and `scripts/build-event-archive.mts`. (This
+  said "the project ships no `sharp`/`cwebp` binary — use Python `Pillow`",
+  which stopped being true and sent people to a second image toolchain.)
+  Resize to ≤1600px wide at quality ≈82 and call `.rotate()` first, which
+  applies the EXIF orientation so phone photos are not sideways. Target
+  ~100–250 kB each; step the quality down (82 → 78 → 74 → 70) until a frame
+  fits rather than shrinking it further. The 24-photo hackathon set averages
+  137 kB this way.
 
 `galleryUrl` is the target of the page's **"View Gallery"** button
 (`event-photos.tsx` → `window.open`), so it must be the link you actually want

@@ -86,6 +86,11 @@ source behind them is in `docs/development/PUBLIC_CLAIMS_PROVENANCE.md`.
 - **Speakers are thanked with a gift, not a fee**, and travel is not covered.
 - **Refunds**: Humanitix cannot refund after settlement. The practice is a free
   ticket to a future event instead.
+- **Photographs of children have their own rule**, because there was none until
+  2026-08-22 and ten are already published: no frame in which a child is the
+  identifiable subject, never a child's name anywhere, and youth events run
+  under the host school's consent. See
+  [`PHOTOGRAPHING_MINORS.md`](PHOTOGRAPHING_MINORS.md).
 - **Fiserv venue imagery and Fonterra demo material must not be published** —
   both were shared for internal reference only.
 - **AUT branding**: the AUT logo must not be locked up beside the She Sharp

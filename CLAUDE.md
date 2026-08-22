@@ -177,6 +177,17 @@ writing in is **not** subscribing. The gate is
 `.claude/skills/update-mailing-list/references/consent-rules.md`; every sending
 skill defers to it.
 
+## Consent — before a photograph of a child is published
+
+Do not publish a frame in which **a child is the identifiable subject** — the
+frame is about them and their face is readable. A child inside a wide group
+shot is not that. Never name a child, in copy, caption, `alt` text or credit.
+Youth events (the Youth Tech Series, Superhero Daughter Day) are run under the
+host school's media consent and get a procedure rather than an exemption.
+Screen at selection, not after: `/img/*` is immutable for a year and the public
+album is outside this repo. Full rule, and what is already published without
+one: `docs/development/PHOTOGRAPHING_MINORS.md`.
+
 ## SEO: four gotchas that keep recurring
 
 1. **Title template `%s | She Sharp` does not cascade** through a layout that
