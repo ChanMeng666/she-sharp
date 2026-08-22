@@ -21,6 +21,8 @@ import assert from "node:assert";
 
 import {
   carryReadReceipt,
+  decideAction,
+  isQuiet,
   mergeThreadState,
   scannedPosition,
   shouldInheritMapping,
@@ -30,6 +32,7 @@ import {
   type Manifest,
   type Mapping,
   type ThreadState,
+  type TriageRow,
 } from "./state-lib";
 import { parseCsv, parseSheetUrl } from "./fetch-sheet";
 
@@ -277,6 +280,108 @@ check("caught up means not unread", () => {
     C3: channel({ mapping: { kind: "event", events: [{ slug: "s", eventId: 1 }] }, watermarkTs: "200", scannedTs: "200" }),
   });
   assert.strictEqual(unreadConversations(m).length, 0);
+});
+
+console.log("\ntriage backlog (pendingTs)");
+
+check("a mapped event Slack has run ahead of is BEHIND, even with no scan gap", () => {
+  // THE 21 AUGUST MISS. The triage surfaced #event-ai-forum-ai-hackathon-2026
+  // as actionable, so its scan position correctly did NOT advance — which meant
+  // the scanned/read gap was zero by construction and the audit reported the
+  // whole workspace clean while thirteen messages sat unread, among them the
+  // Google Photos album the channel's own digest called its one open item.
+  const m = manifestOf({
+    C1: channel({
+      mapping: { kind: "event", events: [{ slug: "s", eventId: 1 }] },
+      watermarkTs: "1786433324.690979",
+      scannedTs: "1786433324.690979",
+      pendingTs: "1787049715.026849",
+    }),
+  });
+  const out = unreadConversations(m);
+  assert.deepStrictEqual(out.map((c) => c.id), ["C1"]);
+  assert.strictEqual(out[0].reason, "behind");
+  // The audit prints Slack's position for these, because "read to X, scanned to
+  // X" printed under a line saying BEHIND reads as a bug in the audit.
+  assert.strictEqual(out[0].pendingTs, "1787049715.026849");
+});
+
+check("a marker the read position has caught up with is not a backlog", () => {
+  const m = manifestOf({
+    C1: channel({
+      mapping: { kind: "event", events: [{ slug: "s", eventId: 1 }] },
+      watermarkTs: "200",
+      scannedTs: "200",
+      pendingTs: "200",
+    }),
+  });
+  assert.strictEqual(unreadConversations(m).length, 0);
+});
+
+check("a settled skip is still exempt, marker or no marker", () => {
+  // The exemption is why the audit stays readable. A bot channel is permanently
+  // behind by design, and counting it would make the gate cry wolf.
+  const m = manifestOf({
+    C2: channel({
+      mapping: { kind: "skip", reason: "bot noise" },
+      watermarkTs: "100",
+      scannedTs: "100",
+      pendingTs: "999",
+    }),
+  });
+  assert.strictEqual(unreadConversations(m).length, 0);
+});
+
+console.log("\ntriage action");
+
+const row = (over: Partial<TriageRow> = {}): TriageRow => ({
+  type: "event",
+  readable: true,
+  archived: false,
+  mapping: { kind: "event", events: [{ slug: "s", eventId: 1 }] },
+  hasNew: false,
+  newCount: 0,
+  signalScore: 0,
+  repliesOnly: false,
+  scanTruncated: false,
+  fingerprintStale: false,
+  staleStatus: "",
+  published: null,
+  ...over,
+});
+
+check("a local edit does not hide unread Slack content", () => {
+  // THE 21 AUGUST MISS, one layer up. Every event's image paths moved on
+  // 19 August, so `fingerprintStale` was true for all ten mapped event channels
+  // and its early return fired before `hasNew` was ever consulted. Eight of the
+  // ten genuinely had nothing new; the two that did printed the same label.
+  const action = decideAction(row({ fingerprintStale: true, hasNew: true, newCount: -1 }));
+  assert.ok(action.includes("incremental"), `unread fact missing: ${action}`);
+  assert.ok(action.includes("fingerprint-stale"), `local fact missing: ${action}`);
+  assert.ok(!isQuiet(action), "a row with unread content must never be quiet");
+});
+
+check("thread-only activity survives the same masking", () => {
+  const action = decideAction(row({ fingerprintStale: true, hasNew: true, repliesOnly: true }));
+  assert.ok(action.includes("thread replies"), action);
+  assert.ok(action.includes("fingerprint-stale"), action);
+});
+
+check("a stale status is composed the same way", () => {
+  const action = decideAction(row({ staleStatus: "s: upcoming", hasNew: true }));
+  assert.ok(action.includes("incremental") && action.includes("stale-status"), action);
+});
+
+check("a purely local condition still reads exactly as it did", () => {
+  // The eight quiet rows. Composing must not change what they say, or the
+  // change is a rename rather than a fix.
+  assert.strictEqual(decideAction(row({ fingerprintStale: true })), "fingerprint-stale (event edited)");
+  assert.strictEqual(decideAction(row({ staleStatus: "s: upcoming" })), "stale-status (s: upcoming)");
+});
+
+check("a mapped event with nothing wrong is quiet", () => {
+  assert.strictEqual(decideAction(row()), "no-op");
+  assert.ok(isQuiet(decideAction(row())));
 });
 
 console.log("\nrun-sheet links");

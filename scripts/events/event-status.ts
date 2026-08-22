@@ -485,10 +485,23 @@ function posterCheck(slug: string, upcoming: boolean): StatusCheck {
  * This is the set that carries an event through the weeks before it — a new
  * face per post rather than the same picture five times — so a half-built set
  * is a real gap, and naming the people who are missing is the whole value.
+ *
+ * HOSTS ARE NOT IN IT. The campaign's line-up tile is titled for the panel, and
+ * a host card cut to the same template reads as "another panellist" — which is
+ * a claim about who is speaking, made by artwork nobody re-checks. The MC still
+ * appears on the event page with their photograph and bio; they are simply not
+ * part of the promotional run.
+ *
+ * This is the ONE place that narrows the roster. `rosterFor()` in
+ * build-event-poster.ts still walks every group, so `--speaker <name>` can
+ * build a host a card deliberately — the check just stops demanding one.
  */
 function speakerPosterCheck(event: EventV3, upcoming: boolean): StatusCheck {
   const slug = event.slug;
-  const speakers = getAllSpeakersFromEvent(event);
+  const hosts = new Set(
+    (event.detailPageData.speakers?.hosts?.speakers ?? []).map((person) => person.name),
+  );
+  const speakers = getAllSpeakersFromEvent(event).filter((person) => !hosts.has(person.name));
   if (speakers.length === 0) {
     return notApplicable("speaker-posters", "Speaker set", "the event record lists no speakers");
   }

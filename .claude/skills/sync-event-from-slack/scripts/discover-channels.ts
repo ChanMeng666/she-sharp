@@ -42,9 +42,11 @@ import {
 import {
   CACHE_DIR,
   classifyChannel,
+  decideAction,
   detectEventSignal,
   findEventBySlug,
   fingerprintForMapping,
+  isQuiet,
   isSignalScanned,
   loadManifest,
   nowIso,
@@ -58,6 +60,7 @@ import {
   type ChannelType,
   type Mapping,
   type PublishedEvent,
+  type TriageRow,
 } from "./state-lib";
 
 const flags = new Set(process.argv.slice(2).filter((a) => a.startsWith("--")));
@@ -246,112 +249,22 @@ function bestPublishedMatch(
 
 // --- main ------------------------------------------------------------------
 
-interface Row {
-  type: ChannelType;
+/**
+ * One triage row. Extends `TriageRow`, the subset `decideAction()` reads, so
+ * the shape the decision is tested against and the shape it runs against are
+ * the same declaration rather than two that agree today.
+ */
+interface Row extends TriageRow {
   name: string;
   id: string;
   member: boolean;
-  readable: boolean;
-  archived: boolean;
-  mapping: Mapping | null;
-  hasNew: boolean;
-  newCount: number;
   latestTs: string;
-  signalScore: number;
   signalHits: string[];
   evidence: string;
-  /** New content is thread replies only — no parent moved, so no ts changed. */
-  repliesOnly: boolean;
-  /**
-   * The scan hit its cap before the delta ran out, so the signal score was
-   * computed on a subset. Such a row is NEVER quiet: advancing a scan position
-   * past messages nothing looked at is the same class of lie the two-position
-   * split exists to stop.
-   */
-  scanTruncated: boolean;
   /** Grown threads this run actually read. Only quiet rows record them. */
   grownThreads: GrownThread[];
-  fingerprintStale: boolean;
-  staleStatus: string; // non-empty when a mapped event's date has passed but status is still future
-  published: { slug: string; score: number; source: string; custom: boolean } | null;
   digest: string;
   action: string;
-}
-
-/**
- * Settled: nothing for a human or the model to do. Also gates watermark advance.
- *
- * `read in full` is deliberately absent. It is the one action that means "the
- * model has not seen this yet", so treating it as settled would advance a read
- * position over content nobody read — which is exactly what happened to the
- * events lead's DM on 5 Aug 2026.
- */
-function isQuiet(action: string): boolean {
-  return action.startsWith("no-op") || action === "archived" || action === "skip";
-}
-
-function decideAction(r: Row): string {
-  if (r.archived) return "archived";
-  // A partial scan cannot conclude anything, including "nothing here".
-  if (r.scanTruncated) return `read in full (scan truncated at ${r.newCount})`;
-  /*
-   * ALWAYS-READ WINS OVER EVERY OTHER RULE, INCLUDING THE SIGNAL GATE.
-   *
-   * These are the DMs of the people who send work. They feed no page, so they
-   * are correctly `skip` — and the signal heuristic scores a line like "please
-   * update Carolina Lobos' profile on the website" at zero, because it names no
-   * venue, no date and no ticket. Both facts were true on 5 Aug 2026 and the
-   * message sat unread for a day behind a mapping whose own reason said to read
-   * it in full every run.
-   */
-  if (r.mapping?.kind === "skip" && r.mapping.alwaysRead)
-    return r.hasNew ? "read in full (always-read)" : "no-op";
-  if (r.type === "event") {
-    if (!r.readable) return r.archived ? "archived" : "join+sync";
-    if (r.mapping?.kind === "skip") return r.hasNew ? "skip→review (new msgs)" : "skip";
-    if (!r.mapping || r.mapping.kind === "none") {
-      // Unseen or "scanned, no site event": only resurface on new activity.
-      if (!r.hasNew) return "no-op";
-      // A page may already exist in a NON-skill source (scraped/legacy). Don't
-      // propose creating a duplicate — point at the published slug to map/skip.
-      if (r.published && !r.published.custom)
-        return `exists? (≈${r.published.slug} @${r.published.source})`;
-      return r.published ? `create? (≈${r.published.slug})` : "create?";
-    }
-    // mapped to an event
-    if (r.fingerprintStale) return "fingerprint-stale (event edited)";
-    if (r.staleStatus) return `stale-status (${r.staleStatus})`;
-    // Say WHY when nothing at the top level moved. A reader who checks Slack
-    // by eye will see no new message in the channel and conclude the table is
-    // wrong, unless it tells them the new content is inside a thread.
-    if (r.repliesOnly) return "incremental (thread replies)";
-    return r.hasNew ? "incremental" : "no-op";
-  }
-  // general + dm — scanned for event signal, never auto-created from.
-  if (!r.readable) return "no-op (not readable)";
-  /*
-   * A 1:1 DM IS ADDRESSED TO YOU. The signal heuristic was built for channels
-   * where most traffic is chatter and the event content has to be found in it.
-   * A person writing to you directly is not that, and treating it as that is
-   * exactly how "please update Carolina Lobos' profile on the website" — no
-   * venue, no date, no ticket, score zero — was scanned past on 5 Aug 2026.
-   *
-   * So an unmapped DM with new content always surfaces. Silencing one is still
-   * possible and still explicit: map it `skip` with a reason, which is how
-   * Slackbot and the self-DM stay out of the table.
-   */
-  if (r.type === "dm" && (!r.mapping || r.mapping.kind === "none"))
-    return r.hasNew ? "read in full (dm)" : "no-op";
-  // A skip here must be stickier than on an event channel. #contact-form-
-  // notifications and every DM receive routine traffic forever, so resurfacing
-  // on "any new message" would put them in the table every single run and train
-  // the reader to ignore it. Only a delta that actually scores as event content
-  // is worth a second look.
-  if (r.mapping?.kind === "skip")
-    return r.signalScore >= SIGNAL_THRESHOLD ? "skip→review (event signal)" : "skip";
-  if (r.signalScore >= SIGNAL_THRESHOLD)
-    return r.type === "dm" ? "create? (dm-signal)" : "create? (general-signal)";
-  return r.hasNew ? "no-op (no signal)" : "no-op";
 }
 
 async function main() {
@@ -593,10 +506,45 @@ async function main() {
   if (!skipRecord) {
     const manifest2 = loadManifest();
     let advanced = 0;
+    // Rows where Slack is ahead of the read position and the triage could not
+    // clear it. Counted separately because they are a backlog, not progress.
+    let pending = 0;
     for (const r of rows) {
-      if (!isQuiet(r.action)) continue;
       if (!r.readable && !r.archived) continue;
       const prev = manifest2.channels[r.id];
+      /*
+       * AN ACTIONABLE ROW RECORDS WHAT SLACK HELD, AND NOTHING ELSE.
+       *
+       * Its scan position deliberately does not move — see the block below —
+       * which is why `audit-read-state.ts` could compute a zero backlog for the
+       * hackathon channel while thirteen messages sat unread in it. `pendingTs`
+       * is the one field that answers "how far ahead is Slack?" offline, so the
+       * audit stops depending on a gap that cannot open.
+       *
+       * Existing entries only. A conversation the manifest has never heard of is
+       * a different problem with a different tool — `verify-coverage.ts
+       * --enumerate-only` — and inventing an entry for it here would assert a
+       * mapping and a read position nobody established.
+       */
+      if (!isQuiet(r.action)) {
+        if (!prev) continue;
+        // The newest thing Slack showed us, top level or inside a thread. A
+        // channel can be behind purely in replies, and a parent's ts does not
+        // move when one arrives.
+        const observed = r.grownThreads.reduce(
+          (max, t) => (Number(t.latestReplyTs) > Number(max) ? t.latestReplyTs : max),
+          r.latestTs || "0",
+        );
+        if (observed === "0") continue;
+        // Only when it is genuinely ahead of what was READ. A row can be
+        // actionable for a purely local reason (`fingerprint-stale` on its own),
+        // and claiming a backlog there would make the audit cry wolf.
+        if (Number(observed) <= Number(prev.watermarkTs ?? "0")) continue;
+        if (prev.pendingTs === observed) continue;
+        prev.pendingTs = observed;
+        pending++;
+        continue;
+      }
       const ts = r.latestTs && r.latestTs !== "0" ? r.latestTs : scannedPosition(prev);
       if (ts === "0") continue;
       /*
@@ -632,7 +580,11 @@ async function main() {
        * could report it either. Requiring the field itself is what lets a
        * first triage establish a position at all.
        */
-      if (prev?.scannedTs && prev.scannedTs === ts && !threadsChanged) continue;
+      // `prev.pendingTs` forces the write even when nothing else moved: this
+      // literal rebuilds the entry without it, so going quiet is what clears a
+      // backlog marker, and skipping the write would strand one forever.
+      if (prev?.scannedTs && prev.scannedTs === ts && !threadsChanged && !prev.pendingTs)
+        continue;
       manifest2.channels[r.id] = {
         name: r.name,
         type: r.type,
@@ -659,11 +611,13 @@ async function main() {
       };
       advanced++;
     }
-    if (advanced) {
+    if (advanced || pending) {
       saveManifest(manifest2);
-      console.error(
-        `scan position advanced for ${advanced} quiet conversation(s) — commit state/sync-state.json`,
-      );
+      const parts = [
+        advanced ? `scan position advanced for ${advanced} quiet conversation(s)` : "",
+        pending ? `${pending} conversation(s) recorded as behind Slack` : "",
+      ].filter(Boolean);
+      console.error(`${parts.join("; ")} — commit state/sync-state.json`);
     }
   }
 

@@ -194,6 +194,9 @@ export function unreadConversations(
   type: ChannelType;
   watermarkTs: string;
   scannedTs: string;
+  /** What Slack held when the triage last looked, when it looked past the read
+   *  position. Absent when the backlog was measured from the scan gap alone. */
+  pendingTs?: string;
   /** Why it is on this list — they need different fixes. */
   reason: "never-read" | "never-triaged" | "behind";
 }[] {
@@ -251,6 +254,24 @@ export function unreadConversations(
      * gap is: a bot channel nobody has triaged is not a backlog.
      */
     const neverTriaged = !settledSkip && !c.scannedTs;
+    /*
+     * THE SCAN GAP CANNOT SEE A ROW THAT HAS AN ACTION, so ask Slack's position
+     * as well as our own.
+     *
+     * `discover-channels.ts` advances `scannedTs` only for quiet rows. That is
+     * right — advancing it on an actionable row would mark unread content read —
+     * but it means a surfaced-and-never-worked row holds `scannedTs ===
+     * watermarkTs` forever, and `Number(scanned) > Number(watermarkTs)` below is
+     * zero by construction no matter how far behind it is.
+     *
+     * On 2026-08-21 that is exactly what happened: this audit exited 0 on a
+     * "clean" workspace while the hackathon channel held thirteen unread
+     * messages and Les Mills fourteen. `pendingTs` is what the triage saw in
+     * Slack on a row it could not clear, so comparing it against the READ
+     * position measures the real backlog without a network call.
+     */
+    const behindSlack =
+      !settledSkip && !!c.pendingTs && Number(c.pendingTs) > Number(c.watermarkTs);
 
     const reason = neverRead
       ? ("never-read" as const)
@@ -261,6 +282,7 @@ export function unreadConversations(
     if (
       neverRead ||
       neverTriaged ||
+      behindSlack ||
       (!settledSkip && Number(scanned) > Number(c.watermarkTs))
     ) {
       out.push({
@@ -269,11 +291,152 @@ export function unreadConversations(
         type: c.type,
         watermarkTs: c.watermarkTs,
         scannedTs: scanned,
+        ...(behindSlack ? { pendingTs: c.pendingTs } : {}),
         reason,
       });
     }
   }
   return out.sort((a, b) => a.name.localeCompare(b.name));
+}
+
+// ---------------------------------------------------------------------------
+// Triage decision
+// ---------------------------------------------------------------------------
+
+/**
+ * The subset of a triage row `decideAction()` reads.
+ *
+ * It lives here, beside the read-position rules, because the action string is
+ * the only thing that decides both what a reader opens and whether the scan
+ * position advances. Left in the triage script it was untestable — the module
+ * runs the whole workspace scan on import — and the two failures it has caused
+ * were both invisible for exactly that reason.
+ */
+export interface TriageRow {
+  type: ChannelType;
+  readable: boolean;
+  archived: boolean;
+  mapping: Mapping | null;
+  hasNew: boolean;
+  newCount: number;
+  signalScore: number;
+  /** New content is thread replies only — no parent moved, so no ts changed. */
+  repliesOnly: boolean;
+  /**
+   * The scan hit its cap before the delta ran out, so the signal score was
+   * computed on a subset. Such a row is NEVER quiet: advancing a scan position
+   * past messages nothing looked at is the same class of lie the two-position
+   * split exists to stop.
+   */
+  scanTruncated: boolean;
+  fingerprintStale: boolean;
+  /** Non-empty when a mapped event's date has passed but its status is still future. */
+  staleStatus: string;
+  published: { slug: string; score: number; source: string; custom: boolean } | null;
+}
+
+/**
+ * Settled: nothing for a human or the model to do. Also gates watermark advance.
+ *
+ * `read in full` is deliberately absent. It is the one action that means "the
+ * model has not seen this yet", so treating it as settled would advance a read
+ * position over content nobody read — which is exactly what happened to the
+ * events lead's DM on 5 Aug 2026.
+ */
+export function isQuiet(action: string): boolean {
+  return action.startsWith("no-op") || action === "archived" || action === "skip";
+}
+
+export function decideAction(r: TriageRow): string {
+  if (r.archived) return "archived";
+  // A partial scan cannot conclude anything, including "nothing here".
+  if (r.scanTruncated) return `read in full (scan truncated at ${r.newCount})`;
+  /*
+   * ALWAYS-READ WINS OVER EVERY OTHER RULE, INCLUDING THE SIGNAL GATE.
+   *
+   * These are the DMs of the people who send work. They feed no page, so they
+   * are correctly `skip` — and the signal heuristic scores a line like "please
+   * update Carolina Lobos' profile on the website" at zero, because it names no
+   * venue, no date and no ticket. Both facts were true on 5 Aug 2026 and the
+   * message sat unread for a day behind a mapping whose own reason said to read
+   * it in full every run.
+   */
+  if (r.mapping?.kind === "skip" && r.mapping.alwaysRead)
+    return r.hasNew ? "read in full (always-read)" : "no-op";
+  if (r.type === "event") {
+    if (!r.readable) return r.archived ? "archived" : "join+sync";
+    if (r.mapping?.kind === "skip") return r.hasNew ? "skip→review (new msgs)" : "skip";
+    if (!r.mapping || r.mapping.kind === "none") {
+      // Unseen or "scanned, no site event": only resurface on new activity.
+      if (!r.hasNew) return "no-op";
+      // A page may already exist in a NON-skill source (scraped/legacy). Don't
+      // propose creating a duplicate — point at the published slug to map/skip.
+      if (r.published && !r.published.custom)
+        return `exists? (≈${r.published.slug} @${r.published.source})`;
+      return r.published ? `create? (≈${r.published.slug})` : "create?";
+    }
+    /*
+     * MAPPED TO AN EVENT — AND A LOCAL CONDITION MUST NOT MASK A REMOTE ONE.
+     *
+     * These four used to be four early returns, `fingerprintStale` first. But
+     * fingerprint staleness only says the repo changed since the last sync,
+     * while `hasNew` says Slack is holding content nobody has read: one is
+     * bookkeeping, the other is the whole point of the skill, and the first was
+     * returning before the second was ever consulted.
+     *
+     * Every event's image paths moved on 19 Aug 2026 (74397ce1), so on the
+     * 21 Aug run the flag was true for all ten mapped event channels and every
+     * one of them printed the same label. Eight genuinely had nothing new. The
+     * two that did — thirteen unread messages on the hackathon, fourteen on Les
+     * Mills — were indistinguishable from them in the column a reader uses to
+     * decide what to open. Among the thirteen was the Google Photos album the
+     * channel's own digest named as its one open item.
+     *
+     * Reordering would only swap which fact gets hidden, so the label carries
+     * both. It still starts with the unread verb, which is what `isQuiet()`
+     * reads and what keeps the scan position from advancing.
+     */
+    // Say WHY when nothing at the top level moved. A reader who checks Slack
+    // by eye will see no new message in the channel and conclude the table is
+    // wrong, unless it tells them the new content is inside a thread.
+    const unread = r.repliesOnly
+      ? "incremental (thread replies)"
+      : r.hasNew
+        ? "incremental"
+        : "";
+    const local = r.fingerprintStale
+      ? "fingerprint-stale (event edited)"
+      : r.staleStatus
+        ? `stale-status (${r.staleStatus})`
+        : "";
+    if (unread && local) return `${unread} + ${local}`;
+    return unread || local || "no-op";
+  }
+  // general + dm — scanned for event signal, never auto-created from.
+  if (!r.readable) return "no-op (not readable)";
+  /*
+   * A 1:1 DM IS ADDRESSED TO YOU. The signal heuristic was built for channels
+   * where most traffic is chatter and the event content has to be found in it.
+   * A person writing to you directly is not that, and treating it as that is
+   * exactly how "please update Carolina Lobos' profile on the website" — no
+   * venue, no date, no ticket, score zero — was scanned past on 5 Aug 2026.
+   *
+   * So an unmapped DM with new content always surfaces. Silencing one is still
+   * possible and still explicit: map it `skip` with a reason, which is how
+   * Slackbot and the self-DM stay out of the table.
+   */
+  if (r.type === "dm" && (!r.mapping || r.mapping.kind === "none"))
+    return r.hasNew ? "read in full (dm)" : "no-op";
+  // A skip here must be stickier than on an event channel. #contact-form-
+  // notifications and every DM receive routine traffic forever, so resurfacing
+  // on "any new message" would put them in the table every single run and train
+  // the reader to ignore it. Only a delta that actually scores as event content
+  // is worth a second look.
+  if (r.mapping?.kind === "skip")
+    return r.signalScore >= SIGNAL_THRESHOLD ? "skip→review (event signal)" : "skip";
+  if (r.signalScore >= SIGNAL_THRESHOLD)
+    return r.type === "dm" ? "create? (dm-signal)" : "create? (general-signal)";
+  return r.hasNew ? "no-op (no signal)" : "no-op";
 }
 
 /** The two fields Slack returns on a parent message that has replies. */
@@ -401,6 +564,31 @@ export interface ChannelState {
    * could not.
    */
   readAtSource?: string;
+  /**
+   * PENDING position: the newest ts the triage last SAW IN SLACK on a
+   * conversation it could not clear. The only field here that describes Slack
+   * rather than our own progress through it.
+   *
+   * It exists because the scanned/read gap cannot measure the backlog on a row
+   * that has an action. `discover-channels.ts` advances `scannedTs` only for
+   * QUIET rows — correctly, since moving it on an actionable row would mark
+   * unread content read — so any row the triage surfaces and nobody then works
+   * keeps `scannedTs === watermarkTs`, and the gap `audit-read-state.ts`
+   * computes is zero BY CONSTRUCTION, however much Slack is holding.
+   *
+   * On 2026-08-21 that made the audit report the whole workspace clean while
+   * #event-ai-forum-ai-hackathon-2026 sat thirteen messages behind — among them
+   * the Google Photos album the channel's own digest called "the one open
+   * item". `verify-coverage.ts` caught it, but that walks Slack; the audit is
+   * the cheap offline gate SKILL.md tells you to run every time, and it has to
+   * be able to answer the question without a network call.
+   *
+   * Max of the channel head and the newest reply on any grown thread, so a
+   * channel behind only inside a thread is counted too. Written when the triage
+   * observes unread content, deleted when a row goes quiet, and deleted by
+   * `update-state.ts` once a delivered payload's watermark reaches it.
+   */
+  pendingTs?: string;
   threads: Record<string, ThreadState>; // parentTs -> thread watermark
   fingerprint: string; // sha256:… of the mapped event's salient fields ("" when none)
   lastSyncedAt: string;
@@ -478,6 +666,10 @@ export function saveManifest(m: Manifest): void {
     // Same rule, and the same reason it is on this list at all: a field that
     // does not survive the write does not exist.
     if (c.readAtSource) entry.readAtSource = c.readAtSource;
+    // `pendingTs` is the audit's only evidence that Slack is ahead of a row the
+    // triage could not clear. Dropping it here would put the audit straight back
+    // to reporting clean on a measured backlog.
+    if (c.pendingTs) entry.pendingTs = c.pendingTs;
     // Only emit digest fields when set — channels never given a digest stay
     // byte-identical to their pre-digest serialization.
     if (c.digest) {

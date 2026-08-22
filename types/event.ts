@@ -220,6 +220,16 @@ export interface EventSpecialSection {
   type: string;
   title: string;
   content: string[];
+  /**
+   * Aspect of an embedded video, for `type: "youtube"` and `type: "video"`.
+   *
+   * Defaults to landscape, which is what every embed on the site was until a
+   * YouTube Short arrived: 9:16 source in a hardcoded 16:9 frame is a sliver
+   * between two black bars. Section-level rather than per-item because
+   * `content` is a bare string[] — so a portrait clip gets its own section,
+   * which reads better than mixing the two under one heading anyway.
+   */
+  orientation?: "landscape" | "portrait";
 }
 
 // Photo with alt text

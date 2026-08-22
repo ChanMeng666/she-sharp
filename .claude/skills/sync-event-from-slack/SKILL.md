@@ -189,6 +189,14 @@ the full machine triage to `.cache/triage.json`. Read the `action` column and ac
 - `stale-status (slug: <status>)` → a mapped event whose date has passed but whose
   status is still future → run the **post-event gallery** pass (flip status to
   `past`, add the gallery; see `references/image-conventions.md`).
+- **A composed label — `incremental + fingerprint-stale (event edited)` — means
+  BOTH, and the unread half is the one that matters.** Slack is holding content
+  nobody has read *and* the repo changed out of band. These were four separate
+  early returns with the local condition first, so on 21 Aug 2026 all ten mapped
+  event channels printed `fingerprint-stale` after an image-path refactor and the
+  two carrying thirteen and fourteen unread messages looked exactly like the
+  eight that carried none. Do the Layer B read; the reconcile falls out of it,
+  because `update-state.ts` recomputes the fingerprint after the JSON patch.
 - `no-op` / `archived` / `skip` are quiet and hidden by default (`--all` shows them).
 
 A `↳ digest:` line under a row is the **prior understanding** carried from the last
@@ -712,6 +720,17 @@ filename to `.jpg`. Do not re-encode the file.
   express it. **Four separate misses came out of that**, and the fourth was the
   events lead asking for a page change. If you add a writer, it moves `scannedTs`
   or it delivers content to the model — never both, never neither.
+- **THE SCAN GAP CANNOT MEASURE A ROW THAT HAS AN ACTION — that is what
+  `pendingTs` is for.** The triage advances `scannedTs` only on QUIET rows, so a
+  row it surfaces and nobody then works keeps `scannedTs === watermarkTs` and the
+  gap above is zero *by construction*. On 21 Aug 2026 `audit-read-state.ts`
+  reported the whole workspace clean while the hackathon channel sat thirteen
+  messages behind — including the Google Photos album its own digest called the
+  one open item — and Les Mills fourteen. `pendingTs` is the third position and
+  the only one that describes Slack rather than us: what the triage SAW on a row
+  it could not clear. It is what lets the audit answer the question offline; the
+  network-walking cross-check is still `verify-coverage.ts`, and Step 7.5 runs
+  both because they fail differently.
 - **Never hand-edit `state/sync-state.json`** — always go through `update-state.ts`
   so ordering stays deterministic and the fingerprint is recomputed correctly.
 

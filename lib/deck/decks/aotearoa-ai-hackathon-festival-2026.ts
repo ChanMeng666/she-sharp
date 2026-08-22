@@ -9,8 +9,8 @@
  * belongs with the welcome rather than after the handover.
  *
  * Facts come from `lib/data/json/events-custom.json` via `getEventBySlug()`,
- * read through `specialSection()` so that renumbering the JSON fails loudly
- * instead of quietly projecting the wrong section.
+ * read through `specialSection()`, which looks them up by title so a reordered
+ * JSON fails loudly instead of quietly projecting the wrong section.
  *
  * DELIBERATELY NOT ON SCREEN — the long-form material lives on the event page,
  * which the "Stay Connected" QR reaches in one scan. Do not "helpfully" add it
@@ -57,20 +57,28 @@ if (!event) {
 const detail = event.detailPageData;
 
 /**
- * Reads one `specialSections` entry by index, asserting its title.
+ * Reads one `specialSections` entry BY TITLE.
  *
- * The JSON is edited by the Slack sync, which appends and reorders. Without the
- * title assertion a shifted index would silently swap "Prizes & Awards" for
- * "Registration" on a slide nobody proofreads again before it is projected.
+ * The JSON is edited by the Slack sync, which appends and reorders — so an
+ * index is a fact about today's file, not about the section. This took an index
+ * and asserted the title, which turned every insertion into a build failure
+ * demanding a renumber: the 22 Aug sync added three post-event sections to the
+ * front and shifted both call sites. The title was already the real identifier,
+ * so the index was the only fragile half and it is gone.
+ *
+ * Still fails loudly, which is the part that matters — a silently-swapped
+ * section would put "Registration" where "Prizes & Awards" belongs on a slide
+ * nobody proofreads again before it is projected. Ambiguity is an error too:
+ * two sections sharing a title means the deck cannot know which was meant.
  */
-function specialSection(index: number, expectedTitle: string): string[] {
-  const section = detail.specialSections[index];
-  if (!section || section.title !== expectedTitle) {
+function specialSection(title: string): string[] {
+  const matches = detail.specialSections.filter((s) => s.title === title);
+  if (matches.length !== 1) {
     throw new Error(
-      `Expected specialSections[${index}] of "${EVENT_SLUG}" to be "${expectedTitle}", found "${section?.title ?? "nothing"}". Re-point the index after editing the event JSON.`,
+      `Expected exactly one specialSections entry titled "${title}" in "${EVENT_SLUG}", found ${matches.length}. Available: ${detail.specialSections.map((s) => s.title).join(" | ")}`,
     );
   }
-  return section.content;
+  return matches[0].content;
 }
 
 /** Replaces run-sheet labels that exceed the six-word limit, by exact match. */
@@ -485,7 +493,7 @@ const JUDGING_FOOTNOTE =
 // --- Run sheets ------------------------------------------------------------
 
 const DAY_ONE = shortenLabels(
-  parseTimedLines(specialSection(1, "Day 1 Schedule — Friday 7 August")),
+  parseTimedLines(specialSection("Day 1 Schedule — Friday 7 August")),
   {
     "Registration, guest arrival & networking + dinner":
       "Registration, networking & dinner",
@@ -499,7 +507,7 @@ const DAY_ONE = shortenLabels(
 );
 
 const DAY_TWO = shortenLabels(
-  parseTimedLines(specialSection(2, "Day 2 Schedule — Saturday 8 August")),
+  parseTimedLines(specialSection("Day 2 Schedule — Saturday 8 August")),
   {
     "Team build with mentor support (pitch prep from 10:00am)":
       "Team build with mentor support",
