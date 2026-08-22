@@ -2091,12 +2091,80 @@
             "alt": "Teams spread across the round tables of AUT's timber-ceilinged hall, laptops open, working through the first day of the hackathon"
           },
           {
+            "url": "/img/events/aotearoa-ai-hackathon-festival-2026/photo-8.webp",
+            "alt": "Attendees collect lanyards and folded white t-shirts from a welcome table beside a pink She# pull-up banner in a glass-walled campus foyer."
+          },
+          {
+            "url": "/img/events/aotearoa-ai-hackathon-festival-2026/photo-9.webp",
+            "alt": "Two participants in white AI Forum New Zealand t-shirts reading AI FOR GOOD laugh together, holding up their festival name badges."
+          },
+          {
+            "url": "/img/events/aotearoa-ai-hackathon-festival-2026/photo-10.webp",
+            "alt": "A participant speaks with an open hand across a round table while her teammates listen, printed prompt cards spread on the black tablecloth."
+          },
+          {
+            "url": "/img/events/aotearoa-ai-hackathon-festival-2026/photo-11.webp",
+            "alt": "A participant in a cream puffer jacket laughs broadly across her table in a crowded working hall."
+          },
+          {
+            "url": "/img/events/aotearoa-ai-hackathon-festival-2026/photo-12.webp",
+            "alt": "Three participants sit shoulder to shoulder over open laptops, concentrating, against a warm timber slat wall."
+          },
+          {
+            "url": "/img/events/aotearoa-ai-hackathon-festival-2026/photo-13.webp",
+            "alt": "The whole festival gathered for a group photograph in the campus atrium, some kneeling at the front around a chalkboard sign."
+          },
+          {
+            "url": "/img/events/aotearoa-ai-hackathon-festival-2026/photo-14.webp",
+            "alt": "A round table of participants, several of them smiling, turn towards a speaker in a room hung with dark curtains."
+          },
+          {
+            "url": "/img/events/aotearoa-ai-hackathon-festival-2026/photo-15.webp",
+            "alt": "A woman in a blue puffer jacket laughs mid-conversation with two teammates working over notes at their table."
+          },
+          {
             "url": "/img/events/aotearoa-ai-hackathon-festival-2026/photo-2.webp",
             "alt": "A mentor stands beside a table with a laptop in hand, talking a seated team through their idea"
           },
           {
+            "url": "/img/events/aotearoa-ai-hackathon-festival-2026/photo-16.webp",
+            "alt": "A woman gestures with an open hand as she explains something across a table of open laptops to two listening teammates."
+          },
+          {
+            "url": "/img/events/aotearoa-ai-hackathon-festival-2026/photo-17.webp",
+            "alt": "A mentor wearing an I'm a mentor badge reaches across the table to point at a teammate's laptop screen showing a team's pitch slide."
+          },
+          {
+            "url": "/img/events/aotearoa-ai-hackathon-festival-2026/photo-18.webp",
+            "alt": "Attendees help themselves from a tiered catering stand during the break, plates in hand and conversation running across the table."
+          },
+          {
             "url": "/img/events/aotearoa-ai-hackathon-festival-2026/photo-3.webp",
             "alt": "A speaker with a microphone in front of the Aotearoa AI Hackathon Festival banner reading 'Turning ideas into something real'"
+          },
+          {
+            "url": "/img/events/aotearoa-ai-hackathon-festival-2026/photo-19.webp",
+            "alt": "A keynote speaker raises both hands mid-sentence at a wooden AUT lectern, a classical marble bust and the words KNOW THYSELF projected behind her."
+          },
+          {
+            "url": "/img/events/aotearoa-ai-hackathon-festival-2026/photo-20.webp",
+            "alt": "A host throws both arms wide beside an AUT lectern lit by a neon sign reading The Future is yours to create, a Sustainable Development Goals board to one side."
+          },
+          {
+            "url": "/img/events/aotearoa-ai-hackathon-festival-2026/photo-21.webp",
+            "alt": "Two team members present on stage holding microphones, one gesturing mid-sentence, with a projected slide behind them and a Sustainable Development Goals board at their side."
+          },
+          {
+            "url": "/img/events/aotearoa-ai-hackathon-festival-2026/photo-22.webp",
+            "alt": "A presenter flings one arm wide mid-sentence with the microphone raised, the Sustainable Development Goals board standing at the edge of the stage behind."
+          },
+          {
+            "url": "/img/events/aotearoa-ai-hackathon-festival-2026/photo-7.webp",
+            "alt": "The whole festival gathered for a group photograph around the neon She Sharp sign, beneath the Aotearoa AI Hackathon Festival banners"
+          },
+          {
+            "url": "/img/events/aotearoa-ai-hackathon-festival-2026/photo-23.webp",
+            "alt": "A young woman with long dark hair speaks into a handheld microphone against a plain white wall, her phone held in her other hand as she presents."
           },
           {
             "url": "/img/events/aotearoa-ai-hackathon-festival-2026/photo-4.webp",
@@ -2107,16 +2175,12 @@
             "alt": "The judging panel seated at a long table, listening and taking notes during the final pitches"
           },
           {
+            "url": "/img/events/aotearoa-ai-hackathon-festival-2026/photo-24.webp",
+            "alt": "A judge lifts the microphone to question a team from the long panel table while the rest of the judges take notes and the audience watches behind."
+          },
+          {
             "url": "/img/events/aotearoa-ai-hackathon-festival-2026/photo-6.webp",
             "alt": "A winning team on stage with their prize totes, behind the neon She Sharp sign"
-          },
-          {
-            "url": "/img/events/aotearoa-ai-hackathon-festival-2026/photo-7.webp",
-            "alt": "The whole festival gathered for a group photograph around the neon She Sharp sign, beneath the Aotearoa AI Hackathon Festival banners"
-          },
-          {
-            "url": "/img/events/aotearoa-ai-hackathon-festival-2026/koru.jpg",
-            "alt": "An unfurling silver fern koru, symbolising new growth and the spirit of the Aotearoa AI Hackathon Festival"
           }
         ],
         "posters": [
@@ -2130,7 +2194,8 @@
         "images": [],
         "category": "hackathon",
         "status": "completed",
-        "isFeatured": false
+        "isFeatured": false,
+        "photoCredit": "Photography by VISIONWORKS"
       }
     },
     {
