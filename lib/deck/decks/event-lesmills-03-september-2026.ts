@@ -145,7 +145,27 @@ const PANEL_ROLES: Record<string, string> = {
   "Carolina Lobos": "Head of Finance & Automation Lead",
 };
 
-const PANEL = (SPEAKERS[0]?.people ?? []).map((person) => ({
+/*
+ * BY KEY, NEVER BY POSITION.
+ *
+ * This read `SPEAKERS[0]`, which is the first POPULATED group in
+ * `SPEAKER_GROUP_ORDER` — an ordering this file does not own and cannot see.
+ * On 23 Aug 2026 the event gained a `hosts` group for the MC, `hosts` sorts
+ * first in that order, and the "Meet the Panel" slide silently became one
+ * person: the MC, alone, under the panel's heading. deck.test.ts and
+ * lint-deck.ts both stayed green, because neither asserts WHO is on a slide.
+ *
+ * Throwing is the point. A deck that cannot find its panel must fail the build
+ * rather than project four empty cards, or one wrong face, to a room.
+ */
+const PANEL_GROUP = SPEAKERS.find((group) => group.key === "panel_speakers");
+if (!PANEL_GROUP || PANEL_GROUP.people.length === 0) {
+  throw new Error(
+    `Deck "${event.slug}" expects a populated panel_speakers group in events-custom.json; found: ${SPEAKERS.map((g) => `${g.key}(${g.people.length})`).join(", ") || "none"}.`,
+  );
+}
+
+const PANEL = PANEL_GROUP.people.map((person) => ({
   ...person,
   role: PANEL_ROLES[person.name] ?? person.role,
 }));

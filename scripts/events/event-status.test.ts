@@ -140,6 +140,24 @@ check("the speaker set counts every speaker and the line-up tile", () => {
   );
 });
 
+check("the MC is on the page but not in the speaker campaign", () => {
+  // 23 Aug 2026: a `hosts` group was added for the Les Mills MC, and the check
+  // demanded a poster set for her because getAllSpeakersFromEvent() walks every
+  // group. The line-up tile is titled for the panel; a host card cut to the same
+  // template would read as "another panellist", which is a claim about who is
+  // speaking made by artwork nobody re-checks.
+  const hosts = eventOrThrow(UPCOMING_SLUG).detailPageData.speakers.hosts?.speakers ?? [];
+  assert.ok(hosts.length > 0, "the fixture event must list a host — this test exists for that case");
+  const entry = checkById(upcoming, "speaker-posters");
+  assert.equal(entry.state, "done");
+  for (const host of hosts) {
+    assert.ok(
+      !entry.detail.includes(host.name),
+      `the host ${host.name} should not be counted by the speaker campaign, got: ${entry.detail}`,
+    );
+  }
+});
+
 check("the deck check reports what DECK_INDEX says", () => {
   const deck = deckForEvent(UPCOMING_SLUG);
   assert.ok(deck, "the fixture event must have a registered deck");
