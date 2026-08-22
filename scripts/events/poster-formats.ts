@@ -20,7 +20,7 @@
  * the decks made before they had skins.
  */
 
-import { contrastRatio } from "@/lib/deck/theme";
+import { contrastRatio, relativeLuminance } from "@/lib/deck/theme";
 
 import {
   BODY,
@@ -55,19 +55,69 @@ export interface PosterTheme {
   /** The ground the scrims are made of. Near-black, not brand navy: navy
    *  washes out under a scrim and muddies whatever is behind it. */
   canvas: string;
+  /**
+   * Everything the poster is written in, and the reason there is a light theme.
+   *
+   * This was a module constant, `INK = "#ffffff"`, and that one line decided the
+   * whole palette: white type needs a dark ground, so the scrim has to darken,
+   * so every plate has to be near-black. Nothing else made these posters dark.
+   *
+   * INK AND CANVAS ARE ONE DECISION, NOT TWO. They are the two ends of the same
+   * contrast, and any pairing that puts them on the same side of it produces a
+   * poster no gate can rescue — the scrim is built from `canvas`, so a dark ink
+   * over a dark canvas has nowhere left to go. Change them together, and pick
+   * from the named themes below rather than mixing your own.
+   */
+  ink: string;
 }
-
-export const INK = "#ffffff";
 
 export const SHE_SHARP_THEME: PosterTheme = {
   accent: "#c846ab",
   spark: "#5ee7f5",
   canvas: "#0b0a14",
+  ink: "#ffffff",
 };
+
+/**
+ * The same poster, not dark. Measured, not chosen by eye.
+ *
+ * Every value here was checked against the ground the gate actually samples —
+ * the canvas laid over a near-black plate at the wash's own 0.94, which is
+ * `#e6e3df` — rather than against the canvas itself, because that difference is
+ * a whole contrast step:
+ *
+ *   ink   #141019   14.69:1   (and 4.40:1 on the accent, so the pill keeps a
+ *                              dark label rather than flipping to the canvas)
+ *   spark #0b5c68    5.98:1   the deep counterpart of `#5ee7f5`, same hue family
+ *
+ * THE SPARK COULD NOT SIMPLY BE CARRIED OVER, and that is the same finding the
+ * dark theme's comment records, in the other direction: `#5ee7f5` measures
+ * 1.28:1 on this ground. A bright counterpoint on a pale field has to be a dark
+ * one. The accent is untouched — it carries solid fills, and a fill's job does
+ * not change with the ground behind it.
+ */
+export const SHE_SHARP_LIGHT_THEME: PosterTheme = {
+  accent: "#c846ab",
+  spark: "#0b5c68",
+  canvas: "#f4f1ec",
+  ink: "#141019",
+};
+
+/**
+ * Which side of the contrast this theme's ground sits on.
+ *
+ * Read from the canvas rather than stored, so it cannot disagree with the
+ * colour the scrims are actually built from.
+ */
+export function isLightTheme(theme: PosterTheme): boolean {
+  return relativeLuminance(theme.canvas) > 0.5;
+}
 
 /* -------------------------------------------------------------------- copy */
 
 export interface PosterCopy {
+  /** The event's slug, so a refusal can name the event it is about. */
+  event: string;
   titleLead: string;
   titleTail: string;
   subtitle?: string;
@@ -76,7 +126,19 @@ export interface PosterCopy {
   time: string;
   venue: string;
   address?: string;
-  partner?: { name: string; logo: string };
+  /**
+   * Every organisation hosting the event, in the order the record bills them.
+   *
+   * A LIST, NOT ONE PARTNER, and the plural is the whole point. This was a
+   * single `partner`, filled from the first main sponsor, because every She
+   * Sharp evening until code-secure-2026 had exactly one. That event has two
+   * co-hosts — Xero, and Secure Code Warrior, who run the tournament platform
+   * and supply the speaker — and the poster that shipped said "She# | Xero" and
+   * left the second host off it entirely. Showing fewer marks than there are
+   * hosts is not a layout compromise, it is a false statement about who is
+   * putting the evening on.
+   */
+  partners: { name: string; logo: string }[];
   hasRsvp: boolean;
 }
 
@@ -264,7 +326,7 @@ export function buildStack(o: StackOptions): StackResult {
     // The tail is the half of the title that sat after the dash. Set in the
     // same ink at the same size the two read as one run-on sentence; colour
     // restores the join the dash was doing.
-    const ink = i > 0 && o.tailInSpark ? o.theme.spark : INK;
+    const ink = i > 0 && o.tailInSpark ? o.theme.spark : o.theme.ink;
     const line = { x: o.x, y, text, family: DISPLAY, size: solved[i].size };
     parts.push(textLine({ ...line, fill: ink }));
     boxes.push(boxFor(`title "${text}"`, line, ink));
@@ -276,7 +338,7 @@ export function buildStack(o: StackOptions): StackResult {
   y += o.gap.afterTitle;
 
   parts.push(
-    `<rect x="${o.x}" y="${y}" width="${o.column}" height="1.5" fill="${INK}" fill-opacity="0.2"/>`,
+    `<rect x="${o.x}" y="${y}" width="${o.column}" height="1.5" fill="${o.theme.ink}" fill-opacity="0.2"/>`,
   );
   y += o.gap.afterRule;
 
@@ -284,8 +346,8 @@ export function buildStack(o: StackOptions): StackResult {
     const size = o.strapline.size;
     for (const text of wrapBalanced(o.copy.strapline, BODY, size, o.column)) {
       const line = { x: o.x, y, text, family: BODY, size };
-      parts.push(textLine({ ...line, fill: INK, opacity: 0.92 }));
-      boxes.push(boxFor("strapline", line, INK));
+      parts.push(textLine({ ...line, fill: o.theme.ink, opacity: 0.92 }));
+      boxes.push(boxFor("strapline", line, o.theme.ink));
       y += size * 1.32;
     }
     y += o.gap.afterStrapline;
@@ -303,8 +365,8 @@ export function buildStack(o: StackOptions): StackResult {
   for (const [text, size, opacity] of facts) {
     if (!text) continue;
     const line = { x: o.x, y, text, family: BODY, size };
-    parts.push(textLine({ ...line, fill: INK, opacity }));
-    boxes.push(boxFor("facts", line, INK));
+    parts.push(textLine({ ...line, fill: o.theme.ink, opacity }));
+    boxes.push(boxFor("facts", line, o.theme.ink));
     y += size * 1.42;
   }
 
@@ -339,7 +401,7 @@ export function buildStack(o: StackOptions): StackResult {
 export const PILL_CONTRAST_FLOOR = 3;
 
 export function pillInk(theme: PosterTheme): string {
-  return contrastRatio(INK, theme.accent) >= PILL_CONTRAST_FLOOR ? INK : theme.canvas;
+  return contrastRatio(theme.ink, theme.accent) >= PILL_CONTRAST_FLOOR ? theme.ink : theme.canvas;
 }
 
 /**
@@ -395,32 +457,209 @@ export function pill(
   );
 }
 
-/** A logo lockup: She Sharp, a hairline, the partner. */
+/**
+ * A partner mark's own aspect ratio, from its viewBox.
+ *
+ * Read by inlining it at a throwaway width, which costs one `readFileSync` and
+ * keeps the viewBox parsing in the one place that already does it. The
+ * alternative — a table of aspect ratios beside the logo files — is a second
+ * source of truth for something the file already states.
+ */
+function markAspect(file: string): number {
+  return 1000 / inlineLogo(file, { x: 0, y: 0, width: 1000, fill: "#000" }).height;
+}
+
+/**
+ * Every partner mark is set to the SAME optical cap height, expressed as a
+ * fraction of the She Sharp mark's width.
+ *
+ * This replaced a fixed partner WIDTH, which worked for exactly as long as there
+ * was one partner: Les Mills at `1.36 × width` happens to land at this height,
+ * because its wordmark is 5.55:1. Hand the same 1.36 to Xero (3.70:1) and the
+ * mark comes out half again as tall as the one beside it; hand it to a squarer
+ * mark and it towers over She Sharp. Height is what the eye compares, so height
+ * is what is held constant.
+ */
+const PARTNER_CAP = 0.245;
+
+/**
+ * …with a width ceiling, because an extreme wordmark would run off the poster.
+ *
+ * At the cap height a 5.55:1 wordmark is already 1.36 × the She Sharp mark wide.
+ * Anything wider than that is set shorter instead — the one case where the marks
+ * are not the same height, and the honest trade: a Les Mills lockup at matched
+ * heights would be twice the width of the poster it sits on.
+ */
+const PARTNER_MAX_WIDTH = 1.36;
+
+/**
+ * How small a partner mark may be scaled before it stops being a logo.
+ *
+ * A fraction of `PARTNER_CAP`, not an absolute pixel size, because a format's
+ * pixel size says nothing about how big the poster is when someone looks at it —
+ * the same design is drawn at 1080 and at 3200. What does carry across is the
+ * She Sharp mark beside it, which each format has already sized for its medium.
+ * At 0.6 a host's wordmark is set at 39% of the She Sharp mark's height, which
+ * is where "Secure Code Warrior" stops resolving in a phone-sized feed image.
+ */
+const MIN_PARTNER_SCALE = 0.6;
+
+/**
+ * Strips a supplied mark's own colours so it can be set in the poster's ink.
+ *
+ * A LOCKUP IS ONE COLOUR OR IT IS A MESS, and until there were two partners this
+ * was true by luck: `lesmills_logo.svg` declares no fill at all, so the wrapper's
+ * ink reached it. Xero and Secure Code Warrior both declare theirs, and an
+ * explicit fill on an element always beats an inherited one — so Xero rendered
+ * in brand cyan next to a cyan spark, and Secure Code Warrior's `#202A42`
+ * wordmark rendered near-invisibly on a near-black poster. A host nobody can
+ * read is the defect this whole change exists to fix, wearing a different hat.
+ *
+ * `<mask>`, `<defs>` and friends are skipped, and they are the reason this is a
+ * scan rather than one `String.replace`. Secure Code Warrior's shield is drawn
+ * through a luminance mask whose path is `fill="white"`; repaint that and the
+ * mask stops passing light and the shield disappears entirely. `fill="none"` is
+ * left alone for the same reason — it means "do not paint", not "paint black".
+ *
+ * A mark that declares no fills is returned byte-identical, which is what keeps
+ * every single-partner poster this repo has shipped exactly where it was.
+ */
+const NON_PAINTING = /^(defs|mask|clipPath|filter|pattern|linearGradient|radialGradient|symbol)$/;
+
+function inOneInk(markup: string, ink: string): string {
+  let buried = 0;
+  return markup.replace(/<(\/?)([A-Za-z][\w:-]*)([^>]*)>/g, (tag, slash: string, name: string) => {
+    const container = NON_PAINTING.test(name);
+    if (slash) {
+      if (container) buried = Math.max(0, buried - 1);
+      return tag;
+    }
+    const inside = buried > 0;
+    if (container && !/\/\s*$/.test(tag.slice(0, -1))) buried += 1;
+    if (inside || container) return tag;
+    return tag.replace(/(fill|stroke)="(?!none")[^"]*"/g, `$1="${ink}"`);
+  });
+}
+
+export interface Lockup {
+  markup: string;
+  /** The full width the marks occupy, so a caller can check what it budgeted. */
+  width: number;
+  height: number;
+}
+
+/**
+ * The logo lockup: She Sharp, a hairline, and then every host of the evening.
+ *
+ * ONE HAIRLINE, NOT ONE PER PAIR. The rule is not a list separator, it is the
+ * boundary between the organisation whose poster this is and the organisations
+ * putting the evening on with it. Repeated between the hosts it would rank them
+ * — "Xero | Secure Code Warrior" reads as a fraction, or as an ordering somebody
+ * chose — and it would spend width on ink at exactly the size where width is
+ * scarce. The hosts are separated by space instead, tighter than the space
+ * either side of the rule, so they group.
+ *
+ * `maxWidth` IS NOT OPTIONAL AND CALLERS MUST MEAN IT. Every format has a real
+ * budget — the margin, and in a bottom band the RSVP pill that shares the row —
+ * and the marks are scaled together to fit inside it. Below `MIN_PARTNER_SCALE`
+ * this refuses rather than shipping, because both silent alternatives are worse
+ * than a failed build: an overflow puts a host's mark off the edge of the
+ * artwork, and dropping the last host is the exact defect this replaced.
+ */
 export function lockup(
   copy: PosterCopy,
-  x: number,
-  y: number,
-  sheSharpWidth: number,
-): { markup: string; height: number } {
-  const she = inlineLogo(SHE_SHARP_LOGO, { x, y, width: sheSharpWidth, fill: INK });
-  if (!copy.partner) return { markup: she.markup, height: she.height };
+  theme: PosterTheme,
+  o: { x: number; y: number; sheSharpWidth: number; maxWidth: number },
+): Lockup {
+  const { x, y, sheSharpWidth } = o;
+  const she = inlineLogo(SHE_SHARP_LOGO, { x, y, width: sheSharpWidth, fill: theme.ink });
+  if (copy.partners.length === 0) {
+    return { markup: she.markup, width: she.width, height: she.height };
+  }
 
   const gap = sheSharpWidth * 0.19;
   const ruleX = x + she.width + gap;
-  // Sized to sit optically level with the She Sharp mark rather than to a shared
-  // height: a wordmark like Les Mills is 5.55:1 against She Sharp's 2.67:1, so
-  // matching heights would make the wordmark twice as wide as the poster.
-  const partner = inlineLogo(`public${copy.partner.logo}`, {
-    x: ruleX + gap,
-    y: y + (she.height - sheSharpWidth * 0.245) / 2,
-    width: sheSharpWidth * 1.36,
-    fill: INK,
+  // Tighter than the 2 × gap either side of the rule, so two hosts read as one
+  // group of hosts rather than as two separate lockups.
+  const between = gap * 1.5;
+
+  const natural = copy.partners.map((partner) => {
+    const file = `public${partner.logo}`;
+    return {
+      file,
+      // `Math.min` and not a clamp helper: when the ceiling binds this has to
+      // evaluate to the same `sheSharpWidth * 1.36` the single-partner lockup
+      // has always used, down to the last bit.
+      width: Math.min(
+        sheSharpWidth * PARTNER_MAX_WIDTH,
+        sheSharpWidth * PARTNER_CAP * markAspect(file),
+      ),
+    };
   });
+
+  const group = natural.reduce((sum, m) => sum + m.width, 0) + between * (natural.length - 1);
+  const room = x + o.maxWidth - (ruleX + gap);
+  const scale = Math.min(1, room / group);
+
+  if (scale < MIN_PARTNER_SCALE) {
+    throw new Error(
+      `${copy.event}: ${copy.partners.length} host logos beside the She Sharp mark ` +
+        `(${copy.partners.map((p) => p.name).join(", ")}) need ${Math.round(group)}px, ` +
+        `and this format gives the whole lockup ` +
+        `${Math.round(o.maxWidth)}px. Fitting them would set every mark at ` +
+        `${Math.round(scale * 100)}% of its proper height, below the ` +
+        `${Math.round(MIN_PARTNER_SCALE * 100)}% at which a wordmark stops reading.\n` +
+        "Either bill one of them under sponsors.other in lib/data/json/events-custom.json — " +
+        "which changes what the poster claims, so it is the organisers' call and not a build " +
+        "decision — or supply a narrower, stacked mark for the widest wordmark.",
+    );
+  }
+
+  let cursor = ruleX + gap;
+  const marks = natural.map((mark) => {
+    const width = mark.width * scale;
+    const inlined = inlineLogo(mark.file, {
+      x: cursor,
+      // Centred on the NOMINAL cap height rather than the mark's own. They are
+      // the same number for every mark except one whose width ceiling bound, and
+      // that one is a hair shorter than nominal — a third of a pixel high on the
+      // largest format, against a rebuild of every existing poster.
+      y: y + (she.height - sheSharpWidth * PARTNER_CAP * scale) / 2,
+      width,
+      fill: theme.ink,
+    });
+    cursor += width + between * scale;
+    return inOneInk(inlined.markup, theme.ink);
+  });
+
   const rule =
     `<rect x="${ruleX}" y="${y + she.height * 0.14}" width="1.5" ` +
-    `height="${she.height * 0.72}" fill="${INK}" fill-opacity="0.28"/>`;
+    `height="${she.height * 0.72}" fill="${theme.ink}" fill-opacity="0.28"/>`;
 
-  return { markup: she.markup + rule + partner.markup, height: she.height };
+  return {
+    markup: she.markup + rule + marks.join(""),
+    width: cursor - between * scale - x,
+    height: she.height,
+  };
+}
+
+/**
+ * The width a bottom band can give the lockup once the pill has taken its side.
+ *
+ * Written once because getting it wrong is invisible until it is not: the lockup
+ * and the RSVP pill are a `<g>` and a `<rect>`, and every safe-area assert in
+ * this pipeline walks `TextBox`es, so two hosts sliding under the call to action
+ * would pass every check in the build and be obvious only to the reader.
+ */
+export function lockupBudget(o: {
+  left: number;
+  right: number;
+  sheSharpWidth: number;
+  /** The pill's own width, or 0 in a band that has no pill. */
+  pillWidth: number;
+}): number {
+  const clear = o.pillWidth ? o.pillWidth + o.sheSharpWidth * 0.3 : 0;
+  return o.right - o.left - clear;
 }
 
 export function frame(w: number, h: number, body: string): string {
@@ -444,8 +683,37 @@ export function frame(w: number, h: number, body: string): string {
  * gate caught exactly that when these three were briefly one gradient.
  */
 export function washDefs(theme: PosterTheme, direction: "up" | "left" | "band"): string {
-  const stops =
-    direction === "up"
+  /* THE STOPS ARE NOT SYMMETRIC AND A LIGHT POSTER CANNOT REUSE THEM. Every one
+     of them was tuned for white ink, where a HALF-covered plate is still fine:
+     the plate is near-black, so a wash at 0.4 is a dark ground and the type
+     reads. Reversed, a wash at 0.4 is a muddy grey with dark type on it — the
+     gate measured the poster's kicker at 2.39:1 the first time this ran. So the
+     pale scrims arrive earlier and hold higher, and the picture is a band rather
+     than a whole open half. That is the trade a light poster makes, and it is
+     the same trade the dark one made in the other direction. */
+  const light = isLightTheme(theme);
+
+  const stops = light
+    ? direction === "up"
+      ? `<linearGradient id="wash" x1="0" y1="0" x2="0" y2="1">
+           <stop offset="0" stop-color="${theme.canvas}" stop-opacity="0"/>
+           <stop offset="0.18" stop-color="${theme.canvas}" stop-opacity="0.82"/>
+           <stop offset="0.40" stop-color="${theme.canvas}" stop-opacity="0.92"/>
+           <stop offset="1" stop-color="${theme.canvas}" stop-opacity="0.96"/>
+         </linearGradient>`
+      : direction === "band"
+        ? `<linearGradient id="wash" x1="0" y1="0" x2="0" y2="1">
+             <stop offset="0" stop-color="${theme.canvas}" stop-opacity="0"/>
+             <stop offset="0.14" stop-color="${theme.canvas}" stop-opacity="0.88"/>
+             <stop offset="0.42" stop-color="${theme.canvas}" stop-opacity="0.93"/>
+             <stop offset="1" stop-color="${theme.canvas}" stop-opacity="0.97"/>
+           </linearGradient>`
+        : `<linearGradient id="wash" x1="0" y1="0" x2="1" y2="0">
+             <stop offset="0" stop-color="${theme.canvas}" stop-opacity="0.97"/>
+             <stop offset="0.46" stop-color="${theme.canvas}" stop-opacity="0.92"/>
+             <stop offset="1" stop-color="${theme.canvas}" stop-opacity="0.10"/>
+           </linearGradient>`
+    : direction === "up"
       ? `<linearGradient id="wash" x1="0" y1="0" x2="0" y2="1">
            <stop offset="0" stop-color="${theme.canvas}" stop-opacity="0"/>
            <stop offset="0.35" stop-color="${theme.canvas}" stop-opacity="0.62"/>
@@ -467,7 +735,12 @@ export function washDefs(theme: PosterTheme, direction: "up" | "left" | "band"):
   return `<defs>
     ${stops}
     <linearGradient id="ceiling" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="${theme.canvas}" stop-opacity="0.78"/>
+      ${
+        light
+          ? `<stop offset="0" stop-color="${theme.canvas}" stop-opacity="0.96"/>
+             <stop offset="0.62" stop-color="${theme.canvas}" stop-opacity="0.94"/>`
+          : `<stop offset="0" stop-color="${theme.canvas}" stop-opacity="0.78"/>`
+      }
       <stop offset="1" stop-color="${theme.canvas}" stop-opacity="0"/>
     </linearGradient>
     <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
@@ -486,12 +759,22 @@ function posterLayout(copy: PosterCopy, theme: PosterTheme): Layout {
   const M = 96;
   const COL = W - M * 2;
 
+  /* THE CEILING HAS TO REACH THE KICKER, AND ON A PALE POSTER THAT IS FURTHER
+     DOWN. The kicker's baseline is 268 — inside the last 5% of a 280px ceiling,
+     where the ramp has faded to nothing. That is fine in white ink over a
+     near-black plate, which is the ground it was placed against; in dark ink it
+     is dark type on an open photograph, and the gate said so. The pale ceiling
+     runs to 620 and holds its plateau past the kicker, which moves the picture
+     from "the whole upper half" to a band. */
+  const ceilingH = isLightTheme(theme) ? 620 : 280;
+
   const scrim = `${washDefs(theme, "up")}
     <rect x="0" y="740" width="${W}" height="${H - 740}" fill="url(#wash)"/>
-    <rect x="0" y="0" width="${W}" height="280" fill="url(#ceiling)"/>
+    <rect x="0" y="0" width="${W}" height="${ceilingH}" fill="url(#ceiling)"/>
     <ellipse cx="${M + 180}" cy="1230" rx="760" ry="420" fill="url(#glow)"/>`;
 
-  const mark = lockup(copy, M, 108, 208);
+  // The full column: the poster's top row is the lockup's alone.
+  const mark = lockup(copy, theme, { x: M, y: 108, sheSharpWidth: 208, maxWidth: COL });
   const stack = buildStack({
     x: M,
     // The kicker sits under the lockup, not above the headline. Above the
@@ -541,6 +824,16 @@ function posterLayout(copy: PosterCopy, theme: PosterTheme): Layout {
  * type falling off an event card.
  */
 const SOCIAL_SAFE = { top: 445, bottom: 778 };
+
+/**
+ * The bottom band: the lockup on the left, the RSVP pill on the right.
+ *
+ * Exported for the same reason `STORY_BAND` is — the band is a constant that no
+ * input can move, so the only way it goes wrong is somebody nudging these
+ * numbers in a later tuning pass, and neither the lockup nor the pill is a
+ * `TextBox`, so no assert in the pipeline would notice.
+ */
+export const SOCIAL_BAND = { y: 1188, logo: 168, pill: 33 };
 
 function socialLayout(copy: PosterCopy, theme: PosterTheme): Layout {
   const W = 1080;
@@ -607,14 +900,14 @@ function socialLayout(copy: PosterCopy, theme: PosterTheme): Layout {
   let y = SOCIAL_SAFE.bottom - size * 0.05 - (displayLines.length - 1) * size * 0.86;
   for (const text of displayLines) {
     const line = { x: M, y, text, family: DISPLAY, size };
-    parts.push(textLine({ ...line, fill: INK }));
-    boxes.push(boxFor(`cover title "${text}"`, line, INK));
+    parts.push(textLine({ ...line, fill: theme.ink }));
+    boxes.push(boxFor(`cover title "${text}"`, line, theme.ink));
     y += size * 0.86;
   }
 
   y = SOCIAL_SAFE.bottom + 78;
   parts.push(
-    `<rect x="${M}" y="${y}" width="${COL}" height="1.5" fill="${INK}" fill-opacity="0.2"/>`,
+    `<rect x="${M}" y="${y}" width="${COL}" height="1.5" fill="${theme.ink}" fill-opacity="0.2"/>`,
   );
   y += 58;
   const when = [copy.date, copy.time].filter(Boolean).join("   ·   ");
@@ -624,16 +917,33 @@ function socialLayout(copy: PosterCopy, theme: PosterTheme): Layout {
   ] as [string, number, number][]) {
     if (!text) continue;
     const line = { x: M, y, text, family: BODY, size: s };
-    parts.push(textLine({ ...line, fill: INK, opacity: op }));
-    boxes.push(boxFor("cover facts", line, INK));
+    parts.push(textLine({ ...line, fill: theme.ink, opacity: op }));
+    boxes.push(boxFor("cover facts", line, theme.ink));
     y += s * 1.4;
   }
 
-  const mark = lockup(copy, M, 1188, 168);
+  /* The one event format whose lockup shares its row with the call to action,
+     so the budget is the column MINUS the pill. */
+  const pillWidth = copy.hasRsvp ? pillBox("RSVP TODAY", SOCIAL_BAND.pill).width : 0;
+  const mark = lockup(copy, theme, {
+    x: M,
+    y: SOCIAL_BAND.y,
+    sheSharpWidth: SOCIAL_BAND.logo,
+    maxWidth: lockupBudget({
+      left: M,
+      right: W - M,
+      sheSharpWidth: SOCIAL_BAND.logo,
+      pillWidth,
+    }),
+  });
   parts.push(mark.markup);
   if (copy.hasRsvp) {
     parts.push(
-      pill("RSVP TODAY", theme, { right: W - M, y: 1188 + (mark.height - 81) / 2, size: 33 }),
+      pill("RSVP TODAY", theme, {
+        right: W - M,
+        y: SOCIAL_BAND.y + (mark.height - 81) / 2,
+        size: SOCIAL_BAND.pill,
+      }),
     );
   }
 
@@ -684,7 +994,9 @@ function humanitixLayout(copy: PosterCopy, theme: PosterTheme): Layout {
     <rect x="0" y="0" width="${W}" height="${H}" fill="url(#wash)"/>
     <ellipse cx="${M + 300}" cy="${H / 2}" rx="1200" ry="700" fill="url(#glow)"/>`;
 
-  const mark = lockup(copy, M, 150, 300);
+  // Budgeted to the type COLUMN, not the frame: past it the `left` wash has
+  // thinned to almost nothing and a mark would sit on bare, lit plate.
+  const mark = lockup(copy, theme, { x: M, y: 150, sheSharpWidth: 300, maxWidth: COL });
   const stack = buildStack({
     x: M,
     y: 520,
@@ -736,12 +1048,17 @@ function storyLayout(copy: PosterCopy, theme: PosterTheme): Layout {
   const M = 84;
   const COL = W - M * 2;
 
+  // Deeper on a pale poster, for the reason written at `posterLayout`: here it is
+  // the lockup at 330 rather than a kicker, and a dark mark on an open plate is
+  // the one element the gate cannot see, because a `<g>` is not a `TextBox`.
+  const ceilingH = isLightTheme(theme) ? 560 : 420;
+
   const scrim = `${washDefs(theme, "up")}
     <rect x="0" y="640" width="${W}" height="${H - 640}" fill="url(#wash)"/>
-    <rect x="0" y="0" width="${W}" height="420" fill="url(#ceiling)"/>
+    <rect x="0" y="0" width="${W}" height="${ceilingH}" fill="url(#ceiling)"/>
     <ellipse cx="${W / 2}" cy="1180" rx="700" ry="520" fill="url(#glow)"/>`;
 
-  const mark = lockup(copy, M, 330, 190);
+  const mark = lockup(copy, theme, { x: M, y: 330, sheSharpWidth: 190, maxWidth: COL });
   const stack = buildStack({
     x: M,
     y: 1010,
@@ -792,7 +1109,7 @@ function squareLayout(copy: PosterCopy, theme: PosterTheme): Layout {
     <rect x="0" y="0" width="${W}" height="240" fill="url(#ceiling)"/>
     <ellipse cx="${M + 160}" cy="760" rx="640" ry="380" fill="url(#glow)"/>`;
 
-  const mark = lockup(copy, M, 76, 150);
+  const mark = lockup(copy, theme, { x: M, y: 76, sheSharpWidth: 150, maxWidth: COL });
   // No strapline and no address: at 1080 square there is room for the title and
   // the two facts that decide whether someone can come, and nothing else. A
   // square that tries to carry the poster's copy is a square nobody can read in

@@ -25,7 +25,7 @@
  *
  *   npx tsx scripts/events/build-event-poster.ts <event-slug> --plate <file.png>
  *          [--only social,humanitix] [--suffix v2] [--accent "#c846ab"]
- *          [--spark "#5ee7f5"] [--strapline "..."] [--no-gate]
+ *          [--spark "#5ee7f5"] [--strapline "..."] [--no-gate] [--light]
  *          [--speaker <name-slug>|all] [--lineup] [--role "Panellist"]
  *          [--hook "..."] [--hook-file <json>] [--name-size 128]
  *
@@ -51,6 +51,7 @@ import { contrastRatio, relativeLuminance } from "@/lib/deck/theme";
 import type { EventSpeakerGroup, EventSpeakerV3, EventV3 } from "@/types/event";
 import {
   FORMATS,
+  SHE_SHARP_LIGHT_THEME,
   SHE_SHARP_THEME,
   type Layout,
   type PosterCopy,
@@ -112,10 +113,33 @@ function splitTitle(title: string): string[] {
   return [title];
 }
 
-function copyFor(slug: string, strapline?: string): PosterCopy {
+/**
+ * The organisations billed as HOSTS, which is not the same list as the sponsors.
+ *
+ * `partnerLogosFrom()` returns `sponsors.main` followed by `sponsors.other`, in
+ * that order, and a deck slide is happy to show all of them. A lockup is a
+ * claim about who is putting the evening on, so it carries the main tier only —
+ * a venue or a prize sponsor set beside the She Sharp mark would be the same
+ * false statement as the missing co-host, pointing the other way.
+ *
+ * Taken as a PREFIX of that list rather than re-derived from the record, because
+ * the normalisation — the trim, the empty-logo filter — belongs to
+ * `event-source.ts` and a second copy of it here would drift.
+ */
+function hostLogosFrom(event: EventV3): { name: string; logo: string }[] {
+  const main = (event.detailPageData.sponsors?.main ?? []).filter(
+    (sponsor) => sponsor?.name?.trim() && sponsor.logo?.trim(),
+  );
+  return partnerLogosFrom(event).slice(0, main.length);
+}
+
+export function copyFor(slug: string, strapline?: string): PosterCopy {
   const event = loadEventForDeck(slug);
   const detail = event.detailPageData;
-  const partner = partnerLogosFrom(event)[0];
+  const partners = hostLogosFrom(event);
+  if (partners.length > 1) {
+    console.log(`  hosts: She Sharp with ${partners.map((p) => p.name).join(" and ")}`);
+  }
 
   // The same split `deckTitleFrom()` uses, and for the same documented reason:
   // cut at the first SPACED dash, never at a comma. "No Pain, All Gain – Getting
@@ -132,6 +156,7 @@ function copyFor(slug: string, strapline?: string): PosterCopy {
   const [lead, ...rest] = splitTitle(event.title.trim());
 
   return {
+    event: slug,
     titleLead: lead.trim(),
     titleTail: rest.join(" – ").trim(),
     subtitle: detail.subtitle?.trim() || undefined,
@@ -149,7 +174,7 @@ function copyFor(slug: string, strapline?: string): PosterCopy {
     time: (detail.time ?? "").trim(),
     venue: detail.location?.venueName?.trim() ?? "",
     address: detail.location?.address ? tidyAddress(detail.location.address) : undefined,
-    partner,
+    partners,
     hasRsvp: Boolean(detail.registrationUrl?.trim()),
   };
 }
@@ -164,12 +189,39 @@ function copyFor(slug: string, strapline?: string): PosterCopy {
  * flags exist for the case where the poster comes FIRST and the deck will be
  * built from it, which is the order `build-event-slides` now recommends.
  */
-function themeFor(slug: string, override: Partial<PosterTheme>): PosterTheme {
+function themeFor(
+  slug: string,
+  light: boolean,
+  override: Partial<PosterTheme>,
+): PosterTheme {
+  /* A LIGHT BUILD DOES NOT REUSE THE DECK'S PALETTE, and that is the whole
+     reason `--light` is one flag rather than a pair of `--ink`/`--canvas`
+     overrides. A deck's spark was solved against a dark slide; carried onto a
+     pale poster it is the brightest thing on the frame set as small type, which
+     is the exact contrast the deck had solved for, reversed. Ink, canvas and
+     spark move together or not at all — one named palette is one decision that
+     was verified once, where three hex flags are three decisions that have to
+     agree and nothing checks that they do. `--accent` and `--spark` still
+     override afterwards, for the case where somebody has measured a better pair. */
+  if (light) {
+    const theme = { ...SHE_SHARP_LIGHT_THEME, ...override };
+    console.log(
+      `  theme: LIGHT — ${theme.ink} on ${theme.canvas}, accent ${theme.accent}, ` +
+        `spark ${theme.spark} (a deck palette is not reused on a pale ground)`,
+    );
+    return theme;
+  }
+
   const deck = getAllDecks().find((d) => d.slug === slug || d.eventSlug === slug);
   const fromDeck = deck?.theme?.accent;
 
   const base: PosterTheme = fromDeck
-    ? { accent: fromDeck.onDark, spark: fromDeck.spark, canvas: SHE_SHARP_THEME.canvas }
+    ? {
+        accent: fromDeck.onDark,
+        spark: fromDeck.spark,
+        canvas: SHE_SHARP_THEME.canvas,
+        ink: SHE_SHARP_THEME.ink,
+      }
     : SHE_SHARP_THEME;
 
   const theme = { ...base, ...override };
@@ -265,27 +317,39 @@ export function speakerCopyFor(
   };
 }
 
-/** Artwork this event ships that no page renders, so nothing else points at it. */
-const UNRENDERED = [
+/**
+ * Artwork this event's live campaign ships that no page renders.
+ *
+ * BASE NAMES ONLY, and the omission of `--suffix` builds is the point.
+ *
+ * There are two homes for an unreferenced file and they mean different
+ * things. This manifest means "the campaign ships this, guard it" — delete one
+ * and CI fails instead of a scheduled post losing its picture.
+ * `KNOWN_UNREFERENCED` in scripts/verify-image-paths.ts means "somebody built
+ * this and has not decided whether to keep it", which is what its own entries
+ * say. A `--suffix` build is by definition the second kind: it exists precisely
+ * because someone wanted a variant beside the live one rather than over it.
+ *
+ * Claiming both put the Les Mills `-v2` set in both lists at once, and
+ * verify-image-paths fails an allow-list entry that has become referenced —
+ * so the next rebuild of that event would have turned CI red for a set nobody
+ * had touched. `posterAssets.test.ts` now asserts the two lists cannot overlap.
+ */
+export const UNRENDERED = [
   /* One person, or the whole group, on a tile that gets posted by hand. */
   /^(speaker-.+|lineup)-[a-z0-9-]+\.jpg$/,
   /* The mailing-list banner. Referenced by an absolute https URL inside a
      generated MessageSpec under gitignored `tmp/`, which is not a reference the
      reverse check can see — and the spec is rebuilt for every send, so it never
      will be. Naming it here is what stops it reading as an orphan. */
-  /^email(-[a-z0-9]+)?\.jpg$/,
+  /^email\.jpg$/,
   /* The sizes a human uploads by hand: the Humanitix banner, and the Instagram
      and Facebook files. Nothing on the website renders them — the page shows
      `social.webp` as its cover and `poster.webp` in its posters block, and
-     those two are the only ones deliberately left out of this list.
-
-     They went unnoticed until code-secure-2026, the first event to build a
-     clean base-named set: Les Mills had regenerated its own with --suffix v2,
-     and that set went into KNOWN_UNREFERENCED as an undecided leftover, which
-     hid the fact that the base names had no home either. */
-  /^humanitix(-[a-z0-9]+)?\.jpg$/,
-  /^social(-[a-z0-9]+)?\.jpg$/,
-  /^(story|square)(-[a-z0-9]+)?\.(jpg|webp)$/,
+     those two are the only ones deliberately left out of this list. */
+  /^humanitix\.jpg$/,
+  /^social\.jpg$/,
+  /^(story|square)\.(jpg|webp)$/,
 ];
 
 /**
@@ -460,20 +524,54 @@ async function ground(plate: string, format: RenderSpec, layout: Layout): Promis
 }
 
 /**
+ * The luminance a single pixel may reach behind LIGHT ink before it eats it.
+ *
+ * White type over a highlight at 0.42 measures 2.23:1 — legible as a shape,
+ * illegible as a word, and invisible to the mean.
+ */
+const PEAK_MAX = 0.42;
+
+/**
+ * The mirror of `PEAK_MAX`, for a poster whose ink is dark.
+ *
+ * THE SECOND ONE IS NOT SYMMETRY FOR ITS OWN SAKE — without it the gate cannot
+ * measure a light poster at all. `PEAK_MAX` encodes "no pixel behind the type
+ * may be too BRIGHT", which is the right question only while the type is white;
+ * on a pale poster every pixel behind the type is bright, so a single-sided
+ * check fails the whole frame and the only way to ship would be `--no-gate` —
+ * which is to say, with no check at all. The failure that actually happens there
+ * is the opposite one: a dark shape in the plate surviving the wash and swallowing
+ * a dark letter.
+ *
+ * The number is `PEAK_MAX` carried across at the same contrast. White on 0.42 is
+ * 1.05/0.47 = 2.23:1; the same 2.23:1 under near-black ink (luminance 0.011)
+ * lands at a trough of 0.087, rounded down to leave the existing behaviour of
+ * every dark poster untouched.
+ */
+const TROUGH_MIN = 0.085;
+
+/**
  * Refuses to ship type nobody can read.
  *
  * Two assertions rather than one, because the mean hides the failure that
  * actually happens. A single bright highlight running through a counter barely
  * moves the average of a box while making the word it crosses unreadable, so the
- * peak is checked separately.
+ * extreme is checked separately — and WHICH extreme depends on the ink, which is
+ * why the box carries its own colour rather than the gate assuming one.
  *
  * Note the `.toBuffer()` between `extract()` and `stats()`: **`sharp().stats()`
  * reads the input image and ignores the queued pipeline**, so measuring a box
  * without rendering the crop first silently measures the whole frame.
  */
-async function gate(image: Buffer, boxes: TextBox[], quiet: boolean): Promise<void> {
+async function gate(
+  image: Buffer,
+  boxes: TextBox[],
+  theme: PosterTheme,
+  quiet: boolean,
+): Promise<void> {
   const meta = await sharp(image).metadata();
   const failures: string[] = [];
+  const ground = relativeLuminance(theme.canvas);
 
   for (const box of boxes) {
     const left = Math.max(0, box.left);
@@ -494,18 +592,30 @@ async function gate(image: Buffer, boxes: TextBox[], quiet: boolean): Promise<vo
 
     const mean = hex((c) => c.mean);
     const ratio = contrastRatio(box.ink, mean);
-    const peak = relativeLuminance(hex((c) => c.max));
+    /* Light ink is eaten by the brightest pixel behind it, dark ink by the
+       darkest — so the question is which side of its own GROUND the ink sits on,
+       not whether it is light in absolute terms. Asking the second question is a
+       bug that ships: the Les Mills deck lends this poster a `#8982ff` spark
+       whose luminance is 0.29, which is dark on any absolute scale and is the
+       brightest thing on a near-black poster. Compared against 0.5 the gate
+       looked for a shadow behind it, found the canvas, and refused to build
+       artwork that has been public for weeks. */
+    const inkIsLight = relativeLuminance(box.ink) > ground;
+    const worst = relativeLuminance(hex((c) => (inkIsLight ? c.max : c.min)));
 
     const verdict =
       ratio < 4.5
         ? `contrast ${ratio.toFixed(2)}:1 against ${mean}`
-        : peak > 0.42
-          ? `a highlight at luminance ${peak.toFixed(2)} runs through it`
-          : "";
+        : inkIsLight && worst > PEAK_MAX
+          ? `a highlight at luminance ${worst.toFixed(2)} runs through it`
+          : !inkIsLight && worst < TROUGH_MIN
+            ? `a shadow at luminance ${worst.toFixed(2)} runs through it`
+            : "";
 
     if (!quiet || verdict) {
       console.log(
-        `    ${verdict ? "✗" : "✓"} ${box.name.padEnd(30)} ${ratio.toFixed(2)}:1  peak ${peak.toFixed(2)}`,
+        `    ${verdict ? "✗" : "✓"} ${box.name.padEnd(30)} ${ratio.toFixed(2)}:1  ` +
+          `${inkIsLight ? "peak" : "trough"} ${worst.toFixed(2)}`,
       );
     }
     if (verdict) failures.push(`${box.name} — ${verdict}`);
@@ -613,6 +723,8 @@ async function renderFormat(args: {
   slug: string;
   /** The filename without its extension. */
   stem: string;
+  /** The palette, so the gate knows which end of the histogram eats the ink. */
+  theme: PosterTheme;
   gate: boolean;
   previews: boolean;
 }): Promise<void> {
@@ -645,7 +757,7 @@ async function renderFormat(args: {
       .toBuffer();
   }
 
-  if (args.gate) await gate(base, layout.boxes, true);
+  if (args.gate) await gate(base, layout.boxes, args.theme, true);
 
   const composed = await sharp(base)
     .composite([{ input: renderLayer(layout.type) }])
@@ -699,6 +811,7 @@ async function main(): Promise<void> {
   const suffix = flag("suffix");
   const speaker = flag("speaker");
   const lineup = argv.includes("--lineup");
+  const light = argv.includes("--light");
   const runGate = !argv.includes("--no-gate");
   const only = flag("only")
     ?.split(",")
@@ -710,6 +823,7 @@ async function main(): Promise<void> {
       "Usage: npx tsx scripts/events/build-event-poster.ts <event-slug> --plate <file.png>\n" +
         `       [--only ${FORMATS.map((f) => f.key).join(",")}] [--suffix v2]\n` +
         "       [--accent '#rrggbb'] [--spark '#rrggbb'] [--strapline '...'] [--no-gate]\n" +
+        "       [--light]  dark ink on a pale ground — pair it with --suffix light\n" +
         "\n" +
         "  The speaker set, for the weeks before the event:\n" +
         "       [--speaker <name-slug>|all] [--role 'Panellist']\n" +
@@ -727,7 +841,7 @@ async function main(): Promise<void> {
   mkdirSync(path.join(EVENTS_ROOT, slug), { recursive: true });
 
   console.log(`${slug}\n  plate: ${plate}`);
-  const theme = themeFor(slug, {
+  const theme = themeFor(slug, light, {
     ...(flag("accent") ? { accent: flag("accent") as string } : {}),
     ...(flag("spark") ? { spark: flag("spark") as string } : {}),
   });
@@ -767,6 +881,7 @@ async function main(): Promise<void> {
       spec: format,
       layout: format.build(copy, theme),
       slug,
+      theme,
       // The slug is the directory now, not a filename prefix, so the name is
       // just the role: poster.webp, social.jpg, story.webp.
       stem: stem(format.key),
@@ -883,6 +998,7 @@ async function buildSpeakerSet(o: {
             spec: format,
             layout: format.build(o.copy, person, o.theme),
             slug: o.slug,
+            theme: o.theme,
             stem: o.stem(`speaker-${person.slug}-${format.key}`),
             gate: o.gate,
             previews: false,
@@ -914,6 +1030,7 @@ async function buildSpeakerSet(o: {
         spec: format,
         layout: format.build(o.copy, lineupCopy, o.theme),
         slug: o.slug,
+        theme: o.theme,
         stem: o.stem(`lineup-${format.key}`),
         gate: o.gate,
         previews: false,

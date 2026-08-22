@@ -277,11 +277,25 @@ async function generate(
  *
  * Same family as the one-`resize()` gotcha in `scripts/deck/build-keynote-plate.ts`.
  */
+/**
+ * Mean luminance of a horizontal band, and how uneven it is.
+ *
+ * THE SPREAD IS THE ONE THAT FAILS A BUILD, and it took a rejected poster to
+ * see it. A mean answers 'which ink does this plate want' — far below the
+ * midpoint wants white type, far above it wants dark. It cannot answer 'can a
+ * word be read here', because one specular highlight through a headline does
+ * not move an average and does make the word unreadable. The legibility gate in
+ * build-event-poster.ts measures the word; this measures the zone, so the two
+ * agree before an image is chosen rather than after it is built.
+ *
+ * Spread is p95 minus p05 off the luminance histogram rather than max minus
+ * min: a handful of stray pixels at either end is grain, not a highlight.
+ */
 async function bandLuminance(
   png: Buffer,
   top: number,
   bottom: number,
-): Promise<number> {
+): Promise<{ mean: number; spread: number }> {
   const meta = await sharp(png).metadata();
   const h = meta.height ?? 0;
   const y = Math.round(h * top);
@@ -296,7 +310,24 @@ async function bandLuminance(
 
   const stats = await sharp(band).stats();
   const [r, g, b] = stats.channels.map((c) => c.mean / 255);
-  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  const mean = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+
+  // A greyscale histogram is the cheapest honest read on evenness: the SVG
+  // scrim and the type both sit over luminance, not over hue.
+  const grey = await sharp(band).greyscale().raw().toBuffer();
+  const hist = new Array<number>(256).fill(0);
+  for (const v of grey) hist[v] += 1;
+  const at = (q: number): number => {
+    let seen = 0;
+    const target = grey.length * q;
+    for (let v = 0; v < 256; v += 1) {
+      seen += hist[v];
+      if (seen >= target) return v / 255;
+    }
+    return 1;
+  };
+
+  return { mean, spread: at(0.95) - at(0.05) };
 }
 
 /**
@@ -463,8 +494,8 @@ async function main(): Promise<void> {
       const meta = await sharp(bytes).metadata();
       const zones = await Promise.all(
         Object.entries(TYPE_ZONES).map(async ([name, z]) => {
-          const l = await bandLuminance(bytes, z.top, z.bottom);
-          return `${name} ${l.toFixed(3)}`;
+          const { mean, spread } = await bandLuminance(bytes, z.top, z.bottom);
+          return `${name} ${mean.toFixed(3)} ±${spread.toFixed(2)}`;
         }),
       );
       console.log(
@@ -482,7 +513,12 @@ async function main(): Promise<void> {
   }
 
   console.log(
-    "\nLower luminance under the type is better. Pick one, then:\n" +
+    `\nEach zone reads MEAN ±SPREAD.\n\n` +
+      `  MEAN says which ink the plate wants — well under 0.5 wants white type,\n` +
+      `  well over it wants dark. Neither is better; a plate need not be dark.\n\n` +
+      `  SPREAD is the one that fails a build. Under about 0.35 is calm; a mottled\n` +
+      `  zone averaging 0.20 still loses a word to a highlight no mean can see.\n\n` +
+      `Pick one, then:\n` +
       `  npx tsx scripts/events/build-event-poster.ts ${cli.slug} --plate <chosen>.png`,
   );
 }

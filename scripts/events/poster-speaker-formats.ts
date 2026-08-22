@@ -37,9 +37,9 @@
 import { COPY_LIMITS } from "@/lib/deck/lint";
 
 import {
-  INK,
   frame,
   lockup,
+  lockupBudget,
   pill,
   pillBox,
   washDefs,
@@ -355,8 +355,8 @@ function buildSpeakerStack(o: {
   const nameSize = Math.min(speaker.nameSize, fitDown(speaker.name, DISPLAY, column, 400));
   y = nextBaseline(y, gap.kickerToName, speaker.name, DISPLAY, nameSize);
   const nameLine = { x: o.x, y, text: speaker.name, family: DISPLAY, size: nameSize };
-  parts.push(textLine({ ...nameLine, fill: INK }));
-  boxes.push(boxFor("name", nameLine, INK));
+  parts.push(textLine({ ...nameLine, fill: theme.ink }));
+  boxes.push(boxFor("name", nameLine, theme.ink));
 
   /* The job title, WRAPPED rather than truncated.
      `lib/deck/event-source.ts` clamps this to `COPY_LIMITS.personRoleWords` for
@@ -378,8 +378,8 @@ function buildSpeakerStack(o: {
     for (const [i, text] of lines.entries()) {
       y = nextBaseline(y, i === 0 ? gap.nameToTitle : gap.titleLine, text, BODY, type.title);
       const line = { x: o.x, y, text, family: BODY, size: type.title };
-      parts.push(textLine({ ...line, fill: INK, opacity: 0.92 }));
-      boxes.push(boxFor("job title", line, INK));
+      parts.push(textLine({ ...line, fill: theme.ink, opacity: 0.92 }));
+      boxes.push(boxFor("job title", line, theme.ink));
     }
   }
 
@@ -387,13 +387,13 @@ function buildSpeakerStack(o: {
     const size = fitDown(speaker.company, BODY, column, type.company);
     y = nextBaseline(y, gap.titleToCompany, speaker.company, BODY, size);
     const line = { x: o.x, y, text: speaker.company, family: BODY, size };
-    parts.push(textLine({ ...line, fill: INK, opacity: 0.6 }));
-    boxes.push(boxFor("company", line, INK));
+    parts.push(textLine({ ...line, fill: theme.ink, opacity: 0.6 }));
+    boxes.push(boxFor("company", line, theme.ink));
   }
 
   y += gap.beforeRule;
   parts.push(
-    `<rect x="${o.x}" y="${y}" width="${column}" height="1.5" fill="${INK}" fill-opacity="0.2"/>`,
+    `<rect x="${o.x}" y="${y}" width="${column}" height="1.5" fill="${theme.ink}" fill-opacity="0.2"/>`,
   );
 
   /* The hook, in `spark`.
@@ -424,8 +424,8 @@ function buildSpeakerStack(o: {
       type.event,
     );
     const line = { x: o.x, y, text, family: DISPLAY, size: type.event };
-    parts.push(textLine({ ...line, fill: INK }));
-    boxes.push(boxFor(`event "${text}"`, line, INK));
+    parts.push(textLine({ ...line, fill: theme.ink }));
+    boxes.push(boxFor(`event "${text}"`, line, theme.ink));
   }
 
   /* When, and — where the format has room — where.
@@ -442,8 +442,8 @@ function buildSpeakerStack(o: {
     if (!text) continue;
     y = nextBaseline(y, i === 0 ? gap.eventToWhen : gap.factLine, text, BODY, factsSize);
     const line = { x: o.x, y, text, family: BODY, size: factsSize };
-    parts.push(textLine({ ...line, fill: INK, opacity }));
-    boxes.push(boxFor("facts", line, INK));
+    parts.push(textLine({ ...line, fill: theme.ink, opacity }));
+    boxes.push(boxFor("facts", line, theme.ink));
   }
 
   return { parts, boxes, height: y - o.y };
@@ -522,13 +522,14 @@ function assertClearOfDiscs(boxes: TextBox[], discs: Disc[]): void {
 
 /** Every box a format owes the safe-area check, type and chrome alike. */
 function chromeBoxes(
+  theme: PosterTheme,
   band: { y: number; logoHeight: number },
   pillRect: { top: number; height: number } | null,
 ): TextBox[] {
   const boxes: TextBox[] = [
     {
       name: "logo lockup",
-      ink: INK,
+      ink: theme.ink,
       left: 0,
       top: Math.round(band.y),
       width: 1,
@@ -538,7 +539,7 @@ function chromeBoxes(
   if (pillRect) {
     boxes.push({
       name: "RSVP pill",
-      ink: INK,
+      ink: theme.ink,
       left: 0,
       top: Math.round(pillRect.top),
       width: 1,
@@ -656,21 +657,35 @@ function speakerLayout(
     venue: g.venue,
   });
 
-  const mark = lockup(copy, g.margin, g.band.y, g.band.logo);
+  /* The band's width is shared with the call to action, so the pill is measured
+     BEFORE the lockup rather than after it. Two co-hosts and an RSVP pill add up
+     to more than the column on the narrower sizes, and nothing downstream would
+     notice: both are chrome, and every safe-area assert here walks TextBoxes. */
+  const bandPill = copy.hasRsvp ? pillBox("RSVP TODAY", g.band.pill) : null;
+  const mark = lockup(copy, theme, {
+    x: g.margin,
+    y: g.band.y,
+    sheSharpWidth: g.band.logo,
+    maxWidth: lockupBudget({
+      left: g.margin,
+      right: g.width - g.margin,
+      sheSharpWidth: g.band.logo,
+      pillWidth: bandPill?.width ?? 0,
+    }),
+  });
   const parts = [portraitRing(theme, cx, cy, r, g.ring), ...stack.parts, mark.markup];
 
   let pillRect: { top: number; height: number } | null = null;
-  if (copy.hasRsvp) {
-    const box = pillBox("RSVP TODAY", g.band.pill);
-    const y = g.band.y + (mark.height - box.height) / 2;
-    pillRect = { top: y, height: box.height };
+  if (bandPill) {
+    const y = g.band.y + (mark.height - bandPill.height) / 2;
+    pillRect = { top: y, height: bandPill.height };
     parts.push(pill("RSVP TODAY", theme, { right: g.width - g.margin, y, size: g.band.pill }));
   }
 
   assertClearOfDiscs(stack.boxes, [{ cx, cy, r }]);
   g.assert?.([
     ...stack.boxes,
-    ...chromeBoxes({ y: g.band.y, logoHeight: mark.height }, pillRect),
+    ...chromeBoxes(theme, { y: g.band.y, logoHeight: mark.height }, pillRect),
   ]);
 
   const scrim = `${washFor(theme, g)}
@@ -998,7 +1013,7 @@ function lineupLayout(copy: PosterCopy, group: LineupCopy, theme: PosterTheme): 
   for (const [i, text] of eventLines.entries()) {
     y = nextBaseline(y, i === 0 ? 42 : 10, text, DISPLAY, eventSize);
     const line = { x: M, y, text, family: DISPLAY, size: eventSize };
-    const ink = i > 0 ? theme.spark : INK;
+    const ink = i > 0 ? theme.spark : theme.ink;
     parts.push(textLine({ ...line, fill: ink }));
     boxes.push(boxFor(`event "${text}"`, line, ink));
   }
@@ -1080,7 +1095,7 @@ function lineupLayout(copy: PosterCopy, group: LineupCopy, theme: PosterTheme): 
         text: person.name,
         family: BODY,
         size: nameSize,
-        fill: INK,
+        fill: theme.ink,
         anchor: "middle",
       }),
     );
@@ -1088,7 +1103,7 @@ function lineupLayout(copy: PosterCopy, group: LineupCopy, theme: PosterTheme): 
       boxFor(
         `name ${person.name}`,
         { x: cx - nameWidth / 2, y: nameY, text: person.name, family: BODY, size: nameSize },
-        INK,
+        theme.ink,
       ),
     );
 
@@ -1103,7 +1118,7 @@ function lineupLayout(copy: PosterCopy, group: LineupCopy, theme: PosterTheme): 
           text: roleText,
           family: BODY,
           size: roleSize,
-          fill: INK,
+          fill: theme.ink,
           opacity: 0.68,
           anchor: "middle",
         }),
@@ -1112,7 +1127,7 @@ function lineupLayout(copy: PosterCopy, group: LineupCopy, theme: PosterTheme): 
         boxFor(
           `role ${person.name}`,
           { x: cx - roleWidth / 2, y: roleY, text: roleText, family: BODY, size: roleSize },
-          INK,
+          theme.ink,
         ),
       );
     }
@@ -1123,17 +1138,27 @@ function lineupLayout(copy: PosterCopy, group: LineupCopy, theme: PosterTheme): 
   const factsText = [copy.date, copy.time, copy.venue].filter(Boolean).join("   ·   ");
   const factsSize = fitDown(factsText, BODY, COL, 24);
   const factsLine = { x: M, y: factsBaseline, text: factsText, family: BODY, size: factsSize };
-  parts.push(textLine({ ...factsLine, fill: INK, opacity: 0.85 }));
-  boxes.push(boxFor("facts", factsLine, INK));
+  parts.push(textLine({ ...factsLine, fill: theme.ink, opacity: 0.85 }));
+  boxes.push(boxFor("facts", factsLine, theme.ink));
 
-  const mark = lockup(copy, M, bandY, 150);
+  const bandPill = copy.hasRsvp ? pillBox("RSVP TODAY", 32) : null;
+  const mark = lockup(copy, theme, {
+    x: M,
+    y: bandY,
+    sheSharpWidth: 150,
+    maxWidth: lockupBudget({
+      left: M,
+      right: W - M,
+      sheSharpWidth: 150,
+      pillWidth: bandPill?.width ?? 0,
+    }),
+  });
   parts.push(mark.markup);
-  if (copy.hasRsvp) {
-    const box = pillBox("RSVP TODAY", 32);
+  if (bandPill) {
     parts.push(
       pill("RSVP TODAY", theme, {
         right: W - M,
-        y: bandY + (mark.height - box.height) / 2,
+        y: bandY + (mark.height - bandPill.height) / 2,
         size: 32,
       }),
     );

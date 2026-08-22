@@ -70,6 +70,15 @@ jobs:
       - name: Verify the event lifecycle report
         run: npx tsx scripts/events/event-status.test.ts
 
+      # Also shares this checkout — pure regex against two hard-coded lists.
+      # An unreferenced image has two possible owners, the generated per-event
+      # manifest and KNOWN_UNREFERENCED, and they mean different things. A file
+      # claimed by both fails verify-image-paths as a stale allow-list entry —
+      # but only once its event is next rebuilt, so the branch that widens a
+      # pattern goes green and an unrelated branch weeks later goes red.
+      - name: Verify poster asset ownership
+        run: npx tsx scripts/events/poster-assets.test.ts
+
       # Also shares this checkout. The raw Humanitix exports carry 5,156 real
       # names and 124 live access codes, so they can never be on CI — which is
       # exactly why the committed archive needs a check that survives without
