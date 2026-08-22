@@ -2164,6 +2164,19 @@
           "You'll hear perspectives from experts across technology, change management, commercial strategy, and legal, before joining interactive table discussions on how individuals and organisations can drive positive change with AI. Whether you're a developer, marketer, lawyer, analyst, people leader, or simply curious about where AI is heading, this event is designed to challenge the idea that AI belongs to one department. The future of work will be shaped by people from every background — and we believe AI is now everyone's job. Come ready to learn, connect, and be inspired by the many pathways into the next generation of careers."
         ],
         "speakers": {
+          "hosts": {
+            "heading": "Your MC for the Evening",
+            "speakers": [
+              {
+                "name": "Chan Meng",
+                "title": "AI Lead and Website Team Lead",
+                "company": "She Sharp",
+                "bio": "Chan Meng is an AI Agent Architect and full-stack engineer in Auckland, working at the intersection of AI, cultural technology and women's health. As She Sharp's Website Team Lead she led the platform rebuild that now serves 3,500+ members, and she took the Outstanding Mentor Award at the 2025 AI Hackathon Festival. She has mentored 800+ women into tech, and she is your MC for the evening.",
+                "image": "/img/events/event-lesmills-03-september-2026/chan-meng.jpg",
+                "linkedin": "https://www.linkedin.com/in/chanmeng666/"
+              }
+            ]
+          },
           "panel_speakers": {
             "heading": "Meet the Panel",
             "speakers": [
