@@ -48,6 +48,7 @@ happened, **dormant** is a runbook for a state the site is not in.
 | `HUMANITIX_ARCHIVE.md` | The ticketing export: three tiers, and seven ways a number from it goes wrong | current |
 | `MAILCHIMP_ARCHIVE.md` | The `She#` audience export: 1,560 subscribed of 3,689, and the suppression register | current |
 | `MENTORSHIP_APPLICATIONS_PAUSED.md` | What was hidden on 2026-06-19 and the runbook to re-open | current — the pause is live |
+| `PHOTOGRAPHING_MINORS.md` | When a photograph of a child may be published, and the ten already published without a rule | current — two items await She Sharp's decision |
 | `PUBLIC_CLAIMS_PROVENANCE.md` | Which published figures have a record behind them and which do not | current |
 | `SITE_DATA_HISTORY.md` | Why pre-2023 event data is patchy — background, not rules | current |
 | `SLACK_INTEGRATION_GUIDE.md` | Setting up incoming webhooks and the notification code pattern | current |

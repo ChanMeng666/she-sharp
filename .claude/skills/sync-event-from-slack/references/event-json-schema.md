@@ -99,6 +99,8 @@ Each entry in `events` looks like:
 | `specialSections` | Always include both `agenda` (= "What You'll Learn") and `why-attend` if the source content has them. Never build a "Registration" section that lists access/promo codes — keep concessions generic and point to the official channel. |
 | `registrationUrl` | Public registration base URL only. Strip `?accesscode=...` (internal distribution) and never substitute a private invite/checkout link. See "No internal codes" below. |
 | `status` | `"upcoming"` before the event, `"past"` after. |
+| `detailPageData.photos[]` | **Curated by hand after the event, not harvested from the channel.** Each entry is `{ url, alt }`, ordered so the page reads as the day in sequence. `photos[0]` is the featured hero above the grid AND the album-card cover on `/resources/photo-gallery`, so it is the one frame whose position matters most. A shoot large enough to be worth curating is triaged outside this skill — see UPDATE rule 6. |
+| `detailPageData.photoCredit` | Optional. One line under the gallery grid, e.g. `"Photography by VISIONWORKS"` — a studio, never per-photo and never a She Sharp volunteer’s name. Set it when a paid photographer shot the event; omit it otherwise. |
 | `isFeatured` | `false` by default. Set `true` only if the user explicitly asks. |
 | `category` | Use the closest of `"workshop"`, `"panel"`, `"networking"`, `"fireside-chat"`, `"hackathon"`, `"conference"`. |
 
@@ -164,6 +166,14 @@ Rules, applied in order:
    skill (post-event reconciliation) — never overwrite on re-sync.
 5. `subtitle` is usually editor-curated; keep existing unless empty
    or clearly referring to the wrong event.
+6. `photos[]` and `photoCredit` are curated outside this skill and are
+   **never** rebuilt from the channel. A post-event planning channel is full
+   of photographs, which makes this the easiest field on the record to
+   destroy by accident: the hackathon's set is 24 frames chosen from 377,
+   ordered as a narrative, each one perceptual-hashed against the others so
+   the same moment is not published twice. Re-harvesting would replace that
+   with whatever happened to be posted. Append a genuinely new photograph if
+   the channel has one the page lacks; otherwise leave the array alone.
 
 The point of re-syncing is to let genuinely new information flow
 into the site. It is not to re-render already-polished copy.
