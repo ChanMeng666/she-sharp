@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { LegalPageLayout } from "@/components/legal-page-layout";
+import { ACCESSIBILITY_EMAIL } from "@/lib/config/contact-addresses";
 import "@/styles/components/legal-page.css";
 
 export const metadata: Metadata = {
@@ -104,12 +105,12 @@ export default function AccessibilityPage() {
             <li>Your contact information</li>
           </ul>
           <p>
-            <strong>Email:</strong> <a href="mailto:accessibility@shesharp.org.nz">accessibility@shesharp.org.nz</a>
+            <strong>Email:</strong> <a href={`mailto:${ACCESSIBILITY_EMAIL}`}>{ACCESSIBILITY_EMAIL}</a>
           </p>
 
           <h3>Our Promise</h3>
           <ul>
-            <li>Response within 2 business days</li>
+            <li>Response within 5 business days</li>
             <li>Regular accessibility audits</li>
             <li>Ongoing staff training</li>
             <li>User feedback implementation</li>

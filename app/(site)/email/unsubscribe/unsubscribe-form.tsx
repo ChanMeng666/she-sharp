@@ -1,5 +1,6 @@
 "use client";
 
+import { GENERAL_EMAIL } from "@/lib/config/contact-addresses";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -50,8 +51,8 @@ export function UnsubscribeForm({ token }: { token: string }) {
       {status === "error" && (
         <p className="mt-4 text-sm text-destructive">
           That did not work. The link may have expired. Please email{" "}
-          <a className="underline" href="mailto:hello@shesharp.org.nz">
-            hello@shesharp.org.nz
+          <a className="underline" href={`mailto:${GENERAL_EMAIL}`}>
+            {GENERAL_EMAIL}
           </a>{" "}
           and we will remove you manually.
         </p>

@@ -51,7 +51,7 @@ ahead" it sends no email (`resend … --dry-run`), writes nothing to the databas
 | Which rows to answer? | Every replyable row not already answered in Slack |
 | What should the reply say? | **Ask.** Never assume — see Step 3 |
 | Who is signing? | "The She Sharp team" — never a named individual |
-| Which mailbox? | `She Sharp <hello@shesharp.org.nz>`, Reply-To per the table in `references/reply-voice-and-templates.md` (which must match `lib/email/senders.ts` — the `from-identity` and `reply-to-domain` gates enforce it) |
+| Which mailbox? | `She Sharp <info@shesharp.org.nz>`, Reply-To per the table in `references/reply-voice-and-templates.md` (which must match `lib/email/senders.ts` — the `from-identity` and `reply-to-domain` gates enforce it) |
 | The vendor pitches — bin them? | **Ask.** Never decide this for the user |
 | One reply, or the whole queue? | One at a time, newest first, a plan block per reply |
 
@@ -167,7 +167,7 @@ Write the draft as a `MessageSpec` JSON at `tmp/specs/contact-reply-<id>.json`
   "key": "contact-reply-9",
   "engine": "layout",
   "category": "transactional",
-  "from": "She Sharp <hello@shesharp.org.nz>",
+  "from": "She Sharp <info@shesharp.org.nz>",
   "replyTo": "mentoring@shesharp.org.nz",
   "subject": "Re: your message about our mentoring programme",
   "preheader": "A quick answer about where the programme is up to.",
@@ -218,7 +218,7 @@ Email gates — 3.1KB rendered
 
 Next — dry-run the send (no API call):
 resend emails send `
-  --from "She Sharp <hello@shesharp.org.nz>" `
+  --from "She Sharp <info@shesharp.org.nz>" `
   --to <RECIPIENT> `
   --reply-to "mentoring@shesharp.org.nz" `
   --subject "Re: your message about our mentoring programme" `
@@ -269,7 +269,7 @@ Show this exact block, one per reply:
 Submission  : #9 — Mahsa Shoja <shojamahsa87@gmail.com>
 Kind        : general (matched to Slack thread 1753000000.000100)
 Subject     : Re: your message about our mentoring programme
-From        : She Sharp <hello@shesharp.org.nz>
+From        : She Sharp <info@shesharp.org.nz>
 Reply-To    : mentoring@shesharp.org.nz
 Body        : 3 paragraphs + 1 button → https://www.shesharp.org.nz/mentorship
 Render      : tmp/emails/contact-reply-9.broadcast.html (3.1KB, all gates passed)
@@ -369,8 +369,8 @@ gate** — never read it to decide whether to send. Then report:
 
 ```
 Replied to 2 of 7 pending enquiries.
-  #9  Mahsa Shoja  mentoring  hello@ / reply-to mentoring@  resend re_abc123
-  #10 May Li       general    hello@ / reply-to hello@      resend re_def456
+  #9  Mahsa Shoja  mentoring  info@ / reply-to mentoring@  resend re_abc123
+  #10 May Li       general    info@ / reply-to info@       resend re_def456
 Closed without an email: #5 QA test row · #8 answered by Sarah in Slack, 12 Jul
 Still open (your call): #7, #11 vendor pitches — decline or ignore?
                         #6 needs to know whether we run beginner workshops

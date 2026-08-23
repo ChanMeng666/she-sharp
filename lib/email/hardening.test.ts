@@ -61,6 +61,9 @@ function listUnsubscribe(url: string, mailto?: string): string {
 const UNSUB_URL = "https://www.shesharp.org.nz/api/email/unsubscribe?t=abc";
 check("one-click URL alone is the default (no unverified mailto)", listUnsubscribe(UNSUB_URL) === `<${UNSUB_URL}>`);
 check("no mailto: appears unless one is configured", !listUnsubscribe(UNSUB_URL).includes("mailto:"));
+// A fixture, not a recommendation: unsub@ was probed on 2026-08-23 and does not
+// exist, which is why EMAIL_UNSUBSCRIBE_MAILTO stays unset. This checks the
+// header assembly for the day a real mailbox is created.
 check("a configured mailto is appended, not substituted", listUnsubscribe(UNSUB_URL, "unsub@shesharp.org.nz") === `<${UNSUB_URL}>, <mailto:unsub@shesharp.org.nz>`);
 
 // --- Sender identities -----------------------------------------------------
@@ -68,8 +71,11 @@ check("a configured mailto is appended, not substituted", listUnsubscribe(UNSUB_
 // The newsletter has gone out from newsletter@ via Mailchimp for years; keeping
 // that identity across the move to Resend is the whole deliverability argument.
 check("marketing sends from newsletter@ (Mailchimp continuity)", getSenderIdentity("marketing").from === "She Sharp <newsletter@shesharp.org.nz>");
-check("marketing Reply-To matches the live Mailchimp send", getSenderIdentity("marketing").replyTo === "newsletter@shesharp.org.nz");
-check("hello@ stays an approved sender for 1:1 mail", isApprovedSender("She Sharp <hello@shesharp.org.nz>"));
+// The From keeps the Mailchimp identity; the Reply-To must not. newsletter@
+// accepts mail but nobody on the team had its password as of August 2026, so a
+// subscriber pressing Reply was writing into a mailbox no one opens.
+check("marketing Reply-To is a monitored inbox, not newsletter@", getSenderIdentity("marketing").replyTo === "info@shesharp.org.nz");
+check("info@ is the approved sender for 1:1 mail", isApprovedSender("She Sharp <info@shesharp.org.nz>"));
 check("transactional sends from noreply@", getSenderIdentity("transactional").from.includes("noreply@shesharp.org.nz"));
 check("every stream sets a Reply-To", (["transactional", "notification", "marketing", "internal"] as const).every((s) => getSenderIdentity(s).replyTo.length > 0));
 
@@ -78,8 +84,16 @@ check("EMAIL_FROM overrides the transactional From", getSenderIdentity("transact
 check("EMAIL_FROM does NOT reach marketing (the noreply@ newsletter bug)", getSenderIdentity("marketing").from.includes("newsletter@"));
 delete process.env.EMAIL_FROM;
 
-check("a lookalike domain is not an approved sender", !isApprovedSender("She Sharp <hello@shesharp.co.nz>"));
-check("an approved sender is recognised with a display name", isApprovedSender("She Sharp <hello@shesharp.org.nz>"));
+check("a lookalike domain is not an approved sender", !isApprovedSender("She Sharp <info@shesharp.co.nz>"));
+check("an approved sender is recognised with a display name", isApprovedSender("She Sharp <info@shesharp.org.nz>"));
+
+// Every Reply-To must be a mailbox somebody actually opens. Passing the
+// domain check only proves the address is spelled on the right domain; eight
+// addresses that passed it turned out never to have been created. The set
+// below is the one the 2026-08-23 delivery probe confirmed.
+const MONITORED = ["info", "mentoring", "industry", "events", "website"].map((local) => `${local}@shesharp.org.nz`);
+check("no stream replies into newsletter@", (["transactional", "notification", "marketing", "internal"] as const).every((s) => getSenderIdentity(s).replyTo !== "newsletter@shesharp.org.nz"));
+check("every Reply-To is a monitored mailbox", (["transactional", "notification", "marketing", "internal"] as const).every((s) => MONITORED.includes(getSenderIdentity(s).replyTo)));
 
 // --- Gates -----------------------------------------------------------------
 
@@ -89,7 +103,7 @@ function spec(overrides: Partial<MessageSpec> = {}): MessageSpec {
     key: "gate-test",
     engine: "layout",
     category: "transactional",
-    from: "She Sharp <hello@shesharp.org.nz>",
+    from: "She Sharp <info@shesharp.org.nz>",
     replyTo: "mentoring@shesharp.org.nz",
     subject: "Short subject",
     title: "Hello",
@@ -107,9 +121,12 @@ function gateIds(candidate: MessageSpec): string[] {
 }
 
 check("a clean spec passes", runEmailGates(HTML, "x", spec(), { mode: "broadcast" }).ok);
-check("a lookalike From domain is blocked", gateIds(spec({ from: "She Sharp <hello@shesharp.co.nz>" })).includes("from-identity"));
+check("a lookalike From domain is blocked", gateIds(spec({ from: "She Sharp <info@shesharp.co.nz>" })).includes("from-identity"));
+// hello@ specifically, because it was a real From in this repo until the
+// delivery probe showed the mailbox had never existed. This is the regression.
+check("the retired hello@ is blocked as a sender", gateIds(spec({ from: "She Sharp <hello@shesharp.org.nz>" })).includes("from-identity"));
 check("an unapproved local-part is blocked", gateIds(spec({ from: "She Sharp <random@shesharp.org.nz>" })).includes("from-identity"));
-check("from-identity blocks rather than warns", runEmailGates(HTML, "x", spec({ from: "hello@shesharp.co.nz" }), { mode: "broadcast" }).failures.some((f) => f.id === "from-identity"));
+check("from-identity blocks rather than warns", runEmailGates(HTML, "x", spec({ from: "info@shesharp.co.nz" }), { mode: "broadcast" }).failures.some((f) => f.id === "from-identity"));
 check("an external Reply-To is blocked", gateIds(spec({ replyTo: "volunteer@gmail.com" })).includes("reply-to-domain"));
 check("a tag value with a space is blocked", gateIds(spec({ tags: [{ name: "stream", value: "event promo!" }] })).includes("tag-charset"));
 check("a valid tag value is allowed", !gateIds(spec({ tags: [{ name: "stream", value: "marketing" }] })).includes("tag-charset"));

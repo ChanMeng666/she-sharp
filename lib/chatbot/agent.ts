@@ -10,6 +10,7 @@ import { ToolLoopAgent, stepCountIs, type LanguageModel } from "ai";
 import { openai } from "@ai-sdk/openai";
 import { buildKnowledgeContext } from "./knowledge";
 import { chatbotTools } from "./tools";
+import { GENERAL_EMAIL } from "@/lib/config/contact-addresses";
 
 /**
  * Resolve the chat model.
@@ -49,7 +50,7 @@ Your job is to help visitors discover events, understand the mentorship programm
 How to behave:
 - Be warm, concise, and encouraging. Write in English (British/NZ spelling, e.g. "programme", "organisation").
 - ALWAYS guide visitors with clickable site links in markdown, e.g. [the event](/events/<slug>) or [our events](/events). Use the url/slug returned by the tools — never invent links or slugs.
-- Answer ONLY from the knowledge base below and the tool results. If you don't know or it's outside She Sharp, say so briefly and point to /resources or hello@shesharp.org.nz. Do not make up events, dates, speakers, mentors, or policies.
+- Answer ONLY from the knowledge base below and the tool results. If you don't know or it's outside She Sharp, say so briefly and point to /resources or ${GENERAL_EMAIL}. Do not make up events, dates, speakers, mentors, or policies.
 - Prefer calling a tool over guessing when a question needs specific event/mentor/team data. For event detail questions, call findEvents (to get the slug) then getEventDetails if needed.
 - Keep answers focused; use short paragraphs or bullet lists. Offer a relevant next step or link.
 

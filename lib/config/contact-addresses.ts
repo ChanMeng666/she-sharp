@@ -7,17 +7,37 @@
  * used as a From address, and nothing in senders.ts should be printed on a
  * page as somewhere to write to.
  *
- * Until now these were typed literally into whichever page needed one, which is
- * how `industry@` — the organisation's sponsorship address since 2023, and
- * re-confirmed in 2026 — ended up published nowhere at all while sixteen other
- * addresses were scattered across the codebase.
+ * **Every address here has been proved to accept mail.** On 2026-08-23 a
+ * delivery probe sent one message to each candidate through Resend and read the
+ * result back; `scripts/email/probe-mailboxes.ts` reruns it. Before that probe
+ * this file exported eight addresses that did not exist — `hello@`, `conduct@`,
+ * `governance@`, `security@`, `support@`, `privacy@`, `accessibility@` and
+ * `legal@` — every one of which hard-bounced. They had been invented by page
+ * templates in 2025 and never created in Google Workspace, and they appear
+ * nowhere in eleven years of the organisation's Slack history. On 2026-08-13
+ * an external correspondent reported, through the contact form, that mail to
+ * She Sharp had bounced back; she did not say which address, so that is a
+ * symptom rather than proof. `docs/development/EMAIL_ADDRESSES.md` holds the
+ * evidence that matters.
+ *
+ * Several constants below now share a value. That is deliberate: the *name*
+ * records where the organisation wants that traffic to go one day, so standing
+ * a real mailbox up later is a one-line change here rather than a hunt through
+ * the pages. Do not collapse them.
  *
  * A full inventory, including the internal-only and DNS-reporting addresses,
  * is in `docs/development/EMAIL_ADDRESSES.md`.
  */
 
-/** General enquiries. The address the contact page and the chatbot give out. */
-export const GENERAL_EMAIL = "hello@shesharp.org.nz";
+/**
+ * General enquiries — the organisation's front door.
+ *
+ * The only mailbox anyone has ever confirmed a human opens: asked directly in
+ * October 2025 whether she read it, the volunteer holding it answered "once or
+ * twice a week, not daily". It is also the address printed on She Sharp's
+ * business cards, so it is what people already use.
+ */
+export const GENERAL_EMAIL = "info@shesharp.org.nz";
 
 /**
  * Sponsorship and industry partnership enquiries.
@@ -28,27 +48,60 @@ export const GENERAL_EMAIL = "hello@shesharp.org.nz";
  */
 export const SPONSORSHIP_EMAIL = "industry@shesharp.org.nz";
 
-/** Anything about the mentorship programme — not `info@`, which is general. */
+/** Anything about the mentorship programme — not the general inbox. */
 export const MENTORSHIP_EMAIL = "mentoring@shesharp.org.nz";
 
 /**
- * Code of conduct reports. Deliberately separate and deliberately private: it
- * is the route for someone who had a bad experience and should not have to
- * raise it in a public channel or attached to their name on a feedback form.
+ * Attendee questions about a specific event.
+ *
+ * The address every event email has printed for years ("reach out to us at
+ * events@"), and the login on the ticketing account. It was missing from this
+ * site entirely until 2026-08.
  */
-export const CONDUCT_EMAIL = "conduct@shesharp.org.nz";
+export const EVENTS_EMAIL = "events@shesharp.org.nz";
 
-/** Trustee and governance matters. */
-export const GOVERNANCE_EMAIL = "governance@shesharp.org.nz";
+/** Volunteer, ambassador and committee applications. */
+export const PEOPLE_EMAIL = "people@shesharp.org.nz";
 
-/** Security disclosures — see `/security-policy`. */
-export const SECURITY_EMAIL = "security@shesharp.org.nz";
+/**
+ * Code of conduct reports.
+ *
+ * **This is the weakest link on the site and it is deliberate, not an
+ * oversight.** A report of this kind should reach a small, named, accountable
+ * group — not a shared inbox several volunteers can open. `conduct@` was
+ * supposed to be that group; it never existed. Until one is created this points
+ * at the general inbox, because an address that is read weekly is still
+ * strictly better than one that bounces. Standing up a real `conduct@` as a
+ * restricted group is the first item on
+ * `docs/deployment/WORKSPACE_MAILBOX_CHECKLIST.md`; the day it exists, change
+ * this line and nothing else.
+ */
+export const CONDUCT_EMAIL = "info@shesharp.org.nz";
 
-/** Privacy requests — see `/privacy-policy` and `/cookie-policy`. */
-export const PRIVACY_EMAIL = "privacy@shesharp.org.nz";
+/** Trustee and governance matters — records, not confidential reports. */
+export const GOVERNANCE_EMAIL = "info@shesharp.org.nz";
+
+/**
+ * Security disclosures — see `/security-policy`.
+ *
+ * Points at the website mailbox rather than the general inbox because a
+ * vulnerability report needs a reader who can triage it. This one is read by
+ * the founder and the site developer, and is the Google account behind Resend
+ * and the old Webflow site.
+ */
+export const SECURITY_EMAIL = "website@shesharp.org.nz";
+
+/**
+ * Privacy requests, including the photograph-removal route carried on every
+ * event page — see `docs/development/PHOTOGRAPHING_MINORS.md`.
+ *
+ * That route is a published commitment, so it cannot sit on an address that
+ * bounces, which is what `privacy@` was doing when the notice shipped.
+ */
+export const PRIVACY_EMAIL = "info@shesharp.org.nz";
 
 /** Accessibility feedback — see `/accessibility`. */
-export const ACCESSIBILITY_EMAIL = "accessibility@shesharp.org.nz";
+export const ACCESSIBILITY_EMAIL = "info@shesharp.org.nz";
 
 /** Legal notices — see `/terms-of-service`. */
-export const LEGAL_EMAIL = "legal@shesharp.org.nz";
+export const LEGAL_EMAIL = "info@shesharp.org.nz";

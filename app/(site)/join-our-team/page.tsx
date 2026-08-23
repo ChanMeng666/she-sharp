@@ -9,6 +9,7 @@ import {
   joinTeamStats,
   joinTeamContent,
 } from "@/lib/data/join-team";
+import { PEOPLE_EMAIL } from "@/lib/config/contact-addresses";
 
 export const metadata: Metadata = {
   title: "Join Our Team",
@@ -40,6 +41,19 @@ export default function JoinOurTeamPage() {
       />
 
       <JoinTeamTestimonialsSection />
+
+      <div className="mx-auto max-w-3xl px-6 pb-16 md:pb-24 text-center">
+        <p className="text-sm text-muted-foreground leading-relaxed">
+          Would rather just send us your CV? Email{" "}
+          <a
+            href={`mailto:${PEOPLE_EMAIL}`}
+            className="underline hover:text-brand"
+          >
+            {PEOPLE_EMAIL}
+          </a>
+          .
+        </p>
+      </div>
     </section>
   );
 }

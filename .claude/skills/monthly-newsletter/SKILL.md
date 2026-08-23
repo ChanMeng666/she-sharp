@@ -345,11 +345,16 @@ recipients — that is the pre-agreed trigger to move marketing onto a separate
 alone. Background: `docs/deployment/EMAIL_AUTHENTICATION.md`.
 
 The newsletter sends from **`She Sharp <newsletter@shesharp.org.nz>`** (the
-`marketing` identity in `lib/email/senders.ts`), From and Reply-To both — byte
-for byte what Mailchimp has been sending for years. **Do not change it.**
-Preserving the visible sender is what carries the address's reputation across
-the Mailchimp → Resend migration. If you see `noreply@` or `hello@` anywhere in
-the approve path, that is a regression.
+`marketing` identity in `lib/email/senders.ts`) — byte for byte the visible
+sender Mailchimp has been using for years. **Do not change the From.**
+Preserving it is what carries the address's reputation across the
+Mailchimp → Resend migration. If you see `noreply@` or `hello@` as the From
+anywhere in the approve path, that is a regression.
+
+The **Reply-To is `info@shesharp.org.nz`**, and that difference is deliberate.
+`newsletter@` accepts mail, but as of August 2026 nobody on the team had its
+password and a direct "does anyone read this inbox?" in Slack went unanswered,
+so every subscriber who pressed Reply was writing into nothing.
 
 ```powershell
 $env:BASE_URL="https://www.shesharp.org.nz"; $env:CRON_SECRET="…"

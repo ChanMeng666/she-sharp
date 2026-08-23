@@ -382,7 +382,7 @@ The last-but-one column is the assistant's guess at what kind of message it is:
 |---|---|
 | Which messages to answer? | It starts with the ones nobody has answered |
 | What should the reply say? | **It will ask, and it should.** Give it the gist — full sentences are not needed |
-| Which mailbox is it from? | `hello@shesharp.org.nz`, with mentoring questions replying to `mentoring@` |
+| Which mailbox is it from? | `info@shesharp.org.nz`, with mentoring questions replying to `mentoring@` and sponsorship to `industry@` |
 | Should it note "replied" in Slack? | Yes |
 
 **How to give it the gist.** You do not write the email. You tell it what is

@@ -1384,7 +1384,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **Website**: [https://www.shesharp.org.nz/](https://www.shesharp.org.nz/)
 - **Repository**: [https://github.com/NZ-SheSharp/she-sharp](https://github.com/NZ-SheSharp/she-sharp)
-- **Email**: info@shesharp.org
+- **Email**: info@shesharp.org.nz
 - **LinkedIn**: [She Sharp LinkedIn](https://linkedin.com/company/shesharp)
 - **Twitter**: [@SheSharpOrg](https://twitter.com/shesharporg)
 

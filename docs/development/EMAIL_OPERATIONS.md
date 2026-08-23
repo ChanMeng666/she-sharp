@@ -20,7 +20,8 @@
 - `sendEmail()` (`lib/email/service.ts`) takes `stream`, defaulting to `transactional`. It resolves From/Reply-To, attaches one-click unsubscribe headers for `notification` only, tags every send `stream:<name>` for per-stream Resend analytics, and checks `email_optouts` **only** for `notification` — a suppressed address must still receive a password reset.
 - `EMAIL_FROM` overrides the **transactional** From only. Letting it reach marketing is what previously sent the monthly newsletter from `noreply@` while its own footer said "just hit reply".
 - **`newsletter@` is a continuity decision, not a preference.** The live newsletter still goes out via **Mailchimp** from `She Sharp <newsletter@shesharp.org.nz>` (DKIM `k2`/`k3._domainkey` → `dkim*.mcsv.net`). The founder wants to replace Mailchimp with Resend *to improve deliverability*, so the visible sender must not change across that move — see the Mailchimp → Resend section in the deployment doc, especially the list-hygiene warning (Mailchimp's years of bounce/unsubscribe suppression are **not** in the subscriber CSV export) and the rule to do the ESP migration and the DMARC tightening in **separate months**.
-- `hello@` remains an approved sender but is for **1:1** mail only (contact replies, event fulfilment). List mail uses `newsletter@`.
+- `info@` is the approved sender for **1:1** mail only (contact replies, event fulfilment). List mail uses `newsletter@`. It replaced `hello@` on 2026-08-23, when a delivery probe found `hello@` had never been created — note that sending *as* a non-existent address works fine, because Resend signs at the domain; what breaks is the recipient pressing Reply.
+- **`newsletter@` is never a Reply-To.** It accepts mail, but nobody on the team had its password as of 2026-08-17 and a direct question in Slack about whether anyone read it went unanswered. The `marketing` Reply-To is `info@`; the From stays `newsletter@` for the reason above.
 - **One-click unsubscribe**: `lib/email/unsubscribe-token.ts` (stateless HMAC over the email *hash*, never the address) → `app/api/email/unsubscribe/route.ts`. POST is unauthenticated and must return a bare 200 (providers treat 3xx as failure); **GET must never mutate** — link scanners prefetch it.
 - **Bounces/complaints**: `app/api/webhooks/resend/route.ts` verifies Svix signatures by hand (`lib/email/webhook-verify.ts`, no `svix` dependency) and writes `email_optouts`; complaints also post to Slack. Needs `RESEND_WEBHOOK_SECRET`.
 - **Two suppression stores, one join key**: `email_optouts` (runtime) and `lib/data/json/email-suppression-hashes.json` (committed, read by the offline scripts) both key on `hashEmail()` from `lib/email/hash.ts`. Reconcile monthly with `npx tsx scripts/email/suppression.ts sync`.
@@ -29,9 +30,9 @@
 
 ### The one blocker on DMARC
 
-Enabling Google DKIM needs **Google Workspace super-admin**, and `website@shesharp.org.nz` (the maintainer's account) **cannot open `admin.google.com`**. Without it, **do not go past `p=quarantine`** — at `p=reject` a forwarded message from `hello@` is destroyed rather than filed in Junk, with no bounce and no way to find out. Stopping permanently at quarantine is a defensible end state; `docs/deployment/EMAIL_AUTHENTICATION.md` has the exact request to send an admin.
+Enabling Google DKIM needs **Google Workspace super-admin**, and `website@shesharp.org.nz` (the maintainer's account) **cannot open `admin.google.com`**. Without it, **do not go past `p=quarantine`** — at `p=reject` a forwarded message from a team mailbox is destroyed rather than filed in Junk, with no bounce and no way to find out. Stopping permanently at quarantine is a defensible end state; `docs/deployment/EMAIL_AUTHENTICATION.md` has the exact request to send an admin.
 
-What does **not** need a mailbox login: sending *as* `hello@`/`newsletter@` (Resend signs at the domain level), Reply-To to team inboxes (the point is that replies reach the team, not the maintainer), and DMARC report collection (Cloudflare receives on its own domain).
+What does **not** need a mailbox login: sending *as* `info@`/`newsletter@` (Resend signs at the domain level), Reply-To to team inboxes (the point is that replies reach the team, not the maintainer), and DMARC report collection (Cloudflare receives on its own domain).
 
 ## Monthly newsletter
 
@@ -73,6 +74,13 @@ Four guided skills let non-technical teammates send email without writing code. 
 
 ## Email addresses and routing
 
-`industry@` for sponsorship, `mentoring@` for the mentorship programme, `hello@`
-for general. Held in `lib/config/contact-addresses.ts`; full list and rationale
-in `docs/development/EMAIL_ADDRESSES.md`.
+`industry@` for sponsorship, `mentoring@` for the mentorship programme,
+`events@` for a specific event, `people@` for applications, `info@` for
+everything else. Held in `lib/config/contact-addresses.ts`.
+
+**Publish nothing that is not in that file.** On 2026-08-23 a delivery probe
+found that seven of the eleven addresses this site published had never been
+created and hard-bounced everything sent to them; they had been invented by
+page templates in 2025. The evidence, the replacements and the rerun command
+are in `docs/development/EMAIL_ADDRESSES.md`, and the part only the Workspace
+super-admin can fix is in `docs/deployment/WORKSPACE_MAILBOX_CHECKLIST.md`.

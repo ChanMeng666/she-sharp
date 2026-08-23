@@ -43,8 +43,8 @@ The She Sharp team
 ```
 
 The layout footer already carries the contact address, logo and copyright —
-don't repeat them. From `She Sharp <hello@shesharp.org.nz>`, Reply-To
-`hello@shesharp.org.nz` unless the user names another mailbox.
+don't repeat them. From `She Sharp <info@shesharp.org.nz>`, Reply-To
+`events@shesharp.org.nz` unless the user names another mailbox.
 
 `shesharp.org.nz` receives mail through Google Workspace, so its aliases are
 real inboxes — the "receiving disabled" line in `resend domains list` only means

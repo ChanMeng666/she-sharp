@@ -139,12 +139,16 @@ The wording is live, not a draft, and it went out as three surfaces:
 | "Photographs at Our Events" | `app/privacy-policy/page.tsx` |
 | "Photography" | `app/code-of-conduct/page.tsx` |
 
-All three route removal requests to `privacy@shesharp.org.nz`
-(`PRIVACY_EMAIL` in `lib/config/contact-addresses.ts`), which
-`EMAIL_ADDRESSES.md` designates for privacy requests. The privacy page's older
-sections still say `info@`, which that same table marks as legacy — an
-inconsistency that predates this and is worth tidying, but not silently, since
-someone may be watching the old address.
+All three route removal requests to `PRIVACY_EMAIL` in
+`lib/config/contact-addresses.ts`, which is **`info@shesharp.org.nz`**.
+
+It was `privacy@shesharp.org.nz` when this notice shipped, and that address did
+not exist. A delivery probe on 2026-08-23 established that it had never been
+created: a parent asking for a photograph of their child to be taken down would
+have received a bounce, from a page telling them the route was there. The
+inconsistency this section used to describe — the privacy page's older sections
+saying `info@` while the newer ones said `privacy@` — turns out to have been
+the older sections being right. Both now resolve through the constant.
 
 The event-page notice **is a notice and a removal route, not a consent
 mechanism**, and it says so in its own source. It tells an attendee three
@@ -154,9 +158,12 @@ can be taken down.
 
 **What the removal promise now obligates.** This is the part with a cost:
 
-1. Someone has to actually monitor `privacy@`. `EMAIL_ADDRESSES.md` is explicit
-   that which mailboxes are monitored "is an organisational question" — it is
-   now a published commitment for this one.
+1. Someone has to actually monitor the address. This was written when
+   `EMAIL_ADDRESSES.md` still said that which mailboxes are monitored "is an
+   organisational question" and left it there; the August 2026 audit answered
+   the question and this route was the worst thing it found. `info@` is opened
+   about once or twice a week, which is a real answer rather than a good one —
+   see `docs/deployment/WORKSPACE_MAILBOX_CHECKLIST.md`.
 2. Removal is **not a click**. `/img/*` is served `max-age=31536000, immutable`,
    so a frame cannot be swapped at its own URL: the entry comes out of
    `detailPageData.photos[]` (or `curated-picks.json`, or

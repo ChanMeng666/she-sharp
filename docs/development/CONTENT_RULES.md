@@ -97,8 +97,10 @@ source behind them is in `docs/development/PUBLIC_CLAIMS_PROVENANCE.md`.
   logo; co-branded order is AUT → She Sharp → AI Forum; use the version
   without the word UNIVERSITY.
 - **Contact routing**: `industry@` for sponsorship, `mentoring@` for the
-  mentorship programme, `hello@` for general. See
-  `lib/config/contact-addresses.ts` and `docs/development/EMAIL_ADDRESSES.md`.
+  mentorship programme, `events@` for a specific event, `info@` for general.
+  **Never publish an address that is not in `lib/config/contact-addresses.ts`**
+  — seven that were not spent up to a year on the live site bouncing everything
+  sent to them. See `docs/development/EMAIL_ADDRESSES.md`.
 - **A Google Form with a file-upload question always forces a Google sign-in**
   and cannot be embedded. This has caught the organisation twice.
 - **Website requests belong in `#website-team`, not DMs** — restated twice in

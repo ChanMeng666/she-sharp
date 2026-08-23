@@ -349,7 +349,7 @@ function gatePreheader(spec: MessageSpec): GateResult[] {
  * from-identity — a From this organisation is not authorised to send as.
  *
  * The highest-value gate once the domain reaches DMARC `p=reject`: a typo such
- * as `hello@shesharp.co.nz` fails alignment and is discarded by the receiver
+ * as `info@shesharp.co.nz` fails alignment and is discarded by the receiver
  * with no bounce and no error, so the send looks successful and simply never
  * arrives. Catching it here turns a silent loss into a blocked send.
  */
@@ -386,7 +386,7 @@ function gateReplyToDomain(spec: MessageSpec): GateResult[] {
       level: "fail",
       message:
         `Reply-To "${spec.replyTo}" is not on ${SENDING_DOMAIN}. Route replies ` +
-        `to a team mailbox (hello@, mentoring@, website@) instead.`,
+        `to a team mailbox (info@, mentoring@, website@) instead.`,
     },
   ];
 }

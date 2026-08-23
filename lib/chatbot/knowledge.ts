@@ -16,6 +16,7 @@ import { getUpcomingEvents, formatEventDate } from "@/lib/data/events";
 import { teamMembers } from "@/lib/data/team";
 import { globalStats } from "@/lib/data/stats";
 import { isMentorshipOpen } from "@/lib/config/mentorship";
+import { GENERAL_EMAIL } from "@/lib/config/contact-addresses";
 import {
   SITE_URL,
   SITE_NAME,
@@ -56,7 +57,7 @@ export function buildKnowledgeContext(): string {
 
 ## Organisation
 ${SITE_NAME}: ${SITE_DESCRIPTION}
-Founded in 2014${founder ? ` by ${founder.name} (Founder & Chair)` : ""}, based in Auckland, serving women in STEM across New Zealand. Registered NZ charity (Charities Register ${CHARITY_REGISTRATION}). Canonical site: ${SITE_URL}. Contact: hello@shesharp.org.nz. For other team members, use the getTeamMembers tool.
+Founded in 2014${founder ? ` by ${founder.name} (Founder & Chair)` : ""}, based in Auckland, serving women in STEM across New Zealand. Registered NZ charity (Charities Register ${CHARITY_REGISTRATION}). Canonical site: ${SITE_URL}. Contact: ${GENERAL_EMAIL}. For other team members, use the getTeamMembers tool.
 
 ## Key statistics
 - ${globalStats.members.current}+ active members

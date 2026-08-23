@@ -65,10 +65,16 @@ Resend at all. The real risk is choosing an alias nobody on the team opens.
 
 | Enquiry is about | From | Reply-To |
 |---|---|---|
-| Anything general (default) | `She Sharp <hello@shesharp.org.nz>` | `hello@shesharp.org.nz` |
-| Mentoring — applying, matching, the programme | `She Sharp <hello@shesharp.org.nz>` | `mentoring@shesharp.org.nz` |
-| Sponsorship, partnership, a company wanting to help | `She Sharp <hello@shesharp.org.nz>` | `hello@shesharp.org.nz` |
-| A problem with the website itself | `She Sharp <hello@shesharp.org.nz>` | `website@shesharp.org.nz` |
+| Anything general (default) | `She Sharp <info@shesharp.org.nz>` | `info@shesharp.org.nz` |
+| Mentoring — applying, matching, the programme | `She Sharp <info@shesharp.org.nz>` | `mentoring@shesharp.org.nz` |
+| Sponsorship, partnership, a company wanting to help | `She Sharp <info@shesharp.org.nz>` | `industry@shesharp.org.nz` |
+| A question about a specific event | `She Sharp <info@shesharp.org.nz>` | `events@shesharp.org.nz` |
+| A problem with the website itself | `She Sharp <info@shesharp.org.nz>` | `website@shesharp.org.nz` |
+
+Every address in that table was confirmed to accept mail on 2026-08-23. The
+table used to send everything from `hello@`, and route sponsorship replies to
+it as well; `hello@` had never been created, and sponsorship has had its own
+mailbox since 2022.
 
 Always confirm the pair with the user before the first send of a session; after
 that, reuse it silently for the rest of the batch.
@@ -76,7 +82,7 @@ that, reuse it silently for the rest of the batch.
 **These pairs must match `lib/email/senders.ts`, the code's source of truth for
 sending identities.** Two gates enforce it and will block a render that drifts:
 `from-identity` rejects any From that is not an approved sender on
-`shesharp.org.nz` (a typo like `hello@shesharp.co.nz` is discarded silently by
+`shesharp.org.nz` (a typo like `info@shesharp.co.nz` is discarded silently by
 receivers once the domain reaches DMARC `p=reject`), and `reply-to-domain`
 rejects a Reply-To outside the domain — never route replies to a volunteer's
 personal address. See `docs/deployment/EMAIL_AUTHENTICATION.md`.

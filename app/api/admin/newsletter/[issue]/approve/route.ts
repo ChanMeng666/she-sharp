@@ -13,11 +13,16 @@ export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
 /**
- * The newsletter is marketing, so it takes the marketing identity —
- * `She Sharp <newsletter@shesharp.org.nz>`, From and Reply-To both, which is
- * byte-for-byte what subscribers already receive from Mailchimp. Preserving the
- * visible sender across the Mailchimp → Resend migration is the whole point:
- * see the note in `lib/email/senders.ts`.
+ * The newsletter is marketing, so it takes the marketing identity. The From is
+ * `She Sharp <newsletter@shesharp.org.nz>`, byte-for-byte what subscribers
+ * already receive from Mailchimp; preserving the visible sender across the
+ * Mailchimp → Resend migration is the whole point, so it must not change.
+ *
+ * The **Reply-To is deliberately different** — `info@` rather than
+ * `newsletter@`. The From carries the reputation; the Reply-To carries none of
+ * it, and nobody on the team had `newsletter@`'s password as of August 2026,
+ * so every subscriber who pressed Reply was writing into a mailbox no one
+ * opened. See the note in `lib/email/senders.ts`.
  *
  * This previously read `process.env.EMAIL_FROM || DEFAULT_FROM`, and because
  * every environment sets `EMAIL_FROM` to `noreply@`, the monthly broadcast went

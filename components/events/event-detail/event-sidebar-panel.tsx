@@ -24,6 +24,7 @@ import {
   isPastEvent,
 } from "@/lib/data/event-utils";
 import { cn } from "@/lib/utils";
+import { EVENTS_EMAIL } from "@/lib/config/contact-addresses";
 
 interface EventSidebarPanelProps {
   event: EventV3;
@@ -281,6 +282,21 @@ export function EventSidebarPanel({
               <p className="text-xs text-muted-foreground leading-relaxed">
                 <span className="font-medium text-foreground">Refund policy: </span>
                 {event.detailPageData.refundPolicy}
+              </p>
+            </div>
+          )}
+
+          {/* Questions about this event */}
+          {isFuture && (
+            <div className="pt-4 border-t border-border">
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                Questions about this event?{" "}
+                <a
+                  href={`mailto:${EVENTS_EMAIL}?subject=${encodeURIComponent(event.title)}`}
+                  className="underline hover:text-brand"
+                >
+                  {EVENTS_EMAIL}
+                </a>
               </p>
             </div>
           )}

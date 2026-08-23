@@ -30,7 +30,15 @@ export type EmailStream =
 export interface SenderIdentity {
   /** RFC 5322 From header: `Name <local@domain>`. */
   from: string;
-  /** A monitored Google Workspace mailbox — never a no-reply address. */
+  /**
+   * A monitored Google Workspace mailbox — never a no-reply address.
+   *
+   * "Monitored" is a claim about people, not about DNS, so it is checked
+   * against evidence rather than assumed. Every value below was confirmed to
+   * accept mail by the 2026-08-23 delivery probe
+   * (`scripts/email/probe-mailboxes.ts`) and has a named reader in the
+   * organisation's own records — see `docs/development/EMAIL_ADDRESSES.md`.
+   */
   replyTo: string;
   stream: EmailStream;
 }
@@ -76,12 +84,18 @@ export const SENDERS: Record<EmailStream, SenderIdentity> = {
    * drop impossible to attribute. Subscribers also simply recognise it.
    *
    * Use this for anything going to the mailing list, including one-off
-   * announcements. `hello@` stays what it already is: the 1:1 conversational
-   * address for contact replies and event fulfilment.
+   * announcements.
+   *
+   * **The Reply-To is deliberately not `newsletter@`, and the split is the
+   * point.** The From carries the reputation and must not move. The Reply-To
+   * carries none of it, and until August 2026 it pointed at a mailbox nobody
+   * on the team had the password to — asked outright in Slack whether anyone
+   * read it, nobody answered. Every subscriber who pressed Reply was writing
+   * into that. Replies now go to the general inbox, which someone opens.
    */
   marketing: {
     from: `She Sharp <newsletter@${SENDING_DOMAIN}>`,
-    replyTo: `newsletter@${SENDING_DOMAIN}`,
+    replyTo: `info@${SENDING_DOMAIN}`,
     stream: "marketing",
   },
   internal: {
@@ -95,16 +109,22 @@ export const SENDERS: Record<EmailStream, SenderIdentity> = {
  * Every address allowed to appear in a From header.
  *
  * A superset of the stream identities above, because the skill-driven scripts
- * send as `hello@` for one-to-one mail (contact replies, event fulfilment) —
+ * send as `info@` for one-to-one mail (contact replies, event fulfilment) —
  * an address that is a legitimate sender without being any stream's default.
+ * It was `hello@` until August 2026, when a delivery probe established that
+ * `hello@` had never been created; keeping it here would let a skill render a
+ * reply whose From nobody could answer.
  *
- * Reply-To is checked against the domain instead of this list: a reply may be
- * routed to any team mailbox (`security@`, `governance@`, `conduct@`, …)
- * without that mailbox ever being a sender.
+ * Reply-To is checked against the domain instead of this list, so a reply may
+ * be routed to any team mailbox without that mailbox ever being a sender. Note
+ * what that check does *not* buy you: passing it means the address is on the
+ * right domain, not that anybody reads it. The monitored set is small —
+ * `info@`, `mentoring@`, `industry@`, `events@`, `website@` — and is listed
+ * with its evidence in `docs/development/EMAIL_ADDRESSES.md`.
  */
 const APPROVED_FROM_ADDRESSES = new Set<string>([
   ...Object.values(SENDERS).map((identity) => extractAddress(identity.from)),
-  `hello@${SENDING_DOMAIN}`,
+  `info@${SENDING_DOMAIN}`,
 ]);
 
 /**
@@ -153,7 +173,7 @@ export function parseFromAddress(from: string): { name: string; address: string 
 /**
  * Reports whether a From header is one this organisation may send as.
  *
- * A typo like `hello@shesharp.co.nz` is invisible in a preview and, once the
+ * A typo like `info@shesharp.co.nz` is invisible in a preview and, once the
  * domain reaches `p=reject`, is dropped without a bounce. This is the check
  * that turns that silent failure into a blocked send.
  *

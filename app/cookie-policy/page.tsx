@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { LegalPageLayout } from "@/components/legal-page-layout";
+import { PRIVACY_EMAIL } from "@/lib/config/contact-addresses";
 import "@/styles/components/legal-page.css";
 
 export const metadata: Metadata = {
@@ -149,7 +150,7 @@ export default function CookiePolicyPage() {
           <h2>Questions About Cookies?</h2>
           <p>If you have questions about our use of cookies or this policy, please contact us:</p>
           <ul>
-            <li><strong>Email:</strong> <a href="mailto:privacy@shesharp.org.nz">privacy@shesharp.org.nz</a></li>
+            <li><strong>Email:</strong> <a href={`mailto:${PRIVACY_EMAIL}`}>{PRIVACY_EMAIL}</a></li>
             <li><strong>Website:</strong> <a href="https://www.shesharp.org.nz">www.shesharp.org.nz</a></li>
           </ul>
           <p>
