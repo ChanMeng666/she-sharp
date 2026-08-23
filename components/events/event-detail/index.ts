@@ -13,3 +13,4 @@ export { EventSponsorship } from './event-sponsorship';
 export { EventDonationCta } from './event-donation-cta';
 export { EventSponsors } from './event-sponsors';
 export { EventSpecialSections } from './event-special-sections';
+export { EventPhotographyNotice } from './event-photography-notice';

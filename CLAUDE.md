@@ -185,8 +185,12 @@ shot is not that. Never name a child, in copy, caption, `alt` text or credit.
 Youth events (the Youth Tech Series, Superhero Daughter Day) are run under the
 host school's media consent and get a procedure rather than an exemption.
 Screen at selection, not after: `/img/*` is immutable for a year and the public
-album is outside this repo. Full rule, and what is already published without
-one: `docs/development/PHOTOGRAPHING_MINORS.md`.
+album is outside this repo, so removal is a code change plus an album edit.
+Every event page carries `EventPhotographyNotice` and routes removal requests to
+`PRIVACY_EMAIL` — a notice and a removal route, **not** consent, which would
+have to be collected at registration in Humanitix and still is not. Full rule,
+and the ten photographs published before any of it existed:
+`docs/development/PHOTOGRAPHING_MINORS.md`.
 
 ## SEO: four gotchas that keep recurring
 
