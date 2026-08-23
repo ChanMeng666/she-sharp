@@ -70,6 +70,16 @@ jobs:
       - name: Verify the event lifecycle report
         run: npx tsx scripts/events/event-status.test.ts
 
+      # Also shares this checkout — offline and pure data. /internal/event-playbook
+      # serves a build-time snapshot of docs/development/EVENT_PLAYBOOK.md, which
+      # is what keeps the markdown renderer out of the deployed bundle. The cost
+      # is that the page can fall behind the document without looking any
+      # different: it still renders, still reads as authoritative, and quietly
+      # hands a volunteer a procedure that changed. The snapshot therefore
+      # carries the hash of every source and this test recomputes them all.
+      - name: Verify the playbook page matches its source document
+        run: npx tsx lib/docs/playbook.test.ts
+
       # Also shares this checkout — pure regex against two hard-coded lists.
       # An unreferenced image has two possible owners, the generated per-event
       # manifest and KNOWN_UNREFERENCED, and they mean different things. A file

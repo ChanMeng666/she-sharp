@@ -1,0 +1,431 @@
+/* Playbook — the internal handbook under /internal/*.
+ *
+ * Built on top of the legal-page language so an internal document looks like
+ * the rest of the site rather than like a raw markdown dump. Imported here
+ * rather than in the layout so the two files can never be loaded in the wrong
+ * order: everything below is an override and must come second.
+ *
+ * The page is one short document of short sections, most of which end in a
+ * copy-paste prompt. Those prompt blocks are the reason the page exists, so
+ * they, not the prose, get the strongest treatment on the page.
+ */
+@import "./legal-page.css";
+@reference "../../app/globals.css";
+
+/* ---------------------------------------------------------------------------
+ * Measure
+ *
+ * Three widths, not one. Prose wants ~46rem. The prompts want more: they are
+ * hard-wrapped at about eighty characters and `white-space: pre` never reflows
+ * them, so a prose-width block would put a horizontal scrollbar under every
+ * prompt on the page. Diagrams want as much as they can get. So the text column
+ * stays narrow and both of the others break out of it.
+ * ------------------------------------------------------------------------- */
+
+.playbook-page {
+  @apply mx-auto px-6 py-12 sm:px-8 lg:py-16;
+  max-width: 80rem;
+}
+
+.playbook.legal-content {
+  max-width: 46rem;
+  margin-inline: auto;
+  /* The width diagrams and wide tables get. `100vw` includes the scrollbar,
+   * which is why the viewport clamp subtracts 3rem rather than nothing — and
+   * `body` uses `overflow-x: clip` sitewide, so a rounding error here cannot
+   * start the page scrolling sideways. */
+  --playbook-wide: min(90rem, calc(100vw - 3rem));
+  /* Wide enough for an 80-column prompt at reading size, with room for the copy
+   * button, and no wider: a prompt is still prose and stops being scannable
+   * past that. */
+  --playbook-prompt-width: min(56rem, calc(100vw - 3rem));
+}
+
+/* The break-out: a negative margin equal to half the overhang, so the wide
+ * element stays centred on the text column it grew out of. Scoped to
+ * `.playbook-part`, which is the direct parent — `.playbook > .mermaid` matched
+ * nothing after the wrapper landed, and the failure is invisible: every diagram
+ * silently reverts to prose width.
+ *
+ * A fence nested inside a list item is NOT a direct child and stays in the
+ * prose column, which is right — an indented prompt that breaks out of the list
+ * it belongs to reads as a new section. */
+.playbook-part > .mermaid,
+.playbook-part > .table-scroll {
+  width: var(--playbook-wide);
+  margin-inline: calc((100% - var(--playbook-wide)) / 2);
+}
+
+.playbook-part > .playbook-prompt {
+  width: var(--playbook-prompt-width);
+  margin-inline: calc((100% - var(--playbook-prompt-width)) / 2);
+}
+
+/* ---------------------------------------------------------------------------
+ * Parts
+ *
+ * The handbook is one document today, and the generator renders no running head
+ * for a single source — see `renderSource` in scripts/docs/build-playbook.mts.
+ * These rules are the multi-document treatment, kept beside the machinery that
+ * emits them: a second source added later must not land unstyled, which is the
+ * kind of regression nobody notices until the page is already shared.
+ * ------------------------------------------------------------------------- */
+
+.playbook-part {
+  /* `app/globals.css` gives every `section[id]` a 100px scroll-margin for a
+   * fixed header this page does not have; combined with the 100px
+   * `scroll-padding-top` on `html` an anchor would land 200px down. */
+  scroll-margin-top: 3.5rem;
+}
+
+.playbook-part + .playbook-part {
+  @apply mt-16 border-t pt-12;
+  border-color: #f7e5f3;
+}
+
+/* The running head. It spans the diagram width rather than the prose width
+ * because a wide diagram scrolling half-under a narrow bar reads as a rendering
+ * fault; opaque for the same reason. */
+.playbook-part-label {
+  @apply sticky top-0 z-10 mb-6 flex items-center gap-4 py-2.5 text-xs font-semibold uppercase;
+  width: var(--playbook-wide);
+  margin-inline: calc((100% - var(--playbook-wide)) / 2);
+  letter-spacing: 0.14em;
+  color: #7d1f66;
+  background-color: #ffffff;
+  border-bottom: 1px solid #f7e5f3;
+  font-family: var(--font-heading);
+}
+
+/* A long part name on a narrow phone gives way to an ellipsis rather than
+ * wrapping the bar to two lines. */
+.playbook-part-name {
+  @apply min-w-0 truncate;
+}
+
+/* Tracking is a luxury at 390px: at the full 0.14em a part name loses its last
+ * word to the ellipsis, and the last word is the one that says what it is. */
+@media (max-width: 30rem) {
+  .playbook-part-label {
+    letter-spacing: 0.06em;
+    font-size: 0.6875rem;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Rhythm
+ * ------------------------------------------------------------------------- */
+
+.playbook h1 {
+  @apply text-3xl sm:text-4xl font-bold mb-4;
+  color: #1f1e44;
+  font-family: var(--font-heading);
+}
+
+/* `app/globals.css` already puts 100px of `scroll-padding-top` on `html` for a
+ * fixed header this page does not have, and this adds to it rather than
+ * replacing it. It used to be 3.5rem, to clear the sticky running head; with no
+ * running head that was 156px of empty screen above every heading a reader
+ * jumped to — a fifth of a laptop viewport spent on nothing. */
+.playbook h2,
+.playbook h3 {
+  scroll-margin-top: 0.5rem;
+}
+
+/* The document opens with a blockquote standfirst; give it more presence than
+ * the legal pages' inline pull-quote. */
+.playbook-part > blockquote:first-of-type {
+  @apply text-base not-italic;
+}
+
+.playbook hr {
+  @apply my-10 border-0 border-t;
+  border-color: #f7e5f3;
+}
+
+/* ---------------------------------------------------------------------------
+ * Code
+ *
+ * `legal-page.css` has no code styling at all, and this document names files,
+ * slugs and Slack channels throughout. Unstyled, they are indistinguishable
+ * from prose — which is exactly the confusion that turns "run this" into
+ * "read this".
+ * ------------------------------------------------------------------------- */
+
+.playbook code {
+  @apply rounded px-1.5 py-0.5 text-[0.875em];
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+  color: #7d1f66;
+  background-color: #f7e5f3;
+  overflow-wrap: break-word;
+}
+
+/* Headings and table cells already carry weight; a magenta chip inside them
+ * fights it. */
+.playbook h2 code,
+.playbook h3 code,
+.playbook th code {
+  color: inherit;
+  background-color: transparent;
+  @apply px-0;
+}
+
+/* ---------------------------------------------------------------------------
+ * Prompts
+ *
+ * The fenced blocks are what the reader came for: the words to paste into
+ * Claude Code. They are prose, not shell commands, so they are set at reading
+ * size — a code listing's 14px would say "this is for the engineers", which is
+ * the one thing this page exists to stop people thinking. Dark, wide and
+ * generously spaced, so a reader skimming for their team's prompt finds it
+ * without reading a word of the prose around it.
+ * ------------------------------------------------------------------------- */
+
+.playbook-prompt {
+  /* Anchors the copy button, which `PromptCopyButtons` appends here on mount. */
+  @apply relative;
+}
+
+.playbook pre {
+  @apply my-8 rounded-lg;
+  /* The right gutter belongs to the copy button: its 6.5rem `min-width` plus
+   * the 0.75rem it is inset by, plus a little air. */
+  padding: 1.375rem 7.75rem 1.375rem 1.5rem;
+  background-color: #1f1e44;
+  border: 1px solid #1f1e44;
+  /* The horizontal scroll is on the `<code>` child, not here.
+   *
+   * `padding-right` reserves space at the END of a scroll container's content,
+   * not on each visible line, so a `pre` that scrolled would slide its long
+   * lines straight under the button — and at rest, which is when the reader is
+   * trying to read them. Scrolling the child instead puts the whole gutter
+   * outside the scroll port, so no width and no future prompt can ever put text
+   * under that button. */
+  overflow: visible;
+}
+
+.playbook pre code {
+  @apply block overflow-x-auto p-0;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: #f4f4fa;
+  background-color: transparent;
+  /* `pre`, never `pre-wrap`: the prompts are hard-wrapped by their author and
+   * the line breaks are part of the instruction. Anything too wide scrolls. */
+  white-space: pre;
+  overflow-wrap: normal;
+}
+
+/* A phone has no room for both a readable measure and a 6.5rem gutter — the
+ * gutter would take a quarter of the card. The button takes its own line
+ * instead. */
+@media (max-width: 30rem) {
+  .playbook pre {
+    padding: 3rem 1.125rem 1.125rem;
+  }
+
+  .playbook pre code {
+    font-size: 0.9375rem;
+  }
+}
+
+/* The copy button. Created in the browser by `components/docs/prompt-copy.tsx`
+ * and absent entirely where the clipboard API is — so every rule here is for a
+ * button that only exists when it can do its job. */
+.playbook-copy {
+  @apply absolute right-3 top-3 cursor-pointer rounded-md px-3 py-1.5 text-xs font-semibold uppercase;
+  letter-spacing: 0.08em;
+  color: #f4f4fa;
+  background-color: #3a3866;
+  border: 1px solid #55527f;
+  font-family: var(--font-heading);
+  /* The label swaps between "Copy", "Copied" and "Copy failed"; a fixed width
+   * stops the button resizing under the pointer that just clicked it. */
+  min-width: 6.5rem;
+  text-align: center;
+}
+
+.playbook-copy:hover {
+  background-color: #c846ab;
+  border-color: #c846ab;
+}
+
+.playbook-copy:focus-visible {
+  outline: 2px solid #f7e5f3;
+  outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Diagrams
+ *
+ * Mermaid replaces the container's text with an SVG on mount, so this styles
+ * both states: a light card that reads as "a picture goes here" before the
+ * script runs, and the frame around the picture afterwards.
+ * ------------------------------------------------------------------------- */
+
+.playbook .mermaid {
+  @apply my-8 rounded-lg p-6 overflow-x-auto text-center;
+  background-color: #f4f4fa;
+  border: 1px solid #f7e5f3;
+  /* Pre-render, the source is diagram text: keep its line breaks so it is
+     legible rather than reflowed into a paragraph. */
+  white-space: pre;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.8125rem;
+  color: #4a4a6a;
+  line-height: 1.6;
+}
+
+/* Mermaid marks a container once it has rendered. From that point the content
+   is an SVG and the code-listing treatment must get out of its way. */
+.playbook .mermaid[data-processed] {
+  white-space: normal;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.playbook .mermaid svg {
+  @apply mx-auto h-auto;
+  max-width: 100%;
+}
+
+/* Italic node labels lose their last letter without this.
+ *
+ * Instrument Sans ships no italic face, so the browser synthesises one by
+ * skewing the upright glyphs — and a skew moves ink without changing the
+ * advance width it was measured from. Mermaid sizes each label's
+ * `foreignObject` to exactly that measured width, and a `foreignObject` clips.
+ * The result is a diagram that reads "Chair and Industry Leaa": a defect with
+ * no error anywhere, in the one picture on the page, on the words that say
+ * whose job it is. */
+.playbook .mermaid svg foreignObject {
+  overflow: visible;
+}
+
+/* A diagram too wide to shrink and stay readable keeps its own size and scrolls
+ * — see `MIN_LEGIBLE_SCALE` in `components/docs/mermaid-renderer.tsx`. Centring
+ * a box wider than its scroll port hides the left edge, so pinned diagrams
+ * start at the left instead. */
+.playbook .mermaid-pinned {
+  @apply text-left;
+}
+
+.playbook .mermaid-pinned svg {
+  @apply mx-0;
+  max-width: none;
+}
+
+/* A diagram that would not compile keeps its source on screen — see
+   `components/docs/mermaid-renderer.tsx`. Mark it so the reader knows they are
+   looking at the fallback and not at an intentional code block. */
+.playbook .mermaid-failed {
+  border-color: #c846ab;
+  border-left-width: 4px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Tables
+ * ------------------------------------------------------------------------- */
+
+.playbook .table-scroll {
+  @apply my-6 overflow-x-auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* The wrapper owns the scrolling now, so the phone-width rule in
+   `legal-page.css` that turns the table itself into a scroll container must not
+   also apply — two nested scrollers make the header row drift out of line. */
+.playbook .table-scroll table {
+  @apply my-0;
+  display: table;
+  width: 100%;
+  min-width: 34rem;
+  overflow-x: visible;
+}
+
+.playbook th,
+.playbook td {
+  @apply align-top;
+}
+
+/* ---------------------------------------------------------------------------
+ * Print
+ *
+ * People do print a procedure and take it to a venue.
+ * ------------------------------------------------------------------------- */
+
+@media print {
+  .playbook-page {
+    @apply px-0 py-0;
+    max-width: none;
+  }
+
+  .playbook.legal-content {
+    max-width: none;
+  }
+
+  .playbook-part > .mermaid,
+  .playbook-part > .table-scroll,
+  .playbook-part > .playbook-prompt {
+    width: 100%;
+    margin-inline: 0;
+  }
+
+  /* Sticky is a screen affordance: on paper it would print the running head
+     once, wherever the part happened to start, and pin nothing. */
+  .playbook-part-label {
+    position: static;
+    width: 100%;
+    margin-inline: 0;
+  }
+
+  .playbook-part + .playbook-part {
+    break-before: page;
+  }
+
+  .playbook .mermaid,
+  .playbook .table-scroll,
+  .playbook pre,
+  .playbook pre code,
+  .playbook table {
+    break-inside: avoid;
+    overflow: visible;
+  }
+
+  /* Paper cannot scroll. `!important` because the pinned width is an inline
+     style set by the renderer, and shrinking to the sheet is the only option
+     left once there is no scroll port. */
+  .playbook .mermaid-pinned svg {
+    width: 100% !important;
+    max-width: 100%;
+  }
+
+  .playbook h2,
+  .playbook h3 {
+    break-after: avoid;
+  }
+
+  /* Nothing to click on paper, and the gutter it reserves is wasted. */
+  .playbook-copy {
+    display: none;
+  }
+
+  .playbook pre {
+    background-color: transparent;
+    border-color: #1f1e44;
+    padding: 1.125rem 1.25rem;
+  }
+
+  .playbook pre code {
+    color: #000;
+    /* Paper has no scroll port, so this is the one place the hard wrapping may
+       be given up rather than losing the end of every line. */
+    white-space: pre-wrap;
+  }
+
+  .playbook code {
+    color: #000;
+    background-color: transparent;
+  }
+}

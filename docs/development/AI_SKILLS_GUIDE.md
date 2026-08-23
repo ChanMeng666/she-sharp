@@ -8,25 +8,18 @@ You will not be writing code. You will be typing sentences into a chat box, and
 an AI assistant will do the work while showing you exactly what it is about to do
 and waiting for you to say yes.
 
-**How long the one-time setup takes:** about 30–45 minutes, once. After that,
-starting a task takes about ten seconds.
+**How long the one-time setup takes:** about an hour, once, and most of that is
+waiting for downloads. After that, starting a task takes about ten seconds.
+
+**You will not have to type a single command.** Everything in the setup below is
+done by pasting a sentence into a chat box and letting the assistant do it. The
+commands are printed underneath each step anyway, for the one time in twenty that
+something needs doing by hand.
 
 **The one thing to understand before you begin:** nothing is sent, and nothing is
 changed, until you read a summary and explicitly approve it. Every skill in this
 guide is built to stop and show you its plan first. If you ever feel unsure, you
 can say "stop" or "show me that again" at any point.
-
----
-
-## Table of contents
-
-1. [What you'll be able to do](#1-what-youll-be-able-to-do)
-2. [One-time setup](#2-one-time-setup)
-3. [How to use a skill](#3-how-to-use-a-skill)
-4. [The golden rules](#4-the-golden-rules)
-5. [The skills, one by one](#5-the-skills-one-by-one)
-6. [When something goes wrong](#6-when-something-goes-wrong)
-7. [Words you'll see](#7-words-youll-see)
 
 ---
 
@@ -39,26 +32,31 @@ follows, so it does the task the same careful way every time.
 it works out where your event has got to and tells you which of the others to
 run next, so you never have to hold the order in your head.
 
-| Skill | What it does | Who usually needs it |
-|---|---|---|
-| `/run-event-playbook` | Walks one event from the planning channel to the photographs, calling the others in order | Event organisers |
-| `/sync-event-from-slack` | Turns an event-planning Slack channel into a page on the website | Event organisers |
-| `/make-event-poster` | Makes the artwork — the ticketing banner, the social posts, the print poster, and one graphic per speaker | Event organisers |
-| `/build-event-slides` | Builds the slide deck the room sees, at `/present/<event>` | Event organisers |
-| `/tweak-event-slides` | Makes one small change to slides that already exist, and puts it live in about four minutes | Event organisers, on the day |
-| `/send-event-emails` | Emails the people who registered for one event — reminders, joining details, thank-yous | Event organisers |
-| `/promote-event` | Tells the mailing list about an event that has not happened yet | Anyone doing comms |
-| `/email-the-community` | Sends one announcement to the whole mailing list | Anyone doing comms |
-| `/update-mailing-list` | Shows who is on the mailing list, and adds people who agreed to join | Anyone managing the list |
-| `/monthly-newsletter` | Builds and schedules the monthly newsletter | Newsletter editor |
-| `/reply-to-contact-messages` | Answers the people who filled in the contact form on the website | Anyone doing comms |
+| Skill | What it does | Or just say | Who |
+|---|---|---|---|
+| `/run-event-playbook` | Works out where an event has got to and what comes next | *"what's left to do for Thursday's panel"* | anyone |
+| `/make-event-poster` | The artwork — ticketing banner, social posts, print poster, one graphic per speaker | *"make a poster for the AUT night"* | Marketing |
+| `/tweak-event-slides` | Changes one small thing on slides that already exist, and publishes it in about three minutes | *"fix the typo on the Les Mills deck"* | anyone |
+| `/send-event-emails` | Emails the people who registered — reminders, joining details, thank-yous | *"send the room number to everyone who registered"* | Events or Comms |
+| `/promote-event` | Tells the mailing list about an event that has not happened yet | *"tell the list about next month's event"* | Comms |
+| `/email-the-community` | Sends one announcement to the whole mailing list | *"email everyone about the new mentoring round"* | Comms |
+| `/update-mailing-list` | Shows who is on the mailing list, and adds people who agreed to join | *"who's on our email list?"* | Comms |
+| `/reply-to-contact-messages` | Answers the people who filled in the contact form | *"who hasn't been replied to yet?"* | Comms |
+| `/build-event-slides` | Builds the deck the room sees, at `/present/<event>` | *"build the deck for Thursday's panel"* | you decide the content, a developer operates it |
+| `/monthly-newsletter` | Builds and schedules the monthly newsletter | *"build this month's newsletter"* | the website team |
+| `/sync-event-from-slack` | Turns an event-planning Slack channel into a page on the website | post it in `#website-team` instead | the website team only — see 6.6 |
 
-The four email skills are the focus of this guide. The event skills are included
+The table is ordered by who runs it: everything above `/build-event-slides` is
+yours once you have finished section 2.
+
+The email skills are where most people start. The event skills are here too,
 because they are one toolkit and they depend on each other in a fixed order —
 `/send-event-emails`, `/make-event-poster` and `/build-event-slides` all read the
-date and venue from the website, so `/sync-event-from-slack` has to have put the
-event there first. `/run-event-playbook` exists so you do not have to remember
-that; the order, with every gate and what goes wrong, is written down in
+date and venue from the website, so the event has to be on the website first.
+Putting it there is `/sync-event-from-slack`, and that one skill is the website
+team's job rather than yours — section 6.6 explains why, and what to do instead.
+`/run-event-playbook` exists so you do not have to remember the order; the whole
+order, with every gate and what goes wrong, is in
 `docs/development/EVENT_LIFECYCLE_SOP.md`.
 
 `/tweak-event-slides` is the odd one out: it is the only skill here that changes
@@ -77,8 +75,10 @@ says so itself rather than failing in a confusing way.
 Work through these in order. Each part ends with a way to check it worked, so you
 never move on with something half-finished.
 
-> **A note about asking for help.** Steps D and E need things only an admin can
-> give you. That is normal and expected — it is not you doing something wrong.
+> **A note about asking for help.** Parts C, F and G need things only an admin
+> can give you: access to the organisation on GitHub, the secrets file, and a
+> sending key. That is normal and expected — it is not you doing something
+> wrong, and it is not a queue you can skip by guessing.
 
 ### Part A — Install Cursor
 
@@ -100,89 +100,125 @@ open the **View** menu and choose the chat/agent panel. Cursor has moved this
 around between versions, so trust what you see on screen over any shortcut key
 someone quotes you.
 
-### Part B — Install the three background tools
+### Part B — Let Cursor install the background tools
 
-These are free tools that don't have windows — they work quietly underneath.
-Install all three even if you don't know what they are.
+Four free tools have to be on your computer. They have no windows and you will
+never open them; they work underneath. **You do not have to know what they are,
+find them, or install them yourself.**
 
-**1. Git** — how the project gets onto your computer and stays up to date.
+| Tool | What it is for |
+|---|---|
+| **Git** | Keeps a copy of the project on your computer, and sends your work back |
+| **Node 22** | The thing the project actually runs on |
+| **GitHub CLI** (`gh`) | Lets you propose your work to the team without opening a website |
+| **Resend CLI** | What actually sends the email |
 
-- Windows: download from <https://git-scm.com/download/win> and run the
-  installer. Accept every default by clicking Next.
-- Mac: open the **Terminal** app (find it with Spotlight, `Cmd+Space`, and type
-  "Terminal"), paste `git --version`, and press Enter. If Git isn't installed,
-  macOS will offer to install it — say yes.
-
-**2. Node.js version 22** — this project runs on it.
-
-- Go to <https://nodejs.org> and download the version labelled **22 LTS**.
-- "LTS" means Long Term Support. **Do not pick the newest number** if it isn't
-  22 — this project is tested against 22.
-- Run the installer and accept the defaults.
-
-**3. The Resend command-line tool** — this is what actually sends the email.
-
-Open a terminal:
-- In Cursor: **Terminal → New Terminal** from the top menu.
-- Or use the Terminal app (Mac) / Command Prompt (Windows).
-
-Paste this and press Enter:
+**Open Cursor's chat panel and paste this.** Change the first sentence if you are
+on a Mac.
 
 ```
-npm install -g resend-cli
+I'm setting up this project and I have never used a terminal before.
+
+Please check whether git, node, gh and resend are installed on this Windows
+machine, and install whatever is missing:
+  - git and the GitHub CLI with winget
+  - Node.js version 22 LTS specifically, not the newest version
+  - resend with: npm install -g resend-cli
+
+Tell me what you are about to run before you run it, do them one at a time, and
+stop and tell me if something needs administrator rights so I can ask an admin.
 ```
 
-**Check it worked:** in the same terminal, run each of these. Each should print a
-version number or a path rather than "not found":
+On a Mac, replace the second paragraph's first line with *"…installed on this
+Mac, and install whatever is missing using Homebrew (install Homebrew first if it
+is not there)"*.
+
+**It will show you each command before running it.** That is the assistant
+working correctly. Say yes; if anything asks for an administrator password and
+you do not have one, stop and ask an admin rather than guessing.
+
+**Check it worked.** Paste this:
 
 ```
-git --version
-node --version
-resend --version
+Check my setup: print the versions of git, node, gh and resend, and tell me
+plainly which of them are missing. Don't install anything yet.
 ```
 
-`node --version` should start with `v22`.
+You want four version numbers, and `node` must start with **`v22`**. If it says
+something else is installed, ask it to install 22 as well — this project is
+tested against 22 and a newer one breaks the website build.
 
-### Part C — Get the project onto your computer
+> **If the assistant cannot install something**, these are the manual downloads:
+> Git <https://git-scm.com/downloads>, Node 22 LTS <https://nodejs.org>,
+> GitHub CLI <https://cli.github.com>. The Resend tool is always
+> `npm install -g resend-cli` in a terminal (**Terminal → New Terminal** in
+> Cursor's top menu).
 
-1. Decide where the project will live. Somewhere simple is best — for example
-   `Documents`.
-2. In Cursor, choose **File → Open Folder**, navigate to that place, and open it.
-3. Open a terminal in Cursor (**Terminal → New Terminal**) and paste:
+### Part C — Sign in to GitHub
+
+GitHub is where the project lives. You need an account on it, and your account
+needs to be in the **NZ-SheSharp** organisation — ask an admin to add you, using
+whatever email address your GitHub account uses.
+
+Once you are in, paste this into Cursor's chat:
 
 ```
-git clone https://github.com/NZ-SheSharp/she-sharp.git
+Sign me in to GitHub from the terminal using the GitHub CLI. Walk me through it
+one step at a time — tell me exactly what to click, and wait for me. Choose
+HTTPS rather than SSH.
 ```
 
-If it asks you to sign in to GitHub, do so. If it says you don't have access, ask
-an admin to add you to the **NZ-SheSharp** organisation on GitHub.
+It will show you a short code, open a browser, and ask you to paste the code in.
+That is normal and it only happens once.
 
-4. When it finishes, choose **File → Open Folder** again and open the newly
-   created **she-sharp** folder itself. This matters: the tools only work when
-   Cursor has the `she-sharp` folder open, not its parent.
+**Check it worked.** Paste this:
+
+```
+Am I signed in to GitHub? Show me which account, and confirm I can reach the
+NZ-SheSharp organisation.
+```
+
+If it says you cannot see NZ-SheSharp, you have not been added yet. That is an
+admin job, not something you can fix — ask, and carry on with Part D when it is
+done.
+
+### Part D — Get the project onto your computer
+
+First, pick somewhere simple for it to live — `Documents` is fine. In Cursor,
+choose **File → Open Folder** and open that place. Then paste this into the chat:
+
+```
+Clone the NZ-SheSharp/she-sharp repository from GitHub into this folder, then
+tell me the full path of the folder it created.
+```
+
+**Then open that folder itself.** Choose **File → Open Folder** again and open
+the newly created **she-sharp** folder. This one matters and it is the most
+common thing to get wrong: the tools only work when Cursor has the `she-sharp`
+folder open, not the folder above it.
 
 **Check it worked:** the file list on the left shows folders named `app`,
-`components`, `lib`, and a file called `package.json`.
+`components` and `lib`, and a file called `package.json`.
 
-### Part D — Install the project's parts
+> If it says you do not have access, you have not been added to the
+> **NZ-SheSharp** organisation yet — go back to Part C.
 
-In Cursor's terminal, paste:
+### Part E — Install the project's parts
 
 ```
-npx pnpm@10 install
+Install this project's dependencies. Use pnpm version 10 exactly — run it as
+`npx pnpm@10 install`, not plain `pnpm`. It will take a few minutes; tell me when
+it has finished and whether it ended cleanly.
 ```
 
-This downloads everything the project depends on. It takes a few minutes and
-prints a lot of text — that is normal.
-
-> **Why `pnpm@10` and not just `pnpm`?** Newer versions of pnpm change a file
-> that this project shares with its deployment system, which breaks the website
-> build. Pinning to 10 avoids that. It costs you nothing.
+> **Why version 10 exactly?** Newer versions of pnpm change a file this project
+> shares with its deployment system, which breaks the website build. Pinning to
+> 10 avoids that. It costs you nothing.
 
 **Check it worked:** a new `node_modules` folder appears in the file list, and
-the last lines of output say "Done" rather than "ERR".
+the assistant tells you it finished without errors.
 
-### Part E — The secrets file
+### Part F — The secrets file
 
 The tools need passwords and keys to reach the database, Slack and Resend. These
 live in a file called `.env` in the project folder. **This file is deliberately
@@ -209,7 +245,7 @@ When you receive it:
 **Check it worked:** you can see `.env` in the file list. (Cursor may grey it out
 — that's fine, it means Cursor knows it's private.)
 
-### Part F — Connect the Resend tool
+### Part G — Connect the Resend tool
 
 Ask an admin for a **Resend API key with full access**. In the terminal, paste
 this, replacing the placeholder with the real key:
@@ -230,14 +266,25 @@ list skills cannot work without one.
 
 ### Final check — is everything ready?
 
-Open the Cursor chat panel and type exactly this:
+Open the Cursor chat panel and paste this:
 
 ```
-Check that I'm set up to run the email skills: confirm the repo root, DATABASE_URL, SLACK_BOT_TOKEN, and that resend whoami is authenticated. Don't send anything.
+Check that I'm fully set up for this project, and don't change or send anything.
+Confirm all of these and tell me plainly which are missing:
+  - I have the she-sharp folder itself open, not its parent
+  - git, node (v22), gh and resend are installed
+  - I'm signed in to GitHub and can see the NZ-SheSharp organisation
+  - node_modules exists
+  - a .env file is present, and DATABASE_URL and SLACK_BOT_TOKEN are set in it
+  - `resend whoami` says authenticated with full_access
+Then list the skills available to me.
 ```
 
-The AI will run the checks and tell you what is present and what is missing. If
-something is missing, it will say which one — take that message to an admin.
+It will run the checks and tell you what is present and what is missing. Anything
+missing is either one part of this setup you skipped, or something only an admin
+can give you — take the message to them as it is written.
+
+**When it lists the skills, you are done.** Section 3 is how to start one.
 
 ---
 
@@ -301,7 +348,135 @@ adjusts and shows you a new plan. There is no way to accidentally skip this step
 
 ---
 
-## 4. The golden rules
+## 4. Getting your work into the project
+
+Most of the skills write files — posters, slide decks, a record of what was sent.
+Those files land **on your computer only**. This section is how they get to
+everybody else. It is four sentences you paste into the chat, and you never have
+to learn what any of them do underneath.
+
+### The one idea to hold on to
+
+You have a **copy** of the project. The live website is somewhere else.
+
+```
+your computer  →  you propose the change  →  someone reviews it  →  it goes live
+   (a copy)          (a pull request)          (a teammate)        (~3 minutes)
+```
+
+**You cannot break the website from your computer.** Proposing a change is
+exactly that — a proposal. Somebody looks at it before anything happens. The one
+exception is on purpose and is named in the box at the end of this section.
+
+### Which skills need this
+
+| After you run… | Does anything need proposing? |
+|---|---|
+| `/make-event-poster` | **Yes** — the artwork files are new, and the website needs them |
+| `/build-event-slides` | **Yes**, but the developer working with you does it |
+| `/tweak-event-slides` | **No** — this one publishes itself, on purpose. See the box below |
+| `/send-event-emails`, `/promote-event`, `/email-the-community`, `/update-mailing-list` | **Yes, but only the record.** The email has already gone; the project keeps a small note of what was sent to whom, and that note is worth sharing so nobody sends it twice |
+| `/reply-to-contact-messages` | **Yes** — same, just the record |
+| `/run-event-playbook` | **No** — it only reads |
+
+### Step 1 — Look at what you changed
+
+Before anything else, always:
+
+```
+What have I changed so far? Show me a plain-English list of the files and what
+each change is. Don't commit anything yet.
+```
+
+Read it. If there is something in that list you did not expect — especially a
+file with `.env`, `.csv` or somebody's name in it — stop and ask in
+`#website-team` before going further.
+
+### Step 2 — Propose it
+
+```
+I've finished the posters for the Les Mills event. Please put this on a new
+branch, write a sensible commit message in the project's style, push it, and open
+a pull request. Don't push to main. Show me the pull request link when it's done.
+```
+
+Change the first sentence to whatever you actually did. That is the whole trick:
+**say what you did in your own words, and add "put it on a branch and open a pull
+request".**
+
+You will get a link back. Paste that link into `#website-team` so somebody knows
+it is waiting.
+
+### Step 3 — Nothing, until somebody merges it
+
+A teammate reads it and merges it. The website updates about three minutes later.
+If they ask for a change, say so in the chat — *"they want the date bigger, can
+you redo it"* — and ask for it to be pushed to the same branch. The pull request
+updates itself; you do not open a new one.
+
+**If the pull request shows a red cross**, an automatic check has failed. That is
+the project protecting itself, not you doing something wrong — the commonest one
+is an image that was added but is not used anywhere yet. Paste the failure
+message into the chat and ask *"what does this mean and can you fix it?"*. If it
+is still red after one try, put the link in `#website-team` and leave it.
+
+### Starting again tomorrow
+
+Before you start any new piece of work:
+
+```
+Get the latest version of the project, and start me a fresh branch off main.
+```
+
+This matters more than it sounds. Working on top of a week-old copy is how two
+people quietly overwrite each other.
+
+### If it goes wrong
+
+```
+Something's not right. Undo everything I've changed since my last commit and put
+the project back the way it was. Tell me what you're throwing away first.
+```
+
+Nothing is lost that matters — the artwork can be regenerated in a minute, and
+the live website was never touched.
+
+### Four things never to do
+
+- **Never commit the `.env` file.** It holds the keys. The project is set up to
+  ignore it; if the assistant ever offers to add it, say no and tell an admin.
+- **Never commit a list of attendees, or any spreadsheet with people's email
+  addresses in it.** Those belong in the `tmp/` folder, which is ignored on
+  purpose, and they get deleted when you are done.
+- **Never agree to "force push"**, and never agree to rewrite history. If you are
+  offered either, the honest answer is *"I don't know, ask in #website-team"*.
+- **Never push straight to `main`.** Always a branch, always a pull request. The
+  one exception has its own skill, and it is the next box.
+
+> **The one exception: `/tweak-event-slides`.**
+> Changing a word on slides that already exist publishes itself, straight away,
+> with no review and no undo button. That is deliberate — it exists for the hour
+> before the doors open, when a speaker's title is wrong on the screen behind
+> them. It is safe because it only ever changes **one small thing**: a word, a
+> photograph, a name. Anything bigger than that goes back through
+> `/build-event-slides` and a normal pull request.
+
+### The commands, for the one time you need them
+
+You should not have to type these. They are here so that nothing above is magic.
+
+```
+git status                      # what have I changed
+git switch -c my-branch-name    # start a branch
+git add -A                      # take everything
+git commit -m "feat: …"         # save it, with a message
+git push -u origin my-branch    # send it to GitHub
+gh pr create --fill             # open the pull request
+```
+
+---
+
+## 5. The golden rules
 
 Five things worth knowing before you send anything to a real person.
 
@@ -335,9 +510,9 @@ and a phone.
 
 ---
 
-## 5. The skills, one by one
+## 6. The skills, one by one
 
-### 5.1 `/reply-to-contact-messages` — answer the people who wrote to us
+### 6.1 `/reply-to-contact-messages` — answer the people who wrote to us
 
 **What it does.** People who fill in the contact form on the website land in a
 list that nobody has been working through. This skill shows you who is waiting,
@@ -403,7 +578,7 @@ participation or a safety concern.
 
 ---
 
-### 5.2 `/update-mailing-list` — see and update who gets our email
+### 6.2 `/update-mailing-list` — see and update who gets our email
 
 **What it does.** Shows who is currently on the mailing list, and adds people from
 a spreadsheet — but only people who genuinely agreed to be added.
@@ -475,7 +650,7 @@ the do-not-contact record can live safely in the project.
 
 ---
 
-### 5.3 `/send-event-emails` — email the people coming to an event
+### 6.3 `/send-event-emails` — email the people coming to an event
 
 **What it does.** Sends one of four stage emails to everyone who registered for a
 specific event.
@@ -490,7 +665,7 @@ specific event.
 **Before you start, two things:**
 
 1. **The event must already be on the website.** If it isn't, run
-   `/sync-event-from-slack` first (section 5.6). The skill takes the date, venue
+   `/sync-event-from-slack` first (section 6.6). The skill takes the date, venue
    and times from the website so the email cannot contradict it.
 2. **A registrant list exported from Humanitix.** In Humanitix, export the
    attendees for that event and **make sure the export includes the attendee
@@ -534,7 +709,7 @@ instead. Again: the refusal is the tool working.
 
 ---
 
-### 5.4 `/email-the-community` — one announcement to the whole list
+### 6.4 `/email-the-community` — one announcement to the whole list
 
 **What it does.** Sends a single announcement to everyone on the mailing list, as
 a proper broadcast with a working unsubscribe link.
@@ -590,7 +765,7 @@ cancelled — just say "cancel that broadcast". Once it has gone out, it is gone
 
 ---
 
-### 5.5 `/monthly-newsletter` — the monthly newsletter
+### 6.5 `/monthly-newsletter` — the monthly newsletter
 
 **What it does.** Walks through one month's newsletter: pulls the automatically
 prepared draft, helps you write the human parts, adds the month's real event
@@ -624,47 +799,60 @@ of real events. The skill has a step that collects them for you. Do not skip it.
 
 ---
 
-### 5.6 `/sync-event-from-slack` — put an event on the website
+### 6.6 `/sync-event-from-slack` — how an event gets onto the website
+
+**This is the one skill in this guide you do not run.** It belongs to the website
+team. What you do instead is one line in Slack, and this section is about getting
+that line right.
 
 **What it does.** Reads the Slack channel where an event is being planned and
 turns it into a page on the She Sharp website — dates, venue, speakers, speaker
 photos, the poster, all of it — without anyone downloading and renaming images by
 hand.
 
-**Say this:**
+**Why it is not yours to run.** Two reasons, and only the second is about
+passwords.
 
-```
-/sync-event-from-slack
-```
+1. **It moves two places at once.** The public website gets the event; a separate,
+   private archive gets the record of the Slack conversation behind it. Those two
+   have to stay level with each other, and they are kept level by one person so
+   that “who read what, and when” always has an answer.
+2. It needs a Slack token, and the archive holds things — attendee spreadsheets,
+   live ticket codes, private messages — that must never reach a public website.
 
-or:
+**What to do instead.** Post it in **`#website-team`**. That channel exists for
+exactly this, and every message in it is read. Include four things:
 
-- "Sync the AUT LinkedIn event from Slack."
-- "Update the event page from the planning channel."
-- "Create the new event from Slack."
+- **Which event** — by name or date. “The Xero one in October”, not “the event”.
+- **What should change**, in the words that should appear on the page.
+- **The material**, attached — the headshot, the run sheet link, the document.
+- **When you need it by.**
 
-**What it will show you.** A plan listing every file it wants to download, every
-field it wants to change, and — importantly — a `Redactions:` line naming
-anything it deliberately left out. **Read that line carefully here.** Planning
-channels contain registration codes and private links, and anything published to
-the website is public permanently, including in the project's history.
+**Please do not send it as a direct message.** Website requests arrive in a
+workspace of two hundred conversations and are found by looking for the signals of
+an event — a venue, a date, a ticket link. “Please update Carolina’s profile on
+the website” has none of those, so it scores zero and is invisible. It is not that
+a DM is rude; it is that a DM gets lost. `#website-team` is where it will not.
 
-**It does not change anything until you say "apply".**
+**When it matters most.** Whenever event details change, and always before anyone
+runs `/send-event-emails`, `/make-event-poster` or `/build-event-slides` for that
+event. All three read the date and venue from the website, so the website has to
+be right first.
 
-**When you'd use it.** Whenever event details change, and always before running
-`/send-event-emails` for that event — that skill takes its dates and venue from
-the website, so the website has to be right first.
+The whole order, and who does which part, is on one page at
+`/internal/event-playbook`, and in full in
+`docs/development/EVENT_LIFECYCLE_SOP.md`.
 
 ---
 
-## 6. When something goes wrong
+## 7. When something goes wrong
 
 ### "I typed `/` and my skill isn't in the list"
 
 - Check Cursor has the **`she-sharp` folder itself** open, not the folder above
   it. Look at the file list: you should see `app`, `components`, `lib`.
 - Close and reopen Cursor — skills are discovered at startup.
-- Make sure Part C finished. If `git clone` failed, there is no project yet.
+- Make sure Part D finished. If cloning failed, there is no project yet.
 
 ### "It says `resend` is not found"
 
@@ -680,7 +868,7 @@ Then close the terminal, open a new one, and try `resend --version` again.
 
 The `.env` file is missing, in the wrong folder, or has the wrong name. It must
 sit next to `package.json` and be named exactly `.env`. If you never received
-one, ask an admin (Part E).
+one, ask an admin (Part F).
 
 ### "It refused to send and I don't understand why"
 
@@ -706,6 +894,47 @@ experienced tells you to.
 - **Already delivered:** it cannot be recalled. Tell the team, and if it needs a
   correction, send a short, plain follow-up. Don't try to hide it.
 
+### "It says I don't have permission, or it can't find the repository"
+
+Your GitHub account is not in the **NZ-SheSharp** organisation yet, or you are
+signed in as a different account. Paste this:
+
+```
+Which GitHub account am I signed in as, and can I see the NZ-SheSharp
+organisation? Don't change anything.
+```
+
+If it is the wrong account, ask it to sign you out and back in. If it is the
+right account and the organisation is still not visible, an admin has to add you
+— that is not something you or the assistant can fix.
+
+### "It says my push was rejected"
+
+Almost always because somebody else changed the same part of the project while
+you were working. Paste this:
+
+```
+My push was rejected. Get the latest changes and rebase my branch on top of
+them, then try again. If there is a conflict, stop and explain it to me in plain
+English — don't guess at a resolution.
+```
+
+If it reports a conflict, that is a real decision about whose version wins.
+Take it to `#website-team` rather than answering it yourself.
+
+### "I've made a mess and I want to start over"
+
+Nothing you have done locally has touched the live website, so this is always
+safe:
+
+```
+Throw away everything I've changed since my last commit and put me back on an
+up-to-date copy of main. List what you're discarding first so I can check.
+```
+
+The one thing worth rescuing first is anything you typed by hand — copy it out
+before you run this. Generated files (posters, decks) can simply be made again.
+
 ### "It's asking me something I don't know the answer to"
 
 Say so — "I don't know, what do you suggest?" It will explain the options and
@@ -721,11 +950,11 @@ passing to a developer.
 
 ---
 
-## 7. Words you'll see
+## 8. Words you'll see
 
 | Word | What it means |
 |---|---|
-| **Repo / repository** | The project's folder of files — the thing you copied in Part C |
+| **Repo / repository** | The project's folder of files — the thing you copied in Part D |
 | **Terminal** | The text window where you type commands. Not dangerous; it just doesn't have buttons |
 | **CSV** | A spreadsheet saved as plain text. Excel and Google Sheets both export it |
 | **Segment** | A named group of people in Resend, e.g. "Newsletter Pilot". A broadcast goes to a segment |
