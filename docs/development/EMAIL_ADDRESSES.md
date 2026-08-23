@@ -128,16 +128,29 @@ why the problem stayed invisible for a year.
 `dmarc@` and `tlsrpt@` are DNS reporting addresses and appear only in the
 deployment docs.
 
-## Known-dead, deliberately left alone
+## The one wrong-domain literal, and how it was retired
 
-`lib/db/migrations/0008_add_notifications_table.sql` creates an `email_queue`
-table whose `from_email` defaults to `noreply@shesharp.org` — **missing the
-`.nz`**. Nothing references that table: it is not in `lib/db/schema/`, so
-Drizzle does not know it exists, and no code reads or writes it. The default is
-unreachable and cannot put a wrong-domain From on a real message. It is left as
-it is because editing an applied migration breaks the journal's hash contract
-for anyone rebuilding from scratch; the real fix is to drop the table, which is
-a production `DROP` and belongs in its own change.
+`lib/db/migrations/0008_add_notifications_table.sql` created an `email_queue`
+table whose `from_email` defaulted to `noreply@shesharp.org` — **missing the
+`.nz`**. A From on that domain would fail both the `from-identity` gate and
+DMARC alignment.
+
+It could never actually send anything. The table is absent from
+`lib/db/schema/`, so Drizzle does not know it exists; no route, service or
+script reads or writes it; and it is not present in the production database
+either. But an inert wrong-domain sender literal is precisely what a future
+reader revives by accident, so **`0031_drop_dead_email_queue.sql` drops the
+table**.
+
+Two things about the shape of that fix:
+
+- **0008 is left byte-identical.** Drizzle records a hash per migration and
+  applies anything it does not recognise, so editing an applied file makes it
+  look new and re-runs it — which for 0008 means *creating* this table rather
+  than removing it.
+- **The drop is `IF EXISTS`.** It is a no-op against production, where the
+  table is already gone, and a cleanup in any environment that ever built it.
+  It carries no data risk: nothing has ever written a row to it.
 
 ## Related
 
