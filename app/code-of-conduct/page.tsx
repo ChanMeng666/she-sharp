@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { LegalPageLayout } from "@/components/legal-page-layout";
 import "@/styles/components/legal-page.css";
+import { PRIVACY_EMAIL } from "@/lib/config/contact-addresses";
 
 export const metadata: Metadata = {
   title: "Code of Conduct",
@@ -55,6 +56,27 @@ export default function CodeOfConductPage() {
             <li>Alert staff if you notice violations</li>
             <li>Be mindful of your surroundings</li>
           </ul>
+        </section>
+
+        <section className="legal-section">
+          <h2>Photography</h2>
+          <p>
+            A She Sharp organiser or photographer may be taking photographs at our
+            events, and we publish a selection on our website and in public albums.
+            Tell a member of the team if you would rather not be photographed and we
+            will make sure you are not — you do not need to give a reason.
+          </p>
+          <p>
+            <strong>Do not photograph another attendee&apos;s child.</strong> If you
+            are photographing anyone other than your own group, ask them first, and
+            accept no for an answer.
+          </p>
+          <p>
+            To have a published photograph of you or your child removed, email{" "}
+            <a href={`mailto:${PRIVACY_EMAIL}`}>{PRIVACY_EMAIL}</a>. See our{" "}
+            <a href="/privacy-policy">privacy policy</a> for how we handle
+            photographs of children.
+          </p>
         </section>
 
         <section className="legal-section">

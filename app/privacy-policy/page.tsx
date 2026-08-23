@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { LegalPageLayout } from "@/components/legal-page-layout";
 import "@/styles/components/legal-page.css";
+import { PRIVACY_EMAIL } from "@/lib/config/contact-addresses";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -101,6 +102,29 @@ export default function PrivacyPolicyPage() {
             <li>Tailor your event experience (e.g. catering to dietary restrictions)</li>
             <li>Connect you with appropriate volunteer opportunities</li>
           </ul>
+        </section>
+
+        <section className="legal-section">
+          <h2>Photographs at Our Events</h2>
+          <p>
+            We photograph our events and publish a selection on this website and in
+            public albums. If you would rather not be photographed, tell a member of
+            the She Sharp team on the day and we will make sure you are not.
+          </p>
+          <p>
+            Where children attend, we publish photographs of activities rather than
+            portraits of individual children, we never name a child, and for events
+            run with a school or youth organisation we rely on that
+            organisation&apos;s media consent.
+          </p>
+          <p>
+            If you would prefer a photograph of you or your child not to be published,
+            email{" "}
+            <a href={`mailto:${PRIVACY_EMAIL}`}>{PRIVACY_EMAIL}</a> and we will remove
+            it. Tell us which event and, if you can, which photograph — removing an
+            image means changing this site and editing the public album, so it is not
+            instant, but we will confirm when it is done.
+          </p>
         </section>
 
         <section className="legal-section">

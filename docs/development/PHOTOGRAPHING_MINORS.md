@@ -126,37 +126,59 @@ It is not legal advice, and it does not attempt to state what the Privacy Act
 operating default a contributor can apply without having to ask, plus a record
 of what has not been decided.
 
-**Two things remain the organisation's to adopt**, and neither has been written
-into the live site:
+**One of the two things left open here has since been decided and shipped; the
+other has not.**
 
-- **A consent mechanism.** There is no photography line on any registration
-  form, no signage at events, and no opt-out route for an attendee who does not
-  want their child photographed. The Humanitix registration flow is where this
-  would naturally live.
-- **Public-facing wording.** A draft is below. It is *not* published, and it
-  should not be published until someone at She Sharp — ideally with advice —
-  has agreed it describes what the organisation actually does.
+### Published 2026-08-23
 
-### Draft, unadopted — for the privacy policy
+The wording is live, not a draft, and it went out as three surfaces:
 
-> **Photographs at our events.** We photograph our events and publish a
-> selection on this site and in public albums. Where children attend, we
-> publish photographs of activities rather than portraits of individual
-> children, we never name a child, and for events run with a school or youth
-> organisation we rely on that organisation's media consent. If you would
-> prefer a photograph of you or your child not to be published, email
-> hello@shesharp.org.nz and we will remove it.
+| Surface | Where |
+|---|---|
+| A photography notice on **every event detail page**, upcoming and past | `components/events/event-detail/event-photography-notice.tsx` |
+| "Photographs at Our Events" | `app/privacy-policy/page.tsx` |
+| "Photography" | `app/code-of-conduct/page.tsx` |
 
-### Draft, unadopted — for the code of conduct
+All three route removal requests to `privacy@shesharp.org.nz`
+(`PRIVACY_EMAIL` in `lib/config/contact-addresses.ts`), which
+`EMAIL_ADDRESSES.md` designates for privacy requests. The privacy page's older
+sections still say `info@`, which that same table marks as legacy — an
+inconsistency that predates this and is worth tidying, but not silently, since
+someone may be watching the old address.
 
-> **Photography.** A She Sharp organiser or photographer may be taking
-> photographs. Tell a member of the team if you would rather not be
-> photographed and we will make sure you are not. Do not photograph another
-> attendee's child.
+The event-page notice **is a notice and a removal route, not a consent
+mechanism**, and it says so in its own source. It tells an attendee three
+things they previously had no way to learn: that they may be photographed, that
+they can decline on the day without giving a reason, and that a published frame
+can be taken down.
 
-Adopting the first would mean the removal route has to actually work — someone
-has to own `hello@` requests of that kind, and the immutable cache means removal
-is a code change plus an album edit, not a click.
+**What the removal promise now obligates.** This is the part with a cost:
+
+1. Someone has to actually monitor `privacy@`. `EMAIL_ADDRESSES.md` is explicit
+   that which mailboxes are monitored "is an organisational question" — it is
+   now a published commitment for this one.
+2. Removal is **not a click**. `/img/*` is served `max-age=31536000, immutable`,
+   so a frame cannot be swapped at its own URL: the entry comes out of
+   `detailPageData.photos[]` (or `curated-picks.json`, or
+   `wall-tile-sources.json`), the file is deleted, and `verify-image-paths.ts`
+   is re-run — the reverse check will fail the build if a reference is left
+   behind, which is the safety net working as intended.
+3. The **public Google Photos album is outside this repository** and has to be
+   edited separately. A frame removed from the site but left in the album has
+   not been removed.
+4. If the frame reached a newsletter or a projected deck, those are separate
+   copies too.
+
+### Still open: consent at registration
+
+There is still no photography question anywhere in the sign-up flow. Attendees
+register through **Humanitix**, a third-party platform this codebase does not
+control, so it cannot be added from here. Until it is, the notice on the event
+page and the line in the code of conduct are doing the work that an opt-in
+checkbox would do better — they inform, and they put the burden on the attendee
+to speak up rather than on the organisation to ask.
+
+That remains She Sharp's to close, in Humanitix.
 
 ## Related
 

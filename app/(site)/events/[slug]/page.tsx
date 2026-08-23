@@ -17,6 +17,7 @@ import {
   EventSessions,
   EventSchedule,
   EventInfoSections,
+  EventPhotographyNotice,
   EventSpeakers,
   EventSidebarPanel,
   EventPhotos,
@@ -213,6 +214,14 @@ export default async function EventPage({ params }: EventPageProps) {
 
       {/* Info sections (resources, getting there, venue, key contact) */}
       <EventInfoSections event={event} />
+
+      {/*
+        Photography notice — on EVERY event page, upcoming or past. Attendees had
+        no way to know they might be photographed and no route to have a
+        published frame taken down. Not a consent mechanism: consent would be
+        collected at registration, which happens on Humanitix.
+      */}
+      <EventPhotographyNotice event={event} />
 
       {/* Sponsorship Section */}
       <div>
