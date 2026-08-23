@@ -49,6 +49,7 @@ import { parse } from "csv-parse/sync";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { hashEmail } from "../../lib/email/hash";
+import { ownMailboxAddresses } from "./own-mailboxes";
 
 export { hashEmail };
 
@@ -399,6 +400,20 @@ async function commandSync(dryRun: boolean): Promise<void> {
   }
 }
 
+/**
+ * She Sharp's own mailboxes, by hash.
+ *
+ * Nine of them do not exist, so anything sent to one hard-bounces and the
+ * bounce webhook records an opt-out — correct for the runtime table, wrong for
+ * this register, which means "a member of the public asked us to stop". The
+ * organisation cannot opt out of its own mail. Without this, one run of
+ * `probe-mailboxes.ts` would fold nine of She Sharp's own addresses into a
+ * committed do-not-contact list.
+ */
+const OWN_MAILBOX_HASHES = new Set(
+  ownMailboxAddresses().map((address) => hashEmail(address).toLowerCase())
+);
+
 /** The body of `sync`, split out so the connection close can be guaranteed. */
 async function syncFromDatabase(
   listOptouts: () => Promise<
@@ -410,9 +425,21 @@ async function syncFromDatabase(
   const known = new Set(file.entries.map((entry) => entry.hash.toLowerCase()));
 
   const rows = await listOptouts();
-  const missing = rows.filter((row) => !known.has(row.emailHash.toLowerCase()));
+  const own = rows.filter((row) => OWN_MAILBOX_HASHES.has(row.emailHash.toLowerCase()));
+  const missing = rows
+    .filter((row) => !known.has(row.emailHash.toLowerCase()))
+    .filter((row) => !OWN_MAILBOX_HASHES.has(row.emailHash.toLowerCase()));
 
   console.log(`${rows.length} opt-out(s) in the database, ${file.entries.length} in the file.`);
+  if (own.length > 0) {
+    console.log(
+      `Skipping ${own.length} row(s) for She Sharp's own mailboxes — mostly the
+` +
+        `hard bounces from scripts/email/probe-mailboxes.ts. They belong in the
+` +
+        `runtime table, never in the register.`
+    );
+  }
 
   if (missing.length === 0) {
     console.log("Already in sync — nothing to add.");

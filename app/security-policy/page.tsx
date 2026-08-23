@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { LegalPageLayout } from "@/components/legal-page-layout";
+import { SECURITY_EMAIL } from "@/lib/config/contact-addresses";
 import "@/styles/components/legal-page.css";
 
 export const metadata: Metadata = {
@@ -55,7 +56,7 @@ export default function SecurityPolicyPage() {
 
           <h3>How to Report</h3>
           <ol>
-            <li>Email security@shesharp.org.nz with details</li>
+            <li>Email {SECURITY_EMAIL} with details</li>
             <li>Include steps to reproduce the issue</li>
             <li>Allow us time to investigate and fix</li>
             <li>Avoid public disclosure until resolved</li>
@@ -128,13 +129,16 @@ export default function SecurityPolicyPage() {
             please contact our security team:
           </p>
           <ul>
-            <li><strong>Security Team:</strong> <a href="mailto:security@shesharp.org.nz">security@shesharp.org.nz</a></li>
-            <li><strong>General Support:</strong> <a href="mailto:support@shesharp.org.nz">support@shesharp.org.nz</a></li>
+            <li>
+              <strong>Security reports:</strong>{" "}
+              <a href={`mailto:${SECURITY_EMAIL}`}>{SECURITY_EMAIL}</a>{" "}
+              &mdash; this is the mailbox the people who maintain this site read.
+            </li>
+            <li>
+              <strong>Anything else:</strong> use our{" "}
+              <a href="/contact">contact page</a>.
+            </li>
           </ul>
-          <p>
-            We support PGP encryption for sensitive communications. Request our public key when
-            contacting security@shesharp.org.nz.
-          </p>
         </section>
       </div>
     </LegalPageLayout>

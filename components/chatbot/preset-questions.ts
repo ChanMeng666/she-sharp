@@ -1,4 +1,5 @@
 import { PresetQuestion } from './types';
+import { SPONSORSHIP_EMAIL } from '@/lib/config/contact-addresses';
 
 export const presetQuestions: PresetQuestion[] = [
   // ABOUT (group 1)
@@ -63,7 +64,7 @@ export const presetQuestions: PresetQuestion[] = [
     id: '4',
     question: 'How can I become a sponsor?',
     answer:
-      'We welcome corporate sponsors who share our vision of empowering women in STEM. Sponsorship opportunities include:\n- Event sponsorship\n- Programme funding\n- Annual partnerships\n\nYour organisation can support our mission and engage with our talented community of 3500+ members.\n\n**Learn more:** [Corporate Sponsorship](/sponsors/corporate-sponsorship) | [Email Us](mailto:hello@shesharp.org.nz)',
+      `We welcome corporate sponsors who share our vision of empowering women in STEM. Sponsorship opportunities include:\n- Event sponsorship\n- Programme funding\n- Annual partnerships\n\nYour organisation can support our mission and engage with our talented community of 3500+ members.\n\n**Learn more:** [Corporate Sponsorship](/sponsors/corporate-sponsorship) | [Email Us](mailto:${SPONSORSHIP_EMAIL})`,
     category: 'support',
   },
 ];

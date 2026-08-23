@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { LegalPageLayout } from "@/components/legal-page-layout";
 import "@/styles/components/legal-page.css";
-import { PRIVACY_EMAIL } from "@/lib/config/contact-addresses";
+import { CONDUCT_EMAIL, GENERAL_EMAIL, PRIVACY_EMAIL } from "@/lib/config/contact-addresses";
 
 export const metadata: Metadata = {
   title: "Code of Conduct",
@@ -143,7 +143,7 @@ export default function CodeOfConductPage() {
 
           <h3>Online</h3>
           <ul>
-            <li>Email: <a href="mailto:conduct@shesharp.org.nz">conduct@shesharp.org.nz</a></li>
+            <li>Email: <a href={`mailto:${CONDUCT_EMAIL}`}>{CONDUCT_EMAIL}</a></li>
             <li>Use report features on our platforms</li>
             <li>Contact moderators in online spaces</li>
             <li>Submit anonymous feedback form</li>
@@ -212,8 +212,8 @@ export default function CodeOfConductPage() {
             helping make She Sharp a supportive community for all women in STEM.
           </p>
           <ul>
-            <li><strong>Report Issues:</strong> <a href="mailto:conduct@shesharp.org.nz">conduct@shesharp.org.nz</a></li>
-            <li><strong>General Inquiries:</strong> <a href="mailto:hello@shesharp.org.nz">hello@shesharp.org.nz</a></li>
+            <li><strong>Report Issues:</strong> <a href={`mailto:${CONDUCT_EMAIL}`}>{CONDUCT_EMAIL}</a></li>
+            <li><strong>General Inquiries:</strong> <a href={`mailto:${GENERAL_EMAIL}`}>{GENERAL_EMAIL}</a></li>
           </ul>
         </section>
       </div>

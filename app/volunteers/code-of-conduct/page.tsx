@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { LegalPageLayout } from "@/components/legal-page-layout";
+import { GOVERNANCE_EMAIL } from "@/lib/config/contact-addresses";
 import "@/styles/components/legal-page.css";
 
 export const metadata: Metadata = {
@@ -23,7 +24,7 @@ export default function AmbassadorCodeOfConductPage() {
           </p>
           <p>
             Website: <a href="https://shesharp.org.nz">shesharp.org.nz</a><br />
-            Contact: <a href="mailto:governance@shesharp.org.nz">governance@shesharp.org.nz</a>
+            Contact: <a href={`mailto:${GOVERNANCE_EMAIL}`}>{GOVERNANCE_EMAIL}</a>
           </p>
           <p>
             <strong>Purpose:</strong> This Code of Conduct informs volunteers and ambassadors
@@ -174,7 +175,7 @@ export default function AmbassadorCodeOfConductPage() {
           </p>
           <p>
             <strong>Next Steps:</strong> Please scan & send the completed form to{" "}
-            <a href="mailto:governance@shesharp.org.nz">governance@shesharp.org.nz</a> so that we have
+            <a href={`mailto:${GOVERNANCE_EMAIL}`}>{GOVERNANCE_EMAIL}</a> so that we have
             both the paper & electronic copies of the signed form in our records for compliance with the
             due diligence and governance of our registered charitable trust.
           </p>

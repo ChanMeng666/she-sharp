@@ -9,6 +9,7 @@ import { socialIcons } from "@/components/ui/social-icons";
 import { Mail } from "lucide-react";
 import { PhotoBand } from "@/components/ui/photo-band";
 import { CONTACT_BAND, toBandPhotos } from "@/lib/data/site-photos";
+import { GENERAL_EMAIL } from "@/lib/config/contact-addresses";
 
 export const metadata: Metadata = {
     title: "Contact Us",
@@ -16,8 +17,6 @@ export const metadata: Metadata = {
         "Get in touch with She Sharp. We'd love to hear from you about events, partnerships, media features, and more.",
     alternates: { canonical: "/contact" },
 };
-
-const CONTACT_EMAIL = "hello@shesharp.org.nz";
 
 export default function ContactPage() {
     return (
@@ -40,11 +39,11 @@ export default function ContactPage() {
                         <div className="mt-10">
                             <p className="text-label text-ink-500 mb-3">Email</p>
                             <Link
-                                href={`mailto:${CONTACT_EMAIL}`}
+                                href={`mailto:${GENERAL_EMAIL}`}
                                 className="inline-flex items-center gap-2.5 text-lg font-medium text-brand hover:text-brand-hover transition-colors"
                             >
                                 <Mail className="h-5 w-5 shrink-0" aria-hidden="true" />
-                                {CONTACT_EMAIL}
+                                {GENERAL_EMAIL}
                             </Link>
                         </div>
 

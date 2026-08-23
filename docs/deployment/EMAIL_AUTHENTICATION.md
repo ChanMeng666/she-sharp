@@ -73,8 +73,8 @@ three different things get confused here:
 
 | | Needs a mailbox login? |
 |---|---|
-| **Sending as** `hello@` via Resend | **No.** Resend signs with the domain's DKIM key. The address never has to be opened to send from it. |
-| **Reply-To** `hello@` / `mentoring@` | **No.** The point is that replies reach *the team*, not the maintainer. Both are real Google Workspace inboxes that people read. |
+| **Sending as** `info@` via Resend | **No.** Resend signs with the domain's DKIM key. The address never has to be opened to send from it — which is exactly how this site spent a year sending as `hello@`, a mailbox that had never been created. Sending works; the reply is what bounces. |
+| **Reply-To** `info@` / `mentoring@` | **No.** The point is that replies reach *the team*, not the maintainer. Both were confirmed to be real Google Workspace inboxes with a named reader on 2026-08-23 — see `docs/development/EMAIL_ADDRESSES.md`. Never set a Reply-To that has not been. |
 | **Enabling Google DKIM** | **No mailbox — but yes, Google Workspace super-admin** on `admin.google.com`. See below. |
 | **Collecting DMARC reports** | **No.** Cloudflare receives them on its own domain. |
 
@@ -138,7 +138,7 @@ _bimi / _mta-sts / _smtp._tls     DO NOT EXIST
 |---|---|---|---|
 | **Resend** | transactional + the newsletter pilot | `noreply@` | **Passes** — aligned DKIM *and* aligned SPF (Return-Path `send.shesharp.org.nz`) |
 | **Mailchimp** | the live monthly newsletter | `newsletter@` | **Passes** — aligned DKIM (`k2`/`k3`). SPF does not align (Return-Path is `rsgsv.net`), so DKIM is carrying it alone |
-| **Google Workspace** | humans (`hello@`, `mentoring@`, …) | various | **Fails both** ← the gap |
+| **Google Workspace** | humans (`info@`, `mentoring@`, …) | various | **Fails both** ← the gap |
 
 Progress against the two original problems:
 
@@ -319,7 +319,7 @@ Without 2b, that forwarded fraction of human mail has no passing mechanism.
 > `dig +short TXT google._domainkey.shesharp.org.nz @1.1.1.1` — a truncated key
 > looks like a valid record while every signature silently fails.
 
-*Verify both:* send from `hello@shesharp.org.nz` in Gmail to a personal Gmail →
+*Verify both:* send from `info@shesharp.org.nz` in Gmail to a personal Gmail →
 **Show original** → all three of `SPF: PASS`, `DKIM: 'PASS' with domain
 shesharp.org.nz`, `DMARC: 'PASS'`. Repeat via a Resend path (trigger a password
 reset). Both must pass before Stage 4.
@@ -672,7 +672,7 @@ best-authenticated identity available.
 
 **Streams.** `transactional` (recipient-triggered, never suppressed) ·
 `notification` (recurring, unrequested — carries one-click unsubscribe and
-honours opt-outs) · `marketing` (broadcasts from `hello@`) · `internal` (to She
+honours opt-outs) · `marketing` (broadcasts from `newsletter@`, replying to `info@`) · `internal` (to She
 Sharp's own mailboxes).
 
 Every send is tagged `stream:<name>`, so Resend's analytics separate the
@@ -692,15 +692,15 @@ forgotten or deliberately skipped unless it says so.
 | 2 | **Stage 3a — `np=reject`** | 2 weeks of clean reports | ~2026-08-14 |
 | 3 | **Resend DKIM 1024 → 2048** | a quiet window **after** a broadcast | Before quarantine, never after `p=reject` |
 | 4 | **Stage 3b — `p=quarantine`** | reports show every source identified, no third-party sender hiding in the failures | ~2026-08-30 |
-| 5 | **Stage 2b — Google DKIM** | ⚠️ **Workspace super-admin.** `website@` cannot open `admin.google.com`. Request text is in Stage 2. | Whenever an admin is available |
+| 5 | **Stage 2b — Google DKIM** | ⚠️ **Workspace super-admin.** `website@` cannot open `admin.google.com`. Request text is in Stage 2, and it is folded into `docs/deployment/WORKSPACE_MAILBOX_CHECKLIST.md` so the admin does one sitting rather than two. | Whenever an admin is available |
 | 6 | **Stage 4 — `p=reject`** + root SPF `-all` | **hard-gated on #5** | Not before #5 |
 | 7 | **Decide the legacy SPF include** — drop `include:_spf.1stdomains.co.nz` if reports show nothing sends from those IPs (budget 4/10 → 1/10) | the reports from #1 | With #4 |
 | 8 | **Migrate the newsletter sending off Mailchimp** — see the section above. **List hygiene is done** (18 Aug 2026): all four statuses exported and archived, and the 2,129 non-subscribers are in the suppression register. What remains is importing the 1,560 `Subscribed` through `/update-mailing-list`. | must NOT share a month with #2/#4 | A month with no DMARC change |
 | 8b | **Migrate the subscribe funnel** — wire `/api/newsletter/subscribe` (exists, **nothing calls it**) to a form and repoint the 16 `MAILCHIMP_CONFIG.subscribeUrl` links. Without this, new sign-ups keep going to Mailchimp and never get the Resend send. | — | With #8, not after |
 | 8c | **Decide `MAILCHIMP_CONFIG.archiveUrl`'s replacement.** Partly done: since 2026-08 each new issue is listed in `lib/data/newsletters-manual.ts` pointing at its on-site render (still `noindex`, by design). What remains is the "Open full archive" button, which is the only route to the pre-2026-08 back catalogue. | the back catalogue re-hosted, or the button repointed at `/resources/newsletters` | With #8 |
 | 9 | **Retire the Mailchimp DNS records** (`k2`/`k3._domainkey`) | 2–3 clean Resend sends **and** #8b | After #8 proves out |
-| 10 | **Confirm someone reads `newsletter@`** — it accepts mail (tested, no bounce), but whether a human opens it is unknown. It is both the From and the Reply-To on every newsletter. | someone with Workspace visibility | Before #8 |
-| 11 | **`EMAIL_UNSUBSCRIBE_MAILTO`** — deliberately left **empty**. Only set it once someone confirms the target inbox is real and monitored; an unverified one bounces, which is worse than offering none. | a verified inbox | Optional |
+| 10 | ~~**Confirm someone reads `newsletter@`**~~ — **answered 2026-08-23: no.** Nobody on the team had its password on 2026-08-17, and a direct question in Slack went unanswered. It is no longer the Reply-To (that is now `info@`); it remains the From, which is correct and must not change. Naming an owner is item 3 on `WORKSPACE_MAILBOX_CHECKLIST.md`. | — | **Done** |
+| 11 | **`EMAIL_UNSUBSCRIBE_MAILTO`** — **keep it empty.** The intended target, `unsub@`, was probed on 2026-08-23 and hard-bounced: it does not exist. The HTTPS one-click URL alone satisfies RFC 8058 and both bulk-sender rulebooks, and a mailto into a weekly-read inbox would leave opt-outs unactioned for days — a compliance problem, not a convenience one. | — | **Decided: no** |
 | 12 | **TLS-RPT** (`_smtp._tls`) | needs a real inbox to receive reports (super-admin to create) | Optional, low value |
 | 13 | **MTA-STS** | a second Vercel domain + route | Optional — the only item here whose misconfiguration breaks *inbound* mail |
 | 14 | **BIMI** | a VMC (~USD 1,000–1,500/yr + trademark) | **Deliberately skipped** — not a defensible non-profit spend |

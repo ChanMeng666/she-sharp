@@ -145,7 +145,7 @@ export default function PrivacyPolicyPage() {
           <p>
             You have the right to access and correct any personal information we hold about you.
             To request a copy or update of your information, please contact us at{" "}
-            <a href="mailto:info@shesharp.org.nz">info@shesharp.org.nz</a>.
+            <a href={`mailto:${PRIVACY_EMAIL}`}>{PRIVACY_EMAIL}</a>.
           </p>
           <p>
             We may take steps to verify your identity before processing your request to ensure
@@ -168,7 +168,7 @@ export default function PrivacyPolicyPage() {
             If you have questions about this Privacy Policy or our privacy practices, please contact us:
           </p>
           <ul>
-            <li><strong>Email:</strong> <a href="mailto:info@shesharp.org.nz">info@shesharp.org.nz</a></li>
+            <li><strong>Email:</strong> <a href={`mailto:${PRIVACY_EMAIL}`}>{PRIVACY_EMAIL}</a></li>
             <li><strong>Website:</strong> <a href="https://www.shesharp.org.nz">www.shesharp.org.nz</a></li>
           </ul>
           <p>We aim to respond to all privacy inquiries within 5 business days.</p>

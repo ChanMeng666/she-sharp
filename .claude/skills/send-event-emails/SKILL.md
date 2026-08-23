@@ -65,7 +65,7 @@ Everything else this skill asks, with a default already chosen.
 | Room / level / join details (`day-before`) | **Ask.** Never invent a room number |
 | Feedback form URL (`thank-you`) | **Ask.** No form → drop the button |
 | Photo album URL (`thank-you`) | The event's `galleryUrl` if it has one, else omit |
-| Which mailbox? | `She Sharp <hello@shesharp.org.nz>`, Reply-To `hello@shesharp.org.nz` — both from `lib/email/senders.ts`; the `from-identity` and `reply-to-domain` gates block anything else |
+| Which mailbox? | `She Sharp <info@shesharp.org.nz>`, Reply-To `events@shesharp.org.nz` — both from `lib/email/senders.ts`; the `from-identity` and `reply-to-domain` gates block anything else |
 | Test-send address? | **Ask.** The user names it; this skill has no default mailbox |
 | How many at a time? | 100 per chunk (the Resend maximum), 600ms between chunks |
 

@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Spinner } from "@/components/ui/spinner";
+import { CONDUCT_EMAIL } from "@/lib/config/contact-addresses";
 import {
   DEVICE_HEADER,
   deviceId,
@@ -497,10 +498,10 @@ export function EventFeedbackForm({
           <p className="text-sm text-ink-500">
             If something happened that you would rather tell us privately, email{" "}
             <a
-              href="mailto:conduct@shesharp.org.nz"
+              href={`mailto:${CONDUCT_EMAIL}`}
               className="underline hover:text-brand"
             >
-              conduct@shesharp.org.nz
+              {CONDUCT_EMAIL}
             </a>{" "}
             or read our{" "}
             <Link

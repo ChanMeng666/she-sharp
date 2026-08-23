@@ -40,7 +40,7 @@ them apart is the entire safety margin of this skill.
 ```powershell
 # Required: --from, --subject, --segment-id, and one body source
 resend broadcasts create `
-  --from "She Sharp <hello@shesharp.org.nz>" `
+  --from "She Sharp <newsletter@shesharp.org.nz>" `
   --subject "Mentoring applications are open again" `
   --preview-text "Six months, one mentor, and a room of women in tech behind you." `
   --name "announce-mentoring-round-open" `

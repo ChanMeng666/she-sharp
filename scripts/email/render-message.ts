@@ -151,7 +151,7 @@ function openInBrowser(filePath: string): void {
  * The printed command is meant to be pasted into the repo's primary shell, so
  * backtick, double quote and `$` all need PowerShell's backtick escape — a
  * backslash escape would silently corrupt a From header like
- * `She Sharp <hello@shesharp.org.nz>`.
+ * `She Sharp <info@shesharp.org.nz>`.
  *
  * @param value Raw value.
  * @returns The value wrapped in double quotes, safely escaped.

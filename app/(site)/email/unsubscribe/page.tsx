@@ -1,3 +1,4 @@
+import { GENERAL_EMAIL } from "@/lib/config/contact-addresses";
 import type { Metadata } from "next";
 
 import { Container } from "@/components/layout/container";
@@ -55,9 +56,9 @@ export default async function UnsubscribePage({
               unsubscribe link in the email you received, or write to{" "}
               <a
                 className="underline"
-                href="mailto:hello@shesharp.org.nz"
+                href={`mailto:${GENERAL_EMAIL}`}
               >
-                hello@shesharp.org.nz
+                {GENERAL_EMAIL}
               </a>{" "}
               and we will take you off the list.
             </p>

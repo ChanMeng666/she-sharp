@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { LegalPageLayout } from "@/components/legal-page-layout";
+import { LEGAL_EMAIL } from "@/lib/config/contact-addresses";
 import "@/styles/components/legal-page.css";
 
 export const metadata: Metadata = {
@@ -164,7 +165,7 @@ export default function TermsOfServicePage() {
             policies, please contact us:
           </p>
           <ul>
-            <li><strong>Email:</strong> <a href="mailto:legal@shesharp.org.nz">legal@shesharp.org.nz</a></li>
+            <li><strong>Email:</strong> <a href={`mailto:${LEGAL_EMAIL}`}>{LEGAL_EMAIL}</a></li>
             <li><strong>Charity Number:</strong> CC57025</li>
           </ul>
         </section>

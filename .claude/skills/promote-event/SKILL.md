@@ -169,10 +169,11 @@ What it fixes for you, and why you must not "improve" on any of it:
   opt-out footer and fails the `unsubscribe` gate outright.
 - **`category: "marketing"`** — makes the gates strict, and makes the render
   print a `broadcasts create` skeleton rather than a one-recipient send command.
-- **From / Reply-To `newsletter@shesharp.org.nz`** — the `marketing` identity in
-  `lib/email/senders.ts`. Not `hello@`: that is the 1:1 conversational address,
-  and `newsletter@` carries the years of engagement reputation the
-  Mailchimp → Resend move depends on.
+- **From `newsletter@shesharp.org.nz`, Reply-To `info@shesharp.org.nz`** — the
+  `marketing` identity in `lib/email/senders.ts`. The From carries the years of
+  engagement reputation the Mailchimp → Resend move depends on; the Reply-To is
+  deliberately different because nobody on the team holds `newsletter@`'s
+  password, so a subscriber who presses Reply must land somewhere read.
 - **One button.** Two CTAs split the clicks and neither gets pressed.
 - **All URLs absolute** on `https://www.shesharp.org.nz`. Email clients have no
   base URL, and the `absolute-urls` gate is a hard fail.
