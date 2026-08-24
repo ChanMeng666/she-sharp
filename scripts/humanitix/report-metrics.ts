@@ -33,7 +33,7 @@ import {
   humanitixManifest,
   normalizeHumanitixText,
 } from "../../lib/data/humanitix";
-import { parseDmyToIso, readCsv } from "./csv";
+import { parseDmyToIso, parseIntStrict, parseMoneyCents, readCsv } from "./csv";
 import { REPO_ROOT, argValue, vaultExists } from "./vault";
 
 /**
@@ -199,6 +199,142 @@ function main() {
   say(`// Unique people across the window: ${windowPeople.size} (tickets: ${totalRegistered}).`);
   say();
 
+  // ── Money and access ──────────────────────────────────────────────────────
+  //
+  // The report has carried an entire invented finance page since it was
+  // written, while these figures sat unread in the archive it already ships.
+  // They are small — the organisation runs on free places and partner in-kind
+  // support, not on ticket revenue — and being small is the finding.
+  //
+  // Two definitions worth keeping straight, because getting either wrong turns
+  // a modest true number into a wrong one:
+  //   * `earnings` is NET TO SHE SHARP after Humanitix fees. Not gross, and not
+  //     what an attendee paid.
+  //   * `capacity` here comes from the Event summary report — the seats the
+  //     event actually offered. The per-ticket-type capacities in events.json
+  //     sum to something larger, because allocations overlap.
+  const ticketEarnings = window.reduce((sum, i) => sum + i.earnings, 0);
+  const donationAmount = window.reduce((sum, i) => sum + i.donations.amount, 0);
+  const donationOrders = window.reduce((sum, i) => sum + i.donations.orders, 0);
+  const orderCount = window.reduce((sum, i) => sum + i.orders, 0);
+
+  // Seats offered comes from the Event summary report, NOT from
+  // `instance.capacity`. That field sums the per-ticket-type capacities, and
+  // allocations overlap — it reports 868 seats for a half-year that offered
+  // 606, which would understate a 77% fill as 54%.
+  const summaryFile = humanitixManifest.exports
+    .find((entry) => entry.exportId === exportId)
+    ?.files.find((file) => file.file.startsWith("events-report-"));
+  if (!summaryFile) throw new Error(`No Event summary report in export ${exportId}`);
+  const summaryRows = readCsv(exportId, summaryFile.file);
+  const seatsOffered = summaryRows
+    .filter((row) => {
+      const date = parseDmyToIso(row["Date"] ?? "");
+      return date >= from && date <= to;
+    })
+    .reduce((sum, row) => sum + parseIntStrict(row["Capacity"]), 0);
+
+  // A ticket type that took money is a paid allocation; everything else was
+  // given away. The six revenue-taking types in H1 2026 account for exactly the
+  // ticket earnings above, so the split reconciles rather than being asserted.
+  let paidTickets = 0;
+  let freeTickets = 0;
+  for (const instance of window) {
+    for (const type of instance.ticketTypes) {
+      if (type.earnings > 0) paidTickets += type.tickets;
+      else freeTickets += type.tickets;
+    }
+  }
+
+  const segments = new Map<string, number>();
+  for (const instance of window) {
+    for (const type of instance.ticketTypes) {
+      segments.set(type.segment, (segments.get(type.segment) ?? 0) + type.tickets);
+    }
+  }
+
+  const money = (value: number) => value.toFixed(2);
+
+  say("// ---- money and access ----");
+  say(`ticket-earnings: v(`);
+  say(`  ${money(ticketEarnings)},`);
+  say(
+    `  ${note(`Ticket earnings across the ${window.length} Humanitix instances dated ${from}..${to}, NET TO SHE SHARP after Humanitix fees — not gross and not what attendees paid. Only ${window.filter((i) => i.earnings > 0).length} of the ${window.length} events charged for any ticket at all. Source: ${source}.`)},`
+  );
+  say(`),`);
+  say(`donation-income: v(`);
+  say(`  ${money(donationAmount)},`);
+  say(
+    `  ${note(`${donationOrders} voluntary donations added at checkout across the window, on the Humanitix booking form. Source: ${source}.`)},`
+  );
+  say(`),`);
+  say(`event-income: v(`);
+  say(`  ${money(ticketEarnings + donationAmount)},`);
+  say(
+    `  ${note(`Ticket earnings plus checkout donations, ${from}..${to}. This is the whole of the income that passes through the booking platform; grant funding, sponsorship and in-kind support do not, and are not in this figure. Source: ${source}.`)},`
+  );
+  say(`),`);
+  say(`orders: v(`);
+  say(`  ${orderCount},`);
+  say(
+    `  ${note(`Completed Humanitix orders across the window. An order may carry more than one ticket. Source: ${source}.`)},`
+  );
+  say(`),`);
+  say(`free-places: v(`);
+  say(`  ${freeTickets},`);
+  say(
+    `  ${note(`Tickets issued under a ticket type that took no money, ${from}..${to} — ${Math.round((freeTickets / (freeTickets + paidTickets)) * 100)}% of all ${freeTickets + paidTickets} places. Source: ${source}.`)},`
+  );
+  say(`),`);
+  say(`paid-places: v(`);
+  say(`  ${paidTickets},`);
+  say(
+    `  ${note(`Tickets issued under a ticket type that took money. These ${paidTickets} places account for the whole of the ticket earnings above. Source: ${source}.`)},`
+  );
+  say(`),`);
+  say(`seats-offered: v(`);
+  say(`  ${seatsOffered},`);
+  say(
+    `  ${note(`Capacity summed across the ${window.length} instances, from the Humanitix Event summary report. ${totalRegistered} of those ${seatsOffered} places were taken. One event sold beyond its stated capacity. Source: ${source}.`)},`
+  );
+  say(`),`);
+
+  // Payouts are the cash that actually reached the bank account. Quoted beside
+  // earnings because the two do not match — the 15 May event earned $394.51 and
+  // settled $351.71 — and a funder who reconciles them should find the gap
+  // already named rather than discover it.
+  const payoutFile = humanitixManifest.exports
+    .find((entry) => entry.exportId === exportId)
+    ?.files.find((file) => file.file.startsWith("payout-report-"));
+  if (!payoutFile) throw new Error(`No payout report in export ${exportId}`);
+  const payouts = readCsv(exportId, payoutFile.file).filter((row) => {
+    const date = parseDmyToIso(row["Event Date"] ?? "");
+    return date >= from && date <= to;
+  });
+  const payoutTotal = payouts.reduce(
+    (sum, row) => sum + parseMoneyCents(row["Payout Amount"]) / 100,
+    0
+  );
+
+  say(`payouts-settled: v(`);
+  say(`  ${payouts.length},`);
+  say(
+    `  ${note(`Humanitix settlements for events in ${from}..${to}, all of which were also paid within the window. Source: the payout report in export ${exportId}.`)},`
+  );
+  say(`),`);
+  say(`payouts-amount: v(`);
+  say(`  ${money(payoutTotal)},`);
+  say(
+    `  ${note(`Total settled to She Sharp for events in the window. It is ${money(ticketEarnings + donationAmount - payoutTotal)} less than recorded earnings; the difference is an adjustment on one event that the payout report does not itemise. Source: the payout report in export ${exportId}.`)},`
+  );
+  say(`),`);
+  say();
+  say(`// ticket segments (sums to ${[...segments.values()].reduce((a, b) => a + b, 0)}):`);
+  for (const [segment, tickets] of [...segments].sort((a, b) => b[1] - a[1])) {
+    say(`//   ${String(tickets).padStart(4)}  ${segment}`);
+  }
+  say();
+
   say("// ---- per event ----");
   for (const event of perEvent) {
     say(`${event.slug}: (`);
@@ -208,8 +344,12 @@ function main() {
     say(`  ),`);
     if (event.checkedIn === null) {
       say(`  // NO CHECK-IN WAS RUN at this session. There is no checked-in figure —`);
-      say(`  // not zero. Leave this metric unverified, or state "not recorded".`);
-      say(`  checked-in: p(0),`);
+      say(`  // not zero. na() renders an em dash and survives a FINAL build,`);
+      say(`  // because "not recorded" is a fact about the measurement, not a gap`);
+      say(`  // in it. Never write 0 here: it reads as nobody coming.`);
+      say(`  checked-in: na(`);
+      say(`    ${note(`NOT RECORDED. This session ran no check-in, so Humanitix scanned nobody. ${event.registered} people registered. Source: ${source}.`)},`);
+      say(`  ),`);
     } else {
       say(`  checked-in: v(`);
       say(`    ${event.checkedIn},`);
@@ -247,6 +387,9 @@ function main() {
   );
   console.log(`  companies     ${windowOrgs.size}`);
   console.log(`  unique people ${windowPeople.size}`);
+  console.log(`  event income  ${(ticketEarnings + donationAmount).toFixed(2)} (tickets ${ticketEarnings.toFixed(2)} + donations ${donationAmount.toFixed(2)})`);
+  console.log(`  places        ${paidTickets} paid / ${freeTickets} free of ${seatsOffered} offered`);
+  console.log(`  payouts       ${payouts.length} settlements, ${payoutTotal.toFixed(2)}`);
   const noCheckIn = perEvent.filter((event) => event.checkedIn === null);
   if (noCheckIn.length > 0) {
     console.log(
