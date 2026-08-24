@@ -103,6 +103,93 @@ const MENTORSHIP_2026 = {
     "inbound demand overstates it several times over.",
 };
 
+/**
+ * Email campaign performance, February 2025 to July 2026.
+ *
+ * SECOND-HAND, AND THE ONLY SECOND-HAND SERIES IN THIS FILE. Every other figure
+ * here is derived from an export this repository holds. These 38 rows are
+ * transcribed from `She_Sharp_Campaign_Performance_Report_Jan2025-Feb2026_v0.1.docx`,
+ * prepared by Prasanth Pavithran from the Mailchimp campaign report — a report
+ * that was requested for the archive on 2026-08-17 and never arrived, so this
+ * is the only copy of it the organisation has.
+ *
+ * IT WAS CHECKED BEFORE IT WAS TRUSTED, four ways:
+ *
+ *   · The recipient column sums to 60,648, exactly the total the document
+ *     states, and its stated averages reproduce as RECIPIENT-WEIGHTED means
+ *     (open 28.91 against 28.9 stated) rather than as unweighted ones.
+ *   · Ten campaign send dates fall on exactly the day this repository had
+ *     already derived independently, from the campaign each unsubscribe and
+ *     bounce is recorded against. Ten out of ten, to the day.
+ *   · Its recipient counts track the mailing list's reconstructed size: 1,709
+ *     to 1,717 across late 2025 against 1,716 reconstructed at that year end,
+ *     and 1,560 on the last send, which is the subscriber count in the
+ *     2026-08-17 export to the person.
+ *   · Its worst unsubscribe outlier, Newsletter - April 2026 at 1.95%, is the
+ *     same campaign the raw export attributes 35 unsubscribes to — the single
+ *     worst month in the audience record.
+ *
+ * Replace this with a direct Mailchimp campaign export the moment one exists.
+ * A transcription that has been checked four ways is still a transcription.
+ *
+ * WHAT IT DOES NOT SUPPORT. The source document reads a downward trend in 2026
+ * opens. The rows do not carry it: 2025 averages 28.89% and 2026 averages
+ * 28.43%, a difference of less than half a point across 38 sends. The claim
+ * rests on two low sends read against a range rather than against a mean. What
+ * IS in the data is the last three sends of the window, all in July 2026, at
+ * 19.8%, 13.9% and 19.0% — recent, and too few to call a trend.
+ */
+export interface EmailCampaign {
+  date: string;
+  name: string;
+  recipients: number;
+  openRate: number;
+  clickRate: number;
+  /** Every campaign in the source reports $0 attributed revenue; see the report page. */
+  unsubRate: number;
+}
+
+const EMAIL_CAMPAIGNS: EmailCampaign[] = [
+  { date: "2025-02-28", name: "She Sharp Newsletter - February 2025", recipients: 1586, openRate: 32.47, clickRate: 3.22, unsubRate: 0.69 },
+  { date: "2025-03-03", name: "Join Us to #AccelerateAction for Women in STEM - IWD 2025", recipients: 1573, openRate: 21.93, clickRate: 2.48, unsubRate: 0.38 },
+  { date: "2025-03-25", name: "She Sharp Newsletter - March 2025", recipients: 1564, openRate: 34.65, clickRate: 3.26, unsubRate: 0.58 },
+  { date: "2025-03-25", name: "Join the #IAmRemarkable online workshop this April", recipients: 1559, openRate: 29.83, clickRate: 2.12, unsubRate: 0.06 },
+  { date: "2025-05-06", name: "She Sharp Newsletter - April 2025", recipients: 1545, openRate: 36.76, clickRate: 2.72, unsubRate: 0.32 },
+  { date: "2025-05-08", name: "She Sharp x MYOB - Tech That Matches Your Vibe", recipients: 1543, openRate: 24.24, clickRate: 2.40, unsubRate: 0.19 },
+  { date: "2025-05-28", name: "She Sharp Newsletter - May 2025", recipients: 1534, openRate: 35.33, clickRate: 2.28, unsubRate: 0.07 },
+  { date: "2025-06-29", name: "She Sharp Newsletter - June 2025", recipients: 1626, openRate: 34.50, clickRate: 3.08, unsubRate: 0.31 },
+  { date: "2025-07-04", name: "She Sharp x Tech Babes NZ - THRIVE: Your Career, Your Story", recipients: 1622, openRate: 26.82, clickRate: 2.22, unsubRate: 0.18 },
+  { date: "2025-07-14", name: "Got Questions? Live Hackathon Q&A", recipients: 1619, openRate: 28.66, clickRate: 2.29, unsubRate: 0.49 },
+  { date: "2025-07-31", name: "She Sharp Newsletter - July 2025", recipients: 1609, openRate: 33.25, clickRate: 2.05, unsubRate: 0.37 },
+  { date: "2025-08-17", name: "SheSharp x Fonterra: Business and Technology Transformation", recipients: 1598, openRate: 25.41, clickRate: 3.13, unsubRate: 0.19 },
+  { date: "2025-08-27", name: "SheSharp x Fonterra: Business and Technology Transformation (copy 01)", recipients: 1600, openRate: 26.56, clickRate: 1.25, unsubRate: 0.31 },
+  { date: "2025-08-31", name: "She Sharp Newsletter - August 2025", recipients: 1594, openRate: 36.14, clickRate: 1.13, unsubRate: 0.31 },
+  { date: "2025-09-06", name: "SheSharp x Secure Code Warrior x Xero - Cybersecurity Workshop", recipients: 1591, openRate: 23.88, clickRate: 2.26, unsubRate: 0.25 },
+  { date: "2025-09-16", name: "SheSharp x Secure Code Warrior x Xero - Cybersecurity Workshop", recipients: 1605, openRate: 21.12, clickRate: 1.06, unsubRate: 0.06 },
+  { date: "2025-09-30", name: "Newsletter - September 2025", recipients: 1598, openRate: 34.54, clickRate: 1.00, unsubRate: 0.25 },
+  { date: "2025-10-17", name: "SheSharp x Secure Code Warrior x Xero - Cybersecurity Workshop", recipients: 1722, openRate: 25.38, clickRate: 1.63, unsubRate: 0.12 },
+  { date: "2025-10-17", name: "SheSharp x Vector: Future-Ready (erratum)", recipients: 1721, openRate: 23.59, clickRate: 0.99, unsubRate: 0.23 },
+  { date: "2025-10-31", name: "Newsletter - October 2025", recipients: 1717, openRate: 25.39, clickRate: 0.82, unsubRate: 0.35 },
+  { date: "2025-11-01", name: "SheSharp x Vector: Future-Ready EDM #2", recipients: 1713, openRate: 24.64, clickRate: 1.93, unsubRate: 0.12 },
+  { date: "2025-11-09", name: "SheSharp x HCLTech (Dunedin Event) EDM#1", recipients: 1711, openRate: 26.77, clickRate: 3.33, unsubRate: 0.47 },
+  { date: "2025-12-24", name: "Newsletter - December 2025", recipients: 1709, openRate: 32.59, clickRate: 1.11, unsubRate: 0.88 },
+  { date: "2026-02-14", name: "SheSharp x academyEX IWD Email#1", recipients: 1675, openRate: 27.22, clickRate: 3.76, unsubRate: 0.18 },
+  { date: "2026-02-24", name: "SheSharp x IWD EDM#2", recipients: 1667, openRate: 24.90, clickRate: 1.56, unsubRate: 0.24 },
+  { date: "2026-03-02", name: "Newsletter - March 2026", recipients: 1669, openRate: 44.46, clickRate: 1.62, unsubRate: 0.36 },
+  { date: "2026-03-21", name: "SheSharp x MetLifeCare Mind Coach April Event Email #1", recipients: 1654, openRate: 32.83, clickRate: 2.06, unsubRate: 0.36 },
+  { date: "2026-03-30", name: "SheSharp x MetLifeCare EDM#2", recipients: 1641, openRate: 24.19, clickRate: 2.13, unsubRate: 0.30 },
+  { date: "2026-04-13", name: "Newsletter - April 2026", recipients: 1638, openRate: 49.45, clickRate: 1.77, unsubRate: 1.95 },
+  { date: "2026-04-13", name: "Newsletter - April 2026", recipients: 1618, openRate: 33.50, clickRate: 1.67, unsubRate: 0.19 },
+  { date: "2026-04-25", name: "SheSharp x AUT LinkedIn Event EDM #1", recipients: 1607, openRate: 19.48, clickRate: 1.74, unsubRate: 0.19 },
+  { date: "2026-05-04", name: "SheSharp x AUT LinkedIn Event EDM #2", recipients: 1601, openRate: 19.99, clickRate: 1.00, unsubRate: 0.19 },
+  { date: "2026-05-31", name: "May Month Newsletter", recipients: 1595, openRate: 33.61, clickRate: 1.88, unsubRate: 0.69 },
+  { date: "2026-06-23", name: "She Sharp Newsletter - June 2026", recipients: 1578, openRate: 33.21, clickRate: 2.03, unsubRate: 0.25 },
+  { date: "2026-06-23", name: "She Sharp Newsletter - June 2026", recipients: 1574, openRate: 30.94, clickRate: 2.03, unsubRate: 0.38 },
+  { date: "2026-07-04", name: "SheSharp x MYOB Event EDM #1", recipients: 1569, openRate: 19.82, clickRate: 2.42, unsubRate: 0.19 },
+  { date: "2026-07-07", name: "Resend: SheSharp x MYOB Event EDM #1", recipients: 743, openRate: 13.86, clickRate: 1.48, unsubRate: 0.40 },
+  { date: "2026-07-14", name: "She Sharp x MYOB EDM #2-setB", recipients: 1560, openRate: 19.04, clickRate: 2.24, unsubRate: 0.06 },
+];
+
 const REGISTER_URL = "https://register.charities.govt.nz/Charity/CC57025";
 
 function requireVaults(humanitixExport: string, mailchimpExport: string) {
@@ -358,6 +445,35 @@ function main() {
         alsoRecordedLabel: "still in the waiting queue",
       },
     ],
+
+    email: {
+      campaigns: EMAIL_CAMPAIGNS,
+      totalRecipients: EMAIL_CAMPAIGNS.reduce((a, c) => a + c.recipients, 0),
+      byYear: [...new Set(EMAIL_CAMPAIGNS.map((c) => c.date.slice(0, 4)))]
+        .sort()
+        .map((year) => {
+          const rows = EMAIL_CAMPAIGNS.filter((c) => c.date.startsWith(year));
+          const sent = rows.reduce((a, c) => a + c.recipients, 0);
+          // Recipient-weighted, matching how the source document computes its
+          // own averages. An unweighted mean would let a 743-recipient resend
+          // count for as much as a full send.
+          const weighted = (pick: (c: EmailCampaign) => number) =>
+            Math.round((rows.reduce((a, c) => a + pick(c) * c.recipients, 0) / sent) * 100) / 100;
+          return {
+            year: Number(year),
+            campaigns: rows.length,
+            recipients: sent,
+            openRate: weighted((c) => c.openRate),
+            clickRate: weighted((c) => c.clickRate),
+            unsubRate: weighted((c) => c.unsubRate),
+          };
+        }),
+      attributedRevenue: 0,
+      source:
+        "She_Sharp_Campaign_Performance_Report_Jan2025-Feb2026_v0.1.docx, " +
+        "prepared by Prasanth Pavithran from the Mailchimp campaign report. " +
+        "Transcribed and cross-checked; see the header of build-record.ts.",
+    },
 
     mentorship: MENTORSHIP_2026,
 
