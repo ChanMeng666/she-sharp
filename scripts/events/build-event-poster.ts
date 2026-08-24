@@ -40,7 +40,7 @@ import { fileURLToPath } from "node:url";
 
 import sharp from "sharp";
 
-import { formatEventDate } from "@/lib/data/events";
+import { formatEventDate, isUpcomingEvent } from "@/lib/data/events";
 import {
   SPEAKER_GROUP_ORDER,
   loadEventForDeck,
@@ -175,7 +175,12 @@ export function copyFor(slug: string, strapline?: string): PosterCopy {
     venue: detail.location?.venueName?.trim() ?? "",
     address: detail.location?.address ? tidyAddress(detail.location.address) : undefined,
     partners,
-    hasRsvp: Boolean(detail.registrationUrl?.trim()),
+    // A registration link is necessary but not sufficient. It outlives the
+    // evening — the Humanitix page stays up, so the field is still set months
+    // later — and reading it alone stamped "RSVP TODAY" onto artwork for an
+    // event that had already run. Anything built for a past event is a record
+    // of it, and a record does not ask the reader to come.
+    hasRsvp: Boolean(detail.registrationUrl?.trim()) && isUpcomingEvent(event),
   };
 }
 
