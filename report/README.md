@@ -1,13 +1,21 @@
 # She Sharp — H1 2026 impact report
 
 A print-quality PDF built with [Typst](https://typst.app) 0.15, in the visual
-language of the 2025 impact report (`public/docs/she-sharp-impact-report-2025.pdf`).
+language of the 2025 impact report (`IMPACT_REPORT_2025_PDF` in
+`lib/config/assets.ts` — the published PDFs live on Vercel Blob, not in
+`public/`).
 
 ```powershell
-pwsh report/build.ps1              # draft PDF
+pwsh report/build.ps1              # draft  → report/out/she-sharp-h1-2026-DRAFT.pdf
 pwsh report/build.ps1 -Png         # ... plus 150ppi page previews to look at
-pwsh report/build.ps1 -Final       # the shipping PDF (blocked while data is unverified)
+pwsh report/build.ps1 -Final       # final  → report/out/she-sharp-half-year-report-2026-h1.pdf
 ```
+
+**Both modes write into `report/out/`, which is gitignored.** A final build
+produces a file, not a publication: shipping it is an upload to the Blob store
+under a **new** filename plus a new constant in `lib/config/assets.ts`. Blob
+assets are cached immutable for a year, so an overwrite serves stale bytes with
+no way to bust it. `build.ps1` prints both steps when a final build succeeds.
 
 **Read `report/PITFALLS.md` before editing anything here.** Its first half is
 layout bugs the compiler does not catch; its second half is the failures the
@@ -19,30 +27,72 @@ either.
 
 ## Status
 
-**30 content pages.** Draft builds add a placeholder register that vanishes in a
-final build. Shipped 2026-08-01 (PR #93).
+**31 content pages**, and the draft build is the same 31. The placeholder
+register used to add a page to every draft, which put draft and final
+permanently out of step and made a single `-ExpectPages` unusable; it now
+renders a sheet only when it has something to list, and today it has nothing.
+Shipped 2026-08-01 (PR #93); rebuilt against verified data 2026-08-24.
 
-**`-Final` is currently blocked by design** — 64 metrics are still unverified.
-That is the honest state of this half-year's measurement, and the gate exists so
-it cannot be published as if it were not.
+**`-Final` builds.** Every metric in the tree is either traced to a named source
+or recorded as never measured.
 
-### What is needed to unblock a final build
+### How many metrics are unverified
 
-Editing **`data/report-data.typ` alone** should be enough. If any other file
-needs touching, the data layer has leaked and that is the bug.
+Ask the build; do not read a number here. This section said **64** for weeks
+while the real figure was 29, and a count written into prose rots the moment
+anyone edits `data/`. One command is the answer:
 
-| Needed | Where it goes | Why it is missing |
-|---|---|---|
-| Attendance for 5 of 9 events | `D.events.<slug>.*` | Never exported from the booking platform. The 5 May cohort's export is *broken*, not empty — it shows 5 registrations for a session with a full speaker line-up and a photo gallery. |
-| Returning attendees, organisations | `D.events.<slug>.*` | The 2025 report sourced these from the company name entered at ticket checkout, so the field exists; it has not been exported for this period. |
-| H1 income, expenditure, cost per participant | `D.finance.*` | Held in accounting records outside this repository. `programme-funding`, `surplus` and `cost-per-participant` are already defined and unused — wiring them is a page, not a schema change. |
-| Employment outcomes | — | **Not tracked by any system She Sharp operates.** The report says so rather than estimating. Needs a measurement decision before it needs a number. |
-| Participant demographics | — | Not collected. The largest gap for an MSD-funded employment programme. |
+```powershell
+pwsh report/build.ps1 -Final
+```
 
-Two things the report cannot fix for itself: a **safeguarding statement** for the
-youth workshops with 12–18-year-olds, and a `period?: string` field on
-`types/impact-report.ts` so a half-year edition can be listed on `/resources`
-(that type is keyed by `year` alone).
+It either produces a PDF, in which case none are unverified, or it refuses and
+names every offending file and line. `assert-final-clean(D)` inside
+`lib/metrics.typ` enforces the same rule at compile time; `build.ps1` runs a grep
+version of it first so the failure arrives with a file and a line number instead
+of a Typst path expression. The two are meant to agree exactly, and a change to
+one without the other is a bug — they disagreed by a factor of 3.5 until
+2026-08-24, because the grep was reading comment prose.
+
+To see the state without building, run a draft: `placeholder-register(D)` prints
+a draft-only checklist of everything still being guessed at.
+
+### What the report reports, and what it does not
+
+**The money is what passes through the booking platform and the public
+register**, and it says so on the page:
+
+- Event income is ticket earnings **net of platform fees** plus voluntary
+  checkout donations — not gross, not what attendees paid.
+- Organisation-level income and expenditure are the filed annual returns on the
+  Charities Register (CC57025). **H1 2026 falls in the current financial year
+  and has not been filed**, so no H1 income statement exists to quote.
+
+What genuinely remains unmeasured is **not a missing export**. Nothing here is
+waiting on a file someone forgot to download; each is a measurement decision
+nobody has made:
+
+| Unmeasured | Why there is no number |
+|---|---|
+| Employment outcomes | No system She Sharp operates tracks whether a participant got a job. Needs a decision about what to ask and when, before it needs a figure. |
+| Participant demographics | Not collected at registration. The largest gap for an MSD-funded employment programme. |
+| Post-event feedback | No survey ran in H1 2026, so there are no satisfaction or usefulness figures. The charts that displayed them were removed rather than marked. |
+
+Two related figures are recorded as **never measured** rather than as zero: the
+two Youth Tech sessions ran no check-in scanner, so their attendance is `na()`
+and renders as an em dash. Writing `0` under a tile labelled "Attended" would
+read as nobody coming to a workshop that demonstrably happened.
+
+### Still open outside the report
+
+Neither is fixable inside `report/`, and both were still outstanding on
+2026-08-24:
+
+- A **safeguarding statement** for the youth workshops with 12–18-year-olds.
+  `docs/development/PHOTOGRAPHING_MINORS.md` covers publishing photographs of
+  children and is not a substitute for one.
+- A `period?: string` field on `types/impact-report.ts`, which is keyed by
+  `year` alone, so a half-year edition can be listed on `/resources`.
 
 ---
 
@@ -85,7 +135,16 @@ typst compile --root . --font-path report\fonts --input mode=draft report\she-sh
 ## Every number carries its source
 
 A metric is a dict: `(value: 716, src: "verified", note: "Humanitix export")`.
-`src` is one of `verified` · `placeholder` · `estimate` · `projected`.
+`src` is one of `verified` · `not-recorded` · `placeholder` · `estimate` ·
+`projected`, written through the constructors `v()` · `na()` · `p()` · `e()`.
+
+The last three are collectively FAKE and block a final build. **`not-recorded`
+is deliberately not one of them**, and the distinction is the whole reason it
+exists: a placeholder is a number we have not got yet and the build waits for
+it, while `na(note)` is the finding that no number exists because nobody
+measured. That is itself a verified statement about a system of record, so it
+survives a final build and renders as an em dash. Reach for it only where
+writing `0` would be a plausible-looking lie.
 
 - `num(m)` renders a **verified** metric as plain text, and anything else with an
   amber highlight and a superscript initial. A placeholder cannot be mistaken for
@@ -94,7 +153,8 @@ A metric is a dict: `(value: 716, src: "verified", note: "Humanitix export")`.
   Only `commas` / `pct()` / `money()` require a numeric `value`.
 - `assert-final-clean(D)` **panics a `--input mode=final` compile** while any
   unverified metric survives, naming every path. `build.ps1 -Final` runs the same
-  check first so the failure names a file and line.
+  check first so the failure names a file and line. It also gates
+  `sector-all-metrics`, which lives in `data/sources.typ` outside `D`.
 - `placeholder-register(D)` prints a draft-only checklist of everything still
   being guessed at.
 

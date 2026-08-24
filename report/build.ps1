@@ -6,7 +6,11 @@
 #   pwsh report/build.ps1 -Png            # ... plus 150ppi page previews
 #   pwsh report/build.ps1 -Assets         # re-run the photo conversion first
 #   pwsh report/build.ps1 -Diagrams       # re-render the mermaid diagrams first
-#   pwsh report/build.ps1 -Final          # final, writes public/docs/she-sharp-half-year-report-2026-h1.pdf
+#   pwsh report/build.ps1 -Final          # final, writes report/out/she-sharp-half-year-report-2026-h1.pdf
+#
+# Both modes write into report/out/, which is gitignored. The FINAL pdf is NOT
+# committed and does NOT belong in public/ — see the note printed at the end of
+# a successful final build.
 #
 # NOTE FOR EDITORS: this file must contain NO "less than" or "greater than"
 # characters anywhere, including inside strings and comments. They are the
@@ -19,7 +23,7 @@ param(
     [switch] $Assets,
     [switch] $Diagrams,
     [switch] $Png,
-    [int]    $ExpectPages = 30,
+    [int]    $ExpectPages = 31,
     [string] $Src = "report\she-sharp-h1-2026.typ"
 )
 
@@ -47,6 +51,25 @@ function Assert-Ran($step) {
     if ($LASTEXITCODE -ne 0) {
         throw "$step failed (exit $LASTEXITCODE)."
     }
+}
+
+# Returns the part of a Typst line that a grep is allowed to read: string
+# literals blanked first, then any line comment removed. Strings go first so an
+# "https://..." literal is removed whole and cannot leave a bare "//" behind,
+# and the comment strip additionally refuses to fire on a "//" preceded by a
+# colon, which is a URL sitting in markup rather than in a string.
+#
+# BOTH file-scanning gates below run on the result. This is one function on
+# purpose: the two rules drifted apart once already. The provenance gate (step
+# 5) used to read raw lines, so three lines of explanatory COMMENT PROSE in
+# report/data/report-data.typ — the ones documenting what p() and e() mean —
+# counted as unverified metrics. A perfectly clean data tree still reported
+# hits and refused to build, and the grep disagreed with the Typst-side
+# assert-final-clean by a factor of three. They are supposed to be two
+# implementations of one rule.
+function Get-TypstCode($line) {
+    $code = [regex]::Replace($line, '"(?:[^"\\]|\\.)*"', '""')
+    [regex]::Replace($code, '(^|[^:])//.*$', '$1')
 }
 
 try {
@@ -88,9 +111,7 @@ try {
     # `"hello\@shesharp.org.nz"` renders a VISIBLE BACKSLASH on the page
     # (measured, not assumed). So the gate must never ask anyone to escape a
     # string. String literals and line comments are therefore stripped before
-    # matching; strings go first so an "https://..." literal is removed whole,
-    # and the comment strip additionally refuses to fire on a "//" preceded by a
-    # colon.
+    # matching, by Get-TypstCode above.
     #
     # The at-sign pattern is narrowed to a DOMAIN SHAPE (@word.tld) rather than
     # any at-sign, for two reasons: it is precisely the hazard (an email address
@@ -116,8 +137,7 @@ try {
         $lineNo = 0
         foreach ($line in [System.IO.File]::ReadAllLines($file.FullName)) {
             $lineNo++
-            $code = [regex]::Replace($line, '"(?:[^"\\]|\\.)*"', '""')
-            $code = [regex]::Replace($code, '(^|[^:])//.*$', '$1')
+            $code = Get-TypstCode $line
             if ($code -match '(^|[^\\])~\d') {
                 $tildeHits += ("  " + $file.FullName + ":" + $lineNo + "  " + $line.Trim())
             }
@@ -158,21 +178,49 @@ try {
     #
     # It matches the CONSTRUCTOR CALLS — `p(12)`, `e(46, "…")` — not the string
     # `src: "placeholder"`. That string appears nowhere in the data: it only
-    # exists inside the two `#let` lines that DEFINE p() and e(), so the old
-    # pattern found exactly those two lines and nothing else, on every run,
+    # exists inside the `#let` lines that DEFINE p() and e(), so a pattern on
+    # the string found exactly those lines and nothing else, on every run,
     # whatever the data said. A gate that fires unconditionally is a gate nobody
     # can act on, and it would have passed a tree of pure placeholders just as
-    # readily. `-notmatch '^\s*#let'` keeps the definitions themselves out.
+    # readily. `^\s*#let` keeps the definitions themselves out.
+    #
+    # It reads Get-TypstCode output, not the raw line. Three lines of comment
+    # prose in report-data.typ describe p() and e() by name; scanning raw lines
+    # meant a fully verified tree still reported those three and threw. The
+    # Typst-side assert-final-clean never saw them, so the two gates disagreed.
+    #
+    # The constructor set is v / p / e / na, and only p and e are FAKE. `na()`
+    # is not matched and must not be: it records that a measurement was never
+    # taken (the two Youth Tech sessions ran no check-in), which is a verified
+    # statement about a system of record and survives a final build. Writing 0
+    # there would be the lie this gate exists to prevent, so the message below
+    # names na() as the correct answer rather than leaving an author to guess.
+    #
+    # The leading "not a name character" class replaces a lookbehind, whose
+    # syntax needs the angle-bracket characters this file must not contain. It
+    # is what stops `type(` matching on its trailing `e(`.
     if ($Final -and (Test-Path "report\data")) {
-        $fake = Get-ChildItem -Path "report\data" -Filter *.typ -Recurse -File |
-            Select-String -Pattern '(?<![A-Za-z0-9_-])[pe]\(' |
-            Where-Object { $_.Line -notmatch '^\s*#let' }
-        if ($fake) {
+        $fake = @()
+        foreach ($file in (Get-ChildItem -Path "report\data" -Filter *.typ -Recurse -File)) {
+            $lineNo = 0
+            foreach ($line in [System.IO.File]::ReadAllLines($file.FullName)) {
+                $lineNo++
+                if ($line -match '^\s*#let') { continue }
+                if ((Get-TypstCode $line) -match '(^|[^A-Za-z0-9_-])[pe]\(') {
+                    $fake += ("  " + $file.FullName + ":" + $lineNo + "  " + $line.Trim())
+                }
+            }
+        }
+        if ($fake.Count -gt 0) {
             Write-Host ""
             Write-Host "FINAL build blocked. These metrics are not verified:"
-            $fake | ForEach-Object { Write-Host ("  " + $_.Path + ":" + $_.LineNumber + "  " + $_.Line.Trim()) }
+            $fake | ForEach-Object { Write-Host $_ }
             Write-Host ""
-            throw "$($fake.Count) unverified metric(s) in report\data. Replace each value with the real figure and set src to verified."
+            Write-Host "Replace each with v(value, note) once the figure is traced to a named"
+            Write-Host "source, or with na(note) if the measurement was never taken at all."
+            Write-Host "Do not write 0 for something nobody counted."
+            Write-Host ""
+            throw "$($fake.Count) unverified metric(s) in report\data."
         }
     }
 
@@ -216,15 +264,19 @@ try {
     if (-not (Test-Path $Src)) {
         throw "Report entry file not found: $Src"
     }
+    # BOTH modes write into report\out\, which is gitignored regenerable output.
+    # The final build used to write public\docs\, which no longer exists: the
+    # impact-report PDFs live on Vercel Blob and are referenced through
+    # lib\config\assets.ts. Writing there recreated a directory that must not be
+    # committed, and put the whole report binary inside the Next.js static tree. The
+    # filenames differ so a draft can never be mistaken for the shipping PDF.
+    $mode = "draft"
+    $out = "report\out\she-sharp-h1-2026-DRAFT.pdf"
     if ($Final) {
         $mode = "final"
-        $out = "public\docs\she-sharp-half-year-report-2026-h1.pdf"
-        New-Item -ItemType Directory -Force "public\docs" | Out-Null
-    } else {
-        $mode = "draft"
-        $out = "report\out\she-sharp-h1-2026-DRAFT.pdf"
-        New-Item -ItemType Directory -Force "report\out" | Out-Null
+        $out = "report\out\she-sharp-half-year-report-2026-h1.pdf"
     }
+    New-Item -ItemType Directory -Force "report\out" | Out-Null
 
     Write-Host "Compiling $Src (mode=$mode) to $out"
     typst compile --root . --font-path report\fonts --input mode=$mode $Src $out
@@ -260,6 +312,29 @@ try {
     Write-Host ""
     Write-Host "Build complete"
     Write-Host ("   " + $out + "   " + $size.ToString('N0') + " bytes, " + $pages + " pages")
+
+    # ── 12. What publishing actually takes ──────────────────────────────────
+    # The build stops at a file on disk. Nothing here uploads, and nothing here
+    # should: Blob assets are served with a one-year immutable cache, so a
+    # replaced file keeps serving the old bytes to anyone who has seen it. The
+    # only safe publish is a NEW filename and a NEW constant. Printing the two
+    # steps here is the difference between an operator doing that and an
+    # operator committing the PDF into public/ because that is what the script
+    # used to imply.
+    if ($Final) {
+        Write-Host ""
+        Write-Host "This file is NOT the published report yet, and it must not be committed."
+        Write-Host "public\docs\ no longer exists; the impact-report PDFs live on Vercel Blob."
+        Write-Host "Two manual steps remain:"
+        Write-Host ""
+        Write-Host ("  1. Upload " + $out + " to the Vercel Blob store under a NEW filename.")
+        Write-Host "     Never overwrite an existing Blob asset — they are cached immutable"
+        Write-Host "     for a year, so an overwrite serves stale bytes with no way to bust it."
+        Write-Host ""
+        Write-Host "  2. Add a new constant for the returned URL in lib\config\assets.ts,"
+        Write-Host "     beside IMPACT_REPORT_2024_PDF and IMPACT_REPORT_2025_PDF, and point"
+        Write-Host "     the /resources listing at it. See docs\development\FUNDER_REPORTS.md."
+    }
 }
 finally {
     Pop-Location

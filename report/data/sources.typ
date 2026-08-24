@@ -407,7 +407,7 @@
   (
     id: "report-2025",
     label: "2025 Impact Report",
-    detail: "public/docs/she-sharp-impact-report-2025.pdf — the comparative year. NOTE: that document is internally inconsistent. Its founder's letter (p.3) says \"over 500 registered attendees\" from \"135 unique companies\"; its own summary panel (p.5) says 716 and 138. This report quotes the p.5 panel throughout and treats the p.3 prose as a rounding error in the source document.",
+    detail: "The published 2025 impact report, referenced as IMPACT_REPORT_2025_PDF in lib/config/assets.ts and hosted on Vercel Blob — the comparative year. NOTE: that document is internally inconsistent. Its founder's letter (p.3) says \"over 500 registered attendees\" from \"135 unique companies\"; its own summary panel (p.5) says 716 and 138. This report quotes the p.5 panel throughout and treats the p.3 prose as a rounding error in the source document.",
   ),
   (
     id: "marketing-stats",
