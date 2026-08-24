@@ -24,7 +24,7 @@
 param(
     [switch] $Png,
     [switch] $Data,
-    [int]    $ExpectPages = 12,
+    [int]    $ExpectPages = 13,
     [string] $Src = "report-internal\she-sharp-record.typ"
 )
 

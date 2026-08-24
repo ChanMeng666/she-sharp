@@ -76,10 +76,13 @@
       ),
       .._gap(
         "Email engagement",
-        [Opens and clicks were never exported and the account-level report never
-         arrived. Sends are only evidenced indirectly, through the campaign a
-         person unsubscribed from.],
-        "Gap",
+        [#text(weight: 600)[No longer a gap, and it never fully was.] This row
+         used to say opens and clicks had never been exported. They had — a
+         colleague pulled the campaign report and wrote it up, and nobody had
+         connected that document to this one. It is now page 8. What is still
+         missing is the export itself: those figures are transcribed from a
+         Word document rather than read from the platform.],
+        "Closed",
       ),
       .._gap(
         "Attendance before 2020",
@@ -97,9 +100,11 @@
   ]
 
   #reading[
-    Four of the eight are decisions rather than gaps, which means they cannot be
-    fixed by a better export — someone has to choose what to ask, when to ask
-    it, and who records the answer. The two marked Gap are the cheapest: both
-    are exports that exist and have not been taken.
+    Four of the eight are decisions rather than gaps: they cannot be fixed by a
+    better export, because somebody has to choose what to ask, when to ask it,
+    and who records the answer. One of the eight closed while this report was
+    being written, and it closed by asking a colleague rather than by any new
+    measurement — worth remembering before the next one is written off as
+    impossible.
   ]
 ]

@@ -68,7 +68,9 @@
 // content block, where a bare `@` starts a label reference) but NOT in a string
 // literal — `"\@"` renders a visible backslash. Interpolating this constant into
 // markup with `#contact-email` inserts it as text, so it stays safe there.
-#let contact-email = "hello@shesharp.org.nz"
+// `info@`, NOT `hello@` — see the note on `org.email` in data/sources.typ.
+// The retired `hello@` local part never existed and bounced every message.
+#let contact-email = "info@shesharp.org.nz"
 #let founder-name = "Dr. Mahsa McCauley"
 #let founder-role = "Founder & Chair"
 #let city = "Tāmaki Makaurau Auckland"
