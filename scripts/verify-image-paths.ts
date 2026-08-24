@@ -58,6 +58,18 @@ export const KNOWN_UNREFERENCED: Array<{ path: string; reason: string }> = [
   { path: "/img/events/event-lesmills-03-september-2026/story-v2.jpg", reason: "regenerated poster set, pending a keep-or-drop decision" },
   { path: "/img/events/event-lesmills-03-september-2026/story-v2.webp", reason: "regenerated poster set, pending a keep-or-drop decision" },
 
+  // Artwork built for the MYOB evening after it had already run, so it is a
+  // record of the event rather than a promotion of it. Every other size in that
+  // set is claimed by the folder's generated index.ts; these two are the pair
+  // the manifest deliberately never claims, because they are the two the
+  // WEBSITE renders — social.webp as coverImage.url, poster.webp in the page's
+  // posters block. The page still shows the original cover.webp and wiring
+  // either of these in would change a published page, which is a decision that
+  // has not been made. Wire them up or delete them; do not leave them here
+  // indefinitely.
+  { path: "/img/events/she-sharp-and-myob-working-smarter/social.webp", reason: "retrospective poster set; the event page still uses its original cover.webp, and repointing coverImage.url is an unmade decision" },
+  { path: "/img/events/she-sharp-and-myob-working-smarter/poster.webp", reason: "retrospective poster set; the event has no `posters` block on its page yet, and adding one is an unmade decision" },
+
   // The Slack event sync duplicates a shared speaker photo per event rather
   // than sharing one file across events (docs/development/SLACK_APP_DEVELOPMENT_GUIDE.md).
   // The April 2026 Her Waka page never used this copy — only the March one is
