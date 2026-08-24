@@ -1,0 +1,519 @@
+{
+  "metadata": {
+    "generatedBy": "scripts/internal-report/build-record.ts",
+    "generatedFor": "report-internal/ — She Sharp internal record report",
+    "humanitixExport": "2026-08-17",
+    "mailchimpExport": "2026-08-17",
+    "filedReturnsReadAt": "2026-08-24",
+    "registerUrl": "https://register.charities.govt.nz/Charity/CC57025",
+    "note": "GENERATED — do not hand-edit. Counts only: no address, name, IP or code appears here or can be recovered from it. Re-run against a newer export to refresh; that is the whole update procedure."
+  },
+  "coverage": [
+    {
+      "source": "Event register (lib/data/json/)",
+      "from": "2014",
+      "to": "2026",
+      "holds": "Every event, ticketed or not. Attendance only where a ticketing record exists."
+    },
+    {
+      "source": "Humanitix ticketing",
+      "from": "2020-03",
+      "to": "2026-09",
+      "holds": "Registrations, check-ins, earnings, employer answers. 62 of the 96 events held."
+    },
+    {
+      "source": "Mailchimp audience",
+      "from": "2019-07",
+      "to": "2026-08",
+      "holds": "Joins, departures, bounces. No campaign open or click data was exportable."
+    },
+    {
+      "source": "Charities Register CC57025",
+      "from": "FY2020",
+      "to": "FY2025",
+      "holds": "Filed income and expenditure. FY2026 will not be filed until 2027."
+    },
+    {
+      "source": "Member platform (Neon)",
+      "from": "2026-03",
+      "to": "2026-08",
+      "holds": "Accounts, roles, profiles, mentorship queue. Four months old."
+    }
+  ],
+  "events": {
+    "registerHeld": 96,
+    "registerByYear": [
+      {
+        "year": 2014,
+        "events": 1
+      },
+      {
+        "year": 2015,
+        "events": 6
+      },
+      {
+        "year": 2016,
+        "events": 6
+      },
+      {
+        "year": 2017,
+        "events": 6
+      },
+      {
+        "year": 2018,
+        "events": 6
+      },
+      {
+        "year": 2019,
+        "events": 5
+      },
+      {
+        "year": 2020,
+        "events": 7
+      },
+      {
+        "year": 2021,
+        "events": 8
+      },
+      {
+        "year": 2022,
+        "events": 8
+      },
+      {
+        "year": 2023,
+        "events": 12
+      },
+      {
+        "year": 2024,
+        "events": 10
+      },
+      {
+        "year": 2025,
+        "events": 10
+      },
+      {
+        "year": 2026,
+        "events": 13
+      }
+    ],
+    "ticketedInstances": 62,
+    "byYear": [
+      {
+        "year": 2020,
+        "instances": 10,
+        "registered": 739,
+        "people": 468,
+        "newPeople": 468,
+        "returningPeople": 0,
+        "checkedIn": 1,
+        "checkInDataPresent": false,
+        "checkInRate": null,
+        "earnings": 575,
+        "registerEvents": 7
+      },
+      {
+        "year": 2021,
+        "instances": 6,
+        "registered": 333,
+        "people": 235,
+        "newPeople": 196,
+        "returningPeople": 39,
+        "checkedIn": 0,
+        "checkInDataPresent": false,
+        "checkInRate": null,
+        "earnings": 975,
+        "registerEvents": 8
+      },
+      {
+        "year": 2022,
+        "instances": 8,
+        "registered": 733,
+        "people": 512,
+        "newPeople": 449,
+        "returningPeople": 63,
+        "checkedIn": 108,
+        "checkInDataPresent": true,
+        "checkInRate": 0.4909,
+        "earnings": 5110,
+        "registerEvents": 8
+      },
+      {
+        "year": 2023,
+        "instances": 10,
+        "registered": 1025,
+        "people": 730,
+        "newPeople": 634,
+        "returningPeople": 96,
+        "checkedIn": 656,
+        "checkInDataPresent": true,
+        "checkInRate": 0.6986,
+        "earnings": 7000,
+        "registerEvents": 12
+      },
+      {
+        "year": 2024,
+        "instances": 9,
+        "registered": 1138,
+        "people": 715,
+        "newPeople": 546,
+        "returningPeople": 169,
+        "checkedIn": 725,
+        "checkInDataPresent": true,
+        "checkInRate": 0.6371,
+        "earnings": 6620,
+        "registerEvents": 10
+      },
+      {
+        "year": 2025,
+        "instances": 8,
+        "registered": 618,
+        "people": 414,
+        "newPeople": 318,
+        "returningPeople": 96,
+        "checkedIn": 429,
+        "checkInDataPresent": true,
+        "checkInRate": 0.6942,
+        "earnings": 3170,
+        "registerEvents": 10
+      },
+      {
+        "year": 2026,
+        "instances": 11,
+        "registered": 570,
+        "people": 387,
+        "newPeople": 309,
+        "returningPeople": 78,
+        "checkedIn": 349,
+        "checkInDataPresent": true,
+        "checkInRate": 0.6911,
+        "earnings": 1730,
+        "registerEvents": 13
+      }
+    ]
+  },
+  "people": {
+    "unique": 2919,
+    "repeatDistribution": [
+      {
+        "instances": 1,
+        "people": 2229
+      },
+      {
+        "instances": 2,
+        "people": 380
+      },
+      {
+        "instances": 3,
+        "people": 146
+      },
+      {
+        "instances": 4,
+        "people": 55
+      },
+      {
+        "instances": 5,
+        "people": 28
+      },
+      {
+        "instances": 6,
+        "people": 20
+      },
+      {
+        "instances": 7,
+        "people": 12
+      },
+      {
+        "instances": 8,
+        "people": 8
+      },
+      {
+        "instances": 9,
+        "people": 8
+      },
+      {
+        "instances": 10,
+        "people": 7
+      },
+      {
+        "instances": 11,
+        "people": 7
+      },
+      {
+        "instances": 12,
+        "people": 5
+      },
+      {
+        "instances": 13,
+        "people": 2
+      },
+      {
+        "instances": 14,
+        "people": 2
+      },
+      {
+        "instances": 15,
+        "people": 3
+      },
+      {
+        "instances": 17,
+        "people": 1
+      },
+      {
+        "instances": 18,
+        "people": 3
+      },
+      {
+        "instances": 19,
+        "people": 1
+      },
+      {
+        "instances": 21,
+        "people": 1
+      },
+      {
+        "instances": 25,
+        "people": 1
+      }
+    ],
+    "maxInstancesPerPerson": 25,
+    "caveat": "Repeat REGISTRATION, not repeat attendance — a person who registered and did not come is counted. It only becomes attendance when restricted to the instances that recorded check-ins, i.e. 2023 onward. One person with two addresses counts twice; a shared household address counts once. She Sharp's own shared booking mailbox is excluded: its 47 tickets carry 38 different attendee names, so the people behind them are unrecoverable and are simply absent from this distribution."
+  },
+  "checkIn": {
+    "instances": 62,
+    "withCheckIns": 36,
+    "withZeroCheckIns": 26,
+    "firstScanned": "2022-09-03--she-sharp-ai-for-the-environment-female-led-hackathon-aienvirohack"
+  },
+  "list": {
+    "contacts": 3689,
+    "subscribed": 1560,
+    "suppressed": 2129,
+    "byStatus": [
+      {
+        "key": "subscribed",
+        "contacts": 1560
+      },
+      {
+        "key": "unsubscribed",
+        "contacts": 803
+      },
+      {
+        "key": "nonsubscribed",
+        "contacts": 782
+      },
+      {
+        "key": "cleaned",
+        "contacts": 544
+      }
+    ],
+    "byYear": [
+      {
+        "year": 2019,
+        "joined": 293,
+        "unsubscribed": 9,
+        "bounced": 16,
+        "net": 268,
+        "emailableAtYearEnd": 268
+      },
+      {
+        "year": 2020,
+        "joined": 310,
+        "unsubscribed": 61,
+        "bounced": 19,
+        "net": 230,
+        "emailableAtYearEnd": 498
+      },
+      {
+        "year": 2021,
+        "joined": 321,
+        "unsubscribed": 82,
+        "bounced": 46,
+        "net": 193,
+        "emailableAtYearEnd": 691
+      },
+      {
+        "year": 2022,
+        "joined": 550,
+        "unsubscribed": 105,
+        "bounced": 92,
+        "net": 353,
+        "emailableAtYearEnd": 1044
+      },
+      {
+        "year": 2023,
+        "joined": 737,
+        "unsubscribed": 161,
+        "bounced": 104,
+        "net": 472,
+        "emailableAtYearEnd": 1516
+      },
+      {
+        "year": 2024,
+        "joined": 332,
+        "unsubscribed": 160,
+        "bounced": 58,
+        "net": 114,
+        "emailableAtYearEnd": 1630
+      },
+      {
+        "year": 2025,
+        "joined": 322,
+        "unsubscribed": 114,
+        "bounced": 122,
+        "net": 86,
+        "emailableAtYearEnd": 1716
+      },
+      {
+        "year": 2026,
+        "joined": 41,
+        "unsubscribed": 111,
+        "bounced": 87,
+        "net": -157,
+        "emailableAtYearEnd": 1559
+      }
+    ],
+    "reconciliation": {
+      "replayed": 1559,
+      "actual": 1560,
+      "difference": 1,
+      "note": "The replay ends one contact short of the export's own subscriber count. One contact carries no OPTIN_TIME and therefore never joins the series. Nothing is adjusted to close the gap."
+    }
+  },
+  "finance": {
+    "filed": [
+      {
+        "yearEnded": "2020-06-30",
+        "submitted": "2020-11-10",
+        "income": 6660,
+        "expenditure": 2864
+      },
+      {
+        "yearEnded": "2021-12-31",
+        "submitted": "2021-12-29",
+        "income": 13100,
+        "expenditure": 5741
+      },
+      {
+        "yearEnded": "2022-12-31",
+        "submitted": "2022-12-22",
+        "income": 49325,
+        "expenditure": 10331
+      },
+      {
+        "yearEnded": "2023-12-31",
+        "submitted": "2023-12-31",
+        "income": 98917,
+        "expenditure": 44815
+      },
+      {
+        "yearEnded": "2024-12-31",
+        "submitted": "2025-02-05",
+        "income": 102674,
+        "expenditure": 38771
+      },
+      {
+        "yearEnded": "2025-12-31",
+        "submitted": "2026-06-25",
+        "income": 40825,
+        "expenditure": 25335
+      }
+    ],
+    "ticketing": [
+      {
+        "year": 2020,
+        "earnings": 575
+      },
+      {
+        "year": 2021,
+        "earnings": 975
+      },
+      {
+        "year": 2022,
+        "earnings": 5110
+      },
+      {
+        "year": 2023,
+        "earnings": 7000
+      },
+      {
+        "year": 2024,
+        "earnings": 6620
+      },
+      {
+        "year": 2025,
+        "earnings": 3170
+      },
+      {
+        "year": 2026,
+        "earnings": 1730
+      }
+    ],
+    "ticketingLifetime": {
+      "tickets": 25180,
+      "donations": 871.22,
+      "total": 26051.22
+    },
+    "payouts": {
+      "count": 48,
+      "total": 25953.42,
+      "eventsCovered": 38
+    }
+  },
+  "claims": [
+    {
+      "claim": "Members",
+      "claimed": 3500,
+      "recorded": 2919,
+      "recordedLabel": "distinct people who ever registered for a ticketed event, 2020 onward",
+      "alsoRecorded": 3689,
+      "alsoRecordedLabel": "contacts in the mailing audience, of which 1560 may be emailed"
+    },
+    {
+      "claim": "Sponsors",
+      "claimed": 50,
+      "recorded": 39,
+      "recordedLabel": "organisations on the cumulative logo wall",
+      "alsoRecorded": 9,
+      "alsoRecordedLabel": "sponsors carrying a tier in the register"
+    },
+    {
+      "claim": "Events since 2014",
+      "claimed": 96,
+      "recorded": 96,
+      "recordedLabel": "events on the register dated on or before today",
+      "alsoRecorded": 62,
+      "alsoRecordedLabel": "of them with a ticketing record"
+    },
+    {
+      "claim": "Mentors",
+      "claimed": 120,
+      "recorded": 26,
+      "recordedLabel": "mentor records created in the 2026 cycle, 25 of them a single batch import",
+      "alsoRecorded": 0,
+      "alsoRecordedLabel": "active pairings, on both the database and the programme's own weekly digest"
+    },
+    {
+      "claim": "Mentees",
+      "claimed": 350,
+      "recorded": 11,
+      "recordedLabel": "mentee submissions in the 2026 cycle",
+      "alsoRecorded": 10,
+      "alsoRecordedLabel": "still in the waiting queue"
+    }
+  ],
+  "mentorship": {
+    "mentorsOnboarded": 26,
+    "mentorsBatchImported": 25,
+    "menteeSubmissions": 11,
+    "waitingQueue": 10,
+    "mentorProfiles": 23,
+    "activeMentorRoles": 24,
+    "pairings": 0,
+    "meetings": 0,
+    "intakePaused": "2026-06-19",
+    "note": "25 of the 26 mentors were confirmed offline and imported in a single batch on 2026-03-19. They are onboarded, never applied — reading the figure as inbound demand overstates it several times over."
+  },
+  "team": {
+    "size": 15
+  }
+}
