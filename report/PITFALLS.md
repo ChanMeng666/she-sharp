@@ -186,7 +186,7 @@ space is left. Write `\~`. Enforced by `report/build.ps1`.
 
 ## 10. A bare `@` in markup is a label reference
 
-`hello@shesharp.org.nz` in markup silently loses the address. Write `\@`.
+`info@shesharp.org.nz` in markup silently loses the address. Write `\@`.
 Enforced by `report/build.ps1`.
 
 ## 10b. Escaping is MARKUP-ONLY — never "fix" a string literal
@@ -196,7 +196,7 @@ markup body of a `.typ` file). Inside a **string literal** both characters are
 already literal, and adding the escape makes it worse:
 
 ```typst
-#let email = "hello@shesharp.org.nz"     // correct — renders hello@shesharp.org.nz
+#let email = "info@shesharp.org.nz"     // correct — renders info@shesharp.org.nz
 #let email = "hello\@shesharp.org.nz"    // WRONG  — renders hello\@shesharp.org.nz
 ```
 
@@ -209,7 +209,7 @@ stores `contact-email` and `org.email` as plain strings.
 it actively teaches people to introduce this bug. `report/build.ps1` therefore:
 
 - strips string literals **and** `//` comments before matching, so neither a
-  correct `"hello@shesharp.org.nz"` nor a heading reading `(~450 words)` can fire
+  correct `"info@shesharp.org.nz"` nor a heading reading `(~450 words)` can fire
   — both were real false positives on the actual tree;
 - narrows the at-sign pattern to a **domain shape** (`@word.tld`) rather than any
   at-sign, because `@some-label` is *legitimate* Typst markup. Typst label names

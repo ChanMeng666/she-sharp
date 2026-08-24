@@ -31,7 +31,17 @@
   site: "https://www.shesharp.org.nz",
   // Plain `@`: this is a string literal, not markup. `"\@"` would render a
   // visible backslash. Only escape `@` inside a `[...]` content block.
-  email: "hello@shesharp.org.nz",
+  //
+  // `info@`, NOT `hello@`. This prints on the back cover as the address a
+  // funder is invited to write to, and the retired `hello@` local part HAS
+  // NEVER EXISTED — invented by a 2025 contact-page template, published for a
+  // year, and hard-bounced every message sent to it. The website retired it on
+  // 2026-08-23; this report kept its own copy of the org constants and was
+  // missed, so the back cover went on printing it. Only the seven addresses in
+  // the "Monitored" table of docs/development/EMAIL_ADDRESSES.md may be printed
+  // anywhere a reader is invited to write, and `info@` is the one confirmed on
+  // the record to have a human opening it.
+  email: "info@shesharp.org.nz",
   founded: 2014,
   base: "Tāmaki Makaurau Auckland, Aotearoa New Zealand",
   socials: (
