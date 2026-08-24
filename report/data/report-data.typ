@@ -21,6 +21,16 @@
 //                               FINAL build. Use for any aggregate that mixes
 //                               verified and placeholder inputs — the note then
 //                               says exactly which parts are which.
+//   na(note)        not-recorded  no measurement was ever taken. Carries NO
+//                               value, renders as a muted em dash, and DOES
+//                               survive a FINAL build — it is a verified fact
+//                               about a system of record, not a gap in one.
+//
+// p() and na() look similar and are opposites. A placeholder is a number we
+// have not got yet; na() is the finding that the number does not exist. Reach
+// for na() only when writing 0 would be a plausible-looking lie: the two Youth
+// Tech sessions ran no check-in scanner, and a 0 under a tile labelled
+// "Attended" reads as nobody coming to a workshop that demonstrably happened.
 //
 // `lib/metrics.typ` walks this tree, panics on any non-verified metric in a
 // FINAL build, and renders non-verified values with an amber highlight in DRAFT.
@@ -37,6 +47,9 @@
 #let v(value, note) = (value: value, src: "verified", note: note)
 #let p(value) = (value: value, src: "placeholder", note: none)
 #let e(value, note) = (value: value, src: "estimate", note: note)
+// No `value` argument, deliberately: there is nothing to pass. `num()` in
+// lib/metrics.typ short-circuits on the `none` before any formatter sees it.
+#let na(note) = (value: none, src: "not-recorded", note: note)
 
 // -----------------------------------------------------------------------------
 // Document constants (not metrics — plain strings for titles and running heads)
@@ -74,10 +87,10 @@
 //   D.programme.her-waka.*  the MSD-funded employment programme
 //   D.programme.youth.*     the Youth Tech Series
 //   D.community.*           volunteers, enquiries, newsletter, team
-//   D.finance.*             ALL placeholder — the donations table is empty
+//   D.reach.*               who booked, and how the mailing list moved
+//   D.finance.*             ONLY money this repository can see — see the block
 //   D.outlook.*             H2 2026
 //   D.comparatives.*        2025 figures for the year-on-year spread
-//   D.claims.*              marketing claims, all downgraded to estimates
 // -----------------------------------------------------------------------------
 
 #let D = (
@@ -122,12 +135,12 @@
     ),
     check-in-rate-verified: v(
       71,
-      "298 ÷ 418 — check-ins over the registrations of the seven instances that RAN a check-in, not over all 468. Including the two Youth Tech sessions, which scanned nobody, would report 64% and would be measuring the absence of a scanner rather than attendance. Compares with the 67% average reported for 2025 in public/docs/she-sharp-impact-report-2025.pdf, p.3.",
+      "298 ÷ 418 — check-ins over the registrations of the seven instances that RAN a check-in, not over all 468. Including the two Youth Tech sessions, which scanned nobody, would report 64% and would be measuring the absence of a scanner rather than attendance. Compares with the 67% average reported for 2025 in the 2025 impact report (IMPACT_REPORT_2025_PDF in lib/config/assets.ts, hosted on Vercel Blob; the old public/docs/ path no longer exists), p.3.",
     ),
 
     avg-registered: v(
       52,
-      "468 ÷ 9 events. The equivalent 2025 figure was 74 (public/docs/she-sharp-impact-report-2025.pdf, p.5), but 2025 held no small-cohort programme sessions, so the two are not like-for-like. Source: lib/data/json/humanitix/events.json.",
+      "468 ÷ 9 events. The equivalent 2025 figure was 74 — the 2025 impact report (IMPACT_REPORT_2025_PDF in lib/config/assets.ts, hosted on Vercel Blob; the old public/docs/ path no longer exists), p.5 — but 2025 held no small-cohort programme sessions, so the two are not like-for-like. Source: lib/data/json/humanitix/events.json.",
     ),
 
     // Unique employers represented by attendees, from the Humanitix checkout
@@ -328,11 +341,12 @@
       ),
       // NO CHECK-IN WAS RUN at this session, so there is no attendance
       // figure — not a zero. A 0 here would read as nobody turning up to a
-      // workshop that demonstrably happened, with a published gallery. Left
-      // as an estimate so a FINAL build has to make the call deliberately.
-      checked-in: e(
-        0,
-        "NOT RECORDED. The session ran no check-in; Humanitix scanned nobody. Treat as missing, never as zero. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+      // workshop that demonstrably happened, with a published gallery, on the
+      // only page in this report about children. `na()` renders an em dash and
+      // survives a FINAL build: the absence of a measurement is itself the
+      // finding, and it will never become a number.
+      checked-in: na(
+        "NOT RECORDED. This session ran no check-in, so Humanitix scanned nobody. 24 people registered. Source: lib/data/json/humanitix/events.json (export 2026-08-17, attendee spine sha256 4bbac21d8239d5a7…).",
       ),
       returning: v(
         6,
@@ -348,13 +362,10 @@
         26,
         "Humanitix instance dated 2026-06-20. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
       ),
-      // NO CHECK-IN WAS RUN at this session, so there is no attendance
-      // figure — not a zero. A 0 here would read as nobody turning up to a
-      // workshop that demonstrably happened, with a published gallery. Left
-      // as an estimate so a FINAL build has to make the call deliberately.
-      checked-in: e(
-        0,
-        "NOT RECORDED. The session ran no check-in; Humanitix scanned nobody. Treat as missing, never as zero. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+      // As the 13 June session above: no check-in was run, so there is no
+      // attendance figure — not a zero. See that comment for the reasoning.
+      checked-in: na(
+        "NOT RECORDED. This session ran no check-in, so Humanitix scanned nobody. 26 people registered. Source: lib/data/json/humanitix/events.json (export 2026-08-17, attendee spine sha256 4bbac21d8239d5a7…).",
       ),
       returning: v(
         17,
@@ -482,6 +493,29 @@
         96,
         "As `checked-in`: all four cohorts recorded check-ins. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
       ),
+      // The returning-participant story, requested by the section layer to
+      // replace a card that rendered `registered-verified` / `checked-in-verified`
+      // — identical to `registered` / `checked-in` beside it, so the page showed
+      // 128 and 96 twice under two contradictory captions.
+      //
+      // Recomputed from the vault attendee report rather than inherited from the
+      // note on `registered-verified`, which already asserted 93: the 128 rows
+      // dated to the four cohorts are all status "complete", none has a blank
+      // email, and they carry 93 distinct addresses.
+      //
+      // The gap of 35 is NOT 35 returns, and the arithmetic matters because the
+      // card is built on it: 31 are the same address in a LATER cohort, and 4 are
+      // a second ticket booked on an address already used in the SAME cohort.
+      // 128 − 93 is therefore the wrong way to count people coming back;
+      // `repeat-registrants` below is the right one.
+      distinct-registrants: v(
+        93,
+        "Distinct registering email addresses across the four HER WAKA cohorts, against 128 registrations. ADDRESSES, not verified individuals — one address can book more than one place, and four of the 128 registrations are a second ticket on an address already used in the same cohort. Computed from attendee-report-(exported-2026-08-17@10.02.37).csv in the gitignored vault at private/humanitix/2026-08-17/, registered by sha256 in the committed lib/data/json/humanitix/manifest.json, filtered to event dates 2026-03-25, 2026-04-07, 2026-05-05 and 2026-06-02; identity is the lowercased Email column falling back to Buyer email, the same rule as scripts/humanitix/report-metrics.ts.",
+      ),
+      repeat-registrants: v(
+        20,
+        "Registering addresses appearing in more than one HER WAKA cohort: 13 in two cohorts, 3 in three, 4 in all four. Those 20 account for 31 of the 35 registrations above the distinct count; the remaining 4 are same-cohort duplicates and are not people returning. 73 addresses appear in exactly one cohort, and 73 + 20 = 93. Same source and same identity rule as `distinct-registrants`.",
+      ),
       // 16, not 14. Recounted directly from the source: the four cohort records
       // (ids 88, 89, 90, 92) hold 7 + 5 + 5 + 1 = 18 speaker entries, of which
       // 16 are distinct people — two appear in more than one cohort. A v() that
@@ -495,8 +529,14 @@
         5,
         "Recruitment firms named across the four cohorts in lib/data/json/events-custom.json: Potentia, Randstad Digital, Absolute IT, Elevate Consulting, Younity.",
       ),
-      into-work: p(12),
-      confidence-lift: p(84),
+      // `into-work` p(12) and `confidence-lift` p(84) were here and are gone,
+      // not downgraded. Employment outcomes and confidence are tracked by NO
+      // system She Sharp operates, and no survey ran in H1 2026 — so no
+      // process exists that would ever turn either placeholder into a figure.
+      // PITFALLS.md: a placeholder that can never become real is not a
+      // placeholder, because marking it implies "awaiting data". This is a
+      // measurement decision that has not been made, and
+      // sections/08-her-waka.typ says exactly that in body copy.
     ),
     youth: (
       workshops: v(
@@ -539,8 +579,20 @@
         6,
         "Applications were paused on 2026-06-19 — docs/development/MENTORSHIP_APPLICATIONS_PAUSED.md, commit 1d26970.",
       ),
-      pairs-matched: p(9),
-      meetings-logged: p(21),
+      // NIL IS THE VERIFIED TRUTH, so these are v(0) — the same call already
+      // made at D.platform.relationships. They were p(9) and p(21): invented
+      // numbers standing in for a programme that recorded nothing. Two
+      // independent sources agree on zero, which is what makes this verified
+      // rather than absent: the empty database tables, and the weekly Slack
+      // stats app, which had no reason to consult them.
+      pairs-matched: v(
+        0,
+        "No mentor–mentee pairing was recorded in H1 2026. Two independent sources: the `mentorship_relationships` table is empty in the live Neon production database at 2026-08-01; and the weekly \"She Sharp Mentorship Stats\" Slack app, whose 2026-06-29 post is the last inside the period, reports 0 active pairings. Applications were paused on 2026-06-19.",
+      ),
+      meetings-logged: v(
+        0,
+        "No mentoring meeting was logged in H1 2026. Two independent sources: the `meetings` table is empty in the live Neon production database at 2026-08-01; and the weekly \"She Sharp Mentorship Stats\" Slack app's 2026-06-29 post, the last inside the period, records no meetings against 0 active pairings. Nil is the measurement, not a missing measurement.",
+      ),
     ),
   ),
 
@@ -564,19 +616,42 @@
       2,
       "lib/data/team.ts — members carrying the Trustee role: Mahsa McCauley and Mike McCauley.",
     ),
-    // DOWNGRADED from v(6). `lib/newsletter/schedule.ts` computes a send slot;
-    // it is not a record that anything was sent, so it cannot evidence a count.
-    // The repo holds two issue files (2026-06, 2026-07), one of them outside
-    // this period, and the Resend pipeline is a pilot that has not taken over a
-    // live send — the sends that actually reached subscribers went via
-    // Mailchimp, whose archive is not in this repository. No section prints this
-    // today, but marked `verified` it would have sailed through a FINAL build.
-    newsletter-issues: e(
-      6,
-      "Assumed one issue per month, January–June 2026. NOT verifiable from this repository: lib/newsletter/schedule.ts computes a send slot rather than recording sends, and only two issue fixtures exist. Confirm against the Mailchimp campaign archive (MAILCHIMP_CONFIG.archiveUrl in lib/data/newsletters.ts) before a final build.",
+    // The newsletter figures were e(6) and p(1420) — an assumed monthly cadence
+    // and an invented list size. Both are now read from the Mailchimp audience
+    // export of 2026-08-17, which is a record of SENDS in a way that
+    // `lib/newsletter/schedule.ts` is not: that file computes a send slot.
+    // The cadence assumption was also wrong. There was no January or February
+    // issue; the monthly rhythm restarted in March.
+    newsletter-issues: v(
+      4,
+      "Monthly newsletter issues evidenced as sent between 2026-01-01 and 2026-06-30: Newsletter - March 2026; Newsletter - April 2026; May Month Newsletter; She Sharp Newsletter - June 2026. Mailchimp records the campaign a contact unsubscribed from and the campaign a hard bounce was detected on; each issue here is dated by the earliest such reaction, which is an upper bound on its send date. A campaign nobody left and nobody bounced on would be invisible, so this is a FLOOR, not a count of sends — but it IS a record of sends, which lib/newsletter/schedule.ts is not: that file computes a send slot. No January or February 2026 issue appears anywhere in the record. Source: the Mailchimp audience export 2026-08-17 (private/mailchimp/2026-08-17/, hashes in lib/data/json/mailchimp/manifest.json).",
     ),
-    newsletter-subscribers: p(1420),
-    social-followers: p(4600),
+    newsletter-subscribers: v(
+      1560,
+      "Contacts in the She# Mailchimp audience with status \"subscribed\" — the people who may lawfully be emailed. Read at the export date, 2026-08-17, NOT at 2026-06-30: Mailchimp exports a snapshot of the present, and the status column carries no history. The audience holds 3,689 contacts in total; the other 2,129 unsubscribed, hard-bounced, or never subscribed, and are suppression-hashed in lib/data/json/email-suppression-hashes.json so no future import can re-add them. Source: the Mailchimp audience export 2026-08-17 (private/mailchimp/2026-08-17/, hashes in lib/data/json/mailchimp/manifest.json).",
+    ),
+    // The half-year flow behind that standing figure. Publish the three
+    // components beside the net, because -132 alone invites the wrong reading:
+    // 67 of the departures are dead mailboxes, not people leaving.
+    newsletter-joined: v(
+      26,
+      "Contacts whose OPTIN_TIME falls in 2026-01-01..2026-06-30 and who were still subscribed at the export date. Source: the Mailchimp audience export 2026-08-17 (private/mailchimp/2026-08-17/, hashes in lib/data/json/mailchimp/manifest.json).",
+    ),
+    newsletter-unsubscribed: v(
+      91,
+      "Contacts whose UNSUB_TIME falls in 2026-01-01..2026-06-30. Source: the Mailchimp audience export 2026-08-17 (private/mailchimp/2026-08-17/, hashes in lib/data/json/mailchimp/manifest.json).",
+    ),
+    newsletter-bounced: v(
+      67,
+      "Contacts whose CLEAN_TIME falls in 2026-01-01..2026-06-30 — addresses Mailchimp removed after a hard bounce. These are undeliverable mailboxes, not people choosing to leave. Source: the Mailchimp audience export 2026-08-17 (private/mailchimp/2026-08-17/, hashes in lib/data/json/mailchimp/manifest.json).",
+    ),
+    newsletter-net: v(
+      -132,
+      "26 joined less 91 unsubscribed and 67 removed as undeliverable, 2026-01-01..2026-06-30. Source: the Mailchimp audience export 2026-08-17 (private/mailchimp/2026-08-17/, hashes in lib/data/json/mailchimp/manifest.json).",
+    ),
+    // `social-followers: p(4600)` is gone, not downgraded. Nothing in this
+    // repository or in any export held here counts a follower, so no process
+    // exists that would ever verify it.
     photo-galleries: v(
       9,
       "Every H1 event record in lib/data/json/events-custom.json carries a populated detailPageData.galleryUrl.",
@@ -584,28 +659,207 @@
   ),
 
   // ---------------------------------------------------------------------------
-  // FINANCE — EVERYTHING HERE IS A PLACEHOLDER.
+  // REACH — who booked the 468 places, and how the mailing list moved.
   //
-  // The `donations` and `membership_purchases` tables in the production database
-  // are both EMPTY, and there is no accounting export in this repository. Not
-  // one figure below is traceable. They exist so the finance spread has a shape;
-  // a FINAL build will refuse to compile until the treasurer supplies real ones.
+  // Everything here is a different cut of two exports already cited above: the
+  // Humanitix account export and the Mailchimp audience export, both taken
+  // 2026-08-17. Nothing in this block is a new claim; it is the composition
+  // behind figures the headline spread already states.
+  // ---------------------------------------------------------------------------
+  reach: (
+    // A LIST, not a scalar — nine (label, metric) pairs in the shape
+    // `bar-h` and `stat-wall` accept directly (lib/charts.typ, `_row-metric`).
+    // The walker descends into it and reaches each `metric` leaf, so a
+    // non-verified segment could not hide in here.
+    //
+    // THE LABELS ARE HUMANITIX'S CATEGORIES, NOT PLAIN ENGLISH, and three of
+    // them mislead a reader who takes them at face value. Read each note
+    // before writing a caption:
+    //   · "Student" is 41 tertiary students AND 32 primary-school children.
+    //   · "Youth" is five Little Engineers places, NOT the 50 rangatahi.
+    //   · "Programme session" is HER WAKA cohorts only, no Youth Tech.
+    // Every one of the three was written wrong here first, from the segment
+    // name alone, and caught by reading the ticket types back out of the
+    // export. A segment name is not evidence of what the segment contains.
+    ticket-segments: (
+      (
+        label: "Partner guest",
+        metric: v(
+          95,
+          "Tickets under a ticket type named for a partner organisation, across the nine H1 2026 instances — places a partner allocated to its own people, every one at zero cost: AUT 47, MSD 15, RCSA 12, academyEX 12, Metlifecare 4, UNESCO 3, HCLTech 1, MYOB 1. Note the concentration: 46 of the 47 AUT places are the 15 May LinkedIn event, held on AUT's own campus, so nearly half this segment is one host institution's own people at one event. Source: lib/data/json/humanitix/events.json (export 2026-08-17, attendee spine sha256 4bbac21d8239d5a7…).",
+        ),
+      ),
+      (
+        label: "General guest",
+        metric: v(
+          84,
+          "Tickets under a guest ticket type at the three public evening events, all free. NOT all general admission: 49 are open \"Guests\" tickets, 33 are \"Guests of Ambassadors\" (11 on 16 April, 22 on 15 May) and 2 are guests of a speaker — a third of this segment is somebody's plus-one rather than an independent booking. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+        ),
+      ),
+      (
+        label: "Programme session",
+        metric: v(
+          84,
+          "HER WAKA cohort places, and nothing else. Exactly four ticket types feed this segment: Tickets - March 2026 (25), April 2026 (25), May 2026 (20), June 2026 (14). NO Youth Tech ticket is in this segment — those 50 places sit under `student` (32) and `ambassador` (13) with 5 under `youth`. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+        ),
+      ),
+      (
+        label: "Student",
+        metric: v(
+          73,
+          "Tickets under a student ticket type, and the segment a caption is most likely to misdescribe: 41 are TERTIARY students at the three evening events (Students 24 plus Uniclubs 17), and the other 32 are PRIMARY-SCHOOL CHILDREN at the two Youth Tech workshops at Fruitvale Primary (17 on 13 June, 15 on 20 June). \"Student\" here does not mean university. The 24 Students tickets at the evening events are also the only paid places in the segment, accounting for $360 of the $1,200 ticket earnings; the other 49 were free. Self-selected at checkout and never verified. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+        ),
+      ),
+      (
+        label: "Ambassador",
+        metric: v(
+          71,
+          "Tickets under an ambassador ticket type — the She Sharp volunteer network's own places, all free. 58 are at the evening events and HER WAKA cohorts; the other 13 are helper places at the two Youth Tech workshops (7 on 13 June, 6 on 20 June, spelled \"Ambassdors\" in the source). Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+        ),
+      ),
+      (
+        label: "Professional",
+        metric: v(
+          42,
+          "Tickets under a professional ticket type at the three public evening events (20 on 6 March, 11 on 16 April, 11 on 15 May). Every one was paid, and together they account for $840 of the $1,200 in ticket earnings — with the 24 paid student tickets they are the whole of D.finance.paid-places. Self-selected at checkout and never verified. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+        ),
+      ),
+      (
+        label: "Speaker",
+        metric: v(
+          11,
+          "Tickets under a speaker ticket type, across five of the nine instances (6 on 6 March, then 1, 1, 2 and 1 at the four HER WAKA cohorts). Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+        ),
+      ),
+      (
+        label: "Youth",
+        metric: v(
+          5,
+          "One ticket type only: the five \"Tickets - Little Engineers\" places at the 20 June workshop. This is NOT the Youth Tech Series headcount — the other 45 places across the two workshops sit under `student` (32) and `ambassador` (13). A chart labelled \"Youth\" beside a page about 50 rangatahi will be read as a contradiction unless the caption says so. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+        ),
+      ),
+      (
+        label: "Host",
+        metric: v(
+          3,
+          "Two ticket types: \"She Sharp Sponsors\" (2) at the 6 March academyEX event and \"Metlifecare (Host)\" (1) at the 16 April event. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+        ),
+      ),
+    ),
+    // The nine segments above sum to exactly 468, which is the whole point of
+    // printing them: they reconcile with D.headline.registered rather than
+    // sampling it. PITFALLS.md — a reader who adds a column and finds it short
+    // stops trusting the document, so the column has to add up.
+    ticket-segments-total: v(
+      468,
+      "The nine ticket-type segments above sum to exactly 468, identical to D.headline.registered — every H1 2026 ticket falls in exactly one segment and none is unclassified. Source: lib/data/json/humanitix/events.json (export 2026-08-17, attendee spine sha256 4bbac21d8239d5a7…).",
+    ),
+    seats-filled-rate: v(
+      77,
+      "468 of 606 seats offered, 77%. One event sold beyond its stated capacity. The denominator is D.finance.seats-offered — read from the Humanitix Event summary report, NOT from `instance.capacity` in lib/data/json/humanitix/events.json, which sums overlapping ticket-type allocations, reaches 868, and would report this fill as 54%. Source: the 468 numerator is lib/data/json/humanitix/events.json (export 2026-08-17, attendee spine sha256 4bbac21d8239d5a7…); the 606 denominator is the vault CSV cited in full at D.finance.seats-offered.",
+    ),
+    event-email-campaigns: v(
+      6,
+      "Distinct non-newsletter campaigns evidenced as first sent between 2026-01-01 and 2026-06-30: SheSharp x academyEX IWD Email#1; SheSharp x IWD EDM#2; SheSharp x MetLifeCare Mind Coach April Event Email #1; SheSharp x MetLifeCare EDM#2; SheSharp x AUT Linkedin Event EDM #1; SheSharp x AUT Linkedin Event EDM #2 — exactly two per public evening event. Same floor and same dating rule as D.community.newsletter-issues: a campaign nobody left and nobody bounced on is invisible here. Source: the Mailchimp audience export 2026-08-17 (private/mailchimp/2026-08-17/, hashes in lib/data/json/mailchimp/manifest.json).",
+    ),
+  ),
+
+  // ---------------------------------------------------------------------------
+  // FINANCE — ONLY THE MONEY THIS REPOSITORY CAN SEE.
+  //
+  // Fourteen placeholders used to sit here — total income, expenditure by
+  // category, surplus, in-kind venue value, cost per participant, volunteer
+  // hours. Every one was invented so the finance spread had a shape, and there
+  // is still no accounting export in this repository and no ledger a build can
+  // read. They are deleted rather than downgraded: nothing in this repo will
+  // ever produce them, and marking a figure "placeholder" promises it is coming.
+  //
+  // What replaces them is narrower and true. Two systems record She Sharp money
+  // in a form this build can cite:
+  //
+  //   1. the booking platform — every ticket and checkout donation that passed
+  //      through Humanitix in the period, and what Humanitix settled;
+  //   2. the New Zealand Charities Register — the annual returns the trust has
+  //      actually filed, which any funder can read for themselves.
+  //
+  // GRANT FUNDING, SPONSORSHIP AND IN-KIND SUPPORT PASS THROUGH NEITHER. The
+  // event income below is therefore not She Sharp's income; it is the slice of
+  // it that has a machine-readable record. Any page using these figures must
+  // say so, or it invites a reader to subtract $1,334.84 from a grant-funded
+  // year and conclude the organisation is tiny.
+  //
+  // The register figures are the CURRENT filings and neither is an H1 2026
+  // figure — the balance date is 31 December, so H1 2026 sits inside a
+  // financial year that has not been filed and will not be until 2027.
   // ---------------------------------------------------------------------------
   finance: (
-    total-income: p(148500),
-    programme-funding: p(96000),
-    sponsorship-cash: p(34500),
-    donations: p(4200),
-    other-income: p(13800),
-    total-expenditure: p(131200),
-    programme-delivery: p(88400),
-    events-and-venues: p(21600),
-    platform-and-tools: p(12300),
-    administration: p(8900),
-    surplus: p(17300),
-    in-kind-venue-value: p(26000),
-    cost-per-participant: p(322),
-    volunteer-hours: p(1180),
+    // ---- the booking platform, 1 Jan – 30 Jun 2026 --------------------------
+    ticket-earnings: v(
+      1200.00,
+      "Ticket earnings across the nine Humanitix instances dated 2026-01-01..2026-06-30, NET TO SHE SHARP after Humanitix fees — not gross, and not what attendees paid. Only 3 of the 9 events charged for any ticket at all. Source: lib/data/json/humanitix/events.json (export 2026-08-17, attendee spine sha256 4bbac21d8239d5a7…).",
+    ),
+    donation-income: v(
+      134.84,
+      "19 voluntary donations added at checkout across the period, on the Humanitix booking form, spread across 5 events. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+    ),
+    event-income: v(
+      1334.84,
+      "Ticket earnings plus checkout donations, 2026-01-01..2026-06-30. This is the whole of the income that passes through the booking platform; grant funding, sponsorship and in-kind support do not pass through it and are not in this figure. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+    ),
+    orders: v(
+      435,
+      "Completed Humanitix orders across the period. An order may carry more than one ticket, which is why 435 orders yield 468 tickets. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+    ),
+    payouts-settled: v(
+      5,
+      "Humanitix settlements for events dated 2026-01-01..2026-06-30, all of which were also paid within the period. Source: the payout report in the Humanitix account export 2026-08-17.",
+    ),
+    payouts-amount: v(
+      1292.04,
+      "Total settled to She Sharp for events in the period. It is $42.80 less than the $1,334.84 recorded as earned; the difference is an adjustment on the 15 May LinkedIn event that the payout report does not itemise. Named rather than hidden, and not guessed at. Source: the payout report in the Humanitix account export 2026-08-17.",
+    ),
+
+    // ---- access: what the money bought, and what it did not have to --------
+    free-places: v(
+      402,
+      "Tickets issued under a ticket type that took no money, 2026-01-01..2026-06-30 — 86% of all 468 places. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+    ),
+    paid-places: v(
+      66,
+      "Tickets issued under a ticket type that took money. These 66 places account for the whole of the $1,200 ticket earnings above. Source: lib/data/json/humanitix/events.json (export 2026-08-17).",
+    ),
+    // The ONE figure in this file that does not come from a committed JSON
+    // file, so its Source clause has to name the uncommitted CSV rather than
+    // the nearest tracked path. It said "lib/data/json/humanitix/events.json"
+    // — the exact file the rest of the note says the number did NOT come from,
+    // and the file that gives 868. The manifest is committed and registers the
+    // CSV by sha256, so the citation still resolves for a checker.
+    seats-offered: v(
+      606,
+      "Capacity summed across the nine instances dated 2026-01-01..2026-06-30. 468 of those 606 places were taken, and one event sold beyond its stated capacity. Deliberately NOT `instance.capacity` in lib/data/json/humanitix/events.json, which sums overlapping ticket-type allocations and reaches 868 — that figure would report a 77% fill as 54%. Source: the `Capacity` column of the Humanitix Event summary report, events-report-(exported-2026-08-17@12.37.50).csv, held in the gitignored vault at private/humanitix/2026-08-17/ and registered with sha256 d45bd14f5ee19ca0… in the committed lib/data/json/humanitix/manifest.json; summed by scripts/humanitix/report-metrics.ts.",
+    ),
+
+    // ---- the public register: what has actually been FILED ------------------
+    // Two years, both shown. The income fell from $102,674 to $40,825, and a
+    // funder can read that off the register in under a minute — PITFALLS.md,
+    // "state the comparison your reader already has". No explanation is offered
+    // here, because none is evidenced.
+    filed-income-2025: v(
+      40825,
+      "Total income for the year ended 31 December 2025, as filed. Source: the New Zealand Charities Register entry for She Sharp, charity CC57025, Annual Returns tab, return submitted 25/06/2026 on the Tier 4 Combined Form; read 2026-08-24 at https://register.charities.govt.nz/Charity/CC57025. NOT an H1 2026 figure: the balance date is 31 December, so H1 2026 falls inside a financial year that has not been filed.",
+    ),
+    filed-expenditure-2025: v(
+      25335,
+      "Total expenditure for the year ended 31 December 2025, as filed. Source: the New Zealand Charities Register entry for She Sharp, charity CC57025, Annual Returns tab, return submitted 25/06/2026 on the Tier 4 Combined Form; read 2026-08-24 at https://register.charities.govt.nz/Charity/CC57025. NOT an H1 2026 figure: the balance date is 31 December, so H1 2026 falls inside a financial year that has not been filed.",
+    ),
+    filed-income-2024: v(
+      102674,
+      "Total income for the year ended 31 December 2024, as filed. Source: the New Zealand Charities Register entry for She Sharp, charity CC57025, Annual Returns tab, return submitted 5/02/2025; read 2026-08-24 at https://register.charities.govt.nz/Charity/CC57025. Shown beside the 2025 row because the fall from $102,674 to $40,825 is on the public register either way.",
+    ),
+    filed-expenditure-2024: v(
+      38771,
+      "Total expenditure for the year ended 31 December 2024, as filed. Source: the New Zealand Charities Register entry for She Sharp, charity CC57025, Annual Returns tab, return submitted 5/02/2025; read 2026-08-24 at https://register.charities.govt.nz/Charity/CC57025.",
+    ),
   ),
 
   // ---------------------------------------------------------------------------
@@ -620,9 +874,13 @@
       2,
       "Friday 7 August 5:00pm through Saturday 8 August — lib/data/json/events-custom.json, detailPageData.time for aotearoa-ai-hackathon-festival-2026.",
     ),
-    target-registered: p(520),
-    target-cohorts: p(6),
-    target-rangatahi: p(120),
+    // `target-registered` p(520), `target-cohorts` p(6) and `target-rangatahi`
+    // p(120) were here and are gone. No board minute, funding agreement or
+    // planning document in reach of this build sets a target for H2 2026, so
+    // they were three numbers this report would have been the first place to
+    // state. A forecast nobody has committed to is not a placeholder awaiting
+    // data; it is an invention. The three scheduled events below are real
+    // records and carry the outlook on their own.
   ),
 
   // ---------------------------------------------------------------------------
@@ -636,23 +894,23 @@
   comparatives: (
     events-2025: v(
       9,
-      "public/docs/she-sharp-impact-report-2025.pdf, p.5 — \"NUMBER OF EVENTS: 9\".",
+      "the 2025 impact report (IMPACT_REPORT_2025_PDF in lib/config/assets.ts, hosted on Vercel Blob; the old public/docs/ path no longer exists), p.5 — \"NUMBER OF EVENTS: 9\".",
     ),
     registered-2025: v(
       716,
-      "public/docs/she-sharp-impact-report-2025.pdf, p.5 — \"TOTAL NUMBER OF REGISTERED ATTENDEES TO ALL EVENTS: 716\".",
+      "the 2025 impact report (IMPACT_REPORT_2025_PDF in lib/config/assets.ts, hosted on Vercel Blob; the old public/docs/ path no longer exists), p.5 — \"TOTAL NUMBER OF REGISTERED ATTENDEES TO ALL EVENTS: 716\".",
     ),
     avg-registered-2025: v(
       74,
-      "public/docs/she-sharp-impact-report-2025.pdf, p.5 — \"AVERAGE NUMBER OF REGISTERED ATTENDEE PER EVENT: 74\".",
+      "the 2025 impact report (IMPACT_REPORT_2025_PDF in lib/config/assets.ts, hosted on Vercel Blob; the old public/docs/ path no longer exists), p.5 — \"AVERAGE NUMBER OF REGISTERED ATTENDEE PER EVENT: 74\".",
     ),
     companies-2025: v(
       138,
-      "public/docs/she-sharp-impact-report-2025.pdf, p.5 — \"NUMBER OF UNIQUE COMPANIES REPRESENTED BY ATTENDEES: 138\".",
+      "the 2025 impact report (IMPACT_REPORT_2025_PDF in lib/config/assets.ts, hosted on Vercel Blob; the old public/docs/ path no longer exists), p.5 — \"NUMBER OF UNIQUE COMPANIES REPRESENTED BY ATTENDEES: 138\".",
     ),
     check-in-rate-2025: v(
       67,
-      "public/docs/she-sharp-impact-report-2025.pdf, p.3 — \"an average check-in rate of 67% across all events\".",
+      "the 2025 impact report (IMPACT_REPORT_2025_PDF in lib/config/assets.ts, hosted on Vercel Blob; the old public/docs/ path no longer exists), p.3 — \"an average check-in rate of 67% across all events\".",
     ),
     founded: v(
       2014,
@@ -661,22 +919,26 @@
   ),
 
   // ---------------------------------------------------------------------------
-  // MARKETING CLAIMS — lib/data/stats.ts is promotional copy, not a measurement,
-  // and the repository's own data contradicts it. Anything drawn from it is an
-  // estimate at best and must carry that caveat wherever it appears in print.
+  // MARKETING CLAIMS — DELETED. There is no `D.claims` block, on purpose.
+  //
+  // It held three estimates read out of lib/data/stats.ts: members 3,000,
+  // sponsors 50, events since 2014 94. No page in this report rendered any of
+  // them, and no page should: they are cumulative promotional claims with no
+  // register, ledger or export behind them anywhere in this repository, and the
+  // repo's own data contradicts them (39 accounts in `users`, 38 named
+  // organisations in lib/data/sponsors.ts, nine counted events in each of 2025
+  // and H1 2026).
+  //
+  // The metric tree is the wrong place to carry a claim the report does not
+  // make. A figure sitting here — even flagged — reads to the next author as
+  // "approved, awaiting verification", and the flag is exactly what invites
+  // someone to wire it into a page and then verify it. Deleting it is the only
+  // state that cannot be misread.
+  //
+  // The warning itself did not go away, it moved and got better: it is now a
+  // prose paragraph on the methodology page, which can say what a metric dict
+  // cannot — that the numbers on the She Sharp website are cumulative reach
+  // claims since 2014, that this report counts records instead, and that the
+  // two will not reconcile.
   // ---------------------------------------------------------------------------
-  claims: (
-    members: e(
-      3000,
-      "ORGANISATIONAL CLAIM, NOT A MEASUREMENT. lib/data/stats.ts, globalStats.members.current — promotional copy with no register behind it. The production `users` table holds 39 accounts and the mentorship programme onboarded 26 mentors and 11 mentees in H1, so this figure describes cumulative mailing-list and social reach since 2014, not members in any countable sense. A funder who checks 3,000 against 39 must find that distinction already drawn by this report; never print it beside a platform figure without saying which is which.",
-    ),
-    sponsors-all-time: e(
-      50,
-      "ORGANISATIONAL CLAIM, NOT A MEASUREMENT. lib/data/stats.ts, globalStats.sponsors.current — a rounded cumulative claim since 2014 with no sponsor register behind it. The logo wall in lib/data/sponsors.ts carries 38 named organisations, and seven partners backed an event in H1 2026 (D.headline.partners). Those two are counted; this one is not.",
-    ),
-    events-since-2014: e(
-      94,
-      "ORGANISATIONAL CLAIM, NOT A MEASUREMENT. lib/data/stats.ts, globalStats.events.total — a cumulative claim since 2014 with no event register in this repository to support it. Only the nine H1 2026 events (D.headline.events) and the nine 2025 events (D.comparatives.events-2025) are counted records.",
-    ),
-  ),
 )

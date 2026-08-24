@@ -2,14 +2,26 @@
 //
 // A metric is a dictionary shaped `(value: 103, src: "verified", note: "…")`.
 // `src` is one of:
-//   "verified"    — taken from a named system of record; renders plainly
-//   "placeholder" — invented so the page could be laid out; renders FLAGGED
-//   "estimate"    — derived, not measured; renders FLAGGED
-//   "projected"   — a forecast; renders FLAGGED
+//   "verified"     — taken from a named system of record; renders plainly
+//   "not-recorded" — the measurement was never taken; renders as an em dash
+//   "placeholder"  — invented so the page could be laid out; renders FLAGGED
+//   "estimate"     — derived, not measured; renders FLAGGED
+//   "projected"    — a forecast; renders FLAGGED
 //
 // The three flagged states are collectively FAKE. A `final` build refuses to
 // compile while any of them survives, so a placeholder cannot reach a reader
 // by being forgotten.
+//
+// "not-recorded" is deliberately NOT in FAKE, and the distinction is the whole
+// reason it exists. A placeholder is a number we have not got yet — it will
+// arrive, and the build blocks until it does. `not-recorded` is the opposite:
+// the finding that no number exists, because nobody measured. That is itself a
+// verified statement about a system of record, so it survives a FINAL build.
+//
+// The alternative — writing 0 — is a lie with a plausible shape. The two Youth
+// Tech sessions ran no check-in scanner; `0` under a tile labelled "Attended"
+// reads as nobody coming to a workshop that demonstrably happened, on the only
+// page in this report about children. An em dash says what actually happened.
 //
 // Gaps follow RULE 1 (below-side only) — see report/theme/theme.typ.
 
@@ -92,13 +104,24 @@
 // amber highlight plus a superscript initial (P / E / J), so a placeholder is
 // impossible to mistake for a fact at a glance.
 //
+// A `not-recorded` metric renders as a muted em dash with NO highlight and NO
+// superscript. It is not an unverified number that a reader should discount; it
+// is a verified statement that no measurement was taken, and the page copy
+// beside it says so. Flagging it amber would say the opposite.
+//
 // `fmt` receives the raw `value` and returns a string — pass `commas` for big
-// integers, or any custom closure.
+// integers, or any custom closure. The em-dash branch short-circuits BEFORE
+// `fmt` is called, because `value` is `none` there and every formatter in this
+// repository (`commas`, the `pct` and `money` closures below) would fail on it.
+// That guard is why `pct()` and `money()` need no `none` handling of their own:
+// they delegate here and their closures never run.
 #let num(m, fmt: v => str(v)) = {
-  let shown = fmt(m.value)
-  if m.src == "verified" {
-    shown
+  if m.src == "not-recorded" or m.value == none {
+    text(fill: ink-500, [—])
+  } else if m.src == "verified" {
+    fmt(m.value)
   } else {
+    let shown = fmt(m.value)
     box(
       fill: flag-fill,
       stroke: (bottom: 0.7pt + flag-ink),
@@ -115,7 +138,30 @@
   fmt: v => (if digits == 0 { str(int(calc.round(v))) } else { str(calc.round(v, digits: digits)) }) + "%",
 )
 
-#let money(m, prefix: "$") = num(m, fmt: v => prefix + commas(v))
+// `digits` exists because the finance figures are cents-precise and `commas()`
+// rounds: $1,334.84 printed as "$1,335", and the $42.80 gap between what
+// Humanitix recorded as earned and what it settled disappeared entirely at
+// `digits: 0`. That gap is named in the report precisely because it must not be
+// hidden. Default stays 0, so every existing call site renders as before.
+//
+// Cents are computed as an INTEGER before the split, so 1.999 carries into the
+// whole part instead of rendering "1.100".
+#let money(m, prefix: "$", digits: 0) = num(
+  m,
+  fmt: v => {
+    if digits == 0 {
+      prefix + commas(v)
+    } else {
+      let scale = calc.pow(10, digits)
+      let neg = v < 0
+      let units = int(calc.round(calc.abs(v) * scale))
+      let whole = int(calc.floor(units / scale))
+      let frac = str(units - whole * scale)
+      while frac.len() < digits { frac = "0" + frac }
+      (if neg { "-" } else { "" }) + prefix + commas(whole) + "." + frac
+    }
+  },
+)
 
 // ─── Draft marking ──────────────────────────────────────────────────────────
 // Deliberately NOT a page-covering watermark. A diagonal wash across every page
@@ -183,6 +229,9 @@
 // ─── Placeholder register ───────────────────────────────────────────────────
 // A draft-only appendix listing every number the report is still guessing at,
 // so the reviewer has one checklist instead of hunting amber boxes.
+//
+// It lists exactly what `walk()` returns, so `not-recorded` metrics are absent
+// from it by construction — they are not outstanding work.
 #let placeholder-register(data) = {
   if MODE == "final" { return }
   let stale = walk(data)

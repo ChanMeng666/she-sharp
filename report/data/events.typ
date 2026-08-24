@@ -8,26 +8,35 @@
 // headline spread.
 //
 // Editorial fields (`lede`, `speakers`, `venue`) are drawn from the event's own
-// record in `lib/data/json/events-custom.json`. Nothing here is invented except
-// the `companies`, `went-well` and `improve` blocks, which are explicitly
-// placeholder and are marked as such.
+// record in `lib/data/json/events-custom.json`. The `companies` blocks are read
+// from the Humanitix account export of 2026-08-17 — self-reported at checkout
+// and never verified against the organisation, which is what each row's note
+// says. Nothing in this file is invented.
 //
 // The photo-key → source-path table is at the BOTTOM of this file. The asset
 // agent builds its manifest from that block.
 // =============================================================================
 
-#import "report-data.typ": D, v, p, e
+#import "report-data.typ": D, v
 
 // -----------------------------------------------------------------------------
-// Survey blocks.
+// DELETED: the `went-well` and `improve` blocks. Do not re-add them.
 //
-// The 2025 report ran a post-event survey and charted the top four answers to
-// "what went well" (bar chart) and "areas for improvement" (donut) on every
-// event page — see public/docs/she-sharp-impact-report-2025.pdf, p.7.
+// Every record used to carry four "what went well" percentages and four "areas
+// for improvement" percentages — 72 figures in all — shaped to look like a
+// survey response distribution, because the 2025 report charted exactly that on
+// every event page. NO POST-EVENT SURVEY RAN IN H1 2026. Nothing will ever
+// populate these fields: there is no instrument, no export, and no partial
+// dataset waiting to be reconciled.
 //
-// No H1 2026 survey export exists in this repository. Every percentage in the
-// `went-well` and `improve` blocks below is a PLACEHOLDER shaped to look like a
-// real survey response distribution. They block a FINAL build.
+// That makes them fiction with an amber marker on it rather than placeholders.
+// A placeholder says "awaiting data"; these were awaiting nothing. The two
+// charts that consumed them were removed from sections/09-event-page.typ and
+// replaced with the speaker line-up, which is real and comes from each event's
+// own record. See the header comment on that block for the fuller reasoning.
+//
+// The `p()` and `e()` constructors are no longer imported here for the same
+// reason: this file now holds no estimated and no percentage values at all.
 // -----------------------------------------------------------------------------
 
 #let events = (
@@ -53,8 +62,14 @@
       around this year's theme, Give To Gain. The evening was deliberately
       unglamorous in structure — five speakers, honest conversations, and a long
       run of open networking — on the premise that progress grows through
-      community rather than announcements. It was the largest single gathering
-      of the half-year.
+      community rather than announcements. More people were checked in here than
+      // The measure is named on purpose. This read "the largest single
+      // gathering of the half-year", which the LinkedIn evening's reconciled
+      // 106 registrations now outranks — that event drew more bookings, this
+      // one drew more people through the door. Both figures are printed in this
+      // report, so an unqualified superlative invites a reader to find the
+      // other page and disagree with us.
+      at any other session in the half-year.
     ],
     speakers: (
       (
@@ -104,18 +119,6 @@
       ("Sanford", v(2, "Humanitix checkout Company/Organisation field, instance 2026-03-06--she-sharp-and-academyex-international-women-s-day-2026 — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
       ("Ventana Ventures", v(2, "Humanitix checkout Company/Organisation field, instance 2026-03-06--she-sharp-and-academyex-international-women-s-day-2026 — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
       ("Adhesion Ltd", v(1, "Humanitix checkout Company/Organisation field, instance 2026-03-06--she-sharp-and-academyex-international-women-s-day-2026 — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
-    ),
-    went-well: (
-      ("Keynote speaker", p(88)),
-      ("Networking", p(61)),
-      ("Panel questions", p(44)),
-      ("Venue and catering", p(39)),
-    ),
-    improve: (
-      ("More information before the event", p(38)),
-      ("More time for networking", p(27)),
-      ("Speed up the pace", p(20)),
-      ("More stimulating activities", p(15)),
     ),
   ),
   // ===========================================================================
@@ -190,18 +193,6 @@
       ("RCSA", v(1, "Humanitix checkout Company/Organisation field, instance 2026-03-25--her-waka — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
       ("StayinFront", v(1, "Humanitix checkout Company/Organisation field, instance 2026-03-25--her-waka — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
     ),
-    went-well: (
-      ("Panel discussion", p(82)),
-      ("Recruiter insight", p(70)),
-      ("Practical AI exercise", p(55)),
-      ("Small-group format", p(48)),
-    ),
-    improve: (
-      ("More time with recruiters", p(41)),
-      ("More hands-on practice", p(26)),
-      ("Clearer pre-reading", p(18)),
-      ("Longer session", p(15)),
-    ),
   ),
   // ===========================================================================
   (
@@ -272,18 +263,6 @@
       ("RBS Intellect", v(1, "Humanitix checkout Company/Organisation field, instance 2026-04-07--her-waka-april-2026 — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
       ("Sona Sansaar Ltd.", v(1, "Humanitix checkout Company/Organisation field, instance 2026-04-07--her-waka-april-2026 — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
     ),
-    went-well: (
-      ("#IAmRemarkable workshop", p(91)),
-      ("Recruiter tables", p(74)),
-      ("Facilitation", p(58)),
-      ("Peer conversations", p(46)),
-    ),
-    improve: (
-      ("More time with recruiters", p(36)),
-      ("More technical content", p(29)),
-      ("Larger room", p(21)),
-      ("Follow-up material", p(14)),
-    ),
   ),
   // ===========================================================================
   (
@@ -306,14 +285,19 @@
       Career mindset coach Candice Murray took a room at Metlifecare through the
       practical question of how to choose the state you turn up in — calm,
       confidence, self-belief — rather than hoping for it. Metlifecare's CIO Tim
-      // Was: "the second-largest event of the half-year and the first She Sharp
-      // has held in Newmarket." The ranking compared a verified 81 against the
-      // LinkedIn evening's placeholder 68 — if the real figure lands above 81
-      // the sentence becomes false, and nobody currently knows. The Newmarket
-      // claim is all-time, and this report states elsewhere that no pre-2025
-      // event register exists to support one.
-      Aynsley opened the evening. It drew the largest verified attendance of any
-      community evening in the half-year after International Women's Day.
+      // NO RANKING SENTENCE HERE, and this is the second time one has been
+      // removed. It first read "the second-largest event of the half-year and
+      // the first She Sharp has held in Newmarket"; it was then softened to
+      // "the largest verified attendance of any community evening after
+      // International Women's Day", which compared this event's verified 81
+      // against the LinkedIn evening's placeholder 68. The note left here at
+      // the time said the sentence becomes false if the real figure lands above
+      // 81. The Humanitix export of 2026-08-17 put the LinkedIn evening at 106
+      // registered and 70 checked in, so it did, twice over — this was the
+      // SMALLEST of the three community evenings, not the second largest.
+      // A ranking written against an unverified sibling figure is a claim about
+      // the sibling. Do not write another one.
+      Aynsley opened the evening.
     ],
     speakers: (
       (
@@ -349,18 +333,6 @@
       ("UNESCO", v(2, "Humanitix checkout Company/Organisation field, instance 2026-04-16--own-your-energy-with-candice-murray-presented-by-she-sharp-and-metlifecare — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
       ("Vector", v(2, "Humanitix checkout Company/Organisation field, instance 2026-04-16--own-your-energy-with-candice-murray-presented-by-she-sharp-and-metlifecare — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
     ),
-    went-well: (
-      ("Facilitator", p(94)),
-      ("Practical tools", p(72)),
-      ("Interactive format", p(63)),
-      ("Networking", p(51)),
-    ),
-    improve: (
-      ("More time for networking", p(34)),
-      ("More information before the event", p(28)),
-      ("Earlier start", p(22)),
-      ("Written takeaway", p(16)),
-    ),
   ),
   // ===========================================================================
   (
@@ -390,8 +362,13 @@
       The third cohort turned to cybersecurity — a field with more open roles
       than people to fill them and no single way in. Three practitioners gave
       lightning talks on how they got there, followed by forty-five minutes of
-      recruiter tables. Attendance for this session has not yet been reconciled
-      against Humanitix; the figures shown are the incomplete export.
+      // Was: "Attendance for this session has not yet been reconciled against
+      // Humanitix; the figures shown are the incomplete export." It has been.
+      // The stat cards above this lede now read 33 registered and 29 checked
+      // in, straight from the export — a caveat left standing next to figures
+      // it no longer describes is worse than no caveat, because a reader who
+      // notices assumes the numbers were never checked either.
+      recruiter tables.
     ],
     speakers: (
       (
@@ -449,18 +426,6 @@
       ("Auckland University of Technology", v(1, "Humanitix checkout Company/Organisation field, instance 2026-05-05--her-waka-may-2026 — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
       ("BJT", v(1, "Humanitix checkout Company/Organisation field, instance 2026-05-05--her-waka-may-2026 — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
       ("RBS Intellect", v(1, "Humanitix checkout Company/Organisation field, instance 2026-05-05--her-waka-may-2026 — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
-    ),
-    went-well: (
-      ("Lightning talks", p(79)),
-      ("Recruiter tables", p(68)),
-      ("Range of pathways covered", p(57)),
-      ("Supportive atmosphere", p(52)),
-    ),
-    improve: (
-      ("More technical depth", p(35)),
-      ("More time with recruiters", p(30)),
-      ("Reminders before the day", p(21)),
-      ("Better room acoustics", p(14)),
     ),
   ),
   // ===========================================================================
@@ -521,18 +486,6 @@
       ("Ais", v(1, "Humanitix checkout Company/Organisation field, instance 2026-05-15--making-linkedin-work-for-you — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
       ("ASB", v(1, "Humanitix checkout Company/Organisation field, instance 2026-05-15--making-linkedin-work-for-you — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
     ),
-    went-well: (
-      ("Speaker", p(86)),
-      ("Practical examples", p(69)),
-      ("Recruiter perspective", p(54)),
-      ("Q&A", p(43)),
-    ),
-    improve: (
-      ("Live profile review", p(40)),
-      ("More time for questions", p(25)),
-      ("Slides shared afterwards", p(20)),
-      ("Easier venue directions", p(15)),
-    ),
   ),
   // ===========================================================================
   (
@@ -581,18 +534,6 @@
       ("Ideqa", v(1, "Humanitix checkout Company/Organisation field, instance 2026-06-02--her-waka-june-2026 — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
       ("RBS Intellect", v(1, "Humanitix checkout Company/Organisation field, instance 2026-06-02--her-waka-june-2026 — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
     ),
-    went-well: (
-      ("Speaker's own story", p(89)),
-      ("Practical branding steps", p(71)),
-      ("Recruiter market update", p(60)),
-      ("Peer conversations", p(49)),
-    ),
-    improve: (
-      ("Profile review time", p(37)),
-      ("More time with recruiters", p(28)),
-      ("Templates to take away", p(20)),
-      ("Longer session", p(15)),
-    ),
   ),
   // ===========================================================================
   (
@@ -639,18 +580,6 @@
       ("Three Kings School", v(1, "Humanitix checkout Company/Organisation field, instance 2026-06-13--youth-tech-series-ai-and-electronics-workshop — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
       ("UCG", v(1, "Humanitix checkout Company/Organisation field, instance 2026-06-13--youth-tech-series-ai-and-electronics-workshop — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
     ),
-    went-well: (
-      ("Hands-on activity", p(93)),
-      ("Facilitators", p(78)),
-      ("Take-home kit", p(64)),
-      ("Pace for beginners", p(55)),
-    ),
-    improve: (
-      ("More build time", p(44)),
-      ("More kits per table", p(24)),
-      ("Split by age group", p(19)),
-      ("Longer session", p(13)),
-    ),
   ),
   // ===========================================================================
   (
@@ -695,18 +624,6 @@
       ("Metlifecare", v(1, "Humanitix checkout Company/Organisation field, instance 2026-06-20--youth-tech-series-electronics-workshop — normalised to its canonical name by lib/data/json/humanitix/organisations.json. Self-reported at checkout and never verified against the organisation.")),
       ("RBS Intellect", v(1, "Humanitix checkout Company/Organisation field, instance 2026-06-20--youth-tech-series-electronics-workshop — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
       ("W. Hospital", v(1, "Humanitix checkout Company/Organisation field, instance 2026-06-20--youth-tech-series-electronics-workshop — shown as attendees most often spelled it; no canonical entry exists for it. Self-reported at checkout and never verified against the organisation.")),  // as typed
-    ),
-    went-well: (
-      ("Hands-on activity", p(96)),
-      ("Little Engineers kits", p(81)),
-      ("Facilitators", p(70)),
-      ("Confidence at the end", p(58)),
-    ),
-    improve: (
-      ("More build time", p(41)),
-      ("Take-home components", p(27)),
-      ("Split by age group", p(18)),
-      ("More facilitators", p(14)),
     ),
   ),
 )

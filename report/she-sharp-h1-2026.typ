@@ -35,6 +35,7 @@
 #import "sections/13-matching.typ": matching-page
 #import "sections/14-partners.typ": partners-page
 #import "sections/15-voices.typ": voices-page
+#import "sections/23-who-was-in-the-room.typ": who-was-in-the-room-page
 #import "sections/16-sector.typ": sector-page
 #import "sections/17-outlook.typ": outlook-page
 #import "sections/18-whats-next.typ": whats-next-page
@@ -66,7 +67,7 @@
 #cover()
 // ── 2 ───────────────────────────────────────────────────────────────────────
 #contents()
-// ── 3–4 ─────────────────────────────────────────────────────────────────────
+// ── 3–4 ─────────────────────────────────────────────────────────────────
 #founder-letter-pages()
 // ── 5 ───────────────────────────────────────────────────────────────────────
 #glance()
@@ -74,7 +75,7 @@
 #team-page()
 // ── 7 ───────────────────────────────────────────────────────────────────────
 #chapter-her-waka-page()
-// ── 8–9 ─────────────────────────────────────────────────────────────────────
+// ── 8–9 ─────────────────────────────────────────────────────────────────
 #her-waka-shape()
 #her-waka-numbers()
 // ── 10–13 · the four HER WAKA cohorts ───────────────────────────────────────
@@ -84,25 +85,27 @@
 #event-page(event-by-slug("her-waka-june-2026"))
 // ── 14 ──────────────────────────────────────────────────────────────────────
 #chapter-youth-page()
-// ── 15 · both school workshops on ONE page ──────────────────────────────────
+// ── 15 · both school workshops on ONE page ───────────────────────────────
 // Deliberately not two `event-page()` calls — see the header of
 // sections/22-youth-series.typ for why the shared template was the wrong fit
 // for these two sessions specifically.
 #youth-series-page()
-// ── 17 ──────────────────────────────────────────────────────────────────────
+// ── 16 ──────────────────────────────────────────────────────────────────────
 #chapter-community-page()
-// ── 18–20 · the three partner-hosted evenings ───────────────────────────────
+// ── 17–19 · the three partner-hosted evenings ───────────────────────────
 #event-page(event-by-slug("she-sharp-and-academyex-international-womens-day-2026"))
 #event-page(event-by-slug("she-sharp-candice-murray-own-your-energy"))
 #event-page(event-by-slug("making-linkedin-work-for-you-with-stuart-little"))
-// ── 21 ──────────────────────────────────────────────────────────────────────
+// ── 20 ──────────────────────────────────────────────────────────────────────
 #platform-page()
-// ── 22 ──────────────────────────────────────────────────────────────────────
+// ── 21 ──────────────────────────────────────────────────────────────────────
 #matching-page()
-// ── 23 ──────────────────────────────────────────────────────────────────────
+// ── 22 ──────────────────────────────────────────────────────────────────────
 #partners-page()
-// ── 24 ──────────────────────────────────────────────────────────────────────
+// ── 23 ──────────────────────────────────────────────────────────────────────
 #voices-page()
+// ── 24 · closes the community chapter, does not open the next ──────────
+#who-was-in-the-room-page()
 // ── 25 ──────────────────────────────────────────────────────────────────────
 #sector-page()
 // ── 26 ──────────────────────────────────────────────────────────────────────
@@ -111,7 +114,7 @@
 #whats-next-page()
 // ── 28 ──────────────────────────────────────────────────────────────────────
 #thanks-page()
-// ── 29 ──────────────────────────────────────────────────────────────────────
+// ── 29–30 · methodology runs to two sheets ──────────────────────────────
 #methodology-page()
-// ── 30 ──────────────────────────────────────────────────────────────────────
+// ── 31 ──────────────────────────────────────────────────────────────────────
 #back-cover-page()

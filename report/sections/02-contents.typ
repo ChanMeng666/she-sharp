@@ -85,9 +85,19 @@
     ("Two Saturdays at Fruitvale Primary", "15"),
   ), accent: mint, pale: mint-pale, on-accent-ink: ink)
 
-  // Everything from here shifted DOWN one when the two Youth Tech workshop pages
-  // were merged into a single spread. A contents page that disagrees with its
-  // own folios is the fastest way to make a reader distrust the rest.
+  // TWO SHIFTS ARE BAKED INTO THE FOLIOS BELOW, and both are recorded here
+  // because a contents page that disagrees with its own folios is the fastest
+  // way to make a reader distrust the rest.
+  //
+  //  · everything from band 04 down moved DOWN ONE when the two Youth Tech
+  //    workshop pages were merged into a single spread;
+  //  · everything from band 06 down moved down one AGAIN on 2026-08-24, when
+  //    "Who was in the room" was inserted at page 24 to close the community
+  //    chapter. Band 05 gained the entry; band 06 only moved.
+  //
+  // The page map lives in she-sharp-h1-2026.typ, where every section is one
+  // scoped `page()` call and the call order IS the folio order. Check against it,
+  // not against a render, when either changes.
   #_band("04", "Community evenings", (
     ("Three nights, open to anyone", "16"),
     ("International Women's Day, Own Your Energy, LinkedIn", "17"),
@@ -98,14 +108,15 @@
     ("How matching works", "21"),
     ("Partners and sponsors", "22"),
     ("Community voices", "23"),
+    ("Who was in the room", "24"),
   ), accent: brand-mid, pale: brand-pale)
 
   #_band("06", "Context, outlook and method", (
-    ("Where New Zealand actually is", "24"),
-    ("Financial and pipeline outlook", "25"),
-    ("What is next for H2 2026", "26"),
-    ("Thank you", "27"),
-    ("Methodology and sources", "28"),
-    ("Where each figure comes from", "29"),
+    ("Where New Zealand actually is", "25"),
+    ("Funding and resourcing", "26"),
+    ("What is next for H2 2026", "27"),
+    ("Thank you", "28"),
+    ("Methodology and sources", "29"),
+    ("Where each figure comes from", "30"),
   ), accent: peri, pale: peri-pale)
 ]

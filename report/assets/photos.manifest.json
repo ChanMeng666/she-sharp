@@ -1,6 +1,6 @@
 {
   "cover-plate": {
-    "src": "public/img/curated/divider-crowd-wide-1920.webp",
+    "src": "public/img/events/she-sharp-and-academyex-international-womens-day-2026/group-photo.webp",
     "role": "plate"
   },
   "chapter-her-waka": {
@@ -12,7 +12,7 @@
     "role": "plate"
   },
   "chapter-thanks": {
-    "src": "public/img/curated/hero-conference-crowd-1920.webp",
+    "src": "public/img/events/she-sharp-candice-murray-own-your-energy/volunteers.webp",
     "role": "plate"
   },
   "she-sharp-and-academyex-international-womens-day-2026-hero": {
@@ -228,6 +228,10 @@
     "pad": 0.8,
     "padShiftY": 0.05
   },
+  "mosaic-iwd": {
+    "src": "public/img/events/she-sharp-and-academyex-international-womens-day-2026/archive/4.webp",
+    "role": "mosaic"
+  },
   "mosaic-her-waka": {
     "src": "public/img/events/her-waka/archive/4.webp",
     "role": "mosaic"
@@ -278,7 +282,7 @@
     "role": "diagram"
   },
   "chapter-community": {
-    "src": "public/img/curated/hero-celebration-handsup-1920.webp",
+    "src": "public/img/events/she-sharp-candice-murray-own-your-energy/audience.webp",
     "role": "plate"
   },
   "founder-portrait": {

@@ -13,9 +13,9 @@
 #import "../theme/theme.typ": *
 #import "../lib/layout.typ": sheet
 #import "../lib/components.typ": source-note, eyebrow
-#import "../lib/metrics.typ": placeholder-register
+#import "../lib/metrics.typ": placeholder-register, walk
 #import "../data/report-data.typ": D
-#import "../data/copy.typ": methodology
+#import "../data/copy.typ": methodology, methodology-notes
 #import "../data/sources.typ": internal-sources
 
 // TWO pages, deliberately. The disclosure list grew past one sheet and was
@@ -23,6 +23,17 @@
 // heading orphaned. Trimming would have meant deleting disclosure, which is the
 // one thing this section exists to do, so the split is now structural: the
 // narrative on the first page, the register of sources on the second.
+//
+// The narrative itself then outgrew ITS sheet, on 2026-08-24, and spilled two
+// paragraphs onto a headerless continuation page — a scoped `page()` still flows
+// when its content is taller than the paper, which is the failure PITFALLS rule 5
+// is about. It was fixed at the seam that was already in the copy rather than by
+// cutting any of it: `methodology` now ends with the "what these figures can and
+// cannot tell you" list, and the three standing notes that followed it live in
+// `methodology-notes` and open the facing sheet, which had room to spare.
+//
+// BOTH SHEETS ARE NOW NEAR FULL. Anything added to either constant needs a
+// re-render and a page count before it is committed.
 #let methodology-page() = {
   sheet(title: "Methodology and sources")[
     #block(above: 0pt, below: 0pt, width: 100%)[
@@ -32,6 +43,15 @@
   ]
 
   sheet(title: "Where each figure comes from")[
+    // The three standing notes, carried over from the narrative sheet. They read
+    // as facts about the report as an artefact rather than as caveats on H1 2026,
+    // so they sit at the head of the sources register, which is the other page
+    // about how this document was made.
+    #block(above: 0pt, below: gap-section, width: 100%)[
+      #set par(leading: lead-body, justify: true)
+      #text(size: size-body, fill: ink-700, methodology-notes)
+    ]
+
     #block(above: 0pt, below: gap-section, width: 100%)[
     // RULE 3 — 7.5pt at 0.60em leading is 4.50pt within-item; 8pt row-gutter is
     // 1.78x. Below ~1.7x adjacent source rows merge into one grey slab.
@@ -57,6 +77,20 @@
     ]
   ]
 
-  // Draft only — renders nothing in a final build.
-  placeholder-register(D)
+  // Draft only — renders nothing in a final build, and now nothing in a CLEAN
+  // draft build either.
+  //
+  // Un-guarded, this emitted a page whatever the state of the tree. With the
+  // register empty — which it has been since the 2026-08-24 reconciliation — that
+  // page was a bare sheet with no canvas fill, no folio and no draft mark,
+  // carrying one sentence saying there was nothing to list. It also put the draft
+  // build permanently one page ahead of the final build, which is what makes a
+  // single `-ExpectPages` in build.ps1 unusable.
+  //
+  // A register with nothing in it is not a page. When there IS something in it,
+  // it gets a proper `sheet()` so it looks like the rest of the document; the
+  // component prints its own heading, so the sheet takes no notch title.
+  if walk(D).len() > 0 {
+    sheet[#placeholder-register(D)]
+  }
 }

@@ -49,12 +49,20 @@
       },
       // The pull quote used to read "There is ONE number in this report I do not
       // trust, and we have marked it." It was the best-written line on the page
-      // and it was false: the register on the methodology page lists 66
-      // unverified metrics. A reader who reaches that page having been told
-      // "one" does not conclude the letter was imprecise — they conclude they
-      // are being managed, and then they re-read everything else with that in
-      // mind. The strongest sentence in a report must also be the most literally
-      // true one.
+      // and it was false: the register on the methodology page listed 66
+      // unverified metrics at the time. A reader who reaches that page having
+      // been told "one" does not conclude the letter was imprecise — they
+      // conclude they are being managed, and then they re-read everything else
+      // with that in mind. The strongest sentence in a report must also be the
+      // most literally true one.
+      //
+      // The register is now EMPTY: the Humanitix and Mailchimp exports of
+      // 2026-08-17 reconciled the figures that could be reconciled, and every
+      // placeholder that no process would ever have filled was deleted rather
+      // than carried. The line below still holds, because it is about the
+      // half-year and not about the register — less was measured than should
+      // have been, and the report says so where a measurement is missing. Check
+      // it again if the copy in data/copy.typ changes.
       quote-card(
         [We measured less of this half-year than we should have, and we have
           marked every figure we cannot yet stand behind.],

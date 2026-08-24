@@ -1,10 +1,12 @@
 // The event page — ONE template, invoked nine times.
 //
-// Pages 10–13 (HER WAKA cohorts), 15–16 (Youth Tech Series) and 18–20 (the
-// community evenings) are all this function. Adding a tenth event is a record in
-// data/events.typ and one line in the entry document; it is never a new file.
-// That is what makes the nine pages flip past as one recurring component instead
-// of nine near-misses.
+// Pages 10–13 (the four HER WAKA cohorts) and 17–19 (the three community
+// evenings) are all this function — SEVEN pages, not nine. The two Youth Tech
+// workshops were pulled out onto a single shared page; sections/22-youth-series.typ
+// records why the template was the wrong fit for those two specifically.
+// Adding an eighth event is a record in data/events.typ and one line in the entry
+// document; it is never a new file. That is what makes the pages flip past as one
+// recurring component instead of seven near-misses.
 //
 // ── What is fixed, and why ───────────────────────────────────────────────────
 // Everything structural is a constant, not a function of the data:
@@ -89,16 +91,21 @@
 
   // ── Stats (2×2) beside the hero photograph ────────────────────────────────
   //
-  // `suppress-companies` suppresses the DERIVED tiles too, not only the table.
-  // On the May cohort the export records 5 registered — but the placeholder
-  // tiles beside it read "returning 9" and "companies 7". Nine returning out of
-  // five registered is impossible on its face, and it sits on the one page whose
-  // entire argument is that its export cannot be trusted. If a record is too
-  // damaged to publish a breakdown from, it is too damaged to publish figures
-  // derived from it. The two counted-from-the-register tiles stay; the two
-  // derived ones are replaced by an em-dash placeholder card.
-  #let _suppressed = ev.at("suppress-companies", default: false)
-  #let _tiles = if _suppressed { ev.stats.slice(0, 2) } else { ev.stats }
+  // `ev.stats` DIRECTLY, with no filtering. This block used to read an
+  // `ev.at("suppress-companies", default: false)` flag and, where it was set,
+  // replace the two derived tiles with em-dash cards reading "Not published —
+  // export incomplete". It existed for one event: the May HER WAKA cohort, whose
+  // export recorded 5 registered beside placeholder tiles claiming 9 returning
+  // and 7 companies. Nine returning out of five registered is impossible on its
+  // face, on the one page whose whole argument was that its export could not be
+  // trusted.
+  //
+  // The Humanitix account export of 2026-08-17 reconciled that record — May is
+  // 33 registered, 29 checked in — and `suppress-companies` was removed from
+  // data/events.typ with it. NO EVENT SETS IT ANY MORE, so both branches were
+  // unreachable code and are deleted rather than kept "in case". A dead branch
+  // that renders an apology is the one kind of dead code that eventually renders
+  // itself.
   #block(above: 0pt, below: gap-section, width: 100%, breakable: false)[
     #grid(
       columns: (1fr, 1fr),
@@ -107,29 +114,7 @@
         columns: (1fr, 1fr),
         column-gutter: gutter-card,
         row-gutter: gutter-card,
-        ..(_tiles.map(s => stat-card(s.metric, s.label, height: _tile))
-           + (if _suppressed {
-                ev.stats.slice(2).map(s => box(
-                  width: 100%, height: _tile, fill: peri-pale, radius: radius-card,
-                  inset: (x: 5mm, y: 4.5mm),
-                  {
-                    block(above: 0pt, below: gap-line, width: 100%, {
-                      set par(leading: 0.70em)
-                      text(font: body-font, size: size-micro, weight: 700,
-                        tracking: 0.08em, fill: ink-500, upper(s.label))
-                    })
-                    // The reason lives INSIDE the tile, in readable ink. A bare
-                    // grey em-dash at 1.58:1 advertised the gap without
-                    // explaining it — a reader turning the page met two empty
-                    // boxes before reading a word.
-                    block(above: 0pt, below: 0pt, width: 100%, {
-                      set par(leading: 0.62em)
-                      text(font: body-font, size: size-micro, fill: ink-700,
-                        "Not published — export incomplete")
-                    })
-                  },
-                ))
-              } else { () }))
+        ..ev.stats.map(s => stat-card(s.metric, s.label, height: _tile)),
       ),
       box(
         width: 100%, height: _tile * 2 + gutter-card,
@@ -141,48 +126,22 @@
 
   // ── Who was in the room ───────────────────────────────────────────────────
   //
-  // SUPPRESSED where the event's own registration figure is a known-broken
-  // export. The May HER WAKA record shows 5 registrations; a placeholder
-  // breakdown beneath it summed to 28. Two numbers six centimetres apart that
-  // cannot both be true do more damage than a missing table — a reader who
-  // notices stops trusting the arithmetic everywhere else, and they are right
-  // to. `suppress-companies` is set on that one event in data/events.typ.
-  #if ev.at("suppress-companies", default: false) [
-    #block(above: 0pt, below: gap-line, width: 100%, breakable: false)[
-      #box(
-        width: 100%, fill: peri-pale, radius: radius-card,
-        inset: (x: 5mm, y: 4mm),
-        {
-          block(above: 0pt, below: gap-line, text(
-            font: body-font, size: size-micro, weight: 700, tracking: 0.08em,
-            fill: brand, upper("Registered attendees by organisation"),
-          ))
-          block(above: 0pt, below: 0pt, {
-            set par(leading: 0.62em)
-            text(font: body-font, size: size-meta, fill: ink-700)[
-              Not shown for this session. The registration export for this cohort
-              is incomplete and is being reconciled with the booking platform;
-              publishing a breakdown drawn from it would imply a precision the
-              underlying record does not have.
-            ]
-          })
-        },
-      )
-    ]
-  ] else [
-    // "Largest organisations represented", NOT "Registered attendees by
-    // organisation". The old heading claimed the table accounted for everyone,
-    // and it never did: on the IWD page 21 rows summed to 58 against 103
-    // registered, beside a tile claiming 38 organisations — three numbers, no
-    // two of which agreed. The table is a top-N slice, so saying so reconciles
-    // all three at once without deleting anything. A reader who adds up a column
-    // and finds it short stops trusting every other number on the page.
-    #company-table(
-      ev.companies,
-      cols: _company-cols(ev.companies.len()),
-      title: "Largest organisations represented",
-    )
-  ]
+  // "Largest organisations represented", NOT "Registered attendees by
+  // organisation". The old heading claimed the table accounted for everyone, and
+  // it never did: on the IWD page 21 rows summed to 58 against 103 registered,
+  // beside a tile claiming 38 organisations — three numbers, no two of which
+  // agreed. The table is a top-N slice, so saying so reconciles all three at once
+  // without deleting anything. A reader who adds up a column and finds it short
+  // stops trusting every other number on the page.
+  //
+  // The `suppress-companies` alternative that stood here, replacing the table
+  // with a card explaining that one cohort's export was incomplete, went with the
+  // flag itself — see the stat row above.
+  #company-table(
+    ev.companies,
+    cols: _company-cols(ev.companies.len()),
+    title: "Largest organisations represented",
+  )
 
   // ── Who spoke ─────────────────────────────────────────────────────────────
   //
@@ -247,14 +206,22 @@
     })
   }
 
+  // The old closing sentence — "No returning-attendee or organisation figures are
+  // available for this period; every such figure on this page is a placeholder
+  // and is marked" — was true when it was written and is now false for all
+  // eighteen of them. What replaces it is the two caveats those figures actually
+  // carry, which are narrower and real. The survey sentence in front of it is
+  // still true and survives unchanged in substance.
   #source-note[
-    Attendance is taken from the event register in the She Sharp codebase;
-    speakers from the event's own record. No post-event survey was run in this
-    period, so this report carries no participant-feedback figures for any event
-    — the 2025 report's survey charts have no 2026 equivalent and none is shown
-    here. No returning-attendee or organisation figures are available for this
-    period; every such figure on this page is a placeholder and is marked. The
-    organisation table lists the largest groups only and does not account for
-    every registration.
+    Attendance and organisation figures are taken from the Humanitix account
+    export of 17 August 2026, reconciled against the event register in the She
+    Sharp codebase; speakers come from the event's own record. No post-event
+    survey was run in this period, so this report carries no participant-feedback
+    figures for any event — the 2025 report's survey charts have no 2026
+    equivalent and none is shown here. "Returning" means an earlier registration
+    exists in the booking archive, which begins in 2020, so anyone whose first She
+    Sharp event was before then counts as new and the figure is a floor. Employers
+    are typed freehand at checkout and are never verified. The organisation table
+    lists the largest groups only and does not account for every registration.
   ]
 ]
