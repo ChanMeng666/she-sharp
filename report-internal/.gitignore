@@ -1,0 +1,4 @@
+# Build output. Regenerable from `pwsh report-internal/build.ps1` in seconds,
+# and the PDF is INTERNAL — committing it would put a document the team has not
+# agreed to circulate into a repository that several people clone.
+out/
