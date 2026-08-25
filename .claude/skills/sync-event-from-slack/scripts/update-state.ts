@@ -47,6 +47,7 @@ import {
   loadManifest,
   nowIso,
   carryReadReceipt,
+  deliveredPosition,
   readPayload,
   saveManifest,
   shouldInheritMapping,
@@ -199,11 +200,27 @@ function applyOne(
    * `pendingTs` is what the triage saw in Slack on a row it could not clear.
    * Once a payload has delivered content at least that far, the marker has done
    * its job and keeping it would leave `audit-read-state.ts` red on a
-   * conversation that was in fact read. A marker still ahead of the delivered
-   * watermark is kept: a partial read is not a read.
+   * conversation that was in fact read. A marker still ahead of what was
+   * delivered is kept: a partial read is not a read.
+   *
+   * MEASURE THE DELIVERY, NOT THE TOP-LEVEL WATERMARK. `watermarkTs` is the
+   * newest TOP-LEVEL ts, and the triage stamps `pendingTs` from the newest ts
+   * Slack holds — which is frequently a thread REPLY, because a reply does not
+   * move its parent. Comparing the two meant a marker set from a reply could
+   * never be retired by any delivery, however complete: on 25 Aug 2026 both
+   * live event channels sat red in the audit with every message and every reply
+   * already read, the Les Mills marker pinned to Mahsa's "Looks great!" and the
+   * Xero one to Nikita's reply about the poster options. A gate that is always
+   * red proves nothing and gets ignored, which is the one failure mode this
+   * file's own comments say a gate cannot survive.
+   *
+   * The rule itself lives in `deliveredPosition()` in state-lib.ts, next to the
+   * other things that decide what counts as read, with state-lib.test.ts
+   * asserting it.
    */
+  const deliveredTs = deliveredPosition(watermarkTs, mergedThreads);
   const pendingTs =
-    prev?.pendingTs && Number(prev.pendingTs) > Number(watermarkTs)
+    prev?.pendingTs && Number(prev.pendingTs) > Number(deliveredTs)
       ? prev.pendingTs
       : undefined;
 

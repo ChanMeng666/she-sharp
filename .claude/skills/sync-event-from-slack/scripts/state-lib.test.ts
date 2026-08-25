@@ -22,6 +22,7 @@ import assert from "node:assert";
 import {
   carryReadReceipt,
   decideAction,
+  deliveredPosition,
   isQuiet,
   mergeThreadState,
   scannedPosition,
@@ -316,6 +317,46 @@ check("a marker the read position has caught up with is not a backlog", () => {
     }),
   });
   assert.strictEqual(unreadConversations(m).length, 0);
+});
+
+check("a marker set from a thread reply is retired by the read that delivered it", () => {
+  // THE 25 AUGUST MISS, and it is the 21 August one wearing the other face.
+  // `pendingTs` is stamped from the newest ts Slack holds, replies included,
+  // but `watermarkTs` only ever moves to the newest TOP-LEVEL message. On both
+  // live event channels the newest thing in the channel was a one-line reply
+  // ("Looks great!"), so the marker sat permanently above the watermark and the
+  // audit called two fully-read conversations BEHIND. A gate that is always red
+  // gets ignored, which is the failure this whole file exists to prevent.
+  const watermarkTs = "1787448574.845929"; // newest top-level message
+  const threads: Record<string, ThreadState> = {
+    "1787448574.845929": { replyCount: 2, latestReplyTs: "1787459520.518339" },
+  };
+  const delivered = deliveredPosition(watermarkTs, threads);
+  assert.strictEqual(delivered, "1787459520.518339", "replies count as delivered");
+  assert.ok(
+    Number(delivered) >= Number("1787459520.518339"),
+    "the read that delivered the reply retires a marker stamped from it",
+  );
+});
+
+check("deliveredPosition never goes backwards past the top-level watermark", () => {
+  // An older thread must not drag the delivered position below the watermark.
+  assert.strictEqual(
+    deliveredPosition("500", { "100": { replyCount: 1, latestReplyTs: "120" } }),
+    "500",
+  );
+  assert.strictEqual(deliveredPosition("500", {}), "500");
+  assert.strictEqual(deliveredPosition("500", undefined), "500");
+});
+
+check("a marker genuinely ahead of every delivery is still a backlog", () => {
+  // The other half of the rule: retiring on replies must not retire a marker
+  // for content that never arrived at all. A partial read is not a read.
+  const delivered = deliveredPosition("100", {
+    "90": { replyCount: 1, latestReplyTs: "150" },
+  });
+  assert.strictEqual(delivered, "150");
+  assert.ok(Number("999") > Number(delivered), "999 stays pending");
 });
 
 check("a settled skip is still exempt, marker or no marker", () => {

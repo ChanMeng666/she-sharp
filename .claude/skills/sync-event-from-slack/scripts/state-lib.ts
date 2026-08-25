@@ -508,6 +508,33 @@ export function mergeThreadState(
   return out;
 }
 
+/**
+ * The furthest point a delivery can be PROVEN to have reached, counting thread
+ * replies as well as top-level messages.
+ *
+ * `watermarkTs` alone is the newest TOP-LEVEL ts, and a reply does not move its
+ * parent — so on a conversation whose newest content is a reply, the top-level
+ * watermark understates what was read. `discover-channels.ts` stamps
+ * `pendingTs` from the newest ts Slack holds, replies included, so comparing
+ * that marker against `watermarkTs` could never retire it: on 25 Aug 2026 both
+ * live event channels sat BEHIND in the audit with every message and every
+ * reply already read, pinned to a one-line thread reply apiece.
+ *
+ * Measuring `threadState` is honest because `mergeThreadState()` advances a
+ * thread only when the fetch actually delivered it, and otherwise carries the
+ * prior record forward — so every entry describes content that reached the
+ * model, in this read or an earlier one.
+ */
+export function deliveredPosition(
+  watermarkTs: string,
+  threads: Record<string, ThreadState> | undefined,
+): string {
+  return Object.values(threads ?? {}).reduce(
+    (hi, t) => (Number(t.latestReplyTs) > Number(hi) ? t.latestReplyTs : hi),
+    watermarkTs,
+  );
+}
+
 export interface ChannelState {
   name: string;
   type: ChannelType;
