@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { Search, X, Calendar } from "lucide-react";
 import { Section } from "@/components/layout/section";
 import { Container } from "@/components/layout/container";
@@ -44,9 +45,19 @@ export function GalleryAlbumsGrid({
    */
   showHeader?: boolean;
 }) {
-  // Search and filter state
+  // Search and filter state.
+  //
+  // `?year=2023` pre-selects one year so the per-year links on the /about
+  // timeline land on that year's albums rather than on all ninety. Read once,
+  // in the initialiser: this is a starting point for the filter the reader
+  // then drives by hand, not a controlled mirror of the URL. The Suspense
+  // boundary this needs lives in app/(site)/resources/photo-gallery/page.tsx.
+  const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedYears, setSelectedYears] = useState<number[]>([]);
+  const [selectedYears, setSelectedYears] = useState<number[]>(() => {
+    const requested = Number(searchParams.get("year"));
+    return Number.isInteger(requested) && requested > 2000 ? [requested] : [];
+  });
 
   // Pagination state
   const [displayedCount, setDisplayedCount] = useState(ALBUMS_PER_PAGE);

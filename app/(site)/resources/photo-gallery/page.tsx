@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { Suspense } from "react";
 import Image from "next/image";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
@@ -126,7 +127,15 @@ export default function PhotoGalleryPage() {
             Google Photos, where the complete set lives.
           </p>
         </Container>
-        <GalleryAlbumsGrid albums={galleryAlbums} showHeader={false} />
+        {/*
+          GalleryAlbumsGrid reads `?year=` so the /about timeline can link
+          straight at one year. `useSearchParams()` opts a client component out
+          of static rendering unless a boundary sits above it — the same
+          pattern the search-param pages elsewhere in this app already use.
+        */}
+        <Suspense fallback={null}>
+          <GalleryAlbumsGrid albums={galleryAlbums} showHeader={false} />
+        </Suspense>
       </Section>
     </>
   );
