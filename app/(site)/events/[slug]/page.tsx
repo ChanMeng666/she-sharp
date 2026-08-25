@@ -127,7 +127,8 @@ export default async function EventPage({ params }: EventPageProps) {
           ]),
         ]}
       />
-      {/* Header — full-bleed real event photo with navy scrim */}
+      {/* Header — solid navy panel. The cover is NOT painted behind it: it
+          already renders whole, uncropped, in the editorial frame below. */}
       <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
         <EventHeader event={event} />
       </div>

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { EventV3 } from "@/types/event";
 import { cn } from "@/lib/utils";
 import { EventCountdown } from "./event-countdown";
@@ -12,6 +11,22 @@ interface EventHeaderProps {
   className?: string;
 }
 
+/**
+ * The event detail page's header.
+ *
+ * Deliberately a SOLID navy panel rather than the cover poster behind a scrim.
+ * The cover is the 4:5 social plate, which already carries the title, date and
+ * venue as artwork; stretched full-bleed behind this block it was cropped to a
+ * letterbox and its baked-in text collided with the h1 laid over it, which is
+ * what made both hard to read. The cover is not lost: the page renders
+ * it whole and uncropped in the editorial frame at the top of the main column,
+ * for every event, which is the one place it is legible. Requested in
+ * #website-team on 25 Aug 2026.
+ *
+ * The surface is `bg-navy`, NOT `bg-foreground`: `--foreground` inverts to white
+ * under `.dark` while `--navy` stays dark in both themes. The old markup only
+ * got away with `bg-foreground` because the photo covered it.
+ */
 export function EventHeader({ event, className }: EventHeaderProps) {
   const isFutureEvent = isFutureDate(event.date);
   const location = event.detailPageData.location;
@@ -27,21 +42,16 @@ export function EventHeader({ event, className }: EventHeaderProps) {
   return (
     <div
       className={cn(
-        "relative isolate flex min-h-[62vh] items-end overflow-hidden bg-foreground",
+        "relative isolate flex items-end overflow-hidden bg-navy",
         className
       )}
     >
-      {/* Full-bleed real event photo */}
-      <Image
-        src={event.coverImage.url}
-        alt={event.coverImage.alt || event.title}
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover object-center"
+      {/* A single soft mint bloom, low and to one side, so a tall page of navy
+          has somewhere to start. No photograph, no scrim to read text through. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -bottom-1/3 -left-24 h-[36rem] w-[36rem] rounded-full bg-mint/10 blur-3xl"
       />
-      {/* Navy scrim — heavier at the base for legibility, light ambient veil above */}
-      <div className="absolute inset-0 bg-gradient-to-t from-foreground/85 via-foreground/45 to-foreground/30" />
 
       <div className="relative z-10 mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 pt-32 pb-12 md:pt-36 md:pb-16 lg:pb-20">
         {/* Category chip */}
