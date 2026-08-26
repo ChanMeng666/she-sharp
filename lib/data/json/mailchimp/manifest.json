@@ -101,6 +101,108 @@
           "columns": 27
         }
       ]
+    },
+    {
+      "exportId": "2026-08-27-api",
+      "source": "Mailchimp Marketing API v3, pulled by scripts/mailchimp/fetch-api.ts. The audience id was verified against GET /lists rather than trusted from the environment.",
+      "exportedAtLocal": "2026-08-27T01:43:17",
+      "timezone": "Pacific/Auckland",
+      "vaultPath": "private/mailchimp/2026-08-27-api/",
+      "fileCount": 5,
+      "method": "api-v3",
+      "api": {
+        "baseUrl": "https://us3.api.mailchimp.com/3.0",
+        "listId": "31bd05e8eb",
+        "endpoints": [
+          "/lists",
+          "/lists/{listId}",
+          "/lists/{listId}/growth-history",
+          "/campaigns?status=sent",
+          "/reports"
+        ]
+      },
+      "files": [
+        {
+          "file": "growth-history.json",
+          "report": "growth-history",
+          "scope": "audience:She#",
+          "status": "n/a",
+          "format": "json",
+          "endpoint": "/lists/31bd05e8eb/growth-history",
+          "piiClass": "aggregate",
+          "role": "primary",
+          "redundantWith": null,
+          "note": "Month-by-month audience growth: `existing` is subscribed members at each month's end, i.e. the list-size-over-time series a status-partitioned CSV export cannot contain. `imports` and `optins` are that month's additions by route, NOT a consent record.",
+          "exportedAt": "2026-08-27",
+          "bytes": 78647,
+          "sha256": "fa5496a7609a530bc64726ab6fffe6a8d1baf5e0240b56b46a1ef3b570ae34ff",
+          "items": 86
+        },
+        {
+          "file": "list.json",
+          "report": "list",
+          "scope": "audience:She#",
+          "status": "n/a",
+          "format": "json",
+          "endpoint": "/lists/31bd05e8eb",
+          "piiClass": "aggregate",
+          "role": "primary",
+          "redundantWith": null,
+          "note": "The She# audience as Mailchimp held it at pull time: member, unsubscribe and cleaned counts, campaign count, open and click rate. A SNAPSHOT — the Humanitix integration adds contacts between pulls, so this disagrees with an older export by design.",
+          "exportedAt": "2026-08-27",
+          "bytes": 6732,
+          "sha256": "b3c98d3dc0df34f9f8772e5100204db92549825f9ff2ab09abffcd394497c697",
+          "items": 1
+        },
+        {
+          "file": "lists.json",
+          "report": "lists",
+          "scope": "account",
+          "status": "n/a",
+          "format": "json",
+          "endpoint": "/lists",
+          "piiClass": "aggregate",
+          "role": "reference",
+          "redundantWith": "list.json",
+          "note": "Every audience on the account, with Mailchimp's own summary stats. Authoritative for 'which audiences existed at pull time', which is why it is kept even though only one of them matters. Its stats are a reading at pull time, not a history.",
+          "exportedAt": "2026-08-27",
+          "bytes": 7062,
+          "sha256": "5716fc09af5e89891a7941e859c41b912d82d14a601c8a37611829bf7fd1b182",
+          "items": 1
+        },
+        {
+          "file": "reports.json",
+          "report": "reports",
+          "scope": "account",
+          "status": "n/a",
+          "format": "json",
+          "endpoint": "/reports",
+          "piiClass": "aggregate",
+          "role": "primary",
+          "redundantWith": null,
+          "note": "Per-campaign aggregate performance: sends, opens, clicks, bounces, unsubscribes, abuse reports. This is the campaign-level statistics the account ZIP was going to supply. Open rate is unreliable after Apple Mail Privacy Protection (2021) and must not be compared across that boundary.",
+          "exportedAt": "2026-08-27",
+          "bytes": 1898345,
+          "sha256": "f25e1271b3134b52a9f296d389b70551159cb14385bbf9036961dd73588ebf88",
+          "items": 180
+        },
+        {
+          "file": "sent-campaigns.json",
+          "report": "sent-campaigns",
+          "scope": "account",
+          "status": "n/a",
+          "format": "json",
+          "endpoint": "/campaigns?status=sent",
+          "piiClass": "none",
+          "role": "primary",
+          "redundantWith": null,
+          "note": "Every campaign that actually went out: subject line, send time, recipient count, archive URL. Account-scoped because /campaigns filters by status, not by audience; the account has one audience, so in practice they coincide. `emailsSent` is what Mailchimp attempted, not what was delivered — see reports.json for bounces.",
+          "exportedAt": "2026-08-27",
+          "bytes": 824342,
+          "sha256": "7c07359d898fddd2dd527703dfbeaf2faf75f8fb951d62e8d41531ef1ec1c365",
+          "items": 180
+        }
+      ]
     }
   ],
   "knownGaps": [
@@ -116,7 +218,9 @@
         "campaign send/open/click/bounce statistics",
         "the historical audience-size series",
         "template and landing-page content"
-      ]
+      ],
+      "closedBy": "2026-08-27-api",
+      "closedAt": "2026-08-27"
     },
     {
       "report": "per-campaign-recipient-activity",

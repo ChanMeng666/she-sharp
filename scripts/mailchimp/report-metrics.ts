@@ -18,15 +18,21 @@
  *   1. The H1 flow — joins, unsubscribes and hard-bounce removals — rather than
  *      the standing total. A list that grew and a list that shrank both report
  *      "1,560 subscribed" at the end of the period.
- *   2. Which campaigns are EVIDENCED to have been sent. Mailchimp records the
- *      campaign a person left through (`UNSUB_CAMPAIGN_TITLE`) and the campaign
- *      a bounce was detected on (`CLEAN_CAMPAIGN_TITLE`). A campaign only
- *      appears if at least one recipient unsubscribed or bounced, so the count
- *      is a FLOOR, never a total — and the script says so in the note it emits.
- *      This is the only send evidence in reach of this repository:
- *      `lib/newsletter/schedule.ts` computes a send slot, not a record of a send.
+ *   2. The same flow month by month, which is what says whether the direction
+ *      held or turned inside the period.
  *   3. Location coverage, stated with its own hole: 42% of subscribed contacts
  *      carry no country at all, so any geographic claim has to name that first.
+ *
+ * **It no longer derives the campaign counts, and the header used to be wrong
+ * about them.** Until 2026-08-27 it inferred sends from `UNSUB_CAMPAIGN_TITLE`
+ * and `CLEAN_CAMPAIGN_TITLE`: a campaign appeared only if at least one
+ * recipient had left or bounced on it, so every count was a FLOOR — and this
+ * file claimed to be "the only send evidence in reach of this repository".
+ * Both statements are now false. `lib/data/json/mailchimp/campaigns.json` holds
+ * all 180 sends with their opens, clicks and bounces, pulled from the API, and
+ * it is a TOTAL. Quoting a floor into a funder report while the total sits one
+ * directory away is exactly the failure this script exists to prevent, so the
+ * campaign section below reads the committed archive and the inference is gone.
  *
  * Usage:
  *   npx tsx scripts/mailchimp/report-metrics.ts
@@ -37,7 +43,7 @@ import { join } from "node:path";
 
 import { readCsv } from "./csv";
 import { REPO_ROOT, argValue, vaultExists } from "./vault";
-import { mailchimpManifest } from "../../lib/data/mailchimp";
+import { campaignsSentBetween, mailchimpCampaigns, mailchimpManifest } from "../../lib/data/mailchimp";
 
 /** The four status files are a partition — no address appears in two of them. */
 const STATUS_FILES = {
@@ -84,8 +90,16 @@ function main() {
   const argv = process.argv.slice(2);
   const from = argValue(argv, "--from") ?? "2026-01-01";
   const to = argValue(argv, "--to") ?? "2026-06-30";
+  // The newest MANUAL CSV export, not simply the newest export. `exports` is
+  // append-only and its last entry has been an API pull since 2026-08-27; this
+  // script reads four status CSVs out of whatever this names, and an API
+  // directory holds none of them.
   const exportId =
-    argValue(argv, "--export") ?? mailchimpManifest.exports.at(-1)?.exportId ?? "";
+    argValue(argv, "--export") ??
+    mailchimpManifest.exports
+      .filter((entry) => (entry.method ?? "manual-csv") === "manual-csv")
+      .at(-1)?.exportId ??
+    "";
 
   requireVault(exportId);
 
@@ -161,61 +175,80 @@ function main() {
   say(`// bounces by month: ${[...tally(bounced.map((r) => monthOf(r["CLEAN_TIME"]))).entries()].sort().map(([k, v]) => `${k}=${v}`).join(" ")}`);
   say();
 
-  // ── Campaigns evidenced as sent ────────────────────────────────────────────
+  // ── Campaigns actually sent ────────────────────────────────────────────────
   //
-  // A campaign appears here only if at least one recipient unsubscribed from it
-  // or bounced on it. That makes every count below a FLOOR. It also makes the
-  // window unsafe for OLD campaigns: a 2024 event email can collect an
-  // unsubscribe in 2026, and its title would then look like a 2026 send. Only
-  // titles that DATE THEMSELVES inside the window are quoted as evidence.
-  // Date each campaign by its EARLIEST reaction anywhere in the export, not by
-  // its title and not by a reaction inside the window. A 2024 event email can
-  // collect an unsubscribe in 2026, and filtering on the window alone would
-  // read that as a 2026 send. The earliest reaction is an upper bound on the
-  // send date, and it is the only send date this export carries at all.
-  const year = from.slice(0, 4);
-  const firstReaction = new Map<string, string>();
-  const bump = (title: string, stamp: string) => {
-    const name = title.trim();
-    const when = stamp.trim();
-    if (!name || !when) return;
-    const seen = firstReaction.get(name);
-    if (!seen || when < seen) firstReaction.set(name, when);
-  };
-  for (const row of unsubscribed) {
-    bump(String(row["UNSUB_CAMPAIGN_TITLE"] ?? ""), String(row["UNSUB_TIME"] ?? ""));
-  }
-  for (const row of cleaned) {
-    bump(String(row["CLEAN_CAMPAIGN_TITLE"] ?? ""), String(row["CLEAN_TIME"] ?? ""));
-  }
+  // From `campaigns.json`, which is the API's own record of every send. Two
+  // things to keep straight before quoting any of this:
+  //
+  //   - A SEND is not an ISSUE. Two of the six newsletter sends in H1 2026 are
+  //     second sends of an issue already sent that day. The script prints every
+  //     send and counts sends; deciding what an "issue" is, is a person's job.
+  //   - `campaignsSentBetween()` never returns a campaign sent to fewer than
+  //     five people, because such a campaign is a description of those people.
+  //     None of this account's four fall in a reporting half-year, but a period
+  //     count built from it is a floor by construction all the same. The
+  //     whole-account totals in `mailchimpCampaigns.totals` include them.
+  const windowCampaigns = campaignsSentBetween(from, to);
+  const isNewsletter = (title: string, subject: string) =>
+    /newsletter/i.test(title) || /newsletter/i.test(subject);
+  const newsletters = windowCampaigns.filter((campaign) =>
+    isNewsletter(campaign.title, campaign.subjectLine)
+  );
+  const eventEmails = windowCampaigns.filter(
+    (campaign) => !isNewsletter(campaign.title, campaign.subjectLine)
+  );
 
-  const sentInWindow = [...firstReaction]
-    .filter(([, stamp]) => within(stamp, from, to))
-    .sort((a, b) => a[1].localeCompare(b[1]));
+  const sumOf = (
+    list: typeof windowCampaigns,
+    pick: (campaign: (typeof windowCampaigns)[number]) => number
+  ) => list.reduce((total, campaign) => total + pick(campaign), 0);
 
-  const newsletters = sentInWindow.filter(([title]) => /newsletter/i.test(title));
-  const eventEmails = sentInWindow.filter(([title]) => !/newsletter/i.test(title));
+  const windowSent = sumOf(windowCampaigns, (campaign) => campaign.emailsSent);
+  const windowOpens = sumOf(windowCampaigns, (campaign) => campaign.uniqueOpens);
+  const windowProxyExcluded = sumOf(
+    windowCampaigns,
+    (campaign) => campaign.proxyExcludedUniqueOpens
+  );
+  const windowClicks = sumOf(windowCampaigns, (campaign) => campaign.uniqueClicks);
+  const rate = (part: number, whole: number) =>
+    whole === 0 ? "0.0" : ((part / whole) * 100).toFixed(1);
 
-  say("// ---- campaigns evidenced as sent in the window ----");
-  say(`// A campaign appears in this export only when at least one recipient`);
-  say(`// unsubscribed from it or bounced on it. Every count below is a FLOOR.`);
-  say(`// Dated by earliest reaction, which is an upper bound on the send date.`);
+  const campaignSource = `lib/data/json/mailchimp/campaigns.json, built by scripts/mailchimp/build-campaigns.ts from the Mailchimp API pull ${mailchimpCampaigns.metadata.exportId}`;
+
+  say("// ---- campaigns actually sent in the window ----");
+  say(`// Every send, from the API. Not a floor — see campaigns.json.`);
   say(`//`);
-  say(`// Newsletter issues (${newsletters.length}):`);
-  for (const [title, stamp] of newsletters) say(`//   ${stamp}  ${title}`);
+  say(`// Newsletter sends (${newsletters.length}):`);
+  for (const campaign of newsletters) {
+    say(`//   ${campaign.sentAt.slice(0, 10)}  ${campaign.emailsSent} sent  ${campaign.uniqueOpens} opened  ${campaign.title}`);
+  }
   say(`// Event and campaign emails (${eventEmails.length}):`);
-  for (const [title, stamp] of eventEmails) say(`//   ${stamp}  ${title}`);
+  for (const campaign of eventEmails) {
+    say(`//   ${campaign.sentAt.slice(0, 10)}  ${campaign.emailsSent} sent  ${campaign.uniqueOpens} opened  ${campaign.title}`);
+  }
   say();
   say(`newsletter-issues: v(`);
   say(`  ${newsletters.length},`);
   say(
-    `  ${note(`Monthly newsletter issues evidenced as sent between ${from} and ${to}: ${newsletters.map(([title]) => title).join("; ")}. Mailchimp records the campaign a contact unsubscribed from and the campaign a hard bounce was detected on; each issue here is dated by the earliest such reaction, which is an upper bound on its send date. A campaign nobody left and nobody bounced on would be invisible, so this is a FLOOR, not a count of sends — but it IS a record of sends, which lib/newsletter/schedule.ts is not: that file computes a send slot. No January or February ${year} issue appears anywhere in the record. Source: ${source}.`)},`
+    `  ${note(`Newsletter campaigns SENT between ${from} and ${to}: ${newsletters.map((campaign) => `${campaign.sentAt.slice(0, 10)} ${campaign.title}`).join("; ")}. This is a count of sends, not of distinct issues — check the list before calling it "issues", because a re-send of the same issue on the same day appears twice. Source: ${campaignSource}.`)},`
   );
   say(`),`);
   say(`event-email-campaigns: v(`);
   say(`  ${eventEmails.length},`);
   say(
-    `  ${note(`Distinct non-newsletter campaigns evidenced as first sent between ${from} and ${to}: ${eventEmails.map(([title]) => title).join("; ")}. Same floor and same dating rule as the issue count above. Source: ${source}.`)},`
+    `  ${note(`Non-newsletter campaigns sent between ${from} and ${to}: ${eventEmails.map((campaign) => `${campaign.sentAt.slice(0, 10)} ${campaign.title}`).join("; ")}. Source: ${campaignSource}.`)},`
+  );
+  say(`),`);
+  say(`newsletter-emails-sent: v(`);
+  say(`  ${windowSent},`);
+  say(
+    `  ${note(`Emails Mailchimp attempted across all ${windowCampaigns.length} campaigns sent between ${from} and ${to}. It is a count of SENDS, not of people: the same subscriber is counted once per campaign. What Mailchimp attempted, not what was delivered — bounces come out of it. Source: ${campaignSource}.`)},`
+  );
+  say(`),`);
+  say(`newsletter-open-rate: v(`);
+  say(`  ${rate(windowOpens, windowSent)},`);
+  say(
+    `  ${note(`Unique opens as a percentage of emails sent, across the ${windowCampaigns.length} campaigns sent between ${from} and ${to} (${windowOpens} of ${windowSent}). Apple Mail Privacy Protection pre-fetches images and Mailchimp counts that as an open; excluding proxy opens gives ${rate(windowProxyExcluded, windowSent)}%, and any comparison with a pre-2022 figure must use the proxy-excluded series. ${windowClicks} recipients clicked (${rate(windowClicks, windowSent)}%). Source: ${campaignSource}.`)},`
   );
   say(`),`);
   say();
@@ -256,7 +289,9 @@ function main() {
   console.log(`  unsubscribed      ${left.length}`);
   console.log(`  bounced out       ${bounced.length}`);
   console.log(`  net               ${net}`);
-  console.log(`  newsletter issues ${newsletters.length}  (floor)`);
+  console.log(`  campaigns sent    ${windowCampaigns.length}  (${newsletters.length} newsletter, ${eventEmails.length} event)`);
+  console.log(`  emails sent       ${windowSent}`);
+  console.log(`  unique open rate  ${rate(windowOpens, windowSent)}%  (${rate(windowProxyExcluded, windowSent)}% proxy-excluded)`);
   console.log("\nNothing under report/ was written.");
 }
 
