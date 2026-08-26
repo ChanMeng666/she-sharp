@@ -18,6 +18,11 @@
  * Usage:
  *   npx tsx scripts/mailchimp/manifest.ts --export 2026-08-17 --append
  *   npx tsx scripts/mailchimp/manifest.ts --export 2026-08-17            # verify
+ *   npx tsx scripts/mailchimp/manifest.ts --close-gap <report> --closed-by <exportId>
+ *
+ * It is also imported: `scripts/mailchimp/fetch-api.ts` builds its own entry
+ * with {@link buildApiExportEntry} and writes it with {@link appendExportEntry},
+ * so `main()` runs only when this file is the entry point.
  */
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -34,6 +39,7 @@ import {
   argValue,
   fileBytes,
   listVaultCsvs,
+  listVaultFiles,
   resolveVaultDir,
   sha256File,
   vaultFilePath,
@@ -178,6 +184,229 @@ function buildExportEntry(exportId: string): MailchimpManifestExport {
   };
 }
 
+// ---------------------------------------------------------------------------
+// API pulls
+// ---------------------------------------------------------------------------
+
+/** What `classifyApiFile` decides, before the measured fields are added. */
+type ApiFileFacts = Pick<
+  MailchimpManifestFile,
+  "report" | "scope" | "endpoint" | "piiClass" | "role" | "redundantWith" | "note"
+>;
+
+/**
+ * Classifies one JSON file written by `fetch-api.ts`.
+ *
+ * The twin of {@link classify}, kept separate for the same reason
+ * {@link buildApiExportEntry} is: a CSV is identified by the status in its
+ * filename and a JSON response by the endpoint it came from, and those are two
+ * different provenance stories rather than one with a parameter.
+ *
+ * The endpoint is concrete, not templated, because per file it is the ONLY
+ * statement of what the numbers inside are counts of — `/lists/<id>` and
+ * `/lists/<other>/growth-history` are different claims, and a reader holding
+ * one file should not have to consult `api.listId` to know which they have.
+ *
+ * @param relativePath - Path relative to the export directory, forward slashes.
+ * @param listId - The verified audience id, for the audience-scoped endpoints.
+ * @returns The file's provenance and PII judgements.
+ * @throws When the file is not one this pull is known to write.
+ */
+export function classifyApiFile(relativePath: string, listId: string): ApiFileFacts {
+  switch (relativePath) {
+    case "lists.json":
+      return {
+        report: "lists",
+        scope: "account",
+        endpoint: "/lists",
+        piiClass: "aggregate",
+        role: "reference",
+        // The pulled audience appears here too. Recorded as redundant rather
+        // than dropped: this file is the EVIDENCE that the id in `api.listId`
+        // was the only audience on the account, which is the question a reader
+        // asks a year later when a number does not match the dashboard.
+        redundantWith: "list.json",
+        note: "Every audience on the account, with Mailchimp's own summary stats. Authoritative for 'which audiences existed at pull time', which is why it is kept even though only one of them matters. Its stats are a reading at pull time, not a history.",
+      };
+
+    case "list.json":
+      return {
+        report: "list",
+        scope: "audience:She#",
+        endpoint: `/lists/${listId}`,
+        piiClass: "aggregate",
+        role: "primary",
+        redundantWith: null,
+        note: "The She# audience as Mailchimp held it at pull time: member, unsubscribe and cleaned counts, campaign count, open and click rate. A SNAPSHOT — the Humanitix integration adds contacts between pulls, so this disagrees with an older export by design.",
+      };
+
+    case "growth-history.json":
+      return {
+        report: "growth-history",
+        scope: "audience:She#",
+        endpoint: `/lists/${listId}/growth-history`,
+        piiClass: "aggregate",
+        role: "primary",
+        redundantWith: null,
+        note: "Month-by-month audience growth: `existing` is subscribed members at each month's end, i.e. the list-size-over-time series a status-partitioned CSV export cannot contain. `imports` and `optins` are that month's additions by route, NOT a consent record.",
+      };
+
+    case "sent-campaigns.json":
+      return {
+        report: "sent-campaigns",
+        scope: "account",
+        endpoint: "/campaigns?status=sent",
+        // Sender identity is not mapped by lib/mailchimp/client.ts, so no
+        // address reaches this file — see the MailchimpCampaign doc comment.
+        piiClass: "none",
+        role: "primary",
+        redundantWith: null,
+        note: "Every campaign that actually went out: subject line, send time, recipient count, archive URL. Account-scoped because /campaigns filters by status, not by audience; the account has one audience, so in practice they coincide. `emailsSent` is what Mailchimp attempted, not what was delivered — see reports.json for bounces.",
+      };
+
+    case "reports.json":
+      return {
+        report: "reports",
+        scope: "account",
+        endpoint: "/reports",
+        piiClass: "aggregate",
+        role: "primary",
+        redundantWith: null,
+        note: "Per-campaign aggregate performance: sends, opens, clicks, bounces, unsubscribes, abuse reports. This is the campaign-level statistics the account ZIP was going to supply. Open rate is unreliable after Apple Mail Privacy Protection (2021) and must not be compared across that boundary.",
+      };
+
+    default: {
+      const activity = /^activity\/([A-Za-z0-9]+)\.json$/.exec(relativePath);
+      if (activity) {
+        return {
+          report: "email-activity",
+          scope: `campaign:${activity[1]}`,
+          endpoint: `/reports/${activity[1]}/email-activity`,
+          // The only person-shaped file in the pull: one row per recipient,
+          // keyed by their address. IP addresses are excluded at the request
+          // AND dropped by the client's mapper, so this is `person-identifying`
+          // rather than `person-network`.
+          piiClass: "person-identifying",
+          role: "primary",
+          redundantWith: null,
+          note: "Per-recipient opens, clicks and bounces for one campaign. NEVER commit, and never derive a segment from it without re-reading the consent rules — being an opener is not a subscription. IP addresses are absent by design.",
+        };
+      }
+
+      throw new Error(
+        `Unclassified API vault file: ${relativePath}\n` +
+          `  Add a case to classifyApiFile() rather than letting it into the manifest unlabelled.`
+      );
+    }
+  }
+}
+
+/**
+ * The moment this ran, as local wall-clock plus the zone it is wall-clock in.
+ *
+ * @returns `exportedAtLocal` and `timezone`, ready to spread into an entry.
+ */
+function localTimestamp(): { exportedAtLocal: string; timezone: string } {
+  const now = new Date();
+  const pad = (value: number) => String(value).padStart(2, "0");
+  return {
+    exportedAtLocal:
+      `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}` +
+      `T${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`,
+    // Named rather than assumed: the CSV entries say Pacific/Auckland because
+    // that is where somebody sat; a pull can be run from anywhere.
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC",
+  };
+}
+
+/**
+ * Counts what one JSON response holds.
+ *
+ * A single-resource response (`/lists/{id}`) is one item. `0` would read as
+ * "the pull returned nothing", which is a different — and false — claim.
+ *
+ * @param path - Absolute path to the JSON file.
+ * @returns The collection length, or 1 for a single resource.
+ */
+function measureApiFile(path: string): number {
+  const parsed: unknown = JSON.parse(readFileSync(path, "utf8"));
+  return Array.isArray(parsed) ? parsed.length : 1;
+}
+
+/**
+ * Builds the `exports[]` entry for an API pull.
+ *
+ * Deliberately NOT a parameterisation of {@link buildExportEntry}. That one
+ * hardcodes a `source` describing a sequence of dashboard clicks, an
+ * `exportedAtLocal` of `${exportId}T21:00:00` (the evening somebody sat down to
+ * download files), and `classify()`'s filename-prefix rules. None of the three
+ * means anything for a pull that ran at a known instant against known
+ * endpoints, and threading a flag through all of them would leave one function
+ * telling two stories.
+ *
+ * @param exportId - The export id, `<YYYY-MM-DD>-api`. Names the vault directory.
+ * @param api - The verified audience, the shard the key resolved to, and the
+ *   endpoint templates touched. No key and no address, ever.
+ * @returns The entry, ready for {@link appendExportEntry}.
+ */
+export function buildApiExportEntry(
+  exportId: string,
+  api: { baseUrl: string; listId: string; endpoints: string[] }
+): MailchimpManifestExport {
+  const dir = resolveVaultDir(exportId);
+  const files = listVaultFiles(exportId, ".json");
+
+  const entries: MailchimpManifestFile[] = files.map((file) => {
+    const path = vaultFilePath(exportId, file);
+    const facts = classifyApiFile(file, api.listId);
+    // Written out field by field rather than spread, so the rendered manifest
+    // keeps the same reading order as a CSV entry: what the file is, then what
+    // it holds, then how much of a person it exposes, then its measurements.
+    return {
+      file,
+      report: facts.report,
+      scope: facts.scope,
+      // An API response is scoped by endpoint, not by subscription status —
+      // `/lists/{id}/growth-history` has no status at all, and inventing one
+      // would make the entry claim something the data does not support.
+      status: "n/a",
+      format: "json",
+      endpoint: facts.endpoint,
+      piiClass: facts.piiClass,
+      role: facts.role,
+      redundantWith: facts.redundantWith,
+      note: facts.note,
+      // `hasHeaderRow`, `rows` and `columns` are deliberately absent rather
+      // than false/0: they are CSV shape, and a JSON document does not have
+      // them. `rows: 0` would read as "the pull returned nothing".
+      //
+      // The date, not the whole export id: `exportedAt` is a date everywhere
+      // else in the manifest, and `2026-08-27-api` is not one.
+      exportedAt: exportId.slice(0, 10),
+      bytes: fileBytes(path),
+      sha256: sha256File(path),
+      items: measureApiFile(path),
+    };
+  });
+
+  return {
+    exportId,
+    source:
+      "Mailchimp Marketing API v3, pulled by scripts/mailchimp/fetch-api.ts. The audience id was verified against GET /lists rather than trusted from the environment.",
+    // A pull knows the instant it ran, unlike a CSV session whose filenames
+    // carry only an export-job hash. Recorded to the second because here the
+    // precision is measured rather than guessed — and built from LOCAL
+    // calendar fields with the machine's own zone beside it, because a
+    // `toISOString()` slice on a New Zealand evening records yesterday.
+    ...localTimestamp(),
+    vaultPath: dir.includes("private") ? `private/mailchimp/${exportId}/` : dir,
+    fileCount: entries.length,
+    method: "api-v3",
+    api,
+    files: entries,
+  };
+}
+
 const KNOWN_GAPS: MailchimpManifest["knownGaps"] = [
   {
     report: "account-export-zip",
@@ -247,51 +476,136 @@ function render(manifest: MailchimpManifest): string {
   return (JSON.stringify(manifest, null, 2) + "\n").replace(/\n/g, "\r\n");
 }
 
+const METADATA_NOTE =
+  "Provenance for the raw Mailchimp audience exports. The raw CSVs are never committed (see /private/ in .gitignore); this file exists so their provenance stays auditable when the data itself is not present, which is the normal case and always the case on CI. Unlike a ticketing report, a Mailchimp export is a SNAPSHOT of subscription status — so an old exports[] entry is not superseded by a newer one, it is the only remaining evidence of anyone deleted from the account since.";
+
 function loadManifest(): MailchimpManifest | null {
   if (!existsSync(MANIFEST_PATH)) return null;
   return JSON.parse(readFileSync(MANIFEST_PATH, "utf8")) as MailchimpManifest;
+}
+
+/**
+ * Adds one export entry to the manifest and writes it back.
+ *
+ * Append-only in the sense that matters: other entries are carried through
+ * untouched and `knownGaps` is preserved as it stands on disk. Re-running the
+ * same `exportId` replaces only that entry, which is what makes a pull safe to
+ * repeat after a failure part-way through.
+ *
+ * @param entry - The entry to add, from `buildExportEntry` or
+ *   {@link buildApiExportEntry}.
+ */
+export function appendExportEntry(entry: MailchimpManifestExport): void {
+  const existing = loadManifest();
+  const others = (existing?.exports ?? []).filter(
+    (item) => item.exportId !== entry.exportId
+  );
+
+  const manifest: MailchimpManifest = {
+    metadata: {
+      note: METADATA_NOTE,
+      vaultEnvVar: "MAILCHIMP_VAULT_DIR",
+      piiClasses: PII_CLASSES,
+    },
+    exports: [...others, entry].sort((a, b) => a.exportId.localeCompare(b.exportId)),
+    knownGaps: existing?.knownGaps ?? KNOWN_GAPS,
+  };
+
+  writeFileSync(MANIFEST_PATH, render(manifest), "utf8");
+}
+
+/**
+ * Annotates one known gap as closed, changing nothing else about it.
+ *
+ * The only sanctioned way to edit a gap. `KNOWN_GAPS` above is unreachable once
+ * a manifest exists (`existing?.knownGaps ?? KNOWN_GAPS`), so without this the
+ * only way to record that a gap had been filled was to hand-edit a file the
+ * docs call GENERATED — and a hand edit is exactly how `impact` and `action`
+ * get tidied away, leaving the archive looking as though nothing was ever
+ * missing.
+ *
+ * Note what it does NOT do: `present` stays as it was. A gap recorded as
+ * exported-but-absent is still absent; something else supplied what it held.
+ *
+ * @param report - The `knownGaps[].report` to annotate.
+ * @param closedBy - The `exportId` that supplied what was missing.
+ */
+export function closeGap(report: string, closedBy: string): void {
+  const manifest = loadManifest();
+  if (!manifest) {
+    throw new Error(`No manifest at ${MANIFEST_PATH}. Run with --append first.`);
+  }
+
+  const gap = manifest.knownGaps.find((item) => item.report === report);
+  if (!gap) {
+    throw new Error(
+      `No known gap named ${report}.\n  Gaps: ${manifest.knownGaps.map((item) => item.report).join(", ")}`
+    );
+  }
+  if (!manifest.exports.some((item) => item.exportId === closedBy)) {
+    throw new Error(
+      `No export ${closedBy} in the manifest — a gap may only be closed by an export that is recorded.`
+    );
+  }
+
+  gap.closedBy = closedBy;
+  gap.closedAt = localTimestamp().exportedAtLocal.slice(0, 10);
+
+  writeFileSync(MANIFEST_PATH, render(manifest), "utf8");
+  console.log(`Closed gap ${report} — closedBy ${closedBy}, closedAt ${gap.closedAt}`);
+  console.log(`  present stays ${JSON.stringify(gap.present)}; impact and action are unchanged.`);
+}
+
+/** One line per file, in whichever shape the file actually has. */
+function printEntry(entry: MailchimpManifestExport): void {
+  console.log(`Wrote ${MANIFEST_PATH}\n  export ${entry.exportId}: ${entry.fileCount} files`);
+  for (const file of entry.files) {
+    const size =
+      (file.format ?? "csv") === "csv"
+        ? `${String(file.rows).padStart(5)} rows `
+        : `${String(file.items).padStart(5)} items`;
+    console.log(`    ${file.role.padEnd(9)} ${size}  ${file.status.padEnd(14)} ${file.file}`);
+  }
 }
 
 function main() {
   const argv = process.argv.slice(2);
   const exportId = argValue(argv, "--export");
   const append = argv.includes("--append");
+  const gapToClose = argValue(argv, "--close-gap");
+
+  if (gapToClose) {
+    const closedBy = argValue(argv, "--closed-by");
+    if (!closedBy) {
+      console.error(
+        "Usage: npx tsx scripts/mailchimp/manifest.ts --close-gap <report> --closed-by <exportId>"
+      );
+      process.exit(1);
+    }
+    try {
+      closeGap(gapToClose, closedBy);
+    } catch (error) {
+      // Every failure here is a typo in one of the two arguments, and the
+      // message already names the valid values. A stack trace pushes it off
+      // the screen.
+      console.error(error instanceof Error ? error.message : String(error));
+      process.exit(1);
+    }
+    return;
+  }
 
   if (!exportId) {
     console.error(
-      "Usage: npx tsx scripts/mailchimp/manifest.ts --export <YYYY-MM-DD> [--append]"
+      "Usage: npx tsx scripts/mailchimp/manifest.ts --export <YYYY-MM-DD> [--append]\n" +
+        "       npx tsx scripts/mailchimp/manifest.ts --close-gap <report> --closed-by <exportId>"
     );
     process.exit(1);
   }
 
   if (append) {
-    const existing = loadManifest();
     const entry = buildExportEntry(exportId);
-    const others = (existing?.exports ?? []).filter(
-      (item) => item.exportId !== exportId
-    );
-
-    const manifest: MailchimpManifest = {
-      metadata: {
-        note: "Provenance for the raw Mailchimp audience exports. The raw CSVs are never committed (see /private/ in .gitignore); this file exists so their provenance stays auditable when the data itself is not present, which is the normal case and always the case on CI. Unlike a ticketing report, a Mailchimp export is a SNAPSHOT of subscription status — so an old exports[] entry is not superseded by a newer one, it is the only remaining evidence of anyone deleted from the account since.",
-        vaultEnvVar: "MAILCHIMP_VAULT_DIR",
-        piiClasses: PII_CLASSES,
-      },
-      exports: [...others, entry].sort((a, b) =>
-        a.exportId.localeCompare(b.exportId)
-      ),
-      knownGaps: existing?.knownGaps ?? KNOWN_GAPS,
-    };
-
-    writeFileSync(MANIFEST_PATH, render(manifest), "utf8");
-    console.log(
-      `Wrote ${MANIFEST_PATH}\n  export ${exportId}: ${entry.fileCount} files`
-    );
-    for (const file of entry.files) {
-      console.log(
-        `    ${file.role.padEnd(9)} ${String(file.rows).padStart(5)} rows  ${file.status.padEnd(14)} ${file.file}`
-      );
-    }
+    appendExportEntry(entry);
+    printEntry(entry);
     return;
   }
 
@@ -334,4 +648,6 @@ function main() {
   process.exit(failures === 0 ? 0 : 1);
 }
 
-main();
+// Guarded so `fetch-api.ts` can import `buildApiExportEntry` and
+// `appendExportEntry` without this file's CLI running as a side effect.
+if (require.main === module) main();

@@ -25,6 +25,7 @@ import {
 } from "@/lib/data/event-utils";
 import { cn } from "@/lib/utils";
 import { EVENTS_EMAIL } from "@/lib/config/contact-addresses";
+import { useTicketStatus } from "@/hooks/use-ticket-status";
 
 interface EventSidebarPanelProps {
   event: EventV3;
@@ -79,13 +80,41 @@ export function EventSidebarPanel({
   const isOnline = location.format === "online";
   const isHybrid = location.format === "hybrid";
 
+  // Live from Humanitix, and only for an event that could still sell a ticket.
+  // Until the response lands — and for `"unknown"`, which is what a missing key
+  // or a Humanitix outage returns — this is the page exactly as it was before
+  // the fetch existed: same label, same enabled button, no spinner, no shift.
+  const ticketStatus = useTicketStatus(isPast ? null : event.slug);
+  const registrationBlocked =
+    !isPast && (ticketStatus === "sold-out" || ticketStatus === "closed");
+
   const getButtonText = () => {
     if (isPast && event.detailPageData.galleryUrl) return "View Gallery";
     if (isPast) return "Event Ended";
+    if (ticketStatus === "sold-out") return "Sold out";
+    if (ticketStatus === "closed") return "Registration closed";
     return "Register Now";
   };
 
+  /**
+   * The sentence read to a screen reader, and shown above the button.
+   *
+   * A disabled button is not focusable, so `aria-describedby` on it would never
+   * be announced — hence a `role="status"` live region, which is read when it
+   * appears. The colour change and the relabelled button are then the visual
+   * half of the same message rather than the whole message.
+   */
+  const statusNote =
+    ticketStatus === "sold-out" && !isPast
+      ? "This event has sold out. Registration is closed."
+      : ticketStatus === "closed" && !isPast
+        ? "Registration for this event has closed."
+        : null;
+
   const handleRegister = () => {
+    // Belt and braces: the button is disabled, but a stale click handler must
+    // never open a ticket page we have just said is shut.
+    if (registrationBlocked) return;
     if (event.detailPageData.registrationUrl) {
       window.open(event.detailPageData.registrationUrl, "_blank");
     }
@@ -303,18 +332,29 @@ export function EventSidebarPanel({
 
           {/* CTA */}
           {(isFuture || (isPast && event.detailPageData.galleryUrl)) && (
-            <Button
-              size="lg"
-              variant="brand"
-              className="w-full"
-              onClick={
-                isPast && event.detailPageData.galleryUrl
-                  ? handleViewGallery
-                  : handleRegister
-              }
-            >
-              {getButtonText()}
-            </Button>
+            <div className="space-y-2">
+              {statusNote && (
+                <p
+                  role="status"
+                  className="text-sm text-muted-foreground leading-relaxed"
+                >
+                  {statusNote}
+                </p>
+              )}
+              <Button
+                size="lg"
+                variant="brand"
+                className="w-full"
+                disabled={registrationBlocked}
+                onClick={
+                  isPast && event.detailPageData.galleryUrl
+                    ? handleViewGallery
+                    : handleRegister
+                }
+              >
+                {getButtonText()}
+              </Button>
+            </div>
           )}
 
           {showViewPhotosFallback && (

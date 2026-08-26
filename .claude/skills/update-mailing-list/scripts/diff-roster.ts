@@ -34,7 +34,8 @@
  *                  Addresses stay masked.
  *
  * Output (--json):
- *   { recipientsFile, key, tier, consentSource, consentDate, segmentId,
+ *   { recipientsFile, key, tier, consentSource, consentDate, restrictedTo,
+ *     segmentId,
  *     resend: { contacts, subscribed, segmentMembers },
  *     new: Entry[], alreadyPresent: Entry[], unsubscribed: Entry[],
  *     alreadyInSegment: Entry[], suppressed: Entry[],
@@ -81,6 +82,12 @@ interface RecipientsFile {
   tier: AudienceTier;
   consentSource: string | null;
   consentDate: string | null;
+  /**
+   * The narrowing filter `normalize-recipients.ts --restrict-to-hashes` applied,
+   * when one was used. Optional because every file written before that flag
+   * existed simply has no such key.
+   */
+  restrictedTo?: { path: string; hashes: number } | null;
   recipients: Recipient[];
 }
 
@@ -115,6 +122,7 @@ interface Report {
   tier: AudienceTier;
   consentSource: string | null;
   consentDate: string | null;
+  restrictedTo: { path: string; hashes: number } | null;
   segmentId: string | null;
   resend: { contacts: number; subscribed: number; segmentMembers: number | null };
   new: Entry[];
@@ -392,6 +400,17 @@ function printReport(report: Report): void {
         : "NOT RECORDED — this file may not be imported"
     }`
   );
+  if (report.restrictedTo) {
+    // Without this line the plan block reads "412 recipients" with no
+    // explanation of where the other 1,148 went, and an unexplained drop in a
+    // consent-sensitive report is the kind of thing a reader has to assume the
+    // worst about.
+    console.log(
+      `  Restricted to    ${report.restrictedTo.hashes} hash(es) — ${report.counts.recipients} row(s) survived`
+    );
+    console.log(`                   ${report.restrictedTo.path}`);
+    console.log("                   (a send-order filter over an already-consented list, not a consent source)");
+  }
   console.log(
     `  Resend now       ${report.resend.contacts} contact(s), ${report.resend.subscribed} still subscribed`
   );
@@ -487,6 +506,7 @@ async function main(): Promise<void> {
     tier: file.tier,
     consentSource: file.consentSource,
     consentDate: file.consentDate,
+    restrictedTo: file.restrictedTo ?? null,
     segmentId,
     resend: {
       contacts: contacts.length,

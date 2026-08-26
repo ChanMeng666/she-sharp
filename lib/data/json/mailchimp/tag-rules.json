@@ -7,7 +7,7 @@
     {
       "id": "event",
       "label": "Event",
-      "definition": "Applied with the `Event: ` prefix, the convention adopted around 2022. Says the contact is associated with that event — usually because a ticket list was pasted in. It does NOT say they attended; Humanitix is authoritative for that."
+      "definition": "Applied with the `Event: ` prefix, the convention adopted around 2022. Says the contact is associated with that event — written by the live Humanitix→Mailchimp integration, which pushes each event's registrants into the `She#` audience and tags them, rather than by anybody pasting a ticket list in. It does NOT say they attended; Humanitix is authoritative for that."
     },
     {
       "id": "ticket-type",
@@ -27,7 +27,7 @@
     {
       "id": "label",
       "label": "Hand-typed label",
-      "definition": "A label from before the `Event: ` convention. These name events, partners, campaigns and audiences without distinguishing between them; one bucket on purpose, because inventing four kinds to sort 36 freehand strings would claim a structure the tagger never applied. Each rule's note says which it is."
+      "definition": "A label from before the `Event: ` convention. These name events, partners, campaigns and audiences without distinguishing between them; one bucket on purpose, because inventing four kinds to sort 32 freehand strings would claim a structure the tagger never applied. Each rule's note says which it is."
     },
     {
       "id": "fragment",

@@ -522,6 +522,29 @@ posted into the event channel and pinned.
 > 2026 cost a rewrite of the repository's history and the rotation of every code.
 > This is the one rule in this section with no exceptions.
 
+**Turn on the mailing-list opt-in before the page goes live.** In Humanitix:
+*Edit Event → Advanced → Settings → Orders → "Enable host's mailing list opt
+in"*. It is a **per-event** switch and it defaults to **off**, so it is lost by
+omission on every new event unless somebody sets it.
+
+That default is expensive. The switch has been off since roughly the middle of
+2022 — the ticketing archive records 224 opted-in orders from 187 distinct
+addresses, every one of them between July 2020 and 30 May 2022, and nothing
+since. Roughly 3,500 registrations have passed through checkout in the years
+after that without being asked the question at all.
+
+It matters more than it looks, because it is the only place She Sharp collects a
+consent record that is **per person, timestamped, and made by the person
+themselves**. `.claude/skills/update-mailing-list/references/consent-rules.md`
+allows exactly four consent routes, and a ticked box on a registration form is
+route 2; a registration with no opt-in column is not consent, however full the
+room was. Every event run with this switch off is a mailing list that could have
+grown honestly and did not.
+
+The flag reaches the Humanitix API as `Order.organiserMailListOptIn`, and reaches
+Mailchimp through the live Humanitix integration as a `subscribed` contact rather
+than a non-subscribed one — see `docs/development/MAILCHIMP_ARCHIVE.md`.
+
 ### The channel, and its first message
 
 Two things about `#event-…` channels surprise people:
@@ -1270,7 +1293,7 @@ reaches a projector or a poster.
 | T-6w | the fetch payload was recorded | its **Step 7.6** archive refresh | developer | skill | the private archive level with Slack — **committed there, never here** |
 | T-5w | date, venue, title confirmed **in the event record** | `/make-event-poster` | Marketing | skill | `poster`, `social`, `story`, `square`, `humanitix`, `email` |
 | T-5w | the poster set exists | send it to the partner and get an answer | Event Manager | human | approval, or one revision round |
-| T-4w | approved artwork, and a banner at 3200×1600 | build the Humanitix page and the access codes | Event Manager | human | a live ticket page |
+| T-4w | approved artwork, and a banner at 3200×1600 | build the Humanitix page and the access codes; **switch on the mailing-list opt-in** (per event, defaults off) | Event Manager | human | a live ticket page |
 | T-4w | every speaker has a headshot in the event record | `/make-event-poster --speaker all --lineup` | Marketing | skill | one graphic per person + the line-up tile |
 | T-4w → T-1w | the graphics exist | post the campaign, one speaker a week | marketing | human | the campaign |
 | T-3w | the mailing list has consented contacts | `/promote-event` → `/email-the-community` | Comms | **blocked** | one scheduled broadcast |

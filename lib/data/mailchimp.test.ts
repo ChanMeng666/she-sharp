@@ -24,7 +24,10 @@ import { join } from "node:path";
 
 import { getEventBySlug } from "./events";
 import {
+  campaignsSentBetween,
+  listSizeByMonth,
   mailchimpAggregates,
+  mailchimpCampaigns,
   mailchimpCrosswalk,
   mailchimpManifest,
   mailchimpTagRules,
@@ -232,10 +235,18 @@ console.log("\nManifest");
 
 check("the manifest records at least one export", mailchimpManifest.exports.length > 0);
 
+// A CSV is measured in rows and a JSON document in items, so one check cannot
+// read both fields. `file.rows >= 0` on a JSON file would be `undefined >= 0`
+// — `false` at runtime and legal to the compiler, which is a silent failure
+// rather than a caught one. Branch on the format instead.
 check(
-  "every recorded file has a sha256 and a row count",
+  "every recorded file has a sha256 and a count of what it holds",
   mailchimpManifest.exports.every((entry) =>
-    entry.files.every((file) => /^[0-9a-f]{64}$/.test(file.sha256) && file.rows >= 0)
+    entry.files.every(
+      (file) =>
+        /^[0-9a-f]{64}$/.test(file.sha256) &&
+        ((file.format ?? "csv") === "csv" ? (file.rows ?? -1) >= 0 : (file.items ?? -1) >= 0)
+    )
   )
 );
 
@@ -264,13 +275,283 @@ check(
   mailchimpManifest.knownGaps.every((gap) => gap.impact.length > 0 && gap.action.length > 0)
 );
 
-const spine = mailchimpManifest.exports.flatMap((entry) =>
+// The spine rule is about the manual CSV export, where one file per session IS
+// the mailing list. An API pull has no spine — it is scoped by endpoint, not by
+// status — so scoping this by method is not a weakening, it is the rule finally
+// saying which export shape it was ever about.
+const csvExports = mailchimpManifest.exports.filter(
+  (entry) => (entry.method ?? "manual-csv") === "manual-csv"
+);
+const spine = csvExports.flatMap((entry) =>
   entry.files.filter((file) => file.role === "spine")
 );
 check(
-  "exactly one file per export is the spine, and it is the subscribed list",
-  spine.length === mailchimpManifest.exports.length &&
-    spine.every((file) => file.status === "subscribed")
+  "exactly one file per CSV export is the spine, and it is the subscribed list",
+  spine.length === csvExports.length && spine.every((file) => file.status === "subscribed")
+);
+
+// An API export is exempted from the spine rule above, and an exemption with no
+// replacement is a hole. These four say what an API entry must carry instead:
+// the audience it was pulled from, and per file the endpoint that is its only
+// statement of what the numbers inside are counts of.
+const apiExports = mailchimpManifest.exports.filter((entry) => entry.method === "api-v3");
+
+check(
+  "every API export names the audience it was pulled from",
+  apiExports.every((entry) => typeof entry.api?.listId === "string" && entry.api.listId.length > 0),
+  apiExports
+    .filter((entry) => !entry.api?.listId)
+    .map((entry) => entry.exportId)
+    .join(", ")
+);
+
+check(
+  "every file in an API export names the endpoint it is the response to",
+  apiExports.every((entry) =>
+    entry.files.every((file) => typeof file.endpoint === "string" && file.endpoint.startsWith("/"))
+  )
+);
+
+// `rows: 0` on a JSON file would read as "the pull returned nothing", which is
+// a different claim from "rows are not a thing this file has". Absence is the
+// only way to say the second.
+check(
+  "an API file declares no CSV-only shape",
+  apiExports.every((entry) =>
+    entry.files.every(
+      (file) =>
+        file.hasHeaderRow === undefined &&
+        file.rows === undefined &&
+        file.columns === undefined
+    )
+  )
+);
+
+// The manifest is append-only, so the exportId is the key every other file and
+// script joins on. A duplicate would make "the 2026-08-17 export" ambiguous and
+// silently hand the first match to whichever lookup ran.
+const exportIds = mailchimpManifest.exports.map((entry) => entry.exportId);
+check(
+  "no exportId is recorded twice",
+  new Set(exportIds).size === exportIds.length,
+  exportIds.filter((id, index) => exportIds.indexOf(id) !== index).join(", ")
+);
+
+// A gap is closed by annotation, never by deletion — so the two things that can
+// go wrong are pointing at an export that does not exist, and quietly emptying
+// the record of what was missing while marking it closed.
+const closedGaps = mailchimpManifest.knownGaps.filter((gap) => gap.closedBy !== undefined);
+
+check(
+  "a closed gap names an export that exists",
+  closedGaps.every((gap) => exportIds.includes(gap.closedBy as string)),
+  closedGaps
+    .filter((gap) => !exportIds.includes(gap.closedBy as string))
+    .map((gap) => `${gap.report} -> ${gap.closedBy}`)
+    .join(", ")
+);
+
+check(
+  "closing a gap never erases what was missing",
+  closedGaps.every(
+    (gap) => gap.impact.length > 0 && gap.action.length > 0 && typeof gap.closedAt === "string"
+  )
+);
+
+// --- Campaigns ---------------------------------------------------------------
+console.log("\n--- Campaigns ---");
+
+const campaigns = mailchimpCampaigns.campaigns;
+const campaignTotals = mailchimpCampaigns.totals;
+
+check("the campaign archive declares a floor of at least 5", campaigns.floor >= 5);
+
+check(
+  "no named campaign sits below the floor",
+  campaigns.sent.every((campaign) => campaign.emailsSent >= campaigns.floor),
+  campaigns.sent
+    .filter((campaign) => campaign.emailsSent < campaigns.floor)
+    .map((campaign) => campaign.id)
+    .join(", ")
+);
+
+// The three buckets are a partition of the pull. If they stopped adding up, a
+// campaign would have gone missing between the vault and the archive with
+// nothing saying so — which is indistinguishable from the floor eating it.
+check(
+  "the named, suppressed and unsent campaigns account for every campaign",
+  campaigns.distinct === campaigns.sent.length + campaigns.belowFloor + campaigns.unsent,
+  `${campaigns.distinct} vs ${campaigns.sent.length} + ${campaigns.belowFloor} + ${campaigns.unsent}`
+);
+
+check(
+  "the send total counts the suppressed campaigns too",
+  campaignTotals.campaignsSent === campaigns.sent.length + campaigns.belowFloor,
+  `${campaignTotals.campaignsSent} vs ${campaigns.sent.length} + ${campaigns.belowFloor}`
+);
+
+// The units check, and the reason this file has a Campaigns section at all.
+// Mailchimp returns `open_rate` as a FRACTION and `unique_opens` as a COUNT.
+// Reading one as the other produces a number that looks entirely plausible in a
+// funder report — 0.37 opens, or 500 percent — so the impossible direction is
+// asserted rather than trusted. `uniqueClicks` is the same trap twice over:
+// Mailchimp's `unique_clicks` counts clicks per link and legitimately exceeds
+// the recipient count, which is why the builder commits
+// `unique_subscriber_clicks` instead.
+const overOpened = campaigns.sent.filter((entry) => entry.uniqueOpens > entry.emailsSent);
+check(
+  "no campaign was opened by more people than it was sent to",
+  overOpened.length === 0,
+  overOpened.map((entry) => `${entry.id} ${entry.uniqueOpens}/${entry.emailsSent}`).join(", ")
+);
+
+const overClicked = campaigns.sent.filter((entry) => entry.uniqueClicks > entry.emailsSent);
+check(
+  "no campaign was clicked by more people than it was sent to",
+  overClicked.length === 0,
+  overClicked.map((entry) => `${entry.id} ${entry.uniqueClicks}/${entry.emailsSent}`).join(", ")
+);
+
+check(
+  "total opens are never fewer than unique opens",
+  campaigns.sent.every((entry) => entry.opensTotal >= entry.uniqueOpens),
+  campaigns.sent
+    .filter((entry) => entry.opensTotal < entry.uniqueOpens)
+    .map((entry) => entry.id)
+    .join(", ")
+);
+
+check(
+  "total clicks are never fewer than unique clicks",
+  campaigns.sent.every((entry) => entry.clicksTotal >= entry.uniqueClicks),
+  campaigns.sent
+    .filter((entry) => entry.clicksTotal < entry.uniqueClicks)
+    .map((entry) => entry.id)
+    .join(", ")
+);
+
+// Proxy-excluded opens are a subset of opens by definition. If the pair ever
+// inverted, Mailchimp's MPP correction would be reading as an inflation.
+check(
+  "proxy-excluded opens never exceed unique opens",
+  campaigns.sent.every((entry) => entry.proxyExcludedUniqueOpens <= entry.uniqueOpens),
+  campaigns.sent
+    .filter((entry) => entry.proxyExcludedUniqueOpens > entry.uniqueOpens)
+    .map((entry) => entry.id)
+    .join(", ")
+);
+
+check(
+  "departures and failures never exceed the send",
+  campaigns.sent.every(
+    (entry) => entry.unsubscribed + entry.hardBounces + entry.softBounces <= entry.emailsSent
+  ),
+  campaigns.sent
+    .filter((entry) => entry.unsubscribed + entry.hardBounces + entry.softBounces > entry.emailsSent)
+    .map((entry) => entry.id)
+    .join(", ")
+);
+
+// A campaign id is ten hex characters. A MEMBER id is the 32-character md5 of a
+// lower-cased address — pseudonymous, but one per person. Both are hex, so the
+// LENGTH is the whole difference between a record of a send and a record of a
+// person, and checking it is what stops a future mapper writing the wrong one
+// into a file whose every other value is a legitimate count.
+const badIds = campaigns.sent.filter((entry) => !/^[0-9a-f]{6,16}$/.test(entry.id));
+check(
+  "every campaign id is campaign-shaped, not member-shaped",
+  badIds.length === 0,
+  badIds.map((entry) => `${entry.id} (${entry.id.length} chars)`).join(", ")
+);
+
+check(
+  "named campaigns are ordered oldest first",
+  campaigns.sent.every((entry, index) => index === 0 || campaigns.sent[index - 1].sentAt <= entry.sentAt)
+);
+
+check(
+  "the per-year buckets sum to the whole-account totals",
+  mailchimpCampaigns.bySendYear.reduce((acc, year) => acc + year.emailsSent, 0) ===
+    campaignTotals.emailsSent &&
+    mailchimpCampaigns.bySendYear.reduce((acc, year) => acc + year.campaigns, 0) ===
+      campaignTotals.campaignsSent
+);
+
+check(
+  "the campaign archive ships its caveats with the data",
+  mailchimpCampaigns.caveats.length >= 5
+);
+
+// --- The list-size series ----------------------------------------------------
+const growth = mailchimpCampaigns.growth;
+
+check("the growth series is not empty", growth.length > 0);
+
+check(
+  "every growth point is a YYYY-MM month",
+  growth.every((point) => /^\d{4}-(0[1-9]|1[0-2])$/.test(point.month))
+);
+
+// Monthly, ordered and gapless is the whole contract of a time series. A chart
+// drawn from a series with a hole in it draws a straight line across the hole,
+// and nothing on the chart says so.
+const monthGaps: string[] = [];
+for (let index = 1; index < growth.length; index++) {
+  const [year, month] = growth[index - 1].month.split("-").map(Number);
+  const expected =
+    month === 12 ? `${year + 1}-01` : `${year}-${String(month + 1).padStart(2, "0")}`;
+  if (growth[index].month !== expected) {
+    monthGaps.push(`${growth[index - 1].month} → ${growth[index].month}`);
+  }
+}
+check(
+  "the growth series is monthly, ordered and gapless",
+  monthGaps.length === 0,
+  monthGaps.join(", ")
+);
+
+check(
+  "listSizeByMonth reports the same series",
+  listSizeByMonth().length === growth.length &&
+    listSizeByMonth()[0].subscribed === growth[0].subscribed
+);
+
+check(
+  "no month claims more subscribers than the audience has ever held",
+  growth.every((point) => point.subscribed <= totals.contacts),
+  growth
+    .filter((point) => point.subscribed > totals.contacts)
+    .map((point) => point.month)
+    .join(", ")
+);
+
+// Cross-file, and a BAND rather than an equality on purpose: the API pull and
+// the CSV export are ten days apart, so people joined and left in between. An
+// equality here would fail on the next pull for an entirely healthy reason,
+// which is how a check gets deleted instead of read.
+const latestListSize = growth[growth.length - 1].subscribed;
+const drift = Math.abs(latestListSize - totals.subscribed) / totals.subscribed;
+check(
+  "the newest growth point is within 10% of the CSV export's list size",
+  drift <= 0.1,
+  `${latestListSize} (API ${mailchimpCampaigns.metadata.exportId}) vs ${totals.subscribed} (CSV), ${(drift * 100).toFixed(1)}% apart`
+);
+
+// The accessor is a floor by construction, and a caller who forgets that reads
+// a period figure as a total. The window below covers every send there is, and
+// it still returns fewer campaigns than were sent.
+const everySend = campaignsSentBetween("2000-01-01", "2999-12-31");
+check(
+  "campaignsSentBetween over all time returns the named campaigns and no more",
+  everySend.length === campaigns.sent.length && everySend.length < campaignTotals.campaignsSent,
+  `${everySend.length} named vs ${campaignTotals.campaignsSent} sent`
+);
+
+check(
+  "campaignsSentBetween excludes campaigns outside the window",
+  campaignsSentBetween("2019-01-01", "2019-12-31").every((entry) =>
+    entry.sentAt.startsWith("2019")
+  ) && campaignsSentBetween("1999-01-01", "1999-12-31").length === 0
 );
 
 // --- Leak guard --------------------------------------------------------------

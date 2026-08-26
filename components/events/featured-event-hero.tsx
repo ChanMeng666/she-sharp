@@ -10,6 +10,7 @@ import { CurtainReveal } from "@/components/ui/reveal";
 import { curatedImages } from "@/public/img/curated";
 import type { EventListItem } from "@/lib/data/event-list-item";
 import { daysUntilDate, formatDateString } from "@/lib/data/event-utils";
+import { useTicketStatus } from "@/hooks/use-ticket-status";
 
 const FALLBACK_HERO = curatedImages["hero-conference-crowd"];
 
@@ -62,6 +63,22 @@ function FeaturedEventContent({ event }: { event: EventListItem }) {
   const registerHref = event.registrationUrl || `/events/${event.slug}`;
   const isExternal = !!event.registrationUrl;
 
+  // Live from Humanitix. `"unknown"` — the value while the request is in flight,
+  // and the value for every failure — leaves the hero exactly as it is today.
+  const ticketStatus = useTicketStatus(event.slug);
+  const registrationBlocked =
+    ticketStatus === "sold-out" || ticketStatus === "closed";
+  const blockedLabel =
+    ticketStatus === "sold-out" ? "Sold out" : "Registration closed";
+  // Same reasoning as the event sidebar: a disabled button is not focusable, so
+  // the explanation has to be a live region rather than `aria-describedby`.
+  const statusNote =
+    ticketStatus === "sold-out"
+      ? "This event has sold out. Registration is closed."
+      : ticketStatus === "closed"
+        ? "Registration for this event has closed."
+        : null;
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 mt-12 items-center">
       {/* Left: event information */}
@@ -111,18 +128,32 @@ function FeaturedEventContent({ event }: { event: EventListItem }) {
         )}
 
         {/* Actions */}
+        {statusNote && (
+          <p role="status" className="text-base text-ink-600 mb-4">
+            {statusNote}
+          </p>
+        )}
         <div className="flex flex-wrap gap-3">
-          <Button asChild variant="brand" size="lg">
-            <Link
-              href={registerHref}
-              {...(isExternal
-                ? { target: "_blank", rel: "noopener noreferrer" }
-                : {})}
-            >
-              Register now
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-          </Button>
+          {registrationBlocked ? (
+            // A real <button disabled>, not the `asChild` Link: an anchor cannot
+            // be disabled, and one that still navigates to a shut ticket page is
+            // worse than no link at all.
+            <Button variant="brand" size="lg" disabled>
+              {blockedLabel}
+            </Button>
+          ) : (
+            <Button asChild variant="brand" size="lg">
+              <Link
+                href={registerHref}
+                {...(isExternal
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
+              >
+                Register now
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            </Button>
+          )}
           <Button asChild variant="outline" size="lg">
             <Link href={`/events/${event.slug}`}>View details</Link>
           </Button>

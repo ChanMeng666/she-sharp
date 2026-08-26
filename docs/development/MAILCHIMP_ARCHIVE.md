@@ -18,7 +18,8 @@ never be committed.
 | Tier | What | Where | Committed? |
 |---|---|---|---|
 | Raw | The five CSVs, verbatim | `she-sharp-slack-archive/mailchimp/2026-08-17/` (master), `private/mailchimp/2026-08-17/` (cache) | **Never** |
-| Derived | Counts, tag vocabulary, crosswalk, checksums | `lib/data/json/mailchimp/` | Yes |
+| Raw | The five API responses, verbatim | `private/mailchimp/2026-08-27-api/` | **Never** |
+| Derived | Counts, tag vocabulary, crosswalk, campaign statistics, checksums | `lib/data/json/mailchimp/` | Yes |
 | Access | Typed reader | `lib/data/mailchimp.ts`, `types/mailchimp.ts` | Yes |
 
 ### Why the raw data is not in git
@@ -59,9 +60,24 @@ lib/data/json/mailchimp/
   manifest.json     GENERATED  provenance: per-file sha256, rows, columns, PII class, known gaps
   aggregates.json   GENERATED  every count in this document
   tags.json         GENERATED  all 243 tag strings with per-status counts and a kind
+  campaigns.json    GENERATED  180 sends with opens/clicks/bounces, plus the list-size series
   tag-rules.json    AUTHORED   how a tag string becomes a kind
   crosswalk.json    AUTHORED   each `Event:` tag → a site event slug
 ```
+
+`campaigns.json` comes from the **API pull**, not the CSV export, and is built
+by `scripts/mailchimp/build-campaigns.ts` — a separate script from
+`build-archive.ts` because its `--export` names a different kind of thing
+(`2026-08-27-api`, not `2026-08-17`), and one flag meaning two things is how a
+build succeeds against data it was never pointed at.
+
+It is the one committed file carrying **free text**: each campaign's `title` and
+`subjectLine`. Both are already public — every subject line here is on the
+account's own archive at `us3.campaign-archive.com` — and the builder re-runs
+the CI leak guard's own email and IP patterns over both before writing, failing
+the build on a hit and naming the campaign id rather than the string. No
+`from_name` and no `reply_to` is ever mapped: those carry the organisation's
+mailboxes, and `lib/mailchimp/client.ts` already refuses to project them.
 
 **GENERATED files are rebuilt wholesale and must never be hand-edited.**
 AUTHORED files are judgements, and the builder never writes them — a
@@ -88,10 +104,29 @@ excludes the 544 `cleaned`. See trap 2.
 
 **byOptinYear.** Contacts whose `OPTIN_TIME` falls in that year, across every
 status — 2019: 297, 2020: 346, 2021: 323, 2022: 594, 2023: 820, 2024: 347,
-2025: 322, 2026: 41. It is recruitment per year, **not list size in that year**,
-and the difference cannot be recovered: an unsubscribe records when someone left,
-never which cohort they joined in. 599 contacts have no `OPTIN_TIME` at all and
-appear in no year.
+2025: 322, 2026: 41. It is recruitment per year, **not list size in that year**.
+599 contacts have no `OPTIN_TIME` at all and appear in no year.
+
+**The CSV still cannot produce list size in a past year** — an unsubscribe
+records when somebody left, never which cohort they joined in, so the two
+numbers cannot be reconciled inside this file. But the series itself is not
+lost: Mailchimp kept a monthly snapshot server-side, and
+`GET /lists/{id}/growth-history` returns it. It is committed as
+`campaigns.json` → `growth[]` and read through `listSizeByMonth()`. See
+**growth** below.
+
+**growth.** 86 months, July 2019 to August 2026, gapless. **`subscribed` is a
+STOCK — subscribed members at the END of that month, not that month's
+additions**, which is the opposite of what the field name suggests and the
+single most likely way to mis-read this series. It is therefore **not
+monotonic**: 157 in July 2019, 1,093 by December 2022, 1,573 by December 2023,
+1,716 by December 2025, a peak of **1,742 in November 2025**, and **1,555 in
+August 2026**. The list has been shrinking through 2026.
+
+Mailchimp's documented growth fields — `existing`, `imports`, `optins` — are
+**hard zero in all 86 months** of this account and are deliberately not
+committed. A committed zero is worse than an absent field, because somebody
+will chart it.
 
 **domains / organisations.** Buckets of at least **5** contacts are named; below
 that they are counted and suppressed, because a bucket of one is a person. 660
@@ -108,6 +143,27 @@ an `OPTIN_IP`, **0 carry a `CONFIRM_IP`**, and 1,431 have `OPTIN_TIME` equal to
 **tags.** 243 distinct strings, of which **229 are real tags and 14 are
 artefacts** of Mailchimp's own broken export (trap 6). Kinds: 106 `ticket-type`,
 64 `event`, 32 `label`, 23 `campaign-segment`, 4 `cohort-year`.
+
+**campaigns — 180 sent**, July 2019 to August 2026, **188,796 emails**, 71,493
+unique opens (**37.9%**) and 5,256 unique clicks (2.8%). Not 209 and not 215:
+`GET /lists` reports `campaignCount: 215`, which counts drafts and deleted
+campaigns too, and the 209 in older notes here was a UI reading of the same
+thing. Neither is a count of sends. Four campaigns went to fewer than **5**
+people and are counted but never named — a two-person send is a description of
+those two people, and in this account such sends are titled after them.
+
+**opens after 2021.** Apple Mail Privacy Protection pre-fetches images, which
+Mailchimp counts as an open, so an open rate cannot be compared across that
+boundary. Every campaign carries `proxyExcludedUniqueOpens`, Mailchimp's own
+correction: 62,531 against 71,493 overall, and **exactly equal to `uniqueOpens`
+for every campaign sent before 2022**, because there was nothing to exclude
+yet. That equality is the evidence of where the boundary falls.
+
+**uniqueClicks counts PEOPLE.** It is Mailchimp's `unique_subscriber_clicks`,
+not its `unique_clicks` — which counts unique clicks per *link* summed across
+links, and so legitimately exceeds the recipient count (a two-person send here
+reports 3 of them, and the account's one variate campaign reports 0 while 47
+people clicked). Only a count of people may be divided by `emailsSent`.
 
 ## Eight ways to get a number wrong
 
@@ -158,8 +214,11 @@ Each of these is a claim the data will appear to support and does not.
 
 8. **`LAST_CHANGED` read as engagement.** 1,441 of the 3,689 changed during 2025
    and 357 during 2026. That is the signature of a bulk tag operation, not of
-   people reading mail. Nothing in this export measures whether anyone opened
-   anything — that lives in the account-level ZIP, which has not arrived.
+   people reading mail. Nothing in the **CSV** export measures whether anyone
+   opened anything. That evidence now exists, but it is in `campaigns.json`,
+   from the API pull — and it is **per campaign**, never per person. It says
+   500 people opened an email; it cannot say which 500, and nothing in this
+   repository can.
 
 ### What this archive does *not* evidence
 
@@ -168,7 +227,11 @@ Each of these is a claim the data will appear to support and does not.
 - **Attendance.** Use the Humanitix archive.
 - **Membership or community size.** A tagged address is not a member, and the
   repo's `users` table is a different population again.
-- **Engagement of any kind**, until the account ZIP lands.
+- **Per-person engagement.** `campaigns.json` evidences engagement *per
+  campaign* — sends, opens, clicks, bounces, unsubscribes. Who opened what is a
+  separate per-campaign export that was never taken; see the known gaps.
+- **Readership.** An open is a pixel load, and after 2021 often a machine's.
+  Use `proxyExcludedUniqueOpens` and say which one you used.
 
 ## Running it
 
@@ -179,6 +242,9 @@ npx tsx scripts/mailchimp/verify-export.ts --export 2026-08-17
 npx tsx scripts/mailchimp/build-archive.ts --export 2026-08-17 --check    # diff only
 npx tsx scripts/mailchimp/build-archive.ts --export 2026-08-17
 npx tsx scripts/mailchimp/build-archive.ts --export 2026-08-17 --check    # must be empty
+npx tsx scripts/mailchimp/build-campaigns.ts --export 2026-08-27-api --check
+npx tsx scripts/mailchimp/build-campaigns.ts --export 2026-08-27-api
+npx tsx scripts/mailchimp/build-campaigns.ts --export 2026-08-27-api --check   # must be empty
 npx tsx lib/data/mailchimp.test.ts
 npx tsx scripts/mailchimp/propose-crosswalk.ts                            # drafts to tmp/
 ```
@@ -189,8 +255,8 @@ unsorted map.
 
 ### What runs where
 
-`manifest`, `verify-export` and `build-archive` need the vault and therefore
-**never run on CI**. `lib/data/mailchimp.test.ts` reads only committed JSON and
+`manifest`, `verify-export`, `build-archive` and `build-campaigns` need the
+vault and therefore **never run on CI**. `lib/data/mailchimp.test.ts` reads only committed JSON and
 runs on every PR. `verify-export.ts --allow-missing-vault` exists but must be
 asked for: a verify script that passes with nothing to verify is worse than no
 verify script.
@@ -252,8 +318,8 @@ What the import session still needs to know:
 
 | Item | Status |
 |---|---|
-| Account-level ZIP (campaign statistics, templates, audience history) | Triggered 2026-08-17, **not yet arrived**. One export per 24 hours. Recorded as `claimedExported: true, present: false` |
-| Per-campaign per-recipient opens/clicks (209 campaigns) | Deliberately skipped — 209 manual exports. Blocks the "recent openers" sub-segment the migration runbook wants for the first send |
+| Account-level ZIP (campaign statistics, templates, audience history) | **Closed 2026-08-27 — but not by the ZIP.** The API supplied the campaign statistics and the audience-size history directly, and they are committed as `campaigns.json`. Recorded in `manifest.json` as `closedBy: "2026-08-27-api"`. **Templates and landing-page content are still missing** — the API does not carry them and the ZIP is still the only source |
+| Per-campaign per-recipient opens/clicks (180 campaigns) | Still open. Deliberately skipped — one manual export per campaign. Blocks the "recent openers" sub-segment the migration runbook wants for the first send. (The gap entry says 209, the count believed at the time; 180 is the number of campaigns actually sent) |
 | Automations, signup-form designs, landing pages | **Not in any Mailchimp export.** Must be screenshotted before the account is closed |
 | Mailchimp credentials | `SECURITY/credentials-to-rotate.md` Tier 1 #1 in the private repo — password plus a 2FA QR pinned in Slack. Unrotated. This archive raises what that costs |
 | The subscribe funnel | Still Mailchimp's. `EMAIL_AUTHENTICATION.md` item 8b |
