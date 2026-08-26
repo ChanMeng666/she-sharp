@@ -25,10 +25,31 @@
  * without a recorded consent source and date, and drops every row that did not
  * tick the marketing opt-in.
  *
+ * `--restrict-to-hashes` is the opposite kind of flag, and the distinction
+ * matters more than it looks. It is a SEND-ORDER FILTER, not a consent source.
+ * `references/consent-rules.md` governs WIDENING a list — who may be added, on
+ * what evidence. **Narrowing an already-consented list needs no permission and
+ * grants none.** Choosing to email the 400 warmest people on a 1,560-person
+ * list before the other 1,160 is a deliverability decision, in the same family
+ * as sending on a Tuesday; it says nothing about anyone's consent, and being in
+ * the hash file can never make an address sendable that was not already.
+ *
+ * The guardrails that keep it that way:
+ *   - it can only ever REMOVE rows — there is deliberately no `--add-hashes`;
+ *   - it cannot introduce an address the input CSV did not already contain;
+ *   - `--for-import` still refuses to run without --consent-source and
+ *     --consent-date, restricted or not.
+ *
+ * It takes HASHES rather than addresses on purpose. The ramp cohort is derived
+ * from per-recipient engagement data — who reads what — which must never come
+ * to rest on disk as a list of addresses. A flag that accepted a CSV of
+ * addresses would create a reason for exactly that file to exist.
+ *
  * Usage:
  *   npx tsx scripts/email/normalize-recipients.ts <input.csv> --key <k> \
  *     [--map email=<col>,firstName=<col>,lastName=<col>,status=<col>,optIn=<col>] \
  *     [--for-import] [--consent-source "..."] [--consent-date YYYY-MM-DD] \
+ *     [--restrict-to-hashes <path>] \
  *     [--tier 0|1|2|3] [--out-dir tmp/emails] [--json] [--self-test]
  *
  * Flags:
@@ -44,13 +65,19 @@
  *   --consent-source   Where the opt-in came from, e.g. "Humanitix checkout
  *                      question, AUT July 2026". Required by --for-import.
  *   --consent-date     ISO date the opt-in was collected. Required by --for-import.
+ *   --restrict-to-hashes
+ *                      Path to a JSON file of `hashEmail()` digests. Keeps only
+ *                      the rows whose hash is in it; everything else is
+ *                      excluded with a reason. See the note below — this is a
+ *                      send-order filter, never a consent route.
  *   --tier             Audience tier recorded in the output (default 2).
  *   --out-dir          Output directory (default tmp/emails).
  *   --json             Print a machine-readable summary instead of prose.
  *   --self-test        Run the CSV parser's built-in assertions and exit.
  *
  * Output (--map mode), written to <out-dir>/recipients-<key>.json:
- *   { key, source, tier, consentSource, consentDate, detected, nameSplitFrom,
+ *   { key, source, tier, consentSource, consentDate, restrictedTo, detected,
+ *     nameSplitFrom,
  *     recipients: [{ email, firstName, lastName, fields }],
  *     excluded:   [{ email, row, reason }],
  *     duplicates: [{ email, rows }],
@@ -61,8 +88,9 @@
  * so the first data row is row 2 — the number a colleague can type into Excel.
  */
 
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
-import { resolve } from "node:path";
+import { readFileSync, writeFileSync, mkdirSync, mkdtempSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { hashEmail, loadSuppressionHashes } from "./suppression";
 import type { AudienceTier } from "../../lib/email/audience";
@@ -171,6 +199,56 @@ export function parseCsv(input: string): CsvRecord[] {
   return records;
 }
 
+/**
+ * Exercises `--restrict-to-hashes` end to end on a three-row in-memory CSV.
+ *
+ * The property under test is the one the flag's safety rests on: restricting
+ * can only ever REMOVE rows. If it could grow the recipient count it would be a
+ * way of getting an address into a send that the source file did not contain —
+ * i.e. a consent route — which is exactly what it must never be. A bare `<=`
+ * assertion would also pass if the flag did nothing at all, so the exact counts
+ * are checked instead.
+ *
+ * @returns `[unrestricted recipients, restricted recipients, hashes recorded]`.
+ */
+function restrictNarrowsOnly(): [number, number, number | null] {
+  const map = { email: "Email" };
+  const argsFor = (restrictToHashes: string | null): Args => ({
+    input: "(self-test)",
+    key: "self-test",
+    map,
+    forImport: false,
+    consentSource: null,
+    consentDate: null,
+    restrictToHashes,
+    tier: 2,
+    outDir: "tmp/emails",
+    json: false,
+  });
+
+  const records = parseCsv("Email\na@example.com\nb@example.com\nc@example.com");
+  const headers = records[0].cells;
+  const rows = records.slice(1);
+
+  const unrestricted = normalize(argsFor(null), "(self-test)", headers, rows, map);
+
+  // Written to the OS temp dir, not the repo's tmp/, so a self-test never
+  // leaves a file a colleague could mistake for a real ramp cohort.
+  const dir = mkdtempSync(join(tmpdir(), "she-sharp-restrict-"));
+  const path = join(dir, "hashes.json");
+  writeFileSync(path, JSON.stringify({ hashes: [hashEmail("a@example.com")] }), "utf8");
+  try {
+    const restricted = normalize(argsFor(path), "(self-test)", headers, rows, map);
+    return [
+      unrestricted.counts.recipients,
+      restricted.counts.recipients,
+      restricted.restrictedTo?.hashes ?? null,
+    ];
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+}
+
 /** Parser assertions — run with `--self-test`. */
 function selfTest(): void {
   const checks: { name: string; got: unknown; want: unknown }[] = [];
@@ -231,6 +309,11 @@ function selfTest(): void {
   checks.push({ name: "email shape accepted", got: looksLikeEmail("A.B+c@Example.co.nz"), want: true });
   checks.push({ name: "email shape rejected", got: looksLikeEmail("not-an-email"), want: false });
   checks.push({ name: "header normalization", got: compact("Attendee  E-Mail_Address"), want: "attendeeemailaddress" });
+  checks.push({
+    name: "--restrict-to-hashes only ever removes rows",
+    got: restrictNarrowsOnly(),
+    want: [3, 1, 1],
+  });
 
   let failed = 0;
   for (const check of checks) {
@@ -363,6 +446,84 @@ function isOptedIn(value: string): boolean {
   return OPT_IN_VALUES.has(normalizeValue(value));
 }
 
+/** A loaded `--restrict-to-hashes` file: where it came from, and its digests. */
+interface RestrictSet {
+  path: string;
+  hashes: Set<string>;
+}
+
+/**
+ * Loads the narrowing filter — a JSON file of `hashEmail()` digests.
+ *
+ * Accepts either a bare array or `{ hashes: [...] }`, which is what
+ * `scripts/mailchimp/recent-openers.ts` writes.
+ *
+ * Every entry must look like a sha256 digest, and that check is doing real
+ * work: it is what stops somebody pointing this flag at a list of email
+ * addresses. The ramp cohort is derived from per-recipient engagement data, and
+ * the entire reason the flag speaks hashes is so no such address file has a
+ * reason to exist. Rejecting one loudly is the point, not pedantry.
+ *
+ * @param path Path as given on the command line.
+ * @returns The resolved path and the digest set.
+ */
+function loadRestrictHashes(path: string): RestrictSet {
+  const resolved = resolve(path);
+
+  let raw: string;
+  try {
+    raw = readFileSync(resolved, "utf8");
+  } catch {
+    fail(
+      `could not read --restrict-to-hashes ${resolved}`,
+      "",
+      "This file is produced by:",
+      "  npx tsx scripts/mailchimp/recent-openers.ts --export <id> \\",
+      "    --subscribed-export <id> --since YYYY-MM-DD"
+    );
+  }
+
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(raw);
+  } catch (error) {
+    fail(`${resolved} is not valid JSON: ${error instanceof Error ? error.message : String(error)}`);
+  }
+
+  const list =
+    Array.isArray(parsed) ? parsed
+    : typeof parsed === "object" && parsed !== null ? (parsed as { hashes?: unknown }).hashes
+    : undefined;
+  if (!Array.isArray(list)) {
+    fail(
+      `${resolved} must be a JSON array of hashes, or an object with a "hashes" array.`
+    );
+  }
+
+  const hashes = new Set<string>();
+  for (const entry of list) {
+    if (typeof entry !== "string" || !/^[0-9a-f]{64}$/i.test(entry.trim())) {
+      fail(
+        `${resolved} contains a value that is not a sha256 hex digest.`,
+        "",
+        "Every entry must be a hashEmail() digest. If this file holds email",
+        "addresses, it is the wrong file — this flag takes hashes precisely so a",
+        "plaintext list of engaged readers never needs to exist on disk."
+      );
+    }
+    hashes.add(entry.trim().toLowerCase());
+  }
+
+  if (hashes.size === 0) {
+    fail(
+      `${resolved} contains no hashes — that would exclude every row.`,
+      "Drop --restrict-to-hashes rather than passing an empty filter."
+    );
+  }
+
+  return { path: resolved, hashes };
+}
+
 /** Splits "Ada Lovelace" into first/last at the first space. */
 function splitFullName(value: string): { firstName: string; lastName: string } {
   const trimmed = value.trim().replace(/\s+/g, " ");
@@ -389,6 +550,11 @@ interface NormalizedOutput {
   tier: AudienceTier;
   consentSource: string | null;
   consentDate: string | null;
+  /**
+   * The narrowing filter this run applied, for audit. Present so a later reader
+   * can explain why 1,560 rows became 412 without having to guess.
+   */
+  restrictedTo: { path: string; hashes: number } | null;
   detected: Record<string, string | null>;
   /** Non-standard extra: the column first/last name were split out of, if any. */
   nameSplitFrom: string | null;
@@ -416,6 +582,7 @@ interface Args {
   forImport: boolean;
   consentSource: string | null;
   consentDate: string | null;
+  restrictToHashes: string | null;
   tier: AudienceTier;
   outDir: string;
   json: boolean;
@@ -490,6 +657,7 @@ const VALUE_FLAGS = new Set([
   "--map",
   "--consent-source",
   "--consent-date",
+  "--restrict-to-hashes",
   "--tier",
   "--out-dir",
 ]);
@@ -542,6 +710,7 @@ function parseArgs(argv: string[]): Args {
     forImport: argv.includes("--for-import"),
     consentSource: readOption(argv, "--consent-source"),
     consentDate,
+    restrictToHashes: readOption(argv, "--restrict-to-hashes"),
     tier,
     outDir: readOption(argv, "--out-dir") ?? "tmp/emails",
     json: argv.includes("--json"),
@@ -724,6 +893,7 @@ function normalize(
   const optInIndex = indexOf(resolved.optIn);
 
   const suppressed = loadSuppressionHashes();
+  const restrict = args.restrictToHashes ? loadRestrictHashes(args.restrictToHashes) : null;
 
   const recipients: NormalizedRecipient[] = [];
   const excluded: { email: string | null; row: number; reason: string }[] = [];
@@ -763,6 +933,23 @@ function normalize(
 
     if (suppressed.has(hashEmail(email))) {
       excluded.push({ email, row: rowNumber, reason: "on suppression list" });
+      return;
+    }
+
+    // Deliberately AFTER the suppression check and BEFORE the dedupe.
+    //
+    // After suppression, because an address that is both suppressed and a
+    // recent opener is SUPPRESSED — full stop. The exclusion summary is read by
+    // someone asking "why did this person not get it?", and it has to give the
+    // strongest reason a row was dropped, not whichever test happened to fire
+    // last. Reversing these two lines would report a do-not-contact address as
+    // merely "outside the send cohort", which understates it to the one reader
+    // who most needs the truth.
+    //
+    // Before the dedupe, so that a row removed here never claims a slot in
+    // `seen` and never turns a later, wanted duplicate into a dropped one.
+    if (restrict && !restrict.hashes.has(hashEmail(email))) {
+      excluded.push({ email, row: rowNumber, reason: "outside the restrict-to-hashes cohort" });
       return;
     }
 
@@ -806,6 +993,7 @@ function normalize(
     tier: args.tier,
     consentSource: args.consentSource,
     consentDate: args.consentDate,
+    restrictedTo: restrict ? { path: restrict.path, hashes: restrict.hashes.size } : null,
     detected: resolved,
     nameSplitFrom,
     recipients,
@@ -910,6 +1098,7 @@ async function main(): Promise<void> {
           out: outPath,
           key: result.key,
           tier: result.tier,
+          restrictedTo: result.restrictedTo,
           detected: result.detected,
           nameSplitFrom: result.nameSplitFrom,
           counts: result.counts,
@@ -929,6 +1118,12 @@ async function main(): Promise<void> {
   console.log(
     `  Consent       ${result.consentSource ? `${result.consentSource} (${result.consentDate})` : "not recorded (fulfilment send only)"}`
   );
+  if (result.restrictedTo) {
+    console.log(
+      `  Restricted to ${result.restrictedTo.hashes} hash(es) — send-order filter, not a consent source`
+    );
+    console.log(`                ${result.restrictedTo.path}`);
+  }
   console.log("");
   console.log(`  Rows read     ${result.counts.rows}`);
   console.log(`  Recipients    ${result.counts.recipients}`);
