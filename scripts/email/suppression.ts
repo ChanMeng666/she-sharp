@@ -21,6 +21,7 @@
  *   npx tsx scripts/email/suppression.ts remove <email>
  *   npx tsx scripts/email/suppression.ts check <email>
  *   npx tsx scripts/email/suppression.ts sync [--dry-run]
+ *   npx tsx scripts/email/suppression.ts pull-mailchimp [--since <ISO>] [--full] [--list-id <id>] [--dry-run]
  *
  * Output:
  *   list     — one line per entry: `<hash[0:12]>…  <reason>  <YYYY-MM-DD>`, then a total.
@@ -38,6 +39,14 @@
  *            this file. Both sides key on the same `hashEmail()`, so it is a
  *            plain set union — no matching logic and no PII crossing over.
  *            Needs POSTGRES_URL. Run it monthly.
+ *   pull-mailchimp
+ *          — the same union, for the platform She Sharp actually sends from.
+ *            Mailchimp is still the live list; Resend holds one test contact.
+ *            So someone who unsubscribes today exists ONLY in Mailchimp's
+ *            record, and `sync` cannot see them. Pulls the `unsubscribed` and
+ *            `cleaned` members changed since the last pull and folds them in.
+ *            Needs MAILCHIMP_API_KEY (+ MAILCHIMP_LIST_ID). Run it monthly,
+ *            beside `sync`.
  *
  * Importable API (used by normalize-recipients.ts):
  *   hashEmail(email)          → lowercase sha256 hex of the normalized address
@@ -49,6 +58,12 @@ import { parse } from "csv-parse/sync";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { hashEmail } from "../../lib/email/hash";
+// Statically imported, unlike `sync`'s database modules: `lib/mailchimp/client.ts`
+// reads MAILCHIMP_API_KEY lazily inside each fetch and throws nothing at module
+// load, so `list`/`add`/`remove`/`check` keep working on a machine that has no
+// Mailchimp key. (`lib/db/drizzle.ts` does throw at load, which is the whole
+// reason `commandSync` imports dynamically; that reason does not apply here.)
+import { getLists, listMembers, type MailchimpList } from "../../lib/mailchimp/client";
 import { ownMailboxAddresses } from "./own-mailboxes";
 
 export { hashEmail };
@@ -185,6 +200,9 @@ function usage(): void {
   console.error("  npx tsx scripts/email/suppression.ts remove <email>");
   console.error("  npx tsx scripts/email/suppression.ts check <email>");
   console.error("  npx tsx scripts/email/suppression.ts sync [--dry-run]");
+  console.error(
+    "  npx tsx scripts/email/suppression.ts pull-mailchimp [--since <ISO>] [--full] [--list-id <id>] [--dry-run]"
+  );
 }
 
 /** Validates and returns the address argument for add/remove/check. */
@@ -466,6 +484,357 @@ async function syncFromDatabase(
   console.log(`\nAdded ${missing.length} entr(ies). ${file.entries.length} total in ${SUPPRESSION_PATH}`);
 }
 
+// ---------------------------------------------------------------------------
+// pull-mailchimp
+// ---------------------------------------------------------------------------
+
+/**
+ * The reason strings written by a Mailchimp pull.
+ *
+ * These are not new vocabulary: the 2026-08-17 CSV import wrote exactly
+ * `mailchimp-unsubscribed` (803) and `mailchimp-cleaned` (544) into the
+ * register, and reusing them is what lets the watermark below find the last
+ * pull. `mailchimp-never-subscribed` (782) also exists in the file but has no
+ * live counterpart — the API has no such status, it was a CSV artefact.
+ */
+const MAILCHIMP_UNSUBSCRIBED_REASON = "mailchimp-unsubscribed";
+const MAILCHIMP_CLEANED_REASON = "mailchimp-cleaned";
+
+/** Identifies every entry that came from Mailchimp, whichever pull wrote it. */
+const MAILCHIMP_REASON_PREFIX = "mailchimp-";
+
+/**
+ * How far back before the last recorded decision the default window reaches.
+ *
+ * Deliberately generous, because `since_last_changed` **over-returns**: a bulk
+ * tag operation moves `last_changed` for thousands of contacts who did nothing
+ * (trap 8 in `docs/development/MAILCHIMP_ARCHIVE.md`). The two failure modes
+ * are not symmetric — over-returning costs a re-hash of somebody already
+ * suppressed, which is a no-op, while under-returning emails somebody who
+ * asked us to stop. So err long.
+ */
+const MAILCHIMP_WATERMARK_OVERLAP_DAYS = 7;
+
+/**
+ * The field projection for the pull.
+ *
+ * Narrower than the client's own default, which is already a PII guard. This
+ * command needs an address to hash, the status that decides the reason, and
+ * the date the decision was made. `members.id` is excluded on purpose: it is
+ * the md5 of the address, a per-person identifier that reverses against any
+ * candidate list, and nothing in a script that writes to a committed file
+ * should be holding one. `total_items` stays because `paginate()` reads it to
+ * know when to stop.
+ */
+const MAILCHIMP_PULL_FIELDS = [
+  "members.email_address",
+  "members.status",
+  "members.last_changed",
+  "members.unsubscribe_reason",
+  "total_items",
+] as const;
+
+/**
+ * Finds the start of the default pull window: the newest Mailchimp decision
+ * already on file, less an overlap.
+ *
+ * Deliberately NOT the file's `updatedAt`. That field moves on any write —
+ * `add`, `add-file`, `sync` — so an unrelated `sync` run on Tuesday would
+ * advance the cursor past Monday's unsubscribes and they would never be
+ * pulled. `max(entry.at)` over Mailchimp entries only is a cursor over the
+ * data this command actually owns, which is the property a watermark needs.
+ *
+ * @param file The register as read from disk.
+ * @returns An ISO timestamp for `since_last_changed`, or undefined when no
+ *   Mailchimp entry exists yet (in which case the caller should ask for
+ *   `--full`, since there is nothing to resume from).
+ */
+function mailchimpWatermark(file: SuppressionFile): string | undefined {
+  let newest = Number.NEGATIVE_INFINITY;
+  for (const entry of file.entries) {
+    if (typeof entry.reason !== "string" || !entry.reason.startsWith(MAILCHIMP_REASON_PREFIX)) {
+      continue;
+    }
+    const ms = typeof entry.at === "string" ? Date.parse(entry.at) : Number.NaN;
+    if (!Number.isNaN(ms) && ms > newest) newest = ms;
+  }
+  if (newest === Number.NEGATIVE_INFINITY) return undefined;
+  return new Date(newest - MAILCHIMP_WATERMARK_OVERLAP_DAYS * 24 * 60 * 60 * 1000).toISOString();
+}
+
+/**
+ * Runs one Mailchimp call, naming the step in whatever it throws.
+ *
+ * `main()` prints `err.message` and nothing else — deliberately, so no stack
+ * trace or response body can carry a fragment of an address into a pasted
+ * terminal log. The cost is that a bare transport failure surfaces as
+ * "fetch failed", naming neither the API nor the step it died on. This puts
+ * that back without widening what gets printed.
+ *
+ * @param what The step, e.g. "list lookup".
+ * @param run The call.
+ * @returns Whatever the call returns.
+ */
+async function mailchimpStep<T>(what: string, run: () => Promise<T>): Promise<T> {
+  try {
+    return await run();
+  } catch (err) {
+    throw new Error(`Mailchimp ${what} failed: ${err instanceof Error ? err.message : String(err)}`);
+  }
+}
+
+/**
+ * Resolves the audience to pull, and verifies it exists on the account.
+ *
+ * The id is never trusted on its own. `MAILCHIMP_LIST_ID` is a constant in a
+ * `.env` that outlives the account it was copied from, and Mailchimp answers a
+ * request for an unknown list with a 404 but a request for *another* list of
+ * the same account with data — so pulling the wrong audience is silent, and it
+ * would write real people's decisions in under the wrong provenance. Checking
+ * against `GET /lists` costs one request and makes that failure loud.
+ *
+ * @param explicit The `--list-id` argument, if given.
+ * @returns The matching audience.
+ */
+async function resolveMailchimpList(explicit: string | undefined): Promise<MailchimpList> {
+  const lists = await mailchimpStep("audience lookup (GET /lists)", getLists);
+  if (lists.length === 0) {
+    console.error("Error: this Mailchimp account has no audiences. Nothing to pull.");
+    process.exit(1);
+  }
+
+  const configured = process.env.MAILCHIMP_LIST_ID?.trim();
+  // The sole-audience fallback exists because She Sharp has exactly one (`She#`)
+  // and a fresh checkout should not need an env var to do the safe thing. It
+  // only applies when there is no ambiguity to resolve.
+  const wanted = explicit?.trim() || configured || (lists.length === 1 ? lists[0].id : undefined);
+
+  if (!wanted) {
+    console.error(
+      `Error: the account has ${lists.length} audiences and none was chosen. ` +
+        "Pass --list-id, or set MAILCHIMP_LIST_ID.\n" +
+        `  Audiences: ${lists.map((list) => `${list.id} (${list.name})`).join(", ")}`
+    );
+    process.exit(1);
+  }
+
+  const match = lists.find((list) => list.id === wanted);
+  if (!match) {
+    console.error(
+      `Error: audience ${JSON.stringify(wanted)} is not on this Mailchimp account.\n` +
+        `  The account returned: ${lists.map((list) => `${list.id} (${list.name})`).join(", ")}\n` +
+        "  Refusing to run rather than pull an audience nobody asked for."
+    );
+    process.exit(1);
+  }
+  return match;
+}
+
+/** One member's decision, reduced to what the register stores. */
+interface MailchimpDecision {
+  hash: string;
+  reason: string;
+  /** The member's own `last_changed`, ISO. */
+  at: string;
+}
+
+/**
+ * Folds Mailchimp's own unsubscribe and cleaned records into the register.
+ *
+ * **The hole this closes.** Mailchimp is still She Sharp's live sending
+ * platform — the migration to Resend has not happened (Resend holds one test
+ * contact). So a person who unsubscribes today exists only in Mailchimp's
+ * record. `normalize-recipients.ts` consults this register on every import, and
+ * until that unsubscribe is in it, the next import of any list containing them
+ * puts them straight back — the exact trap
+ * `.claude/skills/update-mailing-list/references/consent-rules.md` describes,
+ * and the reason the register exists at all. Before this command the only way
+ * to learn about it was a manual CSV export, which is to say: nobody did it.
+ *
+ * `sync` is the same idea for the Resend webhook's `email_optouts` table; the
+ * two are siblings and should be run together.
+ *
+ * The same two constraints as `add-file` hold, and matter more here because
+ * the input is live: **no address is ever printed** — not on success, not on
+ * error — and **no address is ever written**. Only `hashEmail()` output
+ * reaches disk. `unsubscribe_reason` is fetched but never printed either: it
+ * is free text the member typed and can contain anything, including their own
+ * address or somebody else's.
+ *
+ * @param listIdArg `--list-id`, overriding MAILCHIMP_LIST_ID.
+ * @param since `--since`, an explicit ISO window start.
+ * @param full `--full`, dropping the cursor entirely — for the first run.
+ * @param dryRun Report what would be added and write nothing.
+ */
+async function commandPullMailchimp(
+  listIdArg: string | undefined,
+  since: string | undefined,
+  full: boolean,
+  dryRun: boolean
+): Promise<void> {
+  // Loaded here rather than at module scope: `normalize-recipients.ts` imports
+  // this file as a library, and a library should not read `.env` as a side
+  // effect of being imported. `sync` gets the same thing for free because
+  // `lib/db/drizzle.ts` calls `dotenv.config()` itself.
+  await import("dotenv/config");
+
+  if (since && full) {
+    console.error("Error: --since and --full are alternatives; pass one or neither.");
+    process.exit(1);
+  }
+  if (since && Number.isNaN(Date.parse(since))) {
+    console.error(`Error: --since ${JSON.stringify(since)} is not a date. Use ISO 8601, e.g. 2026-08-01.`);
+    process.exit(1);
+  }
+
+  // Checked before the first request so a machine without the key gets one
+  // clear sentence instead of an API error phrased for a different problem.
+  if (!process.env.MAILCHIMP_API_KEY?.trim()) {
+    console.error(
+      "Error: MAILCHIMP_API_KEY is not set, so there is nothing to pull from.\n" +
+        "  Add it to .env (Mailchimp → Account → Extras → API keys). The key ends\n" +
+        "  in its data-centre suffix, e.g. …-us3, which IS the hostname; keep it.\n" +
+        "  Every other suppression subcommand works without it."
+    );
+    process.exit(1);
+  }
+
+  const file = readSuppressionFile();
+  const watermark = mailchimpWatermark(file);
+  const sinceLastChanged = full ? undefined : (since ?? watermark);
+
+  if (!full && !sinceLastChanged) {
+    console.error(
+      "Error: no Mailchimp entry on file to resume from, so there is no window.\n" +
+        "  Run with --full for the first pull, or give an explicit --since."
+    );
+    process.exit(1);
+  }
+
+  const list = await resolveMailchimpList(listIdArg);
+  console.log(`Audience ${list.id} (${list.name})`);
+  console.log(
+    `  Mailchimp reports ${list.memberCount} subscribed, ` +
+      `${list.unsubscribeCount} unsubscribed, ${list.cleanedCount} cleaned.`
+  );
+  if (full) {
+    console.log("  Window: none (--full) — every unsubscribed and cleaned member.");
+  } else {
+    const source = since ? "--since" : `watermark (newest ${MAILCHIMP_REASON_PREFIX}* entry, less ${MAILCHIMP_WATERMARK_OVERLAP_DAYS}d)`;
+    console.log(`  Window: last_changed >= ${sinceLastChanged}  [${source}]`);
+  }
+
+  const pulls: { status: string; reason: string }[] = [
+    { status: "unsubscribed", reason: MAILCHIMP_UNSUBSCRIBED_REASON },
+    { status: "cleaned", reason: MAILCHIMP_CLEANED_REASON },
+  ];
+
+  const decisions: MailchimpDecision[] = [];
+  let blank = 0;
+  let malformed = 0;
+  let ownMailbox = 0;
+  let undated = 0;
+  const runAt = new Date().toISOString();
+
+  for (const pull of pulls) {
+    const members = await mailchimpStep(`${pull.status} member pull`, () =>
+      listMembers(list.id, {
+        status: pull.status,
+        ...(sinceLastChanged ? { sinceLastChanged } : {}),
+        fields: MAILCHIMP_PULL_FIELDS,
+      })
+    );
+    console.log(`  ${members.length} ${pull.status} member(s) in window`);
+
+    for (const member of members) {
+      const address = member.emailAddress.trim();
+      if (!address) {
+        blank++;
+        continue;
+      }
+      if (!looksLikeEmail(address)) {
+        malformed++;
+        continue;
+      }
+      const hash = hashEmail(address).toLowerCase();
+      // She Sharp's own mailboxes never enter a committed do-not-contact list —
+      // see OWN_MAILBOX_HASHES. Several of them are on the audience and several
+      // hard-bounce, so Mailchimp has them `cleaned`.
+      if (OWN_MAILBOX_HASHES.has(hash)) {
+        ownMailbox++;
+        continue;
+      }
+      // `at` is the member's OWN last_changed, not now: the register's `at`
+      // means "when the decision was made", which is what `sync` records with
+      // `row.createdAt` and what makes the watermark above a real cursor.
+      // Stamping the run time would make every pull look like a fresh decision
+      // and push the cursor past dates nothing was ever pulled for.
+      //
+      // Normalised to `Z` because Mailchimp sends `2026-08-20T10:00:00+00:00`
+      // and every other writer here uses `toISOString()`; one format in the
+      // file keeps `list`'s ten-character date slice honest. A member with no
+      // parseable date falls back to the run time — an entry dated today is a
+      // small inaccuracy, an entry missing is somebody we email again.
+      const parsed = member.lastChanged ? Date.parse(member.lastChanged) : Number.NaN;
+      if (Number.isNaN(parsed)) undated++;
+      decisions.push({
+        hash,
+        reason: pull.reason,
+        at: Number.isNaN(parsed) ? runAt : new Date(parsed).toISOString(),
+      });
+    }
+  }
+
+  const known = new Set(file.entries.map((entry) => entry.hash.toLowerCase()));
+  const seen = new Set<string>();
+  const missing: MailchimpDecision[] = [];
+  let already = 0;
+
+  for (const decision of decisions) {
+    // A member can only hold one status, so a hash seen twice means the two
+    // pulls overlapped mid-run; keep the first and do not count it as "already".
+    if (seen.has(decision.hash)) continue;
+    seen.add(decision.hash);
+    if (known.has(decision.hash)) {
+      already++;
+      continue;
+    }
+    missing.push(decision);
+  }
+
+  console.log("");
+  console.log(`  ${seen.size} distinct address(es) considered`);
+  if (blank > 0) console.log(`  ${blank} with no address, skipped`);
+  if (malformed > 0) console.log(`  ${malformed} not address-shaped, skipped`);
+  if (ownMailbox > 0) console.log(`  ${ownMailbox} She Sharp mailbox(es), skipped`);
+  if (undated > 0) console.log(`  ${undated} with no usable last_changed, dated as of this run`);
+  console.log(`  ${already} already suppressed`);
+  console.log(`  ${missing.length} to add`);
+
+  if (missing.length === 0) {
+    console.log(`\nAlready in sync. ${file.entries.length} entr(ies) in ${SUPPRESSION_PATH}`);
+    return;
+  }
+
+  // Truncated hashes and dates only, matching `sync`. A --full run on a fresh
+  // register would list thousands, so the listing is capped: it is there to
+  // make a small delta reviewable, not to reproduce the file.
+  const PREVIEW = 20;
+  for (const decision of missing.slice(0, PREVIEW)) {
+    console.log(`  + ${decision.hash.slice(0, 12)}…  ${decision.reason}  ${decision.at.slice(0, 10)}`);
+  }
+  if (missing.length > PREVIEW) console.log(`  … and ${missing.length - PREVIEW} more`);
+
+  if (dryRun) {
+    console.log(`\n--dry-run: would add ${missing.length} entr(ies). Nothing written.`);
+    return;
+  }
+
+  file.entries.push(...missing);
+  writeSuppressionFile(file);
+  console.log(`\nAdded ${missing.length}. ${file.entries.length} entr(ies) now in ${SUPPRESSION_PATH}`);
+}
+
 async function main(): Promise<void> {
   const argv = process.argv.slice(2);
   const command = argv[0];
@@ -504,6 +873,14 @@ async function main(): Promise<void> {
       return;
     case "sync":
       await commandSync(argv.includes("--dry-run"));
+      return;
+    case "pull-mailchimp":
+      await commandPullMailchimp(
+        argValue(argv, "--list-id"),
+        argValue(argv, "--since"),
+        argv.includes("--full"),
+        argv.includes("--dry-run")
+      );
       return;
     default:
       console.error(command ? `Unknown command: ${command}` : "Error: no command given.");
