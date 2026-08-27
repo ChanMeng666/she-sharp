@@ -296,7 +296,11 @@ async function humanitixGet(
       });
     } catch (error) {
       if (!isRetryableNetworkError(error) || attempt === MAX_ATTEMPTS - 1) {
-        throw new Error(`Humanitix request failed: network error [${path}].`);
+        const networkFailure = new Error(`Humanitix request failed: network error [${path}].`);
+        // 0 means "no HTTP exchange happened", which is a different fact from
+        // any real status and is worth being able to tell apart in the archive.
+        (networkFailure as Error & { status: number }).status = 0;
+        throw networkFailure;
       }
       await sleep(backoffMs(attempt, null));
       continue;
@@ -321,10 +325,16 @@ async function humanitixGet(
     await sleep(backoffMs(attempt, res.headers.get("retry-after")));
   }
 
-  throw new Error(
+  // The status rides on the error object as well as in the prose. A caller that
+  // wants to RECORD a failure rather than abort on it — pullCheckInCounts does —
+  // needs the number, and parsing it back out of a sentence is the kind of thing
+  // that silently becomes 0 the day somebody rewords the sentence.
+  const failure = new Error(
     `Humanitix request failed (HTTP ${lastStatus}) [${path}]. The response body is ` +
       "deliberately not reported: this transport also serves the attendee endpoints."
   );
+  (failure as Error & { status: number }).status = lastStatus;
+  throw failure;
 }
 
 /**
@@ -593,10 +603,20 @@ async function pullCollection(
  * an array rather than an object keyed by date id so the file's shape does not
  * change between a one-off event and a series.
  *
+ * A failed date is RECORDED, not thrown. On 2026-08-28 Humanitix answered 500
+ * for one date of `storytellers-series-2-0`, a 2020 three-session series, and an
+ * aborting loop cost the remaining five events their counts. An archive pull is
+ * the wrong place to be strict: a run that stops at the first bad row leaves a
+ * directory nobody can tell apart from a complete one. So the entry becomes
+ * `{ eventDateId, error: { status } }` and the pull continues. The status code
+ * is kept and the response body is not — this transport also serves the
+ * attendee endpoints, and a body echoed into a file is how personal data
+ * escapes a place that was supposed to hold counts.
+ *
  * @param apiKey - The account key.
  * @param dir - The export directory.
  * @param event - The event and its live date ids.
- * @returns The number of dates written.
+ * @returns The number of dates written, successful or not.
  */
 async function pullCheckInCounts(
   apiKey: string,
@@ -605,9 +625,18 @@ async function pullCheckInCounts(
 ): Promise<number> {
   const entries: unknown[] = [];
   for (const eventDateId of event.dateIds) {
-    entries.push(
-      await humanitixGet(apiKey, `/v1/events/${event.id}/check-in-count`, { eventDateId })
-    );
+    try {
+      entries.push(
+        await humanitixGet(apiKey, `/v1/events/${event.id}/check-in-count`, { eventDateId })
+      );
+    } catch (error) {
+      const status =
+        typeof (error as { status?: unknown }).status === "number"
+          ? (error as { status: number }).status
+          : 0;
+      console.log(`    ! ${event.id} date ${eventDateId}: HTTP ${status}, recorded as an error`);
+      entries.push({ eventDateId, error: { status } });
+    }
   }
   writeJson(dir, `check-in-counts/${event.id}.json`, entries);
   return entries.length;

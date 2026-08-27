@@ -325,6 +325,26 @@ function buildExportEntry(exportId: string): HumanitixManifestExport {
   const dir = resolveVaultDir(exportId);
   const files = listVaultCsvs(exportId);
 
+  // Refuse to describe an API vault as a CSV export.
+  //
+  // On 2026-08-28 this was run by mistake against `2026-08-28-api`, a directory
+  // of 179 JSON files. It found no CSVs, classified nothing, and wrote an entry
+  // with `files: []` and no `method` or `api` — silently replacing a complete
+  // record of an attendee pull with an empty one. The archive test caught it,
+  // but only because an unrelated assertion about the CSV spine happened to
+  // exist.
+  //
+  // The two builders are one keystroke apart and one of them can erase the
+  // other's work, so the cheap fix is to make the wrong one say no.
+  if (files.length === 0 && listVaultFiles(exportId, ".json").length > 0) {
+    throw new Error(
+      `${exportId} holds JSON, not CSV — this is an API pull, and --append would ` +
+        `overwrite its manifest entry with an empty one.
+` +
+        `  Rebuild it with: npx tsx scripts/humanitix/fetch-api.ts --export ${exportId} …`
+    );
+  }
+
   const entries: HumanitixManifestFile[] = files.map((file) => {
     const classified = classify(exportId, file);
     const path = vaultFilePath(exportId, file);
@@ -347,9 +367,7 @@ function buildExportEntry(exportId: string): HumanitixManifestExport {
     source: "Humanitix → Reports (account level), Filter by events = All events",
     exportedAtLocal: stamps[0] ?? `${exportId}T00:00:00`,
     timezone: "Pacific/Auckland",
-    vaultPath: dir.includes("private")
-      ? `private/humanitix/${exportId}/`
-      : dir,
+    vaultPath: portableVaultPath(dir, exportId),
     fileCount: entries.length,
     files: entries,
   };
@@ -541,6 +559,37 @@ function measureApiFile(path: string): number {
  *   files were derived from, and the endpoint templates touched. No key, ever.
  * @returns The entry, ready for {@link appendExportEntry}.
  */
+/**
+ * Where the raw files live, written so a committed manifest stays portable.
+ *
+ * Three cases. Inside `private/`, it is the gitignored cache and the path is
+ * repo-relative. Inside another git repository — which is the normal case now
+ * that the private archive is the master copy — it is that repository's own
+ * name plus the path within it, so the entry reads the same on every machine
+ * and says WHICH archive rather than which laptop. Anywhere else, the absolute
+ * path is recorded verbatim, because a manifest that quietly rewrites a path it
+ * does not understand is worse than one that admits where the files were.
+ *
+ * An absolute Windows path in a committed file is the failure being avoided
+ * here: it is true on exactly one machine and silently wrong everywhere else.
+ *
+ * @param dir - The resolved vault directory.
+ * @param exportId - The export it belongs to.
+ * @returns A path suitable for committing.
+ */
+export function portableVaultPath(dir: string, exportId: string): string {
+  const norm = dir.split("\\").join("/");
+  if (norm.includes("/private/")) return `private/humanitix/${exportId}/`;
+
+  const parts = norm.split("/");
+  for (let i = parts.length - 1; i > 0; i -= 1) {
+    if (existsSync(parts.slice(0, i).concat(".git").join("/"))) {
+      return parts.slice(i - 1).join("/") + "/";
+    }
+  }
+  return norm.endsWith("/") ? norm : `${norm}/`;
+}
+
 export function buildApiExportEntry(
   exportId: string,
   api: { baseUrl: string; events: number; endpoints: string[] }
@@ -585,7 +634,7 @@ export function buildApiExportEntry(
     // A pull knows the instant it ran, unlike a CSV session whose filenames
     // carry only Humanitix's export stamp per file.
     ...localTimestamp(),
-    vaultPath: dir.includes("private") ? `private/humanitix/${exportId}/` : dir,
+    vaultPath: portableVaultPath(dir, exportId),
     fileCount: entries.length,
     method: "api-v1",
     api,
@@ -835,4 +884,16 @@ function main() {
 
 // Guarded so `fetch-api.ts` can import `buildApiExportEntry` and
 // `appendExportEntry` without this file's CLI running as a side effect.
-if (require.main === module) main();
+//
+// Errors are reported as a sentence, not a stack. Everything this script can
+// fail on is a thing the operator did — pointing it at the wrong directory,
+// pointing it at an API pull — and a stack trace buries the sentence that says
+// which.
+if (require.main === module) {
+  try {
+    main();
+  } catch (error) {
+    console.error(error instanceof Error ? error.message : String(error));
+    process.exit(1);
+  }
+}
