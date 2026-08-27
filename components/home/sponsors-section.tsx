@@ -27,7 +27,7 @@ function SponsorLogo({ sponsor }: { sponsor: TieredSponsor }) {
           src={sponsor.logo}
           alt={sponsor.name}
           fill
-          className="object-contain grayscale transition duration-300 hover:grayscale-0"
+          className="object-contain"
         />
       </div>
     </a>

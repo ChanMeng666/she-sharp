@@ -278,7 +278,7 @@ export function SponsorshipPricing() {
                     alt={sponsor.name}
                     height={32}
                     width={100}
-                    className="h-6 w-auto grayscale transition-all duration-300 hover:grayscale-0 md:h-7"
+                    className="h-6 w-auto md:h-7"
                   />
                 </div>
               ))}

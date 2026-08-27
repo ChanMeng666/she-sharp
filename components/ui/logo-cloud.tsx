@@ -51,7 +51,7 @@ export function LogoCloud({
                 async decoding are the wins available without next/image. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              className="max-w-full max-h-full w-auto h-auto object-contain grayscale transition duration-300 hover:grayscale-0"
+              className="max-w-full max-h-full w-auto h-auto object-contain"
               src={logo.src}
               alt={logo.alt}
               loading="lazy"

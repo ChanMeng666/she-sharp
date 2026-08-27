@@ -74,7 +74,7 @@ function SponsorLogoGrid({
               <SponsorLogo
                 src={sponsor.logo}
                 alt={sponsor.name}
-                className={`${logoSizeClass} w-auto max-w-[220px] object-contain grayscale opacity-80 transition duration-300 hover:grayscale-0 hover:opacity-100`}
+                className={`${logoSizeClass} w-auto max-w-[220px] object-contain`}
               />
             </div>
           </TooltipTrigger>
@@ -121,7 +121,7 @@ function SponsorRow({ sponsor, id, logoSizeClass = "h-28 md:h-36 lg:h-44" }: Spo
         <SponsorLogo
           src={sponsor.logo}
           alt={sponsor.name}
-          className={`${logoSizeClass} w-auto object-contain grayscale opacity-80 transition duration-300 hover:grayscale-0 hover:opacity-100`}
+          className={`${logoSizeClass} w-auto object-contain`}
         />
       </div>
     </div>
