@@ -2335,11 +2335,11 @@
       "title": "Beyond the Code: Women Leading the Future of Cybersecurity and AI",
       "date": "October 8, 2026",
       "coverImage": {
-        "url": "/img/events/code-secure-2026/social.webp",
-        "alt": "Code Secure. Lead the Future: a lit hairline fracture running through dark glass, over the details of She Sharp's evening with Xero and Secure Code Warrior on Thursday 8 October 2026 at Xero's Parnell office"
+        "url": "/img/events/code-secure-2026/cover.webp",
+        "alt": "Beyond the Code: a dotted map of Aotearoa held in an open hand inside a glowing shield, over the details of She Sharp's evening with Xero and Secure Code Warrior on Thursday 8 October 2026 at Xero's Parnell office"
       },
       "detailPageUrl": "https://shesharp.org.nz/events/code-secure-2026",
-      "shortDescription": "An evening with Xero and Secure Code Warrior: a live secure-coding tournament, and the people who found their way into cybersecurity without starting there.",
+      "shortDescription": "An evening with Xero and Secure Code Warrior: a live secure-coding tournament with prizes, and four women on how they found their way into cybersecurity and AI.",
       "attendees": null,
       "checkedIn": null,
       "detailPageData": {
@@ -2356,9 +2356,10 @@
           "country": "New Zealand"
         },
         "fullDescription": [
-          "She Sharp is back at Xero with Secure Code Warrior for a second Code Secure evening — and this one is built around the part everybody asked for more of: the tournament, and the people.",
-          "You will take on real vulnerable code in a live secure-coding tournament, find the flaw, and fix it, against a leaderboard and a clock. No cybersecurity background is assumed. There is a beginner-friendly option alongside the mainstream languages, so the challenge meets you where you are rather than the other way round.",
-          "Around it, you will hear from women who work in application security about how they actually got there — which, for most of them, was not a straight line from a computer science degree. Bring a laptop and a charger."
+          "Join Xero, Secure Code Warrior and She Sharp for an interactive evening built to bring women and female-identifying people together around the future of cybersecurity and AI — a community to connect with, skills to build, leaders to hear from, and a good many ways to help shape a safer Aotearoa.",
+          "Whether you already work in cybersecurity or are looking to break into it, whether you are curious about where AI and security meet or simply ready for your next step in tech, there is a place for you here.",
+          "You will get hands-on with secure coding the way Secure Code Warrior teaches it — as a game. Take on real vulnerable code, find the flaw, understand what went wrong, and fix it, against a leaderboard and a clock. Code your way in Java Spring, Python, JavaScript or Ruby, or take the pseudocode option and work on the concepts without committing to a language at all.",
+          "Around the tournament, four women leaders will give lightning talks on their own journeys and the pathways that took them into cybersecurity and AI. There are prizes for whoever finishes on top. Bring a laptop and a charger."
         ],
         "speakers": {
           "guest_speakers": {
@@ -2394,10 +2395,11 @@
             "type": "why-attend",
             "title": "What You'll Do",
             "content": [
-              "Take on real vulnerable code in a 45-minute live tournament — find the flaw, fix it, watch the leaderboard",
-              "Start from wherever you are: a beginner-friendly option sits alongside the mainstream languages",
-              "Hear how women already working in application security found their way in, and what they would tell you to do next",
-              "Meet the Xero and Secure Code Warrior teams, and the rest of the room"
+              "Take on real vulnerable code in a 45-minute gamified tournament — find the flaw, understand what went wrong, fix it",
+              "Code your way in Java Spring, Python, JavaScript or Ruby — or take the pseudocode option and skip the language question entirely",
+              "Hear lightning talks from four women leaders on their journeys into cybersecurity and AI, and the pathways they would point you at",
+              "Meet the Xero and Secure Code Warrior teams, and the rest of the room",
+              "Climb the leaderboard: there are prizes for whoever is crowned the ultimate Secure Code Warrior"
             ]
           },
           {
@@ -2405,7 +2407,8 @@
             "title": "Before You Come",
             "content": [
               "Bring a laptop and a charger — the tournament runs on your own machine",
-              "No cybersecurity experience is needed, and no preparation is required"
+              "No cybersecurity experience is needed, and no preparation is required",
+              "Pick a language beforehand if you like, or decide on the night — the pseudocode option needs none"
             ]
           }
         ],
@@ -2416,12 +2419,7 @@
         "category": "workshop",
         "status": "upcoming",
         "isFeatured": false,
-        "posters": [
-          {
-            "url": "/img/events/code-secure-2026/poster.webp",
-            "alt": "Code Secure. Lead the Future: a lit hairline fracture running through dark glass, over the details of She Sharp's evening with Xero and Secure Code Warrior on Thursday 8 October 2026 at Xero's Parnell office"
-          }
-        ]
+        "posters": []
       }
     }
   ]
