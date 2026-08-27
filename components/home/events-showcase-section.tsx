@@ -157,7 +157,7 @@ export function EventsShowcaseSection() {
             <h2 className="text-display-sm text-foreground">Upcoming events</h2>
           </div>
           <span className="text-outline hidden text-display-sm text-foreground md:block">
-            gather
+            join us
           </span>
         </Reveal>
 
