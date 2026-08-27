@@ -316,12 +316,34 @@ What the import session still needs to know:
 
 ## What the API pull holds, and why the CSVs still matter
 
-`2026-08-27-api/` is 375 files pulled by `scripts/mailchimp/fetch-api.ts`. Unlike
-Humanitix, the Mailchimp API **can** reproduce the hand export exactly —
-`/lists/{id}/members?status=` returns the same partition, verified by status
-counts down to the five archived test rows, with `transactional` being the API's
-name for the CSV's `nonsubscribed`. Keep doing both anyway until that has held
-over a full year.
+`2026-08-28-api/` is the maximal pull — 884 files across 47 endpoints plus 677
+gallery images, taken because the account is being cancelled and anything not
+pulled is gone. `2026-08-27-api/` was the first pass and is kept beside it; a
+Mailchimp snapshot supplements, it never supersedes.
+
+**The API does not replace the hand export**, and the first version of this
+section said it did. The counts line up — `/lists/{id}/members?status=` returns
+the same partition down to the five archived test rows, with `transactional`
+being the API's name for the CSV's `nonsubscribed` — and so do the IPs, once you
+know the names invert between the two surfaces:
+
+| CSV column | API field | Populated |
+|---|---|---|
+| `OPTIN_IP` | `ip_opt` | 861 / 861 — per-address join across 1,551 contacts disagrees on **none** |
+| `CONFIRM_IP` | `ip_signup` | 0 / 0 |
+| `OPTIN_TIME` | `timestamp_opt` | 1,559 / 1,554 |
+| `CONFIRM_TIME` | `timestamp_signup` | **1,560 / 129** |
+
+Checking for signup IPs against `ip_signup` reads zero of 1,555 and looks
+exactly like the API withholding them. It is not; it is the wrong field.
+
+`CONFIRM_TIME` is the one that does not survive. The consent reading in this
+document — confirm equals opt-in on 1,431 contacts while `CONFIRM_IP` is empty
+on all of them, the signature of single rather than double opt-in — rests on a
+column no pull can produce. **Keep exporting by hand.**
+
+Left open rather than guessed at: `OPTIN_TIME` and `timestamp_opt` disagree on
+the date for 220 of 1,551, most likely account-local against UTC. Unverified.
 
 What it adds that no export produces:
 
