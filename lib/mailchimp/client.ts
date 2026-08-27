@@ -432,12 +432,22 @@ function projection(fields: readonly string[] | undefined): string | undefined {
  * written through the mapper stored 86 months of zeroes and a correct-looking
  * checksum over them.
  *
- * **Never call this for `/lists/{id}/members` or `/reports/{id}/email-activity`.**
- * The narrow projections on `listMembers()` and the `ip` exclusion on
- * `getEmailActivity()` are the guard that keeps signup IPs and read-location
- * records out of reach; this function goes around that guard by definition. The
- * archive script pulls those two through the mapped accessors on purpose, and
- * records in the manifest that they are filtered rather than verbatim.
+ * **The narrow projection on `listMembers()` and the `ip` exclusion on
+ * `getEmailActivity()` are guards, and this function goes around them by
+ * definition.** `getEmailActivity()` keeps its guard unconditionally: an IP
+ * against an open timestamp is a read-location record, and nothing needs one.
+ *
+ * `/lists/{id}/members` has exactly one sanctioned exception, and it is the
+ * terminal pull. `scripts/mailchimp/fetch-api.ts --include members` asks for
+ * the FULL member object on purpose — `ip_signup`, `ip_opt`, `location`,
+ * `merge_fields`, `tags` and `stats` — because those are the columns the
+ * status-partitioned CSV export carries, and once the account is cancelled
+ * nobody can re-fetch them, ever. A guard that narrows the last reading ever
+ * taken is not protecting the data, it is deleting it. What still protects it
+ * is where the file goes: the gitignored vault, classified `person-network` in
+ * the manifest, never `lib/data/json/`. Do not "fix" that call site back to
+ * `listMembers()` — its narrow default is right for every OTHER caller, which
+ * is why the default was left alone rather than widened.
  *
  * @param path - API path with a leading slash.
  * @param collectionKey - The envelope property holding the array, or undefined
@@ -455,6 +465,65 @@ export async function fetchRawForArchive(
     return mailchimpFetch<unknown>({ path, query });
   }
   return paginate<unknown>(path, collectionKey, query);
+}
+
+/**
+ * Fetches a collection endpoint and returns its **verbatim envelope**, complete.
+ *
+ * The sibling of {@link fetchRawForArchive}, and the difference is what a
+ * reader loses. `fetchRawForArchive` with a `collectionKey` returns the rows
+ * and throws the envelope away, which is right for `/lists`, whose envelope
+ * carries nothing but `total_items`. It is wrong wherever the envelope holds a
+ * figure that has no row to live on: `/reports/{id}/open-details` reports
+ * `total_opens` and `total_proxy_excluded_opens` beside its members array, and
+ * those two are the Apple-Mail-Privacy-Protection correction for the whole
+ * campaign. Neither is derivable from the rows.
+ *
+ * The obvious alternative — one request with `count: 1000`, keeping the
+ * envelope exactly as it arrives — is what `fetchEngagement()` does, and it is
+ * only safe there because no breakdown in this account reaches 1000 rows. A
+ * recipient list does: the largest send went to 1,779 people, so a single
+ * capped request would have stored 1,000 of them under a `total_items` of
+ * 1,779 and looked complete to anything that did not compare the two numbers.
+ * So this pages to exhaustion and splices the later pages into the FIRST
+ * page's envelope, keeping both properties at once: every scalar exactly as
+ * Mailchimp sent it, and an array that is all of the rows.
+ *
+ * @param path - Collection path below `/3.0`.
+ * @param collectionKey - Envelope key holding the array.
+ * @param query - Extra query parameters.
+ * @returns The first page's envelope, with `collectionKey` holding every row.
+ */
+export async function fetchEnvelopeForArchive(
+  path: string,
+  collectionKey: string,
+  query: Record<string, string | number | undefined> = {}
+): Promise<Record<string, unknown>> {
+  const first = await mailchimpFetch<Record<string, unknown>>({
+    path,
+    query: { ...query, count: MAX_PAGE_SIZE, offset: 0 },
+  });
+
+  const rows = Array.isArray(first[collectionKey]) ? [...(first[collectionKey] as unknown[])] : [];
+  const totalItems = typeof first.total_items === "number" ? first.total_items : rows.length;
+
+  // Bounded by the same MAX_PAGES as `paginate()`, for the same reason: a
+  // `total_items` the server never satisfies must fail rather than spin against
+  // a rate-limited API. The short-page break is the real exit — `total_items`
+  // is a hint, and on an account a live integration writes into it can be stale
+  // by a row between one request and the next.
+  for (let page = 1; rows.length < totalItems && page < MAX_PAGES; page += 1) {
+    const next = await mailchimpFetch<Record<string, unknown>>({
+      path,
+      query: { ...query, count: MAX_PAGE_SIZE, offset: rows.length },
+    });
+    const batch = Array.isArray(next[collectionKey]) ? (next[collectionKey] as unknown[]) : [];
+    if (batch.length === 0) break;
+    rows.push(...batch);
+    if (batch.length < MAX_PAGE_SIZE) break;
+  }
+
+  return { ...first, [collectionKey]: rows };
 }
 
 // --- Lists ---------------------------------------------------------------

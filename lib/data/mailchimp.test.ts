@@ -554,6 +554,44 @@ check(
   ) && campaignsSentBetween("1999-01-01", "1999-12-31").length === 0
 );
 
+
+// Where the raw files live is the only statement a committed manifest makes
+// about a directory nobody can see from here, and it has to survive being read
+// on another machine.
+//
+// The rule is "not anywhere THIS repository tracks" — not "under private/".
+// The attendee and member records belong in the private archive repository,
+// which is the master; private/ is only a cache of it. A check that insisted on
+// the cache would fail the moment somebody did the right thing.
+const MC_TRACKED_ROOTS = ["lib/", "app/", "components/", "docs/", "scripts/", "public/", "types/", "hooks/"];
+const mcVaultIsOutsideTheTree = (vaultPath: string): boolean => {
+  if (vaultPath.startsWith("private/")) return true;
+  return !MC_TRACKED_ROOTS.some((root) => vaultPath.startsWith(root));
+};
+check(
+  "no API export writes member records anywhere this repository tracks",
+  apiExports.every((entry) => mcVaultIsOutsideTheTree(entry.vaultPath)),
+  apiExports
+    .filter((entry) => !mcVaultIsOutsideTheTree(entry.vaultPath))
+    .map((entry) => `${entry.exportId} -> ${entry.vaultPath}`)
+    .join(", ")
+);
+
+// An absolute path is true on one machine and wrong on every other. This one is
+// not hypothetical: the 2026-08-28 pull recorded `D:\github_repository\…`
+// because the running process had loaded manifest.ts before the portable-path
+// helper was added to it, and nothing would have noticed.
+const isAbsolutePath = (value: string): boolean =>
+  /^[A-Za-z]:/.test(value) || value.startsWith('/') || value.startsWith(String.fromCharCode(92));
+check(
+  "no vault path is absolute",
+  apiExports.every((entry) => !isAbsolutePath(entry.vaultPath)),
+  apiExports
+    .filter((entry) => isAbsolutePath(entry.vaultPath))
+    .map((entry) => `${entry.exportId} -> ${entry.vaultPath}`)
+    .join(", ")
+);
+
 // --- Leak guard --------------------------------------------------------------
 console.log("\nLeak guard");
 
