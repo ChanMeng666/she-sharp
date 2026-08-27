@@ -102,6 +102,20 @@ reintroduce a `cookies()`, `headers()` or database read into the root layout** �
 it silently opts the entire public site out of static rendering, and nothing
 fails, it just gets slower.
 
+**`app/api/events/ticket-status/` is the first runtime consumer of an external
+ticketing API, and it changes none of the above.** It asks Humanitix about the
+site's *upcoming* events only, reduces each listing to three flags
+(`markedAsSoldOut`, `suspendSales`, `published`/`public`) and returns one word
+per slug — cached in Redis and at the CDN (`s-maxage=300`,
+`stale-while-revalidate=900`), rate-limited, `force-dynamic` so a build can
+never bake an answer in. `/events/[slug]` is still `●` SSG: the page ships
+prerendered and `hooks/use-ticket-status.ts` fetches the status afterwards to
+disable the registration button on `"sold-out"` / `"closed"`. **No count crosses
+the boundary** — tickets remaining and capacity are both available upstream and
+neither may be rendered — and every failure, a missing key included, is a 200 of
+`"unknown"`, which is exactly what the page looked like before the route
+existed.
+
 ## 4. The dual-table data model
 
 Mentor and mentee data is split across two tables plus a fallback to `users`.
@@ -224,6 +238,8 @@ path that does not exist.
 | Volunteer recruitment pipeline | `lib/recruitment/` | `stages.ts` is the stage vocabulary; `ai-screening.ts` |
 | Email sending, streams, gates, suppression | `lib/email/` | Single Resend call site in `service.ts` |
 | Monthly newsletter | `lib/newsletter/` | Assemble / render / generate / schedule / approve |
+| Mailchimp Marketing API v3 | `lib/mailchimp/` | `client.ts`, a typed `fetch` wrapper. **Local tooling only** — nothing under `app/` reads `MAILCHIMP_API_KEY`, and `listMembers()` defaults to a narrow `fields` projection because the full member object carries `ip_signup`/`ip_opt`/`location` |
+| Humanitix Public API v1 | `lib/humanitix/` | `client.ts`, same shape. **PII-free endpoints only**: `listEvents`, `getEvent`, `getCheckInCount`, `listTags`. `/orders` and `/tickets` are deliberately unimplemented — that absence is the safety mechanism. `docs/development/PLATFORM_APIS.md` |
 | Visitor chatbot | `lib/chatbot/` | AI SDK 6 agent, tools over live data, Redis rate limit |
 | Slack webhooks (notifications, digests) | `lib/slack/` | One app per notification stream |
 | Slack event-sync bot | `lib/slack-bot/` | AI extraction → GitHub draft branch |

@@ -1,7 +1,7 @@
 # `scripts/`
 
-70 TypeScript files: 19 loose at the top level, the rest in nine subsystem
-directories. Everything here is run by hand with `npx tsx <file>` from the repo
+90 tracked TypeScript files (96 on disk — `slack-recommendations/` is
+gitignored): 17 loose at the top level, the rest in subsystem directories. Everything here is run by hand with `npx tsx <file>` from the repo
 root — **exactly one is wired into `package.json`** (`pnpm db:seed-profiles` →
 `seed-profiles.ts`), so the rest are found by reading this file. pnpm 10 is
 pinned by `packageManager`; on pnpm 11 use `npx drizzle-kit migrate` rather than
@@ -35,6 +35,18 @@ below is production. The two wipe scripts are gated by
 `email/build-batch.ts` and `email/render-message.ts` deliberately do **not**
 send: they write files and print the `resend` command a human runs.
 
+**`humanitix/fetch-api.ts` is the sensitive one that is not in the table**,
+because nothing it does is irreversible — it mails nobody and writes only to the
+gitignored vault. What it *writes* is the hazard. Events and tags come down on
+every run and are safe; `--include orders,tickets` adds, per event, names, email
+addresses, mobiles, street addresses, dates of birth, the free-text
+dietary/accessibility/photo-consent answers, a working `qrCodeData` admission
+token, and a **live `accessCode` on nearly every row**. Those land under
+`private/humanitix/<exportId>/` and nothing derived from them may be summarised
+into `lib/data/json/`. Three access codes reached a committed file on 2026-06-11
+and needed a git history rewrite plus rotation; a leaked code cannot be
+un-leaked by a later edit.
+
 ## Subsystem directories
 
 | Directory | For | Entry point |
@@ -43,10 +55,10 @@ send: they write files and print the `resend` command a human runs.
 | `lib/` | Shared helpers for scripts. | `destructive.ts` — the dry-run / host-confirmation gate the two database-wiping scripts go through. |
 | `data/` | One-off corrections to `events-custom.json` / `shesharp_events_v3.json`, each carrying its finding id and its authority. | `json-format.ts` is the shared safe read/write; each fix script is its own entry point and is idempotent. |
 | `deck/` | Building and checking `/present/<slug>` slide decks. | `new-deck.ts` to scaffold, `lint-deck.ts` for the organiser-readable report, `sync-registry.ts` to regenerate `registry.ts` + `index-meta.ts`. |
-| `email/` | The outbound-mail pipeline behind the four email skills: audience inventory, recipient normalisation, render, gate, batch. | `render-message.ts` (spec → HTML), `build-batch.ts` (list → chunked JSON). `suppression.ts` is the do-not-contact register. `probe-mailboxes.ts` answers which `@shesharp.org.nz` addresses exist — it found seven published ones that did not. |
+| `email/` | The outbound-mail pipeline behind the four email skills: audience inventory, recipient normalisation, render, gate, batch. | `render-message.ts` (spec → HTML), `build-batch.ts` (list → chunked JSON). `suppression.ts` is the do-not-contact register; its `pull-mailchimp` subcommand syncs new unsubscribes and cleaned addresses straight from the Mailchimp API rather than waiting for the next manual export — run it before any import. `probe-mailboxes.ts` answers which `@shesharp.org.nz` addresses exist — it found seven published ones that did not. |
 | `events/` | The event lifecycle report, event poster generation (plate → the event's five layouts, or a per-speaker campaign set) and feedback tooling. | `event-status.ts` — offline, read-only, writes nothing: for each event it prints where the Slack channel, event record, artwork, deck, feedback code, announcement, attendee emails and photos have got to, and names the command or skill that fixes every gap (`--slug`, `--upcoming`, `--past [N]`, `--all`, `--json`; CI runs `event-status.test.ts`). Then `generate-poster-plate.ts` → `build-event-poster.ts` (`--speaker`/`--lineup` for the campaign set); design lives in `poster-formats.ts`, `poster-speaker-formats.ts` and `poster-type.ts`; `poster-speaker.test.ts` checks the layouts without a plate. |
-| `humanitix/` | Reducing the gitignored ticketing vault to committed aggregates. | `verify-export.ts` → `manifest.ts --append` → `build-archive.ts`. |
-| `mailchimp/` | The same split for the audience export: addresses in the vault, counts in the repo. | `verify-export.ts` → `build-archive.ts`. |
+| `humanitix/` | Reducing the gitignored ticketing vault to committed aggregates, and — since 2026-08-27 — reading the live account over the Public API. | `verify-export.ts` → `manifest.ts --append` → `build-archive.ts`. For the API: `fetch-api.ts` pulls events and tags on every run, with `--include orders,tickets,check-ins` for the rest (**see the note above the subsystem table — those two carry live access codes**); `api-counts.ts` is the scripts-only ticket-count reader, asking for `pageSize=1` and reading only the pagination envelope's `total`, so exactly one real ticket crosses the wire and the body is parsed with a reviver that drops it; `verify-live-events.ts` prints where the site's event records and the live listings disagree and **never edits**, with `--offline` for a run that needs no key. |
+| `mailchimp/` | The same split for the audience export: addresses in the vault, counts in the repo — plus the Marketing API pull that answers what a CSV export structurally cannot. | `verify-export.ts` → `build-archive.ts`. For the API: `fetch-api.ts --export <YYYY-MM-DD>-api` pulls campaigns, reports and growth in tiers (`content`, `engagement`, `assets`, `templates`, `members`, `recipients`, `activity`), writing to the vault and, into the repo, nothing but a new append-only `exports[]` entry in `lib/data/json/mailchimp/manifest.json`; `fetch-assets.ts` then downloads the 677 gallery images (547 MB) that pull only inventoried, resumable — a file already on disk at its recorded byte size is skipped; `build-campaigns.ts` regenerates the committed `campaigns.json` and `--check` immediately afterwards proves the build is deterministic; `recent-openers.ts` writes the ramp cohort to `tmp/` as `hashEmail()` digests only, intersected with the `subscribed` CSV before anything is serialised — a send-order filter, never a consent source. |
 | `newsletter/` | Monthly newsletter: photo strip, local preview, test send, approve. | `preview.ts` for review, `approve.ts` to ship. |
 | `seo/` | Post-deploy on-page metadata crawl (~121 live requests). | `verify-page-metadata.ts --base <origin>`. |
 | `slack-recommendations/` | Four-phase LinkedIn recommendation generator over Slack history. **Untracked — see gotchas.** | `01-discover.ts` → `02-build-context.ts` → `03-generate.ts` → `04-generate-invitations.ts`. |
