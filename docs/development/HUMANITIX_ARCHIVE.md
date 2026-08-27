@@ -362,6 +362,35 @@ Until then the archive is aggregate-only, and no per-person record is committed.
 
 ---
 
+## The API reaches half of this, and the half it misses is the expensive half
+
+She Sharp has held a Humanitix Public API key since 2026-08-27, and
+`scripts/humanitix/fetch-api.ts` will pull events, orders, tickets and check-in
+counts into a dated vault the same way the Mailchimp fetcher does. The API is
+better than the CSV in one specific way: it preserves nesting the export has to
+flatten — `additionalFields`, `checkInHistory`, `dates[]`, `totalsV2` — and it
+carries `Order.organiserMailListOptIn`, the per-order marketing consent flag,
+which no CSV column expresses cleanly.
+
+**It is not a superset.** Probed 2026-08-27, every one of these returned 404:
+
+| Report in the vault | API route | Result |
+|---|---|---|
+| `payout-report` — 48 settlements, one masked bank account | `/v1/payouts`, `/v1/events/{id}/payouts` | 404 |
+| `access-codes-report` — 124 codes with remaining capacity | `/v1/access-codes`, `/v1/events/{id}/access-codes` | 404 |
+| `discount-report` — 13 codes | `/v1/discounts`, `/v1/events/{id}/discount-codes` | 404 |
+| `AffiliateCodesOrders-*` | — | no equivalent |
+| `top-purchasers-report` | — | derivable from tickets, not served |
+| `earnings-by-ticket-type-report` | — | derivable from tickets, not served |
+
+`/v1/tags` returns zero; this account uses no Humanitix tags.
+
+So the hand export in `docs`-speak is not legacy, it is load-bearing. **The
+failure mode to guard against is somebody reading "we have an API key now" and
+stopping.** They would lose the settlement record and the code registry, and
+would not notice until an income reconciliation went wrong months later. The API
+is an addition to the Reports-screen procedure, never a replacement for it.
+
 ## Known gaps and open items
 
 | Item | Status |

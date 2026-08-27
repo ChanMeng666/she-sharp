@@ -314,6 +314,37 @@ What the import session still needs to know:
   Resend has no segment update endpoint, so renaming means delete and recreate,
   which drops membership.
 
+## What the API pull holds, and why the CSVs still matter
+
+`2026-08-27-api/` is 375 files pulled by `scripts/mailchimp/fetch-api.ts`. Unlike
+Humanitix, the Mailchimp API **can** reproduce the hand export exactly —
+`/lists/{id}/members?status=` returns the same partition, verified by status
+counts down to the five archived test rows, with `transactional` being the API's
+name for the CSV's `nonsubscribed`. Keep doing both anyway until that has held
+over a full year.
+
+What it adds that no export produces:
+
+| Tier | Holds | PII class |
+|---|---|---|
+| `content/` (180) | Every newsletter as it was sent — `html`, `plain_text`, `archive_html`. The only copy outside Mailchimp; the archive URLs die with the account | `person-identifying` |
+| `engagement/` (180) | Per-send clicks-per-URL, delivery and opens per recipient domain, opens per country, shortlink referrers | `email-only` |
+| `list-activity.json` | 2,054 days of daily sends/opens/clicks/subs/unsubs. `growth-history` is monthly; this is the resolution underneath | `aggregate` |
+| `segments.json` | 237 objects: 214 `static` (a tag) + 23 `campaign_static` (a past send's frozen recipient set) | `aggregate` |
+| `file-manager-files.json` | Inventory of 677 gallery images, 547 MB. Metadata and URLs only — the images are not downloaded | `none` |
+| `signup-forms.json` | The hosted form's header, contents, styles, URL — the wording people agreed to, as it stands today | `none` |
+
+`content/` is `person-identifying` rather than `none` because a scan of all 180
+found seven real addresses: five She Sharp role mailboxes, a partner's
+recruitment address, and one named individual's personal address in the footer
+of fourteen consecutive monthly issues. A five-campaign sample had suggested the
+content was clean, which is why the scan runs over everything.
+
+The vault stores **verbatim** payloads. A sha256 over a mapped object proves what
+our mapper kept, not what Mailchimp said — and that distinction already cost this
+archive 86 months of zeroes when `getGrowthHistory` was written from
+documentation that lists three fields the us3 shard always sends as zero.
+
 ## Known gaps and open items
 
 | Item | Status |
