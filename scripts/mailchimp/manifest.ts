@@ -219,7 +219,11 @@ export function classifyApiFile(relativePath: string, listId: string): ApiFileFa
         report: "lists",
         scope: "account",
         endpoint: "/lists",
-        piiClass: "aggregate",
+        // `email-only`, not `aggregate`: the verbatim payload carries
+        // `campaign_defaults.from_email`, which on this account is a founder's
+        // personal Gmail rather than a role address. Everything else in the
+        // file is counts. See the `list.json` case for the general trap.
+        piiClass: "email-only",
         role: "reference",
         // The pulled audience appears here too. Recorded as redundant rather
         // than dropped: this file is the EVIDENCE that the id in `api.listId`
@@ -234,10 +238,16 @@ export function classifyApiFile(relativePath: string, listId: string): ApiFileFa
         report: "list",
         scope: "audience:She#",
         endpoint: `/lists/${listId}`,
-        piiClass: "aggregate",
+        // THE TRAP THAT APPLIES TO EVERY FILE IN AN API PULL. `lib/mailchimp/
+        // client.ts` maps sender identity away, and it is tempting to reason
+        // from that to "no address reaches the vault" — but `fetchRawForArchive`
+        // exists precisely to go around the mappers, so a mapper's guarantee
+        // says nothing at all about a file written verbatim. Checked on
+        // 2026-08-27: `campaign_defaults.from_email` is a personal Gmail.
+        piiClass: "email-only",
         role: "primary",
         redundantWith: null,
-        note: "The She# audience as Mailchimp held it at pull time: member, unsubscribe and cleaned counts, campaign count, open and click rate. A SNAPSHOT — the Humanitix integration adds contacts between pulls, so this disagrees with an older export by design.",
+        note: "The She# audience as Mailchimp held it at pull time: member, unsubscribe and cleaned counts, campaign count, open and click rate. A SNAPSHOT — the Humanitix integration adds contacts between pulls, so this disagrees with an older export by design. Carries ONE address, `campaign_defaults.from_email`, which is a founder's personal Gmail and not a role address; `contact` is the charity's own postal details, not a person's.",
       };
 
     case "growth-history.json":
@@ -256,12 +266,16 @@ export function classifyApiFile(relativePath: string, listId: string): ApiFileFa
         report: "sent-campaigns",
         scope: "account",
         endpoint: "/campaigns?status=sent",
-        // Sender identity is not mapped by lib/mailchimp/client.ts, so no
-        // address reaches this file — see the MailchimpCampaign doc comment.
-        piiClass: "none",
+        // Was `none`, on the reasoning that `mapCampaign()` drops `from_name`
+        // and `reply_to`. That reasoning does not hold for a VERBATIM file:
+        // this one is written by `fetchRawForArchive`, which bypasses the
+        // mapper by design, and every one of the 180 rows carries
+        // `settings.reply_to`. Corrected 2026-08-27 after scanning the file
+        // rather than the code that was believed to have produced it.
+        piiClass: "email-only",
         role: "primary",
         redundantWith: null,
-        note: "Every campaign that actually went out: subject line, send time, recipient count, archive URL. Account-scoped because /campaigns filters by status, not by audience; the account has one audience, so in practice they coincide. `emailsSent` is what Mailchimp attempted, not what was delivered — see reports.json for bounces.",
+        note: "Every campaign that actually went out: subject line, send time, recipient count, archive URL. Account-scoped because /campaigns filters by status, not by audience; the account has one audience, so in practice they coincide. `emailsSent` is what Mailchimp attempted, not what was delivered — see reports.json for bounces. Carries `settings.reply_to` on all 180 rows: seven distinct values, six of them She Sharp role addresses and one (a single April-2026 campaign) a founder's personal Gmail. NOT the campaign body — that is content/.",
       };
 
     case "reports.json":
@@ -273,6 +287,121 @@ export function classifyApiFile(relativePath: string, listId: string): ApiFileFa
         role: "primary",
         redundantWith: null,
         note: "Per-campaign aggregate performance: sends, opens, clicks, bounces, unsubscribes, abuse reports. This is the campaign-level statistics the account ZIP was going to supply. Open rate is unreliable after Apple Mail Privacy Protection (2021) and must not be compared across that boundary.",
+      };
+
+    case "segments.json":
+      return {
+        report: "segments",
+        scope: "audience:She#",
+        endpoint: `/lists/${listId}/segments`,
+        piiClass: "aggregate",
+        role: "primary",
+        redundantWith: null,
+        note: "All 237 segments: 214 of type `static` — which is what Mailchimp calls a TAG — and 23 of type `campaign_static`, the frozen recipient set of a past send. Each row carries a name and a member_count and NO members, so this names the audience's structure without describing anybody in it. It does NOT contradict the saved-segments gap: `saved` means a dynamic, rule-based segment, and there are still zero of those. Authoritative for the tag vocabulary INCLUDING tags nobody now carries, which the CSV export cannot show because it only lists tags against live contacts.",
+      };
+
+    case "merge-fields.json":
+      return {
+        report: "merge-fields",
+        scope: "audience:She#",
+        endpoint: `/lists/${listId}/merge-fields`,
+        piiClass: "none",
+        role: "primary",
+        redundantWith: null,
+        note: "The seven merge-field DEFINITIONS — tag, name, type, required, default, public. The schema of the audience, not a single value from it: this is what the columns in a CSV export mean, and it is what a Resend import would have to map onto. No contact data of any kind.",
+      };
+
+    case "signup-forms.json":
+      return {
+        report: "signup-forms",
+        scope: "audience:She#",
+        endpoint: `/lists/${listId}/signup-forms`,
+        piiClass: "none",
+        role: "primary",
+        redundantWith: null,
+        note: "The hosted signup form's own design: header, field contents, styles and public URL. This is the WORDING PEOPLE AGREED TO when they joined — the thing knownGaps said could only be screenshotted before the account closed. It is the form as it stands at pull time, NOT as it stood when any particular person signed up, so it is evidence of the current opt-in text and not a per-person consent record.",
+      };
+
+    case "list-activity.json":
+      return {
+        report: "list-activity",
+        scope: "audience:She#",
+        endpoint: `/lists/${listId}/activity`,
+        piiClass: "aggregate",
+        role: "primary",
+        redundantWith: null,
+        note: "Daily aggregate list activity — sends, opens, clicks, subscribes, unsubscribes per DAY, 2,054 days from 2019-07-15 to the pull. The daily resolution growth-history.json only has monthly. Counts of events, never who: no row identifies anybody. A day missing from the series is a day Mailchimp recorded nothing, not a day of zeroes.",
+      };
+
+    case "clients.json":
+      return {
+        report: "clients",
+        scope: "audience:She#",
+        endpoint: `/lists/${listId}/clients`,
+        piiClass: "aggregate",
+        role: "reference",
+        redundantWith: null,
+        note: "The 16 email clients subscribers read with, with a member count each. Aggregate by construction — Mailchimp reports the client, never the reader. Derived from open tracking, so it describes only the subset who loaded images, and it is skewed by Apple Mail Privacy Protection the same way open rate is.",
+      };
+
+    case "interest-categories.json":
+      return {
+        report: "interest-categories",
+        scope: "audience:She#",
+        endpoint: `/lists/${listId}/interest-categories`,
+        piiClass: "none",
+        role: "reference",
+        redundantWith: null,
+        // Empty, and that is the point — see `planFixedFiles()` in fetch-api.ts.
+        note: "EMPTY, and stored because empty is the finding. The audience has no interest groups, so every preference a subscriber ever expressed is expressed as a tag and nothing is hiding in a second structure. `items: 0` here means the account holds none, NOT that the pull failed.",
+      };
+
+    case "webhooks.json":
+      return {
+        report: "webhooks",
+        scope: "audience:She#",
+        endpoint: `/lists/${listId}/webhooks`,
+        piiClass: "none",
+        role: "reference",
+        redundantWith: null,
+        note: "EMPTY. No webhook forwards this audience's subscribe, unsubscribe or profile events anywhere, so no third system holds a shadow copy fed by Mailchimp. `items: 0` means there are none, NOT that the pull failed. Worth re-reading before the account is closed: a webhook added later is a data flow that would outlive it.",
+      };
+
+    case "automations.json":
+      return {
+        report: "automations",
+        scope: "account",
+        endpoint: "/automations",
+        piiClass: "none",
+        role: "primary",
+        redundantWith: null,
+        note: "EMPTY. No classic automation workflow exists on the account, so no mail goes out on a trigger nobody is watching. This settles half of the `automations-forms-landing-pages` gap, which recorded automations as unexportable — they are exportable, there are simply none. It does NOT cover Customer Journeys, which Mailchimp exposes through a different endpoint and this pull does not touch.",
+      };
+
+    case "landing-pages.json":
+      return {
+        report: "landing-pages",
+        scope: "account",
+        endpoint: "/landing-pages",
+        piiClass: "none",
+        role: "primary",
+        redundantWith: null,
+        note: "EMPTY. The account has no landing pages, so nothing published under a Mailchimp URL disappears when it closes. Settles the other half of the `automations-forms-landing-pages` gap. `items: 0` is the evidence, not a failed request.",
+      };
+
+    case "file-manager-files.json":
+      return {
+        report: "file-manager",
+        scope: "account",
+        endpoint: "/file-manager/files",
+        // Checked rather than assumed: across all 677 rows the only
+        // person-shaped field, `created_by`, holds exactly two values — the
+        // organisation's own account name and one two-initial name. No
+        // address, no IP, no recipient.
+        piiClass: "none",
+        role: "primary",
+        redundantWith: null,
+        note: "The 677 images in the Mailchimp gallery: name, type, size, dimensions, upload date and public gallery URL. METADATA ONLY — the pull does not download the images, and the URLs stop resolving when the account closes, so this is an inventory of what would be lost rather than a copy of it. `created_by` is the Mailchimp user's display name, and across all 677 rows holds only the organisation's own account name and one two-initial name.",
       };
 
     default: {
@@ -290,6 +419,49 @@ export function classifyApiFile(relativePath: string, listId: string): ApiFileFa
           role: "primary",
           redundantWith: null,
           note: "Per-recipient opens, clicks and bounces for one campaign. NEVER commit, and never derive a segment from it without re-reading the consent rules — being an opener is not a subscription. IP addresses are absent by design.",
+        };
+      }
+
+      const content = /^content\/([A-Za-z0-9]+)\.json$/.exec(relativePath);
+      if (content) {
+        return {
+          report: "campaign-content",
+          scope: `campaign:${content[1]}`,
+          endpoint: `/campaigns/${content[1]}/content`,
+          // Assumed `none` from a five-campaign sample; scanning all 180 said
+          // otherwise. No RECIPIENT is exposed — that half of the assumption
+          // held, the reader is always the unexpanded `*|FNAME|*` merge tag —
+          // but the newsletters name speakers and organisers in prose, and 22
+          // of the 180 print a non-She-Sharp address in the body. A sample is
+          // not a scan.
+          piiClass: "person-identifying",
+          role: "primary",
+          redundantWith: null,
+          note: "One newsletter as it was sent — `plain_text`, `html` and `archive_html`. Twelve years of the organisation's own writing, and the ONLY copy of it outside Mailchimp: `sent-campaigns.json` has the subject line and an archive_url, and that URL dies with the account. It is the TEMPLATE, not a per-recipient render: the reader appears only as `*|FNAME|*`, so no subscriber is identifiable here and this is NOT a substitute for activity/. What it does carry is the people it was written about — named speakers with bios, employers and photographs — and, in 22 of the 180 issues, a contact address that is not a She Sharp role address: one volunteer's private Hotmail account, printed as a `mailto:` in 14 issues, plus an organisational Gmail in 7 and a partner's careers@ in 1. Public-by-intent, every word of it, which is a reason it may be quoted and NOT a reason it may be committed.",
+        };
+      }
+
+      const engagement = /^engagement\/([A-Za-z0-9]+)\.json$/.exec(relativePath);
+      if (engagement) {
+        return {
+          report: "campaign-engagement",
+          scope: `campaign:${engagement[1]}`,
+          // Five responses in one file, so the endpoint is five endpoints. The
+          // alternative — five files per campaign, 900 of them — would put the
+          // provenance in the filename at the cost of a directory nobody opens.
+          endpoint:
+            `/reports/${engagement[1]}/click-details + /reports/${engagement[1]}/domain-performance + ` +
+            `/reports/${engagement[1]}/locations + /reports/${engagement[1]}/eepurl + ` +
+            `/campaigns/${engagement[1]}/send-checklist`,
+          // Four of the five sub-responses are pure aggregate. The fifth is
+          // not: `sendChecklist` quotes the campaign's own from-address back in
+          // prose ("All replies for this campaign will be sent to …"), which
+          // for one of the 180 is a personal Gmail. One sentence in one item
+          // decides the class for the whole file.
+          piiClass: "email-only",
+          role: "primary",
+          redundantWith: null,
+          note: "Five aggregate breakdowns of one send, each under its own key holding the verbatim envelope: `clickDetails` (clicks per URL), `domainPerformance` (delivery and opens per recipient DOMAIN, e.g. gmail.com), `locations` (opens per country/region), `eepurl` (the shortlink and its social referrers), `sendChecklist` (Mailchimp's own pre-send warnings). No RECIPIENT appears anywhere: every count is a total, and domainPerformance names the mail provider, never the mailbox. The only address in the file is the SENDER's, quoted inside a sendChecklist item — a She Sharp role address in 179 of the 180, a founder's personal Gmail in one. `items: 1` because the file is a composite object, not a collection; each envelope's own `total_items` is the count that means something, and it is also the evidence that nothing was truncated. NOT per-recipient detail — that is activity/, and it is a different PII class.",
         };
       }
 

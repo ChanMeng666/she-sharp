@@ -376,8 +376,20 @@ check(
 // --- Manifest ----------------------------------------------------------------
 console.log("\nManifest");
 
-const exportEntry = humanitixManifest.exports.at(-1);
-check("the manifest records at least one export", exportEntry !== undefined);
+check("the manifest records at least one export", humanitixManifest.exports.length > 0);
+
+// The block below is about the MANUAL CSV export, where one account-wide
+// attendee table is the spine every headline number is counted from and every
+// primary file is credited in `events.json`. An API pull has neither: it is
+// scoped by endpoint, its 59 per-event files feed nothing yet, and calling any
+// of them a spine would make the word mean two things. Selecting the CSV export
+// rather than `exports.at(-1)` is what keeps these assertions pointed at the
+// export shape they were written for once an API entry is appended after it.
+const csvExports = humanitixManifest.exports.filter(
+  (entry) => (entry.method ?? "manual-csv") === "manual-csv"
+);
+const exportEntry = csvExports.at(-1);
+check("the manifest records at least one CSV export", exportEntry !== undefined);
 
 if (exportEntry) {
   check(
@@ -443,6 +455,150 @@ if (eventSummaryGap?.present === true) {
     instances.every((i) => i.organiser)
   );
 }
+
+// --- API pulls ---------------------------------------------------------------
+console.log("\nAPI pulls");
+
+// An API export is exempted from the spine and provenance rules above, and an
+// exemption with no replacement is a hole. These say what an API entry must
+// carry instead — and, because these files are the most sensitive this project
+// writes, what it must never claim about them.
+const apiExports = humanitixManifest.exports.filter((entry) => entry.method === "api-v1");
+const apiFiles = apiExports.flatMap((entry) => entry.files);
+
+check(
+  "every API export names the host and the event population it was pulled from",
+  apiExports.every(
+    (entry) =>
+      typeof entry.api?.baseUrl === "string" &&
+      entry.api.baseUrl.startsWith("https://") &&
+      typeof entry.api.events === "number" &&
+      entry.api.events > 0
+  ),
+  apiExports
+    .filter((entry) => !entry.api?.baseUrl || !entry.api.events)
+    .map((entry) => entry.exportId)
+    .join(", ")
+);
+
+// The key is the whole of the account's authority. It is never recorded, and
+// `baseUrl` is the one field close enough to a credential to be worth asserting.
+check(
+  "no API export records anything that looks like a credential",
+  apiExports.every((entry) => !/[?&:@]/.test(entry.api?.baseUrl.replace("https://", "") ?? "")),
+  apiExports.map((entry) => entry.api?.baseUrl ?? "").join(", ")
+);
+
+check(
+  "every file in an API export names the endpoint it is the response to",
+  apiFiles.every((file) => typeof file.endpoint === "string" && file.endpoint.startsWith("/v1/")),
+  apiFiles
+    .filter((file) => !file.endpoint?.startsWith("/v1/"))
+    .map((file) => file.file)
+    .join(", ")
+);
+
+// `rows: 0` on a JSON file would read as "the pull returned nothing", which is
+// a different claim from "rows are not a thing this file has". Absence is the
+// only way to say the second.
+check(
+  "an API file declares its JSON shape and no CSV-only shape",
+  apiFiles.every(
+    (file) =>
+      file.format === "json" &&
+      (file.items ?? -1) >= 0 &&
+      file.hasHeaderRow === undefined &&
+      file.rows === undefined &&
+      file.columns === undefined
+  ),
+  apiFiles
+    .filter((file) => file.format !== "json" || (file.items ?? -1) < 0)
+    .map((file) => file.file)
+    .join(", ")
+);
+
+// The assertion this whole section exists for. `orders/` and `tickets/` carry a
+// LIVE accessCode on nearly every row, plus names, mobiles, addresses, dates of
+// birth and free-text health answers. A manifest entry understating one of them
+// is how a file gets handled as though it were a summary — so the class is
+// checked, not trusted to whoever adds the next case to classifyApiFile().
+const attendeeFiles = apiFiles.filter(
+  (file) => file.file.startsWith("orders/") || file.file.startsWith("tickets/")
+);
+check(
+  "every attendee-bearing API file declares an access-secret or person-sensitive class",
+  attendeeFiles.every(
+    (file) => file.piiClass === "access-secret" || file.piiClass === "person-sensitive"
+  ),
+  attendeeFiles
+    .filter((file) => file.piiClass !== "access-secret" && file.piiClass !== "person-sensitive")
+    .map((file) => `${file.file} -> ${file.piiClass}`)
+    .join(", ")
+);
+
+check(
+  "every attendee-bearing API file says in its note what it holds",
+  attendeeFiles.every((file) => /accessCode/.test(file.note)),
+  attendeeFiles
+    .filter((file) => !/accessCode/.test(file.note))
+    .map((file) => file.file)
+    .join(", ")
+);
+
+// The vault path is the only statement in a committed file about where this
+// data lives. `/private/` is what .gitignore excludes; anything else would mean
+// the pull wrote attendee records somewhere git can see.
+check(
+  "every API export keeps its files under private/",
+  apiExports.every((entry) => entry.vaultPath.startsWith("private/humanitix/")),
+  apiExports
+    .filter((entry) => !entry.vaultPath.startsWith("private/humanitix/"))
+    .map((entry) => `${entry.exportId} -> ${entry.vaultPath}`)
+    .join(", ")
+);
+
+// `orders/` and `tickets/` must never become a source of the committed archive.
+// `generatedFrom` is how a file earns that status, so an API filename appearing
+// in it is the first visible symptom of the rule having been broken.
+const creditedApiFiles = apiFiles.filter((file) =>
+  humanitixEvents.metadata.generatedFrom.includes(file.file)
+);
+check(
+  "no API file is credited as a source of the committed archive",
+  creditedApiFiles.length === 0,
+  creditedApiFiles.map((file) => file.file).join(", ")
+);
+
+// The manifest is append-only, so the exportId is the key every other file and
+// script joins on. A duplicate would make "the 2026-08-17 export" ambiguous and
+// silently hand the first match to whichever lookup ran.
+const exportIds = humanitixManifest.exports.map((entry) => entry.exportId);
+check(
+  "no exportId is recorded twice",
+  new Set(exportIds).size === exportIds.length,
+  exportIds.filter((id, index) => exportIds.indexOf(id) !== index).join(", ")
+);
+
+// A gap is closed by annotation, never by deletion — so the two things that can
+// go wrong are pointing at an export that does not exist, and quietly emptying
+// the record of what was missing while marking it closed.
+const closedGaps = humanitixManifest.knownGaps.filter((gap) => gap.closedBy !== undefined);
+
+check(
+  "a closed gap names an export that exists",
+  closedGaps.every((gap) => exportIds.includes(gap.closedBy as string)),
+  closedGaps
+    .filter((gap) => !exportIds.includes(gap.closedBy as string))
+    .map((gap) => `${gap.report} -> ${gap.closedBy}`)
+    .join(", ")
+);
+
+check(
+  "closing a gap never erases what was missing",
+  closedGaps.every(
+    (gap) => gap.impact.length > 0 && gap.action.length > 0 && typeof gap.closedAt === "string"
+  )
+);
 
 // --- Leak guard --------------------------------------------------------------
 console.log("\nLeak guard");
