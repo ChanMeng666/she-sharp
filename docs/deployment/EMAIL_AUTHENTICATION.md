@@ -540,6 +540,24 @@ Before importing anything:
 4. Also set those contacts `unsubscribed` in Resend if they are ever imported by
    another route — the local register protects the scripts, the Resend flag
    protects broadcasts.
+5. **Top the register up from the API immediately before the import, every
+   time.** The three files above are a snapshot of one afternoon, and the list
+   kept moving after it: the first run of
+   ```bash
+   npx tsx scripts/email/suppression.ts pull-mailchimp --dry-run   # then without
+   ```
+   on 2026-08-27 took the register from 2,129 to **2,138** — three unsubscribes
+   and six hard bounces from the ten days since the export, every one of which
+   an import built on that export would have emailed. It is incremental
+   (`--since <ISO>`, or `--full` to re-walk) and needs `MAILCHIMP_API_KEY`.
+
+**Having an API key does not retire the manual export.** Mailchimp's API has no
+equivalent of `CONFIRM_TIME` — 1,560 contacts carry it in the CSV against 129
+for the nearest API field, `timestamp_signup` — and the archive's reading of
+consent rests on that column. The API is a second, independent reading of the
+account; it is not the download. (Same on Humanitix, for a blunter reason:
+`/payouts`, `/access-codes` and `/discounts` are 404. Full detail for both in
+`docs/development/PLATFORM_APIS.md`.)
 
 Three things the import session will otherwise have to rediscover:
 
@@ -587,7 +605,16 @@ order:
    until those issues are re-hosted or the button is repointed at
    `/resources/newsletters` itself. The per-issue route stays `noindex` and out
    of `app/sitemap.ts` deliberately; that is not a blocker.
-4. Only then retire the Mailchimp records.
+4. **Deal with the live Humanitix → Mailchimp integration.** Easier to miss than
+   the funnel, because it is configured in *Humanitix* and nothing in this repo
+   mentions it: Humanitix pushes event contacts into the `She#` audience by
+   itself. Left connected when the audience is retired, it keeps feeding a dead
+   list, and the sign-ups it collects are lost rather than merely misplaced. Two
+   settings were changed on 2026-08-27 — "Sync contacts who haven't opted-in"
+   switched **off**, and the checkout opt-in question switched **on** for the
+   September event — which fixes the consent shape but not the destination. It
+   must be repointed at Resend or switched off before step 5.
+5. Only then retire the Mailchimp records.
 
 ### Keep the Mailchimp DNS records
 
@@ -605,6 +632,35 @@ Outlook and at least one corporate domain, then widen. Resend's shared IPs are
 warm, and your *domain* reputation carries across — but the sending pattern is
 new, and a sudden first-time spike from a new platform is exactly the shape
 filters are built to notice.
+
+**The list this asks for can now be built.** It could not before: who opened
+what is per-campaign recipient activity, which the CSV export does not carry and
+which the Mailchimp UI would have surrendered only as a couple of hundred
+hand-driven downloads — so it was recorded as skipped by decision, and "recent
+openers" stayed an instruction with no way to follow it. The API key closes that
+gap:
+
+```bash
+npx tsx scripts/mailchimp/fetch-api.ts --export 2026-08-27-api --include activity
+npx tsx scripts/mailchimp/recent-openers.ts --export 2026-08-27-api \
+  --subscribed-export 2026-08-17 --since 2026-02-27
+# then, on the import CSV:
+npx tsx scripts/email/normalize-recipients.ts … --restrict-to-hashes tmp/mailchimp/recent-openers.json
+```
+
+Two things to hold on to. The output is `hashEmail()` digests in `tmp/`, never
+addresses — per-recipient open data is the most sensitive thing in the account,
+and the only question the ramp list is ever asked is "is this row in the warm
+cohort?". And it is **intersected with the `subscribed` CSV before it is
+written**, which makes it a subset of the consented list by construction: it can
+only ever **narrow**. An open is not consent. A `nonsubscribed` contact who
+opened a receipt, or an `unsubscribed` one who opened an old newsletter, is
+still out — `consent-rules.md` governs widening a list, and nothing here widens
+anything.
+
+**Nothing has been sent and nobody has been imported.** As at 2026-08-27 the
+Resend list still holds one test contact; the import still goes through
+`/update-mailing-list`, its plan block and a human approval.
 
 ### What actually improves by moving
 
@@ -625,6 +681,23 @@ Resend dashboard, after each broadcast: complaint rate **< 0.1%**, hard bounce
 rate **< 2%**, and delivery rate against the Mailchimp baseline. If any is out
 of bounds, stop and clean the list before the next issue — that is the
 pre-committed trigger in the next section.
+
+**The Mailchimp baseline is now in the repo**, at
+`lib/data/json/mailchimp/campaigns.json`: 180 sends and 188,796 emails from
+2019-07 to 2026-08, **37.9% unique open** — or **33.1%** with Apple's proxy
+opens excluded — 881 hard bounces, 797 unsubscribes and 4 abuse reports across
+the whole history. Before this file the only campaign statistics anywhere were
+figures somebody had transcribed into a `.docx`.
+
+Two traps in comparing against it. **Pick one open-rate figure and stay on it**:
+the proxy-excluded series equals the headline series exactly for every campaign
+sent before 2022, because Apple Mail Privacy Protection did not exist yet, and
+diverges afterwards — so an open rate from 2020 and one from 2024 are not the
+same measurement, and **open rates cannot be compared across 2021**. And read
+`growth[].subscribed` as a stock, not a flow: 86 months of end-of-month list
+size, peaking at **1,742 in 2025-11** and standing at **1,555** in 2026-08. The
+list has been shrinking through 2026, which is the trend any post-migration
+number lands on top of.
 
 ---
 
@@ -695,9 +768,10 @@ forgotten or deliberately skipped unless it says so.
 | 5 | **Stage 2b — Google DKIM** | ⚠️ **Workspace super-admin.** `website@` cannot open `admin.google.com`. Request text is in Stage 2, and it is folded into `docs/deployment/WORKSPACE_MAILBOX_CHECKLIST.md` so the admin does one sitting rather than two. | Whenever an admin is available |
 | 6 | **Stage 4 — `p=reject`** + root SPF `-all` | **hard-gated on #5** | Not before #5 |
 | 7 | **Decide the legacy SPF include** — drop `include:_spf.1stdomains.co.nz` if reports show nothing sends from those IPs (budget 4/10 → 1/10) | the reports from #1 | With #4 |
-| 8 | **Migrate the newsletter sending off Mailchimp** — see the section above. **List hygiene is done** (18 Aug 2026): all four statuses exported and archived, and the 2,129 non-subscribers are in the suppression register. What remains is importing the 1,560 `Subscribed` through `/update-mailing-list`. | must NOT share a month with #2/#4 | A month with no DMARC change |
+| 8 | **Migrate the newsletter sending off Mailchimp** — see the section above. **List hygiene is done** (18 Aug 2026): all four statuses exported and archived, and the non-subscribers are in the suppression register — **2,138 as at 2026-08-27**, not the 2,129 the export gave, so run `suppression.ts pull-mailchimp` immediately before the import rather than trusting the file. **The ramp cohort is no longer blocked** (27 Aug 2026): `scripts/mailchimp/recent-openers.ts` builds it from the API. What remains is importing the 1,560 `Subscribed` through `/update-mailing-list` — nothing has been sent and nobody has been imported yet. | must NOT share a month with #2/#4 | A month with no DMARC change |
 | 8b | **Migrate the subscribe funnel** — wire `/api/newsletter/subscribe` (exists, **nothing calls it**) to a form and repoint the 16 `MAILCHIMP_CONFIG.subscribeUrl` links. Without this, new sign-ups keep going to Mailchimp and never get the Resend send. | — | With #8, not after |
 | 8c | **Decide `MAILCHIMP_CONFIG.archiveUrl`'s replacement.** Partly done: since 2026-08 each new issue is listed in `lib/data/newsletters-manual.ts` pointing at its on-site render (still `noindex`, by design). What remains is the "Open full archive" button, which is the only route to the pre-2026-08 back catalogue. | the back catalogue re-hosted, or the button repointed at `/resources/newsletters` | With #8 |
+| 8d | **Repoint or switch off the Humanitix → Mailchimp contact integration.** Configured in Humanitix, invisible from this repo, and it pushes event contacts into the `She#` audience on its own — left connected past the retirement it feeds a dead list. "Sync contacts who haven't opted-in" was switched **off** and the checkout opt-in question **on** (both 2026-08-27), which fixes the consent shape, not the destination. | — | With #8, before #9 |
 | 9 | **Retire the Mailchimp DNS records** (`k2`/`k3._domainkey`) | 2–3 clean Resend sends **and** #8b | After #8 proves out |
 | 10 | ~~**Confirm someone reads `newsletter@`**~~ — **answered 2026-08-23: no.** Nobody on the team had its password on 2026-08-17, and a direct question in Slack went unanswered. It is no longer the Reply-To (that is now `info@`); it remains the From, which is correct and must not change. Naming an owner is item 3 on `WORKSPACE_MAILBOX_CHECKLIST.md`. | — | **Done** |
 | 11 | **`EMAIL_UNSUBSCRIBE_MAILTO`** — **keep it empty.** The intended target, `unsub@`, was probed on 2026-08-23 and hard-bounced: it does not exist. The HTTPS one-click URL alone satisfies RFC 8058 and both bulk-sender rulebooks, and a mailto into a weekly-read inbox would leave opt-outs unactioned for days — a compliance problem, not a convenience one. | — | **Decided: no** |
@@ -720,7 +794,10 @@ which one caused it, and the fix for each is different.
   with a human in the loop — check last month's digest for unrecognised sources,
   and the last broadcast's complaint (<0.1%) and bounce (<2%) rates.
 - **Monthly:** `npx tsx scripts/email/suppression.ts sync` to fold runtime
-  bounces and complaints into the committed register.
+  bounces and complaints into the committed register, and — while Mailchimp is
+  still the live sender — `npx tsx scripts/email/suppression.ts pull-mailchimp`
+  to fold in the opt-outs and hard bounces that happen over there. Also before
+  any import, whenever that falls.
 - **Annually:** rotate DKIM keys, recount the SPF lookup budget, confirm the
   `rua` addresses still work.
 

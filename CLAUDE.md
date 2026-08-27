@@ -53,9 +53,10 @@ components/      mirrors the site: about, admin, chatbot, contact, deck, donate,
                  events, forms, home, join-team, layout, membership, mentorship,
                  resources, seo, sponsors, ui (shadcn/ui + custom primitives)
 lib/             api, auth, chatbot, cloudinary, config, data, db, deck, email,
-                 export, forms, funding, invitations, matching, mentorship,
-                 newsletter, programmes, recruitment, seo, slack, slack-bot,
-                 stripe, user  (+ utils.ts, fonts.ts, design-system.ts)
+                 export, forms, funding, humanitix, invitations, mailchimp,
+                 matching, mentorship, newsletter, programmes, recruitment, seo,
+                 slack, slack-bot, stripe, user
+                 (+ utils.ts, fonts.ts, design-system.ts)
 hooks/ types/ styles/ emails/
 public/          site imagery; img/events/<slug>/ per event, img/legacy-site/ is
                  LIVE content on every pre-2026 event page — read their READMEs
@@ -309,6 +310,46 @@ Mailchimp exports. It carries real names, addresses, sign-up IPs and live access
 codes. Read it only when a task requires it, and never copy its contents into
 `lib/data/json/` — CI has leak guards for exactly that.
 
+## Platform APIs: what they reach, and the line they must not cross
+
+She Sharp holds API keys for **Mailchimp** (Marketing v3, `us3`, audience
+`31bd05e8eb`) and **Humanitix** (Public API v1, `x-api-key`). Both were created
+2026-08-27. Full reference: `docs/development/PLATFORM_APIS.md`.
+
+**The PII boundary is enforced by absence, not by discipline.**
+`lib/humanitix/client.ts` implements `listEvents`, `getEvent`,
+`getCheckInCount` and `listTags` — and **deliberately does not implement
+`/orders` or `/tickets`**, which carry names, emails, mobiles, addresses and a
+live `accessCode` on nearly every row. A function that does not exist under
+`lib/` cannot be imported from `app/` by mistake. Scripts may call them
+(`scripts/humanitix/{fetch-api,api-counts}.ts`); nothing under `lib/` may.
+Same shape on the other side: `listMembers()` in `lib/mailchimp/client.ts`
+defaults to a narrow `fields` projection because the full member object carries
+`ip_signup`, `ip_opt` and `location`. Widening it is an explicit act.
+
+**Neither API replaces the manual export. Do not let anyone conclude otherwise.**
+Humanitix `/payouts`, `/access-codes` and `/discounts` are **404** — there is no
+route to the settlement report, the 124-code access registry, the discount or
+affiliate codes, top-purchasers, or earnings-by-ticket-type, so six of the
+eighteen reports in the vault exist only because somebody downloaded them.
+Mailchimp matches the CSVs on counts and on IPs (`OPTIN_IP` is `ip_opt`;
+`CONFIRM_IP` is `ip_signup` — the names invert between the surfaces) but
+**`CONFIRM_TIME` has no equivalent**, 1,560 populated in the CSV against 129 for
+`timestamp_signup`, and the archive's reading of consent rests on it.
+
+**The vault stores verbatim payloads, never mapped objects.** A sha256 over a
+mapped object proves what the mapper kept, not what the API said.
+`getGrowthHistory` was written from Mailchimp's documentation, which lists
+`existing`/`imports`/`optins`; `us3` sends all three as hard zero and puts the
+real series in seven fields the docs never mention. The vault held 86 months of
+zeroes under a valid checksum.
+
+**Raw pulls go to the private archive repo, never to `lib/data/json/`.** Set
+`MAILCHIMP_VAULT_DIR` / `HUMANITIX_VAULT_DIR` to a directory inside
+`she-sharp-slack-archive`; `private/` here is only a cache. `manifest.ts
+--append` is the **CSV** builder and will overwrite an API entry with an empty
+one — it now refuses, but only because it was done once.
+
 ## Conventions
 
 - **All UI text in English.** No Chinese characters in page content, components
@@ -385,7 +426,11 @@ and **124 live access codes**, so they live in a gitignored vault (`/private/`)
 and never in git; a committed manifest keeps their provenance auditable without
 them. Three traps before quoting anything: it starts in **2020**, it covers only
 **57 of the 97 events**, and a `checkedIn` of 0 usually means nobody scanned —
-read `checkInDataPresent`. → `docs/development/HUMANITIX_ARCHIVE.md`
+read `checkInDataPresent`. Since 2026-08-28 there is also an API pull
+(`humanitix/2026-08-28-api` in the archive repo: 59 events, 4,169 orders, 5,259
+tickets) which adds the nesting a CSV flattens but reaches **none** of the
+payout, access-code or discount reports.
+→ `docs/development/HUMANITIX_ARCHIVE.md`, `PLATFORM_APIS.md`
 
 **Mailchimp audience archive.** The `She#` audience export (2019→, 3,689
 contacts, 229 tags) reduced to counts in `lib/data/json/mailchimp/` and read
@@ -396,8 +441,15 @@ Three traps before quoting anything: the list is **1,560**, not 3,689 (the rest
 left, bounced, or never subscribed); Mailchimp's own dashboard says **3,145**
 because it excludes the 544 hard-bounced; and a `Ticket Type:`/`Event:` tag is a
 pasted ticket list, **not attendance** — Humanitix is authoritative for that.
-The 2,129 non-subscribers are hashed into `email-suppression-hashes.json` so no
-future import can re-add them. → `docs/development/MAILCHIMP_ARCHIVE.md`
+The non-subscribers are hashed into `email-suppression-hashes.json` so no future
+import can re-add them — **2,138** as of 2026-08-27, and
+`suppression.ts pull-mailchimp` keeps it current while Mailchimp is still the
+live sender. `campaigns.json` now carries the send history the account export
+never delivered: 180 sends, 188,796 emails, 37.9% unique open — **33.1% once
+Apple's mail proxies are excluded**, and the two are equal through 2023 then
+diverge, so open rates cannot be compared across 2021. The list peaked at
+**1,742 in 2025-11** and is **1,555** now.
+→ `docs/development/MAILCHIMP_ARCHIVE.md`, `PLATFORM_APIS.md`
 
 **Presentation decks.** `/present/<slug>`, built from typed slide data with a
 build-failing copy and rhythm linter, per-event skins over a fixed house
@@ -488,7 +540,17 @@ the failure.
 
 Required variables and what each is for: **`.env.example`** (database, auth +
 OAuth, OpenAI, Upstash Redis, Resend + webhook/unsubscribe secrets, Slack
-webhooks, Stripe, Cloudinary, `BASE_URL`, `CRON_SECRET`). Setting them on Vercel:
+webhooks, Stripe, Cloudinary, `BASE_URL`, `CRON_SECRET`, and the platform API
+keys below).
+
+Scripts read **`.env`** — they use `import "dotenv/config"`, which does not load
+`.env.local`. `.env.local` is the Next.js dev server's file. Both are gitignored.
+
+`MAILCHIMP_API_KEY` is **local tooling only** and nothing under `app/` may read
+it; it **expires 2027-08-27**, because Mailchimp now forces a one-year expiry.
+`HUMANITIX_API_KEY` is the exception — it is also set on Vercel production,
+because the ticket-status route reads it. `MAILCHIMP_VAULT_DIR` /
+`HUMANITIX_VAULT_DIR` point a pull at a directory in the private archive repo. Setting them on Vercel:
 see the Vercel rules above and
 `docs/deployment/VERCEL_ENV_VARIABLES_GUIDE.md`. `MAINTENANCE_MODE=true` serves a
 503 for the whole site including `/f/*` and the feedback form —

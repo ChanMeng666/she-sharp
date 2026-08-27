@@ -16,6 +16,12 @@ source behind them is in `docs/development/PUBLIC_CLAIMS_PROVENANCE.md`.
 - **`attendees` holds REGISTRATIONS, `checkedIn` holds attendance.** Decided
   April 2026; registrations are the number the site displays. The field name is
   misleading, the convention is not.
+- **A published `attendees` figure goes stale, and nothing used to notice.** The
+  September 2026 Les Mills event was published as 25 while the archive said 15
+  and the account said 34 — three values, one of them on the website, none of
+  them agreeing. `scripts/humanitix/verify-live-events.ts --with-counts` now
+  reports the drift. It is still a registrations figure and still a snapshot;
+  the check tells you when the snapshot has aged, not what to publish.
 - **Expos and trade shows have no headcount by design** — the organisation has
   never counted people at a booth. They live on `/community`
   (`lib/data/community-appearances.ts`), not in the event data. Do not "fix"

@@ -48,8 +48,32 @@ Two metrics are routinely confused and must not be merged:
 - **`impact.workshopAttendees`** (5,000) — the 10th-anniversary line
   "empowering 5,000+ women". A cumulative reach figure, not a membership count.
 
-And the mailing list is a third thing again: roughly 1,300 Mailchimp
-subscribers at the end of 2022, about 1.6k recipients through 2023.
+And the mailing list is a third thing again — and since 2026-08-27 it is the one
+figure on this page with a month-by-month series behind it rather than an
+estimate. Mailchimp's `growth-history` endpoint returns 86 months, and
+`lib/data/json/mailchimp/campaigns.json` commits them:
+
+| | Subscribed at month end |
+|---|---|
+| 2019-07 | 157 |
+| 2022-12 | 1,093 |
+| 2023-12 | 1,573 |
+| 2025-12 | 1,716 |
+| **peak, 2025-11** | **1,742** |
+| 2026-08 | **1,555** |
+
+`subscribed` there is a **stock**, not a flow — subscribed members at the end of
+that month, verified because the final row matches `GET /lists` exactly in the
+same minute. The series is not monotonic, and the shape it shows is a list that
+peaked in November 2025 and has lost 187 since. `MAILCHIMP_ARCHIVE.md` recorded
+this series as unrecoverable; it was right about the CSV and wrong about the API.
+
+**SOURCED, and new**: the send history. 180 campaigns, 188,796 emails,
+2019-07-16 to 2026-08-22, with a **37.9%** unique open rate. Quote the
+proxy-excluded figure, **33.1%**, to anyone who will compare years: Apple Mail
+Privacy Protection pre-fetches images and Mailchimp counts that as an open, so
+the two figures are identical through 2023 and diverge sharply after — 14,489
+against 10,414 in 2025. An open rate spanning 2021 is not a comparison.
 
 ## Counting conventions
 
