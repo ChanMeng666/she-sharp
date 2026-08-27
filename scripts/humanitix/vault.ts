@@ -23,7 +23,7 @@
  * exists to avoid.
  */
 import { createHash } from "node:crypto";
-import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 export const REPO_ROOT = resolve(__dirname, "..", "..");
@@ -64,6 +64,29 @@ export function resolveVaultDir(exportId: string): string {
   return dir;
 }
 
+/**
+ * Resolves an export's vault directory, creating it when it does not exist.
+ *
+ * The only sanctioned way to make a vault directory, and separate from
+ * {@link resolveVaultDir} because everything else in this archive READS the
+ * vault and must fail loudly when it is absent — a reader that silently mkdirs
+ * an empty directory reports "0 tickets" instead of "the data is not here".
+ * Only a script that is about to write an export has any business creating one.
+ *
+ * It mirrors `resolveVaultDir`'s override precedence rather than reimplementing
+ * it at the call site, so `HUMANITIX_VAULT_DIR` cannot mean one directory to
+ * the writer and another to the reader.
+ *
+ * @param exportId - The export id, which names the directory by default.
+ * @returns The absolute directory path.
+ */
+export function ensureVaultDir(exportId: string): string {
+  const override = process.env.HUMANITIX_VAULT_DIR?.trim();
+  const dir = override ? resolve(override) : join(DEFAULT_VAULT_ROOT, exportId);
+  mkdirSync(dir, { recursive: true });
+  return dir;
+}
+
 /** True when the export's vault directory is present and readable. */
 export function vaultExists(exportId: string): boolean {
   try {
@@ -74,12 +97,46 @@ export function vaultExists(exportId: string): boolean {
   }
 }
 
+/**
+ * Every file of one extension in the vault directory, sorted.
+ *
+ * Recurses exactly one level, for the `orders/`, `tickets/` and
+ * `check-in-counts/` sub-directories an API pull writes its per-event responses
+ * into. One level rather than a full walk on purpose: an unbounded walk would
+ * quietly pick up whatever else somebody left in the vault, and the manifest's
+ * rule is that an unclassified file throws rather than being absorbed.
+ *
+ * Paths come back **relative to the export directory, with forward slashes**,
+ * because they are written verbatim into the committed manifest. `join()` on
+ * Windows would put `orders\\<id>.json` in a file that CI reads on Linux, so
+ * the recorded `file` string would depend on who ran the pull.
+ *
+ * @param exportId - The export id.
+ * @param extension - The extension to match, lower-case, including the dot.
+ * @returns Relative paths, sorted, so output is deterministic.
+ */
+export function listVaultFiles(exportId: string, extension: ".csv" | ".json"): string[] {
+  const dir = resolveVaultDir(exportId);
+
+  const matches = (name: string) => name.toLowerCase().endsWith(extension);
+  const found: string[] = [];
+
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    if (entry.isDirectory()) {
+      for (const child of readdirSync(join(dir, entry.name), { withFileTypes: true })) {
+        if (child.isFile() && matches(child.name)) found.push(`${entry.name}/${child.name}`);
+      }
+      continue;
+    }
+    if (entry.isFile() && matches(entry.name)) found.push(entry.name);
+  }
+
+  return found.sort((a, b) => a.localeCompare(b, "en"));
+}
+
 /** Every `.csv` in the vault directory, sorted, so output is deterministic. */
 export function listVaultCsvs(exportId: string): string[] {
-  const dir = resolveVaultDir(exportId);
-  return readdirSync(dir)
-    .filter((name) => name.toLowerCase().endsWith(".csv"))
-    .sort((a, b) => a.localeCompare(b, "en"));
+  return listVaultFiles(exportId, ".csv");
 }
 
 export function vaultFilePath(exportId: string, file: string): string {
