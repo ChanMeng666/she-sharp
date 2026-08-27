@@ -546,13 +546,41 @@ check(
 );
 
 // The vault path is the only statement in a committed file about where this
-// data lives. `/private/` is what .gitignore excludes; anything else would mean
-// the pull wrote attendee records somewhere git can see.
+// data lives, and the rule it has to express is "not anywhere THIS repository
+// tracks" — not "under private/".
+//
+// The first version of this check said private/ and it was too narrow. The
+// attendee records are supposed to live in the private archive repository,
+// which is the master copy; private/ is only a cache of it. A check that
+// insists on the cache fails the moment somebody does the right thing.
+//
+// So: a path is acceptable if it is the gitignored cache, or if it names a
+// different repository. It is NOT acceptable if it points at a directory this
+// repository tracks — that would mean the pull wrote names, emails and live
+// access codes somewhere git can see.
+const TRACKED_ROOTS = ["lib/", "app/", "components/", "docs/", "scripts/", "public/", "types/", "hooks/"];
+const vaultIsOutsideTheTree = (vaultPath: string): boolean => {
+  if (vaultPath.startsWith("private/")) return true;
+  return !TRACKED_ROOTS.some((root) => vaultPath.startsWith(root));
+};
 check(
-  "every API export keeps its files under private/",
-  apiExports.every((entry) => entry.vaultPath.startsWith("private/humanitix/")),
+  "no API export writes attendee records anywhere this repository tracks",
+  apiExports.every((entry) => vaultIsOutsideTheTree(entry.vaultPath)),
   apiExports
-    .filter((entry) => !entry.vaultPath.startsWith("private/humanitix/"))
+    .filter((entry) => !vaultIsOutsideTheTree(entry.vaultPath))
+    .map((entry) => `${entry.exportId} -> ${entry.vaultPath}`)
+    .join(", ")
+);
+
+// An absolute path is true on one machine and wrong on every other. A committed
+// manifest that carries one has stopped being a record and become a note to
+// self.
+const ABSOLUTE = /^([A-Za-z]:|\/|\\)/;
+check(
+  "no vault path is absolute",
+  apiExports.every((entry) => !ABSOLUTE.test(entry.vaultPath)),
+  apiExports
+    .filter((entry) => ABSOLUTE.test(entry.vaultPath))
     .map((entry) => `${entry.exportId} -> ${entry.vaultPath}`)
     .join(", ")
 );

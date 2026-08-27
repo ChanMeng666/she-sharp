@@ -150,8 +150,84 @@ function measure(exportId: string, file: string) {
   };
 }
 
+/**
+ * Where the raw files live, written so a committed manifest stays portable.
+ *
+ * Three cases. Inside `private/`, it is the gitignored in-repo cache and the
+ * path is repo-relative. Inside another git repository — the normal case, now
+ * that the private archive repo is the master copy — it is that repository's
+ * own directory name plus the path within it, so the entry reads the same on
+ * every machine and says WHICH archive rather than which laptop. Anywhere else
+ * the path is recorded verbatim, because a manifest that quietly rewrites a
+ * path it does not understand is worse than one that admits where the files
+ * were.
+ *
+ * The failure being avoided is an absolute Windows path in a committed file:
+ * `D:/github_repository/…` is true on exactly one machine, silently wrong
+ * everywhere else, and leaks a local filesystem layout into a public
+ * repository. The previous test — `dir.includes("private") ? … : dir` — fell
+ * into the `: dir` branch for every run against the archive repo.
+ *
+ * The twin of `portableVaultPath` in `scripts/humanitix/manifest.ts`, and
+ * deliberately not shared with it, for the same reason the two vault modules
+ * are not shared: the one thing that must never be got wrong is which
+ * subsystem's directory the PII is in, and that is the only thing a shared
+ * version would be parameterised on.
+ *
+ * @param dir - The resolved vault directory.
+ * @param exportId - The export it belongs to.
+ * @returns A path suitable for committing.
+ */
+export function portableVaultPath(dir: string, exportId: string): string {
+  const norm = dir.split("\\").join("/");
+  if (norm.includes("/private/")) return `private/mailchimp/${exportId}/`;
+
+  const parts = norm.split("/");
+  // Deepest first, so a repository nested inside another names the inner one.
+  for (let i = parts.length - 1; i > 0; i -= 1) {
+    if (existsSync(parts.slice(0, i).concat(".git").join("/"))) {
+      return parts.slice(i - 1).join("/") + "/";
+    }
+  }
+  return norm.endsWith("/") ? norm : `${norm}/`;
+}
+
+/**
+ * Refuses to build a CSV entry for a directory holding an API pull.
+ *
+ * `--append` and `fetch-api.ts` write to the SAME `exports[]` array keyed on
+ * the same `exportId`, and {@link appendExportEntry} replaces a matching entry
+ * rather than merging it. So `manifest.ts --export 2026-08-28-api --append`,
+ * one keystroke from the command that built it, hands `buildExportEntry` a
+ * directory full of JSON: `classify()` never runs because there are no CSVs,
+ * and a complete `method: "api-v3"` entry — its `api` block, its endpoint list,
+ * every file and hash — is silently overwritten with `files: []`.
+ *
+ * That is not a hypothetical. It happened on the Humanitix side on 2026-08-28
+ * and was only noticed because an unrelated assertion about the spine happened
+ * to fail. An empty entry is worse than no entry: it reads as "this export was
+ * recorded and contained nothing".
+ *
+ * @param exportId - The export being appended.
+ * @throws When the directory holds JSON and no CSV.
+ */
+function refuseApiVault(exportId: string): void {
+  if (listVaultCsvs(exportId).length > 0) return;
+  if (listVaultFiles(exportId, ".json").length === 0) return;
+
+  throw new Error(
+    `Export ${exportId} is an API pull, not a CSV export.\n` +
+      `  ${resolveVaultDir(exportId)}\n` +
+      "  holds .json responses and no .csv, so --append would record an EMPTY\n" +
+      "  entry over whatever is in the manifest for this exportId.\n" +
+      "  Rebuild it with the tool that wrote it instead:\n" +
+      `    npx tsx scripts/mailchimp/fetch-api.ts --export ${exportId} --include <tiers>`
+  );
+}
+
 function buildExportEntry(exportId: string): MailchimpManifestExport {
   const dir = resolveVaultDir(exportId);
+  refuseApiVault(exportId);
   const files = listVaultCsvs(exportId);
 
   const entries: MailchimpManifestFile[] = files.map((file) => {
@@ -178,7 +254,7 @@ function buildExportEntry(exportId: string): MailchimpManifestExport {
       "Mailchimp → Audience → All contacts → Export Contacts (one file per status), plus Audience → Archived contacts → Export",
     exportedAtLocal: `${exportId}T21:00:00`,
     timezone: "Pacific/Auckland",
-    vaultPath: dir.includes("private") ? `private/mailchimp/${exportId}/` : dir,
+    vaultPath: portableVaultPath(dir, exportId),
     fileCount: entries.length,
     files: entries,
   };
@@ -214,6 +290,241 @@ type ApiFileFacts = Pick<
  */
 export function classifyApiFile(relativePath: string, listId: string): ApiFileFacts {
   switch (relativePath) {
+    case "account.json":
+      return {
+        report: "account",
+        scope: "account",
+        endpoint: "/",
+        // Checked on 2026-08-28, not assumed. No natural person is NAMED —
+        // `first_name`/`last_name` hold "She"/"Sharp" and `email` is the
+        // newsletter role address. What the file does carry is `contact`, a
+        // full street address in Henderson, Auckland, filed under
+        // `company: "She Sharp"`. It appears nowhere in this repository and
+        // nowhere on the public site; it is a residential address that a
+        // charity is registered at, which is to say it is somebody's home
+        // filed under an organisation's name. Classified by what it exposes
+        // rather than by whose name is on it.
+        piiClass: "person-sensitive",
+        role: "primary",
+        redundantWith: null,
+        note: "The account itself: plan type, first payment, industry, timezone, member-since, last login, and `total_subscribers` — which is 3,151 and is Mailchimp's OWN figure, excluding the cleaned, so it is the dashboard number and NOT the 3,706 the members/ files total. Also `industry_stats`, which are Mailchimp's non-profit-sector benchmarks and describe other people's accounts, not this one. The `contact` block is a residential street address; it may be quoted to the charity's own officers and MUST NOT be republished, and it is the reason this file is person-sensitive despite naming nobody.",
+      };
+
+    case "campaigns-all.json":
+      return {
+        report: "campaigns-all",
+        scope: "account",
+        endpoint: "/campaigns",
+        // Stronger than `sent-campaigns.json`'s `email-only`, and the
+        // difference is entirely in the 33 rows that file does not have. The
+        // 180 sent rows carry `from_name` values that are role labels or a
+        // bare first name; one DRAFT carries a person's full name against
+        // their work address, which is an identification the sent set never
+        // makes. Scanned across all 213 rows, not sampled.
+        piiClass: "person-identifying",
+        role: "primary",
+        redundantWith: "sent-campaigns.json",
+        note: "All 213 campaigns at every status — 180 `sent`, 32 `save` (drafts) and 1 `schedule`. The 33 unsent ones exist ONLY here: a draft is the last trace of a campaign somebody wrote and decided not to send, and no report, archive URL or CSV records it. Ordered by create_time, so it reads as a history of the writing rather than of the sending. Supersedes sent-campaigns.json as a superset; that file is kept because it is the send-time-ordered view and the one the committed campaigns.json is built from. Sender identity is verbatim here: `settings.from_name` holds one person's full name on a single draft and `settings.reply_to` a personal Gmail on 7 rows (1 sent, 6 drafts). `emails_sent` is 0 on every unsent row — that is what unsent means, not a failed send.",
+      };
+
+    case "authorized-apps.json":
+      return {
+        report: "authorized-apps",
+        scope: "account",
+        endpoint: "/authorized-apps",
+        // Scanned: no address anywhere, and the only person-shaped field,
+        // `users`, holds the organisation's own Mailchimp username.
+        piiClass: "none",
+        role: "primary",
+        redundantWith: null,
+        note: "The 4 third-party applications holding OAuth access to this account, with the description each of them presented at authorisation. SECURITY-RELEVANT and recorded nowhere else: one of them is the Humanitix integration that writes registrants into the audience without anybody touching Mailchimp, which is why every count in this archive is a reading at pull time. Names the apps, NOT their credentials — a token appears nowhere in the API — so revoking them is still a dashboard job that has to happen before the account closes.",
+      };
+
+    case "verified-domains.json":
+      return {
+        report: "verified-domains",
+        scope: "account",
+        endpoint: "/verified-domains",
+        // One row carries `verification_email`, a She Sharp role address. The
+        // other is gmail.com with the field empty.
+        piiClass: "email-only",
+        role: "primary",
+        redundantWith: null,
+        note: "The 2 domains this account was permitted to send AS, with `verified`, `authenticated` and `is_free_email_provider` per row. Mailchimp's side of the arrangement documented from the DNS side in docs/deployment/EMAIL_AUTHENTICATION.md, and the evidence for which of the historic from-addresses were actually authenticated. `authenticated: false` on a verified domain means the address was confirmed by clicking a link, NOT that DKIM was set up for it.",
+      };
+
+    case "ecommerce-stores.json":
+      return {
+        report: "ecommerce-stores",
+        scope: "account",
+        endpoint: "/ecommerce/stores",
+        // Each of the 3 stores is NAMED after a person — the same person,
+        // with a currency suffix — beside a She Sharp role address. A full
+        // name plus an address is an identification, whoever it belongs to.
+        // `phone` and `address` are present as fields and empty in all 3.
+        piiClass: "person-identifying",
+        role: "reference",
+        redundantWith: null,
+        note: "3 ecommerce stores, which is a surprise on a non-profit newsletter account and is the finding. All 3 are artefacts of connected integrations rather than a shop: no platform, no domain, no orders, empty addresses, and `money_format` NZD. Two of the ids share a prefix with the third's, so they are the same connection re-registered. Each store's `name` is a natural person's full name, which is what makes this file person-identifying; the `email_address` on each is a She Sharp role address. Evidence that ecommerce tracking existed, NOT evidence that anything was ever sold.",
+      };
+
+    case "connected-sites.json":
+      return {
+        report: "connected-sites",
+        scope: "account",
+        endpoint: "/connected-sites",
+        // Scanned: domains, timestamps and a tracking script. No address, no
+        // name, no visitor.
+        piiClass: "none",
+        role: "reference",
+        redundantWith: null,
+        note: "The 4 websites carrying (or registered to carry) the Mailchimp tracking script, with the exact `<script>` fragment for each and an `is_pixel_enabled` flag. Records that the OLD shesharp.co.nz domain was connected in 2020 and updated as recently as 2026-08-17. Describes SITES, never visitors: no browsing data is in the API. `is_pixel_enabled: false` on a site means the connection exists and the pixel is off, which is a different thing from the site not being connected.",
+      };
+
+    case "batches.json":
+      return {
+        report: "batches",
+        scope: "account",
+        endpoint: "/batches",
+        // No person appears: ids, statuses, operation counts, timestamps. The
+        // caveat in the note is about a CREDENTIAL, not about PII, and the
+        // vocabulary here has no class for that — types/mailchimp.ts drops
+        // Humanitix's `access-secret` deliberately — so it is stated in the
+        // note where a reader will actually meet it.
+        piiClass: "none",
+        role: "primary",
+        redundantWith: null,
+        note: "The 21 batch operations ever run against this account: how many operations each carried, how many errored, and when. The ONLY record of automated WRITES in an archive that is otherwise entirely a record of reads — the most recent ran 222 operations on 2026-08-26. CAUTION: `response_body_url` is a PRE-SIGNED AWS S3 URL carrying a temporary credential, and it points at a tarball of the per-operation API responses, which for a member batch is member data. It expires, so it is not a durable link and must not be treated as one; it is also the reason this file should not be pasted anywhere the vault's own rules do not reach. The results themselves are NOT downloaded by this pull.",
+      };
+
+    case "batch-webhooks.json":
+      return {
+        report: "batch-webhooks",
+        scope: "account",
+        endpoint: "/batch-webhooks",
+        piiClass: "none",
+        role: "reference",
+        redundantWith: null,
+        note: "EMPTY, and stored because empty is the finding. No endpoint is notified when a batch operation finishes, so the 21 batches in batches.json told nothing outside Mailchimp that they had run. `items: 0` means there are none, NOT that the pull failed. The audience-event twin of this question is webhooks.json, and it is also empty.",
+      };
+
+    case "conversations.json":
+      return {
+        report: "conversations",
+        scope: "account",
+        endpoint: "/conversations",
+        piiClass: "none",
+        role: "reference",
+        redundantWith: null,
+        note: "EMPTY. Nobody's REPLY to a campaign was ever captured into Mailchimp's conversations inbox, so no correspondence with a subscriber is held on the account and none is lost when it closes. `items: 0` is the evidence, not a failed request. Replies went to the reply-to addresses instead, which are named in campaigns-all.json and whose mailboxes are outside this archive entirely.",
+      };
+
+    case "template-folders.json":
+      return {
+        report: "template-folders",
+        scope: "account",
+        endpoint: "/template-folders",
+        piiClass: "none",
+        role: "reference",
+        redundantWith: null,
+        note: "EMPTY. The 125 templates are unfoldered, so `templates.json` is the whole organisation of them and no grouping is lost. `items: 0` means there are none.",
+      };
+
+    case "campaign-folders.json":
+      return {
+        report: "campaign-folders",
+        scope: "account",
+        endpoint: "/campaign-folders",
+        piiClass: "none",
+        role: "reference",
+        redundantWith: null,
+        note: "EMPTY. The 213 campaigns are unfoldered — every `settings.folder_id` in campaigns-all.json is blank — so no grouping a person applied is lost. `items: 0` means there are none.",
+      };
+
+    case "file-manager-folders.json":
+      return {
+        report: "file-manager-folders",
+        scope: "account",
+        endpoint: "/file-manager/folders",
+        piiClass: "none",
+        role: "reference",
+        redundantWith: null,
+        note: "EMPTY. The image gallery is flat: all 677 files in file-manager-files.json sit at the top level, so their `folder_id` carries no meaning and nothing has to be reconstructed. `items: 0` means there are none.",
+      };
+
+    case "facebook-ads.json":
+      return {
+        report: "facebook-ads",
+        scope: "account",
+        endpoint: "/facebook-ads",
+        piiClass: "none",
+        role: "reference",
+        redundantWith: null,
+        note: "EMPTY. No Facebook or Instagram ad was ever run through this account, so no paid-social spend or audience is held here and none dies with it. `items: 0` means there are none, NOT that the pull failed or that the account lacked permission — the endpoint answered 200.",
+      };
+
+    case "customer-journeys.json":
+      return {
+        report: "customer-journeys",
+        scope: "account",
+        endpoint: "/customer-journeys/journeys",
+        piiClass: "none",
+        role: "primary",
+        redundantWith: null,
+        note: "EMPTY, and it closes the one thing automations.json explicitly did not. That file's note said it covered classic automations only and that Customer Journeys sat behind an endpoint the pull did not touch; this is that endpoint, and the answer is zero. Taken together the two settle it completely: NO mail leaves this account on a trigger of any kind, so cancelling it silences nothing that is still running. `items: 0` is the evidence.",
+      };
+
+    case "list-abuse-reports.json":
+      return {
+        report: "list-abuse-reports",
+        scope: "audience:She#",
+        endpoint: `/lists/${listId}/abuse-reports`,
+        // Four rows, four real personal email addresses at consumer domains,
+        // each against a campaign id and a date. `merge_fields` is not
+        // returned by this endpoint, so it stops short of person-sensitive.
+        piiClass: "person-identifying",
+        role: "primary",
+        redundantWith: null,
+        note: "The 4 spam complaints in the account's whole history: who complained, about which campaign, and when. Every row is a real personal address at a consumer domain. Read it as a SUPPRESSION obligation and nothing else — a complaint is the strongest possible refusal of consent, and these four addresses must never be imported into Resend or any successor regardless of what any other file says about them. The aggregate `abuseReports` column in reports.json is the same four events counted; this is the only place they are attributed.",
+      };
+
+    case "list-locations.json":
+      return {
+        report: "list-locations",
+        scope: "audience:She#",
+        endpoint: `/lists/${listId}/locations`,
+        piiClass: "aggregate",
+        role: "reference",
+        redundantWith: null,
+        note: "The audience by country: 28 rows of `country`, `cc`, `percent` and `total`. Aggregate by construction — Mailchimp reports the country, never the member. Derived from the same geolocation that fills `location` on a member object, so it covers only the subset Mailchimp could place, and the percentages are of THAT subset rather than of the audience. A country with 1 contact is still listed, which is the one place this file edges toward describing somebody.",
+      };
+
+    case "list-surveys.json":
+      return {
+        report: "list-surveys",
+        scope: "audience:She#",
+        endpoint: `/lists/${listId}/surveys`,
+        piiClass: "none",
+        role: "reference",
+        redundantWith: null,
+        note: "EMPTY. No Mailchimp survey was ever created against this audience, so no survey responses are held on the account and no question anybody answered is lost. She Sharp's own feedback form is unrelated and lives in this repository — see docs/development/EVENT_FEEDBACK.md. `items: 0` means there are none.",
+      };
+
+    case "templates.json":
+      return {
+        report: "templates",
+        scope: "account",
+        endpoint: "/templates",
+        // Scanned all 125 rows: no address of any kind. The only
+        // person-shaped fields, `created_by` and `edited_by`, hold three
+        // values — the organisation's own account name, an empty string, and
+        // one two-initial name.
+        piiClass: "none",
+        role: "primary",
+        redundantWith: null,
+        note: "All 125 saved templates: name, type, category, created/edited dates and by whom, and whether each is drag-and-drop. Only 6 are `type: \"user\"` — the organisation's own designs, including the newsletter template in use in 2026 — and the other 119 are Mailchimp's stock `base` (40) and `gallery` (79) designs, which are not She Sharp's work and are kept only so the 6 can be identified by contrast. METADATA ONLY: `GET /templates/{id}` returns no HTML at all, so this file names the templates without preserving any of them. What it is NOT is a copy of the newsletter design — see templates/ for how little of that is recoverable.",
+      };
+
     case "lists.json":
       return {
         report: "lists",
@@ -465,6 +776,61 @@ export function classifyApiFile(relativePath: string, listId: string): ApiFileFa
         };
       }
 
+      const template = /^templates\/(\d+)\.json$/.exec(relativePath);
+      if (template) {
+        return {
+          report: "template-default-content",
+          scope: `template:${template[1]}`,
+          endpoint: `/templates/${template[1]}/default-content`,
+          piiClass: "none",
+          role: "reference",
+          redundantWith: null,
+          note: "The default content of one saved template, section by section. MOSTLY EMPTY, and that is the finding rather than a failure: of the 6 templates that are the organisation's own, 4 return `sections: {}` — including BOTH current newsletter templates — and only the two oldest return anything. Mailchimp's Marketing API v3 exposes no way to read a template's HTML, so the design of the newsletter people have received since 2023 is NOT recoverable from this archive by any endpoint, and it is lost when the account closes unless somebody exports it by hand from the dashboard. What IS preserved is the rendered result: content/<campaignId>.json holds the full HTML of every issue as it went out, which is the same design with the copy poured in. The sections that do come back are Mailchimp's own stock boilerplate on `base` templates, not She Sharp's writing.",
+        };
+      }
+
+      const members = /^members\/(subscribed|unsubscribed|cleaned|transactional|pending|archived)\.json$/.exec(
+        relativePath
+      );
+      if (members) {
+        return {
+          report: "members",
+          scope: "audience:She#",
+          endpoint: `/lists/${listId}/members?status=${members[1]}`,
+          // THE AUDIENCE, whole. Confirmed on a live row, not assumed:
+          // `ip_opt` is a real IP address, `location` carries latitude,
+          // longitude, timezone and region, and `merge_fields` carries FNAME,
+          // LNAME, ADDRESS, PHONE and BIRTHDAY. That is the same class the
+          // CSV files get, which is right — this is the same data by another
+          // route.
+          piiClass: "person-network",
+          role: members[1] === "subscribed" ? "spine" : "primary",
+          redundantWith: null,
+          note: "Every member at one subscription status, as FULL member objects — the deliberate opposite of `listMembers()`'s narrow default, because this is the last reading anybody will ever be able to take. Carries `ip_signup` and `ip_opt`, `location` (latitude, longitude, timezone, region), `merge_fields` (name, street address, phone, birthday), `tags`, `stats`, `member_rating`, `source` and `unsubscribe_reason`. The API's `transactional` is the CSV export's `nonsubscribed` — the same 790 contacts who reached the audience through the Humanitix integration and opted in to nothing; `pending` is 0 and `archived` is 5 August-2020 test rows. NEVER commit any of it, and never import any status but `subscribed`, and that only through /update-mailing-list. `id` is the md5 of the lowercased address, which reverses trivially against a candidate list, so it is not an anonymisation. A count here disagreeing with a CSV export is not an error: the integration adds contacts between readings.",
+        };
+      }
+
+      const recipients = /^recipients\/([A-Za-z0-9]+)\.json$/.exec(relativePath);
+      if (recipients) {
+        return {
+          report: "campaign-recipients",
+          scope: `campaign:${recipients[1]}`,
+          endpoint:
+            `/reports/${recipients[1]}/sent-to + /reports/${recipients[1]}/open-details + ` +
+            `/reports/${recipients[1]}/unsubscribed + /reports/${recipients[1]}/abuse-reports + ` +
+            `/reports/${recipients[1]}/advice`,
+          // Stronger than activity/'s `person-identifying`, and the reason is
+          // one field: `sent-to` and `unsubscribed` rows carry `merge_fields`,
+          // so a recipient arrives with whatever name, street address, phone
+          // and birthday the audience holds for them. activity/ carries the
+          // address alone.
+          piiClass: "person-sensitive",
+          role: "primary",
+          redundantWith: null,
+          note: "Who one campaign went to and what they did with it, as five verbatim envelopes under named keys: `sentTo` (every recipient, opened or not), `openDetails` (the openers, with per-open timestamps and the envelope's own `total_opens` / `total_proxy_excluded_opens`), `unsubscribed` (who left through this send, with their reason), `abuseReports` (who marked it spam), `advice` (Mailchimp's boilerplate coaching, no person in it). NOT a fuller activity/ — the two disagree: `sentTo` is the ONLY place the recipients who did nothing appear, and activity/ is the only place CLICKS and BOUNCES appear against a recipient. A 653-recipient send with 99 openers is 653 rows here and 99 there. Person-sensitive rather than person-identifying because `sentTo` and `unsubscribed` rows carry `merge_fields`. `items: 1` because the file is a composite object; each envelope's `total_items` is the count that means something, and the arrays are complete — they are paged to exhaustion rather than capped at 1000, which matters on the 1,779-recipient send. Being sent a campaign is NOT consent; re-read the consent rules before deriving any segment from it.",
+        };
+      }
+
       throw new Error(
         `Unclassified API vault file: ${relativePath}\n` +
           `  Add a case to classifyApiFile() rather than letting it into the manifest unlabelled.`
@@ -571,7 +937,7 @@ export function buildApiExportEntry(
     // calendar fields with the machine's own zone beside it, because a
     // `toISOString()` slice on a New Zealand evening records yesterday.
     ...localTimestamp(),
-    vaultPath: dir.includes("private") ? `private/mailchimp/${exportId}/` : dir,
+    vaultPath: portableVaultPath(dir, exportId),
     fileCount: entries.length,
     method: "api-v3",
     api,
@@ -775,9 +1141,18 @@ function main() {
   }
 
   if (append) {
-    const entry = buildExportEntry(exportId);
-    appendExportEntry(entry);
-    printEntry(entry);
+    try {
+      const entry = buildExportEntry(exportId);
+      appendExportEntry(entry);
+      printEntry(entry);
+    } catch (error) {
+      // Same one-line treatment as --close-gap, and for a sharper reason: the
+      // failure this path now has is `refuseApiVault`, whose whole value is a
+      // five-line message saying which tool to use instead. A stack trace
+      // pushes that message off the screen.
+      console.error(error instanceof Error ? error.message : String(error));
+      process.exit(1);
+    }
     return;
   }
 
