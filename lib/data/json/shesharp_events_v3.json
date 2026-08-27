@@ -1668,11 +1668,11 @@
         "time": "",
         "location": {
           "format": "in_person",
-          "venueName": "MYOB office",
-          "address": "Level 5, 12 Normanby Road, Mt Eden, Auckland",
+          "venueName": "AcademyEX",
+          "address": "99 Khyber Pass Road, Grafton, Auckland 1023, New Zealand",
           "city": "",
           "country": "New Zealand",
-          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.864872,174.7642524&query_place_id=ChIJe6Q8Ed9HDW0RJDGYEw4DqbU",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.864872,174.7642524",
           "latitude": -36.864872,
           "longitude": 174.7642524
         },
@@ -2653,13 +2653,13 @@
         "time": "",
         "location": {
           "format": "in_person",
-          "venueName": "The Pa Multifunction Room",
-          "address": "Hillcrest Road, Hillcrest, Hamilton 3216, New Zealand",
+          "venueName": "Gallagher Academy of Performing Arts, Te Whare Tāpere Iti",
+          "address": "Knighton Road University of Waikato, Hillcrest, Hamilton 3216, New Zealand",
           "city": "",
           "country": "New Zealand",
-          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-37.78663590000001,175.3176315&query_place_id=ChIJYfb-UCYZbW0RrZfR5DNNfz0",
-          "latitude": -37.78663590000001,
-          "longitude": 175.3176315
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-37.78643929999999,175.3150648",
+          "latitude": -37.78643929999999,
+          "longitude": 175.3150648
         },
         "fullDescription": [
           "Discuss how technology can be used to address environmental challenges and promote sustainability focusing on green Tech."
@@ -4469,11 +4469,11 @@
         "time": "",
         "location": {
           "format": "in_person",
-          "venueName": "MYOB office",
-          "address": "Level 5, 12 Normanby Road, Mt Eden, Auckland",
+          "venueName": "Level 8 (WooliesX)",
+          "address": "4 Williamson Avenue, Grey Lynn, Auckland 1021, New Zealand",
           "city": "",
           "country": "New Zealand",
-          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8585184,174.7483896&query_place_id=ChIJ54fVhJVHDW0R2aFAUNU7338",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8585184,174.7483896",
           "latitude": -36.8585184,
           "longitude": 174.7483896
         },
@@ -4560,8 +4560,8 @@
         "time": "",
         "location": {
           "format": "in_person",
-          "venueName": "AUT City Campus",
-          "address": "55 Wellesley Street East, Auckland CBD",
+          "venueName": "Google Auckland",
+          "address": "10 Madden Street, Central, Auckland 1010, New Zealand",
           "city": "Auckland",
           "country": "New Zealand"
         },
@@ -9009,13 +9009,13 @@
         "time": "",
         "location": {
           "format": "in_person",
-          "venueName": "Countdown Ponsonby",
-          "address": "4 Williamson Avenue, Grey Lynn, Auckland 1021, New Zealand",
+          "venueName": "Fergus Software Ltd",
+          "address": "65 New North Road, Eden Terrace, Auckland 1021, New Zealand",
           "city": "",
           "country": "New Zealand",
-          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8585472,174.7487792&query_place_id=ChIJq0Czl5VHDW0RYLF9zDA1eTg",
-          "latitude": -36.8585472,
-          "longitude": 174.7487792
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8657158,174.7582235",
+          "latitude": -36.8657158,
+          "longitude": 174.7582235
         },
         "fullDescription": [
           "This month’s event was all about women in tech and trades who are proving that they are more than just a diversity quota filler & industry leaders who are setting a new benchmark for inclusivity every day.",
@@ -12199,13 +12199,13 @@
         "time": "",
         "location": {
           "format": "in_person",
-          "venueName": "Vector’s office",
-          "address": "Level 6, 110 Carlton Gore Road, Newmarket, Auckland 1023, New Zealand",
+          "venueName": "Deloitte Auckland",
+          "address": "80 Queen Street, Auckland CBD, Auckland 1010, New Zealand",
           "city": "",
           "country": "New Zealand",
-          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8652009,174.77722&query_place_id=ChIJYVjkP3RIDW0RqkR_qut8Sm0",
-          "latitude": -36.8652009,
-          "longitude": 174.77722
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.84616879999999,174.7665584",
+          "latitude": -36.84616879999999,
+          "longitude": 174.7665584
         },
         "fullDescription": [
           "Some of the world’s leading companies use Deloitte’s 10 Types of Innovation Framework to create innovative products.",
@@ -12966,11 +12966,11 @@
         "time": "",
         "location": {
           "format": "in_person",
-          "venueName": "MYOB office",
-          "address": "Level 5, 12 Normanby Road, Mt Eden, Auckland",
+          "venueName": "Countdown Ponsonby",
+          "address": "4 Williamson Avenue, Grey Lynn, Auckland 1021, New Zealand",
           "city": "",
           "country": "New Zealand",
-          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8585472,174.7487792&query_place_id=ChIJq0Czl5VHDW0RYLF9zDA1eTg",
+          "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=-36.8585472,174.7487792",
           "latitude": -36.8585472,
           "longitude": 174.7487792
         },
