@@ -485,6 +485,18 @@ If it fails:
   written at all**, because a bad render is a whole-list problem, not a
   one-message one. Go back to Step 3/5, fix it, re-render, rebuild.
 
+> **Known today: the `image-format` gate fails on every issue, and it is not
+> your fault.** The event cards pull their cover images from the website's own
+> event data, and those covers are WebP — which Outlook cannot display at all.
+> This is not the photo strip you curated in Step 3; you cannot fix it by
+> re-doing that step, and you should not try. It is an open problem with the
+> template itself.
+>
+> **Do not work around it, and do not ask anyone to relax the gate.** The gate is
+> the only reason we know: the old sending path ran no checks, so this would have
+> gone out looking broken to every Outlook reader. Stop here and say that the
+> newsletter cannot be sent until the event cover images are served as JPEG.
+
 ### Step 8e — Send the batches (a human runs these)
 
 The commands printed by 8d look like this, one per chunk of 100, with a pause
