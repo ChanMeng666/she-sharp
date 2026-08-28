@@ -77,20 +77,23 @@ npx tsx scripts/email/audience-report.ts --include-resend
 ```
 
 **Tell the user the real number, plainly and first.** The list currently holds
-**1 contact** (`chanmeng6666@gmail.com`, the founder's test address):
+**0 contacts** — the account moved to the She Sharp–owned Resend team on
+2026-08-28 and nothing has been imported into it:
 
-> Right now the mailing list has 1 contact on it — the test address. The 3000+
-> members you're thinking of are in the database, but the database never
-> recorded who agreed to receive email, so it can't be used as a list. Building
-> the list up is exactly what this skill is for.
+> Right now the mailing list has nobody on it. The real list — about 1,560
+> subscribers — is still in Mailchimp, and the monthly newsletter still goes
+> out from there. The 3000+ members you're thinking of are in the database, but
+> the database never recorded who agreed to receive email, so it can't be used
+> as a list. Building the Resend list up is exactly what this skill is for.
 
 `--limit` defaults to **10**; on a longer list page with `--after` until
 `has_more` is false, or you will confidently report the wrong number.
 
-Live objects: segment **Newsletter Pilot** `c0041ec5-8653-46ec-ac6f-ff577b11714d`,
-segment **General** `c82698d4-3363-4501-9bbf-4d5c18a3d786`, topic **Monthly
-Newsletter** `301e1e64-1d0f-482a-9089-436499623ff8`. Re-read them rather than
-trusting this line.
+Live objects (Resend team **shesharp**, owned by `website@shesharp.org.nz`):
+segment **Newsletter** `95d452f5-2eed-4ad4-b18e-5ff5a89a576b`, topic **Monthly
+Newsletter** `08e59693-29dc-4556-8357-866dea047c6f`. The team's default segment
+**General** `9d195cb7-f7fc-49e0-9b88-e47c1741e720` is empty and nothing uses it.
+Re-read them rather than trusting this line.
 
 ## Step 2 — Read the user's file (any shape)
 
@@ -160,7 +163,7 @@ malformed addresses and anyone suppressed. Output:
 ```powershell
 npx tsx .claude/skills/update-mailing-list/scripts/diff-roster.ts `
   --recipients tmp/emails/recipients-aut-jul-2026.json `
-  --segment-id c0041ec5-8653-46ec-ac6f-ff577b11714d
+  --segment-id 95d452f5-2eed-4ad4-b18e-5ff5a89a576b
 ```
 
 It sorts every row into `new`, `alreadyPresent`, `unsubscribed`,
@@ -187,7 +190,7 @@ contact and there is no batch undo.
 Show this block, then **stop and wait**.
 
 ```
-List          : Newsletter Pilot (c0041ec5-8653-46ec-ac6f-ff577b11714d)
+List          : Newsletter (95d452f5-2eed-4ad4-b18e-5ff5a89a576b)
 Source file   : tmp/csv/attendees.local.csv (sha256 930614c5…)
 Consent       : Humanitix checkout question "Can we email you about future
                 She Sharp events?", AUT July 2026 — collected 2026-07-15
@@ -222,8 +225,8 @@ Only after approval.
 resend contacts imports create --file .\tmp\csv\attendees.local.csv `
   --column-map '{"email":"E-Mail Address","firstName":"Given Name"}' `
   --on-conflict skip `
-  --segment-id c0041ec5-8653-46ec-ac6f-ff577b11714d `
-  --topics '[{"id":"301e1e64-1d0f-482a-9089-436499623ff8","subscription":"opt_in"}]'
+  --segment-id 95d452f5-2eed-4ad4-b18e-5ff5a89a576b `
+  --topics '[{"id":"08e59693-29dc-4556-8357-866dea047c6f","subscription":"opt_in"}]'
 ```
 
 It returns `{"object":"contact_import","id":"<id>"}` — **a receipt, not a
@@ -248,9 +251,9 @@ table are in `references/resend-roster-cli.md`.
 The import flags cover both. For one person, or to fix an assignment afterwards:
 
 ```powershell
-resend contacts add-segment someone@example.com --segment-id c0041ec5-8653-46ec-ac6f-ff577b11714d
+resend contacts add-segment someone@example.com --segment-id 95d452f5-2eed-4ad4-b18e-5ff5a89a576b
 resend contacts update-topics someone@example.com `
-  --topics '[{"id":"301e1e64-1d0f-482a-9089-436499623ff8","subscription":"opt_in"}]'
+  --topics '[{"id":"08e59693-29dc-4556-8357-866dea047c6f","subscription":"opt_in"}]'
 resend contacts segments someone@example.com
 ```
 
@@ -301,7 +304,7 @@ un-synced register will happily re-add someone who bounced last week. Needs
 ```powershell
 npx tsx .claude/skills/update-mailing-list/scripts/roster-state.ts record `
   --key aut-jul-2026 --import-id <id from Step 6> `
-  --file-sha256 <sha from Step 4> --count 2 --segment "Newsletter Pilot" `
+  --file-sha256 <sha from Step 4> --count 2 --segment "Newsletter" `
   --consent "Humanitix checkout opt-in question, AUT July 2026, collected 2026-07-15" `
   --digest "40-row attendee export; 2 new, 1 already present, 4 excluded. Nothing outstanding."
 ```

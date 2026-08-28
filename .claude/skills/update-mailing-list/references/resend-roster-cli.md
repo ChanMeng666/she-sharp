@@ -30,13 +30,19 @@ The two opt-out mechanisms are not the same thing: `--unsubscribed` on a contact
 is a **team-wide** opt-out from all broadcasts, while a topic `opt_out` silences
 that one topic only.
 
-She Sharp's live objects (as of this writing):
+She Sharp's live objects (Resend team **shesharp**, owned by
+`website@shesharp.org.nz`; re-verified 2026-08-28 after the account move):
 
 | Object | Name | ID |
 |---|---|---|
-| Segment | Newsletter Pilot | `c0041ec5-8653-46ec-ac6f-ff577b11714d` |
-| Segment | General | `c82698d4-3363-4501-9bbf-4d5c18a3d786` |
-| Topic | Monthly Newsletter | `301e1e64-1d0f-482a-9089-436499623ff8` |
+| Segment | Newsletter | `95d452f5-2eed-4ad4-b18e-5ff5a89a576b` |
+| Segment | General (team default — empty, nothing uses it) | `9d195cb7-f7fc-49e0-9b88-e47c1741e720` |
+| Topic | Monthly Newsletter | `08e59693-29dc-4556-8357-866dea047c6f` |
+
+**Every id above changed on 2026-08-28**, when the domain and the sending setup
+moved from the maintainer's personal Resend team to the She Sharp–owned one.
+Segments and topics do not travel with a domain claim, so these were recreated;
+the team holds **0 contacts** and nothing has been imported.
 
 Re-read them rather than trusting this table:
 
@@ -52,7 +58,7 @@ resend contacts list --limit 100 --json
 resend contacts get someone@example.com --json
 resend contacts segments someone@example.com
 resend contacts topics someone@example.com
-resend segments contacts c0041ec5-8653-46ec-ac6f-ff577b11714d --limit 100 --json
+resend segments contacts 95d452f5-2eed-4ad4-b18e-5ff5a89a576b --limit 100 --json
 ```
 
 **`--limit` defaults to 10 and caps at 100.** This is the single most common way
@@ -75,8 +81,8 @@ the file in the background.
 resend contacts imports create --file .\tmp\csv\attendees.local.csv `
   --column-map '{"email":"E-Mail Address","firstName":"Given Name","lastName":"Family Name"}' `
   --on-conflict skip `
-  --segment-id c0041ec5-8653-46ec-ac6f-ff577b11714d `
-  --topics '[{"id":"301e1e64-1d0f-482a-9089-436499623ff8","subscription":"opt_in"}]'
+  --segment-id 95d452f5-2eed-4ad4-b18e-5ff5a89a576b `
+  --topics '[{"id":"08e59693-29dc-4556-8357-866dea047c6f","subscription":"opt_in"}]'
 ```
 
 Returns `{"object":"contact_import","id":"<id>"}`. Then poll
@@ -139,10 +145,10 @@ resend contacts update someone@example.com --unsubscribed
 
 # Per-topic — replaces ONLY the topics named in the array
 resend contacts update-topics someone@example.com `
-  --topics '[{"id":"301e1e64-1d0f-482a-9089-436499623ff8","subscription":"opt_in"}]'
+  --topics '[{"id":"08e59693-29dc-4556-8357-866dea047c6f","subscription":"opt_in"}]'
 
-resend contacts add-segment someone@example.com --segment-id c0041ec5-8653-46ec-ac6f-ff577b11714d
-resend contacts remove-segment someone@example.com c0041ec5-8653-46ec-ac6f-ff577b11714d
+resend contacts add-segment someone@example.com --segment-id 95d452f5-2eed-4ad4-b18e-5ff5a89a576b
+resend contacts remove-segment someone@example.com 95d452f5-2eed-4ad4-b18e-5ff5a89a576b
 resend contacts segments someone@example.com
 ```
 

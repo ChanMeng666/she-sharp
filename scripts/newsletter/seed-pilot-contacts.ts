@@ -3,7 +3,7 @@
  *
  * Reads `scripts/newsletter/pilot-contacts.local.csv` (header: `email,firstName`)
  * and creates each contact opted into the "Monthly Newsletter" topic and the
- * "Newsletter Pilot" segment (ids taken from env). Existing contacts are
+ * "Newsletter" segment (ids taken from env). Existing contacts are
  * treated as success. Prints a per-row summary table at the end.
  *
  * Usage:

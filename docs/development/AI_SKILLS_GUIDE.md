@@ -957,7 +957,7 @@ passing to a developer.
 | **Repo / repository** | The project's folder of files — the thing you copied in Part D |
 | **Terminal** | The text window where you type commands. Not dangerous; it just doesn't have buttons |
 | **CSV** | A spreadsheet saved as plain text. Excel and Google Sheets both export it |
-| **Segment** | A named group of people in Resend, e.g. "Newsletter Pilot". A broadcast goes to a segment |
+| **Segment** | A named group of people in Resend, e.g. "Newsletter". A broadcast goes to a segment |
 | **Topic** | What someone can unsubscribe *from*, so they can leave one thing without leaving everything |
 | **Broadcast** | One email to a whole segment, with an unsubscribe link |
 | **Transactional email** | An email to a specific person about something they did — a reply, a booking confirmation. No unsubscribe link, because they asked for it |

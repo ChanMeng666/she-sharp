@@ -41,7 +41,7 @@
  *            Needs POSTGRES_URL. Run it monthly.
  *   pull-mailchimp
  *          — the same union, for the platform She Sharp actually sends from.
- *            Mailchimp is still the live list; Resend holds one test contact.
+ *            Mailchimp is still the live list; Resend holds no contacts at all.
  *            So someone who unsubscribes today exists ONLY in Mailchimp's
  *            record, and `sync` cannot see them. Pulls the `unsubscribed` and
  *            `cleaned` members changed since the last pull and folds them in.

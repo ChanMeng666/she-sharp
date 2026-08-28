@@ -40,6 +40,12 @@ All commands below are PowerShell-first (this repo's primary shell on Windows).
 5. `ffmpeg` + `ffprobe` on PATH — the photo pipeline transcodes with them.
 6. For approve/schedule: production `BASE_URL` + the Resend newsletter env
    (`RESEND_NEWSLETTER_SEGMENT_ID`, `RESEND_NEWSLETTER_TOPIC_ID`) set on the server.
+   Both ids **changed on 2026-08-28**, when the domain moved to the She
+   Sharp–owned Resend team (`website@shesharp.org.nz`, team `shesharp`, Pro) and
+   the segment was recreated as **"Newsletter"**. That segment holds **0
+   contacts** — the real list is still in Mailchimp, and the live newsletter
+   still goes out from there, so an approve today schedules a broadcast to
+   nobody. Account detail: `docs/deployment/EMAIL_AUTHENTICATION.md`.
 
 ---
 

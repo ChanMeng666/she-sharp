@@ -6,6 +6,22 @@
 > **`docs/deployment/EMAIL_AUTHENTICATION.md`** — read that before touching any
 > From address or DNS record. This file covers the code and the operating loops.
 
+## The Resend account
+
+**She Sharp owns it.** Since **2026-08-28** `shesharp.org.nz` lives in the Resend team **shesharp**, owned by **`website@shesharp.org.nz`**, on the **Pro** plan (Transactional 50,000/month, renewing on the 27th; Marketing still Free). It was moved off the maintainer's personal team (`chanmeng6666@gmail.com`) with Resend's Domain Claim flow — one DNS record changed, `resend._domainkey`, and nothing else. Method, ids, and why the swap was safe: `docs/deployment/EMAIL_AUTHENTICATION.md` → "Resend account migration (2026-08-28)".
+
+Live objects in the new team — segments and topics do not travel with a claim, so **every id below changed on 2026-08-28**:
+
+| Object | Name | ID | Env var |
+|---|---|---|---|
+| Segment | `Newsletter` | `95d452f5-2eed-4ad4-b18e-5ff5a89a576b` | `RESEND_NEWSLETTER_SEGMENT_ID` |
+| Segment | `General` (team default — empty, unused) | `9d195cb7-f7fc-49e0-9b88-e47c1741e720` | — |
+| Topic | `Monthly Newsletter` (`opt_in`, private) | `08e59693-29dc-4556-8357-866dea047c6f` | `RESEND_NEWSLETTER_TOPIC_ID` |
+
+The webhook is `facbd62e-7c3e-47fa-abf1-0d36b37cd71c` → `https://www.shesharp.org.nz/api/webhooks/resend`, the same four events as before with a new `whsec_` secret. `EMAIL_UNSUBSCRIBE_SECRET`, `EMAIL_FROM` and `lib/email/senders.ts` were deliberately **not** touched: the four streams and every From address are unchanged.
+
+**The list holds 0 contacts.** Nothing has been imported into the new team. The real list — **1,560 subscribers** — is still in Mailchimp, and the live newsletter still goes out from there.
+
 ## Sending streams
 
 **Sender identities live in `lib/email/senders.ts` — the single source of truth.** Never hard-code a From or Reply-To anywhere else. Four streams, and the stream decides everything downstream:
@@ -48,7 +64,7 @@ What does **not** need a mailbox login: sending *as* `info@`/`newsletter@` (Rese
 > **Update (2026-08-27): the ramp list is unblocked, and the register has stopped being frozen.** Both because the account now has an API key — `docs/development/PLATFORM_APIS.md`.
 >
 > - "Ramp, don't switch" wanted the first Resend broadcast to go to recent openers, and could not build that list: per-campaign recipient activity had been recorded as skipped by decision, because getting it out of the UI meant a couple of hundred manual exports. `scripts/mailchimp/recent-openers.ts` now computes it from the API vault as `hashEmail()` digests, intersected with the `subscribed` CSV before anything is written, and `scripts/email/normalize-recipients.ts --restrict-to-hashes` applies it. It **narrows** an already-consented list and grants nothing: it is a send-order filter, not a consent source.
-> - **Nothing was sent and nobody was imported.** The Resend list still holds one test contact, and the import still goes through `/update-mailing-list` with its plan block and a human approval.
+> - **Nothing was sent and nobody was imported.** As at 2026-08-28 the Resend list holds **0 contacts** — the account moved to the She Sharp–owned team that day and not even a test address came across — and the import still goes through `/update-mailing-list` with its plan block and a human approval.
 > - Suppression is incrementally syncable (`suppression.ts pull-mailchimp`) and went 2,129 → **2,138** on its first run. Run it before the import, not after.
 > - **Campaign performance now exists in the repo**, as `lib/data/json/mailchimp/campaigns.json`: **180 sends**, **188,796 emails**, **37.9% unique open** — **33.1% with Apple's proxy opens excluded**. The two figures are *equal* for every campaign sent before 2022 and diverge after, so **open rates cannot be compared across 2021**, and any Mailchimp-vs-Resend baseline has to pick one of the two and stay on it. It also carries 86 months of list size: a peak of **1,742 in 2025-11**, standing at **1,555** in 2026-08. Until this file existed the only campaign statistics anywhere were figures transcribed into a `.docx`.
 > - **Neither API replaces the manual CSV export, on either platform.** Humanitix `/payouts`, `/access-codes` and `/discounts` are all **404**; Mailchimp's API has no equivalent of `CONFIRM_TIME` (1,560 populated in the CSV against 129 for `timestamp_signup`), and the archive's reading of consent rests on it. A key is a second reading of the account, not a replacement for the download.

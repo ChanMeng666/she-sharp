@@ -17,7 +17,7 @@ Four things, in this order, every time:
   the user's approval and that.
 - **This skill only READS the list.** Adding or removing contacts is
   `/update-mailing-list` — also this skill's hard prerequisite, because the list
-  currently holds one contact.
+  currently holds no contacts at all.
 
 Input: a topic and a paragraph. Output: one scheduled broadcast, its id in
 `state/broadcasts.json`, and a report. Commands are PowerShell-first.
@@ -59,7 +59,7 @@ runs with `--dry-run`, and `state/broadcasts.json` is untouched.
 
 | Question it asks | Default when the user shrugs |
 |---|---|
-| Which segment? | `Newsletter Pilot` — confirm the name and count out loud |
+| Which segment? | `Newsletter` — confirm the name and count out loud |
 | Which topic? | `Monthly Newsletter` — always pass one, so opt-out has granularity |
 | A cover photo? | **No cover.** Only add one if the user offers a real photo URL |
 | What does the button say, and where does it go? | **Ask.** One CTA, one live `https://www.shesharp.org.nz/…` URL — never guess a link |
@@ -111,16 +111,16 @@ go in the plan block.
 **If the segment holds fewer than 5 contacts, stop and say this:**
 
 ```
-Heads up: "Newsletter Pilot" currently has 1 contact.
-Sending a broadcast now reaches essentially nobody.
+Heads up: "Newsletter" currently has 0 contacts.
+Sending a broadcast now reaches nobody at all.
 
   (1) run /update-mailing-list first, then come back
   (2) send anyway as a rehearsal — I'll note it as such
   (3) stop here
 ```
 
-Then wait. Do not pick for them, and do not quietly send to a list of one as
-though it were a campaign.
+Then wait. Do not pick for them, and do not quietly send to an empty list — or
+to a list of one — as though it were a campaign.
 
 ## Step 2 — Write the announcement spec
 
@@ -282,8 +282,8 @@ Show this exact block:
 
 ```
 Announcement : announce-mentoring-round-open
-Audience     : segment "Newsletter Pilot" (c0041ec5-…) — 1 contact
-Topic        : "Monthly Newsletter" (301e1e64-…) — scopes what unsubscribe opts out of
+Audience     : segment "Newsletter" (95d452f5-…) — <count from Step 1>
+Topic        : "Monthly Newsletter" (08e59693-…) — scopes what unsubscribe opts out of
 Subject      : Mentoring applications are open again            (37 chars)
 Preview text : Six months, one mentor, and a room of women in tech behind you.  (63)
 From         : She Sharp <newsletter@shesharp.org.nz>
@@ -348,7 +348,7 @@ undone once sent — this is the last moment it is free.
 ```powershell
 npx tsx .claude/skills/email-the-community/scripts/broadcast-ledger.ts record `
   --key announce-mentoring-round-open --broadcast-id <broadcast-id> --status draft `
-  --segment "Newsletter Pilot" --html-sha256 $sha `
+  --segment "Newsletter" --html-sha256 $sha `
   --digest "Mentoring applications reopen for the September 2026 round; closes 30 Aug."
 ```
 
@@ -373,7 +373,7 @@ Record the new state, and tell the user the cancellation command:
 ```powershell
 npx tsx .claude/skills/email-the-community/scripts/broadcast-ledger.ts record `
   --key announce-mentoring-round-open --broadcast-id <broadcast-id> --status scheduled `
-  --segment "Newsletter Pilot" --html-sha256 $sha --scheduled-at "2026-07-28T22:00:00Z"
+  --segment "Newsletter" --html-sha256 $sha --scheduled-at "2026-07-28T22:00:00Z"
 ```
 
 ## Step 9 — Verify delivery
@@ -391,11 +391,11 @@ Record `--status sent`, then report:
 Broadcast delivered.
   Key       : announce-mentoring-round-open
   Broadcast : 8f2c1a94-… → sent 2026-07-28T22:00:14Z
-  Audience  : segment "Newsletter Pilot" — 1 contact
+  Audience  : segment "Newsletter" — <count from Step 1>
   Subject   : Mentoring applications are open again
   Ledger    : .claude/skills/email-the-community/state/broadcasts.json
 
-Note: the list holds 1 contact, so this reached one mailbox.
+Note: the list is still empty, so this reached nobody.
 Run /update-mailing-list before the next announcement.
 ```
 

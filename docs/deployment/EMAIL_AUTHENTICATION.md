@@ -1,6 +1,9 @@
 # Email Authentication (SPF, DKIM, DMARC)
 
-**Last verified:** 2026-07-31 (live DNS queried against `1.1.1.1`)
+**Last verified:** 2026-07-31 (live DNS queried against `1.1.1.1`);
+`resend._domainkey` replaced and re-verified **2026-08-28**, when the domain
+moved to the She Sharp–owned Resend team — see
+[Resend account migration](#resend-account-migration-2026-08-28).
 
 > **Picking this up cold? Read these three first:**
 > 1. [Outstanding work](#outstanding-work) — everything not done, with what
@@ -42,8 +45,14 @@ the mail can produce its own key.
 | `_dmarc`, root SPF, TLS-RPT | you | **Cloudflare** |
 | `google._domainkey` | **Google Admin** (generates the key pair) | Cloudflare |
 | `resend._domainkey`, `send.` SPF + MX | **Resend** (generates the key pair) | Cloudflare |
-| DKIM rotation, webhook signing secret | **Resend dashboard** | — |
+| DKIM rotation, webhook signing secret | **Resend dashboard** — team **shesharp**, owned by `website@shesharp.org.nz` (Pro) | — |
 | `RESEND_WEBHOOK_SECRET`, `EMAIL_UNSUBSCRIBE_SECRET` | you | **Vercel** |
+
+**Resend is owned by She Sharp, not by the maintainer.** Since 2026-08-28 the
+domain lives in the Resend team **shesharp** (`website@shesharp.org.nz`, Pro:
+Transactional 50,000/month renewing on the 27th; Marketing still Free). It was
+moved off the maintainer's personal team with Resend's Domain Claim flow — see
+"Resend account migration (2026-08-28)" below for the method and the DNS delta.
 
 The `include:_spf.1stdomains.co.nz` inside the root SPF is a **leftover from the
 old web host** (1stDomains → isx.net.nz → voyager.co.nz), not a sign of where DNS
@@ -122,7 +131,8 @@ shesharp.org.nz            TXT    v=spf1 include:_spf.google.com \
                                         include:_spf.1stdomains.co.nz ~all
 _dmarc.shesharp.org.nz     TXT    v=DMARC1; p=none; \
                                   rua=mailto:0061f6fe…@dmarc-reports.cloudflare.net;
-resend._domainkey…         TXT    p=MIGfMA0…            (1024-bit RSA)
+resend._domainkey…         TXT    p=MIGfMA0…oQ2d+CqK/… (1024-bit RSA, replaced
+                                                        2026-08-28 — see below)
 send.shesharp.org.nz       TXT    v=spf1 include:amazonses.com ~all
 send.shesharp.org.nz       MX     feedback-smtp.us-east-1.amazonses.com
 k2._domainkey…             CNAME  dkim2.mcsv.net        (Mailchimp)
@@ -434,6 +444,74 @@ disagree and **every Resend message fails DKIM**.
 Do this at `p=none` or `p=quarantine`, where a botched rotation degrades. At
 `p=reject` it drops mail on the floor.
 
+**The 2026-08-28 account move replaced the key but did not rotate it** — the new
+team issued another **1024-bit** RSA key. Everything above is still outstanding.
+
+---
+
+## Resend account migration (2026-08-28)
+
+`shesharp.org.nz` moved out of the maintainer's personal Resend team
+(`chanmeng6666@gmail.com`) into the She Sharp–owned team **shesharp**
+(`website@shesharp.org.nz`, **Pro** — Transactional 50,000/month renewing on the
+27th; Marketing still on the Free plan). The organisation now owns its own
+sending account, which was the point.
+
+**Method: Resend's Domain Claim flow**, driven from the `resend` CLI —
+`domains claim create` → publish the TXT it returns → `domains claim verify` →
+poll `domains claim get` until `completed` → update DKIM in DNS →
+`domains verify`.
+
+| | Old team | New team **shesharp** |
+|---|---|---|
+| Domain id | `86d3a2e3-3178-4bc1-a3dd-7cb4561eaee4` (now `failed` there) | `0e8e0ee5-3dd9-437b-a08d-a595d1f4e487` |
+| Region | us-east-1 | us-east-1 — **deliberately the same** |
+| Return-Path | `send.shesharp.org.nz` | `send.shesharp.org.nz` — unchanged |
+| Webhook | → `https://www.shesharp.org.nz/api/webhooks/resend` | `facbd62e-7c3e-47fa-abf1-0d36b37cd71c`, same URL, same four events, **new `whsec_` secret** |
+| Contacts | 2 test addresses (left in place, exported to a private backup) | **0 — nothing was imported** |
+
+Segments and topics do **not** travel with a claim; they were recreated. Their
+new ids are in `.claude/skills/update-mailing-list/references/resend-roster-cli.md`
+and in `docs/development/EMAIL_OPERATIONS.md`.
+
+### The DNS delta was exactly one record
+
+Only `resend._domainkey` TXT changed — the old value began
+`p=MIGfMA0…DX0GQAjj8McjI29YZE64vIM…`, the new one begins
+`p=MIGfMA0…oQ2d+CqK/AK1XsgAds2Ef…` (218 characters, still 1024-bit RSA).
+
+**Why only one:** the claim was created with `--region us-east-1
+--custom-return-path send`, so the `send.` SPF and MX values the new team asked
+for came back **byte-identical** to the ones already published. That is the
+reusable trick — match the region and the Return-Path subdomain of the old
+setup and a domain move becomes a single-record DNS change.
+
+Unchanged, and deliberately left alone: `send.shesharp.org.nz` TXT
+(`v=spf1 include:amazonses.com ~all`), `send.shesharp.org.nz` MX
+(`feedback-smtp.us-east-1.amazonses.com`), root SPF, root MX (Google
+Workspace), `_dmarc` (still `p=none`), and Mailchimp's `k2`/`k3._domainkey`
+CNAMEs. A temporary apex TXT `resend-domain-verification=…` was added for the
+claim and deleted afterwards. The DKIM record's TTL was lowered 3600 → 300 for
+the swap.
+
+### Why the swap was safe without waiting a full TTL
+
+**SPF alignment held throughout.** The Return-Path stayed
+`send.shesharp.org.nz`, which aligns with `shesharp.org.nz` under relaxed
+alignment — so during the window where a resolver still had the *old* DKIM key
+cached and messages were being signed with the *new* one, DMARC still passed on
+the SPF leg. Add `p=none`, and the worst case was a temporary DKIM-only failure
+with no policy consequence. Do not read this as "DKIM swaps are safe": it is
+safe *because* the Return-Path did not move at the same time.
+
+### Vercel production env vars updated
+
+`RESEND_API_KEY`, `RESEND_WEBHOOK_SECRET`, `RESEND_NEWSLETTER_SEGMENT_ID`,
+`RESEND_NEWSLETTER_TOPIC_ID`. **Deliberately not touched:**
+`EMAIL_UNSUBSCRIBE_SECRET`, `EMAIL_FROM`, and `lib/email/senders.ts` — the four
+sending streams and every From address are unchanged, which is the whole reason
+subscribers see no difference.
+
 ---
 
 ## Optional extras
@@ -570,10 +648,13 @@ Three things the import session will otherwise have to rediscover:
 - **`--column-map` is mandatory**: the export uses `Email Address`,
   `First Name`, `Last Name`.
 
-And one decision to take before, not after: `RESEND_NEWSLETTER_SEGMENT_ID` today
-points at a segment named **"Newsletter Pilot"**, which is the name 1,560 real
-subscribers would land under. Resend has no segment update endpoint, so renaming
-means delete and recreate — which drops membership.
+**The segment-name decision is settled.** It used to be an open item: Resend has
+no segment update endpoint, so renaming means delete and recreate — which drops
+membership — and `RESEND_NEWSLETTER_SEGMENT_ID` pointed at a segment called
+"Newsletter Pilot", the name 1,560 real subscribers would have landed under. The
+2026-08-28 account move recreated every segment from scratch, so it was free to
+fix: the target is now simply **"Newsletter"**
+(`95d452f5-2eed-4ad4-b18e-5ff5a89a576b`). Nothing to do before the import.
 
 ### The subscribe funnel is Mailchimp too — not just the sending
 
@@ -658,9 +739,12 @@ opened a receipt, or an `unsubscribed` one who opened an old newsletter, is
 still out — `consent-rules.md` governs widening a list, and nothing here widens
 anything.
 
-**Nothing has been sent and nobody has been imported.** As at 2026-08-27 the
-Resend list still holds one test contact; the import still goes through
-`/update-mailing-list`, its plan block and a human approval.
+**Nothing has been sent and nobody has been imported.** As at 2026-08-28 the
+Resend list holds **0 contacts** — the account moved to the She Sharp–owned team
+that day and not even a test address was carried over. The real 1,560-subscriber
+list is still in Mailchimp, and the live newsletter still goes out from there.
+The import still goes through `/update-mailing-list`, its plan block and a human
+approval.
 
 ### What actually improves by moving
 
