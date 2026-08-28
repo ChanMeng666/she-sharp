@@ -28,6 +28,7 @@ import {
 } from "./layout";
 import type { Block, MessageSpec } from "./message";
 import { blocksToText } from "./message";
+import { UNSUBSCRIBE_URL_PLACEHOLDER } from "./unsubscribe-headers";
 import { AnnouncementEmail } from "@/emails/announcement";
 
 export interface ComposeResult {
@@ -188,6 +189,38 @@ export function withDraftBanner(html: string, lines: string[]): string {
 }
 
 /**
+ * Adds a one-click opt-out line to a marketing message's footer.
+ *
+ * Every marketing email must carry an unsubscribe link, and until now the layout
+ * engine had none — so `gateUnsubscribe` refused every marketing spec unless its
+ * author had remembered to hand-write the placeholder into `footerExtra`. That
+ * is the wrong shape: a gate should catch the case nobody thought of, not the
+ * case that is true every single time. Adding it here makes a marketing send
+ * correct by construction, and leaves the gate as the backstop it was meant to
+ * be.
+ *
+ * The placeholder is substituted per recipient by the batch builders. An author
+ * who has already written their own opt-out link keeps it; nothing is duplicated.
+ *
+ * @param spec The message being composed.
+ * @returns The footer HTML to pass to the layout, or undefined when there is none.
+ */
+function withUnsubscribeFooter(spec: MessageSpec): string | undefined {
+  if (spec.category !== "marketing") return spec.footerExtra;
+
+  const existing = spec.footerExtra ?? "";
+  if (existing.includes(UNSUBSCRIBE_URL_PLACEHOLDER)) return existing;
+
+  const optOut =
+    `<p style="margin: 8px 0 0; font-size: 12px;">` +
+    `<a href="${UNSUBSCRIBE_URL_PLACEHOLDER}" style="color: inherit;">Unsubscribe</a>` +
+    ` from these emails.</p>`;
+
+  return existing ? `${existing}
+${optOut}` : optOut;
+}
+
+/**
  * Renders a spec to HTML + plain text with the engine it declares.
  *
  * @param spec The validated message spec.
@@ -221,10 +254,18 @@ export async function composeMessage(
       title: personalize(spec.title, firstName),
       preheader: spec.preheader ? personalize(spec.preheader, firstName) : undefined,
       bodyHtml: blocks.map(blockToLayoutHtml).join("\n\n"),
-      footerExtra: spec.footerExtra,
+      footerExtra: withUnsubscribeFooter(spec),
       contactEmail,
     });
-    text = `${blocksToText(blocks)}\n\nQuestions? ${contactEmail}`;
+    // The opt-out has to reach the plain-text part too. Some clients render
+    // text only, and a marketing message whose only unsubscribe link is in the
+    // HTML leaves those readers with the header alone, which not every client
+    // surfaces. Substituted per recipient alongside the HTML.
+    const optOutText =
+      spec.category === "marketing"
+        ? `\n\nUnsubscribe: ${UNSUBSCRIBE_URL_PLACEHOLDER}`
+        : "";
+    text = `${blocksToText(blocks)}\n\nQuestions? ${contactEmail}${optOutText}`;
   }
 
   if (opts.draftBanner && opts.draftBanner.length > 0) {

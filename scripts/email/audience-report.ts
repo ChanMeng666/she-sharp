@@ -18,10 +18,13 @@
  * Usage:
  *   npx tsx scripts/email/audience-report.ts [--json] [--include-resend]
  *
- *   --include-resend   Also query the Resend CLI for the Tier 0 opted-in
- *                      contact count and the segment/topic IDs a broadcast
- *                      needs. Requires the `resend` CLI on PATH and a saved
- *                      API key; a missing CLI degrades to a warning.
+ *   --include-resend   Queries the Resend contact roster. **Resend no longer
+ *                      holds the mailing list** — Tier 0 is the
+ *                      `newsletter_subscribers` table, read with
+ *                      `npx tsx scripts/email/inspect-subscribers.ts`. This flag
+ *                      now reports on an account that holds nothing, and is kept
+ *                      only to confirm that during the retirement. Do not read a
+ *                      Tier 0 count out of it.
  *   --json             Emit the whole report as JSON on stdout instead of the
  *                      human table. Sample addresses stay masked.
  *
@@ -440,7 +443,12 @@ async function listAllContacts(): Promise<ResendContact[]> {
 }
 
 /**
- * Queries Resend for the Tier 0 list and the IDs a broadcast needs.
+ * Queries the Resend contact roster, which is no longer where Tier 0 lives.
+ *
+ * Kept for the retirement: it is how you confirm the account really is empty
+ * before deleting the segment and topic. Anything it reports is a fact about
+ * Resend, not about who may be emailed — that answer comes from
+ * `newsletter_subscribers`.
  *
  * @returns Contact/segment/topic inventory, or null when the CLI is unusable
  *   (a warning is printed and the database report still stands).
@@ -483,7 +491,7 @@ function printReport(groups: GroupReport[], resend: ResendReport | null): void {
 
   if (resend) {
     console.log("");
-    console.log("Resend — Tier 0 (opted in)");
+    console.log("Resend contacts (NOT Tier 0 — the list lives in the database)");
     console.log(`  contacts:      ${resend.contacts} (${resend.subscribed} still subscribed)`);
     console.log(`  ${describeTier(0)}`);
     console.log(`  segments (${resend.segments.length}):`);
@@ -518,7 +526,7 @@ function printReport(groups: GroupReport[], resend: ResendReport | null): void {
   if (tier0 === null) {
     console.log(
       "  Broadcastable: UNKNOWN — re-run with --include-resend to read the " +
-        "Tier 0 subscriber count."
+        "Resend contact count. This is not the Tier 0 subscriber count."
     );
   } else {
     console.log(

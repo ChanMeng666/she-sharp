@@ -483,12 +483,13 @@ function build(
 
   const draft: MessageSpec = {
     key,
-    // The single most important line here. `react` is the ONLY engine that emits
-    // {{{RESEND_UNSUBSCRIBE_URL}}}; `layout` is the transactional design with no
-    // opt-out footer and fails the `unsubscribe` gate on marketing mail.
+    // `react` is the branded announcement design. Both engines now carry an
+    // opt-out — `compose.tsx` adds one to any marketing message that lacks it,
+    // and the batch builders substitute a signed per-recipient URL — so this is
+    // a design choice rather than the only option it used to be.
     engine: "react",
-    // Makes the gates strict, and makes render-message.ts print a
-    // `broadcasts create` skeleton rather than a single-recipient send command.
+    // Makes the gates strict, and makes render-message.ts print the two-step
+    // batch route rather than a single-recipient send command.
     category: "marketing",
     from: identity.from,
     replyTo: identity.replyTo,
