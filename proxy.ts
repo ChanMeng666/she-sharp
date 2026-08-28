@@ -103,9 +103,27 @@ function stripLegacyPaginationParams(request: NextRequest) {
   return NextResponse.redirect(url, 308);
 }
 
+/**
+ * The one path that must keep answering while the site is in maintenance mode.
+ *
+ * Resend's hosted unsubscribe page is going away, which makes this endpoint the
+ * only opt-out route we offer. Resend's Acceptable Use Policy requires opt-outs
+ * to be honoured within 7 days, and the account-wide complaint ceiling is 0.08%
+ * — so an unsubscribe link that returns a 503 during maintenance does not delay
+ * an opt-out, it converts it into a spam complaint against the whole account.
+ *
+ * Deliberately an exact-match single path, not a prefix: nothing else under
+ * `/api/` is exempt, and a `startsWith` here would quietly widen the hole every
+ * time someone added a sibling route.
+ */
+const MAINTENANCE_EXEMPT_PATH = '/api/email/unsubscribe';
+
 export async function proxy(request: NextRequest) {
   // Maintenance mode: return 503 page when enabled via environment variable
-  if (process.env.MAINTENANCE_MODE === 'true') {
+  if (
+    process.env.MAINTENANCE_MODE === 'true' &&
+    request.nextUrl.pathname !== MAINTENANCE_EXEMPT_PATH
+  ) {
     return new NextResponse(MAINTENANCE_HTML, {
       status: 503,
       headers: {

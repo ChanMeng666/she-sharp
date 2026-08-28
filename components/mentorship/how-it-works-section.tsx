@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Reveal } from "@/components/ui/reveal";
 import { isMentorshipOpen } from "@/lib/config/mentorship";
-import { MAILCHIMP_CONFIG } from "@/lib/data/newsletters";
 import { Mail } from "lucide-react";
 
 const TAB_VALUES = {
@@ -272,14 +271,10 @@ export function HowItWorksSection() {
                 applications reopen for the next cohort.
               </p>
               <Button variant="brand" size="lg" asChild>
-                <a
-                  href={MAILCHIMP_CONFIG.subscribeUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <Link href="/newsletter/subscribe">
                   <Mail className="h-5 w-5" />
                   Subscribe for Updates
-                </a>
+                </Link>
               </Button>
             </>
           )}

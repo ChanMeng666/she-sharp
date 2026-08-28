@@ -36,9 +36,7 @@ export default function NewslettersPage() {
         <div className="mb-10 md:mb-14 flex flex-col gap-3 sm:flex-row sm:items-center">
           <Button asChild size="lg" variant="brand">
             <Link
-              href={MAILCHIMP_CONFIG.subscribeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/newsletter/subscribe"
               className="inline-flex items-center gap-2"
             >
               <Mail className="h-4 w-4" />

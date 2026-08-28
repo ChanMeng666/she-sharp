@@ -49,6 +49,11 @@ const STATIC_ROUTES: Array<{
   { path: "/resources/podcasts", priority: 0.6, changeFrequency: "monthly" },
   { path: "/resources/newsletters", priority: 0.6, changeFrequency: "monthly" },
   { path: "/resources/photo-gallery", priority: 0.6, changeFrequency: "monthly" },
+  // The newsletter sign-up landing page. Its partner /newsletter/confirm is
+  // absent and must stay absent: it is `noindex`, reachable only from a token
+  // in an email, and listing it here is the "Submitted URL marked 'noindex'"
+  // contradiction noted above.
+  { path: "/newsletter/subscribe", priority: 0.7, changeFrequency: "monthly" },
   { path: "/join-our-team", priority: 0.7, changeFrequency: "monthly" },
   { path: "/donate", priority: 0.7, changeFrequency: "monthly" },
   { path: "/contact", priority: 0.6, changeFrequency: "yearly" },
