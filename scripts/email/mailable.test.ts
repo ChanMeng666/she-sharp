@@ -125,13 +125,28 @@ check("confirming BEFORE the suppression does not resurrect them", () => {
   assert.strictEqual(result.mailable.length, 0, "an older confirmation must not win");
 });
 
-check("an imported row (confirmedAt null) never outranks a suppression", () => {
-  // Its consent predates the register by construction, so it cannot be the
-  // newer act — and treating null as "now" would mail the whole Mailchimp
-  // suppression list on the first import.
+check("a row with no confirmation never outranks a suppression", () => {
+  // Treating null as "now" would mail the whole Mailchimp suppression list on
+  // the first import.
   const result = selectMailable([sub(HASH_A, null)], [optout(HASH_A, "one-click", OLD)], []);
   assert.strictEqual(result.mailable.length, 0);
   assert.strictEqual(result.excluded.length, 1);
+});
+
+check("a Mailchimp-era confirmation does not outrank a later suppression", () => {
+  // Imported rows DO carry a confirmedAt — every row in the export has a
+  // CONFIRM_TIME — so this is the live interaction, not a hypothetical. Someone
+  // who confirmed in 2023 and unsubscribed in 2026 must stay off the list; only
+  // a confirmation NEWER than the suppression means they came back.
+  const confirmed2023 = new Date("2023-05-01T00:00:00.000Z");
+  const suppressed2026 = new Date("2026-08-17T00:00:00.000Z");
+  const result = selectMailable(
+    [sub(HASH_A, confirmed2023)],
+    [optout(HASH_A, "one-click", suppressed2026)],
+    []
+  );
+  assert.strictEqual(result.mailable.length, 0, "an older confirmation must not resurrect them");
+  assert.strictEqual(result.returned.length, 0);
 });
 
 // ---------------------------------------------------------------------------

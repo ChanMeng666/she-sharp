@@ -338,13 +338,16 @@ export const emailOptouts = pgTable('email_optouts', {
  *    provider logs and forwarded mail — so a hash has to be enough to find the
  *    row. It is, and no address ever needs to travel in a URL.
  *
- * 3. **`confirmedAt` is null for imported rows, and is not backfilled.** The
- *    ~1,560 addresses carried over from Mailchimp have that account's `OPTIN_TIME`
- *    in `consentDate` and the export's provenance sentence in `consentSource`,
- *    which is route 1 of `consent-rules.md` and is sufficient. They never clicked
- *    *our* confirmation link, and writing an import date into `confirmedAt` would
- *    fabricate an act that never happened. Two grades of consent, visibly
- *    distinguished, because the honest answer is the only one worth storing.
+ * 3. **`confirmedAt` records a real confirmation, whoever collected it.** It was
+ *    originally going to stay null for the ~1,560 addresses carried over from
+ *    Mailchimp, on the reasoning that they never clicked *our* link. Reading the
+ *    export changed that: every one of those rows carries a `CONFIRM_TIME`, so
+ *    they did complete a double opt-in — in Mailchimp. Recording that timestamp
+ *    is the opposite of fabrication; discarding it would have thrown away the
+ *    strongest consent evidence the organisation holds. What keeps the two
+ *    grades distinguishable is `source` (`mailchimp-import` vs `website-form`)
+ *    together with the provenance sentence in `consentSource`, which answer
+ *    "why is this person on our list?" more completely than a null could.
  *
  * Deliberately NOT keyed on `user_id`, for the same reason as `emailOptouts`:
  * almost nobody on the mailing list has a `users` row.
