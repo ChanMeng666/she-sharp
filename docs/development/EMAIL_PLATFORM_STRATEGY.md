@@ -369,8 +369,8 @@ environment variables, and the broadcast wrapper `lib/newsletter/resend-api.ts`.
 | `lib/newsletter/resend-api.ts` | **Deleted** |
 | `scripts/newsletter/setup-resend.ts`, `seed-pilot-contacts.ts` + its example CSV | **Deleted** |
 | `RESEND_NEWSLETTER_SEGMENT_ID` / `_TOPIC_ID` in `.env.example` | **Removed** |
-| Segment `Newsletter`, topic `Monthly Newsletter` in the Resend account | Still there, 0 contacts — deletion awaits the maintainer |
-| The same two vars on **Vercel production** | Still set — removal awaits the maintainer |
+| Segment `Newsletter`, topic `Monthly Newsletter` in the Resend account | **Deleted 2026-08-29** (both held 0 contacts; the team-default segment `General` was left alone) |
+| The same two vars on **Vercel production** | **Removed 2026-08-29** with `vercel env rm`; `RESEND_API_KEY`, `RESEND_WEBHOOK_SECRET` and `EMAIL_UNSUBSCRIBE_SECRET` confirmed untouched |
 
 The code half was the urgent half, and the reason is the shape of the risk. The
 danger was never a dormant object sitting in a console; it was a script in this

@@ -26,7 +26,7 @@ So, for a community announcement:
 
 - **Do not run `resend broadcasts create` / `send` / `get` / `delete`.**
 - **Do not look up a segment id or a topic id.** There is nothing in them; the
-  ones that still exist in the account are pending deletion.
+  newsletter segment and topic were deleted from the account on 2026-08-29.
 - **`{{{RESEND_UNSUBSCRIBE_URL}}}` is gone.** Nothing emits it, and
   `lib/email/gates.ts` no longer permits it. Templates emit
   `UNSUBSCRIBE_URL_PLACEHOLDER` and `build-batch.ts` substitutes a signed

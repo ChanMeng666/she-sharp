@@ -50,7 +50,7 @@ invites the assumption that it is populated:
 - **Nothing has been sent** from it.
 - The **live newsletter still goes out from Mailchimp.**
 - The Resend segment and topic still physically exist and hold nothing. They
-  are dead weight pending deletion, and are no longer the consent record.
+  were deleted on 2026-08-29, and are no longer the consent record.
 
 ## The four audience tiers
 

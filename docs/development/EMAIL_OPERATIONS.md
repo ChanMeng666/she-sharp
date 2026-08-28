@@ -12,19 +12,19 @@
 
 The webhook is `facbd62e-7c3e-47fa-abf1-0d36b37cd71c` → `https://www.shesharp.org.nz/api/webhooks/resend`, the same four events as before with a new `whsec_` secret, and it is **live** — bounces and complaints from it write `email_optouts` *and* flip the subscriber row. `EMAIL_UNSUBSCRIBE_SECRET`, `EMAIL_FROM` and `lib/email/senders.ts` were deliberately **not** touched: the four streams and every From address are unchanged.
 
-### Resend Marketing objects — the code is gone, the account objects are not
+### Resend Marketing objects — retired
 
-Segments and topics do not travel with a domain claim, so these were recreated on 2026-08-28 — and superseded weeks later, when the subscription record moved into our own database. They are listed here **so a future session recognises them as leftovers**, not as configuration to build on:
+Segments and topics do not travel with a domain claim, so these were recreated on 2026-08-28 — and superseded a day later, when the subscription record moved into our own database. The ids are kept here **so a future session reading an old commit, doc or env dump recognises them as retired**, not as configuration to restore:
 
 | Object | Name | ID | Status |
 |---|---|---|---|
-| Segment | `Newsletter` | `95d452f5-2eed-4ad4-b18e-5ff5a89a576b` | Still in the Resend account, **0 contacts**. Deletion awaits the maintainer |
-| Segment | `General` (team default) | `9d195cb7-f7fc-49e0-9b88-e47c1741e720` | Never used |
-| Topic | `Monthly Newsletter` (`opt_in`, private) | `08e59693-29dc-4556-8357-866dea047c6f` | Still in the Resend account, **0 contacts**. Deletion awaits the maintainer |
+| Segment | `Newsletter` | `95d452f5-2eed-4ad4-b18e-5ff5a89a576b` | **Deleted 2026-08-29** (held 0 contacts) |
+| Segment | `General` (team default) | `9d195cb7-f7fc-49e0-9b88-e47c1741e720` | **Still there, on purpose** — the team default. Never used, do not delete |
+| Topic | `Monthly Newsletter` (`opt_in`, private) | `08e59693-29dc-4556-8357-866dea047c6f` | **Deleted 2026-08-29** (held 0 contacts) |
 
-**Be precise about which half is done.** On 2026-08-29 the *code* side was removed: `lib/newsletter/resend-api.ts`, `scripts/newsletter/setup-resend.ts`, `scripts/newsletter/seed-pilot-contacts.ts` and its example CSV are **deleted**, and `RESEND_NEWSLETTER_SEGMENT_ID` / `RESEND_NEWSLETTER_TOPIC_ID` are out of `.env.example`. Nothing in this repo can read a segment or a topic any more. The *account* side is untouched: both objects still exist in the Resend team, and both env vars are still set on **Vercel production**. Deleting either is an external action on somebody else's console and is waiting on the maintainer's approval — so finding those ids in a Vercel env var is **not** evidence that the migration was rolled back.
+**Both halves are done, as of 2026-08-29.** The *code* side: `lib/newsletter/resend-api.ts`, `scripts/newsletter/setup-resend.ts`, `scripts/newsletter/seed-pilot-contacts.ts` and its example CSV are **deleted**, and `RESEND_NEWSLETTER_SEGMENT_ID` / `RESEND_NEWSLETTER_TOPIC_ID` are out of `.env.example`. Nothing in this repo can read a segment or a topic any more. The *account* side: the segment and the topic were **deleted in the Resend dashboard**, and both env vars were **removed from Vercel production** with `vercel env rm`. Both objects held 0 contacts, checked before and after. Two things were deliberately NOT touched and should stay: the team-default segment `General`, and the `RESEND_API_KEY` / `RESEND_WEBHOOK_SECRET` / `EMAIL_UNSUBSCRIBE_SECRET` variables, all three of which the send path still needs.
 
-Do not wire anything new to these ids, and do not quote a subscriber count out of them — the count is 0 and it would mean nothing. The subscription record is the `newsletter_subscribers` table (see "Monthly newsletter" below), and the newsletter goes out through Resend's *transactional batch* API, which has no contact list, no segments and no topics.
+Do not wire anything new to these ids and do not try to recreate them. The subscription record is the `newsletter_subscribers` table (see "Monthly newsletter" below), and the newsletter goes out through Resend's *transactional batch* API, which has no contact list, no segments and no topics.
 
 **The Resend list is empty; the database list is not, as of 2026-08-29.** Nothing was ever imported into the Resend team. `newsletter_subscribers` now holds **1,545** rows carried over from Mailchimp — but **nothing has been sent from it**, and the live newsletter still goes out from Mailchimp.
 
