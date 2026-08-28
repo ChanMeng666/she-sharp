@@ -175,10 +175,11 @@ blocks:
   paragraph  You're receiving this because you registered for <title> on <date>.
 ```
 
-The subscribe URL is whatever the site's own "Subscribe to Newsletter" button
-points at — read it from `MAILCHIMP_CONFIG.subscribeUrl` in
-`lib/data/newsletters.ts`, don't type a guess. If the user would rather point
-people at the Resend list `update-mailing-list` manages, ask which they mean.
+The subscribe URL is the site's own sign-up page, **`/newsletter/subscribe`** —
+write it as `https://www.shesharp.org.nz/newsletter/subscribe`. It used to be a
+Mailchimp hosted form read out of `MAILCHIMP_CONFIG.subscribeUrl`; that constant
+is gone, because the subscriber list now lives in this project's own database
+and the page is the only way onto it. There is no second list to ask about.
 
 **That line is a link and only a link.** Never add an attendee to a mailing list
 because they came to an event. Imports happen in `update-mailing-list`, with a

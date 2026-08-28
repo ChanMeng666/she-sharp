@@ -19,9 +19,12 @@ export interface MailchimpNewsletter {
   isFeatured?: boolean;
 }
 
+/**
+ * What is still hosted at Mailchimp. Subscribing is no longer: the list moved
+ * into this project's database, so only the back-catalogue archive link is left.
+ */
 export interface MailchimpConfig {
   archiveUrl: string;
-  subscribeUrl: string;
 }
 
 /**

@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { PhotoBackdrop } from "@/components/ui/photo-backdrop";
 import { MENTORSHIP_CTA_BACKDROP, photo } from "@/lib/data/site-photos";
 import { isMentorshipOpen } from "@/lib/config/mentorship";
-import { MAILCHIMP_CONFIG } from "@/lib/data/newsletters";
 
 export function MentorshipCTASection() {
   const applicationsOpen = isMentorshipOpen();
@@ -59,14 +58,10 @@ export function MentorshipCTASection() {
               </>
             ) : (
               <Button variant="brand" size="lg" asChild>
-                <a
-                  href={MAILCHIMP_CONFIG.subscribeUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <Link href="/newsletter/subscribe">
                   <Mail className="h-5 w-5" />
                   Subscribe to Newsletter
-                </a>
+                </Link>
               </Button>
             )}
           </div>

@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Link from "next/link";
 import { Megaphone } from "lucide-react";
 import { TestimonialsSection } from "@/components/mentorship/testimonials-section";
 import { HowItWorksSection } from "@/components/mentorship/how-it-works-section";
@@ -8,7 +9,6 @@ import { MentorshipBenefits } from "@/components/mentorship/mentorship-benefits-
 import { MentorshipCTASection } from "@/components/mentorship/mentorship-cta-section";
 import { MENTORSHIP_VIDEO } from "@/lib/config/assets";
 import { isMentorshipOpen } from "@/lib/config/mentorship";
-import { MAILCHIMP_CONFIG } from "@/lib/data/newsletters";
 import { GeoHead, GEO_INSTRUCTIONS } from "@/components/seo/geo-head";
 import { ParallaxImage } from "@/components/ui/parallax";
 import { curatedImages } from "@/public/img/curated";
@@ -55,10 +55,8 @@ export default function MentorshipPage() {
       {!applicationsOpen && (
         <div className="bg-muted border-y border-border">
           <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-            <a
-              href={MAILCHIMP_CONFIG.subscribeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/newsletter/subscribe"
               className="flex flex-col sm:flex-row items-center justify-center gap-x-2 gap-y-1 text-center text-sm md:text-base font-medium text-brand hover:text-brand-hover transition-colors"
             >
               <span className="inline-flex items-center gap-2">
@@ -68,7 +66,7 @@ export default function MentorshipPage() {
               <span className="text-ink-600">
                 — subscribe for updates about future cohorts.
               </span>
-            </a>
+            </Link>
           </div>
         </div>
       )}

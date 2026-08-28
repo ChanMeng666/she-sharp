@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/collapsible";
 import { cn } from "@/lib/utils";
 import { footerConfig } from "@/lib/config/footer";
-import { MAILCHIMP_CONFIG } from "@/lib/data/newsletters";
 import { socialIcons } from "@/components/ui/social-icons";
 
 export function SiteFooter() {
@@ -84,15 +83,10 @@ export function SiteFooter() {
                     size="lg"
                     className="bg-white/10 backdrop-blur-sm text-white border border-white/60 hover:bg-purple-dark transition-all duration-150 h-12 px-8 rounded-full"
                   >
-                    <a
-                      href={MAILCHIMP_CONFIG.subscribeUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
+                    <Link href="/newsletter/subscribe">
                       <Mail className="h-5 w-5" />
                       Subscribe to Newsletter
-                      <ExternalLink className="h-4 w-4" />
-                    </a>
+                    </Link>
                   </Button>
                 </div>
 

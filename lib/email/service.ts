@@ -86,9 +86,9 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
   const stream = options.stream ?? 'transactional';
   const identity = getSenderIdentity(stream);
 
-  // Honour opt-outs before doing any work. Scoped to notification-class mail
-  // inside isSuppressed(): someone who unsubscribed from reminders must still
-  // be able to receive a password reset.
+  // Honour opt-outs before doing any work. Scoped inside isSuppressed() to the
+  // notification and marketing streams: someone who unsubscribed from reminders,
+  // or from the newsletter, must still be able to receive a password reset.
   if (await isSuppressed(to, stream)) {
     console.log(`[email] Skipped ${stream} email to a suppressed address.`);
     return true;
@@ -456,6 +456,75 @@ ${details.expiresAt ? `This code expires on ${new Date(details.expiresAt).toLoca
     subject: `${isApproval ? '' : ''}${title} - She Sharp`,
     html,
     text,
+  });
+}
+
+/**
+ * Send the double opt-in confirmation for a newsletter subscription request.
+ *
+ * Deliberately `transactional`, even though it is the gateway to marketing mail.
+ * Three consequences follow from that choice, and all three are wanted:
+ * `isSuppressed()` is not consulted, so someone who unsubscribed years ago can
+ * still get the one message that lets them opt back in; no `List-Unsubscribe`
+ * header is attached, because there is nothing yet to unsubscribe from and
+ * offering it would opt people out of a list they have not joined; and the
+ * message is never withheld, which matters because a request with no reply looks
+ * to the requester like the form is broken.
+ *
+ * The "if you didn't request this, ignore it" line is not boilerplate. It is what
+ * makes an unrequested confirmation harmless: anyone can type someone else's
+ * address into a public form, and doing nothing is the correct response because
+ * an unconfirmed row is never mailable.
+ *
+ * @param email The address that was submitted, already normalized by `subscribe()`.
+ * @param token The single-use confirmation token minted for this request.
+ * @returns Whatever `sendEmail` returns — true when handed to Resend or logged.
+ */
+export async function sendNewsletterConfirmationEmail(email: string, token: string) {
+  const confirmUrl = `${getBaseUrl()}/newsletter/confirm?t=${encodeURIComponent(token)}`;
+
+  const html = brandedEmailLayout({
+    title: 'Confirm your subscription',
+    preheader: 'One click confirms your She Sharp newsletter subscription.',
+    bodyHtml: `
+      <h2 style="color: ${BRAND.purpleDark}; margin-top: 0;">Confirm Your Newsletter Subscription</h2>
+      <p>Someone — we hope it was you — asked to join the She Sharp newsletter.</p>
+      <p>It arrives once a month with our upcoming events, news from the mentorship programme, and what is happening in the New Zealand women-in-tech community.</p>
+      <p>Click the button below to confirm:</p>
+      ${brandButton('Confirm Subscription', confirmUrl)}
+      <p style="color: #666; font-size: 14px;">Or copy and paste this link into your browser:</p>
+      ${linkBox(confirmUrl)}
+      <p style="color: #666; font-size: 14px;">This link expires in 7 days.</p>
+    `,
+    footerExtra:
+      '<p style="margin: 0; font-size: 12px;">If you didn\'t request this, you can ignore this email — nothing will happen and you won\'t hear from us again.</p>',
+  });
+
+  const text = `
+Confirm Your Newsletter Subscription
+
+Someone - we hope it was you - asked to join the She Sharp newsletter.
+
+It arrives once a month with our upcoming events, news from the mentorship
+programme, and what is happening in the New Zealand women-in-tech community.
+
+Confirm your subscription by opening this link:
+${confirmUrl}
+
+This link expires in 7 days.
+
+If you didn't request this, you can ignore this email - nothing will happen and
+you won't hear from us again.
+
+© ${new Date().getFullYear()} She Sharp. Empowering women in STEM.
+  `;
+
+  return sendEmail({
+    to: email,
+    subject: 'Confirm your She Sharp newsletter subscription',
+    html,
+    text,
+    stream: 'transactional',
   });
 }
 

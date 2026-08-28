@@ -5,7 +5,6 @@ import { ApplicationCountdown } from "@/components/mentorship/application-countd
 import { ArrowRight, Mail } from "lucide-react";
 import Link from "next/link";
 import { isMentorshipOpen } from "@/lib/config/mentorship";
-import { MAILCHIMP_CONFIG } from "@/lib/data/newsletters";
 
 type MentorshipRole = "mentor" | "mentee";
 
@@ -82,15 +81,13 @@ export function BecomeCTASection({ role }: { role: MentorshipRole }) {
                 </Button>
               ) : (
                 <Button variant="brand" size="lg" asChild>
-                  <a
-                    href={MAILCHIMP_CONFIG.subscribeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    href="/newsletter/subscribe"
                     className="inline-flex items-center gap-2"
                   >
                     <Mail className="h-5 w-5" />
                     Subscribe for Updates
-                  </a>
+                  </Link>
                 </Button>
               )}
 

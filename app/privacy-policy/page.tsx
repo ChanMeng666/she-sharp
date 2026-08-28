@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPolicyPage() {
   return (
-    <LegalPageLayout title="Privacy Policy">
+    <LegalPageLayout title="Privacy Policy" lastUpdated={new Date("2026-08-29")}>
       <div className="legal-content">
         <section className="legal-section">
           <h2>Your Privacy Matters</h2>
@@ -59,6 +59,27 @@ export default function PrivacyPolicyPage() {
             <li>Mobile number</li>
             <li>Work history</li>
           </ul>
+
+          <h3>Newsletter Subscribers</h3>
+          <p>
+            If you subscribe to our newsletter, She Sharp keeps a record of your
+            subscription in its own database:
+          </p>
+          <ul>
+            <li>Email address</li>
+            <li>First name, if you choose to give one</li>
+            <li>
+              When you subscribed and how you signed up — for example, through a
+              form on this website — which is our record that you asked to hear
+              from us
+            </li>
+          </ul>
+          <p>
+            Every newsletter we send carries an unsubscribe link. One click stops
+            the newsletter; you do not need an account, a password, or to explain
+            why. You can also ask us to remove you by emailing{" "}
+            <a href={`mailto:${PRIVACY_EMAIL}`}>{PRIVACY_EMAIL}</a>.
+          </p>
         </section>
 
         <section className="legal-section">
@@ -82,10 +103,18 @@ export default function PrivacyPolicyPage() {
           </p>
           <ul>
             <li><strong>Event Partners & Sponsors</strong> — For example, for dietary planning or speaker coordination</li>
-            <li><strong>Third-Party Platforms</strong> — Used for ticketing, email communications, or event registrations (such as Humanitix, Google Forms, or Mailchimp)</li>
+            <li><strong>Third-Party Platforms</strong> — Used for ticketing, email delivery, or event registrations (such as Humanitix, Google Forms, or Resend)</li>
             <li><strong>Website & Social Media</strong> — When promoting event speakers or highlighting community stories</li>
             <li><strong>Regulatory Authorities</strong> — Or law enforcement agencies, if required by law</li>
           </ul>
+          <p>
+            New newsletter subscriptions are held by She Sharp in its own
+            database rather than by a third-party marketing platform, and Resend,
+            our email delivery provider, receives the address a newsletter is
+            sent to in order to deliver it. We have also used Mailchimp for the
+            newsletter, and it still holds the earlier subscriber records and the
+            archive of past issues.
+          </p>
           <p>
             <strong>Important:</strong> We do not sell or share your personal information with unauthorised third parties.
           </p>
