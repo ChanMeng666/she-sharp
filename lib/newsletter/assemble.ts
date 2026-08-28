@@ -14,6 +14,7 @@ import { globalStats } from "@/lib/data/stats";
 import { absoluteUrl } from "@/lib/seo/site";
 import type { EventV3 } from "@/types/event";
 import type { AutoEvent, IssueAuto } from "./schema";
+import { toEmailSafeAsset } from "./email-assets";
 
 /** IANA zone every She Sharp event is scheduled in. */
 const EVENT_TIME_ZONE = "Pacific/Auckland";
@@ -109,7 +110,9 @@ function toAutoEvent(event: EventV3): AutoEvent {
     startIso: computeStartIso(event),
     timeLabel: nullIfEmpty(event.detailPageData.time),
     locationLabel: formatLocationLabel(event),
-    coverImageUrl: toAbsoluteAsset(event.coverImage?.url),
+    // Mapped to the email-safe JPEG twin before absolutizing: the site serves
+    // WebP, which Outlook cannot decode at all. See lib/newsletter/email-assets.ts.
+    coverImageUrl: toAbsoluteAsset(toEmailSafeAsset(event.coverImage?.url)),
     url: absoluteUrl(`/events/${event.slug}`),
     registrationUrl: nullIfEmpty(event.detailPageData.registrationUrl),
     shortDescription: nullIfEmpty(event.shortDescription),
