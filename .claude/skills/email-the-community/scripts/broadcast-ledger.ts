@@ -1,7 +1,7 @@
 /**
  * Append-only run log of every community broadcast this skill has created.
  *
- * A Resend broadcast cannot be recalled once it is `sent`, so the expensive
+ * A Resend send cannot be recalled once it has gone, so the expensive
  * mistake is not a bad send — it is the SECOND send of the same announcement
  * after a session crashed, a context window rolled over, or a colleague asked
  * "did that go out?". This ledger exists so that question is answered from a

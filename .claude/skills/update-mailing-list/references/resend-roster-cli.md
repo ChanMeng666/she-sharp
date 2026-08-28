@@ -35,7 +35,8 @@ database instead.
 
 They were recreated on 2026-08-28 when the domain and sending setup moved to the
 She Sharp–owned Resend team (**shesharp**, owned by `website@shesharp.org.nz`).
-They hold **nobody**, nothing writes to them, and they are pending deletion.
+They hold **nobody**, nothing writes to them, and deleting them is waiting on the
+maintainer — it is an action on a live account, not a code change.
 
 | Object | Name | ID |
 |---|---|---|
@@ -43,10 +44,14 @@ They hold **nobody**, nothing writes to them, and they are pending deletion.
 | Segment | General (team default) | `9d195cb7-f7fc-49e0-9b88-e47c1741e720` |
 | Topic | Monthly Newsletter | `08e59693-29dc-4556-8357-866dea047c6f` |
 
-They are listed here so that finding them in an env var or an old script is not
-mistaken for evidence that the migration did not happen. The env vars
-`RESEND_NEWSLETTER_SEGMENT_ID` and `RESEND_NEWSLETTER_TOPIC_ID` are still set
-and still in `.env.example`, but nothing in the send path reads them.
+They are listed here so that finding them in a Vercel env var is not mistaken for
+evidence that the migration did not happen. As of 2026-08-29 the **code** that
+read them is deleted — `lib/newsletter/resend-api.ts` and the two
+`scripts/newsletter/` scripts that imported it are gone, and
+`RESEND_NEWSLETTER_SEGMENT_ID` / `RESEND_NEWSLETTER_TOPIC_ID` are out of
+`.env.example`. Nothing in this repo can reach a segment or a topic any more.
+Those two variables are **still set on Vercel production**, awaiting the same
+approval as the objects themselves.
 
 Do not import contacts into them. Do not add anyone to them "so both are in
 sync" — two consent records that can disagree is precisely the situation the
@@ -98,7 +103,13 @@ database versions rhyme:
   **20** and its closing count is the number of rows *shown*, not the size of
   the list. Raise it past the row count before quoting a number.
 - **A contact import had no undo, and `--on-conflict upsert` silently
-  resurrected people who had unsubscribed.** There is still no undo, and the
-  database importer does not exist yet. When it does, the rule that replaces
-  `upsert` is already in code: `selectMailable()` lets a *later confirmation*
-  beat an earlier suppression, and lets nothing at all beat a complaint.
+  resurrected people who had unsubscribed.** There is still no undo. The
+  Mailchimp carry-over (`scripts/email/import-mailchimp-subscribers.ts`, run once
+  on 2026-08-29, 1,545 rows) answers `upsert` by consulting both suppression
+  registers before writing — 15 of the 1,560 rows it read were held back on
+  exactly those grounds — and by defaulting to a dry run, so the write takes a
+  spelled-out `--apply`. The standing rule is in code either way:
+  `selectMailable()` lets a *later confirmation* beat an earlier suppression, and
+  lets nothing at all beat a complaint. **There is still no general CSV
+  importer** — that script reads the Mailchimp `subscribed` export and refuses
+  anything else.

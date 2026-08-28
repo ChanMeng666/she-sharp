@@ -1,6 +1,6 @@
 ---
 name: update-mailing-list
-description: Inspect and safely change who is on She Sharp's newsletter mailing list — the `newsletter_subscribers` table, which is now the organisation's marketing-consent record — using `scripts/email/inspect-subscribers.ts`, `scripts/email/audience-report.ts`, `scripts/email/normalize-recipients.ts` and `scripts/email/suppression.ts`. Use whenever the user wants to see or change who is on the list — phrases like "add these attendees to the mailing list", "who's on our email list?", "import this sign-up sheet", "subscribe these people", "take her off the list", "how many subscribers do we have?", "why is this person getting our emails?" — or anything about unsubscribes, bounces, complaints or suppression. Covers roster reporting from the database, any-shape CSV normalisation, the four-way consent gate, and the do-not-contact registers; nothing is changed before an explicit plan approval. Read `references/consent-rules.md` first — registering for an event is not subscribing. The bulk-import tool does not exist yet; this skill says so rather than improvising one. It is the hard prerequisite for `email-the-community`.
+description: Inspect and safely change who is on She Sharp's newsletter mailing list — the `newsletter_subscribers` table, which is now the organisation's marketing-consent record — using `scripts/email/inspect-subscribers.ts`, `scripts/email/audience-report.ts`, `scripts/email/normalize-recipients.ts` and `scripts/email/suppression.ts`. Use whenever the user wants to see or change who is on the list — phrases like "add these attendees to the mailing list", "who's on our email list?", "import this sign-up sheet", "subscribe these people", "take her off the list", "how many subscribers do we have?", "why is this person getting our emails?" — or anything about unsubscribes, bounces, complaints or suppression. Covers roster reporting from the database, any-shape CSV normalisation, the four-way consent gate, and the do-not-contact registers; nothing is changed before an explicit plan approval. Read `references/consent-rules.md` first — registering for an event is not subscribing. The list holds 1,545 people carried over from Mailchimp, but there is still no importer for a new CSV; this skill says so rather than improvising one. It is the hard prerequisite for `email-the-community`.
 ---
 
 # Look after the mailing list
@@ -20,10 +20,16 @@ mailing list, however it is written. `references/consent-rules.md` is the
 standing baseline; read it before your first import and whenever one feels
 borderline.
 
-**Say this plainly whenever the list comes up.** The table is **empty**. The
-~1,560 real subscribers are still in Mailchimp, the monthly newsletter still
-goes out from there, and nothing has been sent from the new system. The Resend
-segment and topic still exist and hold nobody; they are pending deletion.
+**Say this plainly whenever the list comes up.** The table holds **1,545
+subscribers**, carried over from Mailchimp on 2026-08-29 — so the list is real
+now, and a question like "how many subscribers do we have?" has a database
+answer for the first time. What has **not** happened is a send: the monthly
+newsletter still goes out from Mailchimp, and nothing has ever been sent from
+this system. Two consequences to keep straight. Someone who unsubscribes from a
+real newsletter this month does so *in Mailchimp*, and only
+`suppression.ts pull-mailchimp` brings that back — so run it before you quote the
+list as current. And the Resend segment and topic still exist in the account
+holding nobody; they are not the list and never will be.
 
 **This skill sends no email.** It reads and edits a list. Sending belongs to
 `email-the-community`, `send-event-emails` and `reply-to-contact-messages`.
@@ -87,10 +93,14 @@ npx tsx scripts/email/inspect-subscribers.ts --email someone@example.com
 
 **It lists rows, it does not total them by status.** With `--limit 50` you see
 at most 50 rows and the count printed at the bottom is the number of rows
-shown, not the size of the list. While the table is empty it prints
-`No subscribers yet.`, which is the whole answer. Once it is not, raise
-`--limit` past the row count before quoting a number, or say you are quoting a
-sample.
+shown, not the size of the list. **This trap is live now that the table has
+1,545 rows in it** — the default `--limit 20` will confidently print 20. Raise
+the limit well past the row count before quoting a number, or say plainly that
+you are quoting a sample.
+
+Most rows look the same, and that is expected: 1,545 of them carry
+`source = 'mailchimp-import'` and a `confirmedAt` from the Mailchimp export. A
+row with a different `source` came in through the website form.
 
 Do **not** pass `--token`. It prints a live confirmation credential and refuses
 to run against a non-localhost `BASE_URL` for that reason.
@@ -102,17 +112,22 @@ npx tsx scripts/email/audience-report.ts
 ```
 
 One caveat to state if you quote it: its Tier 0 figure still comes from Resend
-(via `--include-resend`), which is empty and is no longer the consent record.
-Tiers 1–3 are read from the database and are current. The subscriber table is
-not yet one of its sections.
+(via `--include-resend`), which is empty and is no longer the consent record —
+**so it will report 0 while the real list is 1,545.** Tiers 1–3 are read from the
+database and are current. The subscriber table is not yet one of its sections;
+`inspect-subscribers.ts` is.
 
 **Tell the user the real number, plainly and first:**
 
-> Right now the new mailing list has nobody on it. The real list — about 1,560
-> subscribers — is still in Mailchimp, and the monthly newsletter still goes out
-> from there. The 3000+ members you're thinking of are in the database, but the
-> database never recorded who agreed to receive email, so it can't be used as a
-> list. Building this list up is exactly what this skill is for.
+> The mailing list has about 1,545 people on it — the Mailchimp list, moved into
+> our own database in August. The monthly newsletter still goes out from
+> Mailchimp for now; nothing has been sent from the new system yet. The 3000+
+> members you may be thinking of are in the database too, but the database never
+> recorded who agreed to receive email, so they aren't a list and can't be used
+> as one.
+
+Re-read the table before saying a number — don't repeat 1,545 from this file, and
+don't do arithmetic on it.
 
 ## Step 2 — Read the user's file (any shape)
 
@@ -185,7 +200,7 @@ malformed addresses and anyone suppressed. Output:
 
 Note what that file **is**: a cleaned, consent-checked recipients list. It is
 not a subscriber import, and writing it changes nothing about who is on the
-list. Step 6 is where that would happen, and Step 6 is not built.
+list. Step 6 is where that would happen, and Step 6 has no tool.
 
 ## Step 4 — Check who is already known, and who must not be added
 
@@ -216,6 +231,12 @@ still appears in July's attendee export — that file has no idea they left. If
 `reconcile` or `check` finds anyone, name the count in the plan and exclude
 them.
 
+**It has already paid for itself once.** `pull-mailchimp` was run immediately
+before the 2026-08-29 Mailchimp import and moved the register 2,138 → **2,144**;
+six of the fifteen rows that import then held back were those six people, who had
+unsubscribed or hard-bounced in the days since the export was taken. Every file
+you are handed is a snapshot of an afternoon, and people leave after it.
+
 **`diff-roster.ts` in this skill's `scripts/` folder is obsolete.** It queries
 Resend contacts, which are empty and are no longer the list. Do not run it and
 do not report its output as the roster.
@@ -241,14 +262,14 @@ Consent       : Humanitix checkout question "Can we email you about future
 Rows read     : 7
 Would add     : 2 subscribers (status 'subscribed', confirmedAt null —
                 imported provenance, not a confirmation click)
-Already there : 1 (no change)
+Already there : 1 (no change — checked against the 1,545 on the list)
 Redactions    : 4 rows excluded —
                   1 no marketing opt-in
                   1 order refunded
                   1 duplicate address
                   1 malformed address
                   0 previously unsubscribed or suppressed
-Blocker       : the bulk import tool does not exist yet — see Step 6
+Blocker       : no importer exists for a CSV like this one — see Step 6
 ```
 
 The **`Redactions:` line is mandatory** — every row that will not be imported,
@@ -261,28 +282,38 @@ never from the raw CSV row count.
 
 Wait for "yes", "go ahead", "import it". Anything ambiguous is a no.
 
-## Step 6 — Import — **NOT YET BUILT**
+## Step 6 — Import — **STILL NO TOOL FOR THIS**
 
-**There is no script that writes a CSV into `newsletter_subscribers`, and you
-must not improvise one.** No `INSERT`, no ad-hoc `tsx` one-liner, no Drizzle
-snippet typed into the terminal. The table is the organisation's consent record;
-the first thing written into it will be written by reviewed code that records
-provenance the same way every time.
+**There is no script that writes an arbitrary CSV into `newsletter_subscribers`,
+and you must not improvise one.** No `INSERT`, no ad-hoc `tsx` one-liner, no
+Drizzle snippet typed into the terminal. The table is the organisation's consent
+record, and every row in it has to have been written by reviewed code that
+records provenance the same way every time.
 
-Two things are pending, both in the next phase of the migration:
+**Do not let one existing script mislead you.**
+`scripts/email/import-mailchimp-subscribers.ts` exists and was run once, on
+2026-08-29, to carry the Mailchimp audience over — 1,560 rows read, 15 held back
+by the suppression register, **1,545 written**. It is not a general importer and
+cannot be pointed at a sign-up sheet: it reads the Mailchimp export's own columns
+(`Email Address`, `First Name`, `Last Name`, `CONFIRM_TIME`) and refuses files
+whose names say they are the `unsubscribed`, `cleaned` or `nonsubscribed`
+exports. Its whole justification is that every one of those people carried a
+`CONFIRM_TIME` — a double opt-in that actually happened, elsewhere, with a date.
+An event attendee who ticked a box has no such record, which is precisely why
+routes 2, 3 and 4 of the consent rules still have no path into the table.
 
-- a bulk importer for opt-in CSVs (routes 2, 3 and 4 of the consent rules), and
-- the Mailchimp carry-over of the ~1,560 existing subscribers.
+So one thing is still pending: **a bulk importer for opt-in CSVs** (routes 2, 3
+and 4). The Mailchimp carry-over that used to sit beside it in this list is done.
 
 **What to do instead: stop, and tell the user.** Approval at Step 5 does not
 unblock this — there is nothing to approve into.
 
 > I've checked the file and the consent, and 2 of the 7 people could legitimately
-> be added — I've written that down. But the tool that actually writes people into
-> the new subscriber list hasn't been built yet; we're still sending from
-> Mailchimp for now. Two options: I can send you the subscribe link to pass on to
-> them, which puts them on the list today with better consent evidence than an
-> import gives; or I keep the checked file and we import it when the tool lands.
+> be added — I've written that down. But there's no tool for adding people from a
+> spreadsheet; the only importer we have was built for the one-off Mailchimp
+> move. Two options: I can send you the subscribe link to pass on to them, which
+> puts them on the list today with better consent evidence than an import gives;
+> or I keep the checked file and we import it when the tool lands.
 
 Then keep the `tmp/emails/recipients-<key>.json` file if they want the second
 option, and say where it is.
@@ -357,9 +388,11 @@ scaffolding. Keep the recipients file only if the user chose to wait for the
 importer, and say where it is.
 
 `roster-state.ts record` is **not usable for a database import**: it requires
-`--import-id`, which was a Resend `contact_import` id and no longer exists.
-Leave `state/roster.json` alone until the importer lands with its own record
-format. Commit any suppression change on its own.
+`--import-id`, which was a Resend `contact_import` id and no longer exists. The
+Mailchimp carry-over did not use it either — it recorded its provenance on the
+rows themselves, which is the better place for it. Leave `state/roster.json`
+alone until a CSV importer lands with its own record format. Commit any
+suppression change on its own.
 
 ---
 
@@ -371,9 +404,11 @@ format. Commit any suppression change on its own.
 2. **Nothing is written before the Step 5 plan is approved.** *Why:* there is no
    batch undo for a mailing list, and the remedy for 300 wrong subscribers is
    300 corrections.
-3. **Never write to the subscriber table by hand.** *Why:* the first write into
-   the consent record must come from reviewed code that captures provenance
-   identically every time. An ad-hoc `INSERT` produces a row nobody can defend.
+3. **Never write to the subscriber table by hand.** *Why:* every write into the
+   consent record must come from reviewed code that captures provenance
+   identically every time. An ad-hoc `INSERT` produces a row nobody can defend —
+   and it would now sit indistinguishable among 1,545 rows that each carry a
+   `source`, a `consentSource` and a `confirmedAt`.
 4. **Every addition needs one of the four consent sources, recorded with the
    row.** *Why:* if nobody can say where the opt-in came from, it did not
    happen — and "I don't know" cannot survive a complaint.
@@ -392,8 +427,10 @@ format. Commit any suppression change on its own.
    locations are gitignored; anywhere else, one `git add .` publishes real
    addresses into permanent public history.
 9. **Report what actually happened, never what you expected.** *Why:* the most
-   damaging version of this skill is one that says "added 40 people" when the
-   importer does not exist. Say the tool is missing.
+   damaging version of this skill is one that says "added 40 people" when no
+   importer took them. Say the tool is missing. The same rule governs the
+   sending: the list exists, but **nothing has ever been sent from it** — never
+   let "we have 1,545 subscribers" drift into "we emailed 1,545 people".
 
 ## Audience tiers — decision table
 
@@ -416,12 +453,15 @@ only**, and the tick is what you record as consent. A `pending` row is not Tier
 `.env`, not `.env.local`. Check `.env` has the database URL. Report the blocker;
 do not substitute a query of another table, or Resend, for the roster.
 
-**`No subscribers yet.`** — this is the correct, current answer, not a fault.
-Say so, and say where the real list is (Mailchimp, ~1,560 people).
+**`No subscribers yet.`** — this **used** to be the correct answer and is not any
+more: the table has held 1,545 rows since 2026-08-29. If you see it now, you are
+pointed at the wrong database (a local or preview `POSTGRES_URL`). Check `.env`
+before reporting an empty list to anyone.
 
-**A count that looks too low** — `inspect-subscribers.ts` prints the number of
-rows it *showed*, capped by `--limit` (default 20). Raise the limit past the row
-count, or say you are quoting a sample.
+**A count that looks too low** — almost always `inspect-subscribers.ts` printing
+the number of rows it *showed*, capped by `--limit` (default 20), against a list
+of roughly 1,545. Raise the limit past the row count, or say you are quoting a
+sample.
 
 **Someone reports getting mail after unsubscribing** — check the row and the
 registers (`inspect-subscribers.ts --email`, `suppression.ts check`), then run
@@ -446,17 +486,25 @@ harmless; still tell the user.
 
 **Someone asks you to run a Resend contacts command** — `resend contacts`,
 `segments`, `topics`, `contacts imports`. Explain that the newsletter list moved
-out of Resend; the segment and topic still exist there but hold nobody and are
-pending deletion. `references/resend-roster-cli.md` has the detail.
+out of Resend; the segment and topic still exist in the account but hold nobody,
+and their deletion is waiting on the maintainer. Nothing in this repo reads them
+any more. `references/resend-roster-cli.md` has the detail.
+
+**Someone says "so we've emailed them all now?"** — no. The list moved; no send
+has happened. The monthly newsletter still goes out from Mailchimp, and the first
+send from this system is a separate, approved, **ramped** step.
 
 ## What this skill does *not* do
 
 - **Send any email** — not a test, not a campaign, not a confirmation. (The
   confirmation email is sent by the website itself when someone subscribes.)
-- **Import anyone into the subscriber table** — that tool does not exist yet,
-  and improvising one is forbidden.
-- **Migrate the Mailchimp list** — that is the next phase of the migration and
-  is not started.
+- **Import anyone into the subscriber table** — no tool takes a CSV of your
+  choosing, and improvising one is forbidden. The one-off Mailchimp importer is
+  not a general path (Step 6).
+- **Migrate the Mailchimp list** — already done, on 2026-08-29, by
+  `scripts/email/import-mailchimp-subscribers.ts`. Do not re-run it.
+- **Send anything, or switch the newsletter off Mailchimp** — the list is here,
+  the sending is not.
 - **Manage the monthly newsletter** — drafting, editorial and scheduling belong
   to `monthly-newsletter`.
 - **Decide whether consent exists** — it presents the four options and records

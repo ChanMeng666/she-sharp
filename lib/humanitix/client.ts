@@ -4,7 +4,7 @@
  * Why hand-rolled `fetch`? Humanitix publishes an OpenAPI document but no
  * TypeScript client, and generating one would pull a build step and a
  * dependency into `lib/` for four GET endpoints that only hand-run scripts
- * call. `lib/newsletter/resend-api.ts` set that precedent and
+ * call. `lib/mailchimp/client.ts` follows the same precedent, and
  * `lib/mailchimp/client.ts` is this file's sibling: same header style, same
  * error shape, same lazy key read, same retry and pagination idioms. Where the
  * two differ — the throttle, the 1-based paging, the absence of a `fields`
@@ -105,7 +105,7 @@ function makeHumanitixApiError(status: number, body: unknown, path: string): Hum
  * Builds the "cannot even try" error, before any request is made.
  *
  * Uses `status: 0` to mean "no HTTP exchange happened", matching the
- * missing-key errors in `resend-api.ts` and `lib/mailchimp/client.ts`, so a
+ * missing-key errors in `lib/mailchimp/client.ts`, so a
  * caller distinguishing misconfiguration from an API rejection tests one field
  * across all three.
  *

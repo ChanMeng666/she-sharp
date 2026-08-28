@@ -511,6 +511,13 @@ safe *because* the Return-Path did not move at the same time.
 
 ### Vercel production env vars updated
 
+> **This is a record of what the 2026-08-28 account migration changed, not a
+> description of current configuration.** `RESEND_NEWSLETTER_SEGMENT_ID` and
+> `RESEND_NEWSLETTER_TOPIC_ID` were superseded a day later, when the consent
+> record moved into the database. Nothing in the repo reads them any more and
+> they are gone from `.env.example`; they are **still set on Vercel production**
+> pending the maintainer's approval to remove — outstanding-work item 8g.
+
 `RESEND_API_KEY`, `RESEND_WEBHOOK_SECRET`, `RESEND_NEWSLETTER_SEGMENT_ID`,
 `RESEND_NEWSLETTER_TOPIC_ID`. **Deliberately not touched:**
 `EMAIL_UNSUBSCRIBE_SECRET`, `EMAIL_FROM`, and `lib/email/senders.ts` — the four
@@ -562,10 +569,18 @@ the inbox — not Promotions, not Spam — through a change of sending platform.
 > `List-Unsubscribe` pair. Reasoning and costs:
 > [`../development/EMAIL_PLATFORM_STRATEGY.md`](../development/EMAIL_PLATFORM_STRATEGY.md).
 >
-> **Not done:** the subscriber table is **empty**. The 1,560 Mailchimp
-> subscribers have **not** been imported. **Nothing has been sent.** The live
-> newsletter **still goes out from Mailchimp.** Everything below about list
-> hygiene, the ramp and the retirement order is still ahead of us, not behind.
+> **Also built, later the same day:** the import. `newsletter_subscribers` holds
+> **1,545** rows — 1,560 read from the 2026-08-17 `subscribed` export, **15**
+> held back by the suppression register, 0 malformed — every one carrying a real
+> `confirmedAt` from the export's `CONFIRM_TIME`. The register was topped up
+> first (2,138 → **2,144**), and `reconcile` reports no drift.
+>
+> **Not done: the send.** **Nothing has been sent.** The live newsletter **still
+> goes out from Mailchimp**, the Humanitix → Mailchimp integration still feeds
+> the Mailchimp audience, and the first real send is a separate, explicitly
+> approved step that must be **ramped**, not fired at all 1,545 at once. The ramp
+> and the retirement order below are still ahead of us; only the list-hygiene and
+> import half is behind.
 
 ### Do these two things in separate months
 
@@ -616,12 +631,16 @@ Note the fourth. Mailchimp exports **four** statuses, not three, and
 contacts the account holds and may not market to. Left out of the suppression
 register they would look like fresh addresses to the next import.
 
-Before importing anything:
+Before importing anything — **this was carried out on 2026-08-29**; it is kept as
+the procedure because the same shape applies to any future audience carry-over:
 
 1. In Mailchimp, export **all four** statuses, not one. (Audience → All contacts
    → Export Contacts produces one file per status.)
-2. Import **only** `Subscribed` into Resend, through
-   `/update-mailing-list` — its consent gate is the point.
+2. Import **only** `Subscribed`, into `newsletter_subscribers`, with
+   `scripts/email/import-mailchimp-subscribers.ts` — which refuses the other
+   three by filename rather than trusting whoever runs it. (This step used to
+   read "into Resend, through `/update-mailing-list`"; the destination changed
+   on 2026-08-29 and the tool with it.)
 3. Feed the other three into the suppression register so nothing can re-add
    them. `add-file` exists for exactly this: 2,129 addresses is not a job for
    `add`, and a half-finished suppression list is worse than none because it
@@ -637,9 +656,10 @@ Before importing anything:
    npx tsx scripts/email/suppression.ts check <a subscribed address>      # exit 1
    ```
    Only hashes are written; no address reaches disk or the terminal.
-4. Also set those contacts `unsubscribed` in Resend if they are ever imported by
-   another route — the local register protects the scripts, the Resend flag
-   protects broadcasts.
+4. ~~Also set those contacts `unsubscribed` in Resend~~ — **moot since
+   2026-08-29.** There is no Resend contact list any more, so the local register
+   and the `newsletter_subscribers` status are the only two flags, and both are
+   ours.
 5. **Top the register up from the API immediately before the import, every
    time.** The three files above are a snapshot of one afternoon, and the list
    kept moving after it: the first run of
@@ -651,6 +671,13 @@ Before importing anything:
    an import built on that export would have emailed. It is incremental
    (`--since <ISO>`, or `--full` to re-walk) and needs `MAILCHIMP_API_KEY`.
 
+   **The rule proved itself two days later.** The run immediately before the
+   2026-08-29 import took the register 2,138 → **2,144**: six *more* people had
+   unsubscribed or hard-bounced in those two days, and all six were among the
+   fifteen rows the import then held back — so skipping the top-up would have
+   mailed six people who had just left. The gap between an export and an import
+   is never zero, so neither is the top-up.
+
 **Having an API key does not retire the manual export.** Mailchimp's API has no
 equivalent of `CONFIRM_TIME` — 1,560 contacts carry it in the CSV against 129
 for the nearest API field, `timestamp_signup` — and the archive's reading of
@@ -659,24 +686,32 @@ account; it is not the download. (Same on Humanitix, for a blunter reason:
 `/payouts`, `/access-codes` and `/discounts` are 404. Full detail for both in
 `docs/development/PLATFORM_APIS.md`.)
 
-Three things the import session will otherwise have to rediscover:
+Three things that were true of the Mailchimp carry-over and would be true of any
+repeat of it:
 
-- **Consent** is route 1 of `consent-rules.md`. Record `--consent-source
-  "Mailchimp audience 'She#' — website newsletter sign-up; per-contact
-  OPTIN_TIME preserved in the 2026-08-17 export archive"`, `--consent-date
-  2026-08-17`.
-- **`--for-import` will not drop rows.** It filters on an opt-in column only
-  when one is mapped, and the export has none — the file *is* the opt-in.
-- **`--column-map` is mandatory**: the export uses `Email Address`,
-  `First Name`, `Last Name`.
+- **Consent** is route 1 of `consent-rules.md`. It is recorded on every row as
+  `--consent-source "Mailchimp audience 'She#' — website newsletter sign-up;
+  per-contact OPTIN_TIME preserved in the 2026-08-17 export archive"`, which the
+  importer requires and will not run without.
+- **The export's own columns are the contract.** `import-mailchimp-subscribers.ts`
+  reads `Email Address`, `First Name`, `Last Name` and `CONFIRM_TIME` by name —
+  no column map, because a fixed export shape is safer than a mapping somebody
+  has to get right under time pressure. It fails loudly if `Email Address` is
+  missing.
+- **There is no opt-in column to filter on, and that is not a gap** — the
+  `subscribed` file *is* the opt-in. (The older advice here was about
+  `normalize-recipients.ts --for-import` / `--column-map`, which is the
+  general-CSV path and is not what carried this list over.)
 
-**The segment-name decision is settled.** It used to be an open item: Resend has
-no segment update endpoint, so renaming means delete and recreate — which drops
-membership — and `RESEND_NEWSLETTER_SEGMENT_ID` pointed at a segment called
-"Newsletter Pilot", the name 1,560 real subscribers would have landed under. The
-2026-08-28 account move recreated every segment from scratch, so it was free to
-fix: the target is now simply **"Newsletter"**
-(`95d452f5-2eed-4ad4-b18e-5ff5a89a576b`). Nothing to do before the import.
+**The segment-name question is dead, not merely settled — history only.** It was
+once an open item: Resend has no segment update endpoint, so renaming means
+delete and recreate, which drops membership, and `RESEND_NEWSLETTER_SEGMENT_ID`
+pointed at a segment called "Newsletter Pilot" — the name 1,560 real subscribers
+would have landed under. The 2026-08-28 account move recreated every segment from
+scratch and renamed it to "Newsletter". A day later the consent record moved into
+the database, so **no segment was ever the import target**: the 1,545 rows landed
+in `newsletter_subscribers`. The segment still exists in the account, holds
+nobody, and is item 8g.
 
 ### The subscribe funnel was Mailchimp too — not just the sending
 
@@ -728,15 +763,17 @@ receiving the Resend send. Both are now done:
    until those issues are re-hosted or the button is repointed at
    `/resources/newsletters` itself. The per-issue route stays `noindex` and out
    of `app/sitemap.ts` deliberately; that is not a blocker.
-4. **Deal with the live Humanitix → Mailchimp integration.** Easier to miss than
-   the funnel, because it is configured in *Humanitix* and nothing in this repo
-   mentions it: Humanitix pushes event contacts into the `She#` audience by
-   itself. Left connected when the audience is retired, it keeps feeding a dead
-   list, and the sign-ups it collects are lost rather than merely misplaced. Two
+4. **Deal with the live Humanitix → Mailchimp integration. Still outstanding, and
+   the 29 August import made it urgent.** Easier to miss than the funnel, because
+   it is configured in *Humanitix* and nothing in this repo mentions it:
+   Humanitix pushes event contacts into the `She#` audience by itself. Two
    settings were changed on 2026-08-27 — "Sync contacts who haven't opted-in"
    switched **off**, and the checkout opt-in question switched **on** for the
-   September event — which fixes the consent shape but not the destination. It
-   must be repointed at Resend or switched off before step 5.
+   September event — which fixes the consent shape but **not** the destination.
+   Nothing has been repointed. The audience it feeds is now a stale copy of a
+   list we hold ourselves, so every opt-in it collects from here lands where no
+   send will ever read it: those sign-ups are lost rather than merely misplaced,
+   and they are lost silently. Repoint it or switch it off before step 5.
 5. Only then retire the Mailchimp records.
 
 ### Keep the Mailchimp DNS records
@@ -794,11 +831,17 @@ opened a receipt, or an `unsubscribed` one who opened an old newsletter, is
 still out — `consent-rules.md` governs widening a list, and nothing here widens
 anything.
 
-**Nothing has been sent and nobody has been imported.** As at 2026-08-29 the
-**`newsletter_subscribers` table holds 0 rows**, and the Resend list holds
-**0 contacts** — the account moved to the She Sharp–owned team on 2026-08-28 and
-not even a test address was carried over. The real 1,560-subscriber list is
-still in Mailchimp, and the live newsletter still goes out from there.
+**The list has moved. Nothing has been sent.** As at 2026-08-29 the
+**`newsletter_subscribers` table holds 1,545 rows** — 1,560 read from the
+2026-08-17 `subscribed` export, **15** held back by the suppression register, 0
+malformed. The Resend list still holds **0 contacts** and always did: the account
+moved to the She Sharp–owned team on 2026-08-28 and not even a test address was
+carried over, and the database superseded it the following day. The live
+newsletter still goes out from Mailchimp, so Mailchimp still holds the *sending*
+relationship even though it no longer holds the only copy of the list. Anyone who
+unsubscribes from a real newsletter does so there — which is why
+`suppression.ts pull-mailchimp` is still a monthly job, not a migration step that
+has been ticked off.
 
 What changed on 2026-08-29 is **where an import has to land**: the consent record
 is `newsletter_subscribers`, so a Resend audience is no longer the destination.
@@ -807,12 +850,24 @@ approval, and it still has to record `--consent-source` and `--consent-date` —
 which are now real columns on the row (`consent_source`, `consent_date`,
 `consent_ip`, `consent_user_agent`) rather than a note in a script's output.
 
-> **There is no bulk-import path into the table yet.** As at 2026-08-29 the only
-> route to `status = 'subscribed'` is a person completing double opt-in through
-> the form. Importing 1,560 rows with recorded provenance — and without a
-> confirmation click, which an existing consent record makes unnecessary but
-> which the schema currently reaches only through `confirmSubscription()` — is
-> the next piece of work, and it is item #8 below.
+> **The bulk-import path now exists, and has been run once.**
+> `scripts/email/import-mailchimp-subscribers.ts` writes rows carrying an
+> existing consent record rather than a fresh confirmation click:
+> `source = 'mailchimp-import'`, a `consentSource` sentence naming the audience
+> and the export, and `confirmedAt` taken from the export's `CONFIRM_TIME` —
+> which all 1,560 rows carried, so the double opt-in it records is an act that
+> happened in Mailchimp, not one we invented. No sign-up IPs were imported.
+>
+> It defaults to a **dry run** and needs `--apply` spelled out; it **refuses the
+> `unsubscribed` / `cleaned` / `nonsubscribed` exports by filename**; and it
+> prints counts and truncated hashes, never an address, so its output is safe in
+> a plan block or a PR. Every other script here defaults to doing the thing —
+> this one does not, because you cannot un-import consent, only delete rows and
+> lose the provenance with them.
+>
+> It is the **Mailchimp carry-over**, not a general CSV importer. A sign-up sheet
+> from an event still has no route into the table; `/update-mailing-list` says so
+> rather than improvising one.
 
 ### What actually improves by moving
 
@@ -893,8 +948,10 @@ best-authenticated identity available.
 
 ### Decision 2026-08-29 — the recipient-count arm fires, and we are not splitting
 
-The first real newsletter send will be **~1,560 recipients**, which trips the
-middle trigger above on send one. **The decision is not to split.** This is
+The first real newsletter send will be at most **1,545 recipients** — the size of
+the imported list, now measured rather than estimated — which trips the middle
+trigger above on send one. (A *ramped* first send is smaller still; the trigger
+fires on the full-list send whenever it comes.) **The decision is not to split.** This is
 recorded as a decision so a future session reads it as settled rather than as an
 obligation somebody forgot.
 
@@ -982,13 +1039,13 @@ forgotten or deliberately skipped unless it says so.
 | 5 | **Stage 2b — Google DKIM** | ⚠️ **Workspace super-admin.** `website@` cannot open `admin.google.com`. Request text is in Stage 2, and it is folded into `docs/deployment/WORKSPACE_MAILBOX_CHECKLIST.md` so the admin does one sitting rather than two. | Whenever an admin is available |
 | 6 | **Stage 4 — `p=reject`** + root SPF `-all` | **hard-gated on #5** | Not before #5 |
 | 7 | **Decide the legacy SPF include** — drop `include:_spf.1stdomains.co.nz` if reports show nothing sends from those IPs (budget 4/10 → 1/10) | the reports from #1 | With #4 |
-| 8 | **Migrate the newsletter sending off Mailchimp** — see the section above. **The send path is built** (29 Aug 2026): `recipients-from-db.ts` → `build-newsletter-batch.ts` → a human runs the printed `resend emails batch` commands, off the transactional batch API rather than a Resend broadcast. **List hygiene is done** (18 Aug 2026): all four statuses exported and archived, and the non-subscribers are in the suppression register — **2,138 as at 2026-08-27**, not the 2,129 the export gave, so run `suppression.ts pull-mailchimp` immediately before the import rather than trusting the file. **The ramp cohort is no longer blocked** (27 Aug 2026): `scripts/mailchimp/recent-openers.ts` builds it from the API — but see #8e, it cannot yet be applied to a database-backed send. What remains is **importing the 1,560 `Subscribed`** through `/update-mailing-list` into `newsletter_subscribers`, which holds **0 rows**. **Nothing has been sent and nobody has been imported.** | must NOT share a month with #2/#4; **no bulk-import path into the table exists yet** (#8f) | A month with no DMARC change |
+| 8 | **Migrate the newsletter sending off Mailchimp** — see the section above. **The send path is built** (29 Aug 2026): `recipients-from-db.ts` → `build-newsletter-batch.ts` → a human runs the printed `resend emails batch` commands, off the transactional batch API rather than a Resend broadcast. **List hygiene is done** (18 Aug 2026): all four statuses exported and archived, and the non-subscribers are in the suppression register — **2,138 as at 2026-08-27**, not the 2,129 the export gave, so run `suppression.ts pull-mailchimp` immediately before the import rather than trusting the file. **The ramp cohort is no longer blocked** (27 Aug 2026): `scripts/mailchimp/recent-openers.ts` builds it from the API — but see #8e, it cannot yet be applied to a database-backed send. **The import is done** (29 Aug 2026): `newsletter_subscribers` holds **1,545** rows — 1,560 read, 15 held back by the register, which had been topped up to **2,144** first. What remains is **the send itself**, and it must be **ramped** — the whole 1,545 in one burst is the shape this document spends a section warning against. **Nothing has been sent.** | must NOT share a month with #2/#4; a ramped first cohort needs **#8e** | A month with no DMARC change |
 | 8b | ~~**Migrate the subscribe funnel**~~ — **Done 29 Aug 2026.** `/api/newsletter/subscribe` now writes a `pending` row to `newsletter_subscribers` and sends a confirmation email; the person becomes mailable only by pressing the button on `/newsletter/confirm` (POST, never GET — a link scanner must not be able to confirm). All **six** `MAILCHIMP_CONFIG.subscribeUrl` links now point at `/newsletter/subscribe`, and `subscribeUrl` has been deleted from the config. (This row previously said "16 links"; there were 6, plus 1 `archiveUrl`.) | — | **Done** |
 | 8c | **Decide `MAILCHIMP_CONFIG.archiveUrl`'s replacement.** Partly done: since 2026-08 each new issue is listed in `lib/data/newsletters-manual.ts` pointing at its on-site render (still `noindex`, by design). What remains is the "Open full archive" button, which is the only route to the pre-2026-08 back catalogue. | the back catalogue re-hosted, or the button repointed at `/resources/newsletters` | With #8 |
-| 8d | **Repoint or switch off the Humanitix → Mailchimp contact integration.** Configured in Humanitix, invisible from this repo, and it pushes event contacts into the `She#` audience on its own — left connected past the retirement it feeds a dead list. "Sync contacts who haven't opted-in" was switched **off** and the checkout opt-in question **on** (both 2026-08-27), which fixes the consent shape, not the destination. | — | With #8, before #9 |
-| 8e | **Teach `recipients-from-db.ts` to take a hash allow-list.** `normalize-recipients.ts` has `--restrict-to-hashes`, which is how the warm cohort from `recent-openers.ts` is applied; the database path has only `--limit` (first N rows) and `--only` (one address). Until this exists, "ramp to the recent openers" cannot be done from the subscriber table — `--limit` ramps by row order, which is not the same thing. | — | Before the first ramped send |
-| 8f | **Build the bulk-import path into `newsletter_subscribers`.** The only route to `status = 'subscribed'` today is a person completing double opt-in through the form. Importing 1,560 rows carrying an existing consent record — provenance in `consent_source` / `consent_date`, no confirmation click — has no script. This is what actually blocks #8. | — | Before #8 |
-| 8g | **Decommission the Resend Marketing objects.** The segment `Newsletter`, the topic `Monthly Newsletter`, `RESEND_NEWSLETTER_SEGMENT_ID` and `RESEND_NEWSLETTER_TOPIC_ID` became dead weight when the consent record moved into the database on 2026-08-29. **Not yet deleted**, and `scripts/newsletter/{setup-resend,seed-pilot-contacts}.ts` still read them via `lib/newsletter/resend-api.ts` — so running either script today will present a dead segment as current configuration. A dormant segment id in a Vercel env var is exactly what a future session mistakes for live. | #8 proving out — do not remove the fallback before the replacement has sent | After #8, before #9 |
+| 8d | **Repoint or switch off the Humanitix → Mailchimp contact integration — still outstanding, and now the most urgent of these.** Configured in Humanitix, invisible from this repo, and it pushes event contacts into the `She#` audience on its own. "Sync contacts who haven't opted-in" was switched **off** and the checkout opt-in question **on** (both 2026-08-27), which fixes the consent shape but **not** the destination — nothing has been repointed. The 29 Aug import is what sharpened this: the audience it feeds is no longer where the list lives, so every opt-in Humanitix collects from here lands in a copy that is already stale and that nobody will send from. Those sign-ups are lost rather than merely misplaced, and the loss is silent. | — | **Now** — ahead of the first send, not after it |
+| 8e | **Teach `recipients-from-db.ts` to take a hash allow-list.** `normalize-recipients.ts` has `--restrict-to-hashes`, which is how the warm cohort from `recent-openers.ts` is applied; the database path has only `--limit` (first N rows) and `--only` (one address). Until this exists, "ramp to the recent openers" cannot be done from the subscriber table — `--limit` ramps by row order, which is not the same thing. **Now the only thing standing between the imported list and a properly ramped first send**, since the CSV path it lives on is no longer how a send is built. | — | Before the first ramped send |
+| 8f | ~~**Build the bulk-import path into `newsletter_subscribers`.**~~ — **Done, and run, 29 Aug 2026.** `scripts/email/import-mailchimp-subscribers.ts` carried the Mailchimp list over: 1,560 read, **15** held back by the suppression register, 0 malformed, **1,545 rows written**, each with `source = 'mailchimp-import'`, a provenance sentence in `consent_source`, and a real `confirmedAt` from the export's `CONFIRM_TIME`. Dry-run by default; `--apply` must be spelled out. It is the **Mailchimp carry-over only** — a general opt-in CSV importer (routes 2–4 of `consent-rules.md`) still does not exist, and `/update-mailing-list` still says so. | — | **Done** |
+| 8g | ~~**Decommission the Resend Marketing objects**~~ — **done, 29 Aug 2026.** In code: `lib/newsletter/resend-api.ts`, `scripts/newsletter/setup-resend.ts`, `scripts/newsletter/seed-pilot-contacts.ts` and its example CSV deleted; the two env vars out of `.env.example`. In the Resend account: segment `Newsletter` (`95d452f5-…`) and topic `Monthly Newsletter` (`08e59693-…`) **deleted** — both held 0 contacts, verified before and after in both the dashboard and `resend segments list`. The team-default segment `General` (`9d195cb7-…`) was deliberately left alone. On Vercel production: `RESEND_NEWSLETTER_SEGMENT_ID` and `RESEND_NEWSLETTER_TOPIC_ID` **removed** with `vercel env rm`; `RESEND_API_KEY`, `RESEND_WEBHOOK_SECRET` and `EMAIL_UNSUBSCRIBE_SECRET` were confirmed untouched afterwards. No redeploy was needed — nothing read them. | — | **Done** |
 | 9 | **Retire the Mailchimp DNS records** (`k2`/`k3._domainkey`) | 2–3 clean Resend sends **and** #8b | After #8 proves out |
 | 10 | ~~**Confirm someone reads `newsletter@`**~~ — **answered 2026-08-23: no.** Nobody on the team had its password on 2026-08-17, and a direct question in Slack went unanswered. It is no longer the Reply-To (that is now `info@`); it remains the From, which is correct and must not change. Naming an owner is item 3 on `WORKSPACE_MAILBOX_CHECKLIST.md`. | — | **Done** |
 | 11 | **`EMAIL_UNSUBSCRIBE_MAILTO`** — **keep it empty.** The intended target, `unsub@`, was probed on 2026-08-23 and hard-bounced: it does not exist. The HTTPS one-click URL alone satisfies RFC 8058 and both bulk-sender rulebooks, and a mailto into a weekly-read inbox would leave opt-outs unactioned for days — a compliance problem, not a convenience one. | — | **Decided: no** |

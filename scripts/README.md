@@ -30,7 +30,8 @@ below is production. The two wipe scripts are gated by
 | `preview-all-emails.ts` | Sends 18 templates with mock data to one address. | Forces `NODE_ENV=production` so it really sends. Use `chanmeng6666@gmail.com`. |
 | `newsletter/approve.ts` | Sends nothing itself — calls the admin approve endpoint, which creates **and schedules** the Resend broadcast. | This is the one script here that can reach the whole newsletter audience. `--send-now` skips the queue. |
 | `email/probe-mailboxes.ts` | Sends one message to each of ~21 She Sharp mailboxes to find out which exist. | Real send, but only ever to the organisation's own addresses, and dry run is the default (`--send` to send). In production every hard bounce becomes an `email_optouts` row; `email/suppression.ts sync` now skips She Sharp's own mailboxes by hash so they can never reach the committed register. |
-| `newsletter/send-test.ts`, `newsletter/seed-pilot-contacts.ts` | Real one-off sends / real contact writes on Resend. | `send-test.ts` needs `RESEND_API_KEY` in the environment at `npx tsx` start or it reports success while sending nothing. |
+| `newsletter/send-test.ts` | Real one-off sends. | Needs `RESEND_API_KEY` in the environment at `npx tsx` start or it reports success while sending nothing. |
+| `email/import-mailchimp-subscribers.ts` | Writes real people into `newsletter_subscribers`. | **Dry run is the default** — `--apply` must be spelled out. Refuses the `unsubscribed`/`cleaned`/`nonsubscribed` exports outright. |
 
 `email/build-batch.ts` and `email/render-message.ts` deliberately do **not**
 send: they write files and print the `resend` command a human runs.
@@ -118,8 +119,6 @@ un-leaked by a later edit.
   bot (`lib/slack-bot/`, `app/api/slack/events`) and by the
   `sync-event-from-slack` skill. `docs/development/SLACK_EVENT_EXTRACTION.md`
   keeps the Python path documented as a bulk-import fallback only.
-- **`newsletter/pilot-contacts.local.csv` is gitignored real addresses**; the
-  committed `pilot-contacts.example.csv` is the shape.
 - The `humanitix/` and `mailchimp/` scripts need the gitignored `/private/`
   vault. `--allow-missing-vault` exists on the two verify scripts and must be
   asked for — a verify that passes with nothing to verify is worse than none.

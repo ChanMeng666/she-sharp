@@ -121,7 +121,7 @@ nothing has been imported into it and nothing has been sent from it.
 The real list — about **1,560 subscribers** — is still in Mailchimp, and **the
 monthly newsletter still goes out from there.** The Resend segment and topic
 that used to hold Tier 0 still exist in the account, hold nothing, and are
-pending deletion; do not read a count off them.
+deleted from the Resend account on 2026-08-29; there is no count to read.
 
 That is not a reason to send to a database query instead. It is a reason to run
 `/update-mailing-list` first — that skill is this skill's hard prerequisite.

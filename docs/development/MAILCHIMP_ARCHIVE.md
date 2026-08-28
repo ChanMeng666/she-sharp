@@ -289,32 +289,43 @@ register, and it crossed as 2,129 sha256 hashes carrying no address.
 
 This archive is one half of the work in
 `docs/deployment/EMAIL_AUTHENTICATION.md` §"Migrating the newsletter from
-Mailchimp to Resend". The other half is the import itself, which has **not** been
-run. What is already done:
+Mailchimp to Resend". **The other half — the import — ran on 2026-08-29**, and
+this archive is what it read. What is done:
 
-- The 2,129 non-subscribers are in the suppression register, so
-  `normalize-recipients.ts` — which consults it on every import — cannot re-add
-  them. This had to land *before* any import, or the diff would report a clean
-  suppression bucket that was a lie.
+- The 2,129 non-subscribers went into the suppression register first, so no
+  import could re-add them. This had to land *before* any import, or the diff
+  would have reported a clean suppression bucket that was a lie.
+- **The `subscribed` export was imported into `newsletter_subscribers`** by
+  `scripts/email/import-mailchimp-subscribers.ts`: **1,560 rows read, 15 held
+  back by the register, 0 malformed, 1,545 written**, each carrying
+  `source = 'mailchimp-import'` and a real `confirmedAt` from `CONFIRM_TIME`.
+  **Nothing has been sent** — the live newsletter still goes out from Mailchimp.
 
-What the import session still needs to know:
+The archive's role in that import, worth keeping because it is the evidence
+behind 1,545 rows of consent:
 
 - **Consent** is route 1 of `consent-rules.md` (the website newsletter sign-up,
-  linked from 16 places on the site for years). Record
-  `--consent-source "Mailchimp audience 'She#' — website newsletter sign-up; per-contact OPTIN_TIME preserved in the 2026-08-17 export archive"`
-  and `--consent-date 2026-08-17`. Per-contact opt-in dates stay recoverable
-  from the archived CSV.
-- **`--for-import` will not drop rows here.** It filters on an opt-in column
-  only when one is mapped, and the Mailchimp export has none, because the file
-  *is* the opt-in.
-- **`--column-map` is mandatory** — the export uses `Email Address`,
-  `First Name`, `Last Name`.
-- **The segment name is settled** — it was an open decision, because Resend has
-  no segment update endpoint (renaming means delete and recreate, which drops
-  membership) and `RESEND_NEWSLETTER_SEGMENT_ID` pointed at "Newsletter Pilot".
-  The 2026-08-28 Resend account move recreated every segment anyway, so the
-  target is now simply **"Newsletter"** — the name 1,560 real subscribers will
-  land under. Nothing to decide before the import.
+  linked from the site for years). Every imported row records
+  `--consent-source "Mailchimp audience 'She#' — website newsletter sign-up; per-contact OPTIN_TIME preserved in the 2026-08-17 export archive"`.
+  That sentence points *here*: per-contact `OPTIN_TIME` and `CONFIRM_TIME` stay
+  recoverable only from the archived CSV, which is why this archive cannot be
+  deleted once Mailchimp is cancelled.
+- **The export's columns are the importer's contract** — it reads
+  `Email Address`, `First Name`, `Last Name` and `CONFIRM_TIME` by name. Keep
+  the files as exported; a re-shaped copy is not a substitute.
+- **The register moved between the export and the import.**
+  `suppression.ts pull-mailchimp` took it 2,129 → 2,138 (2026-08-27) → **2,144**
+  immediately before the import, and six of the fifteen rows held back were
+  people who had left in those twelve days. A frozen export is a snapshot of an
+  afternoon; the list underneath it keeps moving.
+- **No Resend segment was ever the destination — history only.** It was once an
+  open decision (Resend has no segment update endpoint, so renaming means delete
+  and recreate, which drops membership) and `RESEND_NEWSLETTER_SEGMENT_ID`
+  pointed at a segment called "Newsletter Pilot". The 2026-08-28 account move
+  recreated every segment and renamed it "Newsletter"; a day later the consent
+  record moved into our own database, and that is where the 1,545 landed. The
+  segment still exists in the Resend account and holds nobody. Do not read this
+  paragraph as live configuration.
 
 ## What the API pull holds, and why the CSVs still matter
 
