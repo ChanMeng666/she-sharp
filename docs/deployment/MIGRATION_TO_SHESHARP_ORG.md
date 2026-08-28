@@ -205,8 +205,9 @@ vercel whoami
 # List all env vars
 vercel env ls production --scope she-sharp1
 
-# Add/update a variable
-printf 'value_here' | vercel env add VAR_NAME production --scope she-sharp1 --force
+# Add/update a variable (--value, never a pipe — a piped value is stored empty;
+# see docs/deployment/VERCEL_ENV_VARIABLES_GUIDE.md)
+vercel env add VAR_NAME production --value 'value_here' --no-sensitive --scope she-sharp1 --force --yes
 
 # Remove a variable
 vercel env rm VAR_NAME production --scope she-sharp1 --yes
