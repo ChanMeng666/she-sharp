@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-26T13:37:28.490Z",
+  "updatedAt": "2026-08-28T20:41:39.889Z",
   "entries": [
     {
       "hash": "004729c114395eb17d6b22bd9f4df1392eb43e5311743c266262f5d5c6ca627b",
@@ -781,6 +781,11 @@
       "hash": "12628e44f59e8251b4613a168ad9615d2db387c3e80df12c115654a4aed2fb0b",
       "reason": "mailchimp-cleaned",
       "at": "2026-08-17T13:55:49.076Z"
+    },
+    {
+      "hash": "12725b0c56d2d12243909542a52992e4cb0306aace5dda08bde1b7c2613ea51d",
+      "reason": "mailchimp-cleaned",
+      "at": "2026-08-27T20:38:36.000Z"
     },
     {
       "hash": "12ac652fc01e30321c3662b10915a3f0fa4b2397bbdadff7c54d1458e6fa5e3e",
@@ -3331,6 +3336,11 @@
       "hash": "50e5e577c79c96ec00ec796c838eb9b8a3b991b69d315bad579d6234d878325f",
       "reason": "mailchimp-unsubscribed",
       "at": "2026-08-17T13:55:47.539Z"
+    },
+    {
+      "hash": "50e7ac0ca89acec393187a4b6ff6becf7e8f77436fa4db5e0010e58bcbef68e1",
+      "reason": "mailchimp-cleaned",
+      "at": "2026-08-27T20:38:15.000Z"
     },
     {
       "hash": "512432ff01ae37c2d5ad73e1a729a1982d7c46427ce972c717eeebe54bfd0a2c",
@@ -8228,6 +8238,11 @@
       "at": "2026-08-17T13:55:47.539Z"
     },
     {
+      "hash": "c66fc0a663ccd026eeaf84d651f2860426f96ba42b0e5deb90b47cff427fac7e",
+      "reason": "mailchimp-unsubscribed",
+      "at": "2026-08-27T21:37:31.000Z"
+    },
+    {
       "hash": "c691bd53c299277de6161b8bf8be968c3a85560c98f74c346c21e74999a7d724",
       "reason": "mailchimp-unsubscribed",
       "at": "2026-08-17T13:55:47.539Z"
@@ -9058,6 +9073,11 @@
       "at": "2026-08-17T13:55:47.539Z"
     },
     {
+      "hash": "daf7adf31246d590289ee94cf6fda4b84865eb777cb31573d8dda102c99a12a4",
+      "reason": "mailchimp-unsubscribed",
+      "at": "2026-08-28T00:35:40.000Z"
+    },
+    {
       "hash": "db56e837cb5ce0e929bef40f3a9958d536bc4f655d3226b96300f3fe2bc14721",
       "reason": "mailchimp-never-subscribed",
       "at": "2026-08-17T13:55:50.577Z"
@@ -9336,6 +9356,11 @@
       "hash": "e27310961297d619364510f747c50a980c600f4afeb8a8f058d5ca4939eb074d",
       "reason": "mailchimp-never-subscribed",
       "at": "2026-08-17T13:55:50.577Z"
+    },
+    {
+      "hash": "e28ba837c33a6c180686af6c38a5cc0a3196f8962a66666aa21ec45c415d835d",
+      "reason": "mailchimp-unsubscribed",
+      "at": "2026-08-27T20:05:38.000Z"
     },
     {
       "hash": "e293888c4a5b9e358d6b75a6bd2db4205b70053d0b46613f317802bac5dfcfec",
@@ -10266,6 +10291,11 @@
       "hash": "f5b34406ce9ca09aed4e75cd476ba12e8a547354d390311be4b6c8b2bec5621b",
       "reason": "mailchimp-unsubscribed",
       "at": "2026-08-17T13:55:47.539Z"
+    },
+    {
+      "hash": "f5effe225744ed7f97c1ae114f8c5ddb92b677fb795c4d302e69df0cc0c051b3",
+      "reason": "mailchimp-unsubscribed",
+      "at": "2026-08-27T22:43:00.000Z"
     },
     {
       "hash": "f5f7dc5475a8cb527690e4d336b6455a556abfdd21518a9de29df01a370d77bc",
