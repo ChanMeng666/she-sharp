@@ -8,10 +8,10 @@
  * announcement leads with a plain wordmark plate and puts `spec.title` in the
  * body as the headline.
  *
- * `mode` controls merge-tag behaviour, exactly as in `emails/newsletter.tsx`:
- *  - "broadcast": Resend merge tags are emitted literally for the sending
- *    pipeline to substitute.
- *  - "preview": tags are replaced with inert values for local review.
+ * `mode` controls what the substitutable slots carry:
+ *  - "broadcast": the first-name Resend merge tag, and
+ *    `UNSUBSCRIBE_URL_PLACEHOLDER` for the sending pipeline to substitute.
+ *  - "preview": both are replaced with inert values for local review.
  */
 
 import * as React from "react";
@@ -30,6 +30,7 @@ import {
   Hr,
 } from "@react-email/components";
 import type { Block, MessageSpec } from "@/lib/email/message";
+import { UNSUBSCRIBE_URL_PLACEHOLDER } from "@/lib/email/unsubscribe-headers";
 import { SITE_URL } from "@/lib/seo/site";
 import {
   COLORS,
@@ -275,8 +276,14 @@ export function AnnouncementEmail({
   const greeting =
     mode === "broadcast" ? "Hi {{{contact.first_name|there}}}," : "Hi there,";
 
+  // A template rendered once — or rendered by code that does not yet know the
+  // address — cannot write a per-recipient unsubscribe URL, so it emits a
+  // placeholder and `substituteUnsubscribeUrl()` swaps in the signed URL for
+  // each person at send time. The placeholder is deliberately NOT
+  // brace-delimited: `gateMergeTags` in `lib/email/gates.ts` fails any unknown
+  // `{{…}}` / `{{{…}}}` tag, and this must not look like one.
   const unsubscribeHref =
-    mode === "broadcast" ? "{{{RESEND_UNSUBSCRIBE_URL}}}" : "#";
+    mode === "broadcast" ? UNSUBSCRIBE_URL_PLACEHOLDER : "#";
   const unsubscribeTitle =
     mode === "broadcast" ? undefined : "Unsubscribe (preview)";
 

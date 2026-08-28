@@ -1,7 +1,7 @@
 import { Resend } from 'resend';
 import { brandedEmailLayout, brandButton, infoBox, linkBox, codeBox, warningBox, successBadge, detailsCard, BRAND } from './layout';
 import { getSenderIdentity, type EmailStream } from './senders';
-import { buildUnsubscribeToken } from './unsubscribe-token';
+import { buildUnsubscribeHeaders } from './unsubscribe-headers';
 import { isSuppressed } from './optouts';
 
 /**
@@ -62,17 +62,7 @@ interface EmailOptions {
  */
 function buildStreamHeaders(stream: EmailStream, to: string): Record<string, string> {
   if (stream !== 'notification' && stream !== 'marketing') return {};
-
-  const token = buildUnsubscribeToken(to);
-  if (!token) return {};
-
-  const url = `${getBaseUrl()}/api/email/unsubscribe?t=${token}`;
-  const mailto = process.env.EMAIL_UNSUBSCRIBE_MAILTO?.trim();
-
-  return {
-    'List-Unsubscribe': mailto ? `<${url}>, <mailto:${mailto}>` : `<${url}>`,
-    'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
-  };
+  return buildUnsubscribeHeaders(to, getBaseUrl());
 }
 
 // Initialize Resend client if API key is provided

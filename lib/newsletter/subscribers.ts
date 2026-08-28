@@ -391,6 +391,42 @@ export async function listSubscribed(): Promise<MailableSubscriber[]> {
 }
 
 /**
+ * Every confirmed subscriber, with the fields a send needs to decide about them.
+ *
+ * Separate from {@link listSubscribed} because a send needs two things that a
+ * plain recipient list does not: the hash, to check both suppression registers
+ * without ever comparing addresses, and `confirmedAt`, to apply the
+ * re-subscription rule — a confirmation later than a suppression entry is the
+ * person coming back through the form, which `consent-rules.md` permits.
+ *
+ * The rule itself lives in `scripts/email/mailable.ts`, so the recipient builder
+ * and the drift report cannot implement it differently.
+ *
+ * @returns Confirmed subscribers, oldest first.
+ */
+export async function listMailableCandidates(): Promise<
+  {
+    email: string;
+    firstName: string | null;
+    lastName: string | null;
+    emailHash: string;
+    confirmedAt: Date | null;
+  }[]
+> {
+  return db
+    .select({
+      email: newsletterSubscribers.email,
+      firstName: newsletterSubscribers.firstName,
+      lastName: newsletterSubscribers.lastName,
+      emailHash: newsletterSubscribers.emailHash,
+      confirmedAt: newsletterSubscribers.confirmedAt,
+    })
+    .from(newsletterSubscribers)
+    .where(eq(newsletterSubscribers.status, "subscribed"))
+    .orderBy(newsletterSubscribers.createdAt);
+}
+
+/**
  * Counts subscribers by status, for the roster report and the pre-send plan.
  *
  * @returns A count per status, omitting statuses with no rows.

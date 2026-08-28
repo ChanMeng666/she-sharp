@@ -272,31 +272,35 @@ export async function sendDraftReviewNotifications(opts: {
 }
 
 /**
- * Posts a success notification to Slack after an issue has been scheduled (or
- * queued for immediate send) on Resend. Best-effort: returns false without
- * throwing when no webhook is configured or the post fails, so a notify failure
- * never fails the approve request.
+ * Posts a Slack notification after an issue has been approved.
  *
- * @param opts.issueId The "YYYY-MM" issue id that was scheduled.
- * @param opts.broadcastId The Resend broadcast id.
- * @param opts.scheduledAt The instant the broadcast is scheduled to send.
+ * Named "approved", not "scheduled", and worded so that nobody reading
+ * #newsletter concludes mail is on its way: approval no longer schedules a
+ * Resend broadcast, it only records that the issue is cleared to go. The send
+ * is a separate, manual CLI step run by a human — see the approve route.
+ *
+ * Best-effort: returns false without throwing when no webhook is configured or
+ * the post fails, so a notify failure never fails the approve request.
+ *
+ * @param opts.issueId The "YYYY-MM" issue id that was approved.
+ * @param opts.scheduledAt The intended send instant (the slot of record, which
+ *   the operator honours by hand; nothing is queued against it).
  * @returns Whether the Slack post succeeded.
  */
-export async function notifyNewsletterScheduled(opts: {
+export async function notifyNewsletterApproved(opts: {
   issueId: string;
-  broadcastId: string;
   scheduledAt: Date;
 }): Promise<boolean> {
   const webhookUrl = getNewsletterWebhookUrl();
   if (!webhookUrl) {
     console.warn(
-      "[Newsletter] No newsletter/contact Slack webhook configured, skipping scheduled notification"
+      "[Newsletter] No newsletter/contact Slack webhook configured, skipping approved notification"
     );
     return false;
   }
 
   const when = formatScheduledNz(opts.scheduledAt);
-  const text = `Newsletter ${opts.issueId} scheduled ✓ for ${when} NZT — broadcast ${opts.broadcastId}`;
+  const text = `Newsletter ${opts.issueId} approved ✓ — intended send ${when} NZT. *Not sent yet:* the send is a manual step, run \`scripts/newsletter/build-newsletter-batch.ts\` then the Resend CLI.`;
 
   try {
     const response = await fetch(webhookUrl, {
@@ -306,7 +310,7 @@ export async function notifyNewsletterScheduled(opts: {
     });
     if (!response.ok) {
       console.error(
-        "[Newsletter] Slack scheduled webhook failed:",
+        "[Newsletter] Slack approved webhook failed:",
         response.status,
         await response.text()
       );
@@ -314,7 +318,7 @@ export async function notifyNewsletterScheduled(opts: {
     }
     return true;
   } catch (error) {
-    console.error("[Newsletter] Failed to send scheduled Slack notification:", error);
+    console.error("[Newsletter] Failed to send approved Slack notification:", error);
     return false;
   }
 }

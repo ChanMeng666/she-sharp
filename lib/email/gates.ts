@@ -54,8 +54,22 @@ const GMAIL_CLIP_KB = 100;
 /** Image formats every major client (including Outlook) can render. */
 const SAFE_IMAGE_EXTENSIONS = new Set(["jpg", "jpeg", "png"]);
 
-/** The only Resend merge tags we allow into rendered HTML. */
-const ALLOWED_MERGE_TAGS = new Set(["contact.first_name", "RESEND_UNSUBSCRIBE_URL"]);
+/**
+ * The only Resend merge tags we allow into rendered HTML.
+ *
+ * `RESEND_UNSUBSCRIBE_URL` was removed when the newsletter moved off Resend
+ * broadcasts: nothing emits it any more, templates carry
+ * `UNSUBSCRIBE_URL_PLACEHOLDER` instead, and leaving it permitted meant a
+ * template that still had the old tag would sail through this gate and deliver
+ * an inert string where the opt-out link belongs.
+ *
+ * `contact.first_name` stays, because Resend still substitutes it on the
+ * broadcast path that `/email-the-community` uses today. It is NOT substitutable
+ * on the batch path — `build-batch.ts` refuses any surviving triple-brace tag
+ * for exactly that reason, which is the right place for the check, since this
+ * gate is shared with the broadcast path where the tag is legitimate.
+ */
+const ALLOWED_MERGE_TAGS = new Set(["contact.first_name"]);
 
 /** Credential shapes that must never appear in an email body. */
 const SECRET_PATTERNS: { label: string; re: RegExp }[] = [
@@ -267,7 +281,9 @@ function gateMergeTags(html: string): GateResult[] {
       level: "fail",
       message:
         `Unknown merge tag(s): ${listOffenders(unique(unknown))}. Allowed: ` +
-        `{{{contact.first_name|fallback}}}, {{{RESEND_UNSUBSCRIBE_URL}}}.`,
+        `{{{contact.first_name|fallback}}}. The unsubscribe URL is no longer a ` +
+        `merge tag — templates emit UNSUBSCRIBE_URL_PLACEHOLDER and the send ` +
+        `path substitutes a signed per-recipient URL.`,
     });
   }
 
