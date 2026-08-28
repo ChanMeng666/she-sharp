@@ -264,7 +264,7 @@ BASE_URL=https://she-sharp-zeta.vercel.app npx tsx scripts/preview-all-emails.ts
 | **Stripe** (payments) | shesharp.org.nz | Stripe Dashboard |
 | **Neon** (database) | Created via personal Vercel | Accessed via DATABASE_URL env var |
 | **Cloudinary** (images) | Shared credentials | Via CLOUDINARY_* env vars |
-| **Resend** (email) | She Sharp | Via RESEND_API_KEY env var |
+| **Resend** (email) | Team "shesharp" (Pro) | website@shesharp.org.nz — moved off the personal team 2026-08-28 via Domain Claim; also via RESEND_API_KEY env var |
 
 ## Pending Cleanup Tasks
 

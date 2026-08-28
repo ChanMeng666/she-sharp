@@ -53,16 +53,19 @@ human can tell you which tier a list actually belongs to.
 Omitting `--topic-id` means one annoyed reader has to leave *everything* rather
 than just this kind of mail. Always set it.
 
-**Live account state (verified 2026-07-27):**
+**Live account state** (Resend team **shesharp**, owned by
+`website@shesharp.org.nz`; verified 2026-08-28, after the account move):
 
 | Thing | Name | ID |
 |---|---|---|
-| Segment | `Newsletter Pilot` | `c0041ec5-8653-46ec-ac6f-ff577b11714d` |
-| Segment | `General` | `c82698d4-3363-4501-9bbf-4d5c18a3d786` |
-| Topic | `Monthly Newsletter` (`opt_in`, private) | `301e1e64-1d0f-482a-9089-436499623ff8` |
+| Segment | `Newsletter` | `95d452f5-2eed-4ad4-b18e-5ff5a89a576b` |
+| Segment | `General` (team default — empty, unused) | `9d195cb7-f7fc-49e0-9b88-e47c1741e720` |
+| Topic | `Monthly Newsletter` (`opt_in`, private) | `08e59693-29dc-4556-8357-866dea047c6f` |
 
-Re-check with `resend segments list --json` and `resend topics list --json`
-rather than trusting this table — it is a snapshot, not the authority.
+Every id changed on 2026-08-28: segments and topics do not travel with a Resend
+domain claim, so they were recreated in the new team. Re-check with
+`resend segments list --json` and `resend topics list --json` rather than
+trusting this table — it is a snapshot, not the authority.
 
 ## Every broadcast carries `{{{RESEND_UNSUBSCRIBE_URL}}}`
 
@@ -78,10 +81,14 @@ therefore not evidence the real send has an unsubscribe link.** Always gate the
 If the `unsubscribe` gate fires, the usual cause is `engine: "layout"` —
 the transactional layout has no opt-out footer. Switch to `engine: "react"`.
 
-## The list is currently one contact
+## The list is currently empty
 
-`resend contacts list --json` returns **1** contact
-(`chanmeng6666@gmail.com`). A broadcast today reaches one mailbox.
+`resend contacts list --json` returns **0** contacts. The Resend team was
+replaced on 2026-08-28 and nothing has been imported into the new one — not even
+a test address. A broadcast today reaches nobody.
+
+The real list — about **1,560 subscribers** — is still in Mailchimp, and the
+monthly newsletter still goes out from there.
 
 That is not a reason to send to a database query instead. It is a reason to run
 `/update-mailing-list` first — that skill is this skill's hard prerequisite.

@@ -45,8 +45,8 @@ resend broadcasts create `
   --preview-text "Six months, one mentor, and a room of women in tech behind you." `
   --name "announce-mentoring-round-open" `
   --reply-to "mentoring@shesharp.org.nz" `
-  --segment-id c0041ec5-8653-46ec-ac6f-ff577b11714d `
-  --topic-id 301e1e64-1d0f-482a-9089-436499623ff8 `
+  --segment-id 95d452f5-2eed-4ad4-b18e-5ff5a89a576b `
+  --topic-id 08e59693-29dc-4556-8357-866dea047c6f `
   --html-file "tmp/emails/announce-mentoring-round-open.broadcast.html" `
   --text-file "tmp/emails/announce-mentoring-round-open.broadcast.txt"
 ```
@@ -103,8 +103,10 @@ Output is `{"dryRun":true,"request":{…}}`. The request object uses **camelCase
 (`segmentId`, `topicId`, `replyTo`, `previewText`) even though `get` returns
 snake_case — do not read anything into that, it is the CLI's own shape.
 
-Verified 2026-07-27 against the live Newsletter Pilot segment; the keys present
-were `from, html, name, previewText, replyTo, segmentId, subject, text, topicId`.
+Verified 2026-07-27 against the live newsletter segment (then in the old Resend
+team, and named "Newsletter Pilot" — the CLI's request shape is unaffected by
+the 2026-08-28 account move); the keys present were
+`from, html, name, previewText, replyTo, segmentId, subject, text, topicId`.
 
 ## `--preview-text` works here, unlike the REST wrapper
 

@@ -1,7 +1,7 @@
 /**
  * One-time setup for the She Sharp monthly newsletter on Resend.
  *
- * Creates (idempotently) the "Monthly Newsletter" topic and "Newsletter Pilot"
+ * Creates (idempotently) the "Monthly Newsletter" topic and "Newsletter"
  * segment, then prints their ids and the env vars to add. If a same-named topic
  * or segment already exists it is reused rather than re-created.
  *
@@ -18,7 +18,7 @@ import {
 
 const TOPIC_NAME = "Monthly Newsletter";
 const TOPIC_DESCRIPTION = "She Sharp monthly newsletter for women in STEM.";
-const SEGMENT_NAME = "Newsletter Pilot";
+const SEGMENT_NAME = "Newsletter";
 
 /**
  * Finds a topic by exact name, creating it if absent (idempotent).

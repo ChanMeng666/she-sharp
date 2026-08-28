@@ -309,10 +309,12 @@ What the import session still needs to know:
   *is* the opt-in.
 - **`--column-map` is mandatory** — the export uses `Email Address`,
   `First Name`, `Last Name`.
-- **Decide the segment name first.** The target today is `RESEND_NEWSLETTER_SEGMENT_ID`,
-  named "Newsletter Pilot" — the name 1,560 real subscribers would land under.
-  Resend has no segment update endpoint, so renaming means delete and recreate,
-  which drops membership.
+- **The segment name is settled** — it was an open decision, because Resend has
+  no segment update endpoint (renaming means delete and recreate, which drops
+  membership) and `RESEND_NEWSLETTER_SEGMENT_ID` pointed at "Newsletter Pilot".
+  The 2026-08-28 Resend account move recreated every segment anyway, so the
+  target is now simply **"Newsletter"** — the name 1,560 real subscribers will
+  land under. Nothing to decide before the import.
 
 ## What the API pull holds, and why the CSVs still matter
 

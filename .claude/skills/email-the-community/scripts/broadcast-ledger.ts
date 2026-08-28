@@ -61,7 +61,7 @@ export interface BroadcastEntry {
   /** Resend broadcast id returned by `broadcasts create`. */
   broadcastId: string;
   status: BroadcastStatus;
-  /** Segment NAME (human-readable), e.g. "Newsletter Pilot". */
+  /** Segment NAME (human-readable), e.g. "Newsletter". */
   segment: string;
   /** sha256 of the exact broadcast-mode HTML that was uploaded. */
   htmlSha256: string;
