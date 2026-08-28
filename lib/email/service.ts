@@ -40,10 +40,15 @@ interface EmailOptions {
 /**
  * Builds the RFC 8058 one-click unsubscribe headers for a message.
  *
- * Only notification-class mail gets them. Adding `List-Unsubscribe` to a
- * password reset invites the recipient to opt out of the one message they
- * genuinely need, and Gmail/Yahoo only require the header for the recurring,
- * unrequested kind. Returns an empty object for every other stream.
+ * Notification- and marketing-class mail get them; transactional and internal
+ * mail do not. Adding `List-Unsubscribe` to a password reset invites the
+ * recipient to opt out of the one message they genuinely need, and Gmail/Yahoo
+ * only require the header for the recurring, unrequested kind.
+ *
+ * `marketing` was excluded here until the newsletter moved in-house, because
+ * Resend attached these headers to broadcasts itself. Self-hosted, nobody else
+ * will — so a marketing send without this is a send with no one-click opt-out,
+ * against an AUP that requires a frictionless one.
  *
  * The HTTPS URL alone satisfies RFC 8058 and both the Gmail and Yahoo bulk
  * sender rules. A `mailto:` alternative is offered ONLY when
@@ -56,7 +61,7 @@ interface EmailOptions {
  * @returns Headers to merge into the Resend payload.
  */
 function buildStreamHeaders(stream: EmailStream, to: string): Record<string, string> {
-  if (stream !== 'notification') return {};
+  if (stream !== 'notification' && stream !== 'marketing') return {};
 
   const token = buildUnsubscribeToken(to);
   if (!token) return {};

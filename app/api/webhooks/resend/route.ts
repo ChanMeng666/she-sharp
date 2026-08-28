@@ -29,6 +29,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { hashEmail } from "@/lib/email/hash";
 import { recordOptout, type OptoutReason } from "@/lib/email/optouts";
+import {
+  markBouncedByHash,
+  markComplainedByHash,
+} from "@/lib/newsletter/subscribers";
 import { readSvixHeaders, verifySvixSignature } from "@/lib/email/webhook-verify";
 
 // node:crypto and the database driver both need the Node.js runtime.
@@ -155,13 +159,47 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   return NextResponse.json({ received: true });
 }
 
-/** Records an all-streams opt-out for every recipient of an event. */
+/**
+ * Records an all-streams opt-out for every recipient of an event, and takes them
+ * off the newsletter list.
+ *
+ * Two stores, written in this order for the same reason as the one-click
+ * endpoint: `email_optouts` is what actually stops mail, and
+ * `newsletter_subscribers` is the enumerable record that has to agree with it.
+ * A complaint is terminal in the subscriber table — `subscribe()` will not take
+ * them back by any route — because the complaint ceiling is account-wide and a
+ * second complaint from the same address is the most expensive mail we can send.
+ *
+ * Serial rather than `Promise.all`: Neon throttles bursts of concurrent
+ * connection attempts, and a webhook that throws there is a bounce we lose.
+ *
+ * @param recipients Addresses named by the event.
+ * @param reason What produced the suppression.
+ */
 async function suppressAll(
   recipients: string[],
   reason: OptoutReason
 ): Promise<void> {
   for (const recipient of recipients) {
-    await recordOptout(hashEmail(recipient), "all", reason);
-    console.log(`[email] Suppressed ${hashEmail(recipient).slice(0, 12)}… (${reason}).`);
+    const emailHash = hashEmail(recipient);
+    await recordOptout(emailHash, "all", reason);
+
+    // Deliberately not inside the caller's try: `email_optouts` above is what
+    // actually stops mail, and it has now succeeded. Letting a failure here
+    // bubble would return 500, make Resend retry, and — once retries are
+    // exhausted — lose the bounce record we already hold. The subscriber row is
+    // the reportable copy, not the enforcing one, and `suppression.ts reconcile`
+    // exists to catch exactly this drift.
+    try {
+      if (reason === "complaint") {
+        await markComplainedByHash(emailHash);
+      } else if (reason === "bounce") {
+        await markBouncedByHash(emailHash);
+      }
+    } catch (error) {
+      console.error("[email] Failed to update the subscriber row:", error);
+    }
+
+    console.log(`[email] Suppressed ${emailHash.slice(0, 12)}… (${reason}).`);
   }
 }
