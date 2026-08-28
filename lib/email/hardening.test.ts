@@ -19,7 +19,7 @@ process.env.EMAIL_UNSUBSCRIBE_SECRET = "test-secret-not-a-real-key";
 import { runEmailGates } from "./gates";
 import { hashEmail } from "./hash";
 import type { MessageSpec } from "./message";
-import { getSenderIdentity, isApprovedSender } from "./senders";
+import { getSenderIdentity, isApprovedSender, type EmailStream } from "./senders";
 import { buildUnsubscribeToken, verifyUnsubscribeToken } from "./unsubscribe-token";
 import { verifySvixSignature } from "./webhook-verify";
 
@@ -58,6 +58,11 @@ function listUnsubscribe(url: string, mailto?: string): string {
   return mailto ? `<${url}>, <mailto:${mailto}>` : `<${url}>`;
 }
 
+/** Mirrors buildStreamHeaders' stream test. Keep in step with service.ts. */
+function streamCarriesUnsubscribe(stream: EmailStream): boolean {
+  return stream === "notification" || stream === "marketing";
+}
+
 const UNSUB_URL = "https://www.shesharp.org.nz/api/email/unsubscribe?t=abc";
 check("one-click URL alone is the default (no unverified mailto)", listUnsubscribe(UNSUB_URL) === `<${UNSUB_URL}>`);
 check("no mailto: appears unless one is configured", !listUnsubscribe(UNSUB_URL).includes("mailto:"));
@@ -65,6 +70,46 @@ check("no mailto: appears unless one is configured", !listUnsubscribe(UNSUB_URL)
 // exist, which is why EMAIL_UNSUBSCRIBE_MAILTO stays unset. This checks the
 // header assembly for the day a real mailbox is created.
 check("a configured mailto is appended, not substituted", listUnsubscribe(UNSUB_URL, "unsub@shesharp.org.nz") === `<${UNSUB_URL}>, <mailto:unsub@shesharp.org.nz>`);
+
+// Which streams carry the header. `marketing` was excluded until the newsletter
+// moved in-house, because Resend attached these headers to broadcasts itself.
+// Self-hosted, nobody else will — a marketing send without them is a send with
+// no one-click opt-out, against an AUP that requires a frictionless one.
+check("notification mail carries one-click unsubscribe", streamCarriesUnsubscribe("notification"));
+check("marketing mail carries one-click unsubscribe (self-hosted newsletter)", streamCarriesUnsubscribe("marketing"));
+// Offering to unsubscribe from a password reset invites opting out of the one
+// message the recipient genuinely needs.
+check("transactional mail carries no unsubscribe header", !streamCarriesUnsubscribe("transactional"));
+check("internal mail carries no unsubscribe header", !streamCarriesUnsubscribe("internal"));
+
+// --- Suppression scope -----------------------------------------------------
+// isSuppressed() lives in optouts.ts, which imports the database client, so the
+// rule is mirrored here the same way as the header assembly above.
+
+/** Mirrors isSuppressed()'s stream test. Keep in step with optouts.ts. */
+function streamHonoursOptouts(stream: EmailStream): boolean {
+  return stream === "notification" || stream === "marketing";
+}
+
+// The pair that matters: a one-click unsubscribe from the newsletter records an
+// opt-out, and the marketing stream has to read it. While Resend owned
+// broadcasts it did that for us; self-hosted, an opt-out the sending stream
+// ignores is an unsubscribe button that visibly does nothing — which is how a
+// list earns spam complaints, against an account-wide 0.08% ceiling.
+check("marketing honours opt-outs (or the unsubscribe button is a lie)", streamHonoursOptouts("marketing"));
+check("notification honours opt-outs", streamHonoursOptouts("notification"));
+// A suppressed address must still be able to reset its password.
+check("transactional is never suppressed", !streamHonoursOptouts("transactional"));
+check("internal is never suppressed", !streamHonoursOptouts("internal"));
+
+// Anything that carries an unsubscribe control must act on it. A stream offering
+// a button it then ignores is worse than one that offers none.
+check(
+  "every stream offering unsubscribe also honours opt-outs",
+  (["transactional", "notification", "marketing", "internal"] as const).every(
+    (s) => !streamCarriesUnsubscribe(s) || streamHonoursOptouts(s)
+  )
+);
 
 // --- Sender identities -----------------------------------------------------
 

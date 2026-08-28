@@ -18,12 +18,21 @@
  *
  * The 48-hour processing rule is satisfied trivially: `sendEmail()` checks the
  * table at send time, so the opt-out is effective the moment the row lands.
+ *
+ * Two stores are written, and the order matters. `email_optouts` is the hash-only
+ * register every send consults and is written first, because it is the one that
+ * actually stops mail. `newsletter_subscribers` is the enumerable consent record;
+ * it is written second and its failure is logged rather than surfaced, since by
+ * then the opt-out is already effective and returning 500 would make the provider
+ * retry something that already worked. `suppression.ts reconcile` reports any
+ * pair that drifts apart.
  */
 
 import { NextRequest, NextResponse } from "next/server";
 
 import { recordOptout } from "@/lib/email/optouts";
 import { verifyUnsubscribeToken } from "@/lib/email/unsubscribe-token";
+import { unsubscribeByHash } from "@/lib/newsletter/subscribers";
 
 // node:crypto and the database driver both need the Node.js runtime.
 export const runtime = "nodejs";
@@ -54,6 +63,15 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // asked to stop and we must not quietly lose that.
     console.error("[email] Failed to record one-click unsubscribe:", error);
     return new NextResponse("Could not record unsubscribe", { status: 500 });
+  }
+
+  try {
+    await unsubscribeByHash(emailHash, "one-click");
+  } catch (error) {
+    // Deliberately not a 500: the send-time suppression above already holds, so
+    // the recipient's request is honoured. Retrying would re-run a write that
+    // succeeded to no benefit.
+    console.error("[email] Failed to update the subscriber row:", error);
   }
 
   return new NextResponse(null, { status: 200 });

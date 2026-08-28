@@ -5,9 +5,10 @@
  *
  * 1. **Transactional mail is never suppressed.** Someone who unsubscribed from
  *    reminders, hard-bounced last month, or hit "report spam" must still be
- *    able to receive a password reset. Only `stream: 'notification'` consults
- *    this table; `isSuppressed()` therefore takes the stream and says no for
- *    everything else rather than leaving that decision to each caller.
+ *    able to receive a password reset. Only the `notification` and `marketing`
+ *    streams consult this table; `isSuppressed()` therefore takes the stream and
+ *    says no for everything else rather than leaving that decision to each
+ *    caller.
  * 2. **Never block a send on a database problem.** If the query throws, the
  *    message goes out. A failed lookup is an infrastructure fault; silently
  *    dropping mail because of one is worse than one extra reminder.
@@ -68,7 +69,13 @@ export async function isSuppressed(
   email: string,
   stream: EmailStream
 ): Promise<boolean> {
-  if (stream !== "notification") return false;
+  // `marketing` was absent from this test until the newsletter moved in-house.
+  // It was harmless while Resend broadcasts owned marketing suppression — Resend
+  // honoured its own unsubscribes — but self-hosted it meant a one-click opt-out
+  // recorded here was ignored by the very stream the recipient opted out of.
+  // An unsubscribe that visibly does nothing is how a list earns spam
+  // complaints, and the complaint ceiling is account-wide.
+  if (stream !== "notification" && stream !== "marketing") return false;
 
   try {
     const rows = await db
@@ -80,6 +87,35 @@ export async function isSuppressed(
   } catch (error) {
     console.error("[email] Opt-out lookup failed; sending anyway:", error);
     return false;
+  }
+}
+
+/**
+ * Looks up one address's opt-out record.
+ *
+ * Unlike {@link isSuppressed} this is stream-agnostic and returns the reason, so
+ * a caller can distinguish a complaint — which is terminal — from an ordinary
+ * unsubscribe, which `consent-rules.md` allows the person themselves to reverse
+ * through the website form.
+ *
+ * @param emailHash sha256 of the normalized address (from {@link hashEmail}).
+ * @returns The record, or null when the address is not on file. Returns null on
+ *   a lookup failure too, matching {@link isSuppressed}: an infrastructure fault
+ *   must not be read as evidence about a person.
+ */
+export async function findOptout(
+  emailHash: string
+): Promise<{ stream: string; reason: string } | null> {
+  try {
+    const rows = await db
+      .select({ stream: emailOptouts.stream, reason: emailOptouts.reason })
+      .from(emailOptouts)
+      .where(eq(emailOptouts.emailHash, emailHash))
+      .limit(1);
+    return rows[0] ?? null;
+  } catch (error) {
+    console.error("[email] Opt-out lookup failed:", error);
+    return null;
   }
 }
 

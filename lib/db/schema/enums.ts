@@ -80,3 +80,19 @@ export const fundingSourceEnum = pgEnum('funding_source', [
   'mbie',
   'women_govt',
 ]);
+
+// The lifecycle of one newsletter subscriber. Only 'subscribed' may receive
+// marketing mail; every other value is a reason not to send.
+//
+// 'complained' is deliberately terminal and is checked separately from the
+// others on re-subscribe: someone who filed a spam complaint must never be
+// re-added by any route, including their own form submission, because the
+// account-wide complaint ceiling is 0.08% and a second complaint from the same
+// address is the most expensive email She Sharp can send.
+export const subscriberStatusEnum = pgEnum('subscriber_status', [
+  'pending',
+  'subscribed',
+  'unsubscribed',
+  'bounced',
+  'complained',
+]);

@@ -28,6 +28,7 @@ import {
   invitationCodeTypeEnum,
   recruitmentStageEnum,
   resourceAccessLevelEnum,
+  subscriberStatusEnum,
   resourceTypeEnum,
   userRoleEnum,
   volunteerCurrentStatusEnum,
@@ -311,6 +312,80 @@ export const emailOptouts = pgTable('email_optouts', {
 }));
 
 // ============================================================================
+// NEWSLETTER SUBSCRIBERS (the marketing consent record)
+// ============================================================================
+
+/**
+ * Who has agreed to receive the newsletter, when, and by which route.
+ *
+ * This table is the reason the newsletter can be self-hosted: until it existed,
+ * Resend's segment and topic membership was the only record of who opted in, so
+ * a database query could not produce a mailing list. Everything about its shape
+ * follows from having to answer one question years later — "why is this person
+ * on our list?" — to someone who is annoyed about it.
+ *
+ * Three decisions that look odd and are not:
+ *
+ * 1. **It stores the address in plain text, unlike `emailOptouts` above.** It has
+ *    to: you cannot send a newsletter to a hash. That makes this the first table
+ *    in the repo holding a bulk list of real addresses whose only purpose is bulk
+ *    mail, so it must never be exported into `lib/data/json/`, and everything
+ *    that prints from it masks (`j****@gmail.com`).
+ *
+ * 2. **`emailHash` is stored alongside, and is the join key to `emailOptouts`
+ *    and to the committed suppression register.** The one-click unsubscribe token
+ *    carries only a hash — deliberately, because unsubscribe URLs end up in
+ *    provider logs and forwarded mail — so a hash has to be enough to find the
+ *    row. It is, and no address ever needs to travel in a URL.
+ *
+ * 3. **`confirmedAt` is null for imported rows, and is not backfilled.** The
+ *    ~1,560 addresses carried over from Mailchimp have that account's `OPTIN_TIME`
+ *    in `consentDate` and the export's provenance sentence in `consentSource`,
+ *    which is route 1 of `consent-rules.md` and is sufficient. They never clicked
+ *    *our* confirmation link, and writing an import date into `confirmedAt` would
+ *    fabricate an act that never happened. Two grades of consent, visibly
+ *    distinguished, because the honest answer is the only one worth storing.
+ *
+ * Deliberately NOT keyed on `user_id`, for the same reason as `emailOptouts`:
+ * almost nobody on the mailing list has a `users` row.
+ */
+export const newsletterSubscribers = pgTable('newsletter_subscribers', {
+  id: serial('id').primaryKey(),
+  // Trimmed and lowercased on write, so `email` and `emailHash` cannot disagree.
+  email: varchar('email', { length: 254 }).notNull().unique(),
+  emailHash: varchar('email_hash', { length: 64 }).notNull().unique(),
+  firstName: varchar('first_name', { length: 80 }),
+  lastName: varchar('last_name', { length: 80 }),
+
+  status: subscriberStatusEnum('status').notNull().default('pending'),
+
+  // Provenance. `source` is the machine-readable route; `consentSource` is the
+  // sentence a human wrote and would have to stand behind.
+  source: varchar('source', { length: 64 }).notNull(),
+  consentSource: text('consent_source').notNull(),
+  consentDate: timestamp('consent_date').notNull(),
+  // Captured by the website form only; imports legitimately have neither.
+  consentIp: varchar('consent_ip', { length: 45 }),
+  consentUserAgent: text('consent_user_agent'),
+
+  // Double opt-in. Random, single-use, expiring — see lib/newsletter/subscribers.ts
+  // for why the stateless unsubscribe token is the wrong shape for this.
+  confirmToken: varchar('confirm_token', { length: 64 }).unique(),
+  confirmSentAt: timestamp('confirm_sent_at'),
+  confirmExpiresAt: timestamp('confirm_expires_at'),
+  confirmedAt: timestamp('confirmed_at'),
+
+  unsubscribedAt: timestamp('unsubscribed_at'),
+  unsubscribeReason: varchar('unsubscribe_reason', { length: 32 }),
+
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+}, (table) => ({
+  statusIdx: index('idx_newsletter_subscribers_status').on(table.status),
+  createdAtIdx: index('idx_newsletter_subscribers_created_at').on(table.createdAt),
+}));
+
+// ============================================================================
 // RELATIONS
 // ============================================================================
 
@@ -398,6 +473,8 @@ export type FundingOpportunity = typeof fundingOpportunities.$inferSelect;
 export type NewFundingOpportunity = typeof fundingOpportunities.$inferInsert;
 export type EmailOptout = typeof emailOptouts.$inferSelect;
 export type NewEmailOptout = typeof emailOptouts.$inferInsert;
+export type NewsletterSubscriber = typeof newsletterSubscribers.$inferSelect;
+export type NewNewsletterSubscriber = typeof newsletterSubscribers.$inferInsert;
 
 // ============================================================================
 // ACTIVITY TYPES

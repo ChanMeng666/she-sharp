@@ -22,6 +22,7 @@
  *   npx tsx scripts/email/suppression.ts check <email>
  *   npx tsx scripts/email/suppression.ts sync [--dry-run]
  *   npx tsx scripts/email/suppression.ts pull-mailchimp [--since <ISO>] [--full] [--list-id <id>] [--dry-run]
+ *   npx tsx scripts/email/suppression.ts reconcile
  *
  * Output:
  *   list     — one line per entry: `<hash[0:12]>…  <reason>  <YYYY-MM-DD>`, then a total.
@@ -203,6 +204,7 @@ function usage(): void {
   console.error(
     "  npx tsx scripts/email/suppression.ts pull-mailchimp [--since <ISO>] [--full] [--list-id <id>] [--dry-run]"
   );
+  console.error("  npx tsx scripts/email/suppression.ts reconcile");
 }
 
 /** Validates and returns the address argument for add/remove/check. */
@@ -416,6 +418,118 @@ async function commandSync(dryRun: boolean): Promise<void> {
   } finally {
     await client.end();
   }
+}
+
+/**
+ * Reports mailable subscribers who are also on a do-not-contact register.
+ *
+ * The newsletter list and the two suppression registers are written by different
+ * code paths at different times — a form submission here, a Resend webhook there,
+ * a monthly Mailchimp pull somewhere else — and nothing but this command notices
+ * when they disagree. A `subscribed` row whose hash sits in a register is a
+ * person the list believes it may email and the register says it may not, and
+ * the register is always right.
+ *
+ * Prints hashes only, like everything else here, so the output is safe to paste
+ * into Slack or a plan block. Exits 1 when there is drift, so it can gate a send
+ * from a shell conditional.
+ */
+async function commandReconcile(): Promise<void> {
+  /** How many drifted hashes to print before summarising the rest. */
+  const PREVIEW = 20;
+
+  const { listSubscribedHashes } = await import("../../lib/newsletter/subscribers");
+  const { listOptouts } = await import("../../lib/email/optouts");
+  const { client } = await import("../../lib/db/drizzle");
+
+  try {
+    const subscribed = await listSubscribedHashes();
+    const runtime = new Map(
+      (await listOptouts()).map((row) => [row.emailHash.toLowerCase(), row])
+    );
+    const committed = readSuppressionFile();
+    const committedByHash = new Map(
+      committed.entries.map((entry) => [entry.hash.toLowerCase(), entry])
+    );
+
+    console.log(`Mailable subscribers:      ${subscribed.length}`);
+    console.log(`Runtime opt-outs:          ${runtime.size}`);
+    console.log(`Committed register:        ${committed.entries.length}`);
+    console.log("");
+
+    const drift: { hash: string; where: string; reason: string; resubscribed: boolean }[] = [];
+
+    for (const row of subscribed) {
+      const hash = row.emailHash.toLowerCase();
+      const optout = runtime.get(hash);
+      const entry = committedByHash.get(hash);
+      if (!optout && !entry) continue;
+
+      // A confirmation later than the suppression entry is the person coming
+      // back through the website form, which `consent-rules.md` names as the one
+      // legitimate way back onto the list. It is reported separately rather than
+      // as an error — except after a complaint, which nothing reverses.
+      const suppressedAt = optout
+        ? runtimeCreatedAt(optout)
+        : entry
+          ? new Date(entry.at)
+          : null;
+      const reason = optout?.reason ?? entry?.reason ?? "unknown";
+      const resubscribed =
+        reason !== "complaint" &&
+        !!row.confirmedAt &&
+        !!suppressedAt &&
+        row.confirmedAt > suppressedAt;
+
+      drift.push({
+        hash,
+        where: optout ? (entry ? "both" : "runtime") : "committed",
+        reason,
+        resubscribed,
+      });
+    }
+
+    const blocking = drift.filter((d) => !d.resubscribed);
+    const returned = drift.filter((d) => d.resubscribed);
+
+    if (returned.length > 0) {
+      console.log(`Re-subscribed after suppression (allowed): ${returned.length}`);
+      for (const d of returned.slice(0, PREVIEW)) {
+        console.log(`  ${d.hash.slice(0, 12)}…  ${d.reason}  (${d.where})`);
+      }
+      if (returned.length > PREVIEW) console.log(`  … and ${returned.length - PREVIEW} more`);
+      console.log("");
+    }
+
+    if (blocking.length === 0) {
+      console.log("No drift: every mailable subscriber is clear of both registers.");
+      return;
+    }
+
+    console.log(`DRIFT — mailable but suppressed: ${blocking.length}`);
+    for (const d of blocking.slice(0, PREVIEW)) {
+      console.log(`  ${d.hash.slice(0, 12)}…  ${d.reason}  (${d.where})`);
+    }
+    if (blocking.length > PREVIEW) console.log(`  … and ${blocking.length - PREVIEW} more`);
+    console.log("");
+    console.log(
+      "These rows must not be mailed. The recipient builder strips them anyway,"
+    );
+    console.log(
+      "but a persistent count here means a write path is not updating the"
+    );
+    console.log(
+      "subscriber table — find it rather than living with the strip."
+    );
+    process.exitCode = 1;
+  } finally {
+    await client.end();
+  }
+}
+
+/** Reads the timestamp off a runtime opt-out row. */
+function runtimeCreatedAt(row: { createdAt: Date }): Date {
+  return row.createdAt instanceof Date ? row.createdAt : new Date(row.createdAt);
 }
 
 /**
@@ -873,6 +987,9 @@ async function main(): Promise<void> {
       return;
     case "sync":
       await commandSync(argv.includes("--dry-run"));
+      return;
+    case "reconcile":
+      await commandReconcile();
       return;
     case "pull-mailchimp":
       await commandPullMailchimp(
