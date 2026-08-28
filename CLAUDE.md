@@ -176,8 +176,9 @@ The subscription record is **ours**: the `newsletter_subscribers` table
 (`lib/db/schema/system.ts`). Only `status = 'subscribed'` is mailable, and a row
 reaches it by double opt-in — `POST /api/newsletter/subscribe` writes `pending`,
 `/newsletter/confirm` requires a button press, never a GET. Resend's segment and
-topic are no longer the record; they are dead weight pending removal, so do not
-read consent out of them. A send reads the table through
+topic are no longer the record — the code that read them is deleted, the two
+objects still sit in the Resend account holding nobody — so do not read consent
+out of them. A send reads the table through
 `scripts/email/recipients-from-db.ts`, which applies **both** suppression
 registers via `scripts/email/mailable.ts`.
 
@@ -186,9 +187,12 @@ subscribing. The gate is
 `.claude/skills/update-mailing-list/references/consent-rules.md`; every sending
 skill defers to it.
 
-**The table is empty.** The ~1,560 Mailchimp subscribers have not been imported
-and the live newsletter still goes out from Mailchimp — do not describe the
-migration as done.
+**The table holds 1,545 rows** — the 2026-08-17 Mailchimp export, imported on
+2026-08-29 (1,560 read, 15 held back by the suppression register, every row
+carrying a real `confirmedAt`). **Nothing has been sent from it**: the live
+newsletter still goes out from Mailchimp, so do not describe the migration as
+done. Run `scripts/email/suppression.ts pull-mailchimp` before any further
+import — the register moves under a frozen export.
 
 ## Consent — before a photograph of a child is published
 

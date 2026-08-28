@@ -1,12 +1,14 @@
 # Email Platform Strategy — what we pay for, what we build, and why
 
 **Decision date:** 2026-08-28
-**Status (2026-08-29):** decided, and **partly built**. Phases 1–3 have landed —
-the consent record and the suppression seam, the subscribe funnel with double
-opt-in, and the send path off the batch API. **The import and the retirement have
-not.** The subscriber table is **empty**, the ~1,560 Mailchimp subscribers have
-**not** been imported, **nothing has been sent**, and the live newsletter **still
-goes out from Mailchimp**. Section 5 marks each item.
+**Status (2026-08-29):** decided, and **built**. The consent record and the
+suppression seam, the subscribe funnel with double opt-in, the send path off the
+batch API, and now **the import**: `newsletter_subscribers` holds **1,545** rows
+carried over from the 2026-08-17 Mailchimp export. The code that read Resend's
+Marketing objects is deleted. **What has not happened is the send.** Nothing has
+gone out from this system, the live newsletter **still goes out from Mailchimp**,
+and the two Resend objects and their two Vercel env vars still exist in the
+accounts. Section 5 marks each item.
 
 > **The decision, in one line.** She Sharp keeps **Resend Transactional Pro
 > ($20/month)**, does **not** buy Marketing Pro, and **builds its own newsletter
@@ -196,6 +198,10 @@ Comfortably. The constraints are nowhere near binding.
 | Monthly allowance (Pro) | 50,000 | ~1,600 | fine |
 | Daily allowance (Pro) | unlimited | 1,563 in one burst | fine |
 
+**Since measured, not just projected.** On 2026-08-29 the builder was run against
+the imported list: 1,545 recipients produced exactly **16 chunk files** and 1,545
+distinct signed unsubscribe URLs. The estimate above held. Nothing was sent.
+
 Batch specifics worth knowing before building:
 
 - **Attachments are not supported** on the batch endpoint.
@@ -262,15 +268,17 @@ event-mail tooling needed the same machinery.
 ### Must be built — the real work
 
 Items 1–4 are **built as of 2026-08-29**; item 5 is not, and was never required.
-Built means the code exists, is typechecked and has its own tests — **not** that
-anyone has been imported or that anything has been sent.
+Item 6 was not in the original audit and is the one that has actually *run*.
+For items 1–4, built means the code exists, is typechecked and has its own tests
+— **not** that anything has been sent. Nothing has been sent.
 
 1. ~~**A subscribers table.**~~ **Done.** `newsletter_subscribers` in
    `lib/db/schema/system.ts`, migration `0032_sweet_maria_hill.sql`, **applied to
    the production database**. It holds the address, its `hashEmail()` digest, a
    `subscriber_status` enum (`pending` / `subscribed` / `unsubscribed` /
    `bounced` / `complained`), and the consent evidence — `consent_source`,
-   `consent_date`, `consent_ip`, `consent_user_agent`. The table is **empty**.
+   `consent_date`, `consent_ip`, `consent_user_agent`. The table holds **1,545
+   rows** since the 2026-08-29 import (see item 6 below).
    All reads and writes go through `lib/newsletter/subscribers.ts`, whose
    `listSubscribed()` is the single enumeration point and returns
    `status = 'subscribed'` and nothing else.
@@ -318,23 +326,60 @@ anyone has been imported or that anything has been sent.
 5. **Open/click analytics** — **not built, and not required.** If wanted: enable
    domain-level tracking and capture `email.opened` / `email.clicked` webhook
    events into our own table.
+6. **A bulk importer, so the existing list could move in.** **Done, and run,
+   2026-08-29.** This was the item the whole plan stalled on: double opt-in
+   through the form was the only route to `status = 'subscribed'`, and 1,560
+   people who had already consented years ago were never going to click a fresh
+   confirmation. `scripts/email/import-mailchimp-subscribers.ts` writes them with
+   their existing provenance instead — `source = 'mailchimp-import'`, a
+   `consentSource` sentence naming the audience and the export, and a real
+   `confirmedAt` from the export's `CONFIRM_TIME`, which every one of the 1,560
+   rows carried. Recording that timestamp is not manufacturing a consent act; the
+   act happened, in Mailchimp, and we have its date.
+
+   **1,560 read, 15 held back by the suppression register, 0 malformed → 1,545
+   rows.** Six of the fifteen were found only because
+   `suppression.ts pull-mailchimp` was run first and moved the register
+   2,138 → **2,144**: they had unsubscribed or hard-bounced in the twelve days
+   since the export was taken. An import trusting the frozen file would have
+   mailed them. `reconcile` reports no drift afterwards. No sign-up IPs were
+   imported — the export carries them, and they were left where they are.
+
+   The script defaults to a dry run and needs `--apply` spelled out, refuses the
+   `unsubscribed` / `cleaned` / `nonsubscribed` exports by filename, and prints
+   counts and truncated hashes but never an address. That is deliberate
+   asymmetry: every other script here defaults to doing the thing, because every
+   other thing can be undone.
+
+   The full path was then exercised against the real list — 1,545 recipients →
+   **16 chunks** → 1,545 distinct signed unsubscribe URLs. **The chunk files were
+   not handed to `resend`.**
 
 ### What this decision retires
 
-**Still a plan — none of this has happened yet (as at 2026-08-29).** Nothing on
-the *sending* path touches any of it any more, which is exactly what makes it
-dangerous: it is dormant configuration that still looks live. `resend-api.ts`
-survives, and `scripts/newsletter/{setup-resend,seed-pilot-contacts}.ts` still
-import it and still read the two env vars — so a future session that runs either
-script will be told the segment and topic are current.
-
-Self-hosting makes the Resend **Marketing** objects dead weight. The segment
+Self-hosting makes the Resend **Marketing** objects dead weight: the segment
 `Newsletter` and topic `Monthly Newsletter` created during the 2026-08-28 account
 migration, the `RESEND_NEWSLETTER_SEGMENT_ID` / `RESEND_NEWSLETTER_TOPIC_ID`
-environment variables, and the broadcast wrapper `lib/newsletter/resend-api.ts`
-all become unused. They should be decommissioned deliberately rather than left to
-rot — a dormant segment id in an env var is exactly the kind of thing a future
-session mistakes for live configuration.
+environment variables, and the broadcast wrapper `lib/newsletter/resend-api.ts`.
+
+**Half done, 2026-08-29 — and the halves are not interchangeable.**
+
+| | State |
+|---|---|
+| `lib/newsletter/resend-api.ts` | **Deleted** |
+| `scripts/newsletter/setup-resend.ts`, `seed-pilot-contacts.ts` + its example CSV | **Deleted** |
+| `RESEND_NEWSLETTER_SEGMENT_ID` / `_TOPIC_ID` in `.env.example` | **Removed** |
+| Segment `Newsletter`, topic `Monthly Newsletter` in the Resend account | Still there, 0 contacts — deletion awaits the maintainer |
+| The same two vars on **Vercel production** | Still set — removal awaits the maintainer |
+
+The code half was the urgent half, and the reason is the shape of the risk. The
+danger was never a dormant object sitting in a console; it was a script in this
+repo that would run, read the two env vars, print a segment id and a topic id,
+and present dead configuration as current. Deleting the scripts removed that.
+What is left is inert: nothing in the repo can reach those ids, so the worst a
+leftover env var can now do is confuse a reader — which is what the table above
+is for. Do not read the ids' continued existence as evidence the migration was
+reverted, and do not re-add a wrapper "just to check them".
 
 **The consent record moves from Resend to our database.** This overturns a rule
 currently stated in `CLAUDE.md`, `docs/development/EMAIL_OPERATIONS.md` and

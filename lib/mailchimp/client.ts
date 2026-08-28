@@ -5,7 +5,7 @@
  * callback-era wrapper whose published typings are `any`-shaped, so it buys no
  * type safety over `fetch` while adding a runtime dependency inside `lib/` for
  * a handful of GET endpoints that only hand-run scripts call.
- * `lib/newsletter/resend-api.ts` set that precedent — and the reason — for
+ * `lib/humanitix/client.ts` follows the same precedent — and the reason — for
  * Resend, and this file is its sibling: same header style, same error shape,
  * snake_case in, camelCase out, doc URLs cited inline where the shape is
  * non-obvious.
@@ -72,7 +72,7 @@ function makeMailchimpApiError(status: number, body: unknown, path: string): Mai
  * Builds the "cannot even try" error, before any request is made.
  *
  * Uses `status: 0` to mean "no HTTP exchange happened", matching
- * `resend-api.ts`'s missing-key error, so a caller distinguishing
+ * `lib/humanitix/client.ts`'s missing-key error, so a caller distinguishing
  * misconfiguration from an API rejection can test one field in both.
  *
  * @param message - What is missing and how to supply it.
