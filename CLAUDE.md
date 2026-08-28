@@ -172,11 +172,23 @@ broke a production deploy. On pnpm 11 use `npx drizzle-kit migrate` rather than
 
 ## Consent — before any email goes to a list
 
-The database has **no** marketing opt-in column, so Resend segments/topics are
-the only subscription record. Registering, donating, applying, giving feedback or
-writing in is **not** subscribing. The gate is
+The subscription record is **ours**: the `newsletter_subscribers` table
+(`lib/db/schema/system.ts`). Only `status = 'subscribed'` is mailable, and a row
+reaches it by double opt-in — `POST /api/newsletter/subscribe` writes `pending`,
+`/newsletter/confirm` requires a button press, never a GET. Resend's segment and
+topic are no longer the record; they are dead weight pending removal, so do not
+read consent out of them. A send reads the table through
+`scripts/email/recipients-from-db.ts`, which applies **both** suppression
+registers via `scripts/email/mailable.ts`.
+
+Registering, donating, applying, giving feedback or writing in is **not**
+subscribing. The gate is
 `.claude/skills/update-mailing-list/references/consent-rules.md`; every sending
 skill defers to it.
+
+**The table is empty.** The ~1,560 Mailchimp subscribers have not been imported
+and the live newsletter still goes out from Mailchimp — do not describe the
+migration as done.
 
 ## Consent — before a photograph of a child is published
 
@@ -462,17 +474,23 @@ never touch TypeScript. → `docs/development/DECK_SYSTEM.md`
 bounce/complaint capture. → `docs/development/EMAIL_OPERATIONS.md`; DNS, DMARC
 and the Mailchimp → Resend migration in `docs/deployment/EMAIL_AUTHENTICATION.md`
 
-**Decided 2026-08-28, not yet built:** the newsletter will be **self-hosted**
-on Resend's transactional batch API rather than its Marketing product, which
-moves the marketing-consent record out of Resend and into our own database.
-Until that lands, the Resend-is-the-consent-record rule above still holds.
-Reasoning, costs and the AWS SES fallback:
-`docs/development/EMAIL_PLATFORM_STRATEGY.md`
+**Decided 2026-08-28, half built:** the newsletter is **self-hosted** on Resend's
+transactional batch API rather than its Marketing product, which moves the
+marketing-consent record out of Resend and into our own database. **Built:** the
+`newsletter_subscribers` table, the double opt-in funnel, the six site entry
+points repointed at `/newsletter/subscribe`, and the send path
+(`recipients-from-db.ts` → `build-newsletter-batch.ts` → a human runs
+`resend emails batch`). **Not built:** importing the ~1,560 Mailchimp
+subscribers, and retiring the Resend segment, topic and their env vars — which
+still exist and must not be mistaken for live config. Reasoning, costs and the
+AWS SES fallback: `docs/development/EMAIL_PLATFORM_STRATEGY.md`
 
-**Monthly newsletter.** React Email + Resend broadcasts with an AI editorial
-draft, run by the `/monthly-newsletter` skill. **The live newsletter still goes
-out from Mailchimp** — this is the replacement, piloted but not switched over.
-→ `docs/development/EMAIL_OPERATIONS.md`
+**Monthly newsletter.** React Email rendered in this repo and sent through
+Resend's **batch** API — no broadcasts, no Resend-held contact list — with an AI
+editorial draft, run by the `/monthly-newsletter` skill. Approving an issue no
+longer sends it; a human runs the printed batch commands. **The live newsletter
+still goes out from Mailchimp** — this is the replacement, piloted but not
+switched over. → `docs/development/EMAIL_OPERATIONS.md`
 
 **Outbound email skills.** Four guided skills let teammates send mail without
 writing code: `/reply-to-contact-messages`, `/update-mailing-list`,

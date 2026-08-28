@@ -9,7 +9,10 @@
  * rule is enforced in code rather than remembered by whoever runs the script.
  *
  * Tiers:
- *  0 — Resend subscribers (explicit opt-in). Anything may be sent.
+ *  0 — Confirmed newsletter subscribers. Anything may be sent. The record is
+ *      the `newsletter_subscribers` table in our own database — a `subscribed`
+ *      row, reached by double opt-in — not membership of a Resend segment,
+ *      which is no longer consulted for consent.
  *  1 — People who wrote to us. 1:1 replies only.
  *  2 — Event registrants / active mentorship participants. Fulfilment mail for
  *      the thing they signed up for, only.
@@ -28,7 +31,7 @@ export interface Recipient {
 
 /** Short labels for logs, plan blocks and CLI output. */
 export const TIER_LABELS: Record<AudienceTier, string> = {
-  0: "Tier 0 — Resend subscribers (opted in)",
+  0: "Tier 0 — confirmed newsletter subscribers (double opt-in)",
   1: "Tier 1 — people who wrote to us (1:1 replies only)",
   2: "Tier 2 — event registrants / active participants (fulfilment only)",
   3: "Tier 3 — off-limits (no consent)",
@@ -70,9 +73,11 @@ export function assertSendAllowed(opts: {
         `Registering for an event or writing to us is not a newsletter ` +
         `subscription — consent does not transfer between lists. The correct ` +
         `path is to invite these people to subscribe themselves (a one-line ` +
-        `opt-in link inside mail they DID ask for), then send the campaign to ` +
-        `Tier 0. Alternatively, re-scope this send as transactional fulfilment ` +
-        `for the thing they actually signed up for.`
+        `link to /newsletter/subscribe inside mail they DID ask for), let them ` +
+        `confirm, and then send the campaign to Tier 0 — which is read from the ` +
+        `newsletter_subscribers table, so nobody lands there without a ` +
+        `confirmed opt-in on record. Alternatively, re-scope this send as ` +
+        `transactional fulfilment for the thing they actually signed up for.`
     );
   }
 }

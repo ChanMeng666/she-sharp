@@ -534,8 +534,39 @@ async function main(): Promise<void> {
   printReport(report);
 }
 
+/**
+ * Refuses to run, and says why.
+ *
+ * This script diffs a recipient file against the LIVE RESEND roster, and Resend
+ * is no longer where the mailing list lives — `newsletter_subscribers` is. Left
+ * running it would query an account holding zero contacts and report every row
+ * as new: a confidently wrong answer, of exactly the shape that causes a bad
+ * import. It has not been repointed at the database because the import path
+ * itself is not built yet; this guard comes off when that lands.
+ *
+ * The body below is left intact rather than deleted, because most of it — the
+ * bucketing, the masking, the report — is what the database version will need.
+ *
+ * A tool that cannot be right should not be allowed to look right.
+ */
+function refuseOutOfService(): never {
+  console.error("diff-roster.ts is out of service.");
+  console.error("");
+  console.error("  It compares against the Resend contact roster, but the mailing list now");
+  console.error("  lives in the newsletter_subscribers table. Against Resend it would report");
+  console.error("  every single address as new, because Resend holds none of them.");
+  console.error("");
+  console.error("  To see who is actually subscribed:");
+  console.error("    npx tsx scripts/email/inspect-subscribers.ts");
+  console.error("    npx tsx scripts/email/suppression.ts reconcile");
+  console.error("");
+  console.error("  Importing the Mailchimp list is not built yet. Stop here and say so.");
+  process.exit(1);
+}
+
 const invokedPath = process.argv[1] ? resolve(process.argv[1]) : "";
 if (invokedPath === fileURLToPath(import.meta.url)) {
+  refuseOutOfService();
   void main().catch((error: unknown) => {
     console.error(`Error: ${error instanceof Error ? error.message : String(error)}`);
     process.exit(1);

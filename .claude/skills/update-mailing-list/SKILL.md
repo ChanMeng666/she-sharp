@@ -1,6 +1,6 @@
 ---
 name: update-mailing-list
-description: Inspect and safely update She Sharp's Resend mailing list — the only record of who consented to marketing email — via `scripts/email/normalize-recipients.ts`, this skill's `scripts/diff-roster.ts`, and `resend contacts imports`. Use whenever the user wants to see or change who is on the list — phrases like "add these attendees to the mailing list", "who's on our email list?", "import this sign-up sheet", "subscribe these people", "take her off the list", "how many subscribers do we have?" — or anything about Resend contacts, segments, topics, unsubscribes or bounces. Covers roster reporting, any-shape CSV normalisation, the four-way consent gate, unsubscribed and suppression exclusion, and segment plus topic assignment; nothing is written to Resend before an explicit plan approval. Read `references/consent-rules.md` first — registering for an event is not subscribing. This skill is the hard prerequisite for `email-the-community`.
+description: Inspect and safely change who is on She Sharp's newsletter mailing list — the `newsletter_subscribers` table, which is now the organisation's marketing-consent record — using `scripts/email/inspect-subscribers.ts`, `scripts/email/audience-report.ts`, `scripts/email/normalize-recipients.ts` and `scripts/email/suppression.ts`. Use whenever the user wants to see or change who is on the list — phrases like "add these attendees to the mailing list", "who's on our email list?", "import this sign-up sheet", "subscribe these people", "take her off the list", "how many subscribers do we have?", "why is this person getting our emails?" — or anything about unsubscribes, bounces, complaints or suppression. Covers roster reporting from the database, any-shape CSV normalisation, the four-way consent gate, and the do-not-contact registers; nothing is changed before an explicit plan approval. Read `references/consent-rules.md` first — registering for an event is not subscribing. The bulk-import tool does not exist yet; this skill says so rather than improvising one. It is the hard prerequisite for `email-the-community`.
 ---
 
 # Look after the mailing list
@@ -10,14 +10,20 @@ is on our mailing list?** and **can these people be added to it?**
 
 Hold one idea above everything else:
 
-> **Resend is the source of truth for who is subscribed. The database is not.**
+> **The mailing list is the `newsletter_subscribers` table in our own database.
+> A row with `status = 'subscribed'` is a subscriber. Nothing else is.**
 
-There is no marketing-consent field anywhere in the She Sharp database — no
-`subscribed` column, no `opt_in_at`, no subscribers table. A database query can
-therefore never produce a mailing list, however it is written. Resend's segment
-and topic membership is the entire record of who agreed to hear from us.
-`references/consent-rules.md` is the standing baseline; read it before your
-first import and whenever one feels borderline.
+Until August 2026 the record lived in Resend's segment and topic membership. It
+does not any more. What has **not** changed is the harder half of the old rule:
+no other table in the database records consent, so no other query can produce a
+mailing list, however it is written. `references/consent-rules.md` is the
+standing baseline; read it before your first import and whenever one feels
+borderline.
+
+**Say this plainly whenever the list comes up.** The table is **empty**. The
+~1,560 real subscribers are still in Mailchimp, the monthly newsletter still
+goes out from there, and nothing has been sent from the new system. The Resend
+segment and topic still exist and hold nobody; they are pending deletion.
 
 **This skill sends no email.** It reads and edits a list. Sending belongs to
 `email-the-community`, `send-event-emails` and `reply-to-contact-messages`.
@@ -32,6 +38,7 @@ Trigger conditions (examples — don't wait for an exact match):
 - "here's the sign-up sheet from the AUT event, can you import it"
 - "how many newsletter subscribers do we have?"
 - "please take this person off the list, she asked twice"
+- "why did this person get our newsletter?"
 - "can we email everyone who registered last month?" — usually **no**, and
   explaining why is part of this skill's job
 
@@ -40,60 +47,72 @@ Trigger conditions (examples — don't wait for an exact match):
 Either **a file** (a CSV from Humanitix, Eventbrite, Google Forms, or typed by
 hand — any shape, any headers; you never ask them to clean it up), or **a
 question** with no file at all ("who's on the list?"), which is Step 1 alone and
-a complete piece of work. They may name a segment loosely ("the newsletter
-one"); resolve it to an ID in Step 1. A file with no context is not yet a
-request — ask what it is and where it came from first.
+a complete piece of work. A file with no context is not yet a request — ask what
+it is and where it came from first.
 
 **Dry-run is the default and is not negotiable.** Until the user has seen the
-Step 5 plan and said yes, **nothing is written to Resend** — no
-`contacts create`, no `imports create`, no `add-segment`, no `update-topics`.
-Reads are always fine, and local files under `tmp/` are working notes.
+Step 5 plan and said yes, **nothing is written** — not to the subscriber table,
+not to the suppression register. Reads are always fine, and local files under
+`tmp/` are working notes.
 
 ## Prerequisites
 
 1. **Working directory is the repo root** (contains `scripts/email/` and
-   `lib/email/audience.ts`).
-2. **`resend` on PATH and authenticated** — `resend whoami` must print
-   `"authenticated": true` and `"permission": "full_access"`. Not found:
-   `npm i -g resend-cli`, then `resend login`. A `sending_access` key cannot
-   manage contacts — ask for a full-access one. **Never substitute a guess, or a
-   database query, for the roster.**
+   `lib/newsletter/subscribers.ts`).
+2. **`POSTGRES_URL` (or `DATABASE_URL`) in `.env`.** Scripts read `.env`, not
+   `.env.local`. Without it the roster cannot be read at all — say so and stop.
+   **Never substitute a guess, or a query of some other table, for the roster.**
 3. **CSV readable and in a permitted location** — under `tmp/` or named
    `*.local.csv` (both gitignored). If the user points at their Desktop, copy it
    to `tmp/csv/<name>.local.csv` and work from there.
-4. **`DATABASE_URL` (optional)** — only for the fuller Step 1 report. Without
-   it, run the Resend half and say the database half was skipped.
+4. The `resend` CLI is **not** needed by this skill any more. It is still how
+   mail is *sent* (`resend emails batch`), which is another skill's job.
 
-## Step 1 — Report the current roster
+## Step 1 — Report the current list
 
 Start here even when a file arrived — the user cannot judge a change without
 seeing what exists.
 
 ```powershell
-resend contacts list --limit 100 --json
-resend segments list --json
-resend topics list --json
-npx tsx scripts/email/audience-report.ts --include-resend
+npx tsx scripts/email/inspect-subscribers.ts --limit 50
 ```
 
-**Tell the user the real number, plainly and first.** The list currently holds
-**0 contacts** — the account moved to the She Sharp–owned Resend team on
-2026-08-28 and nothing has been imported into it:
+It prints one block per subscriber, newest first: masked address, status, and
+the provenance columns (`source`, `consent`, `consentDate`, `confirmedAt`,
+whether they have unsubscribed). To look one person up:
 
-> Right now the mailing list has nobody on it. The real list — about 1,560
-> subscribers — is still in Mailchimp, and the monthly newsletter still goes
-> out from there. The 3000+ members you're thinking of are in the database, but
-> the database never recorded who agreed to receive email, so it can't be used
-> as a list. Building the Resend list up is exactly what this skill is for.
+```powershell
+npx tsx scripts/email/inspect-subscribers.ts --email someone@example.com
+```
 
-`--limit` defaults to **10**; on a longer list page with `--after` until
-`has_more` is false, or you will confidently report the wrong number.
+**It lists rows, it does not total them by status.** With `--limit 50` you see
+at most 50 rows and the count printed at the bottom is the number of rows
+shown, not the size of the list. While the table is empty it prints
+`No subscribers yet.`, which is the whole answer. Once it is not, raise
+`--limit` past the row count before quoting a number, or say you are quoting a
+sample.
 
-Live objects (Resend team **shesharp**, owned by `website@shesharp.org.nz`):
-segment **Newsletter** `95d452f5-2eed-4ad4-b18e-5ff5a89a576b`, topic **Monthly
-Newsletter** `08e59693-29dc-4556-8357-866dea047c6f`. The team's default segment
-**General** `9d195cb7-f7fc-49e0-9b88-e47c1741e720` is empty and nothing uses it.
-Re-read them rather than trusting this line.
+Do **not** pass `--token`. It prints a live confirmation credential and refuses
+to run against a non-localhost `BASE_URL` for that reason.
+
+For the wider picture — every address list She Sharp holds, with its tier:
+
+```powershell
+npx tsx scripts/email/audience-report.ts
+```
+
+One caveat to state if you quote it: its Tier 0 figure still comes from Resend
+(via `--include-resend`), which is empty and is no longer the consent record.
+Tiers 1–3 are read from the database and are current. The subscriber table is
+not yet one of its sections.
+
+**Tell the user the real number, plainly and first:**
+
+> Right now the new mailing list has nobody on it. The real list — about 1,560
+> subscribers — is still in Mailchimp, and the monthly newsletter still goes out
+> from there. The 3000+ members you're thinking of are in the database, but the
+> database never recorded who agreed to receive email, so it can't be used as a
+> list. Building this list up is exactly what this skill is for.
 
 ## Step 2 — Read the user's file (any shape)
 
@@ -124,8 +143,9 @@ the state record; pick something recognisable in six months.
 ## Step 3 — Establish consent
 
 You must be able to state **where and when** these people agreed to receive
-email. Four acceptable answers, no fifth: the **website subscribe form**; a
-**tick-box on the registration form** (record the exact question, event and
+email. Four acceptable answers, no fifth: the **website subscribe form** (which
+since August 2026 is a full double opt-in and needs nobody's help — see below);
+a **tick-box on the registration form** (record the exact question, event and
 date — valid only if the CSV really has that column, and only for rows that
 answered yes); a **paper sign-in sheet** that carried opt-in wording ("Does the
 sheet have a line saying they agree to receive emails from She Sharp — and did
@@ -137,6 +157,11 @@ Ask in their language, not in compliance language:
 > wanted emails from She Sharp about future events? If it did, I'll only add the
 > ones who ticked yes. If it didn't, I can't add them, but I can give you a
 > subscribe link to send them so they can add themselves.
+
+The link is **https://www.shesharp.org.nz/newsletter/subscribe**. It records the
+request, emails a confirmation link, and only counts the person as a subscriber
+once they press the button on the page it opens. That is the cleanest consent
+evidence the organisation has, and it costs you nothing to offer it.
 
 **If none of the four fits, stop.** Do not import. Offer the subscribe-link path
 and mean it — 40 people who chose to be there beat 400 who didn't, and it is the
@@ -158,53 +183,72 @@ every row that did not tick the opt-in, plus refunded orders, duplicates,
 malformed addresses and anyone suppressed. Output:
 `tmp/emails/recipients-<key>.json`.
 
-## Step 4 — Diff against Resend
+Note what that file **is**: a cleaned, consent-checked recipients list. It is
+not a subscriber import, and writing it changes nothing about who is on the
+list. Step 6 is where that would happen, and Step 6 is not built.
+
+## Step 4 — Check who is already known, and who must not be added
+
+There is no database equivalent of the old Resend diff yet. Do it with the two
+tools that exist.
+
+Anyone the user names individually, or any address that looks like it might
+already be known:
 
 ```powershell
-npx tsx .claude/skills/update-mailing-list/scripts/diff-roster.ts `
-  --recipients tmp/emails/recipients-aut-jul-2026.json `
-  --segment-id 95d452f5-2eed-4ad4-b18e-5ff5a89a576b
+npx tsx scripts/email/inspect-subscribers.ts --email someone@example.com
+npx tsx scripts/email/suppression.ts check someone@example.com
 ```
 
-It sorts every row into `new`, `alreadyPresent`, `unsubscribed`,
-`alreadyInSegment`, `suppressed` and prints `Importable now: <n>`. Addresses are
-masked; `--json` gives the raw buckets.
-
-**The `unsubscribed` bucket is why this step exists.** Someone who opted out in
-March still appears in July's attendee export — that file has no idea they left
-— and `--on-conflict upsert` would silently resurrect them. If the bucket is
-non-empty, remove those rows from the CSV before importing and say so in the
-plan.
-
-Then check whether these exact bytes have been imported before:
+`check` prints `SUPPRESSED` / `not suppressed` and exits 0 when suppressed, 1
+when not, so it works in a shell conditional. Before any import, make sure the
+registers are current, or an un-synced register will happily re-admit someone
+who bounced last week:
 
 ```powershell
-npx tsx .claude/skills/update-mailing-list/scripts/roster-state.ts sha256 tmp/csv/attendees.local.csv
+npx tsx scripts/email/suppression.ts sync --dry-run        # runtime opt-outs → committed register
+npx tsx scripts/email/suppression.ts pull-mailchimp --dry-run   # Mailchimp's own unsubscribes
+npx tsx scripts/email/suppression.ts reconcile             # subscribers who also sit on a register
 ```
 
-A warning here means **stop and tell the user**. Re-importing re-touches every
-contact and there is no batch undo.
+**This is the step the whole flow exists for.** Someone who opted out in March
+still appears in July's attendee export — that file has no idea they left. If
+`reconcile` or `check` finds anyone, name the count in the plan and exclude
+them.
 
-## Step 5 — Present the roster plan
+**`diff-roster.ts` in this skill's `scripts/` folder is obsolete.** It queries
+Resend contacts, which are empty and are no longer the list. Do not run it and
+do not report its output as the roster.
+
+The repeat-file check still works and is still worth doing:
+
+```powershell
+npx tsx .claude\skills\update-mailing-list\scripts\roster-state.ts sha256 tmp\csv\attendees.local.csv
+```
+
+A warning here means **stop and tell the user** — these exact bytes have been
+processed before.
+
+## Step 5 — Present the plan
 
 Show this block, then **stop and wait**.
 
 ```
-List          : Newsletter (95d452f5-2eed-4ad4-b18e-5ff5a89a576b)
+List          : newsletter_subscribers (our database)
 Source file   : tmp/csv/attendees.local.csv (sha256 930614c5…)
 Consent       : Humanitix checkout question "Can we email you about future
                 She Sharp events?", AUT July 2026 — collected 2026-07-15
 Rows read     : 7
-Would add     : 2 new contacts
+Would add     : 2 subscribers (status 'subscribed', confirmedAt null —
+                imported provenance, not a confirmation click)
 Already there : 1 (no change)
-Topic         : Monthly Newsletter → opt_in
-Conflict mode : skip (existing contacts left untouched)
 Redactions    : 4 rows excluded —
                   1 no marketing opt-in
                   1 order refunded
                   1 duplicate address
                   1 malformed address
-                  0 previously unsubscribed
+                  0 previously unsubscribed or suppressed
+Blocker       : the bulk import tool does not exist yet — see Step 6
 ```
 
 The **`Redactions:` line is mandatory** — every row that will not be imported,
@@ -212,143 +256,144 @@ with its reason, even at zero. It lets the user catch a misread column ("wait,
 why is Priya excluded?") while it is still cheap; without it the exclusions
 surface months later as "why did half the room never hear from us?".
 
-`Would add` comes from `diff-roster.ts`'s `Importable now`, never from the CSV
-row count — only the diff knows who is already there.
+`Would add` comes from the `--for-import` output minus anyone Step 4 found,
+never from the raw CSV row count.
 
 Wait for "yes", "go ahead", "import it". Anything ambiguous is a no.
 
-## Step 6 — Import
+## Step 6 — Import — **NOT YET BUILT**
 
-Only after approval.
+**There is no script that writes a CSV into `newsletter_subscribers`, and you
+must not improvise one.** No `INSERT`, no ad-hoc `tsx` one-liner, no Drizzle
+snippet typed into the terminal. The table is the organisation's consent record;
+the first thing written into it will be written by reviewed code that records
+provenance the same way every time.
 
-```powershell
-resend contacts imports create --file .\tmp\csv\attendees.local.csv `
-  --column-map '{"email":"E-Mail Address","firstName":"Given Name"}' `
-  --on-conflict skip `
-  --segment-id 95d452f5-2eed-4ad4-b18e-5ff5a89a576b `
-  --topics '[{"id":"08e59693-29dc-4556-8357-866dea047c6f","subscription":"opt_in"}]'
-```
+Two things are pending, both in the next phase of the migration:
 
-It returns `{"object":"contact_import","id":"<id>"}` — **a receipt, not a
-success.** The job runs in the background; poll to a terminal state:
+- a bulk importer for opt-in CSVs (routes 2, 3 and 4 of the consent rules), and
+- the Mailchimp carry-over of the ~1,560 existing subscribers.
 
-```powershell
-resend contacts imports get <id> --json
-```
+**What to do instead: stop, and tell the user.** Approval at Step 5 does not
+unblock this — there is nothing to approve into.
 
-`status` moves `queued` → `in_progress` → `completed` | `failed`; only the last
-two are terminal. A completed import carries
-`counts: {total, created, updated, skipped, failed}` — report those, not your
-expectation, and investigate any non-zero `failed` before claiming success.
+> I've checked the file and the consent, and 2 of the 7 people could legitimately
+> be added — I've written that down. But the tool that actually writes people into
+> the new subscriber list hasn't been built yet; we're still sending from
+> Mailchimp for now. Two options: I can send you the subscribe link to pass on to
+> them, which puts them on the list today with better consent evidence than an
+> import gives; or I keep the checked file and we import it when the tool lands.
 
-Two reliable traps: **without `--column-map`, headers must be exactly lowercase
-`email` / `first_name` / `last_name`** (no real export is), and **`upsert`
-overwrites existing contacts** — prefer `skip`. Full flag detail and the error
-table are in `references/resend-roster-cli.md`.
+Then keep the `tmp/emails/recipients-<key>.json` file if they want the second
+option, and say where it is.
 
-## Step 7 — Assign segment and topic
+`scripts/email/recipients-from-db.ts` is not this tool and is not a way round
+it. It reads *out of* the table to build a send; it never writes into it.
 
-The import flags cover both. For one person, or to fix an assignment afterwards:
+## Step 7 — Take one person off the list
 
-```powershell
-resend contacts add-segment someone@example.com --segment-id 95d452f5-2eed-4ad4-b18e-5ff5a89a576b
-resend contacts update-topics someone@example.com `
-  --topics '[{"id":"08e59693-29dc-4556-8357-866dea047c6f","subscription":"opt_in"}]'
-resend contacts segments someone@example.com
-```
-
-`update-topics` replaces only the topics named in the array. Note the asymmetry:
-`add-segment` takes `--segment-id`, `remove-segment` takes the segment as a
-positional second argument. **Never use these to re-subscribe someone who opted
-out** — the CLI will let you; the rules will not.
-
-## Step 8 — Suppressions
-
-When someone bounces, complains, or asks to be left alone, record it so the next
-CSV cannot bring them back:
+When someone asks to be removed, record it so no future file can bring them
+back:
 
 ```powershell
 npx tsx scripts/email/suppression.ts add someone@example.com --reason "asked to be removed"
 npx tsx scripts/email/suppression.ts check someone@example.com
-npx tsx scripts/email/suppression.ts list
 ```
 
-The register stores only sha256 hashes, so
-`lib/data/json/email-suppression-hashes.json` is safe to commit and `list` shows
-truncated hashes plus a reason — use `check` to test one address.
+That is enough to stop mail: `selectMailable()` in `scripts/email/mailable.ts`
+applies the committed register to every send built from the database, and a
+suppression recorded today is newer than any existing confirmation, so they are
+excluded.
 
-Suppressing is local and separate from unsubscribing in Resend. For a removal
-request do **both**: `resend contacts update <email> --unsubscribed` (or
-`contacts delete <email> --yes` if they want their data gone), *and* add the
-suppression entry so no future import re-adds them.
+**There is no operator command that flips a subscriber row to `unsubscribed`.**
+That transition belongs to the one-click unsubscribe link in every send
+(`/api/email/unsubscribe` → `unsubscribeByHash()`) and to the Resend webhook for
+bounces and complaints. If a row genuinely needs correcting by hand, say so and
+stop — that is a code change, not a terminal command.
 
-**Bounces and complaints no longer need adding by hand.** The Resend webhook
-(`app/api/webhooks/resend/route.ts`) writes them straight into the `email_optouts`
-table as they happen, and `sendEmail()` honours that table on every
-notification-class send. One-click unsubscribes from the `List-Unsubscribe`
-header land there too. Fold them into the committed register — the one the
-import scripts read — with:
+**Never re-subscribe someone by hand.** If they want back on, they use the
+website form, which is the only route that produces evidence. A spam complaint
+is never reversed at all, by anything.
+
+## Step 8 — Keep the do-not-contact registers current
 
 ```powershell
+npx tsx scripts/email/suppression.ts list
 npx tsx scripts/email/suppression.ts sync --dry-run   # see what would be added
 npx tsx scripts/email/suppression.ts sync             # merge them in
+npx tsx scripts/email/suppression.ts pull-mailchimp   # unsubscribes Mailchimp saw
+npx tsx scripts/email/suppression.ts reconcile        # drift report
 ```
 
-Both stores key on the same `hashEmail()`, so this is a plain set union with no
-addresses crossing over. Run it monthly, and always **before** an import — an
-un-synced register will happily re-add someone who bounced last week. Needs
-`POSTGRES_URL`; the other subcommands do not.
+`lib/data/json/email-suppression-hashes.json` stores only sha256 hashes, so it
+is safe to commit and `list` shows truncated hashes plus a reason — use `check`
+to test one address.
 
-## Step 9 — Record state and report
+`sync` folds the runtime `email_optouts` table (one-click unsubscribes, bounces
+and spam complaints captured by the Resend webhook) into that committed file.
+Both key on the same `hashEmail()`, so it is a plain set union with no addresses
+crossing over. Needs `POSTGRES_URL`.
 
-```powershell
-npx tsx .claude/skills/update-mailing-list/scripts/roster-state.ts record `
-  --key aut-jul-2026 --import-id <id from Step 6> `
-  --file-sha256 <sha from Step 4> --count 2 --segment "Newsletter" `
-  --consent "Humanitix checkout opt-in question, AUT July 2026, collected 2026-07-15" `
-  --digest "40-row attendee export; 2 new, 1 already present, 4 excluded. Nothing outstanding."
-```
+`pull-mailchimp` does the same for the platform She Sharp still actually sends
+from: someone who unsubscribes today exists **only** in Mailchimp's record and
+`sync` cannot see them. Needs `MAILCHIMP_API_KEY` (+ `MAILCHIMP_LIST_ID`). Run
+both monthly, and always **before** an import.
 
-Commit `state/roster.json` alongside any suppression change — it holds counts,
-hashes and prose, never addresses.
+`reconcile` is the check that the stores agree — it reports subscribers who also
+sit on a register (drift, which means a write path is broken) and, separately,
+people a later confirmation legitimately brought back (allowed, and expected).
+It exits 1 when there is drift.
 
-Then report in the user's terms: how many contacts the list holds **now**
-(re-read it, don't do arithmetic); added versus already there; who was excluded
-and why (the `Redactions` list, in words); what the recorded consent says; and
-anything left open ("3 people ticked no — if you want them, send them the
-subscribe link"). Finally delete the CSV from `tmp/`: the list lives in Resend,
-the CSV was scaffolding.
+## Step 9 — Report
+
+Report in the user's terms: how many people are on the list **now** (re-read it,
+don't do arithmetic); what you checked; who would be excluded and why (the
+`Redactions` list, in words); what the recorded consent says; and anything left
+open ("3 people ticked no — if you want them, send them the subscribe link").
+Be explicit about anything that did not happen and why.
+
+Then delete the CSV from `tmp/`: the list lives in the database, the CSV was
+scaffolding. Keep the recipients file only if the user chose to wait for the
+importer, and say where it is.
+
+`roster-state.ts record` is **not usable for a database import**: it requires
+`--import-id`, which was a Resend `contact_import` id and no longer exists.
+Leave `state/roster.json` alone until the importer lands with its own record
+format. Commit any suppression change on its own.
 
 ---
 
 ## Guardrails (USER-APPROVED — hard rules)
 
-1. **Resend is the source of truth; the database never is.** *Why:* a query
-   result looks exactly like a mailing list and is not one — the permission it
-   would need was never collected.
-2. **Nothing is written to Resend before the Step 5 plan is approved.** *Why:*
-   imports are asynchronous with no batch undo; the only remedy for 300 wrong
-   contacts is 300 deletes.
-3. **Every import needs one of the four consent sources, recorded with the
-   list.** *Why:* if nobody can say where the opt-in came from, it did not
+1. **`newsletter_subscribers` is the consent record; no other table ever is.**
+   *Why:* a query result from any other table looks exactly like a mailing list
+   and is not one — the permission it would need was never collected.
+2. **Nothing is written before the Step 5 plan is approved.** *Why:* there is no
+   batch undo for a mailing list, and the remedy for 300 wrong subscribers is
+   300 corrections.
+3. **Never write to the subscriber table by hand.** *Why:* the first write into
+   the consent record must come from reviewed code that captures provenance
+   identically every time. An ad-hoc `INSERT` produces a row nobody can defend.
+4. **Every addition needs one of the four consent sources, recorded with the
+   row.** *Why:* if nobody can say where the opt-in came from, it did not
    happen — and "I don't know" cannot survive a complaint.
-4. **Never re-add an unsubscribed contact** — not by import, not by hand, not
-   because a newer file lists them. *Why:* they receive mail they explicitly
-   refused, and learn that unsubscribing doesn't work. Re-entry is only ever
-   through the website form.
-5. **Registering, donating, applying or writing to us is not subscribing.**
+5. **Never re-add someone who unsubscribed, bounced or complained** — not by
+   import, not by hand, not because a newer file lists them. *Why:* they receive
+   mail they explicitly refused, and learn that unsubscribing doesn't work.
+   Re-entry is only ever the person themselves through the website form; a spam
+   complaint is never reversed at all.
+6. **Registering, donating, applying or writing to us is not subscribing.**
    *Why:* consent attaches to a purpose, not a person; one address can be
    mailable for one thing and off-limits for another at the same moment.
-6. **Prefer `--on-conflict skip`.** *Why:* `upsert` silently overwrites existing
-   contact state, including opt-outs the source file cannot know about.
 7. **Addresses are masked everywhere they are shown.** *Why:* plans and reports
    get pasted into Slack, a far wider audience than the person who asked.
-8. **CSVs live only in `tmp/` or `*.local.csv`, and are deleted afterwards.**
-   *Why:* both are gitignored; anywhere else one `git add .` publishes real
+8. **CSVs live only in `tmp/` or `*.local.csv`, and are deleted afterwards; the
+   subscriber table is never exported into `lib/data/json/`.** *Why:* both
+   locations are gitignored; anywhere else, one `git add .` publishes real
    addresses into permanent public history.
-9. **Report the import's own `counts`, never your expectation.** *Why:* `create`
-   returning an id means the job was accepted, not that it worked; a `failed`
-   count of 25 is invisible unless you poll and read it.
+9. **Report what actually happened, never what you expected.** *Why:* the most
+   damaging version of this skill is one that says "added 40 people" when the
+   importer does not exist. Say the tool is missing.
 
 ## Audience tiers — decision table
 
@@ -356,66 +401,66 @@ Consistent with `references/consent-rules.md` and `lib/email/audience.ts`.
 
 | Tier | Who | May receive | Channel | On this list? |
 |---|---|---|---|---|
-| **0** | Resend contacts in a segment, opted into the topic | Anything — newsletters, campaigns, promotion | Resend broadcast to a segment/topic | **Yes — this is the list** |
+| **0** | `newsletter_subscribers` rows with `status = 'subscribed'` | Anything — newsletters, campaigns, promotion | Resend batch send built by `recipients-from-db.ts` | **Yes — this is the list** |
 | **1** | People who wrote to us (`contact_form_submissions`) | A 1:1 reply to what they asked | Individual transactional email | No — never import |
 | **2** | Event registrants, mentor/mentee/volunteer applicants, donors, account holders | Only mail fulfilling what they signed up for | Individual or per-event transactional batch | No — unless they separately ticked an opt-in |
 | **3** | Scraped, inherited or unexplainable addresses | Nothing, ever | — | No — and remove if found |
 
 A Tier 2 address that ticked an opt-in box becomes Tier 0 **for that opt-in
-only**, and the tick is what you record as consent.
+only**, and the tick is what you record as consent. A `pending` row is not Tier
+0 — it is somebody who asked and has not confirmed.
 
 ## Common failure modes and how to recover
 
-**`resend: command not found` / `ENOENT`** — CLI missing or not on PATH.
-`npm i -g resend-cli`, `resend login`, `resend whoami`. Report the blocker; do
-not substitute a database query for the roster.
+**`Error: POSTGRES_URL is not set` / a connection failure** — the scripts read
+`.env`, not `.env.local`. Check `.env` has the database URL. Report the blocker;
+do not substitute a query of another table, or Resend, for the roster.
 
-**`{"error":{"code":"auth_error"}}`** — no saved key, or a `sending_access` key
-that cannot manage contacts. `resend login` with a full-access key.
+**`No subscribers yet.`** — this is the correct, current answer, not a fault.
+Say so, and say where the real list is (Mailchimp, ~1,560 people).
 
-**Import stuck at `queued` / `in_progress`** — normal for a large file. Keep
-polling `imports get <id> --json`. **Do not re-upload** — a second create
-double-imports. If wedged, check `imports list --status failed --json` first.
+**A count that looks too low** — `inspect-subscribers.ts` prints the number of
+rows it *showed*, capped by `--limit` (default 20). Raise the limit past the row
+count, or say you are quoting a sample.
 
-**Import `completed` but `created: 0`, `failed: <everything>`** — almost always
-no `--column-map` while the CSV has headers like `Email` / `First Name`
-(matching without a map is case-sensitive against lowercase `email`,
-`first_name`, `last_name`). Re-run with `--column-map`; the failed run created
-nothing, so there is nothing to clean up. **`invalid_column_map`** is the
-neighbouring case — malformed JSON or a header not in the file; print the header
-row and compare byte-for-byte, and single-quote the JSON in PowerShell.
+**Someone reports getting mail after unsubscribing** — check the row and the
+registers (`inspect-subscribers.ts --email`, `suppression.ts check`), then run
+`suppression.ts reconcile`. If they appear under "re-subscribed after
+unsubscribe", that is the rule working: they used the website form again. If
+they appear under DRIFT, a write path is broken — report it rather than
+patching around it.
+
+**About to re-add someone who left** — they will be in `suppression.ts check`,
+or their row's status will not be `subscribed`. Remove them from the file and
+re-run Steps 3–5. If the user pushes back ("she said it's fine now"): *"If she'd
+like back on, this link puts her back with a record we can point to — I can't
+undo an unsubscribe from this side."*
 
 **Mojibake in names, or a first header reading `﻿Email`** — a UTF-8 BOM or a
-non-UTF-8 export. `normalize-recipients.ts` strips the BOM; Resend's importer
-does not. Ask for a re-export as UTF-8 CSV rather than repairing by hand.
+non-UTF-8 export. `normalize-recipients.ts` strips the BOM. Ask for a re-export
+as UTF-8 CSV rather than repairing by hand.
 
-**About to re-add an unsubscribed contact** — `diff-roster.ts` put them in the
-`unsubscribed` bucket. Remove those rows and re-run Steps 3–5. If the user
-pushes back ("she said it's fine now"): *"If she'd like back on, this link puts
-her back with a record we can point to — I can't undo an unsubscribe from this
-side."*
+**The same CSV was processed twice** — `roster-state.ts sha256` warns when bytes
+match a recorded run. Nothing is written by this skill today, so a repeat is
+harmless; still tell the user.
 
-**A contact was imported by mistake** — no batch undo. Delete one at a time
-(`resend contacts delete <email> --yes`). If the mistake was systematic, list
-the affected addresses and confirm the whole set before deleting anything.
-
-**The same CSV was imported twice** — `roster-state.ts sha256` warns when bytes
-match a recorded import. With `skip` the second run is harmless; with `upsert`
-it may have overwritten fields. Compare `imports get <id> --json` counts for
-both runs and report what actually changed.
+**Someone asks you to run a Resend contacts command** — `resend contacts`,
+`segments`, `topics`, `contacts imports`. Explain that the newsletter list moved
+out of Resend; the segment and topic still exist there but hold nobody and are
+pending deletion. `references/resend-roster-cli.md` has the detail.
 
 ## What this skill does *not* do
 
-- **Send any email** — not a test, not a campaign, not a confirmation.
-- **Manage the monthly newsletter** — drafting, editorial and broadcast
-  scheduling belong to `monthly-newsletter`.
-- **Write to the database** — it only reads, and there is no consent field to
-  write to anyway.
+- **Send any email** — not a test, not a campaign, not a confirmation. (The
+  confirmation email is sent by the website itself when someone subscribes.)
+- **Import anyone into the subscriber table** — that tool does not exist yet,
+  and improvising one is forbidden.
+- **Migrate the Mailchimp list** — that is the next phase of the migration and
+  is not started.
+- **Manage the monthly newsletter** — drafting, editorial and scheduling belong
+  to `monthly-newsletter`.
 - **Decide whether consent exists** — it presents the four options and records
   the answer. Only the person who ran the form or held the clipboard knows what
   was actually asked.
-- **Create or design segments and topics.** It uses what exists; segments cannot
-  even be renamed (no update endpoint), so creating one is a decision for the
-  user.
 - **Recover an unsubscribe** — that runs through the website form and the person
   themselves, permanently and by design.

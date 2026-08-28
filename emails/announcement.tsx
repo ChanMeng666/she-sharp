@@ -273,8 +273,15 @@ export function AnnouncementEmail({
   spec: MessageSpec;
   mode: "broadcast" | "preview";
 }): React.JSX.Element {
-  const greeting =
-    mode === "broadcast" ? "Hi {{{contact.first_name|there}}}," : "Hi there,";
+  // The same greeting for everyone, in both modes. This used to emit Resend's
+  // `{{{contact.first_name|there}}}` merge tag in broadcast mode, which only ever
+  // worked for broadcasts against Resend-held contacts: the batch endpoint
+  // substitutes nothing, so it would have reached real inboxes as literal text.
+  // Personalisation was dropped rather than reimplemented, matching the same
+  // decision taken for the newsletter — this goes to the same list, where the
+  // first names inherited from Mailchimp are of uneven quality and a wrong name
+  // reads worse than no name.
+  const greeting = "Hi there,";
 
   // A template rendered once — or rendered by code that does not yet know the
   // address — cannot write a per-recipient unsubscribe URL, so it emits a

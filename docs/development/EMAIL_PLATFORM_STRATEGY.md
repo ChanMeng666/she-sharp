@@ -1,7 +1,12 @@
 # Email Platform Strategy — what we pay for, what we build, and why
 
 **Decision date:** 2026-08-28
-**Status:** decided; implementation not started
+**Status (2026-08-29):** decided, and **partly built**. Phases 1–3 have landed —
+the consent record and the suppression seam, the subscribe funnel with double
+opt-in, and the send path off the batch API. **The import and the retirement have
+not.** The subscriber table is **empty**, the ~1,560 Mailchimp subscribers have
+**not** been imported, **nothing has been sent**, and the live newsletter **still
+goes out from Mailchimp**. Section 5 marks each item.
 
 > **The decision, in one line.** She Sharp keeps **Resend Transactional Pro
 > ($20/month)**, does **not** buy Marketing Pro, and **builds its own newsletter
@@ -236,35 +241,92 @@ event-mail tooling needed the same machinery.
 > A self-hosted `https://www.shesharp.org.nz/api/email/unsubscribe?t=…` link
 > passes as written. **No change to this gate is required.**
 
-### Must change — small
+### Must change — small — **done 2026-08-29**
 
-- **`buildStreamHeaders()` in `lib/email/service.ts`** currently reads
-  `if (stream !== 'notification') return {};`. The `marketing` stream therefore
-  receives **no** `List-Unsubscribe` / `List-Unsubscribe-Post` headers, because
-  Resend attached them for broadcasts. Self-hosted marketing mail must emit them
-  itself. The token builder and URL construction already exist; only the stream
-  test has to widen.
+- ~~**`buildStreamHeaders()` in `lib/email/service.ts`** currently reads
+  `if (stream !== 'notification') return {};`.~~ The `marketing` stream received
+  **no** `List-Unsubscribe` / `List-Unsubscribe-Post` headers, because Resend
+  attached them for broadcasts. Self-hosted marketing mail must emit them itself.
+  **Fixed:** the stream test now reads
+  `if (stream !== 'notification' && stream !== 'marketing') return {};`, and the
+  header construction moved out to `lib/email/unsubscribe-headers.ts` so the
+  batch builder and the single-send path produce the identical pair.
+
+  The same widening was needed one layer down and was **not** in the original
+  audit: `isSuppressed()` in `lib/email/optouts.ts` tested only `notification`
+  too. Harmless while Resend broadcasts honoured their own unsubscribes;
+  self-hosted it meant a one-click opt-out recorded in `email_optouts` would be
+  ignored by the very stream the recipient opted out of. It now covers
+  `marketing` as well, with the reason written at the site.
 
 ### Must be built — the real work
 
-1. **A subscribers table.** There is currently **no table anywhere in
-   `lib/db/schema/` holding an email address together with a subscription
-   consent flag.** `email_optouts` is hash-only (`emailHash` PK, `stream`,
-   `reason`, `createdAt`) — you can *check* a hash, you cannot *enumerate*
-   recipients from it. `eventRegistrations.interestedInNewsletter` exists but its
-   own schema comment says it is explicitly **not** consent to marketing email.
-2. **A subscribe funnel that is actually wired up.**
-   `app/api/newsletter/subscribe/route.ts` exists but **nothing in the codebase
-   calls it**, and it writes to Resend. Six components point at
-   `MAILCHIMP_CONFIG.subscribeUrl` instead.
-3. **Double opt-in**, to produce the evidence the AUP's "explicitly opted in"
-   requires.
-4. **A DB → recipients bridge** so `build-batch.ts` can be fed from the
-   subscribers table rather than a CSV.
-5. **Open/click analytics**, if wanted: enable domain-level tracking and capture
-   `email.opened` / `email.clicked` webhook events into our own table.
+Items 1–4 are **built as of 2026-08-29**; item 5 is not, and was never required.
+Built means the code exists, is typechecked and has its own tests — **not** that
+anyone has been imported or that anything has been sent.
+
+1. ~~**A subscribers table.**~~ **Done.** `newsletter_subscribers` in
+   `lib/db/schema/system.ts`, migration `0032_sweet_maria_hill.sql`, **applied to
+   the production database**. It holds the address, its `hashEmail()` digest, a
+   `subscriber_status` enum (`pending` / `subscribed` / `unsubscribed` /
+   `bounced` / `complained`), and the consent evidence — `consent_source`,
+   `consent_date`, `consent_ip`, `consent_user_agent`. The table is **empty**.
+   All reads and writes go through `lib/newsletter/subscribers.ts`, whose
+   `listSubscribed()` is the single enumeration point and returns
+   `status = 'subscribed'` and nothing else.
+
+   `email_optouts` remains hash-only (`emailHash` PK, `stream`, `reason`,
+   `createdAt`) — you can *check* a hash, you cannot *enumerate* recipients from
+   it, which is why a second table was needed rather than a column on that one.
+
+   > **Correction to this document.** The column that "exists but its own schema
+   > comment says it is explicitly **not** consent to marketing email" is
+   > `eventFeedbackSubmissions.interestedInNewsletter`, **not**
+   > `eventRegistrations.interestedInNewsletter` — see
+   > `lib/db/schema/events.ts:160` and migration `0029_bored_warpath.sql`.
+   > `eventRegistrations` has no email column at all, so it could not have
+   > carried a subscription flag in the first place. The point being made was
+   > correct; only the table name was wrong.
+
+2. ~~**A subscribe funnel that is actually wired up.**~~ **Done.**
+   `POST /api/newsletter/subscribe` no longer writes to Resend — it writes a
+   `pending` row and sends the confirmation mail. The public pages are
+   `app/(site)/newsletter/subscribe/` and `app/(site)/newsletter/confirm/`. The
+   **six** `MAILCHIMP_CONFIG.subscribeUrl` links (footer, newsletters page, and
+   four mentorship surfaces) now point at `/newsletter/subscribe`, and
+   `subscribeUrl` has been **deleted** from `MAILCHIMP_CONFIG` in
+   `lib/data/newsletters.ts` so no seventh one can appear. `archiveUrl` remains —
+   it is still the only route to the pre-2026-08 back catalogue.
+3. ~~**Double opt-in**~~ **Done**, and it is what produces the evidence the AUP's
+   "explicitly opted in" requires. A subscribe request never writes a mailable
+   row: the row is `pending` until the person presses the button on
+   `/newsletter/confirm`, which posts to `/api/newsletter/confirm`. Tokens are
+   single-use, replaced on re-request, and expire after `CONFIRM_TTL_DAYS` (7).
+   The confirmation is a **button press, not a link visit** — a link scanner
+   prefetching a GET must not be able to manufacture consent, the same reason
+   the unsubscribe endpoint's GET never mutates.
+4. ~~**A DB → recipients bridge**~~ **Done.** `scripts/email/recipients-from-db.ts`
+   reads `status = 'subscribed'`, applies both suppression registers through
+   `selectMailable()`, and writes the same recipients-file shape
+   `normalize-recipients.ts` produces — so `build-batch.ts` needed no change to
+   be fed from the database. The newsletter itself, which is a React Email
+   template rather than a `MessageSpec`, goes through
+   `scripts/newsletter/build-newsletter-batch.ts`, which reuses build-batch's
+   idempotency key, hash ledger, manifest shape and chunk-file naming and swaps
+   only the renderer. **Neither script sends.** They write files and print the
+   `resend emails batch --file` commands a human runs.
+5. **Open/click analytics** — **not built, and not required.** If wanted: enable
+   domain-level tracking and capture `email.opened` / `email.clicked` webhook
+   events into our own table.
 
 ### What this decision retires
+
+**Still a plan — none of this has happened yet (as at 2026-08-29).** Nothing on
+the *sending* path touches any of it any more, which is exactly what makes it
+dangerous: it is dormant configuration that still looks live. `resend-api.ts`
+survives, and `scripts/newsletter/{setup-resend,seed-pilot-contacts}.ts` still
+import it and still read the two env vars — so a future session that runs either
+script will be told the segment and topic are current.
 
 Self-hosting makes the Resend **Marketing** objects dead weight. The segment
 `Newsletter` and topic `Monthly Newsletter` created during the 2026-08-28 account
@@ -278,7 +340,8 @@ session mistakes for live configuration.
 currently stated in `CLAUDE.md`, `docs/development/EMAIL_OPERATIONS.md` and
 `consent-rules.md` — *"Resend's segment + topic membership is the only record of
 who opted in"*. Those three places must be updated together with the schema, or
-the repo will assert a rule its own code no longer implements.
+the repo will assert a rule its own code no longer implements. **The schema
+landed on 2026-08-29** (`newsletter_subscribers`), so that window is open now.
 
 ---
 
@@ -313,11 +376,64 @@ against in its "do not tighten DMARC and switch ESP in the same month" rule.
 Revisit the subdomain once the send is boring. Pro allows 10 domains, so nothing
 is foreclosed.
 
+**Resolved 2026-08-29: the decision was taken not to split**, on exactly that
+reasoning, and it is **recorded in `EMAIL_AUTHENTICATION.md`** under
+"Sending-domain architecture" so a future session reads it as a decision rather
+than as an unmet obligation. The trigger itself stays: the complaint-rate
+(>0.10%) and hard-bounce-rate (>2%) arms are untouched and still fire, and the
+recipient-count arm is to be revisited once the send is boring.
+
 **4. Our unsubscribe endpoint becomes availability-critical.** Resend's hosted
 unsubscribe page disappears from the picture. If `www.shesharp.org.nz` is down —
 including during `MAINTENANCE_MODE=true`, which returns 503 for the whole site —
 unsubscribe requests fail, against an AUP that requires honouring them within
 seven days.
+
+**Partly closed 2026-08-29.** `/api/email/unsubscribe` is now the single
+`MAINTENANCE_EXEMPT_PATH` in `proxy.ts` — an exact-match single path, not a
+prefix, so nothing else under `/api/` is exempt and a sibling route cannot widen
+the hole by accident. That removes maintenance mode as a cause. A genuine outage
+of `www.shesharp.org.nz` is not covered and cannot be, which is the residual
+risk.
+
+**5. The pre-send gates were doing no work, and nobody could tell.** Discovered
+while building phase 3, and worth recording because the shape of it will recur.
+
+The newsletter's event cover images were **WebP**, which Outlook on the desktop
+cannot decode — every issue would have rendered a broken-image placeholder for
+every Outlook reader. Worse, the committed issue fixtures still used the **flat
+`/img/events/<slug>-cover.webp` naming that stopped existing at the 2026-08-19
+one-folder-per-event migration**, so the covers were not merely unrenderable in
+Outlook, they 404'd everywhere.
+
+Two independent guards should have caught this and neither did:
+
+- **The old Resend-broadcast path ran none of `lib/email/gates.ts`.** The
+  approve route's only pre-send check was the renderer's own >100KB size throw;
+  nothing called the gates. Both defects were found the first time the batch
+  builder put the rendered message through the strict gates — i.e. they were
+  found by phase 3 existing, not by anyone looking.
+- **`scripts/assets/refs.ts` deliberately excludes absolute URLs** from its
+  reference corpus, and the newsletter's `auto` block stores absolute URLs
+  because email requires them. So the image guard that checks every reference
+  resolves has never been able to see the newsletter fixtures.
+
+Both defects are fixed — a committed email-safe JPEG twin (`cover-email.jpg`)
+beside each cover, generated and verified by
+`scripts/newsletter/email-covers.ts` (`--check`), with the six twins registered
+in `KNOWN_UNREFERENCED` in `scripts/verify-image-paths.ts` and the reason written
+at each entry. Note that `email-covers.ts --check` is **not in CI** — it is a
+local command, so today the only thing standing between a renamed cover and a
+broken send is somebody running it.
+
+**The refs.ts exclusion is not fixed, and deserves a decision.** Its documented
+premise is that an absolute URL in a *newsletter test fixture* is not a reference
+to a file in `public/`. That premise no longer holds: those fixtures are now the
+live source for a real send to a real list. The exclusion was not changed in
+passing — a CI guard's semantics is not something to rewrite as a side effect of
+a bug fix — but somebody has to decide whether the corpus should learn to
+recognise `https://www.shesharp.org.nz/img/...` as a `public/` reference, or
+whether adding `email-covers.ts --check` to `verify.yml` is the permanent answer.
 
 ---
 
