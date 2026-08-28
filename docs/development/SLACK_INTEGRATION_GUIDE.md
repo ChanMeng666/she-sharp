@@ -96,30 +96,33 @@ SLACK_VOLUNTEER_WEBHOOK_URL="https://hooks.slack.com/services/T.../B.../XXXX..."
 
 ### Vercel Production / Preview / Development
 
-Use the Vercel CLI to set the environment variable. **Important**: Use `printf` instead of `echo` to avoid adding a trailing newline character to the value.
+Use the Vercel CLI to set the environment variable. **Important**: pass the value with `--value`, never through a pipe (see the warning below). A webhook URL is a credential — anyone holding it can post into the channel — so leave it Sensitive, which is the default.
 
 ```bash
 # Set for production
-printf 'https://hooks.slack.com/services/T.../B.../XXXX...' | npx vercel env add SLACK_VOLUNTEER_WEBHOOK_URL production
+npx vercel env add SLACK_VOLUNTEER_WEBHOOK_URL production --value 'https://hooks.slack.com/services/T.../B.../XXXX...' --force --yes
 
 # Set for preview
-printf 'https://hooks.slack.com/services/T.../B.../XXXX...' | npx vercel env add SLACK_VOLUNTEER_WEBHOOK_URL preview
+npx vercel env add SLACK_VOLUNTEER_WEBHOOK_URL preview --value 'https://hooks.slack.com/services/T.../B.../XXXX...' --force --yes
 
 # Set for development
-printf 'https://hooks.slack.com/services/T.../B.../XXXX...' | npx vercel env add SLACK_VOLUNTEER_WEBHOOK_URL development
+npx vercel env add SLACK_VOLUNTEER_WEBHOOK_URL development --value 'https://hooks.slack.com/services/T.../B.../XXXX...' --force --yes
 ```
 
-> **Critical Warning — `echo` vs `printf`**
+> **Critical Warning — never pipe the value**
 >
-> Do NOT use `echo` to pipe values to `vercel env add`:
+> Do NOT pipe a value into `vercel env add` — not with `echo`, and not with `printf` either:
 > ```bash
-> # BAD - echo adds a trailing \n character to the env var value
+> # BAD - the pipe is never read; MY_VAR is stored as an EMPTY string
+> printf 'https://hooks.slack.com/...' | npx vercel env add MY_VAR production
+>
+> # BAD - same empty-value problem, and echo appends a trailing \n on top of it
 > echo "https://hooks.slack.com/..." | npx vercel env add MY_VAR production
 >
-> # GOOD - printf does not add a trailing newline
-> printf 'https://hooks.slack.com/...' | npx vercel env add MY_VAR production
+> # GOOD - the value is passed as a flag
+> npx vercel env add MY_VAR production --value 'https://hooks.slack.com/...' --force --yes
 > ```
-> A trailing newline in the webhook URL will cause `fetch()` to fail silently or return errors. This applies to ALL environment variables set via pipe on Vercel, not just Slack webhooks.
+> This CLI reads the value from `/dev/tty`, not from standard input, so the pipe is never consumed — and the command still reports success. The two failures look different in production: an empty `SLACK_VOLUNTEER_WEBHOOK_URL` makes `sendSlackMessage()` log "not configured, skipping notification" and return, so notifications just stop, indistinguishable from a variable nobody set; a trailing `\n` from `echo` would not, because every webhook getter in `lib/slack/service.ts` reads the variable through `?.trim()`. That asymmetry is the point: the newline failure this section used to warn about is already handled in code, while the empty-value failure cannot be — an empty string and an unset variable are the same thing to `if (!webhookUrl)`. This applies to ALL environment variables on Vercel, not just Slack webhooks, and most of them have no `.trim()` in front of them. Full rules: [`docs/deployment/VERCEL_ENV_VARIABLES_GUIDE.md`](../deployment/VERCEL_ENV_VARIABLES_GUIDE.md).
 
 ### Verify Environment Variables
 
@@ -133,14 +136,13 @@ npx vercel env ls | grep -i slack
 
 ### Updating an Environment Variable
 
-To update an existing variable, remove it first, then re-add:
+`--force` overwrites an existing variable, so there is no need to remove it first:
 
 ```bash
-npx vercel env rm SLACK_VOLUNTEER_WEBHOOK_URL production -y
-printf 'https://hooks.slack.com/services/NEW_URL_HERE' | npx vercel env add SLACK_VOLUNTEER_WEBHOOK_URL production
+npx vercel env add SLACK_VOLUNTEER_WEBHOOK_URL production --value 'https://hooks.slack.com/services/NEW_URL_HERE' --force --yes
 ```
 
-> After changing environment variables on Vercel, you must **redeploy** for changes to take effect.
+> After changing environment variables on Vercel, the new value reaches the site only through a **new build**: Vercel binds environment variables to a deployment at build time, so the running deployment keeps the values it was built with. Neither the dashboard's "Redeploy" button nor `vercel redeploy` helps — both reuse the previous build's environment. Push a commit to `main` to trigger the deploy workflow.
 
 ---
 
@@ -436,12 +438,12 @@ If you need to delete messages programmatically (e.g., large-scale cleanup), you
 
 | Symptom | Cause | Fix |
 |---------|-------|-----|
-| No message, no error in logs | Env var not set or empty | Check `npx vercel env ls \| grep SLACK` |
+| No message, no error in logs | Env var not set or empty | Check `npx vercel env ls \| grep SLACK`. A variable that exists but is empty is usually a piped `vercel env add` — re-set it with `--value` |
 | `SLACK_VOLUNTEER_WEBHOOK_URL not configured` in logs | Env var missing | Add the env var to Vercel |
 | Slack webhook failed: 403 | Webhook URL revoked or app uninstalled | Regenerate the webhook in Slack App settings |
 | Slack webhook failed: 404 | Webhook URL is incorrect | Verify the URL in Slack App settings |
 | Slack webhook failed: 400 | Invalid message payload | Check Block Kit format at [Block Kit Builder](https://app.slack.com/block-kit-builder) |
-| Works locally but not on Vercel | Env var has trailing newline | Use `printf` instead of `echo` when setting env vars, or add `.trim()` |
+| Works locally but not on Vercel | Env var is empty (set through a pipe, which is never read) | Re-set it with `--value`, never a pipe. A trailing newline is already handled: the getters in `lib/slack/service.ts` call `.trim()` |
 | DB saves but no Slack message | Fire-and-forget race condition | Change to `await sendSlackNotification(...)` |
 | `missing_scope` from API call | Bot/User token lacks required OAuth scope | Add the scope in App settings → OAuth & Permissions, then reinstall |
 | `not_in_channel` from API call | Bot not a member of the target channel | Invite the bot: `/invite @bot-name` in the Slack channel |
@@ -551,7 +553,7 @@ To add Slack notifications for a different feature (e.g., event registrations):
 
 1. **Add a new env var** (if using a different channel):
    ```bash
-   printf 'https://hooks.slack.com/services/...' | npx vercel env add SLACK_EVENTS_WEBHOOK_URL production
+   npx vercel env add SLACK_EVENTS_WEBHOOK_URL production --value 'https://hooks.slack.com/services/...' --force --yes
    ```
 
 2. **Create or extend the Slack service** (`lib/slack/service.ts`):

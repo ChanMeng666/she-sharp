@@ -41,16 +41,21 @@ The hosted bot lives on the existing Vercel deployment. Admin types
 
 ### One-time environment variable setup (Vercel)
 
-Run from the project root (use `printf`, never `echo` — see
-[CLAUDE.md](../../CLAUDE.md)):
+Run from the project root. Pass every value with `--value`, never through a
+pipe: this CLI reads the value from `/dev/tty`, so a piped value is never read
+and the variable is stored **empty** — which looks like a variable nobody set
+rather than one set wrongly. Secrets stay Sensitive (the default);
+`--no-sensitive` is only for the non-secret identifiers, so they can be read
+back and verified. Full rules:
+[`docs/deployment/VERCEL_ENV_VARIABLES_GUIDE.md`](../deployment/VERCEL_ENV_VARIABLES_GUIDE.md).
 
 ```bash
-printf 'xoxb-your-token' | vercel env add SLACK_BOT_TOKEN production
-printf 'your-signing-secret' | vercel env add SLACK_SIGNING_SECRET production
-printf 'U01ABC,U02DEF' | vercel env add SLACK_ALLOWED_USER_IDS production
-printf 'github_pat_xxx' | vercel env add GITHUB_BOT_TOKEN production
-printf 'NZ-SheSharp/she-sharp' | vercel env add GITHUB_REPO production
-printf 'main' | vercel env add GITHUB_REPO_DEFAULT_BRANCH production
+vercel env add SLACK_BOT_TOKEN production --value 'xoxb-your-token' --force --yes
+vercel env add SLACK_SIGNING_SECRET production --value 'your-signing-secret' --force --yes
+vercel env add SLACK_ALLOWED_USER_IDS production --value 'U01ABC,U02DEF' --no-sensitive --force --yes
+vercel env add GITHUB_BOT_TOKEN production --value 'github_pat_xxx' --force --yes
+vercel env add GITHUB_REPO production --value 'NZ-SheSharp/she-sharp' --no-sensitive --force --yes
+vercel env add GITHUB_REPO_DEFAULT_BRANCH production --value 'main' --no-sensitive --force --yes
 ```
 
 The GitHub PAT should be a **fine-grained** token scoped to the

@@ -29,8 +29,11 @@ The maintenance mode logic lives in `proxy.ts` (the project's Next.js proxy/midd
 ### Option A: Vercel CLI
 
 ```bash
-# Add the environment variable (use printf to avoid trailing newline)
-printf 'true' | vercel env add MAINTENANCE_MODE production
+# Add the environment variable.
+# Pass --value; a piped value (printf/echo) is read from /dev/tty, never from the
+# pipe, so it stores an EMPTY string and the site stays up. See
+# docs/deployment/VERCEL_ENV_VARIABLES_GUIDE.md
+vercel env add MAINTENANCE_MODE production --value 'true' --no-sensitive --force --yes
 
 # Redeploy to apply
 vercel --prod --force
@@ -40,7 +43,7 @@ vercel --prod --force
 
 1. Go to **Vercel Dashboard → Project Settings → Environment Variables**
 2. Add `MAINTENANCE_MODE` with value `true` for the **Production** environment
-3. Trigger a redeployment (Vercel may auto-redeploy on env var changes, or manually redeploy)
+3. Trigger a redeployment. Vercel does **not** auto-redeploy on an env var change, and the dashboard's "Redeploy" button reuses the previous build's environment — env vars bind at build time. Run `vercel --prod --force` as in Option A, or push a commit to `main`
 
 ### Verification
 
@@ -75,7 +78,7 @@ vercel --prod --force
 - **No code changes needed** to toggle maintenance mode — it is purely controlled by the environment variable
 - **All Vercel data is preserved** during maintenance mode (deployments, domains, other env vars, serverless functions)
 - The Vercel Hobby plan does not have a "Pause Project" feature, which is why this application-level approach was implemented
-- When setting the env var via CLI with `echo`, use `printf 'true'` instead of `echo "true"` to avoid a trailing newline character that would cause the string comparison to fail
+- When setting the env var via CLI, pass `--value 'true'`. Do **not** pipe it: the CLI reads the value from `/dev/tty`, so `printf 'true' |` stores an empty string and the site stays up — and `echo "true"` would add a trailing newline that fails the `=== 'true'` comparison. See [`VERCEL_ENV_VARIABLES_GUIDE.md`](./VERCEL_ENV_VARIABLES_GUIDE.md)
 - The `config.matcher` in `proxy.ts` was updated from the original pattern to include `logos` in the exclusion list (for the maintenance page logo) and to include API routes in the proxy scope (so they also return 503 during maintenance)
 
 ## Local Development Testing

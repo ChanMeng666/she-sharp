@@ -320,18 +320,25 @@ Trades a little polish for enormous debugging speedup — essential during devel
 
 **Non-issue for new apps, but worth knowing**: The old `SLACK_BOT_TOKEN` on Vercel (for the legacy Python script) had different scopes. We REPLACED it with the new token from the new app — `vercel env rm SLACK_BOT_TOKEN production` then `vercel env add`. Old Python script paths that need the legacy token should use a different variable name (`SLACK_LEGACY_BOT_TOKEN` or similar) to avoid conflict.
 
-### P-14. Vercel CLI `printf` vs `echo`
+### P-14. Vercel CLI env vars: never pipe the value
 
-**Rule from CLAUDE.md**: Always use `printf 'value' | vercel env add VAR production`. NEVER `echo`. `echo` appends a trailing `\n` that gets stored as part of the value and silently corrupts the env var.
+**Symptom**: `vercel env add` reports success, but the deployed app behaves as though the token were missing (empty) or invalid (a trailing `\n` in the signature check).
+
+**Rule from CLAUDE.md**: Pass the value with `--value`, never through stdin. Any piped form — `printf`, `echo`, `< file` — is silently wrong, for two different reasons: this CLI reads the value from `/dev/tty`, so the pipe is never consumed and the variable is stored **empty**; and `echo` would additionally append a `\n` to the value if it were. The empty case is the nastier one, because it looks like a variable nobody set rather than one that was set wrongly.
 
 Example:
 ```bash
-# BAD — value ends up as "xoxb-...\n"
+# BAD — pipe never read; SLACK_BOT_TOKEN is stored as ""
+printf 'xoxb-...' | vercel env add SLACK_BOT_TOKEN production
+
+# BAD — same empty-value problem, plus echo's trailing "\n"
 echo "xoxb-..." | vercel env add SLACK_BOT_TOKEN production
 
 # GOOD
-printf 'xoxb-...' | vercel env add SLACK_BOT_TOKEN production
+vercel env add SLACK_BOT_TOKEN production --value 'xoxb-...' --force --yes
 ```
+
+Note that a bot token is a secret, so leave it Sensitive — which means `vercel env pull` shows it as `""` and cannot verify it. Full rules, including how to tell "Sensitive" apart from "empty": [`docs/deployment/VERCEL_ENV_VARIABLES_GUIDE.md`](../deployment/VERCEL_ENV_VARIABLES_GUIDE.md).
 
 ---
 
@@ -409,14 +416,16 @@ Adjust scopes to the minimum your app needs. Avoid `users:read`, `chat:write.pub
 ```bash
 vercel switch she-sharp1   # if not already on this scope
 
-printf 'xoxb-your-bot-token' | vercel env add SLACK_BOT_TOKEN production
-printf 'your-signing-secret' | vercel env add SLACK_SIGNING_SECRET production
-printf 'U0YOURID,U0COLLEAGUE' | vercel env add SLACK_ALLOWED_USER_IDS production
+# --value, never a pipe — see P-14. Secrets stay Sensitive (the default);
+# --no-sensitive is for the non-secret identifiers so they stay verifiable.
+vercel env add SLACK_BOT_TOKEN production --value 'xoxb-your-bot-token' --force --yes
+vercel env add SLACK_SIGNING_SECRET production --value 'your-signing-secret' --force --yes
+vercel env add SLACK_ALLOWED_USER_IDS production --value 'U0YOURID,U0COLLEAGUE' --no-sensitive --force --yes
 
 # For apps that commit to GitHub:
-printf 'github_pat_xxx' | vercel env add GITHUB_BOT_TOKEN production
-printf 'NZ-SheSharp/she-sharp' | vercel env add GITHUB_REPO production
-printf 'main' | vercel env add GITHUB_REPO_DEFAULT_BRANCH production
+vercel env add GITHUB_BOT_TOKEN production --value 'github_pat_xxx' --force --yes
+vercel env add GITHUB_REPO production --value 'NZ-SheSharp/she-sharp' --no-sensitive --force --yes
+vercel env add GITHUB_REPO_DEFAULT_BRANCH production --value 'main' --no-sensitive --force --yes
 ```
 
 ### Step 4: Redeploy
@@ -601,9 +610,10 @@ Shared infrastructure like `verify-image-paths.ts` (under `scripts/`) is event-s
 - **New canonical sponsor logo added**: update `CANONICAL_SPONSOR_SLUGS` in `lib/slack-bot/sponsor-registry.ts` and commit. The AI won't know to reuse it until this list is updated.
 - **New admin needs access**: update `SLACK_ALLOWED_USER_IDS` on Vercel:
   ```bash
-  printf 'U094QBSBVGD,U0NEW_USER' | vercel env add SLACK_ALLOWED_USER_IDS production --force
-  vercel redeploy <latest-url>
+  vercel env add SLACK_ALLOWED_USER_IDS production --value 'U094QBSBVGD,U0NEW_USER' --no-sensitive --force --yes
   ```
+  Then push a commit to `main` — env vars bind at build time, so `vercel redeploy`
+  would reuse the old build's environment and the new admin still would not get in.
 - **OpenAI model change**: update `MODEL` constant in `lib/slack-bot/ai-extractor.ts`. Test with a few `/event` invocations before rolling out widely.
 - **Convention change**: edit `lib/slack-bot/conventions.ts`. The change takes effect on next deploy; no schema migration needed since rules are just AI guidance.
 - **Draft branch cleanup**: branches are created at preview time and deleted on Cancel or merged on Confirm. Abandoned drafts (admin closes Slack) accumulate. A weekly GitHub Action could sweep `slack-bot-drafts/*` older than N days — not yet implemented.
