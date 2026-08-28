@@ -462,6 +462,13 @@ never touch TypeScript. → `docs/development/DECK_SYSTEM.md`
 bounce/complaint capture. → `docs/development/EMAIL_OPERATIONS.md`; DNS, DMARC
 and the Mailchimp → Resend migration in `docs/deployment/EMAIL_AUTHENTICATION.md`
 
+**Decided 2026-08-28, not yet built:** the newsletter will be **self-hosted**
+on Resend's transactional batch API rather than its Marketing product, which
+moves the marketing-consent record out of Resend and into our own database.
+Until that lands, the Resend-is-the-consent-record rule above still holds.
+Reasoning, costs and the AWS SES fallback:
+`docs/development/EMAIL_PLATFORM_STRATEGY.md`
+
 **Monthly newsletter.** React Email + Resend broadcasts with an AI editorial
 draft, run by the `/monthly-newsletter` skill. **The live newsletter still goes
 out from Mailchimp** — this is the replacement, piloted but not switched over.
