@@ -70,14 +70,19 @@ async function main(): Promise<void> {
   console.log(`  RESEND_NEWSLETTER_TOPIC_ID=${topic.id}`);
   console.log(`  RESEND_NEWSLETTER_SEGMENT_ID=${segment.id}`);
   console.log("");
-  console.log("To set on Vercel, use printf (never echo — echo appends a trailing newline");
-  console.log("that corrupts the stored value):");
+  console.log("To set on Vercel, pass the value as a flag. Never pipe it in on stdin —");
+  console.log("`printf ... |`, `< file` and `echo` can all silently store an empty");
+  console.log("string, and `echo` additionally appends a newline that becomes part of");
+  console.log("the value. `--no-sensitive` is what makes the result readable back:");
   console.log(
-    `  printf '${topic.id}' | vercel env add RESEND_NEWSLETTER_TOPIC_ID production`
+    `  vercel env add RESEND_NEWSLETTER_TOPIC_ID production --value ${topic.id} --no-sensitive --force --yes`
   );
   console.log(
-    `  printf '${segment.id}' | vercel env add RESEND_NEWSLETTER_SEGMENT_ID production`
+    `  vercel env add RESEND_NEWSLETTER_SEGMENT_ID production --value ${segment.id} --no-sensitive --force --yes`
   );
+  console.log("");
+  console.log("Then verify byte-for-byte:");
+  console.log("  vercel env pull <tmpfile> --environment production --yes");
   console.log("");
 }
 

@@ -468,11 +468,16 @@ poll `domains claim get` until `completed` → update DKIM in DNS →
 | Region | us-east-1 | us-east-1 — **deliberately the same** |
 | Return-Path | `send.shesharp.org.nz` | `send.shesharp.org.nz` — unchanged |
 | Webhook | → `https://www.shesharp.org.nz/api/webhooks/resend` | `facbd62e-7c3e-47fa-abf1-0d36b37cd71c`, same URL, same four events, **new `whsec_` secret** |
-| Contacts | 2 test addresses (left in place, exported to a private backup) | **0 — nothing was imported** |
+| Contacts | 2 test addresses | **0 — nothing was imported** |
 
 Segments and topics do **not** travel with a claim; they were recreated. Their
 new ids are in `.claude/skills/update-mailing-list/references/resend-roster-cli.md`
 and in `docs/development/EMAIL_OPERATIONS.md`.
+
+The old team was cleared out after the move, so its full pre-migration state —
+including both Cloudflare zone dumps — lives only in the private archive repo at
+`resend/2026-08-28-account-migration/` in `she-sharp-slack-archive`. No
+credentials are stored there.
 
 ### The DNS delta was exactly one record
 
