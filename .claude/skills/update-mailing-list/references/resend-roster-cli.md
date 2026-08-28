@@ -1,199 +1,104 @@
-# Resend CLI — roster management
+# The roster is no longer in Resend — read this before running a `resend contacts` command
 
-Practical notes for managing She Sharp's contacts, segments and topics with the
-`resend` CLI (`resend-cli v2.8.1`). Every command here has been run against the
-live account; the flags are from the CLI's own `--help`, not from memory.
+**Superseded 2026-08-29.** This file used to be the working manual for managing
+She Sharp's mailing list with `resend contacts`, `resend segments` and
+`resend topics`. Those commands still work, and running them against this
+account will still produce confident, well-formatted output. **That output is no
+longer the mailing list**, and reporting it as such is now the most likely way to
+give someone a wrong answer about who She Sharp may email.
 
-Confirm authentication first with `resend whoami` — it prints
-`"authenticated": true`, the profile, a masked key and the permission level. A
-`full_access` key can write; a `sending_access` key cannot manage contacts.
+## What replaced it
 
-## The three objects, and how they relate
+The marketing consent record is the **`newsletter_subscribers` table** in this
+project's own Postgres database. A row with `status = 'subscribed'` is a
+subscriber; nothing else is. `references/consent-rules.md` is the rule, and
+`SKILL.md` is the procedure.
 
-**Contacts are global.** Since the 2025 migration they are not scoped to
-anything — one record per email address for the whole team. `resend contacts
---help` states it outright: *"Contacts are global entities (not audience-scoped
-since the 2025 migration)."* Both a UUID and an email address are accepted as
-the id in every subcommand.
+| You want to | Use |
+|---|---|
+| Read the list | `npx tsx scripts/email/inspect-subscribers.ts --limit 50` |
+| Look one person up, with their consent provenance | `npx tsx scripts/email/inspect-subscribers.ts --email someone@example.com` |
+| See every address list She Sharp holds, by tier | `npx tsx scripts/email/audience-report.ts` |
+| Check the do-not-contact registers | `npx tsx scripts/email/suppression.ts check someone@example.com` |
+| Stop mailing someone | `npx tsx scripts/email/suppression.ts add someone@example.com --reason "asked to be removed"` |
+| See whether the stores have drifted apart | `npx tsx scripts/email/suppression.ts reconcile` |
+| Build a send's recipient list | `npx tsx scripts/email/recipients-from-db.ts --key <k>` |
 
-**Segments replaced Audiences.** A segment is a named group of contacts, and a
-broadcast targets a `segment_id`. A contact can belong to several. There is **no
-segments update endpoint** — to rename one you delete and recreate it, which
-drops the membership, so name segments carefully the first time.
+Every one of those masks addresses (`j****@gmail.com`) or prints truncated
+hashes, so the output is safe to paste into a PR or Slack.
 
-**Topics are per-subscription preferences.** A contact opts in or out of each
-topic independently. A broadcast can target a `topic_id` so only opted-in
-contacts receive it; contacts with no explicit record inherit the topic's
-`default_subscription`.
+`audience-report.ts` still accepts `--include-resend` and will still report a
+Tier 0 count from Resend. **That number is zero and means nothing.** Quote the
+database instead.
 
-The two opt-out mechanisms are not the same thing: `--unsubscribed` on a contact
-is a **team-wide** opt-out from all broadcasts, while a topic `opt_out` silences
-that one topic only.
+## The Resend objects that still exist
 
-She Sharp's live objects (Resend team **shesharp**, owned by
-`website@shesharp.org.nz`; re-verified 2026-08-28 after the account move):
+They were recreated on 2026-08-28 when the domain and sending setup moved to the
+She Sharp–owned Resend team (**shesharp**, owned by `website@shesharp.org.nz`).
+They hold **nobody**, nothing writes to them, and they are pending deletion.
 
 | Object | Name | ID |
 |---|---|---|
 | Segment | Newsletter | `95d452f5-2eed-4ad4-b18e-5ff5a89a576b` |
-| Segment | General (team default — empty, nothing uses it) | `9d195cb7-f7fc-49e0-9b88-e47c1741e720` |
+| Segment | General (team default) | `9d195cb7-f7fc-49e0-9b88-e47c1741e720` |
 | Topic | Monthly Newsletter | `08e59693-29dc-4556-8357-866dea047c6f` |
 
-**Every id above changed on 2026-08-28**, when the domain and the sending setup
-moved from the maintainer's personal Resend team to the She Sharp–owned one.
-Segments and topics do not travel with a domain claim, so these were recreated;
-the team holds **0 contacts** and nothing has been imported.
+They are listed here so that finding them in an env var or an old script is not
+mistaken for evidence that the migration did not happen. The env vars
+`RESEND_NEWSLETTER_SEGMENT_ID` and `RESEND_NEWSLETTER_TOPIC_ID` are still set
+and still in `.env.example`, but nothing in the send path reads them.
 
-Re-read them rather than trusting this table:
+Do not import contacts into them. Do not add anyone to them "so both are in
+sync" — two consent records that can disagree is precisely the situation the
+migration removed.
 
-```powershell
-resend segments list --json
-resend topics list --json
-```
+## Resend is still the sender
 
-## Reading the roster
-
-```powershell
-resend contacts list --limit 100 --json
-resend contacts get someone@example.com --json
-resend contacts segments someone@example.com
-resend contacts topics someone@example.com
-resend segments contacts 95d452f5-2eed-4ad4-b18e-5ff5a89a576b --limit 100 --json
-```
-
-**`--limit` defaults to 10 and caps at 100.** This is the single most common way
-to get a wrong answer from this CLI: run `resend contacts list --json` on a list
-of 400 and you will confidently report 10. Page with `--after <contact-id>`
-until `has_more` is `false`:
-
-```json
-{"object":"list","has_more":false,"data":[{"id":"…","email":"…","unsubscribed":false}]}
-```
-
-`diff-roster.ts` in this skill does that paging for you and masks the addresses.
-
-## Importing a CSV
-
-The import is **asynchronous**: `create` returns an id immediately and processes
-the file in the background.
+None of this makes the CLI obsolete in general. Resend remains the transactional
+and bulk **sending** provider, and the send path is unchanged:
 
 ```powershell
-resend contacts imports create --file .\tmp\csv\attendees.local.csv `
-  --column-map '{"email":"E-Mail Address","firstName":"Given Name","lastName":"Family Name"}' `
-  --on-conflict skip `
-  --segment-id 95d452f5-2eed-4ad4-b18e-5ff5a89a576b `
-  --topics '[{"id":"08e59693-29dc-4556-8357-866dea047c6f","subscription":"opt_in"}]'
+resend whoami
+resend emails batch --file "<batch file>" --idempotency-key <key> --batch-validation strict
 ```
 
-Returns `{"object":"contact_import","id":"<id>"}`. Then poll
-`resend contacts imports get <id> --json` until `status` is terminal. Statuses
-are `queued`, `in_progress`, `completed`, `failed` (the same set
-`imports list --status` accepts). A finished import carries counts:
+Those batch files are built by `scripts/email/build-batch.ts` and
+`scripts/newsletter/build-newsletter-batch.ts`, which print the exact commands
+to run. `resend emails batch` has **no `--dry-run`** (only `resend emails send`
+does), so the file it is handed is the send. Sending is not this skill's job —
+see `email-the-community` and `monthly-newsletter`.
 
-```json
-{"object":"contact_import","id":"…","status":"completed",
- "counts":{"total":1200,"created":800,"updated":300,"skipped":75,"failed":25}}
-```
+The webhook at `app/api/webhooks/resend/route.ts` is also still live and still
+matters: it is what turns a bounce or a spam complaint into a `bounced` or
+`complained` status on the subscriber row, and a row in `email_optouts`.
 
-Poll every few seconds; a small file completes almost immediately. **Never
-assume completion** — an import that fails silently looks exactly like one that
-was never checked.
+## Why the move happened
 
-### `--column-map`
+Three reasons, all of which are also reasons not to drift back:
 
-Without it, columns are matched **case-sensitively** against the lowercase names
-`email` (required), `first_name`, `last_name`. A header of `Email` or
-`First Name` fails. Since no real ticketing export uses those exact headers,
-**always pass `--column-map`**.
+1. **The consent record belongs to She Sharp.** In Resend it lived inside a
+   vendor's segment membership, readable only through their API, and it moved
+   teams once already. In `newsletter_subscribers` it is ours, queryable, and
+   backed up with everything else.
+2. **Resend stores the contact, not the consent.** It could never answer "why is
+   this person on our list?" — the question `consent-rules.md` exists to make
+   answerable. The table stores `source`, `consentSource`, `consentDate`,
+   `confirmedAt`, and the IP and user agent for website sign-ups.
+3. **Double opt-in needs a `pending` state that Resend has no shape for.** A
+   contact is in a segment or it is not. A row can be `pending` for a week and
+   then expire, which is exactly what an unclicked confirmation link should do.
 
-The JSON maps contact field → CSV header (field on the left, your column on the
-right — the direction people get backwards). Supported keys: `email`,
-`firstName`, `lastName`, `unsubscribed`, and `properties` for custom columns:
+## The two traps worth carrying over
 
-```json
-{"email":"E-Mail Address","firstName":"Given Name",
- "properties":{"org":{"column":"Organisation","type":"string"}}}
-```
+They were the most common ways to get a wrong answer from the CLI, and the
+database versions rhyme:
 
-Properties are readable in broadcast templates via triple-brace interpolation
-(`{{{ORG|there}}}`); `firstName`/`lastName` are aliases stored as `FIRST_NAME` /
-`LAST_NAME`. In PowerShell, single-quote the JSON so `$` and `"` survive.
-
-### `--on-conflict upsert` vs `skip`
-
-`upsert` (the default) updates contacts that already exist; `skip` leaves them
-untouched.
-
-**Prefer `skip` for attendee imports.** `upsert` will happily overwrite an
-existing contact's fields — including resurrecting someone who unsubscribed,
-because the attendee CSV has no idea they did. Use `upsert` only when the file
-is deliberately a correction (fixing misspelled names on contacts you know are
-current), and only after `diff-roster.ts` shows an empty `unsubscribed` bucket.
-
-### There is no batch undo
-
-Nothing rolls an import back. The only remedy is one delete per contact —
-`resend contacts delete someone@example.com --yes` (`--yes` is **required** in
-non-interactive mode). Deleting 300 mistakenly imported contacts means 300
-calls, which is why the plan-then-confirm flow in `SKILL.md` exists.
-
-## Subscription state and segment membership
-
-```powershell
-# Team-wide opt-out (what an unsubscribe link sets)
-resend contacts update someone@example.com --unsubscribed
-
-# Per-topic — replaces ONLY the topics named in the array
-resend contacts update-topics someone@example.com `
-  --topics '[{"id":"08e59693-29dc-4556-8357-866dea047c6f","subscription":"opt_in"}]'
-
-resend contacts add-segment someone@example.com --segment-id 95d452f5-2eed-4ad4-b18e-5ff5a89a576b
-resend contacts remove-segment someone@example.com 95d452f5-2eed-4ad4-b18e-5ff5a89a576b
-resend contacts segments someone@example.com
-```
-
-Note the asymmetry: `add-segment` takes the segment as `--segment-id`, while
-`remove-segment` takes it as a **positional second argument**. Membership is
-also settable at import time with `--segment-id` (repeatable).
-
-**Never use these to re-subscribe someone who opted out.** Technically the CLI
-will do it; see `consent-rules.md` for why you must not. The only legitimate
-re-entry is the person using the website form.
-
-## Creating objects
-
-```powershell
-resend segments create --name "Newsletter Subscribers" --json
-resend topics create --name "Event Announcements" --default-subscription opt_out --json
-resend contacts create --email someone@example.com --first-name Ada --json
-```
-
-Prefer `default-subscription opt_out` for any new topic: silence until someone
-actively opts in is the behaviour you want to be wrong in.
-
-## Error strings and what to do
-
-Errors come back as `{"error":{"message":"…","code":"…"}}` on stderr with exit
-code 1. Documented codes for imports: `auth_error`, `missing_file`,
-`file_read_error`, `invalid_column_map`, `invalid_topics`, `create_error`.
-
-| What you see | Cause | Fix |
-|---|---|---|
-| `resend: command not found` / `ENOENT` | CLI not on PATH | `npm i -g resend-cli`, then `resend login` |
-| `auth_error` | No saved key, or a `sending_access` key | `resend login` with a `full_access` key; confirm with `resend whoami` |
-| `missing_file` / `file_read_error` | Wrong path, or a Windows path mangled by quoting | Use an absolute path; single-quote it in PowerShell |
-| `invalid_column_map` | Malformed JSON, or a header that isn't in the CSV | Echo the header row and compare byte-for-byte, including trailing spaces |
-| Import `completed` with `created: 0`, `failed: <all>` | No `--column-map` and headers aren't lowercase `email` | Re-run with `--column-map` |
-| `invalid_topics` | Topic JSON isn't `[{"id":"…","subscription":"opt_in"}]` | Check the array shape and that `id` is a real topic UUID |
-| `confirmation_required` on delete | Non-interactive without `--yes` | Add `--yes` |
-| Import stuck `queued` / `in_progress` | Normal for a large file | Keep polling `imports get`; check `imports list --status failed` before re-uploading — a second upload double-imports |
-| Contact count looks far too low | `--limit` defaulted to 10 | Page with `--after` until `has_more` is false |
-
-## Things the CLI will not tell you
-
-- **Why** a contact is on the list — Resend stores the contact, not the consent.
-  That is what `state/roster.json` and its `--consent` statement are for.
-- Whether an address is on the hashed suppression register — that is local
-  (`npx tsx scripts/email/suppression.ts check <email>`).
-- Whether importing is *allowed*. The CLI is a tool, not a gate; the gate is
-  `references/consent-rules.md`.
+- **`--limit` defaulted to 10.** Running `resend contacts list --json` on a list
+  of 400 confidently reported 10. `inspect-subscribers.ts --limit` defaults to
+  **20** and its closing count is the number of rows *shown*, not the size of
+  the list. Raise it past the row count before quoting a number.
+- **A contact import had no undo, and `--on-conflict upsert` silently
+  resurrected people who had unsubscribed.** There is still no undo, and the
+  database importer does not exist yet. When it does, the rule that replaces
+  `upsert` is already in code: `selectMailable()` lets a *later confirmation*
+  beat an earlier suppression, and lets nothing at all beat a complaint.

@@ -1,142 +1,96 @@
-# Resend broadcasts — the CLI lifecycle
+# The Resend CLI, for a community announcement
 
-Everything below was confirmed by running `--help` against the installed
-`resend` CLI on 2026-07-27, and by a real `--dry-run` against She Sharp's live
-segment. Where something could not be verified without creating a broadcast, it
-says so.
+**Read the first section before anything else on this page.** The rest of this
+file used to document `resend broadcasts`, which is no longer how She Sharp
+sends to its mailing list. What survives here is the part that still applies:
+the batch commands, the logs, and the errors you will actually meet.
 
-A broadcast is the only way to send marketing mail: it targets a **segment**
-(not addresses), and Resend attaches the one-click unsubscribe. Individual
-`resend emails send` calls cannot do either.
+Flags below were confirmed against the installed `resend` CLI with `--help` on
+2026-08-29.
 
-## The state machine
+## We do not use `resend broadcasts` for this any more
 
-```
-        create                 send --scheduled-at            (the slot arrives)
-  ∅ ──────────────► draft ──────────────────────► scheduled ─────────────────► sent
-       (no --send)    │                              │                           │
-                      │ update / delete              │ delete = CANCEL           │ nothing.
-                      ▼                              ▼                           ▼
-                   still nothing delivered      still nothing delivered      IRREVERSIBLE
-```
+A broadcast targets a **Resend segment** — a list of contacts Resend holds — and
+Resend attaches the one-click unsubscribe. That was the mechanism until the
+newsletter moved off it.
 
-| State | Can edit? | Can cancel? | What the audience has |
-|---|---|---|---|
-| `draft` | Yes — `broadcasts update` | Yes — `broadcasts delete` | Nothing |
-| `scheduled` | No | **Yes — `broadcasts delete` cancels delivery** | Nothing |
-| `sent` | No | **No. There is no recall.** | The email |
+It moved because the segment *was* the consent record. As long as "who may we
+email?" was answered by an account we do not own, She Sharp had no record of its
+own subscribers, could not say when any of them opted in, and could not move
+platform without losing all of it. Consent now lives in the
+`newsletter_subscribers` table in She Sharp's database, and mail goes out as a
+**batch**: one rendered message per person, each carrying a signed unsubscribe
+link this repo can verify.
 
-`broadcasts get --json` reports `status` as `draft | queued | sent` (per the
-CLI's documented output shape). A scheduled broadcast is expected to read as
-`queued` with a non-null `scheduled_at` — treat "queued + scheduled_at set" and
-"scheduled" as the same thing. *(Not verified live; verified only against the
-CLI's help text.)*
+So, for a community announcement:
 
-## `create` and `send` do different jobs
+- **Do not run `resend broadcasts create` / `send` / `get` / `delete`.**
+- **Do not look up a segment id or a topic id.** There is nothing in them; the
+  ones that still exist in the account are pending deletion.
+- **`{{{RESEND_UNSUBSCRIBE_URL}}}` is gone.** Nothing emits it, and
+  `lib/email/gates.ts` no longer permits it. Templates emit
+  `UNSUBSCRIBE_URL_PLACEHOLDER` and `build-batch.ts` substitutes a signed
+  per-recipient URL.
+- **`{{{contact.first_name|there}}}` cannot be used on this path either.** Merge
+  tags are a feature of broadcasts against Resend-held contacts; the batch
+  endpoint substitutes nothing, so `build-batch.ts` refuses any message where one
+  survives rather than delivering literal braces.
 
-**`broadcasts create` builds the thing. `broadcasts send` delivers it.** Keeping
-them apart is the entire safety margin of this skill.
+`resend broadcasts` still exists as a command. It is simply not this skill's
+mechanism, and there is no segment for it to send to.
+
+## The two commands this skill actually runs
+
+### `resend emails send` — the test send (Step 5)
+
+One recipient, one message, and the only one of the two that supports
+`--dry-run`.
 
 ```powershell
-# Required: --from, --subject, --segment-id, and one body source
-resend broadcasts create `
+resend emails send `
   --from "She Sharp <newsletter@shesharp.org.nz>" `
-  --subject "Mentoring applications are open again" `
-  --preview-text "Six months, one mentor, and a room of women in tech behind you." `
-  --name "announce-mentoring-round-open" `
-  --reply-to "mentoring@shesharp.org.nz" `
-  --segment-id 95d452f5-2eed-4ad4-b18e-5ff5a89a576b `
-  --topic-id 08e59693-29dc-4556-8357-866dea047c6f `
+  --to "<the address the user named>" `
+  --reply-to "info@shesharp.org.nz" `
+  --subject "[TEST] Mentoring applications are open again" `
   --html-file "tmp/emails/announce-mentoring-round-open.broadcast.html" `
-  --text-file "tmp/emails/announce-mentoring-round-open.broadcast.txt"
+  --text-file "tmp/emails/announce-mentoring-round-open.broadcast.txt" `
+  --dry-run
 ```
 
-Body sources (pick at least one): `--html`, `--html-file` (`-` = stdin),
-`--text`, `--text-file`, `--react-email <tsx>`. This skill always uses
-`--html-file` + `--text-file`, because the file on disk is the artefact the
-gates already checked.
+`--dry-run` prints `{"dryRun":true,"request":{…}}` and calls nothing. Check the
+request, then re-run without it.
 
-**`create --send` sends immediately.** Never pass it. Omit `--send` and you get
-a draft you can inspect. `--scheduled-at` on `create` is *ignored* unless
-`--send` is also present, which makes "I meant to schedule it" a silent instant
-send — one more reason to schedule with `send`, not `create`.
+This sends the rendered file **as it sits on disk**, so the unsubscribe
+placeholder `%%SHESHARP_UNSUBSCRIBE_URL%%` appears in the footer as literal
+text. That is expected: only `build-batch.ts` fills it in, per person. The test
+send is for layout, copy and links — not for proving the opt-out works.
+
+### `resend emails batch` — the real send (Step 8)
 
 ```powershell
-resend broadcasts send <id> --scheduled-at "in 1 hour"
+resend emails batch --file "tmp/emails/batch-<key>-<stage>-1.json" `
+  --idempotency-key <the key build-batch printed> `
+  --batch-validation strict
 ```
 
-`--scheduled-at` accepts **ISO 8601** (`2026-08-05T11:52:01Z`) or **natural
-language** (`"in 1 hour"`, `"tomorrow at 9am ET"`). Omit it entirely and the
-broadcast goes out now.
+| Flag | What it does |
+|---|---|
+| `--file <path>` | A JSON **array** of email objects. `build-batch.ts` writes these; never hand-write one |
+| `--idempotency-key <key>` | De-duplicates the whole request. Re-running the same chunk after a failure cannot deliver twice |
+| `--batch-validation strict` | Default, and always pass it explicitly. Resend rejects the **whole** chunk if any single message is invalid, rather than half-delivering it |
 
-**Default to a slot at least an hour out.** A scheduled broadcast can be
-cancelled; a sent one cannot. That hour is the only window in which a typo, a
-wrong segment, or a "wait, the date is wrong" is still free.
+Facts that shape the skill's Step 8:
 
-## Inspecting a draft before you schedule it
-
-```powershell
-resend broadcasts get <id> --json
-```
-
-`get` returns the full payload including the HTML body; `list` deliberately
-returns summary objects **without** `html`/`text`/`from`/`subject`, so never
-review from `list`. Check, in this order:
-
-- `segment_id` — matches the segment you named in the plan block. Wrong segment
-  is the mistake that cannot be undone.
-- `topic_id` — set, so the unsubscribe applies to the right topic.
-- `from`, `subject`, `name`, `reply_to` — no `[TEST]` or `DRAFT` residue.
-- `preview_text` — the inbox preheader. *(Not listed in the CLI's documented
-  `get` output shape; if it is absent from the response, confirm it instead from
-  the `create --dry-run` request JSON, where it definitely appears.)*
-- `html` — non-empty, and contains `{{{RESEND_UNSUBSCRIBE_URL}}}`.
-- `status` — `draft`. `scheduled_at` / `sent_at` — both `null`.
-
-## `--dry-run` prints the request and calls nothing
-
-```powershell
-resend broadcasts create … --dry-run
-```
-
-Output is `{"dryRun":true,"request":{…}}`. The request object uses **camelCase**
-(`segmentId`, `topicId`, `replyTo`, `previewText`) even though `get` returns
-snake_case — do not read anything into that, it is the CLI's own shape.
-
-Verified 2026-07-27 against the live newsletter segment (then in the old Resend
-team, and named "Newsletter Pilot" — the CLI's request shape is unaffected by
-the 2026-08-28 account move); the keys present were
-`from, html, name, previewText, replyTo, segmentId, subject, text, topicId`.
-
-## `--preview-text` works here, unlike the REST wrapper
-
-`lib/newsletter/resend-api.ts:284` accepts a `previewText` argument and then
-**silently drops it** (`void opts.previewText`) because the REST body had no
-`preview_text` field when that wrapper was written. The CLI does not have that
-limitation: `--preview-text` lands in the request as `previewText`.
-
-So a broadcast created through this skill can carry a real inbox preheader,
-while the monthly newsletter has to embed its preheader inside the HTML. Do not
-"fix" the wrapper from this skill; just know the two paths differ.
-
-## Merge tags
-
-Only two are permitted, and `lib/email/gates.ts` fails the render on anything
-else:
-
-- `{{{contact.first_name|there}}}` — first name, with a fallback after the pipe.
-- `{{{RESEND_UNSUBSCRIBE_URL}}}` — mandatory in every marketing broadcast.
-
-**Triple braces.** `{{…}}` is not template syntax to Resend and ships to inboxes
-as literal braces; the `merge-tags` gate fails on any stray double brace.
-
-The CLI help advertises `{{{FIRST_NAME|Friend}}}`. **Use the repo's form**
-(`contact.first_name`) — it is what `emails/announcement.tsx` and
-`emails/newsletter.tsx` emit, what the gates allow, and what the shipped monthly
-newsletter has been sending. A render using `FIRST_NAME` will fail the gate.
-
-Merge tags are substituted at **broadcast** delivery. In a `resend emails send`
-test they arrive as literal text — that is expected, not a bug.
+- **100 messages per request, an API hard limit.** `build-batch.ts` chunks to
+  100 and prints one command per chunk.
+- **No `--dry-run` on `batch`.** The preflight is what `build-batch.ts` already
+  did: every message rendered locally, the first put through the strict gates.
+  To eyeball one, open the chunk file and read its `"html"`.
+- **`scheduled_at` is unsupported per-email.** There is no scheduled state and
+  no cancellation window on this path. It goes when you run it.
+- **`attachments` are unsupported too.** Link to a page instead.
+- Output is `[{"id":"…"},{"id":"…"}]`, one id per message, in order.
+- Keep ~600ms between chunks; Resend's free tier allows about 2 requests/second.
 
 ## After the send — `resend logs`
 
@@ -148,22 +102,37 @@ resend logs open                        # opens the dashboard log view
 
 `logs list` pages with `--after` / `--before` cursors and caps at 100. Use it to
 prove *what was called and when* — it is the audit trail when the ledger and
-Resend disagree.
+Resend disagree, and it is how you find out which chunks went out if a run died
+halfway.
 
 ## Errors you will actually meet
 
 | String | Cause | Fix |
 |---|---|---|
-| `missing_segment` | No `--segment-id` | Get it from `resend segments list --json` |
-| `missing_body` | No `--html*`/`--text*`/`--react-email` | Point at the rendered files |
-| `missing_from` / `missing_subject` | Flag omitted | Add it |
+| `missing_file` | No `--file` on `emails batch` | Point at the chunk file `build-batch.ts` wrote |
 | `file_read_error` | Path typo, or a relative path from the wrong cwd | Run from the repo root |
-| `auth_error` | No/expired API key | `resend login`, or set `RESEND_API_KEY` |
-| `invalid_options` | Contradictory flags (e.g. `--scheduled-at` with no `--send` on `create`) | Re-read the flag's scope |
-| `send_error` on a dashboard broadcast | **Broadcasts created in the Resend dashboard cannot be sent via the API.** | Recreate it with `broadcasts create` |
-| `create_error` | API rejected the payload | Read the message; usually an unverified `from` domain |
-
-Deleting non-interactively needs confirmation: `resend broadcasts delete <id> --yes`.
+| `invalid_json` / `invalid_format` | The chunk file was hand-edited | Rebuild it with `build-batch.ts`; do not repair it by hand |
+| `auth_error` | No or expired API key | `resend login`, or set `RESEND_API_KEY` |
+| `batch_error` | The API rejected the batch | Read the message; usually an unverified `from` domain or a message that failed strict validation |
+| `429` mid-loop | Faster than ~2 requests/second | Stop, wait ten seconds, re-run the failed chunk — never one that succeeded |
 
 Global flags on every subcommand: `--api-key <key>`, `-p/--profile <name>`,
 `--json` (auto-enabled when stdout is piped), `-q/--quiet`.
+
+## The two errors that come before the CLI
+
+Neither of these is a Resend error — they come from `build-batch.ts`, before
+anything is written, and both are the unsubscribe link failing:
+
+```
+Error: EMAIL_UNSUBSCRIBE_SECRET is not set, so no unsubscribe token can be signed.
+Error: BASE_URL is "http://localhost:3000", which cannot be used for a marketing batch.
+```
+
+`build-batch.ts` reads both from the **shell**, not from `.env`. Set them in the
+same PowerShell window and build again:
+
+```powershell
+$env:BASE_URL = "https://www.shesharp.org.nz"
+$env:EMAIL_UNSUBSCRIBE_SECRET = "<the production value>"
+```

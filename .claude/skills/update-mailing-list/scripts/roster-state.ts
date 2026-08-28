@@ -1,10 +1,14 @@
 /**
  * A local run log of every mailing-list import this skill has performed.
  *
- * READ THIS FIRST: **Resend is the source of truth for who is subscribed.**
- * This file is not. It cannot tell you whether someone is on the list, whether
- * they unsubscribed yesterday, or whether an import actually succeeded — only
- * `resend contacts list` can. What it does is remember which FILES have already
+ * READ THIS FIRST: **the `newsletter_subscribers` table is the source of truth
+ * for who is subscribed.** This file is not. It cannot tell you whether someone
+ * is on the list, whether they unsubscribed yesterday, or whether an import
+ * actually succeeded — only the database can, through
+ * `npx tsx scripts/email/inspect-subscribers.ts`. (It used to say Resend was the
+ * source of truth. That was true until the list moved in-house; a run log that
+ * names the wrong system is worse than one that names none.) What it does is
+ * remember which FILES have already
  * been pushed, so the same attendee export cannot be imported twice by two
  * different people a fortnight apart.
  *
@@ -256,7 +260,7 @@ function commandShow(argv: string[]): void {
   }
 
   console.log("");
-  console.log("This is a run log, not the roster. Resend is the source of truth.");
+  console.log("This is a run log, not the roster. The newsletter_subscribers table is the source of truth.");
   console.log("");
 }
 

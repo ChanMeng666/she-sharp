@@ -112,6 +112,13 @@ softer `missing`:**
 - **`n/a`** — not work. A past event's poster set is not outstanding; a past
   event's photographs are.
 
+**One line in that report has rotted.** The Announcement row still says "needs a
+consented Resend segment first". The mailing list moved off Resend: the consent
+record is now the `newsletter_subscribers` table in She Sharp's own database, and
+what the announcement is waiting for is **people in that table** — it holds
+nobody. The skill it names, `/email-the-community`, is still the right one. Say
+the gate in the new words when you translate the report in Step 1.
+
 Other selections:
 
 ```powershell
@@ -136,9 +143,9 @@ then the next thing to do, then stop and let them answer.
 >
 > Two things are open, and one of them is blocked. Nobody has emailed the
 > registrants yet — that's the next real job, and I need the Humanitix export to
-> do it. The mailing-list announcement can't go out at all yet, because the
-> Resend list is still empty and the newsletter people actually receive still
-> comes from Mailchimp.
+> do it. The mailing-list announcement can't go out at all yet, because nobody
+> has subscribed to the new list yet and the newsletter people actually receive
+> still comes from Mailchimp.
 >
 > Shall I start on the registrant email? If you can export the attendee list from
 > Humanitix into `tmp/`, I'll take it from there.
@@ -165,7 +172,7 @@ this one is stuck.
 | **T-6w Archive** | the channel's payload was fetched this session | its **Step 7.6**, `refresh-archive.ts` |
 | **T-5w Artwork** | date, venue and title confirmed **in the event record** | `/make-event-poster`, steps 1–6 |
 | **T-4w Campaign** | every speaker has a headshot **in the event record** | `/make-event-poster` step 7 — `--speaker all --lineup` |
-| **T-3w Promotion** | the Resend segment has real contacts — **it does not today** | `/promote-event` → `/email-the-community` from its Step 3 |
+| **T-3w Promotion** | the newsletter subscriber table has real people in it — **it does not today** | `/promote-event` → `/email-the-community` from its Step 3 |
 | **T-2w Registrants** | a Humanitix export with an attendee email column, in `tmp/` | `/send-event-emails`, stage `welcome` |
 | **T-1w Slides** | a run sheet in the event data | `/build-event-slides` |
 | **T-7d / T-1d Reminders** | the room, level or join link is known — never invented | `/send-event-emails`, `week-before` then `day-before` |
@@ -251,9 +258,10 @@ travel, or a second organisation running half of it.
    poster, the deck or the email. *Why:* the deck and the poster are *views* of
    that record; pasting a correction into one of them makes the projector and
    the website disagree, silently, and nothing will ever tell you.
-4. **Registering is not subscribing.** A promotion never goes to a registrant
-   list, a Humanitix export or a database query. *Why:* the database has no
-   marketing-consent column, so a query cannot produce consent that was never
+4. **Registering is not subscribing.** A promotion goes only to people who
+   confirmed a newsletter subscription — never to a registrant list, a Humanitix
+   export, or a query across the rest of the database. *Why:* no other table
+   carries marketing consent, so a query cannot produce consent that was never
    collected — and it is enforced in `lib/email/audience.ts`, not left to
    judgement.
 5. **A deck slug IS its event slug.** Never build or reuse a deck against a
@@ -276,7 +284,7 @@ travel, or a second organisation running half of it.
 ## What this skill does *not* do
 
 - **Make anything.** Not a poster, a plate, a deck, a slide, an email, a spec, a
-  broadcast or a commit. Every artefact belongs to another skill.
+  send or a commit. Every artefact belongs to another skill.
 - **Read Slack, send email, or call any external service.** Step 0 is offline;
   everything after it is somebody else's step.
 - **Decide the creative work** — the poster concept, the deck's skin, the subject

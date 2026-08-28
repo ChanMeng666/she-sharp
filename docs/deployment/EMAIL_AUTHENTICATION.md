@@ -434,7 +434,7 @@ The rotation carries real transient risk: the selector stays `resend._domainkey`
 so there is an unavoidable window where the published key and the signing key
 disagree and **every Resend message fails DKIM**.
 
-1. Pick a quiet window — **after** a monthly broadcast, never before one.
+1. Pick a quiet window — **after** a monthly newsletter send, never before one.
 2. In Cloudflare, set the `resend._domainkey` record's TTL to 300 (it is likely
    on "Auto") so the change propagates in minutes rather than hours.
 3. Rotate / re-add the domain at 2048-bit in the Resend dashboard.
@@ -550,6 +550,23 @@ SVG Tiny P/S logo) is ignored by Gmail and protects nothing.
 The reason this work exists. The goal is that the newsletter keeps landing in
 the inbox — not Promotions, not Spam — through a change of sending platform.
 
+> **Status, 2026-08-29 — the path is built; the move has not happened.**
+>
+> **Built:** the marketing consent record now lives in this project's database
+> (`newsletter_subscribers`, migration `0032`, **applied to production**), not in
+> Resend; the subscribe funnel writes to it with double opt-in; and the send path
+> is `scripts/email/recipients-from-db.ts` → `scripts/newsletter/build-newsletter-batch.ts`
+> → a human running the printed `resend emails batch` commands. The newsletter no
+> longer goes through a Resend **broadcast** — it goes through the transactional
+> **batch** API, which is why every message now has to carry its own
+> `List-Unsubscribe` pair. Reasoning and costs:
+> [`../development/EMAIL_PLATFORM_STRATEGY.md`](../development/EMAIL_PLATFORM_STRATEGY.md).
+>
+> **Not done:** the subscriber table is **empty**. The 1,560 Mailchimp
+> subscribers have **not** been imported. **Nothing has been sent.** The live
+> newsletter **still goes out from Mailchimp.** Everything below about list
+> hygiene, the ramp and the retirement order is still ahead of us, not behind.
+
 ### Do these two things in separate months
 
 **Do not tighten DMARC and switch ESP in the same window.** If deliverability
@@ -661,26 +678,46 @@ membership — and `RESEND_NEWSLETTER_SEGMENT_ID` pointed at a segment called
 fix: the target is now simply **"Newsletter"**
 (`95d452f5-2eed-4ad4-b18e-5ff5a89a576b`). Nothing to do before the import.
 
-### The subscribe funnel is Mailchimp too — not just the sending
+### The subscribe funnel was Mailchimp too — not just the sending
 
-Easy to miss, and it breaks the migration quietly if you do. `MAILCHIMP_CONFIG`
-in `lib/data/newsletters.ts` holds a Mailchimp `subscribeUrl` and `archiveUrl`,
-and it is referenced in **16 places** across the site — the footer sign-up, the
-newsletters page, the mentorship pages, several CTA sections.
+**Done 2026-08-29.** Kept here because it was easy to miss and it would have
+broken the migration quietly.
 
-So today: **every new subscriber the website acquires goes into Mailchimp.**
+`MAILCHIMP_CONFIG` in `lib/data/newsletters.ts` held a Mailchimp `subscribeUrl`
+and `archiveUrl`. `subscribeUrl` was used in **six** places across the site —
+the footer sign-up, the newsletters page, and four mentorship surfaces
+(`app/(site)/mentorship/page.tsx`, `become-cta-section.tsx`,
+`how-it-works-section.tsx`, `mentorship-cta-section.tsx`) — with `archiveUrl`
+used once, on the newsletters page.
 
-Meanwhile `POST /api/newsletter/subscribe` (honeypot + rate-limited, writes to
-the Resend audience) exists but **no component calls it** — it is reachable only
-by URL. Grep confirms the only references are in generated `.next` type files.
+> **A figure this document had wrong.** It said "16 places" here and again in
+> Outstanding-work item 8b. Sixteen was never the number of links: there were
+> **6** `subscribeUrl` references plus **1** `archiveUrl`, across six files.
+> `EMAIL_PLATFORM_STRATEGY.md` §5 had it right ("Six components").
 
-That means switching the *sending* to Resend without switching the *funnel*
-leaves you with two lists that drift apart from day one: new sign-ups keep
-landing in Mailchimp and never receive the Resend broadcast. Do both, in this
-order:
+So until 2026-08-29: **every new subscriber the website acquired went into
+Mailchimp.** Meanwhile `POST /api/newsletter/subscribe` existed but **no
+component called it** — it was reachable only by URL, and it wrote to the Resend
+audience.
 
-1. Wire the existing `/api/newsletter/subscribe` route to a real form.
-2. Repoint the 16 `MAILCHIMP_CONFIG.subscribeUrl` links at it.
+Switching the *sending* without switching the *funnel* would have left two lists
+drifting apart from day one: new sign-ups landing in Mailchimp and never
+receiving the Resend send. Both are now done:
+
+1. ~~Wire the existing `/api/newsletter/subscribe` route to a real form.~~
+   **Done.** The route no longer writes to Resend. It writes a `pending` row to
+   `newsletter_subscribers` — the database is now the marketing consent record —
+   and sends a confirmation email. The person becomes mailable only by pressing
+   the button on `/newsletter/confirm`, which POSTs to
+   `/api/newsletter/confirm`. **POST, not GET, deliberately**: link scanners and
+   inbox previewers fetch every URL in a message, and a GET that confirms would
+   let a prefetcher manufacture consent. Tokens are single-use and expire after
+   seven days. Pages: `app/(site)/newsletter/subscribe/`,
+   `app/(site)/newsletter/confirm/`.
+2. ~~Repoint the 16 `MAILCHIMP_CONFIG.subscribeUrl` links at it.~~ **Done** — all
+   six now point at `/newsletter/subscribe`, and `subscribeUrl` has been
+   **deleted** from `MAILCHIMP_CONFIG` so a seventh cannot appear by copy-paste.
+   `archiveUrl` stays; see the next item.
 3. Decide what `archiveUrl` becomes. **Half-settled as of the August 2026
    issue:** issues built in this repo now get a card in
    `lib/data/newsletters-manual.ts` whose `url` is the on-site
@@ -712,12 +749,25 @@ only when you are certain, and note the removal in this file.
 
 ### Ramp, don't switch
 
-The first Resend broadcast should not be the whole list. Send to a few hundred
-of the most engaged (recent openers) first, confirm inbox placement in Gmail,
-Outlook and at least one corporate domain, then widen. Resend's shared IPs are
-warm, and your *domain* reputation carries across — but the sending pattern is
-new, and a sudden first-time spike from a new platform is exactly the shape
-filters are built to notice.
+The first Resend send should not be the whole list. Send to a few hundred of the
+most engaged (recent openers) first, confirm inbox placement in Gmail, Outlook
+and at least one corporate domain, then widen. Resend's shared IPs are warm, and
+your *domain* reputation carries across — but the sending pattern is new, and a
+sudden first-time spike from a new platform is exactly the shape filters are
+built to notice.
+
+Since 2026-08-29 this is no longer a "broadcast" but a batch send, and widening
+is now safe by construction: `build-newsletter-batch.ts` skips anyone whose hash
+appears in a previous run's manifest (`--exclude-hashes`), so a second, wider run
+cannot double-mail the first cohort.
+
+**One gap to close before the ramp can actually use the warm cohort.**
+`recipients-from-db.ts` narrows with `--limit` (the first N mailable
+subscribers) and `--only` (one address). It has **no `--restrict-to-hashes`** —
+that flag is on `normalize-recipients.ts`, the CSV path. So the recent-openers
+cohort `scripts/mailchimp/recent-openers.ts` produces cannot yet be applied to a
+database-backed send. `--limit` is a ramp by row order, not by engagement, which
+is not the same thing and should not be mistaken for it.
 
 **The list this asks for can now be built.** It could not before: who opened
 what is per-campaign recipient activity, which the CSV export does not carry and
@@ -744,12 +794,25 @@ opened a receipt, or an `unsubscribed` one who opened an old newsletter, is
 still out — `consent-rules.md` governs widening a list, and nothing here widens
 anything.
 
-**Nothing has been sent and nobody has been imported.** As at 2026-08-28 the
-Resend list holds **0 contacts** — the account moved to the She Sharp–owned team
-that day and not even a test address was carried over. The real 1,560-subscriber
-list is still in Mailchimp, and the live newsletter still goes out from there.
+**Nothing has been sent and nobody has been imported.** As at 2026-08-29 the
+**`newsletter_subscribers` table holds 0 rows**, and the Resend list holds
+**0 contacts** — the account moved to the She Sharp–owned team on 2026-08-28 and
+not even a test address was carried over. The real 1,560-subscriber list is
+still in Mailchimp, and the live newsletter still goes out from there.
+
+What changed on 2026-08-29 is **where an import has to land**: the consent record
+is `newsletter_subscribers`, so a Resend audience is no longer the destination.
 The import still goes through `/update-mailing-list`, its plan block and a human
-approval.
+approval, and it still has to record `--consent-source` and `--consent-date` —
+which are now real columns on the row (`consent_source`, `consent_date`,
+`consent_ip`, `consent_user_agent`) rather than a note in a script's output.
+
+> **There is no bulk-import path into the table yet.** As at 2026-08-29 the only
+> route to `status = 'subscribed'` is a person completing double opt-in through
+> the form. Importing 1,560 rows with recorded provenance — and without a
+> confirmation click, which an existing consent record makes unnecessary but
+> which the schema currently reaches only through `confirmSubscription()` — is
+> the next piece of work, and it is item #8 below.
 
 ### What actually improves by moving
 
@@ -766,10 +829,18 @@ Worth knowing so you can tell whether the migration worked:
 
 ### Watch these on the first three sends
 
-Resend dashboard, after each broadcast: complaint rate **< 0.1%**, hard bounce
-rate **< 2%**, and delivery rate against the Mailchimp baseline. If any is out
-of bounds, stop and clean the list before the next issue — that is the
+Resend dashboard, after each send: complaint rate **< 0.1%**, hard bounce rate
+**< 2%**, and delivery rate against the Mailchimp baseline. If any is out of
+bounds, stop and clean the list before the next issue — that is the
 pre-committed trigger in the next section.
+
+**These are now harder to read than they were, and that is a cost of the batch
+API.** A Resend *broadcast* summarised its own rates on one screen; a batch send
+is ~16 requests of ordinary emails, so the rates have to come from the tags:
+`build-newsletter-batch.ts` stamps every message `stream:marketing` **and**
+`newsletter:<YYYY-MM>`, and the second one is what isolates a single issue in
+Resend's analytics. `email_optouts` is the in-repo cross-check — the webhook
+writes to it on every bounce and complaint.
 
 **The Mailchimp baseline is now in the repo**, at
 `lib/data/json/mailchimp/campaigns.json`: 180 sends and 188,796 emails from
@@ -802,19 +873,57 @@ state. The domain's strongest positive signal is real humans holding two-way
 conversations from Google Workspace, and that cannot be moved. The marketing
 path is also unusually clean already — `lib/email/audience.ts` throws on
 marketing to Tier ≥1, `lib/email/gates.ts` blocks any marketing send without an
-unsubscribe, and Resend broadcasts attach `List-Unsubscribe` themselves. Volume
+unsubscribe, and every marketing message carries `List-Unsubscribe` /
+`List-Unsubscribe-Post`. **That last one changed on 2026-08-29**: Resend
+broadcasts used to attach the pair themselves, and the batch API does not, so
+`buildStreamHeaders()` in `lib/email/service.ts` and
+`lib/email/unsubscribe-headers.ts` now emit it for the `marketing` stream. Volume
 is two orders of magnitude below the Gmail/Microsoft 5,000-per-day bulk-sender
 threshold.
 
 **Split marketing onto `news.shesharp.org.nz` if any one of these fires:**
 
-- a broadcast's complaint rate exceeds **0.10%**, or
+- a send's complaint rate exceeds **0.10%**, or
 - a single send exceeds **~1,000 recipients**, or
-- a broadcast's hard-bounce rate exceeds **2%**.
+- a send's hard-bounce rate exceeds **2%**.
 
 **Transactional mail stays on the root domain permanently, under every
 scenario.** It is the mail that must never fail, so it belongs on the
 best-authenticated identity available.
+
+### Decision 2026-08-29 — the recipient-count arm fires, and we are not splitting
+
+The first real newsletter send will be **~1,560 recipients**, which trips the
+middle trigger above on send one. **The decision is not to split.** This is
+recorded as a decision so a future session reads it as settled rather than as an
+obligation somebody forgot.
+
+**Why.** Splitting would mean changing the From domain in the same month as
+switching ESP *and* moving the list in-house — three simultaneous variables, in
+exactly the situation this document already warns about in "Do not tighten DMARC
+and switch ESP in the same window". If deliverability dips you have to be able to
+say which change caused it, and the fix for each is different. Worse, the split
+would burn the one asset the migration is built to preserve: `newsletter@shesharp.org.nz`
+carries years of opens, replies and "not spam" signals, and a cold subdomain
+starts at "unknown sender". Doing it on the very first send from a new platform
+puts a cold identity where the risk is highest, to mitigate a risk that has not
+yet been measured. The trigger was written before the send existed; the send is
+the thing that will tell us whether the trigger was right.
+
+**What this does and does not change.**
+
+- The **complaint-rate (>0.10%) and hard-bounce-rate (>2%) arms are untouched**
+  and still fire. Those measure real damage. Nothing here weakens them.
+- The **recipient-count arm is deferred, not deleted.** It is a proxy for volume
+  risk, and the honest answer is that ~1,560 a month is still two orders of
+  magnitude under the bulk-sender thresholds. **Revisit it once the send is
+  boring** — after two or three clean issues with the rates in bounds, decide on
+  evidence rather than on a number chosen in advance.
+- Nothing is foreclosed. Resend Pro allows 10 domains, and the split remains a
+  few DNS records and one constant in `lib/email/senders.ts`.
+
+The tension this resolves is written up as risk 3 in
+[`../development/EMAIL_PLATFORM_STRATEGY.md`](../development/EMAIL_PLATFORM_STRATEGY.md) §6.
 
 ---
 
@@ -824,18 +933,34 @@ best-authenticated identity available.
 |---|---|
 | Sender identities, per stream | `lib/email/senders.ts` |
 | Stream routing, `List-Unsubscribe`, tags, opt-out check | `lib/email/service.ts` |
+| `List-Unsubscribe` / `-Post` header pair, shared by the single-send and batch paths | `lib/email/unsubscribe-headers.ts` |
 | Signed one-click unsubscribe tokens | `lib/email/unsubscribe-token.ts` |
 | RFC 8058 endpoint (POST) + confirmation page | `app/api/email/unsubscribe/route.ts`, `app/(site)/email/unsubscribe/` |
+| **The marketing consent record** — subscribe, double opt-in, every exit route | `lib/db/schema/system.ts` → `newsletter_subscribers`, `lib/newsletter/subscribers.ts` |
+| Subscribe funnel (public) | `app/(site)/newsletter/{subscribe,confirm}/`, `app/api/newsletter/{subscribe,confirm}/route.ts` |
+| Newsletter send path — nothing here sends, it prints the commands | `scripts/email/recipients-from-db.ts` → `scripts/newsletter/build-newsletter-batch.ts` |
 | Bounce / complaint capture | `app/api/webhooks/resend/route.ts`, `lib/email/webhook-verify.ts` |
 | Opt-out storage | `lib/db/schema.ts` → `email_optouts`, `lib/email/optouts.ts` |
 | Pre-send gates (From identity, Reply-To domain, tag charset) | `lib/email/gates.ts` |
 | Offline register + reconciliation | `scripts/email/suppression.ts` (`sync`) |
-| Checks | `npx tsx lib/email/hardening.test.ts` |
+| The one path exempt from `MAINTENANCE_MODE` | `proxy.ts` → `MAINTENANCE_EXEMPT_PATH` |
+| Checks | `npx tsx lib/email/hardening.test.ts`, `npx tsx lib/newsletter/subscribers.test.ts` |
 
 **Streams.** `transactional` (recipient-triggered, never suppressed) ·
 `notification` (recurring, unrequested — carries one-click unsubscribe and
-honours opt-outs) · `marketing` (broadcasts from `newsletter@`, replying to `info@`) · `internal` (to She
-Sharp's own mailboxes).
+honours opt-outs) · `marketing` (the newsletter, from `newsletter@`, replying to
+`info@` — since 2026-08-29 it carries its own unsubscribe headers and is covered
+by `isSuppressed()`, both of which Resend broadcasts used to handle) ·
+`internal` (to She Sharp's own mailboxes).
+
+> **`/api/email/unsubscribe` answers during maintenance mode.** It is the single
+> `MAINTENANCE_EXEMPT_PATH` in `proxy.ts` — an exact match, not a prefix, so no
+> sibling route under `/api/` inherits the exemption. The reason: with Resend's
+> hosted unsubscribe page out of the picture this endpoint is the *only* opt-out
+> route we offer, and an unsubscribe link that returns 503 does not delay an
+> opt-out — it converts it into a spam complaint, against an account-wide 0.08%
+> ceiling that would take password resets down with the newsletter. See
+> `docs/deployment/MAINTENANCE_MODE.md`.
 
 Every send is tagged `stream:<name>`, so Resend's analytics separate the
 reputation streams even though they share a domain. That is the instrumentation
@@ -852,22 +977,25 @@ forgotten or deliberately skipped unless it says so.
 |---|---|---|---|
 | 1 | **Read the first DMARC reports** — Cloudflare → Email → DMARC Management. Confirm every source is recognised (expect only Google, Amazon SES, forwarders). | ~24h after 2026-07-31 | Now, then weekly |
 | 2 | **Stage 3a — `np=reject`** | 2 weeks of clean reports | ~2026-08-14 |
-| 3 | **Resend DKIM 1024 → 2048** | a quiet window **after** a broadcast | Before quarantine, never after `p=reject` |
+| 3 | **Resend DKIM 1024 → 2048** | a quiet window **after** a newsletter send | Before quarantine, never after `p=reject` |
 | 4 | **Stage 3b — `p=quarantine`** | reports show every source identified, no third-party sender hiding in the failures | ~2026-08-30 |
 | 5 | **Stage 2b — Google DKIM** | ⚠️ **Workspace super-admin.** `website@` cannot open `admin.google.com`. Request text is in Stage 2, and it is folded into `docs/deployment/WORKSPACE_MAILBOX_CHECKLIST.md` so the admin does one sitting rather than two. | Whenever an admin is available |
 | 6 | **Stage 4 — `p=reject`** + root SPF `-all` | **hard-gated on #5** | Not before #5 |
 | 7 | **Decide the legacy SPF include** — drop `include:_spf.1stdomains.co.nz` if reports show nothing sends from those IPs (budget 4/10 → 1/10) | the reports from #1 | With #4 |
-| 8 | **Migrate the newsletter sending off Mailchimp** — see the section above. **List hygiene is done** (18 Aug 2026): all four statuses exported and archived, and the non-subscribers are in the suppression register — **2,138 as at 2026-08-27**, not the 2,129 the export gave, so run `suppression.ts pull-mailchimp` immediately before the import rather than trusting the file. **The ramp cohort is no longer blocked** (27 Aug 2026): `scripts/mailchimp/recent-openers.ts` builds it from the API. What remains is importing the 1,560 `Subscribed` through `/update-mailing-list` — nothing has been sent and nobody has been imported yet. | must NOT share a month with #2/#4 | A month with no DMARC change |
-| 8b | **Migrate the subscribe funnel** — wire `/api/newsletter/subscribe` (exists, **nothing calls it**) to a form and repoint the 16 `MAILCHIMP_CONFIG.subscribeUrl` links. Without this, new sign-ups keep going to Mailchimp and never get the Resend send. | — | With #8, not after |
+| 8 | **Migrate the newsletter sending off Mailchimp** — see the section above. **The send path is built** (29 Aug 2026): `recipients-from-db.ts` → `build-newsletter-batch.ts` → a human runs the printed `resend emails batch` commands, off the transactional batch API rather than a Resend broadcast. **List hygiene is done** (18 Aug 2026): all four statuses exported and archived, and the non-subscribers are in the suppression register — **2,138 as at 2026-08-27**, not the 2,129 the export gave, so run `suppression.ts pull-mailchimp` immediately before the import rather than trusting the file. **The ramp cohort is no longer blocked** (27 Aug 2026): `scripts/mailchimp/recent-openers.ts` builds it from the API — but see #8e, it cannot yet be applied to a database-backed send. What remains is **importing the 1,560 `Subscribed`** through `/update-mailing-list` into `newsletter_subscribers`, which holds **0 rows**. **Nothing has been sent and nobody has been imported.** | must NOT share a month with #2/#4; **no bulk-import path into the table exists yet** (#8f) | A month with no DMARC change |
+| 8b | ~~**Migrate the subscribe funnel**~~ — **Done 29 Aug 2026.** `/api/newsletter/subscribe` now writes a `pending` row to `newsletter_subscribers` and sends a confirmation email; the person becomes mailable only by pressing the button on `/newsletter/confirm` (POST, never GET — a link scanner must not be able to confirm). All **six** `MAILCHIMP_CONFIG.subscribeUrl` links now point at `/newsletter/subscribe`, and `subscribeUrl` has been deleted from the config. (This row previously said "16 links"; there were 6, plus 1 `archiveUrl`.) | — | **Done** |
 | 8c | **Decide `MAILCHIMP_CONFIG.archiveUrl`'s replacement.** Partly done: since 2026-08 each new issue is listed in `lib/data/newsletters-manual.ts` pointing at its on-site render (still `noindex`, by design). What remains is the "Open full archive" button, which is the only route to the pre-2026-08 back catalogue. | the back catalogue re-hosted, or the button repointed at `/resources/newsletters` | With #8 |
 | 8d | **Repoint or switch off the Humanitix → Mailchimp contact integration.** Configured in Humanitix, invisible from this repo, and it pushes event contacts into the `She#` audience on its own — left connected past the retirement it feeds a dead list. "Sync contacts who haven't opted-in" was switched **off** and the checkout opt-in question **on** (both 2026-08-27), which fixes the consent shape, not the destination. | — | With #8, before #9 |
+| 8e | **Teach `recipients-from-db.ts` to take a hash allow-list.** `normalize-recipients.ts` has `--restrict-to-hashes`, which is how the warm cohort from `recent-openers.ts` is applied; the database path has only `--limit` (first N rows) and `--only` (one address). Until this exists, "ramp to the recent openers" cannot be done from the subscriber table — `--limit` ramps by row order, which is not the same thing. | — | Before the first ramped send |
+| 8f | **Build the bulk-import path into `newsletter_subscribers`.** The only route to `status = 'subscribed'` today is a person completing double opt-in through the form. Importing 1,560 rows carrying an existing consent record — provenance in `consent_source` / `consent_date`, no confirmation click — has no script. This is what actually blocks #8. | — | Before #8 |
+| 8g | **Decommission the Resend Marketing objects.** The segment `Newsletter`, the topic `Monthly Newsletter`, `RESEND_NEWSLETTER_SEGMENT_ID` and `RESEND_NEWSLETTER_TOPIC_ID` became dead weight when the consent record moved into the database on 2026-08-29. **Not yet deleted**, and `scripts/newsletter/{setup-resend,seed-pilot-contacts}.ts` still read them via `lib/newsletter/resend-api.ts` — so running either script today will present a dead segment as current configuration. A dormant segment id in a Vercel env var is exactly what a future session mistakes for live. | #8 proving out — do not remove the fallback before the replacement has sent | After #8, before #9 |
 | 9 | **Retire the Mailchimp DNS records** (`k2`/`k3._domainkey`) | 2–3 clean Resend sends **and** #8b | After #8 proves out |
 | 10 | ~~**Confirm someone reads `newsletter@`**~~ — **answered 2026-08-23: no.** Nobody on the team had its password on 2026-08-17, and a direct question in Slack went unanswered. It is no longer the Reply-To (that is now `info@`); it remains the From, which is correct and must not change. Naming an owner is item 3 on `WORKSPACE_MAILBOX_CHECKLIST.md`. | — | **Done** |
 | 11 | **`EMAIL_UNSUBSCRIBE_MAILTO`** — **keep it empty.** The intended target, `unsub@`, was probed on 2026-08-23 and hard-bounced: it does not exist. The HTTPS one-click URL alone satisfies RFC 8058 and both bulk-sender rulebooks, and a mailto into a weekly-read inbox would leave opt-outs unactioned for days — a compliance problem, not a convenience one. | — | **Decided: no** |
 | 12 | **TLS-RPT** (`_smtp._tls`) | needs a real inbox to receive reports (super-admin to create) | Optional, low value |
 | 13 | **MTA-STS** | a second Vercel domain + route | Optional — the only item here whose misconfiguration breaks *inbound* mail |
 | 14 | **BIMI** | a VMC (~USD 1,000–1,500/yr + trademark) | **Deliberately skipped** — not a defensible non-profit spend |
-| 15 | **Split marketing onto `news.`** | the pre-committed trigger (complaints >0.10%, a send >1,000 recipients, or hard bounces >2%) | Only if the trigger fires |
+| 15 | **Split marketing onto `news.`** — **the recipient-count arm fires on send one (~1,560) and we decided on 2026-08-29 not to split**; see "Decision 2026-08-29" above for the reasoning. The complaint and bounce arms are untouched and still fire. | the two rate arms (complaints >0.10%, hard bounces >2%); the recipient-count arm is **deferred by decision**, to be revisited on evidence | Only if a rate arm fires — or when the send is boring and the count arm can be re-decided |
 
 **Sequencing rule that governs several of these:** never change the ESP and the
 DMARC policy in the same month. If deliverability dips you must be able to say
@@ -881,7 +1009,7 @@ which one caused it, and the fix for each is different.
   and confirm every sending source is one you recognise.
 - **Ongoing:** folded into `/monthly-newsletter`, which already runs monthly
   with a human in the loop — check last month's digest for unrecognised sources,
-  and the last broadcast's complaint (<0.1%) and bounce (<2%) rates.
+  and the last newsletter send's complaint (<0.1%) and bounce (<2%) rates.
 - **Monthly:** `npx tsx scripts/email/suppression.ts sync` to fold runtime
   bounces and complaints into the committed register, and — while Mailchimp is
   still the live sender — `npx tsx scripts/email/suppression.ts pull-mailchimp`

@@ -17,7 +17,7 @@ Three facts shape everything below.
   **Humanitix**. The list arrives as a CSV a human exports. Nothing about who is
   coming is discoverable from this codebase.
 - **The two meet in `tmp/` and are never written back** — no database row, no
-  Resend contact, no list import. The only thing committed is a ledger of sha256
+  subscriber row, no list import. The only thing committed is a ledger of sha256
   hashes.
 
 Underneath all of it: **registering is not subscribing.** Someone who bought a
@@ -114,8 +114,8 @@ later step quotes these exact strings.
 
 | The email is | Route | Mechanism |
 |---|---|---|
-| For people who registered, about **this** event only — room number, time change, join link, thanks and feedback | **(a) transactional direct** | `resend emails batch`, `category: "transactional"`, one line reading "You're receiving this because you registered for `<event>`"; **never added to Resend contacts** |
-| For the same people, but promoting **other** events | **(b) per-event segment broadcast** | Not yet available. Requires a consent-gated import through `update-mailing-list` first, then a broadcast carrying an unsubscribe link |
+| For people who registered, about **this** event only — room number, time change, join link, thanks and feedback | **(a) transactional direct** | `resend emails batch`, `category: "transactional"`, one line reading "You're receiving this because you registered for `<event>`"; **never added to the newsletter subscriber list** |
+| For the same people, but promoting **other** events | **(b) marketing to subscribers** | Not available for registrants. They would first have to subscribe themselves at `/newsletter/subscribe` and confirm; only then are they Tier 0, and the send belongs to `email-the-community` |
 | For subscribers rather than registrants | **(c) hand over** | `email-the-community` — that is an announcement, not event ops |
 | Registration form had **no** marketing opt-in question | **(a) only** | No opt-in, no marketing eligibility. Full stop |
 
@@ -350,7 +350,7 @@ form URL, a decision on the pending orders).
 | `welcome` | Right after an export, registration open | Confirm they're in; get it in their calendar | nothing |
 | `week-before` | ~7 days out | Agenda, and how to get there | agenda outline, parking/transport |
 | `day-before` | ~1 day out | Get them through the right door | room/level or join link, on-the-day contact |
-| `thank-you` | 1–2 days after | Thanks, feedback, photos, one subscribe **link** | feedback form URL, album URL |
+| `thank-you` | 1–2 days after | Thanks, feedback, photos, one subscribe **link** to `https://www.shesharp.org.nz/newsletter/subscribe` | feedback form URL, album URL |
 
 A stage nobody asked for is not sent. Four emails about a two-hour evening
 workshop is too many — for a single-session event, `welcome` + `day-before` is
@@ -373,7 +373,8 @@ image; these templates use none.
 
 **`Blocked: cannot send a marketing email to Tier 2`** — the spec says
 `category: "marketing"`. Either it is genuinely fulfilment (fix the category) or
-genuinely promotion (route (b): stop, go via `update-mailing-list`).
+genuinely promotion, which registrants may not receive at all: stop, and put a
+subscribe link in the fulfilment email instead (route (b)).
 
 **`429` mid-loop** — faster than ~2 requests/second. Stop, wait ten seconds,
 resume from the failed chunk; never re-send one already recorded.
@@ -395,8 +396,9 @@ re-mails everyone.
 ## What this skill does *not* do
 
 - Send to anyone who is not on this event's registrant list.
-- Add anyone to a mailing list, Resend audience, segment or topic — it can link
-  to a subscribe page, never subscribe someone.
+- Add anyone to the newsletter subscriber list — it can link to
+  `/newsletter/subscribe`, but only the person themselves, pressing the
+  confirmation button in their own inbox, can subscribe.
 - Send marketing or cross-event promotion to registrants (route (b) is not built;
   route (c) belongs to `email-the-community`).
 - Write to the database. `event_registrations` stays empty; Humanitix remains the

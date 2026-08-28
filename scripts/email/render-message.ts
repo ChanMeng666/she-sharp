@@ -181,11 +181,15 @@ function joinCommand(lines: string[]): string {
  *
  * Transactional mail goes out as a single `resend emails send` with an
  * idempotency key derived from the rendered HTML, so re-running after an edit
- * is a new send while re-running the same bytes is a no-op. Marketing mail
- * cannot be sent that way — it needs a segment and an unsubscribe-bearing
- * broadcast — so a `resend broadcasts create` skeleton is printed instead, with
- * the segment/topic IDs left as placeholders for the operator to fill from
- * `audience-report.ts --include-resend`.
+ * is a new send while re-running the same bytes is a no-op.
+ *
+ * Marketing mail cannot be sent that way, and no longer goes out as a Resend
+ * broadcast either: the mailing list lives in `newsletter_subscribers`, not in a
+ * Resend segment. So instead of a command, marketing prints the two-step batch
+ * route. This used to print a `resend broadcasts create --segment-id …`
+ * skeleton, which is now a command that would either fail or mail an empty
+ * segment — and a paste-able wrong command is worse than no command, because
+ * somebody will paste it.
  *
  * @param spec The validated spec.
  * @param htmlPath Path to the rendered HTML file.
@@ -202,18 +206,15 @@ function buildNextCommand(
   const lines: string[] = [];
 
   if (spec.category === "marketing") {
-    lines.push("resend broadcasts create");
-    lines.push(`  --from ${psQuote(spec.from)}`);
-    lines.push(`  --subject ${psQuote(spec.subject)}`);
-    if (spec.preheader) lines.push(`  --preview-text ${psQuote(spec.preheader)}`);
-    lines.push(`  --name ${psQuote(spec.key)}`);
-    if (spec.replyTo) lines.push(`  --reply-to ${psQuote(spec.replyTo)}`);
-    lines.push("  --segment-id <SEGMENT_ID>");
-    lines.push("  --topic-id <TOPIC_ID>");
-    lines.push(`  --html-file ${psQuote(htmlPath)}`);
-    lines.push(`  --text-file ${psQuote(textPath)}`);
-    lines.push("  --dry-run");
-    return joinCommand(lines);
+    // Two commands, not one: the recipient list is built from the database and
+    // then rendered per person, because each message carries its own signed
+    // unsubscribe URL. Neither of these sends — the second prints the
+    // `resend emails batch` commands a human runs.
+    return [
+      `npx tsx scripts/email/recipients-from-db.ts --key ${spec.key}`,
+      "",
+      `npx tsx scripts/email/build-batch.ts <spec.json> --recipients tmp/emails/recipients-${spec.key}.json --stage ${spec.key}`,
+    ].join("\n");
   }
 
   lines.push("resend emails send");
