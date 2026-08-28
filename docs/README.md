@@ -41,6 +41,7 @@ happened, **dormant** is a runbook for a state the site is not in.
 | `DECK_SYSTEM.md` | The `/present/*` deck system in full — data model, skins, linter, host controls | current |
 | `EMAIL_ADDRESSES.md` | Every `@shesharp.org.nz` address, and which are mailboxes vs sending identities | current |
 | `EMAIL_OPERATIONS.md` | The four sending streams, unsubscribe handling, newsletter loop | current |
+| `EMAIL_PLATFORM_STRATEGY.md` | What the Resend plan buys, why the newsletter is being self-hosted rather than bought, and AWS SES as a costed future option | current, decision record |
 | `EVENT_FEEDBACK.md` | The `/f/<code>` QR form: codes, rate limiting, digest, anonymisation | current |
 | `EVENT_LIFECYCLE_SOP.md` | One regular event end to end for the whole team — the partner conversation, the phase order, who does what, the promotion beats, close-out, and the developer machinery underneath. The reference `EVENT_PLAYBOOK.md` is built from | current |
 | `FUNDER_REPORTS.md` | Why `report/` is a separate Typst project and what gates a final build | current |
