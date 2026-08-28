@@ -1,7 +1,11 @@
 /**
- * Approves and schedules a monthly newsletter issue via the admin approve
- * endpoint. This does NOT send email itself — it triggers the server, which
- * creates + schedules the Resend broadcast from the deployed JSON fixture.
+ * Approves a monthly newsletter issue via the admin approve endpoint.
+ *
+ * This sends NOTHING, and neither does the endpoint any more. Approving marks
+ * the deployed issue as cleared to go and records the intended send slot; the
+ * mail is built and sent afterwards, by hand, from this repo — the same shape as
+ * the other outbound email skills, where repo scripts render and the `resend`
+ * CLI sends. The two build commands are printed on success.
  *
  * Usage:
  *   BASE_URL=https://www.shesharp.org.nz CRON_SECRET=... \
@@ -10,7 +14,8 @@
  * The issue MUST already be committed to lib/data/json/newsletter-issues/ and
  * deployed (the endpoint reads the deployed bundle, never the Redis draft).
  * Pass --send-now only when the canonical send slot has already passed and you
- * want an immediate send (the server queues it 5 minutes out).
+ * intend to send immediately by hand; it relaxes the endpoint's refusal and
+ * records a send instant five minutes out, nothing more.
  */
 
 import { issueIdSchema } from "../../lib/newsletter/schema";
@@ -22,6 +27,20 @@ function formatNz(iso: string): string {
     timeStyle: "short",
     timeZone: "Pacific/Auckland",
   }).format(new Date(iso));
+}
+
+/**
+ * The commands that actually produce the mail, in order.
+ *
+ * The server returns these in `nextSteps`; this local copy is the fallback for
+ * an older deployment that does not, so the operator is never left at "approved"
+ * with no idea what comes next.
+ */
+function fallbackNextSteps(issueId: string): string[] {
+  return [
+    `npx tsx scripts/email/recipients-from-db.ts --key newsletter-${issueId}`,
+    `npx tsx scripts/newsletter/build-newsletter-batch.ts ${issueId} --recipients tmp/emails/recipients-newsletter-${issueId}.json`,
+  ];
 }
 
 async function main(): Promise<void> {
@@ -50,7 +69,7 @@ async function main(): Promise<void> {
 
   const url = `${baseUrl.replace(/\/$/, "")}/api/admin/newsletter/${issueId}/approve`;
   console.log(`\nApproving ${issueId} via ${url}`);
-  console.log(`Mode: ${sendNow ? "SEND NOW (immediate)" : "scheduled send slot"}\n`);
+  console.log(`Mode: ${sendNow ? "SEND NOW (immediate slot)" : "canonical send slot"}\n`);
 
   const response = await fetch(url, {
     method: "POST",
@@ -63,20 +82,31 @@ async function main(): Promise<void> {
 
   const result = (await response.json().catch(() => ({}))) as {
     issueId?: string;
-    broadcastId?: string;
+    status?: string;
     scheduledAt?: string;
+    scheduledAtNz?: string;
+    renderedKb?: number;
+    nextSteps?: string[];
     error?: string;
     message?: string;
   };
 
   if (response.ok) {
-    console.log("Scheduled successfully.");
+    console.log("Approved. NOTHING HAS BEEN SENT.");
     console.log(`  Issue:       ${result.issueId ?? issueId}`);
-    console.log(`  Broadcast:   ${result.broadcastId ?? "(unknown)"}`);
+    console.log(`  Status:      ${result.status ?? "approved"}`);
+    if (result.renderedKb !== undefined) {
+      console.log(`  Rendered:    ${result.renderedKb} KB (under the 100KB Gmail clip limit)`);
+    }
     if (result.scheduledAt) {
-      console.log(`  Send time:   ${formatNz(result.scheduledAt)} NZT`);
+      console.log(`  Send slot:   ${result.scheduledAtNz ?? `${formatNz(result.scheduledAt)} NZT`}`);
       console.log(`  (ISO: ${result.scheduledAt})`);
     }
+
+    const steps = result.nextSteps?.length ? result.nextSteps : fallbackNextSteps(issueId);
+    console.log("\nNext, build the batch locally:\n");
+    for (const step of steps) console.log(`  ${step}`);
+    console.log("\nThen send the built batch with the Resend CLI (see /monthly-newsletter).");
     process.exit(0);
   }
 

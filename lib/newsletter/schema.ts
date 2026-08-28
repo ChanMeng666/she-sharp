@@ -20,9 +20,15 @@ export const issueMetaSchema = z.object({
   status: z.enum(["draft", "approved", "scheduled", "sent"]),
   /** ISO timestamp of when the AI draft was generated. */
   generatedAt: z.string(),
-  /** Resend broadcast id once scheduled. */
+  /**
+   * Vestigial. Held the Resend broadcast id while the newsletter went out as a
+   * broadcast; nothing writes it now that the send is a batch built by
+   * `scripts/newsletter/build-newsletter-batch.ts`. Kept, rather than removed,
+   * because the committed issue fixtures still carry the field and dropping it
+   * would fail their schema parse — a later cleanup can migrate them together.
+   */
   broadcastId: z.string().nullable().default(null),
-  /** UTC ISO instant the broadcast is scheduled for. */
+  /** UTC ISO instant the issue is approved to send at. */
   scheduledAt: z.string().nullable().default(null),
 });
 

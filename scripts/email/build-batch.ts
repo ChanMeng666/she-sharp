@@ -51,6 +51,11 @@ import { parseMessageSpec, type MessageSpec } from "../../lib/email/message";
 import { composeMessage } from "../../lib/email/compose";
 import { runEmailGates, formatGateReport } from "../../lib/email/gates";
 import { assertSendAllowed, describeTier, type AudienceTier } from "../../lib/email/audience";
+import {
+  buildUnsubscribeHeaders,
+  substituteUnsubscribeUrl,
+} from "../../lib/email/unsubscribe-headers";
+import { getBaseUrl } from "../../lib/email/service";
 import { hashEmail } from "./suppression";
 
 /** Resend refuses more than 100 messages in one batch request. */
@@ -258,7 +263,7 @@ function parseRecipientsFile(raw: unknown, path: string): RecipientsFile {
  * @param value Any parsed JSON value.
  * @returns Every hash found, deduplicated and lowercased.
  */
-function collectRecipientHashes(value: unknown): Set<string> {
+export function collectRecipientHashes(value: unknown): Set<string> {
   const found = new Set<string>();
 
   const walk = (node: unknown): void => {
@@ -293,7 +298,7 @@ function collectRecipientHashes(value: unknown): Set<string> {
  * (a genuinely different message gets a different key) while re-running the
  * same stage with the same copy is not (identical inputs, identical key).
  */
-function idempotencyKey(key: string, stage: string, email: string, subjectHash: string): string {
+export function idempotencyKey(key: string, stage: string, email: string, subjectHash: string): string {
   return createHash("sha256")
     .update(`${key}|${stage}|${email}|${subjectHash}`)
     .digest("hex")
@@ -339,6 +344,46 @@ async function main(): Promise<void> {
   // Gate 1 — the audience rule. Before rendering, before writing, before anything.
   try {
     assertSendAllowed({ category: spec.category, tier: list.tier });
+
+  // Gate 1b — a marketing batch must be able to sign an unsubscribe token.
+  //
+  // `buildUnsubscribeHeaders()` returns {} when EMAIL_UNSUBSCRIBE_SECRET is
+  // unset, and the body-link gate below would still pass on the template's own
+  // footer link, so without this check a whole list ships with no working
+  // one-click opt-out and nothing says so. Resend's AUP requires a frictionless
+  // opt-out and the complaint ceiling is 0.08% account-wide, so this is a hard
+  // failure rather than a warning: better to build nothing than to build a send
+  // nobody can escape.
+  if (spec.category === "marketing" && !process.env.EMAIL_UNSUBSCRIBE_SECRET) {
+    fail(
+      "EMAIL_UNSUBSCRIBE_SECRET is not set, so no unsubscribe token can be signed.",
+      "A marketing batch without List-Unsubscribe headers is a send with no one-click",
+      "opt-out. Set the secret (it is on Vercel production) and build again.",
+      "Nothing has been written."
+    );
+  }
+
+  // Gate 1c — a marketing batch must be built against the production origin.
+  //
+  // Every unsubscribe URL is baked into the message at build time, so a batch
+  // built with the default localhost BASE_URL ships a whole list an opt-out link
+  // that resolves to the recipient's own machine. This is the failure that put
+  // `localhost:3000` into 25 real mentor invitations on 2026-03-19; the repo rule
+  // since then is that any script building URLs guards at startup rather than
+  // relying on a downstream check. The gates would also catch it, but only after
+  // a render and only because the URL happens to appear in the body.
+  if (spec.category === "marketing") {
+    const baseUrl = getBaseUrl();
+    if (!/^https:\/\//.test(baseUrl) || /localhost|127\.0\.0\.1/.test(baseUrl)) {
+      fail(
+        `BASE_URL is "${baseUrl}", which cannot be used for a marketing batch.`,
+        "Unsubscribe links are baked into every message at build time, so they would",
+        "point at a machine the recipient does not have. Set BASE_URL to the production",
+        "origin (https://www.shesharp.org.nz) and build again.",
+        "Nothing has been written."
+      );
+    }
+  }
   } catch (err) {
     console.error(err instanceof Error ? err.message : String(err));
     process.exit(1);
@@ -364,10 +409,36 @@ async function main(): Promise<void> {
   let firstRender: { html: string; text: string } | null = null;
 
   for (const recipient of pending) {
-    const rendered = await composeMessage(spec, {
+    const composed = await composeMessage(spec, {
       mode: "broadcast",
       recipient: { firstName: recipient.firstName, email: recipient.email },
     });
+
+    // Swap the template's unsubscribe placeholder for this person's signed URL.
+    // A no-op for anything that does not carry one, and it throws rather than
+    // shipping a message whose opt-out link does not work.
+    const rendered = {
+      html: substituteUnsubscribeUrl(composed.html, recipient.email, getBaseUrl()),
+      text: substituteUnsubscribeUrl(composed.text, recipient.email, getBaseUrl()),
+    };
+
+    // The batch endpoint substitutes NOTHING. Merge tags are a feature of Resend
+    // broadcasts against Resend-held contacts, and `runEmailGates` still permits
+    // `{{{contact.first_name}}}` because the broadcast path is legitimate — but
+    // on this path a surviving tag reaches a real inbox as literal text. Checked
+    // per message rather than once, because only the first render is gated.
+    for (const [part, content] of [["html", rendered.html], ["text", rendered.text]] as const) {
+      const leftover = content.match(/\{\{\{[^{}]*\}\}\}/);
+      if (leftover) {
+        fail(
+          `A merge tag survived into the ${part}: ${leftover[0]}`,
+          "The Resend batch endpoint substitutes nothing — merge tags only work for",
+          "broadcasts against Resend-held contacts, so this would be delivered as",
+          "literal text. Replace it with a value the template can render itself.",
+          "Nothing has been written."
+        );
+      }
+    }
 
     if (!firstRender) {
       firstRender = { html: rendered.html, text: rendered.text };
@@ -395,6 +466,13 @@ async function main(): Promise<void> {
         // `--idempotency-key` is request-level — so this is where a per-person
         // key can live.
         "X-Entity-Ref-ID": idempotencyKey(spec.key, args.stage, recipient.email, subjectHash),
+        // Marketing mail carries a signed, per-recipient one-click opt-out.
+        // This path never touches `sendEmail()`, so nothing else would attach
+        // them — and Resend only attached them to broadcasts, which this
+        // replaces. The secret was checked before any rendering happened.
+        ...(spec.category === "marketing"
+          ? buildUnsubscribeHeaders(recipient.email, getBaseUrl())
+          : {}),
       },
     };
     if (spec.replyTo) email.replyTo = spec.replyTo;

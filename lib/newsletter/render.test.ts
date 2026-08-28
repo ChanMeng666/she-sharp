@@ -3,12 +3,14 @@
  *
  *   npx tsx lib/newsletter/render.test.ts
  *
- * Builds a representative issue and asserts merge-tag behaviour per mode,
- * size budget, absolute image URLs, presence of the signature gradient, the
- * real-photo cover, and venue-grounded snapshot captions.
+ * Builds a representative issue and asserts the unsubscribe placeholder per
+ * mode (in the HTML *and* the plain-text part), that no Resend merge tag
+ * survives, size budget, absolute image URLs, presence of the signature
+ * gradient, the real-photo cover, and venue-grounded snapshot captions.
  */
 
 import assert from "node:assert";
+import { UNSUBSCRIBE_URL_PLACEHOLDER } from "@/lib/email/unsubscribe-headers";
 import { newsletterIssueSchema, type NewsletterIssueData } from "./schema";
 import { renderNewsletter } from "./render";
 
@@ -260,22 +262,57 @@ async function main(): Promise<void> {
   const broadcast = await renderNewsletter(sample, "broadcast");
   const preview = await renderNewsletter(sample, "preview");
 
-  // Merge tags present only in broadcast mode.
+  // The unsubscribe placeholder is emitted only in broadcast mode; the send
+  // path swaps it for a signed per-recipient URL.
   assert.ok(
-    broadcast.html.includes("{{{RESEND_UNSUBSCRIBE_URL}}}"),
-    "broadcast html must contain the Resend unsubscribe merge tag"
+    broadcast.html.includes(UNSUBSCRIBE_URL_PLACEHOLDER),
+    "broadcast html must contain the unsubscribe placeholder"
   );
   assert.ok(
-    broadcast.html.includes("{{{contact.first_name|there}}}"),
-    "broadcast html must contain the first-name merge tag"
+    !preview.html.includes(UNSUBSCRIBE_URL_PLACEHOLDER),
+    "preview html must NOT contain the unsubscribe placeholder"
+  );
+
+  // No Resend merge tag may survive anywhere in the broadcast output. This is
+  // the assertion that actually protects real inboxes: merge tags are only
+  // substituted for broadcasts sent to Resend-held contacts, so on the batch
+  // path any surviving tag ships as literal text.
+  assert.ok(
+    !broadcast.html.includes("{{{"),
+    "broadcast html must contain no Resend merge tag"
+  );
+
+  // Personalisation is gone in both modes — the batch path renders once for
+  // everyone, so everyone gets the same greeting.
+  for (const [label, rendered] of [
+    ["broadcast", broadcast],
+    ["preview", preview],
+  ] as const) {
+    assert.ok(
+      rendered.html.includes("Hi there,"),
+      `${label} html must greet with "Hi there,"`
+    );
+    assert.ok(
+      !rendered.html.includes("contact.first_name"),
+      `${label} html must NOT contain the first-name merge tag`
+    );
+  }
+
+  // The plain-text part, which `@react-email/render` builds from the same
+  // element: it writes the raw href into the text, so a template whose HTML
+  // was fixed but whose text was not would ship the literal placeholder to
+  // plain-text readers.
+  assert.ok(
+    broadcast.text.includes(UNSUBSCRIBE_URL_PLACEHOLDER),
+    "broadcast text must contain the unsubscribe placeholder"
   );
   assert.ok(
-    !preview.html.includes("{{{RESEND_UNSUBSCRIBE_URL}}}"),
-    "preview html must NOT contain the unsubscribe merge tag"
+    !broadcast.text.includes("{{{"),
+    "broadcast text must contain no Resend merge tag"
   );
   assert.ok(
-    !preview.html.includes("{{{contact.first_name|there}}}"),
-    "preview html must NOT contain the first-name merge tag"
+    !preview.text.includes(UNSUBSCRIBE_URL_PLACEHOLDER),
+    "preview text must NOT contain the unsubscribe placeholder"
   );
 
   // Size budget.

@@ -5,10 +5,10 @@
  * email. Styling comes exclusively from inline style objects in `./brand`
  * (no Tailwind wrapper) for predictable rendering across clients.
  *
- * `mode` controls merge-tag behaviour:
- *  - "broadcast": Resend merge tags are emitted literally (personalized
- *    greeting + unsubscribe URL) for the sending pipeline to substitute.
- *  - "preview": tags are replaced with safe, inert values for local review.
+ * `mode` controls what the footer's unsubscribe link carries:
+ *  - "broadcast": `UNSUBSCRIBE_URL_PLACEHOLDER`, which the send path swaps for
+ *    a signed per-recipient URL.
+ *  - "preview": an inert "#" for local review.
  */
 
 import * as React from "react";
@@ -25,6 +25,7 @@ import {
   Button,
 } from "@react-email/components";
 import type { IssueAuto, NewsletterIssueData } from "@/lib/newsletter/schema";
+import { UNSUBSCRIBE_URL_PLACEHOLDER } from "@/lib/email/unsubscribe-headers";
 import { SITE_URL } from "@/lib/seo/site";
 import { COLORS, styles, SPACE, RADIUS, FONT_STACK, CONTAINER_WIDTH } from "./brand";
 import { Header } from "./components/Header";
@@ -94,13 +95,21 @@ export function NewsletterEmail({
 }): React.JSX.Element {
   const { editorial, auto } = issue;
 
-  const greeting =
-    mode === "broadcast"
-      ? "Hi {{{contact.first_name|there}}},"
-      : "Hi there,";
+  // The same greeting for everyone, in both modes. Per-recipient
+  // personalisation was deliberately dropped when the newsletter moved off
+  // Resend broadcasts: the batch path renders this template ONCE for the whole
+  // list, and the first names imported from Mailchimp are of uneven quality —
+  // a wrong name reads worse than no name at all.
+  const greeting = "Hi there,";
 
+  // A template rendered once — or rendered by code that does not yet know the
+  // address — cannot write a per-recipient unsubscribe URL, so it emits a
+  // placeholder and `substituteUnsubscribeUrl()` swaps in the signed URL for
+  // each person at send time. The placeholder is deliberately NOT
+  // brace-delimited: `gateMergeTags` in `lib/email/gates.ts` fails any unknown
+  // `{{…}}` / `{{{…}}}` tag, and this must not look like one.
   const unsubscribeHref =
-    mode === "broadcast" ? "{{{RESEND_UNSUBSCRIBE_URL}}}" : "#";
+    mode === "broadcast" ? UNSUBSCRIBE_URL_PLACEHOLDER : "#";
   const unsubscribeTitle =
     mode === "broadcast" ? undefined : "Unsubscribe (preview)";
 

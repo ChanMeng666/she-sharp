@@ -1,12 +1,13 @@
 ---
 name: monthly-newsletter
-description: Guides a Claude Code session through She Sharp's monthly newsletter loop — pulling the AI-staged draft, adding the required human editorial polish (founder note, cover, photo of the month, subject/preview), curating the month's REAL event photos onto Vercel Blob, sanity-checking the NZ Tech Pulse data section, and previewing/test-sending/approving the Resend broadcast to the June 2026 showcase quality bar. Use whenever the user wants to work on the monthly newsletter — phrases like "review this month's newsletter", "let's do the newsletter draft", "edit the newsletter", "approve the newsletter", "send the newsletter", "the newsletter for August", or anything about turning the staged monthly draft into a scheduled email. Reference issue (THE approved template): lib/data/json/newsletter-issues/2026-06.json.
+description: Guides a Claude Code session through She Sharp's monthly newsletter loop — pulling the AI-staged draft, adding the required human editorial polish (founder note, cover, photo of the month, subject/preview), curating the month's REAL event photos onto Vercel Blob, sanity-checking the NZ Tech Pulse data section, previewing and test-sending, then approving the issue and building the per-recipient send batch from the subscriber database to the June 2026 showcase quality bar. Use whenever the user wants to work on the monthly newsletter — phrases like "review this month's newsletter", "let's do the newsletter draft", "edit the newsletter", "approve the newsletter", "send the newsletter", "the newsletter for August", or anything about turning the staged monthly draft into an email that goes out. Reference issue (THE approved template): lib/data/json/newsletter-issues/2026-06.json.
 ---
 
 # Run the monthly newsletter loop
 
 This skill walks Claude Code through one month's newsletter, from the
-machine-staged draft to a scheduled Resend broadcast. Every issue is a JSON file
+machine-staged draft to a send that a human runs, one batch at a time, with the
+recipient list built from She Sharp's own database. Every issue is a JSON file
 at `lib/data/json/newsletter-issues/<YYYY-MM>.json` with two blocks
 (`lib/newsletter/schema.ts`):
 
@@ -35,17 +36,26 @@ All commands below are PowerShell-first (this repo's primary shell on Windows).
 
 1. Working directory is the repo root (contains `lib/newsletter/`).
 2. `CRON_SECRET` — Bearer token for the admin/cron endpoints (must match Vercel).
-3. `RESEND_API_KEY` — for test sends and approve.
+3. `RESEND_API_KEY` — for test sends, and for the `resend` CLI that a human uses
+   to send the batches in Step 8e.
 4. `BLOB_READ_WRITE_TOKEN` — for the photo step (read from env or `.env.local`).
 5. `ffmpeg` + `ffprobe` on PATH — the photo pipeline transcodes with them.
-6. For approve/schedule: production `BASE_URL` + the Resend newsletter env
-   (`RESEND_NEWSLETTER_SEGMENT_ID`, `RESEND_NEWSLETTER_TOPIC_ID`) set on the server.
-   Both ids **changed on 2026-08-28**, when the domain moved to the She
-   Sharp–owned Resend team (`website@shesharp.org.nz`, team `shesharp`, Pro) and
-   the segment was recreated as **"Newsletter"**. That segment holds **0
-   contacts** — the real list is still in Mailchimp, and the live newsletter
-   still goes out from there, so an approve today schedules a broadcast to
-   nobody. Account detail: `docs/deployment/EMAIL_AUTHENTICATION.md`.
+6. `POSTGRES_URL` — the recipient list is read from this project's own database
+   (the `newsletter_subscribers` table), not from Resend.
+
+   **Read this before you plan a send.** As of today that table is **empty**.
+   The ~1,560 people on the Mailchimp list have **not** been imported yet — that
+   import is a later phase of this migration and has not happened. So a real
+   batch built today would contain **nobody**. The live newsletter still goes
+   out from **Mailchimp**; nothing has been cut over. If someone asks you to
+   "send this month's newsletter" through this skill, you can do every step up
+   to and including the test send, and then you must **stop and say that the
+   subscriber list is empty** rather than producing an empty batch and calling
+   it a send. Account detail: `docs/deployment/EMAIL_AUTHENTICATION.md`.
+7. `EMAIL_UNSUBSCRIBE_SECRET` — signs each recipient's personal unsubscribe
+   link. The batch build in Step 8d **hard-fails without it**; there is no
+   fallback and no way to skip it.
+8. For approve: production `BASE_URL` + `CRON_SECRET`.
 
 ---
 
@@ -193,7 +203,7 @@ Rules:
 - Placeholder strip entries carry **no `eventSlug`**. `PhotoStrip.captionFor()`
   overrides `alt` when the slug resolves, which would caption a synthetic image
   with a real venue name.
-- Never ship placeholders to the real broadcast if real photos exist. Swap first.
+- Never ship placeholders to the real send if real photos exist. Swap first.
 - Once real photos land, prefer re-running the normal Step 3 path (add the
   event's `galleryUrl` and let `photos.ts` harvest) over hand-uploading.
 
@@ -266,18 +276,18 @@ npx tsx scripts/newsletter/send-test.ts lib/data/json/newsletter-issues/2026-08.
 ```
 
 This uses the transactional `sendEmail` helper with a `[TEST]` subject prefix — it
-does NOT touch Resend broadcasts/segments/topics. Inspect in Gmail (web + mobile)
+does NOT touch the subscriber list and does NOT send a batch. Inspect in Gmail (web + mobile)
 and Outlook: layout, images, links, preheader.
 
 ### Step 6b — Reviewer round (only on explicit approval)
 
-Sometimes the founder wants a wider human review before the broadcast. That is
+Sometimes the founder wants a wider human review before the real send. That is
 allowed under all of these conditions:
 
 - Step 6 has already been sent **and the founder has explicitly approved widening**.
   Never expand the recipient list on your own initiative.
-- The list is a named reviewer list supplied by the founder — never a segment,
-  never the mailing list, never anyone who merely attended an event.
+- The list is a named reviewer list supplied by the founder — never the mailing
+  list, never anyone who merely attended an event.
 - **Maximum 25 addresses** (the script hard-caps this).
 - **One email per address.** The script loops rather than passing an array to
   `to:`, so reviewers never see each other's addresses.
@@ -324,28 +334,47 @@ together (see CLAUDE.md), and listing a noindex URL in the sitemap is what earns
 a "Submitted URL marked 'noindex'" in Search Console. Linked-but-unindexed is the
 deliberate state: the archive is for people who follow the link, not for search.
 
-## Step 8 — Approve and schedule
+## Step 8 — Approve, then build and send the batches
+
+This step used to be one command. It is now six small ones, in order: check the
+domain's health (8a), mark the issue approved (8b), build the recipient list from
+the database (8c), build the batch files (8d), send them (8e), and — only if a
+send is interrupted — resume without double-mailing (8f).
+
+**Nothing in 8a–8d sends any email.** The only step that puts mail in inboxes is
+8e, and a **human** runs it.
 
 ### Step 8a — Deliverability check (before approving)
 
 The newsletter is the only recurring bulk send on this domain, so this monthly
-loop is where the domain's health gets looked at. Three things, ~5 minutes:
+loop is where the domain's health gets looked at. Four things, ~5 minutes:
 
 1. **DMARC report.** Cloudflare dashboard → `shesharp.org.nz` → Email → DMARC
    Management. Every sending source should be one you recognise — normally just
    Google Workspace, Amazon SES (Resend), and forwarders. **An unrecognised
    source is either a spoofer or a legitimate tool nobody authenticated; say so
    and stop before approving.**
-2. **Last broadcast's numbers**, in the Resend dashboard. Complaint rate must be
-   **under 0.1%**, hard bounces **under 2%**. Above either, do not send this
-   month's issue until the list is cleaned.
+2. **Last month's send numbers**, in the Resend dashboard under **Emails**
+   (filter to the newsletter's sending address — these are individual sends now,
+   so there is no Broadcasts page entry to read). Complaint rate must be **under
+   0.1%**, hard bounces **under 2%**. Above either, do not send this month's
+   issue until the list is cleaned.
 3. **Sync the suppression register** so this send skips anyone who bounced,
    complained or unsubscribed since last month:
    ```powershell
    npx tsx scripts/email/suppression.ts sync
    ```
+4. **Reconcile the subscriber table against the registers.** This reports anyone
+   who is marked subscribed *and* sits on a suppression register:
+   ```powershell
+   npx tsx scripts/email/suppression.ts reconcile
+   ```
+   Those people are stripped automatically in Step 8c, so a small number here is
+   not an emergency. But a count that keeps growing month after month means some
+   part of the site is not writing unsubscribes back to the subscriber table —
+   **report the number to the user; don't just move on.**
 
-If any of the three is out of bounds — or a single send would exceed ~1,000
+If any of these is out of bounds — or a single send would exceed ~1,000
 recipients — that is the pre-agreed trigger to move marketing onto a separate
 `news.shesharp.org.nz` sending subdomain. Raise it with the user; do not decide
 alone. Background: `docs/deployment/EMAIL_AUTHENTICATION.md`.
@@ -362,29 +391,168 @@ The **Reply-To is `info@shesharp.org.nz`**, and that difference is deliberate.
 password and a direct "does anyone read this inbox?" in Slack went unanswered,
 so every subscriber who pressed Reply was writing into nothing.
 
+### Step 8b — Approve the issue
+
 ```powershell
 $env:BASE_URL="https://www.shesharp.org.nz"; $env:CRON_SECRET="…"
 npx tsx scripts/newsletter/approve.ts 2026-08
 ```
 
-On success it prints the broadcast id + NZ-local send time and posts a Slack
-"scheduled" message. By default it schedules the **last Thursday, 10am NZ**.
+**Approving no longer sends anything.** It marks the issue as approved on the
+server and works out the issue's send slot (by default the **last Thursday,
+10am NZ**), then posts a Slack message. It is the record that a human signed the
+issue off — the mail itself is built and sent in 8c–8e.
 
-**409 / failure handling:**
-- *"not in the deployed bundle"* → Step 7 hasn't finished deploying. Wait, confirm
-  the web version loads, retry.
-- *"already scheduled / sent"* → already approved (idempotency guard). Nothing to do.
+Read what the script prints back before continuing. Common failures:
+
+- *"not in the deployed bundle"* → Step 7 hasn't finished deploying. The approve
+  endpoint reads the **deployed** JSON, never Redis. Wait, confirm the web
+  version loads, retry.
+- *"already approved"* → somebody already did this (idempotency guard). Nothing
+  to do; carry on to 8c.
 - *"Send slot … has passed"* → the last Thursday is behind you. Re-run with
-  `--send-now` (server delays 5 min as a cancel window):
+  `--send-now`, which resolves the slot to now instead:
   ```powershell
   npx tsx scripts/newsletter/approve.ts 2026-08 --send-now
   ```
 
-Confirm the Slack "scheduled" message landed.
+Confirm the Slack message landed.
+
+### Step 8c — Build the recipient list from the database
+
+```powershell
+npx tsx scripts/email/recipients-from-db.ts --key newsletter-2026-08
+```
+
+This reads `newsletter_subscribers`, keeps only the rows whose status is
+`subscribed`, applies **both** suppression registers (the live one and the
+committed one), and writes
+`tmp/emails/recipients-newsletter-2026-08.json`.
+
+It prints **counts and truncated hashes only — never an address**, so the output
+is safe to paste into Slack, a PR or a message to the user. Read the counts back
+to the user before going further:
+
+```
+  Confirmed subscribers      …
+  Held back by suppression   …
+  WILL BE MAILED             …
+```
+
+**If "WILL BE MAILED" is 0, stop.** As of today that is the expected result —
+nobody has been imported from Mailchimp yet (see Prerequisite 6). Say so; do not
+build a batch of nothing and describe it as a send.
+
+Two flags, both of which can only ever make the list **smaller** — neither can
+add anyone who is not already a confirmed, unsuppressed subscriber:
+
+- `--only <address>` — narrow to one person. This is how you do a **real batch
+  test**: the same machinery as the live send, aimed at a single confirmed
+  mailbox.
+  ```powershell
+  npx tsx scripts/email/recipients-from-db.ts --key newsletter-2026-08 --only chanmeng6666@gmail.com
+  ```
+- `--limit <n>` — keep only the first N. This is how you **ramp** a first real
+  send: mail a small slice, watch the bounce and complaint numbers for a day,
+  then do the rest.
+  ```powershell
+  npx tsx scripts/email/recipients-from-db.ts --key newsletter-2026-08 --limit 50
+  ```
+
+**Whether to ramp, and how big the first slice is, is the founder's decision,
+not yours.** Ask.
+
+### Step 8d — Build the batch files
+
+```powershell
+npx tsx scripts/newsletter/build-newsletter-batch.ts 2026-08 `
+  --recipients tmp/emails/recipients-newsletter-2026-08.json
+```
+
+This renders the issue once, then for each recipient substitutes their own
+signed unsubscribe link, runs the pre-send gates (the same size and image checks
+as the preview), splits the list into chunks of **100** — the maximum Resend
+accepts in one request — and writes the batch files plus a **manifest** into
+`tmp/emails/`.
+
+**It sends nothing.** What it prints at the end is the list of commands a human
+then runs in 8e. Keep that output; you need it.
+
+If it fails:
+- *missing `EMAIL_UNSUBSCRIBE_SECRET`* → it stops before writing anything. Set
+  the variable; there is no way around this one.
+- *a gate fails* (email too large, a WebP or site-relative image) → **nothing is
+  written at all**, because a bad render is a whole-list problem, not a
+  one-message one. Go back to Step 3/5, fix it, re-render, rebuild.
+
+> **If it is the `image-format` gate on an event cover, run the twin generator.**
+> The website serves WebP and Outlook cannot display it, so every event cover
+> needs an email-safe JPEG beside it:
+>
+> ```powershell
+> npx tsx scripts/newsletter/email-covers.ts            # generate what is missing
+> npx tsx scripts/newsletter/email-covers.ts --check    # confirm, writes nothing
+> ```
+>
+> Run it after any month where the issue picked up a new event, and commit the
+> `.jpg` files it writes. It only ever generates covers an issue actually refers
+> to. **Never ask anyone to relax the gate** — it is the only reason we know, and
+> the old sending path ran no checks at all.
+
+### Step 8e — Send the batches (a human runs these)
+
+The commands printed by 8d look like this, one per chunk of 100, with a pause
+line already written in between them:
+
+```powershell
+# chunk 1/3 — 100 recipient(s)
+resend emails batch --file "tmp/emails/batch-newsletter-2026-08-newsletter-1.json" --idempotency-key … --batch-validation strict
+Start-Sleep -Milliseconds 600
+```
+
+Rules for this step:
+
+- **A human runs these commands, not the assistant.** Paste them to the user,
+  say how many there are, and let them run them.
+- **Keep the `Start-Sleep` lines.** Resend allows 2 requests a second; the
+  printed 600ms pause is what keeps the send inside that. Don't paste all the
+  commands as one block without them.
+- **There is no `--dry-run` for `resend emails batch`.** The only preflight that
+  exists is the local build in 8d plus `--batch-validation strict`, which makes
+  Resend reject the whole chunk if any message in it is malformed. Never drop
+  `--batch-validation strict`, and never "just try one to see". If you want to
+  eyeball one message first, open a chunk file and read its `"html"` field.
+- **Do not edit the printed commands.** The `--idempotency-key` is what stops the
+  same chunk delivering twice if a command is re-run.
+- Watch the first chunk's result before running the rest. If it errors, **stop
+  and report** — do not keep going through the list.
+
+### Step 8f — If a send is interrupted
+
+A half-finished send is resumed by excluding everyone the previous run already
+mailed. Rebuild with the previous run's manifest:
+
+```powershell
+npx tsx scripts/newsletter/build-newsletter-batch.ts 2026-08 `
+  --recipients tmp/emails/recipients-newsletter-2026-08.json `
+  --exclude-hashes tmp/emails/batch-newsletter-2026-08-newsletter.manifest.json
+```
+
+Everyone recorded in that manifest is skipped, so **nobody is mailed twice**.
+Then run the newly printed commands from 8e.
+
+Never resume by hand-picking who "probably didn't get it" — use the manifest.
 
 ## Step 9 — Wrap-up (after the send day)
 
-- Set `meta.status` to `"sent"` and `meta.broadcastId` to the id from Step 8.
+- Set `meta.status` to `"sent"`. There is no broadcast id to record any more —
+  the issue was sent as individual messages, not as one Resend broadcast.
+- Record **where the send is written down** instead: the manifest path from Step
+  8d (e.g. `tmp/emails/batch-newsletter-2026-08-newsletter.manifest.json`), how many
+  recipients it covered, and the date it actually went out. Note it in the commit
+  message and in the Slack thread. `tmp/` is gitignored and gets cleared, so if
+  the manifest matters beyond this month, say so and ask the user where it should
+  be kept.
 - `git commit -m "chore(newsletter): mark 2026-08 sent"` + push.
 - Confirm the archive card from Step 7b opens the right issue on
   `https://www.shesharp.org.nz/resources/newsletters`.
@@ -417,7 +585,7 @@ Confirm the Slack "scheduled" message landed.
    sponsors). An issue with no photos is VALID — never pad with filler. The ONE
    exception is the documented placeholder path (Step 3b), for an event whose real
    photos are still coming; placeholders must be visibly labelled as such and must
-   be swapped before the real broadcast.
+   be swapped before the real send.
 7. **Voice.** Warm in-person Auckland community voice, NZ spelling, real venue
    names, one concrete in-the-room detail in the founder note. Subject ≤50
    (≤1 emoji); preview ≤120 (complements, not repeats); ONE primary CTA. The AI
@@ -430,9 +598,17 @@ Also non-negotiable:
   site-relative paths.
 - **The first test send always goes to `chanmeng6666@gmail.com` alone.** Widening
   to a named reviewer list (Step 6b, max 25) requires explicit founder approval
-  each time — never widen on your own initiative, and never to a segment.
+  each time — never widen on your own initiative.
+- **A real batch is only ever built from `recipients-from-db.ts` output.** Never
+  hand-write a recipients file, never paste addresses into one, never add
+  someone to a list the script produced. If a person needs to receive the
+  newsletter, they belong in `newsletter_subscribers` — that is the whole point
+  of the table. The `--only` and `--limit` flags exist because they can only
+  narrow the list; nothing in this loop may widen it.
 - **Approve reads the deployed bundle, not Redis** — always commit + deploy
-  (Step 7) before approving (Step 8).
+  (Step 7) before approving (Step 8b).
+- **The assistant does not send the batches.** Steps 8c and 8d are safe to run;
+  the `resend emails batch` commands in 8e are handed to a human.
 - **Listed, but not indexed.** Every issue gets an archive card (Step 7b); the
   web version keeps `noindex` and stays out of `app/sitemap.ts`.
 
@@ -459,6 +635,11 @@ Also non-negotiable:
 ## What this skill does *not* do
 
 - Generate the AI draft itself (the monthly cron / the `force` POST does).
-- Manage Resend segments/topics/contacts (see `scripts/newsletter/` setup).
+- Manage who is on the mailing list. Subscribing, unsubscribing and importing
+  people into `newsletter_subscribers` all happen outside this loop; this skill
+  only reads the list as it stands.
+- Import the Mailchimp subscribers. That has not happened yet and is not a step
+  here — see Prerequisite 6.
+- Actually run the `resend emails batch` commands (a human does, Step 8e).
 - Send transactional or auth email.
 - Publish the web version to search — the archive card links it, `noindex` stays.

@@ -20,6 +20,12 @@ import { runEmailGates } from "./gates";
 import { hashEmail } from "./hash";
 import type { MessageSpec } from "./message";
 import { getSenderIdentity, isApprovedSender, type EmailStream } from "./senders";
+import {
+  UNSUBSCRIBE_URL_PLACEHOLDER,
+  buildUnsubscribeHeaders,
+  substituteUnsubscribeUrl,
+  unsubscribeUrlFor,
+} from "./unsubscribe-headers";
 import { buildUnsubscribeToken, verifyUnsubscribeToken } from "./unsubscribe-token";
 import { verifySvixSignature } from "./webhook-verify";
 
@@ -48,15 +54,28 @@ check("no secret degrades to no token rather than a broken one", buildUnsubscrib
 process.env.EMAIL_UNSUBSCRIBE_SECRET = "test-secret-not-a-real-key";
 
 // --- List-Unsubscribe headers ----------------------------------------------
-// buildStreamHeaders is private to service.ts, and importing service.ts pulls in
-// the database client. Assert the contract on the same inputs instead: the URL
-// is always offered, the mailto only when explicitly configured to a verified
-// address (an unverified one bounces, which is worse than offering none).
+// These used to be asserted against a local copy of the assembly, because it
+// was private to service.ts and importing service.ts pulls in the database
+// client — so the test proved its own copy self-consistent and nothing about
+// the shipped code. The assembly now lives in its own database-free module and
+// is asserted directly.
 
-/** Mirrors buildStreamHeaders' List-Unsubscribe assembly. */
+/** The real assembly, via the shared module both senders use. */
 function listUnsubscribe(url: string, mailto?: string): string {
-  return mailto ? `<${url}>, <mailto:${mailto}>` : `<${url}>`;
+  const previous = process.env.EMAIL_UNSUBSCRIBE_MAILTO;
+  if (mailto) process.env.EMAIL_UNSUBSCRIBE_MAILTO = mailto;
+  else delete process.env.EMAIL_UNSUBSCRIBE_MAILTO;
+
+  // The URL is rebuilt from the address inside the module, so drive it with the
+  // address and assert on the header it produces for that same URL.
+  const headers = buildUnsubscribeHeaders(EMAIL, BASE);
+  if (previous === undefined) delete process.env.EMAIL_UNSUBSCRIBE_MAILTO;
+  else process.env.EMAIL_UNSUBSCRIBE_MAILTO = previous;
+
+  return headers["List-Unsubscribe"].replace(unsubscribeUrlFor(EMAIL, BASE)!, url);
 }
+
+const BASE = "https://www.shesharp.org.nz";
 
 /** Mirrors buildStreamHeaders' stream test. Keep in step with service.ts. */
 function streamCarriesUnsubscribe(stream: EmailStream): boolean {
@@ -70,6 +89,28 @@ check("no mailto: appears unless one is configured", !listUnsubscribe(UNSUB_URL)
 // exist, which is why EMAIL_UNSUBSCRIBE_MAILTO stays unset. This checks the
 // header assembly for the day a real mailbox is created.
 check("a configured mailto is appended, not substituted", listUnsubscribe(UNSUB_URL, "unsub@shesharp.org.nz") === `<${UNSUB_URL}>, <mailto:unsub@shesharp.org.nz>`);
+
+// The header pair, straight from the module that both senders use.
+check("both RFC 8058 headers are emitted together", (() => {
+  const h = buildUnsubscribeHeaders(EMAIL, BASE);
+  return h["List-Unsubscribe"]?.startsWith("<https://") === true &&
+    h["List-Unsubscribe-Post"] === "List-Unsubscribe=One-Click";
+})());
+check("the unsubscribe URL carries a token, never the address", (() => {
+  const url = unsubscribeUrlFor(EMAIL, BASE) ?? "";
+  return url.includes("/api/email/unsubscribe?t=") && !url.includes("someone");
+})());
+// Without a secret no token can be signed. A single notification email degrades
+// to no header; a marketing BATCH must refuse to build rather than ship a whole
+// list with no opt-out, which is what the preflight in build-batch.ts enforces.
+check("no secret yields no headers at all (never a broken one)", (() => {
+  const previous = process.env.EMAIL_UNSUBSCRIBE_SECRET;
+  process.env.EMAIL_UNSUBSCRIBE_SECRET = "";
+  const h = buildUnsubscribeHeaders(EMAIL, BASE);
+  const url = unsubscribeUrlFor(EMAIL, BASE);
+  process.env.EMAIL_UNSUBSCRIBE_SECRET = previous;
+  return Object.keys(h).length === 0 && url === null;
+})());
 
 // Which streams carry the header. `marketing` was excluded until the newsletter
 // moved in-house, because Resend attached these headers to broadcasts itself.
@@ -110,6 +151,52 @@ check(
     (s) => !streamCarriesUnsubscribe(s) || streamHonoursOptouts(s)
   )
 );
+
+// --- Unsubscribe placeholder substitution ----------------------------------
+// The batch path renders once (or without knowing the address) and swaps a
+// placeholder for each recipient's signed URL. Resend's own
+// {{{RESEND_UNSUBSCRIBE_URL}}} only ever worked for broadcasts against
+// Resend-held contacts; on the batch endpoint it would reach a real inbox as
+// literal text.
+
+check("the placeholder is not brace-delimited", !UNSUBSCRIBE_URL_PLACEHOLDER.includes("{{"));
+check("substitution replaces the placeholder with a signed URL", (() => {
+  const out = substituteUnsubscribeUrl(`<a href="${UNSUBSCRIBE_URL_PLACEHOLDER}">Unsubscribe</a>`, EMAIL, BASE);
+  return out.includes("/api/email/unsubscribe?t=") && !out.includes(UNSUBSCRIBE_URL_PLACEHOLDER);
+})());
+check("every occurrence is replaced, not just the first", (() => {
+  const body = `${UNSUBSCRIBE_URL_PLACEHOLDER} and ${UNSUBSCRIBE_URL_PLACEHOLDER}`;
+  return !substituteUnsubscribeUrl(body, EMAIL, BASE).includes(UNSUBSCRIBE_URL_PLACEHOLDER);
+})());
+check("content without a placeholder is returned untouched", (() => {
+  const body = "<p>No opt-out here.</p>";
+  return substituteUnsubscribeUrl(body, EMAIL, BASE) === body;
+})());
+check("two recipients get two different unsubscribe URLs", (() => {
+  const a = substituteUnsubscribeUrl(UNSUBSCRIBE_URL_PLACEHOLDER, "a@example.com", BASE);
+  const b = substituteUnsubscribeUrl(UNSUBSCRIBE_URL_PLACEHOLDER, "b@example.com", BASE);
+  return a !== b;
+})());
+// Without a secret this must THROW, not silently return the placeholder: a
+// marketing batch that shipped the literal text would give a whole list a dead
+// opt-out link, which is how a list earns spam complaints.
+check("substitution throws when no token can be signed", (() => {
+  const previous = process.env.EMAIL_UNSUBSCRIBE_SECRET;
+  process.env.EMAIL_UNSUBSCRIBE_SECRET = "";
+  let threw = false;
+  try {
+    substituteUnsubscribeUrl(UNSUBSCRIBE_URL_PLACEHOLDER, EMAIL, BASE);
+  } catch {
+    threw = true;
+  }
+  process.env.EMAIL_UNSUBSCRIBE_SECRET = previous;
+  return threw;
+})());
+check("a substituted URL round-trips back to the recipient's hash", (() => {
+  const out = substituteUnsubscribeUrl(UNSUBSCRIBE_URL_PLACEHOLDER, EMAIL, BASE);
+  const token = out.split("?t=")[1];
+  return verifyUnsubscribeToken(token) === hashEmail(EMAIL);
+})());
 
 // --- Sender identities -----------------------------------------------------
 

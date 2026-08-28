@@ -2,36 +2,21 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { markStatus, getStatus } from "@/lib/newsletter/drafts";
 import { getIssue } from "@/lib/newsletter/issues-registry";
-import { notifyNewsletterScheduled } from "@/lib/newsletter/notify";
+import { notifyNewsletterApproved } from "@/lib/newsletter/notify";
 import { renderNewsletter } from "@/lib/newsletter/render";
-import { createBroadcast, sendBroadcast } from "@/lib/newsletter/resend-api";
 import { lastThursdaySendAt } from "@/lib/newsletter/schedule";
 import { issueIdSchema } from "@/lib/newsletter/schema";
-import { getSenderIdentity } from "@/lib/email/senders";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
 /**
- * The newsletter is marketing, so it takes the marketing identity. The From is
- * `She Sharp <newsletter@shesharp.org.nz>`, byte-for-byte what subscribers
- * already receive from Mailchimp; preserving the visible sender across the
- * Mailchimp → Resend migration is the whole point, so it must not change.
+ * How far ahead of "now" a late approval records its send instant.
  *
- * The **Reply-To is deliberately different** — `info@` rather than
- * `newsletter@`. The From carries the reputation; the Reply-To carries none of
- * it, and nobody on the team had `newsletter@`'s password as of August 2026,
- * so every subscriber who pressed Reply was writing into a mailbox no one
- * opened. See the note in `lib/email/senders.ts`.
- *
- * This previously read `process.env.EMAIL_FROM || DEFAULT_FROM`, and because
- * every environment sets `EMAIL_FROM` to `noreply@`, the monthly broadcast went
- * out from a no-reply address whose own footer says "Got news to share? Just
- * hit reply". `getSenderIdentity` deliberately lets `EMAIL_FROM` override the
- * transactional identity only, which is what closes that hole.
+ * The send itself is manual, so this is not a queue delay — it is the intended
+ * send time written into the status record and announced in Slack, and five
+ * minutes is roughly how long the two build commands below take to run.
  */
-const MARKETING_SENDER = getSenderIdentity("marketing");
-/** Immediate-send delay: gives a cancel window in the Resend dashboard. */
 const IMMEDIATE_SEND_DELAY_MS = 5 * 60 * 1000;
 
 /** Formats an instant as a readable NZ-local date+time for operator messages. */
@@ -44,19 +29,49 @@ function formatNz(d: Date): string {
 }
 
 /**
+ * The two commands the operator runs next, in order, to actually produce the
+ * mail. Returned in the response body rather than only documented, because the
+ * step that used to happen here now happens on somebody's laptop and the
+ * response is the last thing they see.
+ */
+function nextStepsFor(issueId: string): string[] {
+  return [
+    `npx tsx scripts/email/recipients-from-db.ts --key newsletter-${issueId}`,
+    `npx tsx scripts/newsletter/build-newsletter-batch.ts ${issueId} --recipients tmp/emails/recipients-newsletter-${issueId}.json`,
+  ];
+}
+
+/**
  * POST /api/admin/newsletter/[issue]/approve
  *
- * Approves a committed+deployed newsletter issue and schedules it as a Resend
- * broadcast. Reads ONLY the deployed JSON fixture (never the Redis draft) so the
- * emailed broadcast is byte-identical to the web version. By default it schedules
- * for the issue's canonical send slot (last Thursday 10am NZ); if that slot has
- * already passed it refuses unless `{ sendNow: true }` is provided, in which case
- * it queues an immediate send 5 minutes out (a dashboard cancel window).
+ * Marks a committed+deployed newsletter issue **approved**. It does NOT send,
+ * schedule, or contact Resend in any way.
+ *
+ * Sending is deliberately a CLI step, not part of this route:
+ *  - it joins the pipeline the four outbound email skills already share — repo
+ *    scripts render, the `resend` CLI sends;
+ *  - it keeps a human in the loop by construction, because approving is not
+ *    the same act as sending;
+ *  - a batch send fans out one request per 100 recipients, and that fan-out has
+ *    no business inside a serverless function bounded by `maxDuration` and by
+ *    Neon's connection-burst limit.
+ *
+ * After a 200 the operator runs, on their own machine:
+ *   npx tsx scripts/email/recipients-from-db.ts --key newsletter-<issue>
+ *   npx tsx scripts/newsletter/build-newsletter-batch.ts <issue> --recipients …
+ * and then sends the built batch with the Resend CLI (the `/monthly-newsletter`
+ * skill walks through it). `scripts/newsletter/approve.ts` prints the same
+ * commands.
+ *
+ * This still reads ONLY the deployed JSON fixture (never the Redis draft), so
+ * what is approved is byte-identical to the web version, and it still renders
+ * the issue as a gate (see below) even though it sends nothing.
  *
  * Auth: a CRON_SECRET bearer token OR an admin session (same dual pattern as the
  * newsletter cron/draft endpoints).
  *
- * Body: { sendNow?: boolean }.
+ * Body: { sendNow?: boolean } — only relaxes the "send slot has passed" refusal;
+ * it does not cause anything to be sent.
  */
 export async function POST(
   request: NextRequest,
@@ -100,7 +115,9 @@ export async function POST(
   }
 
   // 2. Idempotency: refuse if already scheduled/sent — per the committed meta
-  //    and (belt & braces, across deploys) per the Redis status record.
+  //    and (belt & braces, across deploys) per the Redis status record. Only
+  //    those two are terminal; re-approving an approved issue is harmless and
+  //    just re-stamps the record.
   if (issue.meta.status === "scheduled" || issue.meta.status === "sent") {
     return NextResponse.json(
       {
@@ -122,24 +139,15 @@ export async function POST(
     );
   }
 
-  // 3. Required Resend env for a broadcast.
-  const segmentId = process.env.RESEND_NEWSLETTER_SEGMENT_ID;
-  const topicId = process.env.RESEND_NEWSLETTER_TOPIC_ID;
-  if (!segmentId || !topicId || !process.env.RESEND_API_KEY) {
-    return NextResponse.json(
-      {
-        error:
-          "Missing Resend configuration. RESEND_API_KEY, RESEND_NEWSLETTER_SEGMENT_ID, and RESEND_NEWSLETTER_TOPIC_ID must all be set.",
-      },
-      { status: 500 }
-    );
-  }
-
-  // 4. Render broadcast HTML/text. The renderer's >100KB throw is the size gate.
-  let html: string;
-  let text: string;
+  // 3. Render the issue. NOT dead code, and not for sending — the rendered
+  //    output is thrown away here; the batch builder renders again at send
+  //    time. This call is the >100KB Gmail-clip gate, and failing approval on
+  //    an oversized issue is far cheaper than discovering it mid-send, once the
+  //    fixture is already committed and deployed. Its throw becomes a 422.
+  let renderedKb: number;
   try {
-    ({ html, text } = await renderNewsletter(issue, "broadcast"));
+    const { html } = await renderNewsletter(issue, "broadcast");
+    renderedKb = Number((Buffer.byteLength(html, "utf8") / 1024).toFixed(1));
   } catch (error) {
     return NextResponse.json(
       { error: error instanceof Error ? error.message : "Render failed" },
@@ -147,8 +155,9 @@ export async function POST(
     );
   }
 
-  // 5. Resolve the send instant. Default = canonical send slot; if it has passed,
-  //    refuse unless sendNow, then queue 5 minutes out.
+  // 4. Resolve the intended send instant. Default = canonical send slot; if it
+  //    has passed, refuse unless sendNow. Nothing is queued against it — it is
+  //    the send time of record, which the operator honours by hand.
   const [year, month] = issueId.split("-").map(Number);
   const sendSlot = lastThursdaySendAt(year, month);
   const now = new Date();
@@ -158,7 +167,7 @@ export async function POST(
     if (!sendNow) {
       return NextResponse.json(
         {
-          error: `Send slot ${formatNz(sendSlot)} NZT has passed. Re-POST with {"sendNow":true} to send immediately.`,
+          error: `Send slot ${formatNz(sendSlot)} NZT has passed. Re-POST with {"sendNow":true} to approve for an immediate manual send.`,
         },
         { status: 409 }
       );
@@ -168,39 +177,20 @@ export async function POST(
     scheduledAt = sendSlot;
   }
 
-  // 6. Create the broadcast, then schedule the send.
+  // 5. Record status (best-effort) and notify Slack (best-effort). Neither may
+  //    fail the approval, and neither means mail is on its way.
   const scheduledAtIso = scheduledAt.toISOString();
-  try {
-    const { id: broadcastId } = await createBroadcast({
-      segmentId,
-      topicId,
-      from: MARKETING_SENDER.from,
-      replyTo: MARKETING_SENDER.replyTo,
-      subject: issue.editorial.subjectLine,
-      html,
-      text,
-      name: `newsletter-${issueId}`,
-    });
+  await markStatus(issueId, { status: "approved", scheduledAt: scheduledAtIso });
+  await notifyNewsletterApproved({ issueId, scheduledAt });
 
-    await sendBroadcast(broadcastId, { scheduledAt: scheduledAtIso });
-
-    // 7. Record status (best-effort) and notify Slack (best-effort).
-    await markStatus(issueId, {
-      status: "scheduled",
-      broadcastId,
-      scheduledAt: scheduledAtIso,
-    });
-    await notifyNewsletterScheduled({ issueId, broadcastId, scheduledAt });
-
-    return NextResponse.json({ issueId, broadcastId, scheduledAt: scheduledAtIso });
-  } catch (error) {
-    console.error(`Newsletter approve failed for ${issueId}:`, error);
-    return NextResponse.json(
-      {
-        error: "Failed to schedule broadcast on Resend",
-        message: error instanceof Error ? error.message : "Unknown error",
-      },
-      { status: 502 }
-    );
-  }
+  return NextResponse.json({
+    issueId,
+    status: "approved",
+    sent: false,
+    scheduledAt: scheduledAtIso,
+    scheduledAtNz: `${formatNz(scheduledAt)} NZT`,
+    renderedKb,
+    nextSteps: nextStepsFor(issueId),
+    note: "Approval does not send. Run the commands in nextSteps, then send the built batch with the Resend CLI.",
+  });
 }
