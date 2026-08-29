@@ -1,3 +1,5 @@
+import { MAILCHIMP_CONFIG } from "@/lib/data/newsletters";
+
 export interface FooterLink {
   name: string;
   href: string;
@@ -47,6 +49,20 @@ export const footerConfig = {
     },
   ] as FooterSection[],
 
+  /**
+   * Social profiles only — every entry here is a place She Sharp posts as
+   * itself, and every consumer may render the whole list without filtering.
+   *
+   * That invariant is new. The newsletter archive used to sit in this array
+   * with `icon: "mailchimp"`, and three of the five consumers had to filter it
+   * back out by matching the literal string `"Mailchimp"` — `lib/seo/site.ts`,
+   * `lib/deck/boilerplate.ts` and (by allow-list) `emails/components/Footer.tsx`.
+   * The other two rendered it, so a mail vendor's mascot appeared in the footer
+   * of every page and on /contact under "Follow us". Renaming or moving the
+   * entry would have silently broken the three name matches. It now lives in
+   * `newsletterArchive` below; keep this list to actual profiles so nobody has
+   * to reintroduce a filter.
+   */
   socialLinks: [
     {
       name: "Spotify",
@@ -78,12 +94,22 @@ export const footerConfig = {
       href: "https://www.youtube.com/channel/UCfNDV1btAhwWwEXSyxNd5_Q",
       icon: "youtube",
     },
-    {
-      name: "Mailchimp",
-      href: "https://us3.campaign-archive.com/home/?u=1bcf1c40837f51b409973326f&id=31bd05e8eb",
-      icon: "mailchimp",
-    },
   ] as SocialLink[],
+
+  /**
+   * The back catalogue of past issues, rendered as an ordinary text link.
+   *
+   * The href is Mailchimp's campaign archive and stays that way for now: it is
+   * the only route to the issues sent before August 2026, none of which were
+   * sent from this codebase. Re-hosting them here is a later phase, which is
+   * why the URL is read from `MAILCHIMP_CONFIG` rather than copied — that one
+   * constant in `lib/data/newsletters.ts` is the single place the destination
+   * changes when it does. Subscribing is `/newsletter/subscribe`, not this.
+   */
+  newsletterArchive: {
+    name: "Read past issues",
+    href: MAILCHIMP_CONFIG.archiveUrl,
+  } as FooterLink,
 
   /**
    * All seven policy pages, and it must stay all seven.

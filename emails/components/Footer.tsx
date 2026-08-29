@@ -3,7 +3,10 @@
  * short mint rule flourish, labeled social links, charity registration, a
  * "view in browser" link, a warm reply prompt, and the unsubscribe line.
  *
- * Social labels come from `footerConfig.socialLinks` (Mailchimp excluded); the
+ * Social labels come from `footerConfig.socialLinks`, narrowed by the allow-list
+ * below — an editorial choice of which five to show in an email and in what
+ * order, not a filter. (It also used to be what kept the Mailchimp archive out;
+ * that entry has since moved to `footerConfig.newsletterArchive`.) The
  * unsubscribe href/title are passed in so the caller controls broadcast vs
  * preview behaviour.
  */
@@ -23,7 +26,11 @@ function bgcolorAttr(color: string): React.TdHTMLAttributes<HTMLTableCellElement
   return { bgcolor: color } as unknown as React.TdHTMLAttributes<HTMLTableCellElement>;
 }
 
-/** Labeled socials to surface in the footer, in display order. */
+/**
+ * Labeled socials to surface in the footer, in display order. Deliberately not
+ * all of `socialLinks` — Spotify is left out of the email footer — so this stays
+ * an allow-list keyed by name rather than mapping the array through.
+ */
 const FOOTER_SOCIALS = ["Instagram", "Facebook", "LinkedIn", "X", "YouTube"]
   .map((name) => footerConfig.socialLinks.find((s) => s.name === name))
   .filter((s): s is (typeof footerConfig.socialLinks)[number] => Boolean(s));

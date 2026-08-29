@@ -69,13 +69,6 @@ const NON_HANDLE_SEGMENTS = new Set([
   "c",
 ]);
 
-/**
- * The Mailchimp newsletter archive is a subscribe funnel, not a profile, and it
- * has no handle a person could read off a projector. `lib/seo/site.ts` filters
- * it out of the social list for the same reason.
- */
-const NON_SOCIAL_LINKS = new Set(["Mailchimp"]);
-
 /** Trims `text` to at most `max` words, dropping any dangling punctuation. */
 function truncateWords(text: string, max: number): string {
   const parts = text.trim().split(/\s+/).filter(Boolean);
@@ -331,13 +324,15 @@ export function buildOpeningSlides(options: OpeningOptions): Slide[] {
       eyebrow: "Scan now, read later",
       title: "Stay Connected",
       lead: "Everything we run is announced on these channels first",
-      socials: footerConfig.socialLinks
-        .filter((link) => !NON_SOCIAL_LINKS.has(link.name))
-        .map((link) => ({
-          name: link.name,
-          handle: deriveSocialHandle(link.href),
-          href: link.href,
-        })),
+      // Every entry in `socialLinks` is a profile with a handle a person can
+      // read off a projector, so the list maps straight through. It used to be
+      // filtered by the literal name "Mailchimp": the newsletter archive sat in
+      // this array and has no handle. It now lives in `newsletterArchive`.
+      socials: footerConfig.socialLinks.map((link) => ({
+        name: link.name,
+        handle: deriveSocialHandle(link.href),
+        href: link.href,
+      })),
       qrs: options.contactQrs ?? [],
       footnote: `${footerConfig.charityInfo.name} is a registered New Zealand charity, ${footerConfig.charityInfo.registrationNumber}.`,
       note: "Leave this up during the first break so people can scan it without asking.",

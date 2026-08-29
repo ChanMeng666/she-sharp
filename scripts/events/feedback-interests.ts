@@ -5,11 +5,16 @@
  *   npx tsx scripts/events/feedback-interests.ts <event-slug> --csv
  *
  * This exists because the checkboxes on the feedback form subscribe nobody.
- * The live newsletter still goes out through Mailchimp, not Resend, and under
- * `.claude/skills/update-mailing-list/references/consent-rules.md` a ticked box
- * on a feedback form is not a subscription record anyway. So the boxes are an
- * expression of interest that a human has to act on — and a box that promises
- * something nobody delivers is worse than no box at all.
+ * Under `.claude/skills/update-mailing-list/references/consent-rules.md` a
+ * ticked box on a feedback form is not a subscription record, whichever
+ * platform happens to be sending — so the boxes are an expression of interest
+ * that a human has to act on, and a box that promises something nobody
+ * delivers is worse than no box at all.
+ *
+ * Which platform that is, and how far the move off Mailchimp has got, is
+ * tracked in `docs/development/EMAIL_PLATFORM_STRATEGY.md`. Deliberately not
+ * restated here: this script would go quietly out of date the day it changes,
+ * and nothing it does depends on the answer.
  *
  * Output is deliberately paste-ready: names and addresses grouped by what they
  * asked for, so whoever picks this up can add them through whichever front door
@@ -27,7 +32,7 @@ type Interest = 'mentorship' | 'volunteering' | 'newsletter';
 const LABELS: Record<Interest, string> = {
   mentorship: 'Mentorship programme',
   volunteering: 'Volunteering & ambassadors',
-  newsletter: 'Monthly newsletter (Mailchimp)',
+  newsletter: 'Monthly newsletter',
 };
 
 async function main(): Promise<void> {
@@ -104,8 +109,9 @@ async function main(): Promise<void> {
   }
 
   console.log(
-    'Nobody here is subscribed. The newsletter list lives in Mailchimp; see\n' +
-      '.claude/skills/update-mailing-list/references/consent-rules.md before adding anyone.',
+    'Nobody here is subscribed. Adding anyone to the newsletter list goes\n' +
+      'through /update-mailing-list, which records an opt-in source and date;\n' +
+      'read .claude/skills/update-mailing-list/references/consent-rules.md first.',
   );
 }
 

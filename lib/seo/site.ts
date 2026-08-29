@@ -28,10 +28,17 @@ export const LEGAL_NAME = footerConfig.charityInfo.name;
 /** NZ Business Number, from the same register entry. */
 export const NZBN = footerConfig.charityInfo.nzbn;
 
-/** Absolute social profile URLs (excludes the Mailchimp archive). */
-export const SOCIAL_LINKS = footerConfig.socialLinks
-  .filter((link) => link.name !== "Mailchimp")
-  .map((link) => link.href);
+/**
+ * Absolute social profile URLs, for JSON-LD `sameAs`.
+ *
+ * This used to filter out an entry literally named "Mailchimp", because the
+ * newsletter archive sat in `socialLinks` and `sameAs` must list profiles the
+ * organisation controls, not a mail vendor's archive page. The archive moved to
+ * `footerConfig.newsletterArchive`, so the whole list is now profiles and the
+ * filter is gone — but keep it that way: anything non-profile added back to
+ * `socialLinks` would land in `sameAs` unnoticed.
+ */
+export const SOCIAL_LINKS = footerConfig.socialLinks.map((link) => link.href);
 
 /** Build an absolute URL from a site-relative path. */
 export function absoluteUrl(path = "/"): string {

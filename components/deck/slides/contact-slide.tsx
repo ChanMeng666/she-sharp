@@ -4,11 +4,17 @@ import type { ContactSlide } from "@/lib/deck/types";
 
 import { Kicker } from "./archive";
 
-/** Spellings that reach the deck data but are not the icon key. */
+/**
+ * Spellings that reach the deck data but are not the icon key.
+ *
+ * `newsletter` and `email` both used to resolve to `mailchimp` — the vendor's
+ * Freddie mascot standing in for She Sharp's own newsletter. `socialIcons` now
+ * carries a plain envelope under `newsletter`, so that spelling needs no alias
+ * and `email` points at the same glyph.
+ */
 const ICON_ALIASES: Record<string, keyof typeof socialIcons> = {
   twitter: "x",
-  newsletter: "mailchimp",
-  email: "mailchimp",
+  email: "newsletter",
 };
 
 /** Resolves a social network name to its brand mark, or `null` when unknown. */
