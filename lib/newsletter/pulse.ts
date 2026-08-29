@@ -15,8 +15,17 @@
  *      verbatim in that item's own source text and that its URL is one we
  *      actually fetched. An item failing either check is dropped, never
  *      repaired — two sourced items beat three where one is invented.
- *   3. Fallback ladder: fresh fetched data → evergreen fact pool → `null`
+ *   3. A HOUSE-STYLE pass (`lib/newsletter/pulse-copy.ts`), which is a separate
+ *      layer on purpose: the guards above decide whether an item is TRUE, these
+ *      rules decide whether it sounds like us. Style is subordinate to truth —
+ *      a style violation is retried once and then REPORTED, never repaired by
+ *      relaxing a guard and never fixed by dropping the item.
+ *   4. Fallback ladder: fresh fetched data → evergreen fact pool → `null`
  *      (section omitted). A model-invented number NEVER reaches a reader.
+ *
+ * The model, temperature and seed for step 2 are pinned here rather than read
+ * from the shared `OPENAI_MODEL` — see `PULSE_MODEL` for why, and note that the
+ * model in use is printed on every run.
  *
  * See `lib/data/nz-tech-facts.ts` for the evergreen pool.
  */
@@ -34,6 +43,13 @@ import {
   type NzTechFact,
 } from "@/lib/data/nz-tech-facts";
 import { globalStats } from "@/lib/data/stats";
+import {
+  describeIssuesForModel,
+  hasCopyErrors,
+  lintPulseCopy,
+  PULSE_HOUSE_STYLE_RULES,
+  type PulseCopyIssue,
+} from "./pulse-copy";
 import { editorialSchema, type IssueEditorial } from "./schema";
 
 /** The rendered pulse shape (nullable), reused for validating assembled output. */
@@ -1237,7 +1253,9 @@ Return a SINGLE JSON object and nothing else, matching:
 - heroStat: pick ONE VERBATIM number from the SEEK employment report text. Prefer a number about technology, ICT, software, AI, digital skills, or women/gender if one is present; otherwise choose the most striking overall. "value" is that exact number as written (e.g. "5.2%", "12,000"). "label" is a short phrase (≤8 words) naming what it measures. "context" is one sentence of plain-English framing; any number inside it must also be verbatim from the source. You may add an Auckland framing to the context ONLY if the source text itself mentions Auckland — otherwise keep it as written (SEEK is a nationwide report, and that is fine). If no SEEK text is provided, return heroStat: null.
 - Every "title" must be a headline a reader would stop on, never the source document's own name. This matters most for the SEEK report, whose article title is literally "SEEK NZ Employment Report - <Month>" — that is a filing label, not a story. Say what the numbers mean for someone reading: "If you shelved a job search, take it back off the shelf" is a headline; "SEEK NZ Employment Report - July" is not.
 - The SEEK employment report is ALSO eligible as ONE of the news items, using its own exact URL. It is the only job-market DATA source available — the news feeds carry industry stories, not employment figures — so it is usually the right choice for the job-market leg of the mix. Two rules: use AT MOST ONE item from the SEEK report, and do NOT build that item on the same number you used for the hero stat. Choose a different figure from the report, or write no SEEK item at all.
-- newsBites: choose UP TO THREE news items following the editorial mix above, ordered most interesting first. For each: "title" is a short headline of your own (it may re-angle the original, but it must not add a fact the article does not state), "summary" is at most two sentences, and "url" is that item's exact URL. Do not write a source name — we attach it ourselves. If the item's text names an Auckland location, campus, or company, name it in the summary. If no news items are provided, return newsBites: [].
+- newsBites: choose UP TO THREE news items following the editorial mix above. The ORDER does not matter — we sort the list ourselves, so spend your effort on which three and on how they are written. For each: "title" is a short headline of your own (it may re-angle the original, but it must not add a fact the article does not state), "summary" is at most two sentences, and "url" is that item's exact URL. Do not write a source name — we attach it ourselves. If the item's text names an Auckland location, campus, or company, name it in the summary. If no news items are provided, return newsBites: [].
+
+${PULSE_HOUSE_STYLE_RULES}
 
 Return only the JSON object.`;
 
@@ -1285,17 +1303,127 @@ Return ONLY the JSON object described in your instructions.`;
 }
 
 /**
+ * The model this section is written by, PINNED.
+ *
+ * `OPENAI_MODEL` is a shared override read by four subsystems — `lib/matching`,
+ * `lib/recruitment`, `lib/newsletter/generate.ts` and, until now, this file. A
+ * developer who set it for the mentorship matcher silently changed the voice of
+ * the newsletter, and nothing printed to say so. That is precisely the
+ * "different developer, different output" failure this work exists to close, so
+ * this call no longer reads it.
+ *
+ * It is not deleted and not ignored in silence: `pulseModel()` reports when the
+ * shared variable is set and is being disregarded, and `PULSE_OPENAI_MODEL` is
+ * the deliberate, this-call-only escape hatch for someone who actually means to
+ * change the Pulse. Whichever applies, the model in use is printed on every
+ * run, because an operator comparing their output with the founder's has to be
+ * able to see what produced it.
+ */
+export const PULSE_MODEL = "gpt-4o-mini";
+
+/**
+ * Fixed seed. OpenAI documents `seed` as BEST-EFFORT, not a guarantee — the
+ * same seed and inputs usually reproduce, and `system_fingerprint` changing
+ * means the backend changed under you. It narrows run-to-run variance; it does
+ * not remove it, and no code here may assume it did.
+ */
+const PULSE_SEED = 20260829;
+
+/**
+ * Resolves the model for this call and says out loud what it picked.
+ *
+ * Exported for the preflight in `scripts/newsletter/lint-pulse.ts`, so an
+ * operator can see the answer BEFORE spending a generation on it.
+ */
+export function pulseModel(): { model: string; notes: string[] } {
+  const notes: string[] = [];
+  const override = process.env.PULSE_OPENAI_MODEL?.trim();
+  const shared = process.env.OPENAI_MODEL?.trim();
+
+  if (shared && shared !== PULSE_MODEL) {
+    notes.push(
+      `OPENAI_MODEL is set to "${shared}" and is IGNORED here — it is shared with ` +
+        `lib/matching, lib/recruitment and generate.ts, and the Pulse must not ` +
+        `change voice because another subsystem was retuned.`
+    );
+  }
+  if (override && override !== PULSE_MODEL) {
+    notes.push(`PULSE_OPENAI_MODEL overrides the pin: using "${override}".`);
+    return { model: override, notes };
+  }
+  return { model: PULSE_MODEL, notes };
+}
+
+/**
+ * What this machine will actually use, as lines an operator can read.
+ *
+ * A developer with no `OPENAI_API_KEY` currently gets the evergreen fallback and
+ * a thin section with no explanation, and reasonably concludes the generator is
+ * broken or that their prompt is worse than the founder's. Nothing told them.
+ * This is what tells them, BEFORE they spend a run finding out — which is why
+ * both `refresh-pulse.ts` and `lint-pulse.ts --preflight` print it.
+ *
+ * Deliberately reports presence, never the key itself.
+ */
+export function pulsePreflightLines(): string[] {
+  const { model, notes } = pulseModel();
+  const hasKey = Boolean(process.env.OPENAI_API_KEY?.trim());
+
+  const lines = [
+    `Model:        ${model}${model === PULSE_MODEL ? " (pinned)" : " (PULSE_OPENAI_MODEL override)"}`,
+    `Sampling:     temperature 0, seed ${PULSE_SEED} (OpenAI treats a seed as best-effort)`,
+    `OPENAI_MODEL: ${process.env.OPENAI_MODEL?.trim() || "(not set)"}`,
+    `OPENAI_API_KEY: ${hasKey ? "present" : "MISSING"}`,
+  ];
+
+  if (!hasKey) {
+    lines.push(
+      "",
+      "  ! Without a key `buildPulse()` returns the EVERGREEN pulse: a rotated fact",
+      "    from lib/data/nz-tech-facts.ts and NO news items. That is a correct",
+      "    fallback, not a failure — but it is not the section the founder sees, so",
+      "    do not compare output until a key is set in .env (scripts read .env, not",
+      "    .env.local)."
+    );
+  }
+
+  lines.push(
+    "",
+    `Feeds (${PULSE_RSS_FEEDS.length}, from PULSE_RSS_FEEDS — this list is the only place a feed is configured):`
+  );
+  for (const feed of PULSE_RSS_FEEDS) {
+    const pages = feed.pages && feed.pages > 1 ? `, ${feed.pages} pages` : "";
+    lines.push(`  - ${feed.source.padEnd(20)} ${feed.url}${pages}`);
+  }
+  lines.push(
+    `  - ${HRD_SOURCE_LABEL.padEnd(20)} ${HRD_SITEMAP_BASE}<year>.xml (sitemap, not a feed)`,
+    `  - ${SEEK_SOURCE_LABEL.padEnd(20)} ${SEEK_LISTING_URLS[0]}`
+  );
+
+  for (const note of notes) lines.push("", `  ! ${note}`);
+  return lines;
+}
+
+/**
  * Runs the model once, parsing + schema-validating the response. Returns null on
  * unparseable / invalid output so the caller can retry or fall back.
  */
 async function callModel(
   messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[]
 ): Promise<{ parsed: ModelPulse | null; raw: string; error: string }> {
-  const model = process.env.OPENAI_MODEL || "gpt-4o-mini";
+  const { model } = pulseModel();
   const response = await getOpenAI().chat.completions.create({
     model,
     messages,
-    temperature: 0.3,
+    /*
+     * 0, not 0.3. There is nothing here for sampling to improve: the model is
+     * selecting from a fixed candidate list and rephrasing sourced text, and
+     * every creative liberty it takes has to survive `assertNumbersVerbatim`
+     * anyway. The measured cost of 0.3 was a headline that came back three
+     * different ways in three runs of the same month.
+     */
+    temperature: 0,
+    seed: PULSE_SEED,
     response_format: { type: "json_object" },
   });
 
@@ -1392,11 +1520,13 @@ export function selectNewsBites(
   } = {}
 ): PulseNewsItem[] {
   const drop = (url: string, reason: string) => opts.onDrop?.(url, reason);
-  const preferred: PulseNewsItem[] = [];
-  const spares: PulseNewsItem[] = [];
+  /** Every item that survived both guards, with the keys the ordering needs. */
+  const accepted: { item: PulseNewsItem; angle: string; tier: number; stamp: number }[] = [];
   const seenUrls = new Set<string>();
   const seenHeadlines = new Set<string>();
-  const seenAngles = new Set<string>();
+
+
+
 
   for (const draft of drafted) {
     const source = fetched.get(draft.url);
@@ -1455,16 +1585,89 @@ export function selectNewsBites(
       ...(dateLabel ? { dateLabel } : {}),
     };
 
-    const angle = `${hostOf(draft.url)}::${rssRelevanceRank(source.title)}`;
-    if (seenAngles.has(angle)) {
-      spares.push(item);
-      continue;
-    }
-    seenAngles.add(angle);
-    preferred.push(item);
+    // Keyed by the SOURCE's title and date, never the model's, so the order is
+    // a property of what we fetched rather than of what came back this time.
+    const tier = rssRelevanceRank(source.title);
+    accepted.push({
+      item,
+      angle: `${hostOf(draft.url)}::${tier}`,
+      tier,
+      stamp: source.isoDate ? Date.parse(source.isoDate) : Number.NaN,
+    });
   }
 
-  return [...preferred, ...spares].slice(0, MAX_NEWS_BITES);
+  /*
+   * The mix rule decides the list; a stable sort decides the order WITHIN it.
+   *
+   * Until now the order was whatever the model emitted, and that was measurably
+   * unstable: three runs over the same month and the same sources returned the
+   * middle two items in two different orders. The model chooses which stories
+   * the section gets; it should not also be choosing, differently each time,
+   * which one a reader sees first.
+   *
+   * The key is (relevance tier, then recency, then URL), taken from the FETCHED
+   * source rather than from the draft. Tier first because it is already this
+   * newsletter's own stated priority — `rssRelevanceRank` puts women and
+   * diversity above the job market above Auckland above the industry generally,
+   * and the comment there explains at length why. Recency second because it is
+   * a news section. URL last purely as a total order, so two runs over identical
+   * inputs cannot differ: without it, two items sharing a tier and a date keep
+   * whatever order they arrived in, which is the variance being removed.
+   *
+   * Undated items (the SEEK report ships without a publication instant) sort to
+   * the end of their tier rather than the front — no date is not evidence of
+   * freshness.
+   *
+   * SORTED WITHIN EACH PARTITION, NOT ACROSS BOTH. `preferred` before `spares`
+   * is itself an editorial judgement and not merely a membership one: a spare
+   * is a second item from a publisher on a topic the section already covers,
+   * and it is kept only so that a monotonous news month still yields three
+   * items. Letting it sort above a differently-angled story because its tier
+   * happens to be lower would hand the repeat the top of the section, which is
+   * precisely what the mix rule exists to prevent.
+   */
+  type Accepted = (typeof accepted)[number];
+  const byEditorialKey = (a: Accepted, b: Accepted) => {
+    if (a.tier !== b.tier) return a.tier - b.tier;
+    const left = Number.isNaN(a.stamp) ? -Infinity : a.stamp;
+    const right = Number.isNaN(b.stamp) ? -Infinity : b.stamp;
+    if (left !== right) return right - left;
+    return a.item.url.localeCompare(b.item.url);
+  };
+
+  /*
+   * The mix partition, decided by the editorial key rather than by arrival.
+   *
+   * It used to be first-come-first-served: whichever of two same-(publisher,
+   * topic) items the model happened to list first became the preferred one and
+   * the other became the spare. That is the same variance the sort below
+   * removes, one step earlier and harder to see — the model listing the two in
+   * the other order changed which story led the section. Now the group is
+   * sorted and its best member is the one that is preferred, so the outcome is
+   * a property of what we fetched.
+   *
+   * (One order-dependence is left on purpose: `seenHeadlines` above keeps the
+   * first of a cross-posted pair. Both carry the same story under the same
+   * normalised headline, so which survives changes the attribution and nothing
+   * a reader reads, and the fetch layer has already removed cross-posts before
+   * the model ever sees them.)
+   */
+  const byAngle = new Map<string, Accepted[]>();
+  for (const entry of accepted) {
+    byAngle.set(entry.angle, [...(byAngle.get(entry.angle) ?? []), entry]);
+  }
+
+  const preferred: Accepted[] = [];
+  const spares: Accepted[] = [];
+  for (const group of byAngle.values()) {
+    const ranked = [...group].sort(byEditorialKey);
+    preferred.push(ranked[0]);
+    spares.push(...ranked.slice(1));
+  }
+
+  return [...preferred.sort(byEditorialKey), ...spares.sort(byEditorialKey)]
+    .slice(0, MAX_NEWS_BITES)
+    .map((entry) => entry.item);
 }
 
 /**
@@ -1535,7 +1738,17 @@ export async function buildPulse(
     { role: "user", content: buildModelUserPrompt(sources, opts.monthLabel) },
   ];
 
+  const { model: modelName, notes } = pulseModel();
+  // Printed every run: an operator comparing their Pulse with someone else's
+  // has to be able to see what produced each of them.
+  console.log(
+    `[pulse] model=${modelName} temperature=0 seed=${PULSE_SEED} (seed is best-effort)`
+  );
+  for (const note of notes) console.warn(`[pulse] ${note}`);
+
   let model: ModelPulse | null = null;
+  /** The accepted attempt's raw text, so a style retry can continue that turn. */
+  let modelRaw = "";
 
   try {
     for (let attempt = 1; attempt <= 2; attempt++) {
@@ -1545,6 +1758,7 @@ export async function buildPulse(
         const problems = validateModelPulse(parsed, { seekCorpus, newsByUrl });
         if (problems.length === 0) {
           model = parsed;
+          modelRaw = raw;
           break;
         }
         messages.push({ role: "assistant", content: raw });
@@ -1568,43 +1782,174 @@ export async function buildPulse(
     return evergreenPulse(monthIndex);
   }
 
-  // After the retry loop, drop any component still failing its verbatim check
-  // and substitute the evergreen fallback where needed.
-  const heroValid =
-    model?.heroStat &&
-    haveSeek &&
-    assertNumbersVerbatim(
-      `${model.heroStat.value} ${model.heroStat.context}`,
-      seekCorpus
-    ).ok;
+  /**
+   * Turns one accepted model draft into the section's two content blocks.
+   *
+   * Factored out of the straight-line code it used to be so that a style retry
+   * can be assembled and MEASURED before anything decides to adopt it. Drops
+   * are collected rather than logged, because assembling a candidate that is
+   * then rejected must not print a drop that never happened.
+   */
+  const assemble = (draft: ModelPulse | null) => {
+    // Any component still failing its verbatim check is dropped here and the
+    // evergreen fallback substituted.
+    const heroValid =
+      draft?.heroStat &&
+      haveSeek &&
+      assertNumbersVerbatim(
+        `${draft.heroStat.value} ${draft.heroStat.context}`,
+        seekCorpus
+      ).ok;
 
-  const heroStat = heroValid
-    ? {
-        value: model!.heroStat!.value,
-        label: model!.heroStat!.label,
-        context: model!.heroStat!.context,
-        sourceLabel: SEEK_SOURCE_LABEL,
-        sourceUrl: sources.seekArticle!.url,
+    const heroStat = heroValid
+      ? {
+          value: draft!.heroStat!.value,
+          label: draft!.heroStat!.label,
+          context: draft!.heroStat!.context,
+          sourceLabel: SEEK_SOURCE_LABEL,
+          sourceUrl: sources.seekArticle!.url,
+        }
+      : heroStatFromFact(
+          NZ_TECH_NUMERIC_FACTS[wrap(monthIndex, NZ_TECH_NUMERIC_FACTS.length)]
+        );
+
+    // The hero stat is settled first so a SEEK-sourced bite can be checked
+    // against the figure the section is already leading with.
+    const proposed = draft?.newsBites ?? [];
+    const drops: string[] = [];
+    const newsBites = selectNewsBites(proposed, newsByUrl, {
+      seekUrl: seekCandidate?.url ?? null,
+      heroValue: heroStat.value,
+      // Say what was rejected and why. A short Pulse is a legitimate outcome and
+      // is also what a guard eating a good story looks like; whoever is curating
+      // the issue has to be able to tell those apart, and until this logged
+      // nothing they could not.
+      onDrop: (url, reason) => drops.push(`dropped ${url} — ${reason}`),
+    });
+    return { heroStat, newsBites, proposed: proposed.length, drops };
+  };
+
+  /**
+   * The house-style check, run over the assembled section.
+   *
+   * The publisher's real fetched headline is handed in, so the copy rule
+   * compares against what the source ACTUALLY said rather than against the
+   * URL-slug proxy `lint-pulse.ts` has to fall back on.
+   */
+  const sourceTitles = new Map(
+    [...newsByUrl.entries()].map(([url, item]) => [url, item.title])
+  );
+  const styleOf = (section: {
+    heroStat: { label: string; context: string };
+    newsBites: PulseNewsItem[];
+  }) =>
+    lintPulseCopy(
+      { heroStat: section.heroStat, newsBites: section.newsBites },
+      { sourceTitles }
+    );
+  const errorsIn = (issues: PulseCopyIssue[]) =>
+    issues.filter((entry) => entry.severity === "error").length;
+
+  let assembled = assemble(model);
+  let styleIssues = styleOf(assembled);
+
+  /*
+   * ONE style retry, and then we keep what we have.
+   *
+   * A failing bite is NEVER dropped for style. Dropping would quietly shrink
+   * the section — the one outcome this newsletter treats as expensive, since a
+   * two-item Pulse is also what a truth guard eating a good story looks like —
+   * and it would do it for a problem a human can fix in ten seconds during
+   * curation. So the ladder is: ask again with the violations named, keep the
+   * better of the two, and REPORT whatever still fails through the same channel
+   * as the guard drops, so the operator sees it and fixes it by hand.
+   *
+   * Deliberately AFTER the anti-hallucination loop and never folded into it.
+   * `validateModelPulse` decides whether an item is true; these rules decide
+   * whether it sounds like us, and mixing them would let a Title Case headline
+   * burn a retry that a fabricated number needed. The retry's output is put
+   * back through `validateModelPulse` and `selectNewsBites` unchanged: style
+   * cannot buy a relaxation of either guard, and a retry that loses an item is
+   * refused outright rather than accepted for reading better.
+   */
+  if (hasCopyErrors(styleIssues) && model && modelRaw) {
+    try {
+      const styleMessages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
+        ...messages,
+        { role: "assistant", content: modelRaw },
+        {
+          role: "user",
+          content:
+            `Your items break the newsletter's house style:\n${describeIssuesForModel(
+              styleIssues
+            )}\n\nRewrite ONLY the titles and summaries named above and return the ` +
+            `corrected JSON object. Keep the same articles, the same URLs, and the ` +
+            `same items — do not drop one.\n` +
+            /*
+             * Both of these sentences are here because the first version of this
+             * message did not work. Run 1 came back with the copied ShadowTech26
+             * headline UNCHANGED: the message said "if fixing a headline would
+             * need a fact the article does not state, leave that item as it was",
+             * and a headline carrying "1,500+" reads as un-rewritable under a
+             * rule that also says every number must stay exactly as it is. So say
+             * explicitly that a headline may lose its number, and give the model
+             * a measurable target rather than a prohibition.
+             */
+            `A HEADLINE DOES NOT NEED A NUMBER — the summary carries the figures. ` +
+            `Dropping a number from a title is always allowed and never breaks the ` +
+            `number rules.\n` +
+            `Your new headline must share as FEW words as possible with the ` +
+            `publisher's own headline quoted above. If more than about half its ` +
+            `words still come from theirs, write it again. Say what the story means ` +
+            `for a woman working in or entering tech in New Zealand.\n` +
+            `Inside the SUMMARY, keep every number exactly as it is — those are ` +
+            `already verified against the sources and changing one would drop the ` +
+            `item. Do not add any fact the article does not state.`,
+        },
+      ];
+      const retry = await callModel(styleMessages);
+      if (
+        retry.parsed &&
+        validateModelPulse(retry.parsed, { seekCorpus, newsByUrl }).length === 0
+      ) {
+        const candidate = assemble(retry.parsed);
+        const candidateIssues = styleOf(candidate);
+        if (
+          candidate.newsBites.length >= assembled.newsBites.length &&
+          errorsIn(candidateIssues) < errorsIn(styleIssues)
+        ) {
+          assembled = candidate;
+          styleIssues = candidateIssues;
+        } else {
+          console.warn(
+            "[pulse] house-style retry was not an improvement; keeping the first draft"
+          );
+        }
       }
-    : heroStatFromFact(
-        NZ_TECH_NUMERIC_FACTS[wrap(monthIndex, NZ_TECH_NUMERIC_FACTS.length)]
-      );
+    } catch (err) {
+      // A failed style retry is not a failed Pulse. Keep the draft we have.
+      console.error("[pulse] house-style retry failed:", err);
+    }
+  }
 
-  // The hero stat is settled first so a SEEK-sourced bite can be checked
-  // against the figure the section is already leading with.
-  const proposed = model?.newsBites ?? [];
-  const newsBites = selectNewsBites(proposed, newsByUrl, {
-    seekUrl: seekCandidate?.url ?? null,
-    heroValue: heroStat.value,
-    // Say what was rejected and why. A short Pulse is a legitimate outcome and
-    // is also what a guard eating a good story looks like; whoever is curating
-    // the issue has to be able to tell those apart, and until this logged
-    // nothing they could not.
-    onDrop: (url, reason) => console.warn(`[pulse] dropped ${url} — ${reason}`),
-  });
-  if (proposed.length !== newsBites.length) {
+  const { heroStat, newsBites } = assembled;
+
+  for (const line of assembled.drops) console.warn(`[pulse] ${line}`);
+  if (assembled.proposed !== newsBites.length) {
     console.warn(
-      `[pulse] kept ${newsBites.length} of ${proposed.length} proposed news item(s)`
+      `[pulse] kept ${newsBites.length} of ${assembled.proposed} proposed news item(s)`
+    );
+  }
+  for (const entry of styleIssues) {
+    console.warn(
+      `[pulse] house style (${entry.severity}) ${entry.field}: ${entry.message}`
+    );
+  }
+  if (hasCopyErrors(styleIssues)) {
+    console.warn(
+      "[pulse] the section still breaks house style after one retry — fix these by " +
+        "hand during curation, then re-check with " +
+        "`npx tsx scripts/newsletter/lint-pulse.ts <issue-id>`"
     );
   }
 

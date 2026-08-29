@@ -22,7 +22,10 @@ import {
   needsPreviousYearSitemap,
   normaliseHeadline,
   parseSitemapEntries,
+  PULSE_MODEL,
   PULSE_RSS_FEEDS,
+  pulseModel,
+  pulsePreflightLines,
   rssRelevanceRank,
   selectHrdCandidates,
   selectNewsBites,
@@ -622,9 +625,12 @@ async function main(): Promise<void> {
       heroValue: "107.3%",
     });
     assert.strictEqual(bites.length, 2, "both items survive");
-    assert.strictEqual(bites[0].url, SEEK_URL);
-    assert.strictEqual(bites[0].sourceLabel, "SEEK NZ Employment Report");
-    assert.strictEqual(bites[0].dateLabel, undefined, "the report ships no dateline");
+    // Found by URL, not by position: since the deterministic sort landed, the
+    // draft order no longer decides where an item appears — see 8c.
+    const seek = bites.find((bite) => bite.url === SEEK_URL);
+    assert.ok(seek, "the SEEK-sourced bite survives");
+    assert.strictEqual(seek.sourceLabel, "SEEK NZ Employment Report");
+    assert.strictEqual(seek.dateLabel, undefined, "the report ships no dateline");
   });
   await check("the URL guard still binds: a SEEK-looking URL we did not fetch is dropped", () => {
     // The guard is unchanged — SEEK is allowed because it IS fetched, not
@@ -679,9 +685,11 @@ async function main(): Promise<void> {
       seekUrl: SEEK_URL,
       heroValue: "107.3%",
     });
+    // Membership, not position: the order is settled separately by the
+    // deterministic sort in 8c, and asserting it here would only re-test that.
     assert.deepStrictEqual(
-      bites.map((bite) => bite.url),
-      [SEEK_URL, DRAFT_WOMEN.url],
+      [...bites.map((bite) => bite.url)].sort(),
+      [DRAFT_WOMEN.url, SEEK_URL].sort(),
       "one report, one item"
     );
   });
@@ -731,12 +739,16 @@ async function main(): Promise<void> {
     pulseSchema.parse(pulse);
     assert.strictEqual(pulse!.heroStat.value, "107.3%", "hero stat comes from SEEK");
     assert.strictEqual(pulse!.heroStat.sourceUrl, SEEK_URL);
+    // Membership, not position — the order is 8c's business.
     assert.deepStrictEqual(
-      pulse!.newsBites?.map((bite) => bite.url),
-      [SEEK_URL, DRAFT_WOMEN.url],
+      [...(pulse!.newsBites ?? [])].map((bite) => bite.url).sort(),
+      [DRAFT_WOMEN.url, SEEK_URL].sort(),
       "the job-market bite is sourced from the report we already fetched"
     );
-    assert.strictEqual(pulse!.newsBites![0].sourceLabel, "SEEK NZ Employment Report");
+    assert.strictEqual(
+      pulse!.newsBites?.find((bite) => bite.url === SEEK_URL)?.sourceLabel,
+      "SEEK NZ Employment Report"
+    );
     assert.strictEqual(pulse!.newsBite, null);
   });
   await check("a model list of one invented URL degrades to an empty list", async () => {
@@ -1088,6 +1100,169 @@ async function main(): Promise<void> {
       oldOther,
     ]);
     assert.strictEqual(kept.length, 2, "only women items are ever subject to it");
+  });
+
+  // 8c. Deterministic ordering.
+  //
+  // The measured problem: three runs of the generator against the same month
+  // and the same sources returned the middle two items in two different orders.
+  // The model now chooses WHICH stories; the sort chooses the order.
+  console.log("8c. Deterministic ordering:");
+
+  await check("items are ordered by relevance tier, then recency", () => {
+    // Deliberately handed to the selector in the WRONG order.
+    const bites = selectNewsBites(
+      [DRAFT_INDUSTRY, DRAFT_JOBS, DRAFT_WOMEN],
+      FETCHED_BY_URL,
+    );
+    assert.deepStrictEqual(
+      bites.map((bite) => bite.url),
+      [
+        DRAFT_WOMEN.url, // tier 0 (women), 28 Jul
+        DRAFT_JOBS.url, // tier 1 (job market), 20 Jul
+        DRAFT_INDUSTRY.url, // tier 3 (industry), undated
+      ],
+      "the draft order must not survive into the section",
+    );
+  });
+
+  await check("the same three drafts in any order produce the same section", () => {
+    const orders = [
+      [DRAFT_WOMEN, DRAFT_JOBS, DRAFT_INDUSTRY],
+      [DRAFT_INDUSTRY, DRAFT_WOMEN, DRAFT_JOBS],
+      [DRAFT_JOBS, DRAFT_INDUSTRY, DRAFT_WOMEN],
+    ];
+    const results = orders.map((drafts) =>
+      selectNewsBites(drafts, FETCHED_BY_URL).map((bite) => bite.url),
+    );
+    assert.deepStrictEqual(results[1], results[0], "permutation 2 matches permutation 1");
+    assert.deepStrictEqual(results[2], results[0], "permutation 3 matches permutation 1");
+  });
+
+  await check("an undated item sorts to the end of its tier, not the front", () => {
+    // Both are tier 1 (the SEEK report's title matches "Employment"); the SEEK
+    // report ships without a publication instant, and no date is not evidence
+    // of freshness.
+    const bites = selectNewsBites([DRAFT_SEEK, DRAFT_JOBS], FETCHED_WITH_SEEK);
+    assert.deepStrictEqual(
+      bites.map((bite) => bite.url),
+      [DRAFT_JOBS.url, SEEK_URL],
+    );
+  });
+
+  await check("the mix rule still decides membership, and spares still come last", () => {
+    // The near-duplicate is a second IT Brief women item. It is kept — a
+    // monotonous news month should still get three items — but it must never
+    // sort above a differently-angled story just because its tier is lower.
+    const bites = selectNewsBites(
+      [DRAFT_WOMEN_TWO, DRAFT_WOMEN, DRAFT_JOBS],
+      FETCHED_BY_URL,
+    );
+    assert.deepStrictEqual(
+      bites.map((bite) => bite.url),
+      [DRAFT_WOMEN.url, DRAFT_JOBS.url, DRAFT_WOMEN_TWO.url],
+    );
+  });
+
+  await check("which of two same-angle items is preferred does not depend on draft order", () => {
+    // Both are IT Brief women items, so they compete for one slot in the mix.
+    // Before the partition was ranked, whichever the model happened to list
+    // first led the section — the same variance as the sort, one step earlier.
+    const orders = [
+      [DRAFT_WOMEN_TWO, DRAFT_WOMEN, DRAFT_JOBS],
+      [DRAFT_WOMEN, DRAFT_WOMEN_TWO, DRAFT_JOBS],
+      [DRAFT_JOBS, DRAFT_WOMEN_TWO, DRAFT_WOMEN],
+    ];
+    for (const drafts of orders) {
+      assert.deepStrictEqual(
+        selectNewsBites(drafts, FETCHED_BY_URL).map((bite) => bite.url),
+        [DRAFT_WOMEN.url, DRAFT_JOBS.url, DRAFT_WOMEN_TWO.url],
+        "the more recent women item leads whichever order it arrived in",
+      );
+    }
+  });
+
+  // 8d. The model is pinned, and says so.
+  console.log("8d. Model pinning:");
+
+  await check("OPENAI_MODEL is ignored here, loudly", () => {
+    const before = process.env.OPENAI_MODEL;
+    try {
+      process.env.OPENAI_MODEL = "gpt-4.1-mini";
+      const { model, notes } = pulseModel();
+      assert.strictEqual(model, PULSE_MODEL, "the shared override does not change the Pulse");
+      assert.ok(
+        notes.some((note) => note.includes("IGNORED")),
+        "and the operator is told, rather than left to wonder",
+      );
+    } finally {
+      if (before === undefined) delete process.env.OPENAI_MODEL;
+      else process.env.OPENAI_MODEL = before;
+    }
+  });
+
+  await check("PULSE_OPENAI_MODEL is the deliberate, this-call-only escape hatch", () => {
+    const before = process.env.PULSE_OPENAI_MODEL;
+    try {
+      process.env.PULSE_OPENAI_MODEL = "gpt-4.1";
+      const { model, notes } = pulseModel();
+      assert.strictEqual(model, "gpt-4.1");
+      assert.ok(notes.some((note) => note.includes("overrides the pin")), "and it is reported");
+    } finally {
+      if (before === undefined) delete process.env.PULSE_OPENAI_MODEL;
+      else process.env.PULSE_OPENAI_MODEL = before;
+    }
+  });
+
+  await check("with no override, the pinned model is used and nothing is warned about", () => {
+    const beforeShared = process.env.OPENAI_MODEL;
+    const beforeOwn = process.env.PULSE_OPENAI_MODEL;
+    try {
+      delete process.env.OPENAI_MODEL;
+      delete process.env.PULSE_OPENAI_MODEL;
+      const { model, notes } = pulseModel();
+      assert.strictEqual(model, PULSE_MODEL);
+      assert.deepStrictEqual(notes, []);
+    } finally {
+      if (beforeShared !== undefined) process.env.OPENAI_MODEL = beforeShared;
+      if (beforeOwn !== undefined) process.env.PULSE_OPENAI_MODEL = beforeOwn;
+    }
+  });
+
+  // 8e. The preflight tells an operator what they are about to get.
+  console.log("8e. Preflight:");
+
+  await check("a missing API key is called out, with what happens instead", () => {
+    const before = process.env.OPENAI_API_KEY;
+    try {
+      delete process.env.OPENAI_API_KEY;
+      const text = pulsePreflightLines().join("\n");
+      assert.ok(text.includes("OPENAI_API_KEY: MISSING"), "the key is reported as missing");
+      assert.ok(text.includes("EVERGREEN"), "and the consequence is spelled out");
+    } finally {
+      if (before === undefined) delete process.env.OPENAI_API_KEY;
+      else process.env.OPENAI_API_KEY = before;
+    }
+  });
+
+  await check("every configured feed is listed", () => {
+    const text = pulsePreflightLines().join("\n");
+    for (const feed of PULSE_RSS_FEEDS) {
+      assert.ok(text.includes(feed.url), `${feed.source} is listed`);
+    }
+    assert.ok(text.includes("hcamag.com"), "the HRD sitemap leg is listed too");
+    assert.ok(text.includes("seek"), "and the SEEK report");
+  });
+
+  await check("the key itself is never printed", () => {
+    const before = process.env.OPENAI_API_KEY;
+    try {
+      process.env.OPENAI_API_KEY = "sk-do-not-print-me";
+      assert.ok(!pulsePreflightLines().join("\n").includes("sk-do-not-print-me"));
+    } finally {
+      if (before === undefined) delete process.env.OPENAI_API_KEY;
+      else process.env.OPENAI_API_KEY = before;
+    }
   });
 
   console.log(`\nAll ${passed} checks passed.`);
