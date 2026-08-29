@@ -239,10 +239,12 @@ issue (`2026-06.json`). **Required:**
 - **`recapIntro`** — 1–2 sentences framing last month.
 - **`primaryCta`** — the SINGLE most important action (usually the next event's
   registration link). Label ≤40 chars. Don't dilute it.
-- **`pulse`** — sanity-check only. Numbers are already copied verbatim from
-  fetched sources by the pipeline; confirm each `sourceUrl` resolves. **Set
-  `newsBite` to `null`** unless the drafted item is genuinely relevant and local
-  (宁缺毋滥 — better empty than filler).
+- **`pulse`** — **see Step 4a**, which is where this section is actually done.
+  It used to say "sanity-check only", and that was how a section built for three
+  items shipped with one for three issues running. Numbers are copied verbatim
+  from fetched sources by the pipeline and every URL is one it retrieved — what
+  the pipeline cannot judge is whether an item is worth a reader's attention,
+  and that judgement is the step.
 
 **Optional:** `eventBlurbs` (per-slug one-liners), `opportunities` (mentor /
 volunteer / donate — keep the three canonical hrefs), `sponsorThanks` (name ONLY
@@ -254,16 +256,116 @@ partners/venues present in the event data, or `null` to omit).
   `auto.upcomingEvents` — every hard fact is read from there, so only the framing
   copy (`eyebrow`, `dateBadge`, `blurb`, CTA) lives in `editorial`. The promoted
   event is removed from "What's next" and its CTA replaces the one at the bottom.
-- **`pulse.newsBites`** — up to 3 source-attributed NZ items, replacing the single
-  `newsBite`. Same 宁缺毋滥 rule: one strong local item beats three vendor press
-  releases. Every number must appear verbatim in the linked source, and every
-  source must be NZ-relevant to a reader here.
+- **`pulse.newsBites`** — up to 3 source-attributed NZ items. The generator now
+  produces this list and leaves the legacy `newsBite` null. Curating it is
+  **Step 4a**, which carries the fill rates, the editorial bar and the checks.
 
 Never re-add a spotlight / featured-mentee section — it was removed. Only feature
 a person when you can verify a real photo + source (there is no schema slot for it
 today, so in practice: don't).
 
 Do not touch the rest of the `auto` block by hand — it is the machine snapshot.
+
+## Step 4a — The NZ Tech Pulse (the industry-news section)
+
+This has its own step because for three issues it did not get one. The schema,
+the renderer and this document were all built for a three-item news list; the
+generator produced one. So the best Pulse the newsletter has had — July 2026's
+three items — was **typed into the fixture by hand**, which is why it never
+happened again. Read that as the warning it is: a section nobody has a procedure
+for is a section that is excellent once and thin afterwards.
+
+### Refresh it, then judge it
+
+```powershell
+npx tsx scripts/newsletter/refresh-pulse.ts 2026-08            # dry run, prints before/after
+npx tsx scripts/newsletter/refresh-pulse.ts 2026-08 --apply
+```
+
+This rebuilds **only** `editorial.pulse` against the live sources. It is the one
+part of `editorial` that is machine-produced, and this is the only way to
+refresh it without regenerating the whole draft and taking the founder's note
+with it. Run it whenever the draft is more than a few days old.
+
+### What the sources can honestly supply
+
+Do not skip this. It is the difference between a section that is short some
+months and a section padded with filler.
+
+| Slot | Where it comes from | How often it fills |
+|---|---|---|
+| **Hero statistic** | SEEK NZ Employment Report, monthly | Every month |
+| **Job-market / hiring story** | HRD New Zealand | Every month |
+| **Women's story** | TechWomen NZ, else HRD's women-and-work coverage | Effectively every month |
+| — of which *specifically* women **in tech** | TechWomen NZ alone (1.19 posts/month) | **~92%** of months at a 90-day window; ~62% at 35 days |
+| **Industry story** | Tech New Zealand, AI Forum, The Conversation NZ | Most months |
+
+**So: three items is normal, and the third is a women's-news item that is only
+sometimes specifically about women in tech.** That is what the measured rates
+support. The flattering version — "a fresh women-in-tech story every month" — is
+false at 62%, and writing it here would make an operator go looking for
+something to fill the gap.
+
+**Two items is a correct outcome.** 宁缺毋滥. One strong local story beats three
+where two are vendor press releases, and the reader cannot tell you padded but
+they can tell it was dull.
+
+**A fresh women-in-tech *statistic* is roughly twice a year**, not monthly — the
+Stats NZ gender pay gap each August, and Digital Skills Aotearoa every two to
+three years (next expected ~2029). No NZ publisher produces women-in-tech data
+more often; this was checked, not assumed. The hero stat rotates the evergreen
+pool for exactly this reason. **Treat a fresh statistic as a windfall, never as
+a slot to fill.**
+
+### What a good item looks like
+
+A subscriber is a woman in, or entering, tech in New Zealand — often a student
+or a career-changer. Judge every item by whether it changes what she does this
+month.
+
+- **Good:** "Tech job ads are up 9.9% on a year ago and Auckland is up 5.0%,
+  while ads nationally rose just 0.2%." She can act on that.
+- **Good:** a pay-gap or pay-equity story with a number and a source.
+- **Bad:** any sentence of the form "*Vendor* launches *product* for
+  *enterprise*". The feeds are full of these; they are trade press, not news for
+  her.
+- **Bad:** international infrastructure announcements with no NZ hook.
+
+### Checking it, in this order
+
+1. **Every `sourceUrl` and every item `url` opens**, and the page says what the
+   item says it says. The pipeline guarantees the URL was fetched and that every
+   number appears verbatim in the source — it cannot guarantee the framing is
+   fair.
+2. **No item duplicates another.** Tech New Zealand cross-posts TechWomen
+   articles at a different URL with an identical title; dedup is by normalised
+   title for that reason, but check with your eyes too.
+3. **At most one item from any single publisher**, unless the second is
+   genuinely better than anything else available.
+4. **Read the three aloud as a set.** Three AI stories is not a Pulse, it is a
+   theme.
+
+### Removing an item
+
+Delete it from `newsBites`. Do not replace it with something you found yourself
+unless you can meet the same standard: a real NZ-relevant source, a URL that
+opens, and every number verbatim in that source. **Never hand-write a number
+into this section.** `docs/development/CONTENT_RULES.md` exists because numbers
+were published that nobody could source, and this is the section where that is
+easiest to do by accident.
+
+### Known limitations, so you do not chase them
+
+- The evergreen fact "women hold around 29% of professional IT roles in NZ" has
+  **no refresh path** — no NZ publisher updates it. It is sourced and
+  attributed, and it will not change. Do not go looking for this year's figure.
+- RNZ publishes exactly the right stories and is **deliberately not a source**:
+  its `robots.txt` names `anthropic-ai` and `ChatGPT-User` and disallows them.
+  The generic rule permits a plain fetch, but this pipeline summarises with an
+  LLM, which is the use RNZ refused. Do not add it back.
+- Stats NZ, MBIE and Education Counts cannot be fetched at all — a JS-only app,
+  a bot wall that returns HTTP 200 with a challenge page, and a Cloudflare 403
+  respectively. Their numbers reach us through the evergreen pool by hand.
 
 ## Step 5 — Preview loop
 
@@ -598,7 +700,9 @@ Never resume by hand-picking who "probably didn't get it" — use the manifest.
 5. **Truthfulness.** Pulse numbers come verbatim from fetched sources (the
    pipeline guarantees it; you just sanity-check the source links). Venues only
    from event data; sponsor thanks names only partners present in the data; drop
-   `pulse.newsBite` when nothing genuinely relevant/local surfaced.
+   an item from `pulse.newsBites` when it is not genuinely relevant or local. A
+   two-item Pulse is a correct Pulse — see Step 4a for what the sources can
+   honestly supply in a given month.
 6. **Sections auto-hide when empty** (cover / strip / POM / headline / news /
    sponsors). An issue with no photos is VALID — never pad with filler. The ONE
    exception is the documented placeholder path (Step 3b), for an event whose real
@@ -643,8 +747,8 @@ Also non-negotiable:
 | Upcoming + CTA | `auto.upcomingEvents`, `editorial.primaryCta` | upcoming events exist | event data; CTA = next event's registration link. The promoted headline event is filtered out of this list, and the button is suppressed here when a headline block is present (that block carries the issue's one CTA) |
 | NZ Tech Pulse | `editorial.pulse` | pipeline produced verified data | `lib/newsletter/pulse.ts` (SEEK + RSS, verbatim-guarded) |
 | — hero stat | `pulse.heroStat` | present in draft | SEEK report (verbatim) or evergreen fallback |
-| — news list | `pulse.newsBites` | 1-3 genuinely relevant/local items | NZ tech RSS + hand-verified sources; wins over `newsBite` when set |
-| — news bite | `pulse.newsBite` | legacy single-item fallback | NZ tech RSS; else `null` (drop it) |
+| — news list | `pulse.newsBites` | 1-3 genuinely relevant/local items | SEEK report + NZ feeds + the HRD sitemap, verbatim-guarded; wins over `newsBite` when set |
+| — news bite | `pulse.newsBite` | legacy, for issues predating the list | always `null` in new issues; the renderer falls back to it for 2026-06/-07/-08 |
 | — did you know | `pulse.didYouKnow` | present in draft | evergreen NZ/Auckland fact pool |
 | Stats strip | `auto.stats` | always | site stats |
 | Get involved | `editorial.opportunities` | always | mentor / volunteer / donate (canonical hrefs) |
