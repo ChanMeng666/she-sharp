@@ -212,6 +212,12 @@ const RSS_MAX_AGE_DAYS = 35;
  *
  * Three months is the outer edge of what still reads as news rather than as an
  * archive trawl, which is why this is 90 and not 180.
+ *
+ * **It is a fallback, not a default.** A stale women item survives only when
+ * there is no current one — see `dropStaleWomenItemsWhenFreshOnesExist()`. A
+ * monthly newsletter's news section is about the month; the reach-back exists
+ * for the month when the one on-mission publisher was quiet, not to compete
+ * with today's stories.
  */
 const WOMEN_MAX_AGE_DAYS = 90;
 
@@ -964,8 +970,44 @@ export async function fetchPulseSources(): Promise<PulseSourceData> {
     // RSS first so an RSS entry wins a cross-post tie, matching the "earlier
     // list wins" rule and keeping the pre-existing ordering stable; ranking
     // then judges every item on its topic, whichever source produced it.
-    newsItems: mergeNewsItems([rssItems, hrdItems]),
+    newsItems: dropStaleWomenItemsWhenFreshOnesExist(mergeNewsItems([rssItems, hrdItems])),
   };
+}
+
+/**
+ * Removes women/diversity items older than the normal window, unless they are
+ * all there is.
+ *
+ * `WOMEN_MAX_AGE_DAYS` lets a women/diversity item in at up to 90 days, which
+ * lifts the fill rate for a *specifically* women-in-tech story from ~62% of
+ * months to ~92%. That is worth having in the month when TechWomen NZ was
+ * quiet — and actively wrong in the month when it was not, because a monthly
+ * newsletter's news section is supposed to be about the month. Measured on
+ * 2026-08-29 the pool held twelve items aged 1 to 24 days, plus exactly one at
+ * 75 days that the wider window admitted: a June newsletter digest competing
+ * with five current women's stories.
+ *
+ * So the wide window is a **fallback, not a default**. If any women/diversity
+ * item falls inside the normal window, the older ones are dropped; only when
+ * there are none does the reach-back apply. Everything else is already filtered
+ * to the normal window upstream, so this function only ever sees the exception.
+ *
+ * @param items The merged pool, newest-first within each source.
+ * @returns The pool with stale women items removed when fresh ones exist.
+ */
+export function dropStaleWomenItemsWhenFreshOnesExist(
+  items: PulseSourceData["newsItems"]
+): PulseSourceData["newsItems"] {
+  const cutoff = Date.now() - RSS_MAX_AGE_DAYS * 24 * 60 * 60 * 1000;
+  const isWomenItem = (item: PulseSourceData["newsItems"][number]) =>
+    rssRelevanceRank(item.title) === WOMEN_RANK;
+
+  const hasFreshWomenItem = items.some(
+    (item) => isWomenItem(item) && withinAgeWindow(item.isoDate, cutoff)
+  );
+  if (!hasFreshWomenItem) return items;
+
+  return items.filter((item) => !isWomenItem(item) || withinAgeWindow(item.isoDate, cutoff));
 }
 
 // --- Verbatim-number guard ---------------------------------------------------
