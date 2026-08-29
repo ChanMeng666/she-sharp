@@ -197,19 +197,26 @@ npx tsx scripts/email/normalize-recipients.ts tmp/csv/attendees.local.csv `
   --consent-date 2026-07-15 --tier 0
 ```
 
-`--for-import` refuses to run without both consent flags (exit 1) and drops
-every row that did not tick the opt-in, plus refunded orders, duplicates,
-malformed addresses and anyone suppressed. Output:
-`tmp/emails/recipients-<key>.json`.
+`--for-import` refuses to run without both consent flags (exit 1), **refuses to
+run at all if the file has no opt-in column** (exit 1), and drops every row that
+did not tick the opt-in, plus refunded orders, duplicates, malformed addresses
+and anyone suppressed. Output: `tmp/emails/recipients-<key>.json`.
 
 Note what that file **is**: a cleaned, consent-checked recipients list. It is
 not a subscriber import, and writing it changes nothing about who is on the
 list. Step 6 is where that happens, and it reads this file.
 
-**Map the opt-in column if the form had one.** `--for-import` drops the rows
-that answered no *only when an opt-in column was mapped*; with none it keeps
-every row, so a file with no such column looks identical to a file where
-everybody said yes. Step 6 refuses that file rather than trusting this one.
+**If it refuses for want of an opt-in column, that is the answer, not an
+obstacle.** It prints the columns the file has and names the one that looks like
+the question, if there is one — map it with `--map "optIn=<that column>"`. If
+none of them is the question, the form did not ask, and no import is possible
+from this file. Offer the subscribe link instead.
+
+Until 2026-08-30 that run *succeeded*: the row filter only dropped a "No" when
+an opt-in column had been mapped, so a file that had never asked the question
+came through whole, reporting `Excluded 0`, indistinguishable from a file where
+everybody said yes. Step 6 checks again for itself, because a recipients file
+can reach it without having been through `--for-import` at all.
 
 ## Step 4 — Check who is already known, and who must not be added
 
@@ -356,11 +363,14 @@ Four things it does that are worth being able to explain:
 
 **If the file has no opt-in column the script refuses and exits 1**, quoting the
 rule. Do not work around it, and do not re-run `normalize-recipients.ts` with a
-different column mapped in the hope that one of them counts. Note the trap this
-closes: `--for-import` drops the rows that answered no **only when an opt-in
-column was actually mapped**, so a file with none passes through it intact,
-every row present and looking perfectly clean. The refusal lives in the
-importer for exactly that reason.
+different column mapped in the hope that one of them counts.
+
+That is the second of two gates, and it is not redundant. Step 3's
+`--for-import` refuses such a file too — since 2026-08-30, having silently
+passed it before — but a recipients file can arrive here without ever having
+been through that flag: built for a fulfilment send, produced before the gate
+existed, or edited by hand. The importer trusts none of that and re-checks the
+opt-in cell on every row.
 
 ### Routes 3 and 4 — still no tool, still one person at a time
 

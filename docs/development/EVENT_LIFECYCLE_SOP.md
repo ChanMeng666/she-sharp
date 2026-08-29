@@ -527,11 +527,48 @@ posted into the event channel and pinned.
 in"*. It is a **per-event** switch and it defaults to **off**, so it is lost by
 omission on every new event unless somebody sets it.
 
-That default is expensive. The switch has been off since roughly the middle of
-2022 — the ticketing archive records 224 opted-in orders from 187 distinct
-addresses, every one of them between July 2020 and 30 May 2022, and nothing
-since. Roughly 3,500 registrations have passed through checkout in the years
-after that without being asked the question at all.
+**Whether the switch has actually been off since 2022 is an open question, and
+this paragraph used to answer it too confidently.** It said the switch had been
+off since roughly the middle of 2022, on the strength of the ticketing archive:
+224 opted-in orders from 187 distinct addresses, every one between 14 July 2020
+and 30 May 2022, and none after. That is a true statement about the archive. It
+is not a safe statement about the switch.
+
+The measurement that unsettled it, taken 2026-08-30 against the live Mailchimp
+audience across all four member statuses, grouping every write whose `source` is
+`Mahsa McCauley NZD` — the string Humanitix documents as
+`Store = User account name + Currency`:
+
+```
+arrivals after 2022-05: 903 total, 663 of them status=subscribed
+2023-10: 80   2023-11: 73   2024-06: 85   2025-06: 62   2025-10: 80
+… continuous through 2026-06 (2), 2026-07 (3), 2026-08 (5)
+```
+
+The spikes land on event months and have the shape of ticket cohorts, and
+Humanitix's own documentation says only opted-in buyers sync as `subscribed`.
+So **"nothing since May 2022" does not describe reality**, and roughly 3,500
+registrations is not a safe count of people who were never asked.
+
+**Two readings survive, and nothing in this repository separates them:**
+
+1. The checkout opt-in has been collecting all along, and what stopped in
+   May 2022 is the `marketingOptIn` column being **populated in the export** —
+   not the field being used.
+2. Some of those `source` writes are not the Humanitix integration at all, but
+   another API write under the same key.
+
+**What would settle it** is the Humanitix console's **reports → orders →
+Export CSV**, which carries a per-order `marketing opt-in` column — the same
+file `scripts/email/import-optin-subscribers.ts` consumes. Pull one covering
+2023 onward and the answer is a column of Yes/No rather than an inference. Until
+somebody does, quote the archive figure as a fact about the archive and this
+question as open. `lib/data/json/humanitix/aggregates.json` keeps its own caveat
+for the same reason: it is a frozen export, and a field it stopped recording is
+not the same as a field nobody used.
+
+Whatever the answer, **set the switch on every new event**: it costs one click,
+and the reading where it has been off is the expensive one.
 
 It matters more than it looks, because it is the only place She Sharp collects a
 consent record that is **per person, timestamped, and made by the person

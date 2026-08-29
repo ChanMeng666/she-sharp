@@ -26,9 +26,10 @@
  * **It reads a recipients file, not a CSV.** `normalize-recipients.ts` already
  * detects the opt-in column by meaning, drops refunded orders, duplicates and
  * malformed addresses, applies the committed suppression register, and — under
- * `--for-import` — refuses to run without a recorded consent source and date.
- * Re-implementing any of that here would give the repo two answers to "which
- * rows may be imported", and the two would drift. So the flow is:
+ * `--for-import` — refuses to run without a recorded consent source and date,
+ * and without an opt-in column at all. Re-implementing any of that here would
+ * give the repo two answers to "which rows may be imported", and the two would
+ * drift. So the flow is:
  *
  *   export CSV → normalize-recipients.ts (detect) → normalize-recipients.ts
  *   --map --for-import → tmp/emails/recipients-<key>.json → this script
@@ -41,10 +42,13 @@
  * Safety, matching `import-mailchimp-subscribers.ts` shape for shape:
  *
  * - **Dry run is the default.** Writing requires `--apply`, spelled out.
- * - **No opt-in column is an outright refusal**, quoting the rule. That check
- *   cannot live in `normalize-recipients.ts` alone, because its `--for-import`
- *   filter only fires when an opt-in column was mapped — a file with none
- *   passes through intact.
+ * - **No opt-in column is an outright refusal**, quoting the rule — the second
+ *   of two gates. `--for-import` refuses such a file as well (since
+ *   2026-08-30; before that its row filter only fired when an opt-in column had
+ *   been mapped, so a file with none passed through whole, reporting
+ *   `Excluded 0`). That gate is not enough on its own: a recipients file can
+ *   reach here without having been through `--for-import`, so this script
+ *   re-checks the column and every row's cell for itself.
  * - **Both do-not-contact registers are consulted**: the committed hash file
  *   and the runtime `email_optouts` table. An import can never resurrect
  *   somebody who left.

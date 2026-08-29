@@ -98,7 +98,7 @@ function sibling(name: string): string {
  * @param map The `--map` argument.
  * @returns The parsed recipients file.
  */
-function runNormalize(dir: string, csv: string, map: string): RecipientsFile {
+function runNormalize(dir: string, csv: string, map: string, forImport = true): RecipientsFile {
   execFileSync(
     process.execPath,
     [
@@ -109,17 +109,34 @@ function runNormalize(dir: string, csv: string, map: string): RecipientsFile {
       "optin-test",
       "--map",
       map,
-      "--for-import",
-      "--consent-source",
-      "synthetic fixture",
-      "--consent-date",
-      "2026-08-27",
+      ...(forImport
+        ? ["--for-import", "--consent-source", "synthetic fixture", "--consent-date", "2026-08-27"]
+        : []),
       "--out-dir",
       dir,
     ],
     { stdio: "pipe" }
   );
   return asRecipientsFile(JSON.parse(readFileSync(join(dir, "recipients-optin-test.json"), "utf8")));
+}
+
+/**
+ * Runs `normalize-recipients.ts` expecting it to refuse.
+ *
+ * @param dir Output directory.
+ * @param csv Path to the input CSV.
+ * @param map The `--map` argument.
+ * @returns Everything the refused run wrote to stdout and stderr.
+ */
+function expectNormalizeRefuses(dir: string, csv: string, map: string): string {
+  try {
+    runNormalize(dir, csv, map);
+  } catch (error) {
+    const failure = error as { status?: number; stdout?: Buffer; stderr?: Buffer };
+    assert.strictEqual(failure.status, 1, "a refusal must exit 1");
+    return `${failure.stdout ?? ""}${failure.stderr ?? ""}`;
+  }
+  assert.fail("normalize-recipients.ts was expected to refuse and did not");
 }
 
 const OPT_IN_COLUMN = "Marketing opt-in";
@@ -438,12 +455,12 @@ check("a file that is not a recipients file is refused with a pointer", () => {
 // End to end, over a real normalize-recipients run
 // ---------------------------------------------------------------------------
 
-check("a real CSV with no opt-in column normalizes, then is refused here", () => {
-  // This is the case the whole tool exists to stop, and it has to be tested
-  // against a file `normalize-recipients.ts` really produced: that script's
-  // --for-import filter only fires when an opt-in column was mapped, so a CSV
-  // with none passes through it INTACT. Composing with it is not enough; the
-  // refusal has to live on this side too.
+check("a real CSV with no opt-in column is refused by --for-import itself", () => {
+  // The first of two gates. Until 2026-08-30 this run SUCCEEDED and wrote a
+  // full recipients file reporting `Excluded 0`, because the row filter reads
+  // `optInIndex !== -1 && !isOptedIn(...)` and never fires when the column is
+  // absent — clean-looking output for the one case consent-rules.md singles
+  // out as the one that must fail.
   const dir = mkdtempSync(join(tmpdir(), "optin-rows-"));
   try {
     const csv = join(dir, "orders.local.csv");
@@ -453,8 +470,31 @@ check("a real CSV with no opt-in column normalizes, then is refused here", () =>
       "utf8"
     );
 
-    const produced = runNormalize(dir, csv, "email=Email,firstName=Name");
-    assert.strictEqual(produced.recipients.length, 1, "--for-import kept the row: it has no opt-in column to test");
+    const output = expectNormalizeRefuses(dir, csv, "email=Email,firstName=Name");
+    assert.match(output, /needs a marketing opt-in column/);
+    assert.match(output, /there was no opt-in/);
+    assert.match(output, /- Ticket Type/, "the columns present are listed");
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+check("a file that got past --for-import is still refused by the importer", () => {
+  // The second gate, and the reason it is not redundant. A recipients file can
+  // reach the importer without ever having been through `--for-import`: built
+  // for a fulfilment send, produced before the gate above existed, or edited by
+  // hand. The importer trusts none of that and re-checks for itself.
+  const dir = mkdtempSync(join(tmpdir(), "optin-rows-"));
+  try {
+    const csv = join(dir, "orders.local.csv");
+    writeFileSync(
+      csv,
+      ["Email,Name,Ticket Type,Order date", "a@example.com,Ada Lovelace,General,2026-08-27"].join("\n"),
+      "utf8"
+    );
+
+    const produced = runNormalize(dir, csv, "email=Email,firstName=Name", false);
+    assert.strictEqual(produced.recipients.length, 1, "without --for-import the row is kept");
     assert.strictEqual(produced.detected.optIn, null);
     assert.throws(() => plan(produced), OptinImportError);
   } finally {

@@ -284,7 +284,7 @@ export function parseOrderDate(raw: string | undefined): { date: Date } | { reas
  *
  * Kept in step with `OPT_IN_VALUES` in `normalize-recipients.ts` on purpose:
  * this importer re-checks every row rather than trusting that the file it was
- * handed came out of `--for-import`. See `planOptinImport()` for why.
+ * handed came out of `--for-import` at all. See `resolveColumns()` for why.
  */
 const AFFIRMATIVE = new Set(["yes", "y", "true", "1", "checked", "opted in"]);
 
@@ -378,12 +378,13 @@ export interface PlanInput {
  * credentials to fire is one nobody can demonstrate.
  *
  * **Why the opt-in column is checked here at all**, given
- * `normalize-recipients.ts --for-import` is meant to have dropped the "No"
- * rows: it did not, quite. That script drops a row only when an opt-in column
- * was actually mapped (`optInIndex !== -1 && !isOptedIn(...)`), so a file with
- * NO opt-in column passes through `--for-import` intact, every row present.
- * That is precisely the case consent-rules.md is most emphatic about, so the
- * refusal cannot live in a file this script merely trusts.
+ * `normalize-recipients.ts --for-import` refuses such a file too: because a
+ * recipients file can reach this importer without ever having been through
+ * that flag. It might have been built for a fulfilment send, produced before
+ * `forImportOptInRefusal()` existed (until 2026-08-30 that run succeeded and
+ * wrote a full file reporting `Excluded 0`), or edited by hand — the shape is
+ * plain JSON. So the strongest rule in the system is enforced at both ends
+ * rather than inherited from a file this script did not write.
  *
  * @param file The recipients file.
  * @param dateColumn A column named on the command line, which always wins.

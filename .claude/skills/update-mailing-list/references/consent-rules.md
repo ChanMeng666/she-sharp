@@ -130,6 +130,11 @@ conditions, both mandatory:
 - The form must genuinely have had that question. Look at the CSV column. If
   there is no opt-in column, there was no opt-in — a form that only asked for a
   name and a ticket type cannot retroactively have asked for consent.
+  **`--for-import` now refuses to run at all on such a file** (it did not until
+  2026-08-30: its row filter only fired when an opt-in column was mapped, so a
+  file that had never asked the question passed through whole, reporting
+  `Excluded 0`). If the column exists under a name the detector missed, map it
+  with `--map "optIn=<that column>"` — do not work around the refusal.
 - Only rows that answered **yes** may be imported. `--for-import` drops the
   rest automatically; do not override it.
 
@@ -139,11 +144,12 @@ evidence arrives as a column in a file rather than as somebody's recollection.
 `normalize-recipients.ts --for-import` wrote and writes the ticks into the
 table. It composes the sentence above from `--event-name`, `--event-date` and
 the question text rather than accepting a free-text one, because a sentence
-that can omit the event is a rule that can be skipped. **It refuses outright
-when the file has no opt-in column** — that check cannot be left to
-`--for-import`, whose filter only fires when an opt-in column was actually
-mapped, so a file with none passes through it intact and looks clean. Dry run
-is the default; `--apply` writes.
+that can omit the event is a rule that can be skipped. **It also refuses a file
+with no opt-in column**, independently of the gate in `--for-import`: a
+recipients file can reach it without ever having been through that flag — built
+for a fulfilment send, produced before the gate existed, or edited by hand — so
+it re-checks rather than trusting the file it is handed. Dry run is the
+default; `--apply` writes.
 
 For **Humanitix**, the opt-in is a built-in, uneditable checkout control
 (`organiserMailListOptIn` on the order) whose wording is fixed to the sentence

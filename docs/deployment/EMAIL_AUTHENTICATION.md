@@ -705,8 +705,9 @@ repeat of it:
   missing.
 - **There is no opt-in column to filter on, and that is not a gap** — the
   `subscribed` file *is* the opt-in. (The older advice here was about
-  `normalize-recipients.ts --for-import` / `--column-map`, which is the
-  general-CSV path and is not what carried this list over.)
+  `normalize-recipients.ts --for-import` / `--map` — written here as
+  `--column-map`, which is not a flag that has ever existed — the general-CSV
+  path, and not what carried this list over.)
 
 **The segment-name question is dead, not merely settled — history only.** It was
 once an open item: Resend has no segment update endpoint, so renaming means
