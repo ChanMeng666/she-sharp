@@ -78,7 +78,6 @@ const JSON_DATA_DIR = "lib/data/json";
  *  teammate needs to find the entry to fix. */
 const EVENTS_JSON_PATH = "lib/data/json/events-custom.json";
 
-/** Directories never worth walking: build output, caches, dependencies. */
 /**
  * Files inside a scan root that git does not track.
  *
@@ -88,6 +87,33 @@ const EVENTS_JSON_PATH = "lib/data/json/events-custom.json";
  */
 const IGNORED_FILES = new Set(["scripts/collect-event-from-slack.py"]);
 
+/**
+ * Directories inside a scan root that hold a second copy of the repo.
+ *
+ * A git worktree goes at `.claude/worktrees/<name>` — inside the repo, and so
+ * inside the `.claude` scan root. That is not an odd place to put one: it is
+ * what this machine's `git-worktree-windows` skill mandates and where
+ * `EnterWorktree` and the Agent tool's `isolation: "worktree"` create them.
+ * Each one is a complete second tree, so the walk reads every branch somebody
+ * has open as if it were source. With four worktrees live, the gate reported 20
+ * broken paths and 20 stale KNOWN_UNREFERENCED entries — all 108 "referenced
+ * in" lines pointing into a worktree, none into real source.
+ *
+ * They are gitignored twice over — by `.claude/*` in `.gitignore`, and by a
+ * worktrees line in `.git/info/exclude` — so `git status` never
+ * mentions them, and CI checks out one branch and never has them at all. That
+ * is exactly the failure IGNORED_FILES above is guarded against: scanning
+ * something present on some machines and absent in CI makes the gate's answer
+ * depend on who is running it.
+ *
+ * Matched by repo-relative path, the way IGNORED_FILES is, rather than added to
+ * IGNORED_DIRS below — that one tests `entry.name` alone, so a bare
+ * "worktrees" would also skip any directory of that name anywhere in the tree.
+ * Silently under-scanning is the same class of bug as the one being fixed here.
+ */
+const IGNORED_DIR_PATHS = new Set([".claude/worktrees"]);
+
+/** Directories never worth walking: build output, caches, dependencies. */
 const IGNORED_DIRS = new Set([
   "node_modules",
   ".next",
@@ -314,7 +340,9 @@ export function listFiles(root: ScanRoot): string[] {
     for (const entry of readdirSync(current, { withFileTypes: true })) {
       if (entry.isDirectory()) {
         if (IGNORED_DIRS.has(entry.name)) continue;
-        walk(join(current, entry.name));
+        const dir = join(current, entry.name);
+        if (IGNORED_DIR_PATHS.has(relative(REPO_ROOT, dir).replace(/\\/g, "/"))) continue;
+        walk(dir);
       } else {
         consider(join(current, entry.name));
       }

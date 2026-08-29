@@ -28,8 +28,27 @@ jobs:
       - name: Verify image path integrity
         run: npx tsx scripts/verify-image-paths.ts
 
-      # The gate above is generated from resolveOwner(), which decides the event
-      # each of the ~170 files belongs to. A wrong answer there is silent — the
+      # The other half of the guarantee above, and the half that gate
+      # structurally cannot hold. A newsletter's event cards must carry ABSOLUTE
+      # URLs — an email client has no site to resolve "/img/..." against — and
+      # `scripts/assets/refs.ts` deliberately keeps absolute URLs out of the
+      # reference corpus, because `lib/newsletter/render.test.ts` spells eleven
+      # invented fixture paths that way (`/img/events/june.jpg`,
+      # `/img/newsletter/cover-june.jpg`, …) and one regex cannot tell those from
+      # the six real covers. So the six committed `cover-email.jpg` twins sit in
+      # KNOWN_UNREFERENCED, whose only corpus reference is the allow-list entry
+      # itself — which means `apply-move.ts` renames the entry along with the
+      # file and leaves the issue fixture pointing at nothing. The gate above
+      # then passes on all three checks while a cover reaches 1,545 inboxes
+      # broken. This check reads the fixtures, so it sees that; it also fails
+      # when the SOURCE image behind a twin has gone, which no reference corpus
+      # can see. Pure filesystem — ffmpeg is only reached without --check.
+      - name: Verify newsletter email-safe covers
+        run: npx tsx scripts/newsletter/email-covers.ts --check
+
+      # The ownership check inside `verify-image-paths.ts` is generated from
+      # resolveOwner(), which decides the event each of the ~170 files belongs
+      # to. A wrong answer there is silent — the
       # file lands under the wrong event and every path still resolves — so the
       # ownership rules carry their own tests, built from the six real slug
       # prefix collisions rather than invented examples.
