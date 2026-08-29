@@ -354,11 +354,57 @@ into this section.** `docs/development/CONTENT_RULES.md` exists because numbers
 were published that nobody could source, and this is the section where that is
 easiest to do by accident.
 
+### Check the evergreen pool before you send
+
+```powershell
+npx tsx scripts/newsletter/check-facts.ts          # add --json for the machine-readable form
+```
+
+The pool in `lib/data/nz-tech-facts.ts` is the fallback the hero stat and the
+"did you know" line come from whenever the live fetch is thin — so it reaches
+readers most months, and nothing used to notice when one of its facts went bad.
+One did: the gender pay gap read "5.2% … the lowest on record" for a year after
+Stats NZ published a higher figure, and it was found by accident. Every fact now
+records `verifiedAt` (when a human last read the source) and `refresh` (how often
+that source publishes a new figure), and this script reports which are due.
+
+Read its four outcomes as four different things:
+
+- **FAIL** — the source URL is gone, or the page contradicts a number in the
+  fact. Unciteable; fix it before the issue ships. This is the only outcome that
+  exits non-zero.
+- **REVIEW DUE** — the cadence says a newer figure exists. Open the source, read
+  it, and update the fact **and** its `verifiedAt` by hand. The script never
+  edits a fact: a machine deciding what the new number is would be worse than
+  the stale one.
+- **COULD NOT BE CHECKED** — not a failure and not a pass. See the bot walls
+  below.
+- **OK** — nothing contradicts the fact today. Note that the number match is a
+  substring, so a pass is weaker evidence than it looks.
+
+**Never hand-write a new number into that file.** It goes to ~1,545 subscribers
+with a source attached, which is the strongest claim the newsletter makes.
+
 ### Known limitations, so you do not chase them
 
 - The evergreen fact "women hold around 29% of professional IT roles in NZ" has
   **no refresh path** — no NZ publisher updates it. It is sourced and
   attributed, and it will not change. Do not go looking for this year's figure.
+  It is recorded as `refresh: "none"` and `check-facts.ts` will never call it
+  overdue, which is the point: a flag nobody can clear is a flag everybody
+  learns to skip. Its URL and its numbers are still checked on every run.
+- **Four facts report COULD NOT BE CHECKED on every run, and that is the correct
+  answer, not a bug to fix.** Stats NZ answers 200 with 115 KB of HTML that
+  renders zero visible characters (the release is filled in client-side); MBIE
+  answers 200 with an 851-byte Imperva/Incapsula challenge, even for the `.pdf`
+  URL; Te Ara serves a 403 to both facts that cite it. A page that returns 200
+  and no readable text has confirmed nothing — which is a different result from
+  failing, and the script keeps them apart on purpose.
+- **`she-sharp-growth` currently FAILS**, and it is a citation problem rather
+  than a wrong number: the fact quotes the members / sponsors / events counts
+  from `globalStats` and cites `/about`, but `/about` prints only the members
+  figure in prose. The event count is on the home page. Fixing it means a human
+  deciding whether to re-point the source or to show the counts on `/about`.
 - RNZ publishes exactly the right stories and is **deliberately not a source**:
   its `robots.txt` names `anthropic-ai` and `ChatGPT-User` and disallows them.
   The generic rule permits a plain fetch, but this pipeline summarises with an

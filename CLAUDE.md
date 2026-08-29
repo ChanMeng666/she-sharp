@@ -559,10 +559,19 @@ npx tsx lib/deck/deck.test.ts             # slide schema, copy + rhythm, feedbac
 npx tsx scripts/mailchimp/verify-export.ts --export 2026-08-17   # needs the vault
 npx tsx lib/data/sponsors.test.ts         # sponsor registry
 for f in lib/newsletter/*.test.ts; do npx tsx "$f"; done
+npx tsx scripts/newsletter/check-facts.test.ts   # the fact-pool check itself (no network)
+npx tsx scripts/newsletter/check-facts.ts        # the evergreen fact pool, against live sources
 npx tsx scripts/deck/lint-deck.ts [slug]  # organiser-readable deck report
 npx tsx scripts/verify-image-paths.ts
 npx tsx scripts/seo/verify-page-metadata.ts --base http://localhost:3100
 ```
+
+`check-facts.ts` is deliberately **not** in CI: it fetches the real source pages,
+and four of them are bot-walled or JS-only on any given day, so it would be an
+unreliable gate. It exits non-zero only on a dead URL or a number the fetched
+page contradicts — "could not be checked" and "review due" are reported and
+exit 0, because a check that is red on a good day is one people stop running.
+Run it before a newsletter send.
 
 `verify-page-metadata` needs a running site and makes ~121 live requests, so it
 tests a deployment rather than a diff. Kill any orphan `next start` on the port
