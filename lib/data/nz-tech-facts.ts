@@ -5,9 +5,16 @@
  * These are the anti-hallucination safety net: when live source fetching fails,
  * the pulse section is built deterministically from this pool instead of ever
  * showing a model-invented number. Every entry was human-verified against its
- * cited source (NZ-wide facts July 2026; Auckland facts July 2026). Numbers here
- * are the ONLY numbers that may appear when live data is unavailable — do not
- * edit values without re-checking the source URL.
+ * cited source (NZ-wide facts July 2026; Auckland facts July 2026; the gender
+ * pay gap re-verified 2026-08-29 against the June 2026 quarter release). Numbers
+ * here are the ONLY numbers that may appear when live data is unavailable — do
+ * not edit values without re-checking the source URL.
+ *
+ * "Evergreen" means the source is stable, NOT that the figure never moves. A
+ * quarterly statistic goes stale on a schedule: the pay-gap entry sat at "the
+ * lowest on record" for a year after a later quarter overtook it. Where a fact
+ * has a period, say the period in the text — that is what makes staleness
+ * visible to the next reader.
  *
  * The pool is split into two groups so the pulse can lean local: `NZ_WIDE_FACTS`
  * (national) and `AUCKLAND_FACTS` (She Sharp's in-person home city). `pulse.ts`
@@ -45,11 +52,16 @@ export const NZ_WIDE_FACTS: readonly NzTechFact[] = [
     sourceUrl: "https://techwomen.nz/get-informed/",
   },
   {
-    id: "gender-pay-gap-52",
-    text: "New Zealand's gender pay gap fell to 5.2% in the June 2025 quarter — the lowest on record.",
+    // The id deliberately does NOT carry the value. It used to be
+    // `gender-pay-gap-52`, which meant every quarterly update invalidated the
+    // key that `HERO_STAT_FRAMING` in `pulse.ts` joins on — an update in one
+    // file would silently stop matching the other. Quote the period in the
+    // text, never in the id.
+    id: "gender-pay-gap",
+    text: "New Zealand's gender pay gap was 5.3% in the June 2026 quarter, up from 5.2% a year earlier and still near its record low.",
     sourceLabel: "Stats NZ",
     sourceUrl:
-      "https://www.stats.govt.nz/news/gender-pay-gap-narrows-to-lowest-on-record/",
+      "https://www.stats.govt.nz/information-releases/labour-market-statistics-june-2026-quarter/",
   },
   {
     id: "women-bsc-enrolments",

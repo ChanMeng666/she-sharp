@@ -148,9 +148,11 @@ export const editorialSchema = z.object({
       }),
       /**
        * Legacy single news bite. KEPT: issues generated before the list
-       * existed (e.g. 2026-06) carry this key explicitly set to null, and
-       * `pulse.ts` still produces it. Rendered only when `newsBites` is
-       * absent or empty.
+       * existed (2026-06, -07, -08) carry this key. `pulse.ts` no longer
+       * produces it — it emits `newsBites` and leaves this null, so one field
+       * owns the news list and the two cannot drift apart. Rendered only when
+       * `newsBites` is absent or empty, which is what keeps those old issues
+       * rendering unchanged.
        */
       newsBite: pulseNewsItemSchema.nullable(),
       /**
