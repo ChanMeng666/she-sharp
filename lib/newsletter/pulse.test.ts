@@ -8,15 +8,25 @@ import assert from "node:assert";
 
 import {
   assertNumbersVerbatim,
+  buildHrdNewsItem,
   buildPulse,
   evergreenPulse,
+  extractHrdArticleMeta,
   extractNumberTokens,
   feedPageUrl,
+  hrdSitemapUrl,
+  hrdSlugFromUrl,
+  hrdSlugIsTopical,
+  mergeNewsItems,
+  needsPreviousYearSitemap,
   normaliseHeadline,
+  parseSitemapEntries,
   PULSE_RSS_FEEDS,
   rssRelevanceRank,
+  selectHrdCandidates,
   selectNewsBites,
   type PulseSourceData,
+  type SitemapEntry,
 } from "./pulse";
 import {
   AUCKLAND_FACTS,
@@ -160,6 +170,60 @@ const DRAFT_SEEK = {
     "nationally rose just 0.2% in June.",
   url: SEEK_URL,
 };
+
+// --- Fixtures for the HRD NZ sitemap source ---------------------------------
+// A miniature of the real `/nz/sitemaps/articles/2026/`, copied from the live
+// file on 2026-08-29 (948 entries, newest first, date-only `<lastmod>`) and cut
+// to one representative of every case the selection rules have to decide.
+
+/** "Now" for every dated check below, so none of them rot. */
+const HRD_NOW = Date.parse("2026-08-29T00:00:00.000Z");
+/** The same 35-day recency window the fetch layer applies. */
+const HRD_CUTOFF = HRD_NOW - 35 * 24 * 60 * 60 * 1000;
+
+const HRD_PAY_GAP_URL =
+  "https://www.hcamag.com/nz/specialisation/diversity-inclusion/new-zealands-gender-pay-gap-sitting-at-53/587457";
+const HRD_AI_TOOLS_URL =
+  "https://www.hcamag.com/nz/news/general/ai-tools-create-workforce-imbalance-risk-for-employers-report-warns/587819";
+
+const HRD_SITEMAP_XML = `<?xml version="1.0" encoding="utf-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>${HRD_PAY_GAP_URL}</loc>
+    <lastmod>2026-08-25</lastmod>
+  </url>
+  <url>
+    <loc>${HRD_AI_TOOLS_URL}</loc>
+    <lastmod>2026-08-28</lastmod>
+  </url>
+  <url>
+    <loc>https://www.hcamag.com/nz/news/general/whats-fobo-and-why-are-so-many-workers-afraid-of-it/587910</loc>
+    <lastmod>2026-08-28</lastmod>
+  </url>
+  <url>
+    <loc>https://www.hcamag.com/nz/business-news/hiring-managers-share-their-talent-plans/587900</loc>
+    <lastmod>2026-08-28</lastmod>
+  </url>
+  <url>
+    <loc>https://www.hcamag.com/nz/news/general/women-in-leadership-programme-opens/500001</loc>
+    <lastmod>2026-01-20</lastmod>
+  </url>
+  <url>
+    <loc>https://www.hcamag.com/nz/news/general/undated-entry-about-hiring/500002</loc>
+  </url>
+</urlset>`;
+
+/** One real article page, reduced to the parts the extractor reads. */
+const HRD_ARTICLE_HTML = `<!doctype html><html><head>
+<meta property="og:title" content="New Zealand's gender pay gap sitting at 5.3%" />
+<meta property="og:description" content="Concerns raised as gender pay gap 'remained largely unchanged,' according to Stats NZ" />
+</head><body><article><p>The gender pay gap was 5.3% in the June 2026 quarter,
+Stats NZ said, having been 8.6% a decade earlier.</p></article></body></html>`;
+
+/** The same page with the `og:` tags stripped — nothing to summarise or verify. */
+const HRD_ARTICLE_HTML_NO_OG = `<!doctype html><html><head><title>Untagged</title></head>
+<body><article><p>A short piece with no open-graph metadata at all, but enough
+body text that a length rule alone would let it through.</p></article></body></html>`;
 
 /**
  * Runs `fn` with the model stubbed to answer `payload`, so `buildPulse`
@@ -685,6 +749,293 @@ async function main(): Promise<void> {
     pulseSchema.parse(pulse);
     assert.deepStrictEqual(pulse!.newsBites, [], "degraded, not fabricated");
     assert.strictEqual(pulse!.newsBite, null);
+  });
+
+  // 10. The HRD NZ sitemap source. No network: every check runs against the
+  // fixtures above, which were copied from the live files on 2026-08-29.
+  console.log("10. HRD sitemap parsing:");
+  await check("parses <loc> + <lastmod> pairs in document order", () => {
+    const entries = parseSitemapEntries(HRD_SITEMAP_XML);
+    assert.strictEqual(entries[0].loc, HRD_PAY_GAP_URL);
+    assert.strictEqual(entries[0].lastmod, "2026-08-25");
+    assert.strictEqual(entries[1].loc, HRD_AI_TOOLS_URL);
+    assert.strictEqual(entries[1].lastmod, "2026-08-28");
+  });
+  await check("an entry with no <lastmod> is skipped, not half-kept", () => {
+    // A sitemap spans a whole year, so an undated entry can never be shown to
+    // satisfy the recency window — unlike an RSS item, which is kept.
+    const entries = parseSitemapEntries(HRD_SITEMAP_XML);
+    assert.strictEqual(entries.length, 5, "six <url> blocks, one of them undated");
+    assert.ok(
+      !entries.some((entry) => entry.loc.includes("undated-entry")),
+      "the undated entry must not survive parsing"
+    );
+  });
+  await check("the <urlset> wrapper is not mistaken for a <url> entry", () => {
+    // `<url\b` is what stops `<urlset ...>` opening a bogus block.
+    assert.deepStrictEqual(parseSitemapEntries("<urlset><!-- empty --></urlset>"), []);
+  });
+  await check("junk and an empty document parse to nothing rather than throwing", () => {
+    assert.deepStrictEqual(parseSitemapEntries(""), []);
+    assert.deepStrictEqual(parseSitemapEntries("<html><body>404</body></html>"), []);
+  });
+  await check("the sitemap URL is the per-year path", () => {
+    assert.strictEqual(
+      hrdSitemapUrl(2026),
+      "https://www.hcamag.com/nz/sitemaps/articles/2026/"
+    );
+  });
+
+  console.log("10b. HRD slug filter (runs BEFORE any article is fetched):");
+  await check("the slug is the last path segment before the numeric article id", () => {
+    assert.strictEqual(
+      hrdSlugFromUrl(HRD_AI_TOOLS_URL),
+      "ai-tools-create-workforce-imbalance-risk-for-employers-report-warns"
+    );
+    assert.strictEqual(hrdSlugFromUrl("not a url"), "");
+  });
+  await check("keeps the on-mission slugs the section exists for", () => {
+    for (const url of [
+      HRD_PAY_GAP_URL,
+      HRD_AI_TOOLS_URL,
+      "https://www.hcamag.com/nz/news/general/women-remain-underrepresented-in-ai-roles-despite-jobs-boom/586604",
+      "https://www.hcamag.com/nz/news/general/psa-scrapping-pay-equity-cost-new-zealand-135-billion-in-growth/1",
+      "https://www.hcamag.com/nz/news/general/graduate-hiring-lifts-this-summer/2",
+      "https://www.hcamag.com/nz/news/general/what-a-tech-salary-looks-like-now/3",
+    ]) {
+      assert.ok(hrdSlugIsTopical(url), `${hrdSlugFromUrl(url)} should be kept`);
+    }
+  });
+  await check("rejects the slugs that are not this newsletter's subject", () => {
+    for (const url of [
+      "https://www.hcamag.com/nz/news/general/whats-fobo-and-why-are-so-many-workers-afraid-of-it/587910",
+      "https://www.hcamag.com/nz/specialisation/employment-law/rigid-drug-and-alcohol-policy-costs-employer-25k/587790",
+      "https://www.hcamag.com/nz/news/general/most-workers-dont-trust-their-leaders/587815",
+    ]) {
+      assert.ok(!hrdSlugIsTopical(url), `${hrdSlugFromUrl(url)} should be rejected`);
+    }
+  });
+  await check("'ai' is bounded so it cannot match inside an unrelated word", () => {
+    // The same trap `\bintern(ships?|s)?\b` was bounded for. In a slug the
+    // delimiter is a hyphen, so the bound is `(^|-)ai(-|$)`, not `\b`.
+    assert.ok(
+      !hrdSlugIsTopical("https://www.hcamag.com/nz/news/general/workers-afraid-of-change/1"),
+      "'afraid' must not read as an AI story"
+    );
+    assert.ok(
+      !hrdSlugIsTopical("https://www.hcamag.com/nz/news/general/thai-restaurant-wage-case/2"),
+      "'thai' must not read as an AI story"
+    );
+    assert.ok(
+      !hrdSlugIsTopical("https://www.hcamag.com/nz/news/general/repair-shop-dispute/3"),
+      "'repair' must not read as an AI story"
+    );
+    assert.ok(
+      hrdSlugIsTopical("https://www.hcamag.com/nz/news/general/ai-reshapes-early-careers/4"),
+      "a leading 'ai-' is a real match"
+    );
+    assert.ok(
+      hrdSlugIsTopical("https://www.hcamag.com/nz/news/general/how-employers-use-ai/5"),
+      "a trailing '-ai' is a real match"
+    );
+  });
+
+  console.log("10c. HRD candidate selection:");
+  await check("keeps the recent topical entries and drops the rest", () => {
+    const candidates = selectHrdCandidates(
+      parseSitemapEntries(HRD_SITEMAP_XML),
+      HRD_CUTOFF
+    );
+    assert.deepStrictEqual(
+      candidates.map((entry) => entry.loc),
+      [HRD_PAY_GAP_URL, HRD_AI_TOOLS_URL],
+      "gender first (tier 0), then the hiring story (tier 1)"
+    );
+  });
+  await check("an entry outside the recency window is dropped", () => {
+    // The January "women in leadership" entry is squarely on topic; it is seven
+    // months old, and a sitemap holds a whole year, so the window must bind.
+    const candidates = selectHrdCandidates(
+      parseSitemapEntries(HRD_SITEMAP_XML),
+      HRD_CUTOFF
+    );
+    assert.ok(
+      !candidates.some((entry) => entry.loc.includes("women-in-leadership")),
+      "an on-topic but stale entry must not reach the pool"
+    );
+  });
+  await check("a /nz/business-news/ entry is never fetched, topical or not", () => {
+    // The one path robots.txt disallows for `*` on the NZ edition. Its slug
+    // says "hiring" and "talent", so only the path rule can be keeping it out.
+    const url = "https://www.hcamag.com/nz/business-news/hiring-managers-share-their-talent-plans/587900";
+    assert.ok(hrdSlugIsTopical(url), "the slug alone would have kept it");
+    const candidates = selectHrdCandidates(
+      parseSitemapEntries(HRD_SITEMAP_XML),
+      HRD_CUTOFF
+    );
+    assert.ok(
+      !candidates.some((entry) => entry.loc.includes("/nz/business-news/")),
+      "robots.txt disallows this path"
+    );
+  });
+  await check("the article-fetch cap holds against a month of candidates", () => {
+    // ~117 slugs survive the filter in a real 60-day window. This is a monthly
+    // cron, not a crawler, so only a handful may become outbound requests.
+    const many: SitemapEntry[] = Array.from({ length: 40 }, (_, i) => ({
+      loc: `https://www.hcamag.com/nz/news/general/hiring-and-talent-story-${i}/${600000 + i}`,
+      lastmod: "2026-08-20",
+    }));
+    const candidates = selectHrdCandidates(many, HRD_CUTOFF);
+    assert.strictEqual(candidates.length, 6, "at most six article pages are fetched");
+  });
+  await check("the same article in two sitemaps is only fetched once", () => {
+    const twice = [
+      ...parseSitemapEntries(HRD_SITEMAP_XML),
+      ...parseSitemapEntries(HRD_SITEMAP_XML),
+    ];
+    const candidates = selectHrdCandidates(twice, HRD_CUTOFF);
+    assert.strictEqual(new Set(candidates.map((e) => e.loc)).size, candidates.length);
+  });
+
+  console.log("10d. The January boundary (the bug that would fire once a year):");
+  await check("a year that does not reach the cutoff pulls the previous year", () => {
+    // On 5 January 2027 the /2027/ sitemap holds four days. Without this the
+    // section starves every January, and nobody connects it to this code.
+    const january: SitemapEntry[] = [
+      { loc: "https://www.hcamag.com/nz/news/general/hiring-outlook-2027/700003", lastmod: "2027-01-05" },
+      { loc: "https://www.hcamag.com/nz/news/general/talent-plans-for-the-year/700001", lastmod: "2027-01-02" },
+    ];
+    const januaryCutoff = Date.parse("2027-01-05T00:00:00.000Z") - 35 * 24 * 60 * 60 * 1000;
+    assert.strictEqual(
+      needsPreviousYearSitemap(january, januaryCutoff),
+      true,
+      "the oldest entry is newer than the cutoff, so the year is too short"
+    );
+  });
+  await check("a year that already covers the window does not", () => {
+    // Eleven months of the year the second request is never made.
+    const entries = parseSitemapEntries(HRD_SITEMAP_XML);
+    assert.strictEqual(needsPreviousYearSitemap(entries, HRD_CUTOFF), false);
+  });
+  await check("an empty or unparsable sitemap also pulls the previous year", () => {
+    // 1 January, before the year's first article: the file may not exist yet.
+    assert.strictEqual(needsPreviousYearSitemap([], HRD_CUTOFF), true);
+    assert.strictEqual(
+      needsPreviousYearSitemap([{ loc: "https://x/y/1", lastmod: "not a date" }], HRD_CUTOFF),
+      true
+    );
+  });
+
+  console.log("10e. HRD article metadata:");
+  await check("reads og:title and og:description off the article page", () => {
+    const meta = extractHrdArticleMeta(HRD_ARTICLE_HTML);
+    assert.strictEqual(meta.ogTitle, "New Zealand's gender pay gap sitting at 5.3%");
+    assert.ok(meta.ogDescription.startsWith("Concerns raised as gender pay gap"));
+    assert.ok(meta.bodyText.includes("8.6%"), "the body is kept for the number guard");
+  });
+  await check("an article with neither og: tag is skipped, not sent to the model", () => {
+    const entry: SitemapEntry = { loc: HRD_PAY_GAP_URL, lastmod: "2026-08-25" };
+    const meta = extractHrdArticleMeta(HRD_ARTICLE_HTML_NO_OG);
+    assert.strictEqual(meta.ogTitle, "", "no og:title on this page");
+    assert.strictEqual(meta.ogDescription, "", "no og:description either");
+    assert.strictEqual(
+      buildHrdNewsItem(entry, meta),
+      null,
+      "nothing to summarise and nothing to verify a number against"
+    );
+  });
+  await check("an item is built from og:description plus the article body", () => {
+    const entry: SitemapEntry = { loc: HRD_PAY_GAP_URL, lastmod: "2026-08-25" };
+    const item = buildHrdNewsItem(entry, extractHrdArticleMeta(HRD_ARTICLE_HTML));
+    assert.ok(item, "the item is built");
+    assert.strictEqual(item!.source, "HRD New Zealand");
+    assert.strictEqual(item!.url, HRD_PAY_GAP_URL);
+    assert.strictEqual(item!.isoDate, "2026-08-25T00:00:00.000Z", "a real date from <lastmod>");
+    // The model gets the publisher's own sentence and writes its own summary
+    // from it; the guard reads that sentence AND the body, so a number deeper
+    // in the article still verifies.
+    assert.ok(item!.snippet.startsWith("Concerns raised"), "og:description is the teaser");
+    assert.ok(item!.sourceText.includes("8.6%"), "the body backs the number guard");
+  });
+
+  console.log("10f. A sitemap item through the existing guards, unchanged:");
+  await check("a faithful draft survives and is attributed to HRD with a dateline", () => {
+    const entry: SitemapEntry = { loc: HRD_PAY_GAP_URL, lastmod: "2026-08-25" };
+    const item = buildHrdNewsItem(entry, extractHrdArticleMeta(HRD_ARTICLE_HTML))!;
+    const bites = selectNewsBites(
+      [
+        {
+          title: "The gender pay gap barely moved",
+          summary: "Stats NZ put the gap at 5.3% in the June 2026 quarter.",
+          url: HRD_PAY_GAP_URL,
+        },
+      ],
+      new Map([[item.url, item]])
+    );
+    assert.strictEqual(bites.length, 1);
+    assert.strictEqual(bites[0].sourceLabel, "HRD New Zealand", "attribution is ours, not the model's");
+    assert.strictEqual(bites[0].dateLabel, "25 Aug", "dateline formatted in NZ time");
+  });
+  await check("the verbatim-number guard still drops a fabricated HRD figure", () => {
+    const entry: SitemapEntry = { loc: HRD_PAY_GAP_URL, lastmod: "2026-08-25" };
+    const item = buildHrdNewsItem(entry, extractHrdArticleMeta(HRD_ARTICLE_HTML))!;
+    const bites = selectNewsBites(
+      [
+        {
+          title: "The gender pay gap barely moved",
+          summary: "Stats NZ put the gap at 4.1% in the June quarter.",
+          url: HRD_PAY_GAP_URL,
+        },
+      ],
+      new Map([[item.url, item]])
+    );
+    assert.deepStrictEqual(bites, [], "4.1% is in no source we fetched");
+  });
+  await check("the URL guard still binds on an hcamag URL we did not fetch", () => {
+    const entry: SitemapEntry = { loc: HRD_PAY_GAP_URL, lastmod: "2026-08-25" };
+    const item = buildHrdNewsItem(entry, extractHrdArticleMeta(HRD_ARTICLE_HTML))!;
+    const bites = selectNewsBites(
+      [
+        {
+          title: "The gender pay gap barely moved",
+          summary: "Stats NZ put the gap at 5.3% in the June 2026 quarter.",
+          url: "https://www.hcamag.com/nz/news/general/some-other-article/999999",
+        },
+      ],
+      new Map([[item.url, item]])
+    );
+    assert.deepStrictEqual(bites, [], "a plausible hcamag URL is still not one we retrieved");
+  });
+
+  console.log("10g. mergeNewsItems — one pool, whatever source produced it:");
+  await check("an HRD item outranks a generic RSS item on mission tier", () => {
+    const entry: SitemapEntry = { loc: HRD_PAY_GAP_URL, lastmod: "2026-08-25" };
+    const hrd = buildHrdNewsItem(entry, extractHrdArticleMeta(HRD_ARTICLE_HTML))!;
+    // FETCHED[2] is the undated startup-funding item — tier 3.
+    const merged = mergeNewsItems([[FETCHED[2]], [hrd]]);
+    assert.strictEqual(
+      merged[0].url,
+      HRD_PAY_GAP_URL,
+      "a gender item sorts ahead of general industry news even though it was passed second"
+    );
+  });
+  await check("the same story from both sources collapses to one item", () => {
+    const cross: PulseSourceData["newsItems"][number] = {
+      ...FETCHED[0],
+      url: "https://www.hcamag.com/nz/news/general/women-in-tech-summit-fills-auckland-venue/1",
+      source: "HRD New Zealand",
+    };
+    const merged = mergeNewsItems([[FETCHED[0]], [cross]]);
+    assert.strictEqual(merged.length, 1, "one story, one item");
+    assert.strictEqual(merged[0].source, "IT Brief NZ", "the earlier list wins the tie");
+  });
+  await check("merging never returns more than the pool cap", () => {
+    const many: PulseSourceData["newsItems"] = Array.from({ length: 30 }, (_, i) => ({
+      ...FETCHED[1],
+      title: `Tech job ads lift across the country ${i}`,
+      url: `https://techday.co.nz/story/tech-job-ads-lift-${i}`,
+    }));
+    assert.strictEqual(mergeNewsItems([many]).length, 12);
   });
 
   console.log(`\nAll ${passed} checks passed.`);
