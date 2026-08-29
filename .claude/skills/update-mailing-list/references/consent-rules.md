@@ -45,9 +45,12 @@ committed). Both are do-not-contact lists. Neither is a record of consent.
 Be precise about this whenever it comes up, because the table's existence
 invites the assumption that it is populated:
 
-- The subscriber table is **empty**. Nobody has been imported into it.
-- The ~1,560 Mailchimp subscribers have **not** been migrated.
-- **Nothing has been sent** from it.
+- The subscriber table holds **1,545** rows, imported from the 2026-08-17
+  Mailchimp export on 2026-08-29 (1,560 read, 15 held back by the suppression
+  register). Every row carries the export's own `CONFIRM_TIME`, so each one
+  double-opted-in — in Mailchimp.
+- **Nothing has ever been sent** from it, and the live newsletter still goes out
+  from Mailchimp. A populated list is not a cutover.
 - The **live newsletter still goes out from Mailchimp.**
 - The Resend segment and topic still physically exist and hold nothing. They
   were deleted on 2026-08-29, and are no longer the consent record.
