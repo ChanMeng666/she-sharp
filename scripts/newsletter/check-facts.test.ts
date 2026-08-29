@@ -268,6 +268,28 @@ check('"59 per cent" in a source satisfies a fact that says "59%"', () => {
   assert.equal(checkFact(fact, page, TODAY).overall, "OK");
 });
 
+check('a source that writes "3,500" satisfies a fact that says "3500"', () => {
+  // The second live failure, and the same shape as the first. `she-sharp-growth`
+  // interpolates `globalStats.members.current`, so its text says "3500"; every
+  // page that renders it prints "3,500+" for a reader. Same quantity, different
+  // presentation — a thousands separator is formatting, not a number.
+  const folded = numberSearchCorpus("We have grown to 3,500+ members.");
+  assert.ok(folded.includes("3500"), "the ungrouped spelling is searchable");
+  assert.ok(folded.includes("3,500"), "and the original survives for a fact that groups too");
+
+  const fact = fixture({ text: "She Sharp has grown to 3500+ members since 2014." });
+  const page = okPage("She Sharp has grown to 3,500+ members since 2014. " + "w".repeat(500));
+  assert.equal(checkFact(fact, page, TODAY).overall, "OK");
+});
+
+check("only three-digit groups are unpicked, so a decimal is left alone", () => {
+  // The guard on the guard: if the rewrite were looser it could turn "5.3" into
+  // something matching a page that never carried it, which is exactly the
+  // failure mode a verbatim-number check exists to prevent.
+  assert.equal(numberSearchCorpus("the gap was 5.3% this quarter"), "the gap was 5.3% this quarter");
+  assert.equal(numberSearchCorpus("1,024 and 12,345,678"), "1,024 and 12,345,678\n1024 and 12345678");
+});
+
 check("normalising the source cannot invent a number that is not there", () => {
   const fact = fixture({ text: "The figure is 61%." });
   const page = okPage("The figure is 59 per cent. " + "w".repeat(500));
@@ -322,9 +344,17 @@ check("every fact in the live pool carries verifiedAt and refresh", () => {
       Object.keys(REVIEW_INTERVAL_DAYS).includes(fact.refresh),
       `${fact.id}: unknown refresh cadence "${fact.refresh}"`
     );
+    // Compared as CALENDAR DAYS in the operator's zone, not as instants. The
+    // obvious version — `Date.parse(verifiedAt + "T00:00:00Z") <= Date.now()` —
+    // reads the recorded day as UTC midnight while `today` is the real moment,
+    // so in New Zealand (UTC+12/13) a fact verified TODAY looks like it was
+    // verified in the future for the first twelve hours of every day. This is
+    // the same UTC-versus-local trap `toIsoDay()` exists to avoid, arriving in
+    // the test rather than the script; it fired the first time a fact was
+    // verified in the NZ morning.
     assert.ok(
-      Date.parse(`${fact.verifiedAt}T00:00:00Z`) <= today.getTime(),
-      `${fact.id}: verifiedAt ${fact.verifiedAt} is in the future — nobody checked it yet`
+      fact.verifiedAt <= toIsoDay(today),
+      `${fact.id}: verifiedAt ${fact.verifiedAt} is after today (${toIsoDay(today)}) — nobody checked it yet`
     );
     assert.equal(status.refresh, fact.refresh);
   }
