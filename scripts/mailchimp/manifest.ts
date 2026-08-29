@@ -18,6 +18,7 @@
  * Usage:
  *   npx tsx scripts/mailchimp/manifest.ts --export 2026-08-17 --append
  *   npx tsx scripts/mailchimp/manifest.ts --export 2026-08-17            # verify
+ *   npx tsx scripts/mailchimp/manifest.ts --export 2026-08-28-api --assets
  *   npx tsx scripts/mailchimp/manifest.ts --close-gap <report> --closed-by <exportId>
  *
  * It is also imported: `scripts/mailchimp/fetch-api.ts` builds its own entry
@@ -25,9 +26,10 @@
  * so `main()` runs only when this file is the entry point.
  */
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { basename, join } from "node:path";
 
 import type {
+  MailchimpImageClass,
   MailchimpManifest,
   MailchimpManifestExport,
   MailchimpManifestFile,
@@ -38,6 +40,7 @@ import {
   ARCHIVE_DIR,
   argValue,
   fileBytes,
+  listVaultAssets,
   listVaultCsvs,
   listVaultFiles,
   resolveVaultDir,
@@ -927,6 +930,17 @@ export function buildApiExportEntry(
     };
   });
 
+  // Binary rows are carried through, not rebuilt. This function reads only the
+  // `.json` responses, and `appendExportEntry` REPLACES an entry by exportId —
+  // so without this, re-running `fetch-api.ts` after a network failure (the
+  // exact case its resumability exists for) would silently delete every asset
+  // hash recorded by `--assets`, with no error and no diff anyone would read as
+  // a loss. It is `refuseApiVault`'s documented failure running the other way.
+  const carried = carriedBinaryRows(exportId);
+  if (carried.length > 0) {
+    console.log(`  carried forward ${carried.length} recorded asset row(s)`);
+  }
+
   return {
     exportId,
     source:
@@ -938,11 +952,234 @@ export function buildApiExportEntry(
     // `toISOString()` slice on a New Zealand evening records yesterday.
     ...localTimestamp(),
     vaultPath: portableVaultPath(dir, exportId),
-    fileCount: entries.length,
+    fileCount: entries.length + carried.length,
     method: "api-v3",
     api,
-    files: entries,
+    files: [...entries, ...carried],
   };
+}
+
+// ---------------------------------------------------------------------------
+// Images — the gallery, and what the campaign bodies referenced from elsewhere
+// ---------------------------------------------------------------------------
+
+/**
+ * One image row of the vault's `campaign-images.json`.
+ *
+ * Written by `scripts/mailchimp/campaign-images.ts`, which is the only thing
+ * that knows how a URL in a twelve-year-old newsletter maps to a file on disk.
+ * This module reads its output rather than re-deriving it, so the crosswalk has
+ * exactly one implementation.
+ */
+interface CrosswalkFile {
+  file: string;
+  sha256: string;
+  bytes: number;
+  references: number;
+  host?: string;
+  classification?: MailchimpImageClass;
+}
+
+/** The vault's crosswalk, or a message naming the script that writes it. */
+function readCrosswalk(exportId: string): { gallery: CrosswalkFile[]; downloaded: CrosswalkFile[] } {
+  const path = join(resolveVaultDir(exportId), "campaign-images.json");
+  if (!existsSync(path)) {
+    throw new Error(
+      `No campaign-images.json in the vault for ${exportId}.\n` +
+        `  ${path}\n` +
+        "  It is what says which image each campaign body pointed at, and this\n" +
+        "  manifest records only what that file measured. Build it first:\n" +
+        `    npx tsx scripts/mailchimp/campaign-images.ts --export ${exportId}`
+    );
+  }
+
+  const parsed = JSON.parse(readFileSync(path, "utf8")) as {
+    galleryFiles?: CrosswalkFile[];
+    downloadedFiles?: CrosswalkFile[];
+  };
+  return { gallery: parsed.galleryFiles ?? [], downloaded: parsed.downloadedFiles ?? [] };
+}
+
+/**
+ * The prose for one image row.
+ *
+ * Five short templates rather than the paragraph-length notes the JSON rows
+ * carry: there are over seven hundred of these, and note prose is what decides
+ * whether this file grows by 400 KB or by a megabyte.
+ */
+function classifyAssetFile(
+  relativePath: string,
+  record: CrosswalkFile
+): Pick<MailchimpManifestFile, "report" | "scope" | "piiClass" | "role" | "redundantWith" | "note"> {
+  const imageClass: MailchimpImageClass =
+    record.classification ?? (relativePath.startsWith("assets/") ? "gallery-original" : "third-party");
+
+  const shared = {
+    scope: "account",
+    // An image of a poster or a room. No address, no IP, no code. Faces appear
+    // in some of them, which is a publication question for the re-host and not
+    // a classification question for this file.
+    piiClass: "none" as const,
+  };
+
+  switch (imageClass) {
+    case "gallery-original":
+      return {
+        ...shared,
+        report: "gallery-image",
+        role: record.references > 0 ? "primary" : "reference",
+        redundantWith: "file-manager-files.json",
+        note:
+          record.references > 0
+            ? `Gallery image, referenced ${record.references} time(s) by the sent campaigns.`
+            : "Gallery image no surviving campaign references. Kept: the account is being closed and this is the only copy.",
+      };
+    case "mailchimp-chrome":
+      return {
+        ...shared,
+        report: "campaign-image",
+        role: "reference",
+        redundantWith: null,
+        note: "Mailchimp's own template furniture (a social icon or badge), not She Sharp's work. Archived so a past issue still renders; drop it when re-hosting.",
+      };
+    case "content-not-in-gallery":
+      return {
+        ...shared,
+        report: "campaign-image",
+        role: "primary",
+        redundantWith: null,
+        note: "On a Mailchimp host, referenced by a campaign, and absent from the file-manager inventory — so the gallery pull alone would not have saved it. Dies with the account.",
+      };
+    case "third-party":
+      return {
+        ...shared,
+        report: "campaign-image",
+        role: "reference",
+        redundantWith: null,
+        note: "Hosted by a third party, not by Mailchimp. Closing the account does not remove it, but the third party can — and one already has.",
+      };
+    default:
+      throw new Error(
+        `Unclassified image class for ${relativePath}: ${String(imageClass)}\n` +
+          "  Add a case to classifyAssetFile() rather than letting it into the manifest unlabelled."
+      );
+  }
+}
+
+/**
+ * The binary rows for one export, measured on disk and described by the crosswalk.
+ *
+ * Cross-checks both directions on purpose. A file on disk with no crosswalk row
+ * is the unclassified case and throws; a crosswalk row with no file on disk
+ * means an interrupted download, and recording its hash would assert we hold
+ * something we do not.
+ */
+export function buildAssetFileRows(exportId: string): MailchimpManifestFile[] {
+  const crosswalk = readCrosswalk(exportId);
+  const described = new Map<string, CrosswalkFile>();
+  for (const record of [...crosswalk.gallery, ...crosswalk.downloaded]) {
+    described.set(record.file, record);
+  }
+
+  const onDisk = [...listVaultAssets(exportId, "assets"), ...listVaultAssets(exportId, "campaign-images")];
+  const missing = [...described.keys()].filter((file) => !onDisk.includes(file));
+  if (missing.length > 0) {
+    throw new Error(
+      `${missing.length} file(s) in campaign-images.json are not in the vault, e.g. ${missing[0]}.\n` +
+        `  Re-run: npx tsx scripts/mailchimp/campaign-images.ts --export ${exportId}`
+    );
+  }
+
+  return onDisk.map((file) => {
+    const record = described.get(file);
+    if (!record) {
+      throw new Error(
+        `Image in the vault with no crosswalk row: ${file}\n` +
+          `  Re-run: npx tsx scripts/mailchimp/campaign-images.ts --export ${exportId}`
+      );
+    }
+
+    const path = vaultFilePath(exportId, file);
+    const facts = classifyAssetFile(file, record);
+    return {
+      file,
+      report: facts.report,
+      scope: facts.scope,
+      status: "n/a",
+      format: "binary",
+      // No `endpoint`: an image is not the response to one. No `hasHeaderRow`,
+      // `rows` or `columns`: those are CSV shape.
+      piiClass: facts.piiClass,
+      role: facts.role,
+      redundantWith: facts.redundantWith,
+      note: facts.note,
+      exportedAt: exportId.slice(0, 10),
+      bytes: fileBytes(path),
+      sha256: sha256File(path),
+      // One file is one image. `0` would read as "the pull returned nothing".
+      items: 1,
+      // The host, never the URL — see MailchimpManifestFile.sourceHost.
+      sourceHost:
+        record.host ?? (file.startsWith("assets/") ? "gallery.mailchimp.com" : "(unrecorded)"),
+      imageClass: record.classification ?? "gallery-original",
+      referencedBy: record.references,
+    } satisfies MailchimpManifestFile;
+  });
+}
+
+/** The binary rows already recorded for an export, for carrying forward. */
+function carriedBinaryRows(exportId: string): MailchimpManifestFile[] {
+  const entry = loadManifest()?.exports.find((item) => item.exportId === exportId);
+  return (entry?.files ?? []).filter((file) => file.format === "binary");
+}
+
+/**
+ * Merges the image rows into an existing API entry.
+ *
+ * Never `--append`. That path is the CSV builder, and `refuseApiVault` exists
+ * because handing it an API directory silently overwrites a complete entry with
+ * `files: []`. This one reads the entry that is there, replaces only its binary
+ * rows, and writes back through the single write path.
+ */
+export function mergeAssetRows(exportId: string): MailchimpManifestFile[] {
+  const manifest = loadManifest();
+  if (!manifest) throw new Error(`No manifest at ${MANIFEST_PATH}. Run with --append first.`);
+
+  const entry = manifest.exports.find((item) => item.exportId === exportId);
+  if (!entry) {
+    throw new Error(
+      `Manifest has no export ${exportId}.\n` +
+        "  Images belong to the pull that inventoried them; record the pull first."
+    );
+  }
+  if (entry.method !== "api-v3") {
+    throw new Error(
+      `Export ${exportId} is not an API pull.\n` +
+        "  The gallery inventory comes from /file-manager/files, which only an API pull reaches."
+    );
+  }
+
+  const rows = buildAssetFileRows(exportId);
+  const kept = entry.files.filter((file) => file.format !== "binary");
+  appendExportEntry({ ...entry, fileCount: kept.length + rows.length, files: [...kept, ...rows] });
+  return rows;
+}
+
+/**
+ * Refuses to file one export's images under another export's name.
+ *
+ * `resolveVaultDir` honours `MAILCHIMP_VAULT_DIR` regardless of `--export`.
+ * Every read-only script survives that mismatch; this one writes rows into a
+ * committed file keyed on the id it was told.
+ */
+function assertVaultMatchesExport(exportId: string): void {
+  const vault = resolveVaultDir(exportId);
+  if (basename(vault) === exportId) return;
+  throw new Error(
+    `MAILCHIMP_VAULT_DIR points at ${basename(vault)} but --export says ${exportId}.\n` +
+      `  ${vault}\n` +
+      "  These must agree before anything is written into the committed manifest."
+  );
 }
 
 const KNOWN_GAPS: MailchimpManifest["knownGaps"] = [
@@ -1110,6 +1347,8 @@ function main() {
   const argv = process.argv.slice(2);
   const exportId = argValue(argv, "--export");
   const append = argv.includes("--append");
+  const assets = argv.includes("--assets");
+  const verifyAssets = argv.includes("--verify-assets");
   const gapToClose = argValue(argv, "--close-gap");
 
   if (gapToClose) {
@@ -1135,9 +1374,31 @@ function main() {
   if (!exportId) {
     console.error(
       "Usage: npx tsx scripts/mailchimp/manifest.ts --export <YYYY-MM-DD> [--append]\n" +
+        "       npx tsx scripts/mailchimp/manifest.ts --export <id>-api --assets\n" +
         "       npx tsx scripts/mailchimp/manifest.ts --close-gap <report> --closed-by <exportId>"
     );
     process.exit(1);
+  }
+
+  if (assets) {
+    try {
+      assertVaultMatchesExport(exportId);
+      const rows = mergeAssetRows(exportId);
+      const byClass = new Map<string, number>();
+      for (const row of rows) {
+        const key = row.imageClass ?? "(none)";
+        byClass.set(key, (byClass.get(key) ?? 0) + 1);
+      }
+      const bytes = rows.reduce((sum, row) => sum + row.bytes, 0);
+      console.log(`${exportId}: recorded ${rows.length} image(s), ${(bytes / 1024 / 1024).toFixed(1)} MB`);
+      for (const [key, count] of [...byClass].sort()) console.log(`  ${key.padEnd(24)} ${count}`);
+      const unused = rows.filter((row) => row.referencedBy === 0).length;
+      console.log(`  referenced by no campaign  ${unused}`);
+    } catch (error) {
+      console.error(error instanceof Error ? error.message : String(error));
+      process.exit(1);
+    }
+    return;
   }
 
   if (append) {
@@ -1168,8 +1429,18 @@ function main() {
     process.exit(1);
   }
 
+  // Binary rows are skipped unless asked for. Re-hashing 550 MB and printing
+  // 1,400 `ok -` lines on every verify is how a check stops being run.
+  const toVerify = verifyAssets
+    ? entry.files
+    : entry.files.filter((file) => file.format !== "binary");
+  const skipped = entry.files.length - toVerify.length;
+  if (skipped > 0) {
+    console.log(`  (skipping ${skipped} image(s) — pass --verify-assets to include them)`);
+  }
+
   let failures = 0;
-  for (const file of entry.files) {
+  for (const file of toVerify) {
     const path = vaultFilePath(exportId, file.file);
     if (!existsSync(path)) {
       failures++;
@@ -1189,7 +1460,7 @@ function main() {
 
   console.log(
     failures === 0
-      ? `\nok - all ${entry.files.length} files match the manifest`
+      ? `\nok - all ${toVerify.length} files match the manifest`
       : `\n${failures} file(s) do not match the manifest`
   );
   process.exit(failures === 0 ? 0 : 1);

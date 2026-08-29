@@ -305,10 +305,24 @@ check(
     .join(", ")
 );
 
+// Scoped to JSON, because a downloaded image is not the response to an
+// endpoint — its bytes came from a CDN. Naming one anyway would be the same
+// lie as `rows: 0` on a JSON document, which the check below exists to stop.
 check(
-  "every file in an API export names the endpoint it is the response to",
+  "every JSON file in an API export names the endpoint it is the response to",
   apiExports.every((entry) =>
-    entry.files.every((file) => typeof file.endpoint === "string" && file.endpoint.startsWith("/"))
+    entry.files
+      .filter((file) => (file.format ?? "csv") === "json")
+      .every((file) => typeof file.endpoint === "string" && file.endpoint.startsWith("/"))
+  )
+);
+
+check(
+  "no image row claims to be an API response",
+  apiExports.every((entry) =>
+    entry.files
+      .filter((file) => file.format === "binary")
+      .every((file) => file.endpoint === undefined)
   )
 );
 
@@ -324,6 +338,59 @@ check(
         file.rows === undefined &&
         file.columns === undefined
     )
+  )
+);
+
+// --- Image rows --------------------------------------------------------------
+//
+// The gallery and the images the campaign bodies pulled in from elsewhere. Four
+// checks, because binaries brought four new ways to be wrong.
+
+const binaryRows = mailchimpManifest.exports.flatMap((entry) =>
+  entry.files.filter((file) => file.format === "binary")
+);
+
+// THE RULE THIS FILE EXISTS TO KEEP: a source URL must never reach the manifest.
+// Four of the images a newsletter embedded are Slack emoji whose filenames end
+// `1f49c@2x.png`, and the EMAIL regex below matches `1f49c@2x.png` as an address.
+// A URL here would fail CI with a masked message indistinguishable from a real
+// address leak, on a guard whose entire value is that it never cries wolf. The
+// host is recorded instead; the URLs live in the vault, which is never committed.
+check(
+  "no image row records a source URL",
+  binaryRows.every((file) => !/https?:\/\//.test(JSON.stringify(file))),
+  binaryRows
+    .filter((file) => /https?:\/\//.test(JSON.stringify(file)))
+    .map((file) => file.file)
+    .join(", ")
+);
+
+check(
+  "every image row lives under a known sub-directory",
+  binaryRows.every((file) => /^(assets|campaign-images)\//.test(file.file)),
+  binaryRows
+    .filter((file) => !/^(assets|campaign-images)\//.test(file.file))
+    .map((file) => file.file)
+    .join(", ")
+);
+
+// A zero-byte image recorded as archived is worse than a missing one: it reads
+// as coverage. `referencedBy: 0` by contrast is legitimate and common — a third
+// of the gallery was never used by a surviving campaign.
+check(
+  "every image row has a positive byte count and a reference count",
+  binaryRows.every((file) => file.bytes > 0 && (file.referencedBy ?? -1) >= 0),
+  binaryRows
+    .filter((file) => !(file.bytes > 0 && (file.referencedBy ?? -1) >= 0))
+    .map((file) => file.file)
+    .join(", ")
+);
+
+check(
+  "every image row says what kind of image it is",
+  binaryRows.every(
+    (file) =>
+      file.imageClass !== undefined && typeof file.sourceHost === "string" && file.items === 1
   )
 );
 

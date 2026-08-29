@@ -139,6 +139,51 @@ export function listVaultCsvs(exportId: string): string[] {
   return listVaultFiles(exportId, ".csv");
 }
 
+/** Image extensions the archive stores. Anything else is not an asset. */
+const ASSET_EXTENSIONS = [".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg"];
+
+/**
+ * Every image in one named sub-directory of the vault.
+ *
+ * DELIBERATELY SEPARATE FROM {@link listVaultFiles}, which is not an oversight.
+ * That function is the sole input to `buildApiExportEntry`, and every path it
+ * returns is handed to `classifyApiFile`, which throws on anything it does not
+ * recognise. Widening its extension union would break every `fetch-api.ts` run
+ * on the 678th file; teaching the classifier about images instead would put
+ * 550 MB of hashing in the path of every retry-after-network-failure, which is
+ * the exact case that design exists to survive. It also feeds `refuseApiVault`,
+ * whose refusal triggers on that function returning nothing.
+ *
+ * It does not recurse at all. The caller names the directory, so nothing a
+ * human happens to leave in the vault can be absorbed into a committed file.
+ *
+ * @param exportId - The export id.
+ * @param subdir - The sub-directory, e.g. `assets` or `campaign-images`.
+ * @returns `<subdir>/<name>` paths with forward slashes, sorted by code unit.
+ */
+export function listVaultAssets(exportId: string, subdir: string): string[] {
+  const dir = join(resolveVaultDir(exportId), subdir);
+  if (!existsSync(dir) || !statSync(dir).isDirectory()) return [];
+
+  const found: string[] = [];
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    if (!entry.isFile()) continue;
+    const lower = entry.name.toLowerCase();
+    // The vault really does hold `4165797-Dave_Wild.PNG`, so the match is
+    // case-insensitive while the recorded name stays verbatim.
+    if (ASSET_EXTENSIONS.some((extension) => lower.endsWith(extension))) {
+      found.push(`${subdir}/${entry.name}`);
+    }
+  }
+
+  // Plain code-unit sort, NOT `localeCompare`. ICU collation depends on the
+  // Node build (small-icu vs full-icu), and 677 names mixing case, dots,
+  // hyphens and underscores would order differently on two machines. Nothing
+  // verifies `manifest.json` for determinism, so that drift would land as an
+  // unexplainable whole-file diff.
+  return found.sort();
+}
+
 export function vaultFilePath(exportId: string, file: string): string {
   return join(resolveVaultDir(exportId), file);
 }
