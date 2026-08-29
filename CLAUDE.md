@@ -458,13 +458,20 @@ left, bounced, or never subscribed); Mailchimp's own dashboard says **3,145**
 because it excludes the 544 hard-bounced; and a `Ticket Type:`/`Event:` tag is a
 pasted ticket list, **not attendance** — Humanitix is authoritative for that.
 The non-subscribers are hashed into `email-suppression-hashes.json` so no future
-import can re-add them — **2,138** as of 2026-08-27, and
+import can re-add them — **2,144** as of 2026-08-29, and
 `suppression.ts pull-mailchimp` keeps it current while Mailchimp is still the
 live sender. `campaigns.json` now carries the send history the account export
 never delivered: 180 sends, 188,796 emails, 37.9% unique open — **33.1% once
-Apple's mail proxies are excluded**, and the two are equal through 2023 then
-diverge, so open rates cannot be compared across 2021. The list peaked at
-**1,742 in 2025-11** and is **1,555** now.
+Apple's mail proxies are excluded**. **A comparison must pick one of those two
+series and stay on it**, and the boundary has two honest answers rather than
+one, which is why this sentence used to give a third and contradict itself. The
+mechanism starts in **2022**: Apple Mail Privacy Protection did not exist
+before, so the corrected series is exactly equal to the raw one for every
+campaign sent up to 2021. The *difference* only becomes material in **2024** —
+2022 differs by 1 unique open in 8,811 and 2023 by 5 in 13,435, both noise,
+against 17,343 vs 15,284 in 2024. So do not read a 2023 figure as corrected, and
+do not read a 2022 gap as a trend. The list peaked at **1,742 in 2025-11** and
+is **1,555** now.
 → `docs/development/MAILCHIMP_ARCHIVE.md`, `PLATFORM_APIS.md`
 
 **Presentation decks.** `/present/<slug>`, built from typed slide data with a
