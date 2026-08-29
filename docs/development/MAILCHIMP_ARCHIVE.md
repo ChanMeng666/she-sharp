@@ -329,10 +329,10 @@ behind 1,545 rows of consent:
 
 ## What the API pull holds, and why the CSVs still matter
 
-`2026-08-28-api/` is the maximal pull — 884 files across 47 endpoints plus 677
-gallery images, taken because the account is being cancelled and anything not
-pulled is gone. `2026-08-27-api/` was the first pass and is kept beside it; a
-Mailchimp snapshot supplements, it never supersedes.
+`2026-08-28-api/` is the maximal pull — 884 files across 47 endpoints plus **741
+images**, taken because the account is being cancelled and anything not pulled
+is gone. `2026-08-27-api/` was the first pass and is kept beside it; a Mailchimp
+snapshot supplements, it never supersedes.
 
 **The API does not replace the hand export**, and the first version of this
 section said it did. The counts line up — `/lists/{id}/members?status=` returns
@@ -366,7 +366,10 @@ What it adds that no export produces:
 | `engagement/` (180) | Per-send clicks-per-URL, delivery and opens per recipient domain, opens per country, shortlink referrers | `email-only` |
 | `list-activity.json` | 2,054 days of daily sends/opens/clicks/subs/unsubs. `growth-history` is monthly; this is the resolution underneath | `aggregate` |
 | `segments.json` | 237 objects: 214 `static` (a tag) + 23 `campaign_static` (a past send's frozen recipient set) | `aggregate` |
-| `file-manager-files.json` | Inventory of 677 gallery images, 547 MB. Metadata and URLs only — the images are not downloaded | `none` |
+| `file-manager-files.json` | Inventory of the 677 gallery images. Metadata and URLs only | `none` |
+| `assets/` (677) | The gallery images themselves, 547 MB, fetched by `fetch-assets.ts` | `none` |
+| `campaign-images/` (64) | The images a body pulled in from outside the gallery, fetched by `campaign-images.ts` | `none` |
+| `campaign-images.json` | The crosswalk — which file every image URL in every body resolves to. See below | `none` |
 | `signup-forms.json` | The hosted form's header, contents, styles, URL — the wording people agreed to, as it stands today | `none` |
 
 `content/` is `person-identifying` rather than `none` because a scan of all 180
@@ -379,6 +382,66 @@ The vault stores **verbatim** payloads. A sha256 over a mapped object proves wha
 our mapper kept, not what Mailchimp said — and that distinction already cost this
 archive 86 months of zeroes when `getGrowthHistory` was written from
 documentation that lists three fields the us3 shard always sends as zero.
+
+## The images, and the crosswalk that proves we have them
+
+An HTML body full of dead `<img src>` is not an archive of a newsletter, and
+`MAILCHIMP_CONFIG.archiveUrl` is a live hyperlink that stops resolving the day
+the account closes. `fetch-assets.ts` downloaded the gallery; what nobody had was
+the **join** between a campaign body's URL and a file on disk — the body says
+`mcusercontent.com/<hash>/images/<uuid>.png` while the inventory says
+`gallery.mailchimp.com/<hash>/images/<uuid>.png`. Until that join existed, "we
+have the images" was a belief. `scripts/mailchimp/campaign-images.ts` measures
+it and fetches what is missing:
+
+| | |
+|---|---|
+| Image URLs across all 180 sent bodies | **545** (4,304 references) |
+| Already in `assets/` | **460**, covering 442 of the 677 gallery files |
+| Fetched into `campaign-images/` | **84 URLs → 64 distinct objects** |
+| **Already lost** | **1** |
+| Gallery files no surviving campaign references | 235 |
+
+Four things worth knowing before quoting any of that:
+
+1. **The corpus is a union of two scans, because neither is complete.** URLs
+   ending in an image extension: 544. URLs in an image attribute (`src`,
+   `background`, `srcset`): 544. They are not the same 544 — the union is 545.
+   `plain_text` yields **zero**, which is recorded as a finding rather than
+   assumed.
+2. **`dim.mcusercontent.com` has two shapes and only one is an image.**
+   `/cs/<hash>/images/<uuid>.png` is a gallery original at a size; `/https/<url>`
+   is a proxy in front of somebody else's CDN. Not decoding the second reports 43
+   lost She Sharp photographs that are Facebook and Instagram icons.
+3. **Three images sit on a Mailchimp host and are NOT in the gallery** — video
+   thumbnails under `video_thumbnails_new/`. That is a fact about the inventory:
+   `file-manager-files.json` is not a complete list of the account's images, so
+   downloading the gallery was never the same thing as having the newsletters'
+   images.
+4. **One image is already gone** — a Google user-content URL in the 2020-09-16
+   issue, HTTP 403 with and without a browser User-Agent. It carries no file
+   extension, which is why an extension-only scan never saw it. It is recorded in
+   `KNOWN_LOSSES` in the script with its evidence, and the script **fails** if it
+   ever starts resolving again.
+
+Every image is recorded in `manifest.json` with its sha256, as `format: "binary"`
+rows on the `2026-08-28-api` entry — 741 of them, 548 MB. Those rows carry
+`sourceHost` and **never a URL**: four of the images are Slack emoji whose
+filenames end `1f49c@2x.png`, and this archive's own leak guard reads an `@`
+between word characters as an email address. The URLs live in the vault's
+`campaign-images.json`, which is never committed.
+
+```bash
+MAILCHIMP_VAULT_DIR=…/she-sharp-slack-archive/mailchimp/2026-08-28-api \
+  npx tsx scripts/mailchimp/campaign-images.ts --export 2026-08-28-api
+npx tsx scripts/mailchimp/manifest.ts --export 2026-08-28-api --assets
+npx tsx scripts/mailchimp/manifest.ts --export 2026-08-28-api --verify-assets
+```
+
+`--assets` **merges**; it never goes through `--append`, which is the CSV builder
+and would overwrite the whole API entry with `files: []`. Verify skips the
+binaries unless asked, because re-hashing 548 MB on every run is how a check
+stops being run.
 
 ## Known gaps and open items
 

@@ -48,8 +48,28 @@ export type MailchimpStatus =
  * is a hand-downloaded Mailchimp CSV and the manifest is append-only — an old
  * entry is a snapshot of what was true, and is never rewritten to carry a field
  * invented later.
+ *
+ * `"binary"` is an image: the gallery files an API pull inventories but does not
+ * contain, and the images a campaign body referenced from somewhere else. A
+ * binary row has no header, no rows and no columns; its `items` is `1`, because
+ * one file is one image and `0` would read as "the pull returned nothing".
  */
-export type MailchimpFileFormat = "csv" | "json";
+export type MailchimpFileFormat = "csv" | "json" | "binary";
+
+/**
+ * What an archived image is, and what a re-host should do with it.
+ *
+ * Written by `scripts/mailchimp/campaign-images.ts`. `content-not-in-gallery`
+ * is the one that carries information beyond bookkeeping: it says the file
+ * manager's inventory is NOT a complete list of the account's images, so
+ * "we downloaded the gallery" was never the same claim as "we have the
+ * newsletters' images".
+ */
+export type MailchimpImageClass =
+  | "gallery-original"
+  | "mailchimp-chrome"
+  | "content-not-in-gallery"
+  | "third-party";
 
 export interface MailchimpManifestFile {
   /** Filename exactly as Mailchimp produced it, including the export hash. */
@@ -80,16 +100,41 @@ export interface MailchimpManifestFile {
    * Recorded because for an API pull the endpoint is the provenance: it is the
    * only thing that says what the numbers inside are counts *of*, the way a
    * CSV's status filename does.
+   *
+   * Deliberately absent on a `"binary"` row. An image is not the response to an
+   * endpoint — its bytes came from a CDN — and naming one anyway would be the
+   * same lie as `rows: 0` on a JSON document.
    */
   endpoint?: string;
   /**
-   * JSON only — the length of the collection in the response.
+   * JSON and binary — the length of the collection, or `1` for one file.
    *
    * The JSON analogue of `rows`, kept as its own field rather than reusing
    * `rows` so that a reader cannot silently treat an item count as a CSV row
    * count and compare the two.
    */
   items?: number;
+  /**
+   * Binary only — the host the bytes were fetched from. **Never the URL.**
+   *
+   * The rule, not a habit. Four of the images a newsletter embedded are Slack
+   * emoji whose filenames end `1f49c@2x.png`, and the archive's leak guard
+   * (`lib/data/mailchimp.test.ts`) matches an `@` between word characters as an
+   * email address. A URL in this file would fail CI with a masked message
+   * indistinguishable from a real address leak, on a check whose whole value is
+   * that it never cries wolf. The full URL lives in the vault's
+   * `campaign-images.json`, which is never committed.
+   */
+  sourceHost?: string;
+  /** Binary only — see {@link MailchimpImageClass}. */
+  imageClass?: MailchimpImageClass;
+  /**
+   * Binary only — how many times the sent campaigns reference this image.
+   *
+   * `0` is meaningful and common: a third of the gallery was never used by any
+   * surviving campaign, and this is the only place that is written down.
+   */
+  referencedBy?: number;
   /**
    * Optional: a JSON document has no header row.
    *
