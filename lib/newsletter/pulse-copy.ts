@@ -617,6 +617,16 @@ export function checkBiteSummary(
     }
   }
 
+  for (const sentence of hollowClosers(summary)) {
+    at(
+      "summary-hollow-sentence",
+      "error",
+      `"${sentence}" adds no fact — it names no number and no person, place or ` +
+        `programme. Delete it, or replace it with something the reader did not ` +
+        `already know from the sentence before.`,
+    );
+  }
+
   for (const [pattern, fix] of REGISTER_SOFT) {
     const hit = pattern.exec(summary);
     if (hit) {
@@ -629,6 +639,74 @@ export function checkBiteSummary(
   }
 
   return issues;
+}
+
+/**
+ * Sentences that close a summary while saying nothing.
+ *
+ * An ERROR where `REGISTER_SOFT` above is only a warning, and the difference is
+ * deliberate: that list bans WORDS, and words like "ecosystem" or "highlights"
+ * sometimes earn their place. This bans a SENTENCE SHAPE, which does not.
+ *
+ * The shape was measured rather than imagined. Three of three machine-written
+ * 2026-08 summaries ended with one — "This highlights the need for initiatives
+ * to support women entering AI careers", "This initiative aims to inspire young
+ * women to explore careers in technology" — and all three of the hand-written
+ * 2026-07 summaries, which are the quality bar, contain none. So the rule fires
+ * on every observed failure and on no approved copy.
+ *
+ * A sentence qualifies only when it opens with "This"/"These"/"It" AND carries
+ * no quantity AND no proper noun after the first word. Those escapes are what
+ * keep it honest: a closer that names Auckland, or quotes a figure, is telling
+ * the reader something and survives. The rule is deliberately conservative — it
+ * under-fires rather than argue with a sentence that might be doing work.
+ *
+ * "Quantity" deliberately includes SPELLED-OUT numbers. The first version of
+ * this rule tested for a digit only, and flagged "This is the third month of
+ * decline" — a sentence that states a fact in words. A rule that rejects a real
+ * fact because it was written out is worse than one that lets a little padding
+ * through, because the first thing an operator does with a check that argues
+ * with good copy is stop reading it.
+ */
+const SPELLED_QUANTITY =
+  /\b(?:one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|dozen|first|second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth|half|quarter|third|double|triple|most|majority|minority)\b/i;
+
+/**
+ * The summary with any fact-free closing sentence removed.
+ *
+ * The generator's fix, where {@link hollowClosers} is the checker's report. It
+ * is safe by construction, not by judgement: a sentence only qualifies when it
+ * carries no digit, no spelled-out quantity and no proper noun, so removing it
+ * cannot lose a fact — and it cannot affect a verbatim-number check, because
+ * removing text can only remove numbers.
+ *
+ * Returns the input unchanged when the trim would empty the summary. A hollow
+ * sentence that is the WHOLE summary is a different problem, and the checker
+ * should report it rather than this function silently producing nothing.
+ */
+export function trimHollowClosers(summary: string): string {
+  const hollow = new Set(hollowClosers(summary));
+  if (hollow.size === 0) return summary;
+
+  const kept = summary
+    .split(/(?<=[.!?])\s+/)
+    .map((sentence) => sentence.trim())
+    .filter((sentence) => sentence.length > 0 && !hollow.has(sentence));
+
+  return kept.length > 0 ? kept.join(" ") : summary;
+}
+
+export function hollowClosers(summary: string): string[] {
+  return summary
+    .split(/(?<=[.!?])\s+/)
+    .map((sentence) => sentence.trim())
+    .filter((sentence) => {
+      if (!/^(This|These|It)\b/.test(sentence)) return false;
+      if (/\d/.test(sentence)) return false;
+      if (SPELLED_QUANTITY.test(sentence)) return false;
+      const rest = sentence.split(/\s+/).slice(1);
+      return !rest.some((word) => /^[A-Z][a-z]/.test(word));
+    });
 }
 
 /** Checks one bite, headline and summary together. */
@@ -874,7 +952,8 @@ export const PULSE_HOUSE_STYLE_RULES = `HOUSE STYLE — how a news item must be 
 - Never carry quotation marks over from the source's headline.
 - The subject is what changed for the reader, not the company or the report that announced it. Do not end a headline with ", according to X" or ", the report shows" — we print the source beside the item already.
 - No trade-press words anywhere: unveils, launches, solutions, leverages, empowers, "is set to", cutting-edge, seamless, world-class, game-changer. Plain English, New Zealand spelling.
-- The "summary" is at most two sentences and about 35 words. Say the fact, then what it means for a woman working in or entering tech in New Zealand. Do not write a sentence that adds no fact ("This initiative aims to inspire…", "This highlights ongoing disparities…").
+- The "summary" is at most two sentences and about 35 words. Say the fact, then what it means for a woman working in or entering tech in New Zealand.
+- NEVER end a summary with a sentence that adds no fact. "This highlights the need for…", "This initiative aims to inspire…", "This trend underscores…" are all the same sentence, and it is REJECTED, not merely discouraged. If the second sentence names no number and no person, place or programme, it is padding — stop after the first sentence instead. A one-sentence summary is correct and common.
 - Across the three items: do not let all of them open with a number.
 
 WORKED EXAMPLE — this is the failure to avoid, taken from a real run:

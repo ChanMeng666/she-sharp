@@ -21,6 +21,7 @@ import { join } from "node:path";
 
 import {
   checkBiteSummary,
+  hollowClosers,
   checkBiteTitle,
   checkHeroStat,
   checkNewsBite,
@@ -53,6 +54,20 @@ const COPIED_UNDERREPRESENTED =
 /** The one headline the generator did write itself, in its two observed forms. */
 const SEEK_ATTRIBUTED = "Job ads fell 0.8% in July, SEEK report shows";
 const SEEK_PLAIN = "Job ads fell 0.8% in July as hiring slows";
+
+/**
+ * The three hand-written 2026-07 summaries, verbatim.
+ *
+ * They are the quality bar the house style was derived from, so any new rule
+ * has to leave them alone. Held as literals rather than read from the fixture:
+ * a rule must be checked against the copy as it was when the rule was written,
+ * and a future edit to that issue should not silently redefine the standard.
+ */
+const GOLD_STANDARD_SUMMARIES: readonly string[] = [
+  "Tech job ads are up 9.9% on a year ago and Auckland is up 5.0%, while ads nationally rose just 0.2% in June. Tech is growing faster than the market around it.",
+  "Telco One NZ surveyed 1,001 people: 45% are worried about the environmental impact of businesses using AI, rising to 63% among 18 to 24 year olds. Electricity use topped the list at 66%.",
+  "Norton surveyed 1,000 New Zealand adults with children under 18. 44% weren't confident their child could tell AI-generated content from the real thing, and 37% doubted their child knew AI can be wrong. That gap is what schools outreach exists to close.",
+];
 
 const ISSUE_DIR = join(process.cwd(), "lib", "data", "json", "newsletter-issues");
 
@@ -329,12 +344,45 @@ function main(): void {
   });
 
   check("padding words are advisories, banned register is an error", () => {
-    const padding = checkBiteSummary("This initiative aims to inspire young women.", { index: 0 });
+    // A padding WORD stays an advisory: "ecosystem" is what people actually
+    // call it, and this sentence names Auckland, so it is doing work.
+    const padding = checkBiteSummary("Auckland's startup ecosystem grew again.", { index: 0 });
     assert.ok(rules(padding).includes("summary-padding"), "padding is reported");
-    assert.ok(!hasCopyErrors(padding), "but never fails the section");
+    assert.ok(!hasCopyErrors(padding), "but a word alone never fails the section");
 
     const banned = checkBiteSummary("The vendor unveils new solutions for teams.", { index: 0 });
     assert.ok(hasCopyErrors(banned), "trade-press register does fail");
+  });
+
+  check("a closing sentence that adds no fact is an ERROR, not an advisory", () => {
+    // Promoted from advisory on evidence. THREE of three machine-written 2026-08
+    // summaries ended with one of these, and none of the three hand-written
+    // 2026-07 summaries — the quality bar — contains one. A rule that fires on
+    // every observed failure and no approved copy has earned being an error, and
+    // as a warning it relied on every operator noticing it every month.
+    const hollow = checkBiteSummary(
+      "Women hold 13% of AI leadership roles. This highlights the need for change.",
+      { index: 0 },
+    );
+    assert.ok(rules(hollow).includes("summary-hollow-sentence"), "the closer is caught");
+    assert.ok(hasCopyErrors(hollow), "and it fails the section");
+
+    // The two escapes that keep it honest.
+    assert.deepStrictEqual(
+      hollowClosers("Ads fell 0.8%. This is the third month of decline."),
+      [],
+      "a closer carrying a number is telling the reader something",
+    );
+    assert.deepStrictEqual(
+      hollowClosers("Ads fell again. This was sharpest in Auckland."),
+      [],
+      "and so is one naming a place",
+    );
+
+    // The gold standard must keep passing, which is what makes this safe.
+    for (const summary of GOLD_STANDARD_SUMMARIES) {
+      assert.deepStrictEqual(hollowClosers(summary), [], `2026-07 stays clean: ${summary}`);
+    }
   });
 
   // 6. The set.
@@ -417,12 +465,24 @@ function main(): void {
     });
   }
 
-  check("2026-08, the machine-written issue, is caught", () => {
+  check("2026-08 now passes too, having been regenerated under these rules", () => {
+    // This check used to assert the OPPOSITE — that 2026-08's Title Case and
+    // copied headlines were caught — because when the rules were written that
+    // issue was the machine-written counter-example. It has since been
+    // regenerated and curated, and the old assertion then failed: a test that
+    // requires a fixture to stay BROKEN is a test that blocks fixing it.
+    //
+    // Nothing was lost by inverting it. The two real copied headlines are held
+    // as literals at the top of this file and asserted in section 1, so the
+    // regression is pinned to the strings that were actually observed rather
+    // than to a file somebody is expected to leave alone.
     const pulse = readIssuePulse("2026-08");
     assert.ok(pulse, "2026-08 has a pulse");
-    const found = rules(errorsOnly(lintPulseCopy(pulse)));
-    assert.ok(found.includes("title-case"), "its Title Case headlines are caught");
-    assert.ok(found.includes("title-copies-source"), "and the copied ones are caught");
+    assert.deepStrictEqual(
+      rules(errorsOnly(lintPulseCopy(pulse))),
+      [],
+      "the shipped issue must satisfy the rules it is checked against",
+    );
   });
 
   // 9. The prompt half of the contract.
@@ -450,7 +510,13 @@ function main(): void {
         index: 0,
         sourceTitle: COPIED_UNDERREPRESENTED,
       }),
-      ...checkBiteSummary("This initiative aims to inspire.", { index: 1 }),
+      // Advisory-only on purpose: "ecosystem" is a soft-register word, but the
+      // sentence names Auckland, so it is not a fact-free closer and does not
+      // rise to an error. It used to be "This initiative aims to inspire.",
+      // which became an ERROR when fact-free closers were promoted — and the
+      // test then failed for the right reason, so the example moved rather than
+      // the rule.
+      ...checkBiteSummary("Auckland's startup ecosystem grew again.", { index: 1 }),
     ];
     const text = describeIssuesForModel(issues);
     assert.ok(text.includes("newsBites[0].title"), "the failing field is named");
