@@ -62,29 +62,29 @@
       "heroStat": {
         "value": "3.7%",
         "label": "Job ads referencing AI skills",
-        "context": "3.7% of job ads reference AI skills in New Zealand, compared to 2.1% in Australia.",
+        "context": "In New Zealand, 3.7% of job ads reference AI skills, compared to 2.1% in Australia.",
         "sourceLabel": "SEEK NZ Employment Report",
         "sourceUrl": "https://www.seek.co.nz/about/news/article/seek-nz-employment-report-july26"
       },
       "newsBite": null,
       "newsBites": [
         {
-          "title": "ShadowTech26 Opens Doors for 1,500 Girls",
-          "summary": "Tech Women’s ShadowTech26 programme is back, providing over 1,500 secondary school girls across Aotearoa the chance to explore tech careers this August. This initiative aims to inspire young women in Years 9–11 by connecting them with local tech workplaces.",
-          "sourceLabel": "TechWomen NZ",
-          "url": "https://techwomen.nz/2026/08/05/shadowtech26-opens-the-door-to-tech-careers-for-1500-girls-across-aotearoa/",
-          "dateLabel": "5 Aug"
-        },
-        {
-          "title": "Women Underrepresented in AI Roles",
-          "summary": "Despite a boom in AI jobs, women hold just 13% of C-suite AI leadership roles, according to LinkedIn research across 27 countries. This highlights ongoing gender disparities in the tech industry.",
+          "title": "AI leadership roles lack female representation",
+          "summary": "Despite a boom in AI jobs, women hold just 13% of C-suite AI leadership roles, according to LinkedIn research.",
           "sourceLabel": "HRD New Zealand",
           "url": "https://www.hcamag.com/nz/news/general/women-remain-underrepresented-in-ai-roles-despite-jobs-boom/586604",
           "dateLabel": "19 Aug"
         },
         {
-          "title": "Job ads fell for a third month, Auckland included",
-          "summary": "July saw a 0.8% decline in job ads across New Zealand, marking three consecutive months of falling numbers. In Auckland, job ads dropped 0.9% m/m, with significant declines in industries like Sales and Manufacturing.",
+          "title": "Over 1,500 girls to explore tech careers this August",
+          "summary": "TechWomen NZ's ShadowTech26 programme will place over 1,500 secondary school girls in tech workplaces across Aotearoa this August.",
+          "sourceLabel": "TechWomen NZ",
+          "url": "https://techwomen.nz/2026/08/05/shadowtech26-opens-the-door-to-tech-careers-for-1500-girls-across-aotearoa/",
+          "dateLabel": "5 Aug"
+        },
+        {
+          "title": "Job ads fell for a third consecutive month",
+          "summary": "In July, job ads in New Zealand fell 0.8%, marking a continued decline in hiring opportunities.",
           "sourceLabel": "SEEK NZ Employment Report",
           "url": "https://www.seek.co.nz/about/news/article/seek-nz-employment-report-july26"
         }

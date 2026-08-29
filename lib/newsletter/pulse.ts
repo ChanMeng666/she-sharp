@@ -48,6 +48,7 @@ import {
   hasCopyErrors,
   lintPulseCopy,
   PULSE_HOUSE_STYLE_RULES,
+  trimHollowClosers,
   type PulseCopyIssue,
 } from "./pulse-copy";
 import { editorialSchema, type IssueEditorial } from "./schema";
@@ -1576,9 +1577,28 @@ export function selectNewsBites(
     seenUrls.add(draft.url);
     seenHeadlines.add(headline);
     const dateLabel = datelineFor(source.isoDate);
+    // A closing sentence that adds no fact is REMOVED, not argued with.
+    //
+    // Three of three summaries came back with one — "This highlights the ongoing
+    // need for initiatives…", "This initiative aims to inspire…" — and they came
+    // back again after the style rules were added to the prompt AND again after
+    // the retry named the violation. The model has a strong prior for this
+    // shape, and a rule the generator cannot satisfy is a rule that ends up
+    // being disabled.
+    //
+    // Deleting is safe by construction rather than by judgement:
+    // `hollowClosers()` only matches a sentence carrying no digit, no
+    // spelled-out quantity and no proper noun, so removing it cannot lose a
+    // fact — and it cannot break `assertNumbersVerbatim` below, because
+    // removing text can only remove numbers, never introduce one.
+    const trimmed = trimHollowClosers(draft.summary);
+    if (trimmed !== draft.summary) {
+      drop(draft.url, `trimmed a closing sentence that added no fact`);
+    }
+
     const item: PulseNewsItem = {
       title: draft.title,
-      summary: draft.summary,
+      summary: trimmed,
       sourceLabel: source.source,
       url: draft.url,
       // Omit the key entirely rather than emit null: the schema makes it optional.
