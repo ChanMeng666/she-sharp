@@ -47,13 +47,23 @@ All commands below are PowerShell-first (this repo's primary shell on Windows).
    subscribers, imported from the 2026-08-17 Mailchimp export on 2026-08-29, so
    a batch built today would reach real people. But **nothing has ever been sent
    from it**, and the live newsletter still goes out from **Mailchimp** — the
-   cutover has not happened. The first real send is a deliberate, separately
-   approved step, and it should be ramped (`recipients-from-db.ts --limit`)
-   rather than going to all 1,545 at once. If someone asks you to
-   "send this month's newsletter" through this skill, you can do every step up
-   to and including the test send, and then you must **stop and say that the
-   subscriber list is empty** rather than producing an empty batch and calling
-   it a send. Account detail: `docs/deployment/EMAIL_AUTHENTICATION.md`.
+   cutover has not happened.
+
+   So if someone asks you to "send this month's newsletter" through this skill,
+   do every step up to and including the test send, and then **stop and ask.**
+   Two approvals are needed before a single real recipient is mailed, and
+   neither can be inferred from the other:
+
+   - **The founder's approval for this issue.** The first send from this list is
+     the organisation's cutover, not a technical step.
+   - **A per-batch approval for each ramp slice.** The first send is ramped
+     (`recipients-from-db.ts --limit`), not fired at all 1,545 at once, and each
+     slice is approved on its own.
+
+   The reason is the account-wide complaint ceiling — **0.08%, about 1.25
+   complaints on a full send** — and the consequence of breaching it, which is
+   that password resets and donation receipts stop with the newsletter.
+   Account detail: `docs/deployment/EMAIL_AUTHENTICATION.md`.
 7. `EMAIL_UNSUBSCRIBE_SECRET` — signs each recipient's personal unsubscribe
    link. The batch build in Step 8d **hard-fails without it**; there is no
    fallback and no way to skip it.
@@ -441,9 +451,15 @@ to the user before going further:
   WILL BE MAILED             …
 ```
 
-**If "WILL BE MAILED" is 0, stop.** As of today that is the expected result —
-nobody has been imported from Mailchimp yet (see Prerequisite 6). Say so; do not
-build a batch of nothing and describe it as a send.
+**If "WILL BE MAILED" is 0, stop.** Since the 2026-08-29 import that is NOT the
+expected result — the table holds 1,545 confirmed subscribers, so a zero means
+something is wrong (an empty query, a database pointing somewhere else, a
+suppression register that has swallowed the list) and not that the list is
+young. Find the cause; do not build a batch of nothing and describe it as a
+send.
+
+**If it is 1,545, that is also not a licence to send.** See Prerequisite 6: the
+founder approves the issue, and each ramp slice is approved on its own.
 
 Two flags, both of which can only ever make the list **smaller** — neither can
 add anyone who is not already a confirmed, unsuppressed subscriber:
