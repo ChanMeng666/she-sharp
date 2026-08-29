@@ -8,6 +8,7 @@ import {
   type CuratedImageKey,
 } from "@/public/img/curated";
 import { Container } from "@/components/layout/container";
+import { globalStats } from "@/lib/data/stats";
 
 // Known event years for a subset of curated frames — drives the small year
 // chips. Only frames whose source event year is certain appear here.
@@ -109,7 +110,7 @@ export function ArchiveFilmstripSection() {
       <Container>
         <p className="text-label text-brand">From the archive</p>
         <p className="mt-2 max-w-xl text-sm text-ink-600 md:text-base">
-          95+ events since 2014 — every photo here is from our own community.
+          {globalStats.events.total}+ events since 2014 — every photo here is from our own community.
         </p>
       </Container>
 
