@@ -388,9 +388,9 @@ number is verbatim in that candidate's own `text`.
   the only NZ job-market *data* source here. Two rules, both enforced: at most
   **one** item from it, and it must not be built on the figure the hero stat
   already uses.
-- **At most one item per publisher.** Enforced here, unlike in `lint-pulse.ts`
-  where it stays an advisory: a human curating by hand sometimes has a reason,
-  and you have the whole candidate list, so you never do.
+- **Prefer one item per publisher — but do not drop a good story for it.** Two
+  from one publisher is reported as a `look at`, never refused. See the fill
+  rates below for why some months it is simply the right answer.
 
 ### When apply refuses
 
@@ -412,7 +412,6 @@ Dropping an item you cannot source is always allowed and is often the right fix.
 | `numbers not present verbatim in that candidate's own text` | rounded, recomputed, or used a real number from a *different* story | copy the figure character-for-character from that item's own `text`, or drop the number |
 | `heroStat.value … does not appear verbatim` | the hero number is not a literal substring of the report | copy it including the `%`, or write `heroStat: null` |
 | `repeats the hero stat figure` | the SEEK bite is built on the number the hero already leads with | pick a different figure from the report, or drop the SEEK bite |
-| `items come from the same publisher` | two bites share a `sourceLabel` | swap one for a candidate from a different publisher |
 | `the same article twice` | two bites share a URL | keep the better one |
 | `[MUST FIX] Headline is the publisher's, not ours` | you copied or lightly reworded their title | read the candidate's `text` and say what it means for a woman in tech in NZ; a headline does not need a number |
 | any other `[MUST FIX]` | a house-style rule | the report prints the one instruction for each |
@@ -438,6 +437,15 @@ sometimes specifically about women in tech.** That is what the measured rates
 support. The flattering version — "a fresh women-in-tech story every month" — is
 false at 62%, and writing it here would make an operator go looking for
 something to fill the gap.
+
+**Two of the three items coming from HRD New Zealand is expected in some
+months, and is not an error.** Read the table again: HRD fills the job-market
+slot every month *and* is the second source of women's stories, so a month where
+its best women's story and its best job-market story are the two strongest
+things available is a predicted outcome, not a mistake. `lint-pulse.ts` and
+`pulse-apply.ts` both flag it as a `look at` so you notice it; neither refuses
+it. Do not go hunting for a third publisher that did not publish anything worth
+a reader's minute.
 
 **Two items is a correct outcome.** 宁缺毋滥. One strong local story beats three
 where two are vendor press releases, and the reader cannot tell you padded but
@@ -486,8 +494,8 @@ one reading it in Claude Code.
   fact ("This initiative aims to…", "This highlights ongoing disparities…").
 - **No trade-press words anywhere**: unveils, launches, solutions, leverages,
   empowers, "is set to", cutting-edge, seamless, world-class, game-changer.
-- **Across the three:** do not let all of them open with a number, and one item
-  per publisher.
+- **Across the three:** do not let all of them open with a number, and prefer
+  one item per publisher.
 
 **Worked example** — the left-hand side is real August 2026 generator output:
 

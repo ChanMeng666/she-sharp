@@ -890,27 +890,33 @@ async function main(): Promise<void> {
     assert.strictEqual(result.bites.length, 1, "the item is still reportable by headline");
   });
 
-  // --- Refusal 4 of 4: two items from one publisher (SEEK included) ----------
-  await check("REFUSED: two items from the same publisher", () => {
-    // DRAFT_WOMEN and DRAFT_WOMEN_TWO are both IT Brief NZ. `selectNewsBites`
-    // would keep the second as a SPARE and publish both; `applyPulseDraft`
-    // refuses, because an agent choosing from the whole candidate list never
-    // needs the exception a hand-curating human has.
+  // --- Refusal 4 of 4: the same story twice --------------------------------
+  await check("two items from one publisher is a WARNING, not a refusal", () => {
+    // DRAFT_WOMEN and DRAFT_WOMEN_TWO are both IT Brief NZ. This is the one set
+    // rule that must NOT block a write: HRD New Zealand supplies ~2.8
+    // women/gender articles a month and fills the job-market slot every month,
+    // so a month where two of three good items come from one publisher is
+    // predicted, not aberrant. Refusing it would cost the issue a third item
+    // over tidiness rather than truth.
     const result = applyPulseDraft(
       { heroStat: null, newsBites: [DRAFT_WOMEN, DRAFT_WOMEN_TWO] },
       SOURCES,
       { monthLabel: "July 2026" }
     );
-    assert.strictEqual(result.pulse, null, "nothing is written");
-    assert.ok(
-      result.problems.some((problem) => problem.includes("same publisher")),
-      "and the refusal says to pick a different sourceLabel",
+    assert.deepStrictEqual(result.problems, [], "not a refusal");
+    assert.ok(result.pulse, "the section is written");
+    assert.strictEqual(result.pulse!.newsBites?.length, 2, "and keeps both items");
+    const publisher = result.styleIssues.filter(
+      (issue) => issue.rule === "set-one-per-publisher"
     );
+    assert.strictEqual(publisher.length, 1, "but the operator is told");
+    assert.strictEqual(publisher[0].severity, "warning", "as a warning, never an error");
   });
 
   await check("REFUSED: two bites from the SEEK report", () => {
-    // The report is one URL under one sourceLabel, so this is caught twice
-    // over: as a duplicate article and as a repeated publisher.
+    // The report is one URL, so a second bite from it is a duplicate article —
+    // which IS refused. The cap does not depend on the publisher rule, which is
+    // only a warning.
     const result = applyPulseDraft(
       {
         heroStat: null,

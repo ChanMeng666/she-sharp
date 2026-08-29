@@ -63,7 +63,7 @@ export const RULE_FIXES: Record<string, string> = {
   "summary-padding":
     "Delete the sentence or replace it with a fact. \"This initiative aims to…\" and \"This highlights…\" tell a reader nothing.",
   "set-one-per-publisher":
-    "Swap the second one out for a candidate with a different sourceLabel.",
+    "Swap the second one out, unless it is genuinely better than anything else available — see Step 4a.",
   "set-all-open-with-number":
     "Rewrite one headline to lead with the change rather than the figure.",
   "set-duplicate-headline":

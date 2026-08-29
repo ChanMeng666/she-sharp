@@ -1303,7 +1303,7 @@ EDITORIAL MIX (the section reads as a list, so the items must not be three angle
 - That spread is a preference, NOT a quota, and the order of priority when it cannot be met is: (1) three items each worth a reader's minute, (2) the spread, (3) fewer items. So if the women-in-tech candidates include two strong stories and the only industry candidates are vendor product announcements, take BOTH women stories — this newsletter is read by women in tech, and a second story they will actually read beats a third slot filled with a press release.
 - Write fewer than three only when fewer than three are genuinely worth reading. Padding is worse than a short section. Two items is a correct outcome.
 - Never use two items from the same article, and never two that would leave a reader thinking they had read the same story twice.
-- At most one item from any one publisher. This is CHECKED and refused, so pick from different "sourceLabel" values.
+- Prefer at most one item from any one publisher, but do NOT drop a strong story to satisfy it. Some months HRD New Zealand genuinely has both the best women's story and the best job-market story and nothing else is usable — two of three from one publisher is then the right answer, and it is reported as a warning rather than refused.
 
 LOCAL PREFERENCE (never overrides the rules above):
 - When two candidates are equally relevant, prefer the one with an Auckland / Tāmaki Makaurau connection (a local venue, campus, or company).
@@ -1429,8 +1429,9 @@ export const TRIMMED_HOLLOW_CLOSER = "trimmed a closing sentence that added no f
  * The mix rule is the cheap half of "not three angles on one story": at most one
  * item per (publication, topic tier) pair is preferred, and the rest are kept as
  * spares rather than discarded — a monotonous news month should still get three
- * items, it just gets the repeats last. `applyPulseDraft` additionally refuses
- * a section with two items from one publisher, which is stricter; see there.
+ * items, it just gets the repeats last. Two items from one publisher is a
+ * warning, never a refusal — see `applyPulseDraft` for why that line is drawn
+ * where it is.
  *
  * Exported so the drop rules can be unit-tested with no network.
  */
@@ -1684,7 +1685,7 @@ export interface PulseDraftResult {
    * the item it worked hardest on.
    */
   pulse: Pulse | null;
-  /** Verbatim-number, URL, duplicate and publisher violations. Non-empty means refused. */
+  /** Verbatim-number, URL and duplicate violations. Non-empty means refused. */
   problems: string[];
   /** House-style findings. An `error` among them also means refused. */
   styleIssues: PulseCopyIssue[];
@@ -1717,9 +1718,9 @@ export interface PulseDraftResult {
  *   2. every number must appear verbatim in THAT item's own text
  *      (`assertNumbersVerbatim`, per item, never against a pooled corpus);
  *   3. the hero number must be a literal substring of the SEEK report;
- *   4. no duplicate URL, no duplicate normalised headline, at most one item per
- *      publisher — which also caps the SEEK report at one item, since it is one
- *      URL under one `sourceLabel`;
+ *   4. no duplicate URL and no duplicate normalised headline — which also caps
+ *      the SEEK report at one item, since it is one URL. (Two items from one
+ *      PUBLISHER is a warning, not a refusal; see the note at the check.);
  *   5. a SEEK bite must not be built on the figure the hero stat already leads
  *      with (`selectNewsBites`);
  *   6. the full house style from `pulse-copy.ts`, with no error tolerated.
@@ -1809,33 +1810,28 @@ export function applyPulseDraft(
   });
 
   /*
-   * One item per publisher, enforced rather than advised.
+   * ONE ITEM PER PUBLISHER IS A PREFERENCE, NOT A GUARD — deliberately.
    *
-   * `checkNewsBiteSet` keeps this as a WARNING with a stated exception ("unless
-   * the second is genuinely better than anything else available"), which is the
-   * right call for a human curating a fixture by hand. It is the wrong call
-   * here: an agent picking three items has the entire candidate list in front
-   * of it, so it never needs the exception, and two items from one publisher is
-   * the cheapest way for a section to read as one story told twice. A human who
-   * genuinely wants the exception still has it — they edit the fixture and run
-   * `lint-pulse.ts`, where it remains a warning.
+   * An earlier version of this function refused a section with two items from
+   * one publisher. That was wrong, and the fill-rate research Step 4a is built
+   * on says why: HRD New Zealand supplies ~2.8 women/gender/pay-equity articles
+   * a month AND fills the job-market slot every month, from different articles,
+   * so "some months two of three items come from HRD" is a PREDICTED, correct
+   * outcome — not an edge case an exception grudgingly tolerates. Refusing it
+   * would block a good issue and leave the operator with two items instead of
+   * three, over tidiness rather than truth.
    *
-   * This also caps the SEEK report at one item twice over: it is a single URL
-   * (so the duplicate-URL rule catches it) under a single `sourceLabel`.
+   * That is the line this file draws. Every refusal below and above guards
+   * against printing something FALSE or UNSOURCED. A section being less varied
+   * than we would like is a different kind of problem and does not belong at
+   * the same severity, so it is reported by `checkNewsBiteSet` as a warning —
+   * visible in the report, not blocking the write — with the same wording and
+   * the same stated exception a human curating by hand reads in `lint-pulse.ts`.
+   *
+   * The SEEK report is still capped at one item, and does not depend on this:
+   * it is a single URL, so a second bite from it is a duplicate article, which
+   * IS refused.
    */
-  const byPublisher = new Map<string, string[]>();
-  for (const bite of newsBites) {
-    const key = bite.sourceLabel.trim().toLowerCase();
-    byPublisher.set(key, [...(byPublisher.get(key) ?? []), bite.title]);
-  }
-  for (const [publisher, titles] of byPublisher) {
-    if (titles.length < 2) continue;
-    problems.push(
-      `${titles.length} items come from the same publisher (${publisher}): ` +
-        `${titles.map((title) => `"${title}"`).join(", ")}. Keep one and pick the ` +
-        `other slot from a candidate with a different sourceLabel.`
-    );
-  }
 
   /*
    * The house style, over the assembled section.
