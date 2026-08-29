@@ -767,9 +767,9 @@ cancelled — just say "cancel that broadcast". Once it has gone out, it is gone
 
 ### 6.5 `/monthly-newsletter` — the monthly newsletter
 
-**What it does.** Walks through one month's newsletter: pulls the automatically
-prepared draft, helps you write the human parts, adds the month's real event
-photos, previews it, sends a test, and schedules it.
+**What it does.** Walks through one month's newsletter: creates the month's
+issue file on your machine, helps you write it, adds the month's real event
+photos, previews it, sends a test, and approves it for sending.
 
 **A heads-up on difficulty.** This skill needs more setup than the others —
 including a video-processing tool for the photo step. **If you only do the
@@ -782,17 +782,19 @@ the first time.**
 /monthly-newsletter
 ```
 
-or "let's do this month's newsletter", "review the newsletter draft".
+or "let's do this month's newsletter", "start the newsletter for September".
 
-**What it will ask you for.** The parts a machine cannot write: the founder's
-note, which photo goes on the cover, the photo of the month with a caption naming
-the venue, and the subject line.
+**What it will ask you for.** The words. **Nothing writes the newsletter's copy
+for you** — the founder's note, which photo goes on the cover, the photo of the
+month with a caption naming the venue, and the subject line are all yours. There
+used to be an AI first draft; it was rewritten by hand every month, so it was
+removed. Expect the writing to be the work.
 
 **The one rule to remember.** Each issue has a machine part (events, statistics,
 photo strip) and a human part (the founder's note, the cover, the subject line).
-Regenerating the draft refreshes the machine part but **must never overwrite the
-human part**. If you have written the founder's note and something offers to
-"start over", say no.
+Starting the month again rewrites the whole file, human part included. The
+script refuses to do that to a file that already exists — if you have written
+the founder's note and something offers to "start over", say no.
 
 **Photos matter more than words here.** An issue is carried by real photographs
 of real events. The skill has a step that collects them for you. Do not skip it.

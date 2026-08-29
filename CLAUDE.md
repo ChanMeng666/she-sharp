@@ -497,11 +497,16 @@ still exist and must not be mistaken for live config. Reasoning, costs and the
 AWS SES fallback: `docs/development/EMAIL_PLATFORM_STRATEGY.md`
 
 **Monthly newsletter.** React Email rendered in this repo and sent through
-Resend's **batch** API — no broadcasts, no Resend-held contact list — with an AI
-editorial draft, run by the `/monthly-newsletter` skill. Approving an issue no
-longer sends it; a human runs the printed batch commands. **The live newsletter
-still goes out from Mailchimp** — this is the replacement, piloted but not
-switched over. → `docs/development/EMAIL_OPERATIONS.md`
+Resend's **batch** API — no broadcasts, no Resend-held contact list — run by the
+`/monthly-newsletter` skill. **It is not generated in the cloud.** An issue
+starts as a local file (`scripts/newsletter/new-issue.ts <YYYY-MM>`: the `auto`
+snapshot plus an empty editorial stub, no API key, no `CRON_SECRET`, no network
+call) and a human writes it; the AI draft and its Vercel cron were deleted
+because every month's output was rewritten by hand anyway. The one cron that
+still calls OpenAI is the weekly funding crawl. Approving an issue does not send
+it; a human runs the printed batch commands. **The live newsletter still goes
+out from Mailchimp** — this is the replacement, piloted but not switched over.
+→ `docs/development/EMAIL_OPERATIONS.md`
 
 **Outbound email skills.** Four guided skills let teammates send mail without
 writing code: `/reply-to-contact-messages`, `/update-mailing-list`,
