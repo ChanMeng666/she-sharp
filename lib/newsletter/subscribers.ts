@@ -369,6 +369,27 @@ export interface MailableSubscriber {
 }
 
 /**
+ * The order every bulk enumeration of the list is served in.
+ *
+ * `createdAt` is the intent — oldest subscriber first — but on its own it is
+ * not a total order, and the gap is not theoretical. All 1,545 rows arrived in
+ * the single `import-mailchimp-subscribers.ts` run on 2026-08-29 and carry one
+ * identical `created_at`: measured 2026-08-30, the whole mailable list has
+ * exactly ONE distinct value. The sort is therefore a single tie group of
+ * 1,545 rows, and Postgres may return any permutation of it on any run.
+ *
+ * That matters because `--limit N` in `scripts/email/recipients-from-db.ts` is
+ * how the first send is ramped, and a ramp only means something if "the first
+ * 50" is the same fifty people every time the slice is built. Without a
+ * tiebreaker, two builds of one slice can name two different cohorts, and the
+ * chunk files an interrupted send is resumed from stop being reproducible too.
+ *
+ * `id` settles it without changing the intent: inside one timestamp it is
+ * insert order, and across timestamps `createdAt` still decides.
+ */
+const LIST_ORDER = [newsletterSubscribers.createdAt, newsletterSubscribers.id] as const;
+
+/**
  * Every address that may receive marketing mail.
  *
  * The single enumeration point for the list, and deliberately the only exported
@@ -376,7 +397,8 @@ export interface MailableSubscriber {
  * by the recipient builder, not here: this answers "who consented?", not "who
  * may receive this particular message?".
  *
- * @returns Confirmed subscribers, oldest first.
+ * @returns Confirmed subscribers, oldest first, in the total order LIST_ORDER
+ *          defines — see it for why `createdAt` alone is not one.
  */
 export async function listSubscribed(): Promise<MailableSubscriber[]> {
   return db
@@ -387,7 +409,7 @@ export async function listSubscribed(): Promise<MailableSubscriber[]> {
     })
     .from(newsletterSubscribers)
     .where(eq(newsletterSubscribers.status, "subscribed"))
-    .orderBy(newsletterSubscribers.createdAt);
+    .orderBy(...LIST_ORDER);
 }
 
 /**
@@ -402,7 +424,8 @@ export async function listSubscribed(): Promise<MailableSubscriber[]> {
  * The rule itself lives in `scripts/email/mailable.ts`, so the recipient builder
  * and the drift report cannot implement it differently.
  *
- * @returns Confirmed subscribers, oldest first.
+ * @returns Confirmed subscribers, oldest first, in the total order LIST_ORDER
+ *          defines — see it for why `createdAt` alone is not one.
  */
 export async function listMailableCandidates(): Promise<
   {
@@ -423,7 +446,7 @@ export async function listMailableCandidates(): Promise<
     })
     .from(newsletterSubscribers)
     .where(eq(newsletterSubscribers.status, "subscribed"))
-    .orderBy(newsletterSubscribers.createdAt);
+    .orderBy(...LIST_ORDER);
 }
 
 /**

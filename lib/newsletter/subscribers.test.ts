@@ -13,6 +13,8 @@
  */
 
 import assert from "node:assert";
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 
 import { hashEmail } from "../email/hash";
 import {
@@ -208,6 +210,50 @@ check("confirmExpiry does not mutate the date it is given", () => {
   const before = from.getTime();
   confirmExpiry(from);
   assert.strictEqual(from.getTime(), before);
+});
+
+// ---------------------------------------------------------------------------
+// Enumeration order
+//
+// The file header says the rules worth testing are the decisions, not the SQL.
+// This is the one exception, and it earns it: on 2026-08-30 every one of the
+// 1,545 mailable rows was found to carry the SAME `created_at`, because they
+// all arrived in one import. `ORDER BY created_at` was therefore a single tie
+// group spanning the whole list, so `recipients-from-db.ts --limit 50` — the
+// documented way to ramp a first send — could name a different fifty people on
+// every run. The defect was invisible in every decision function above and
+// invisible in code review, because the ORDER BY was right there and looked
+// total. What is asserted here is the property, not the query: every bulk
+// enumeration sorts by the shared LIST_ORDER, and LIST_ORDER ends in a unique
+// column. Reading the source is the only way to check that without a database.
+// ---------------------------------------------------------------------------
+
+const subscribersSource = readFileSync(
+  fileURLToPath(new URL("./subscribers.ts", import.meta.url)),
+  "utf8"
+);
+
+check("LIST_ORDER ends in a unique column, so the sort is total", () => {
+  const match = subscribersSource.match(/const LIST_ORDER = \[([^\]]*)\]/);
+  assert.ok(match, "LIST_ORDER is not declared in subscribers.ts");
+  const columns = match[1].split(",").map((c) => c.trim()).filter(Boolean);
+  assert.deepStrictEqual(columns, [
+    "newsletterSubscribers.createdAt",
+    "newsletterSubscribers.id",
+  ]);
+});
+
+check("every bulk enumeration sorts by LIST_ORDER, not by one column", () => {
+  const orderBys = subscribersSource.match(/\.orderBy\([^)]*\)/g) ?? [];
+  assert.ok(orderBys.length >= 2, "expected the two bulk enumerations to sort");
+  for (const call of orderBys) {
+    assert.strictEqual(
+      call,
+      ".orderBy(...LIST_ORDER)",
+      `${call} sorts on its own terms; a second enumeration with a partial ` +
+        "order is exactly the defect LIST_ORDER exists to prevent"
+    );
+  }
 });
 
 // ---------------------------------------------------------------------------
