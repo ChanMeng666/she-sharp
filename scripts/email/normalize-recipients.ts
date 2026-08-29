@@ -92,6 +92,11 @@ import { readFileSync, writeFileSync, mkdirSync, mkdtempSync, rmSync } from "nod
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  loadRestrictHashes,
+  RestrictHashesError,
+  type RestrictSet,
+} from "./restrict-hashes";
 import { hashEmail, loadSuppressionHashes } from "./suppression";
 import type { AudienceTier } from "../../lib/email/audience";
 import { describeTier } from "../../lib/email/audience";
@@ -446,84 +451,30 @@ function isOptedIn(value: string): boolean {
   return OPT_IN_VALUES.has(normalizeValue(value));
 }
 
-/** A loaded `--restrict-to-hashes` file: where it came from, and its digests. */
-interface RestrictSet {
-  path: string;
-  hashes: Set<string>;
-}
-
 /**
- * Loads the narrowing filter — a JSON file of `hashEmail()` digests.
+ * Loads the ramp cohort, turning the shared loader's throw into this script's
+ * own error format.
  *
- * Accepts either a bare array or `{ hashes: [...] }`, which is what
- * `scripts/mailchimp/recent-openers.ts` writes.
- *
- * Every entry must look like a sha256 digest, and that check is doing real
- * work: it is what stops somebody pointing this flag at a list of email
- * addresses. The ramp cohort is derived from per-recipient engagement data, and
- * the entire reason the flag speaks hashes is so no such address file has a
- * reason to exist. Rejecting one loudly is the point, not pedantry.
+ * The loader lives in `./restrict-hashes` because `recipients-from-db.ts`
+ * needs the identical rules; it throws rather than exiting so that each caller
+ * keeps the error layout its skill documentation quotes. This adapter is that
+ * layout for this file, and the text it prints is unchanged from when the
+ * loader lived here.
  *
  * @param path Path as given on the command line.
  * @returns The resolved path and the digest set.
  */
-function loadRestrictHashes(path: string): RestrictSet {
-  const resolved = resolve(path);
-
-  let raw: string;
+function readRestrictSet(path: string): RestrictSet {
   try {
-    raw = readFileSync(resolved, "utf8");
-  } catch {
-    fail(
-      `could not read --restrict-to-hashes ${resolved}`,
-      "",
-      "This file is produced by:",
-      "  npx tsx scripts/mailchimp/recent-openers.ts --export <id> \\",
-      "    --subscribed-export <id> --since YYYY-MM-DD"
-    );
-  }
-
-  let parsed: unknown;
-  try {
-    parsed = JSON.parse(raw);
+    return loadRestrictHashes(path);
   } catch (error) {
-    fail(`${resolved} is not valid JSON: ${error instanceof Error ? error.message : String(error)}`);
-  }
-
-  const list =
-    Array.isArray(parsed) ? parsed
-    : typeof parsed === "object" && parsed !== null ? (parsed as { hashes?: unknown }).hashes
-    : undefined;
-  if (!Array.isArray(list)) {
-    fail(
-      `${resolved} must be a JSON array of hashes, or an object with a "hashes" array.`
-    );
-  }
-
-  const hashes = new Set<string>();
-  for (const entry of list) {
-    if (typeof entry !== "string" || !/^[0-9a-f]{64}$/i.test(entry.trim())) {
-      fail(
-        `${resolved} contains a value that is not a sha256 hex digest.`,
-        "",
-        "Every entry must be a hashEmail() digest. If this file holds email",
-        "addresses, it is the wrong file — this flag takes hashes precisely so a",
-        "plaintext list of engaged readers never needs to exist on disk."
-      );
+    if (error instanceof RestrictHashesError) {
+      const [message, ...details] = error.lines;
+      fail(message, ...details);
     }
-    hashes.add(entry.trim().toLowerCase());
+    throw error;
   }
-
-  if (hashes.size === 0) {
-    fail(
-      `${resolved} contains no hashes — that would exclude every row.`,
-      "Drop --restrict-to-hashes rather than passing an empty filter."
-    );
-  }
-
-  return { path: resolved, hashes };
 }
-
 /** Splits "Ada Lovelace" into first/last at the first space. */
 function splitFullName(value: string): { firstName: string; lastName: string } {
   const trimmed = value.trim().replace(/\s+/g, " ");
@@ -893,7 +844,7 @@ function normalize(
   const optInIndex = indexOf(resolved.optIn);
 
   const suppressed = loadSuppressionHashes();
-  const restrict = args.restrictToHashes ? loadRestrictHashes(args.restrictToHashes) : null;
+  const restrict = args.restrictToHashes ? readRestrictSet(args.restrictToHashes) : null;
 
   const recipients: NormalizedRecipient[] = [];
   const excluded: { email: string | null; row: number; reason: string }[] = [];

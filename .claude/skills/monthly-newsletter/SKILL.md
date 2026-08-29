@@ -62,8 +62,9 @@ repo and nothing else. They are the prerequisites for the steps that follow.
    - **The founder's approval for this issue.** The first send from this list is
      the organisation's cutover, not a technical step.
    - **A per-batch approval for each ramp slice.** The first send is ramped
-     (`recipients-from-db.ts --limit`), not fired at all 1,545 at once, and each
-     slice is approved on its own.
+     — `recipients-from-db.ts --restrict-to-hashes` for the warm cohort, or
+     `--limit` for a plain first-N slice — not fired at all 1,545 at once, and
+     each slice is approved on its own.
 
    The reason is the account-wide complaint ceiling — **0.08%, about 1.25
    complaints on a full send** — and the consequence of breaching it, which is
@@ -809,6 +810,7 @@ to the user before going further:
 ```
   Confirmed subscribers      …
   Held back by suppression   …
+  Outside the warm cohort    …   (only with --restrict-to-hashes)
   WILL BE MAILED             …
 ```
 
@@ -822,7 +824,7 @@ send.
 **If it is 1,545, that is also not a licence to send.** See Prerequisite 6: the
 founder approves the issue, and each ramp slice is approved on its own.
 
-Two flags, both of which can only ever make the list **smaller** — neither can
+Three flags, all of which can only ever make the list **smaller** — none can
 add anyone who is not already a confirmed, unsuppressed subscriber:
 
 - `--only <address>` — narrow to one person. This is how you do a **real batch
@@ -831,9 +833,20 @@ add anyone who is not already a confirmed, unsuppressed subscriber:
   ```powershell
   npx tsx scripts/email/recipients-from-db.ts --key newsletter-2026-08 --only chanmeng6666@gmail.com
   ```
-- `--limit <n>` — keep only the first N. This is how you **ramp** a first real
-  send: mail a small slice, watch the bounce and complaint numbers for a day,
-  then do the rest.
+- `--restrict-to-hashes <path>` — keep only the people in a cohort file of
+  `hashEmail()` digests, as `scripts/mailchimp/recent-openers.ts` writes. This
+  ramps by **engagement**: the warmest readers first, which is what
+  "Ramp, don't switch" in `docs/deployment/EMAIL_AUTHENTICATION.md` asks for.
+  It is a send-order filter, not a consent source — being in the file cannot
+  make anyone mailable who was not already.
+  ```powershell
+  npx tsx scripts/email/recipients-from-db.ts --key newsletter-2026-08 `
+    --restrict-to-hashes tmp/mailchimp/recent-openers.json
+  ```
+- `--limit <n>` — keep only the first N. This ramps by **row order**, which is
+  not the same thing: mail a small slice, watch the bounce and complaint numbers
+  for a day, then do the rest. Combine the two and `--limit` applies to the warm
+  cohort, not to the whole list.
   ```powershell
   npx tsx scripts/email/recipients-from-db.ts --key newsletter-2026-08 --limit 50
   ```

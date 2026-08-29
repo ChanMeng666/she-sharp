@@ -7,7 +7,7 @@
  * newsletter — and writes the identical shape, so `build-batch.ts` needed no
  * change to be fed from the database.
  *
- * Three things it is careful about:
+ * Four things it is careful about:
  *
  * - **Tier 0 is asserted, not assumed.** Only `status = 'subscribed'` rows are
  *   read, and every one of them reached that status by clicking a confirmation
@@ -21,10 +21,19 @@
  *   output can go in a plan block, a PR or Slack. The file it writes does hold
  *   addresses, which is why it lands in `tmp/` — gitignored, and the same place
  *   every other recipients file lives.
+ * - **Narrowing is applied after suppression, and can only remove.** `--only`,
+ *   `--restrict-to-hashes` and `--limit` all run against what
+ *   `selectMailable()` already returned, in that order, so no selection can
+ *   hide a suppressed address behind a smaller number. `--restrict-to-hashes`
+ *   is *a send-order filter, never a consent route* — and on this path that is
+ *   structurally true rather than merely intended: its input is already
+ *   `selectMailable()`'s output, so a hash in the file that is not a mailable
+ *   subscriber adds nobody, by construction. There is deliberately no flag that
+ *   puts a row in.
  *
  * Usage:
  *   npx tsx scripts/email/recipients-from-db.ts --key <k> [--out-dir tmp/emails]
- *     [--limit <n>] [--only <address>] [--json]
+ *     [--limit <n>] [--only <address>] [--restrict-to-hashes <path>] [--json]
  *
  * Flags:
  *   --key      Names the output `recipients-<key>.json`. Kebab-case.
@@ -34,6 +43,12 @@
  *   --only     Keep only this one address. The safe way to build a real batch
  *              aimed at a test mailbox — it cannot widen the list either, since
  *              the address still has to be a confirmed subscriber.
+ *   --restrict-to-hashes
+ *              Path to a JSON file of `hashEmail()` digests, as
+ *              `scripts/mailchimp/recent-openers.ts` writes. Keeps only the
+ *              subscribers whose hash is in it — which is how a ramp reaches
+ *              the WARM cohort rather than whichever rows the query returned
+ *              first, which is all `--limit` can offer.
  *   --json     Machine-readable summary.
  */
 
@@ -45,6 +60,12 @@ import { client } from "../../lib/db/drizzle";
 import { listOptouts } from "../../lib/email/optouts";
 import { listMailableCandidates } from "../../lib/newsletter/subscribers";
 import { hashEmail, selectMailable } from "./mailable";
+import {
+  loadRestrictHashes,
+  narrowByHash,
+  RestrictHashesError,
+  type RestrictSet,
+} from "./restrict-hashes";
 
 /** How many hashes to show before summarising the rest. */
 const PREVIEW = 10;
@@ -54,6 +75,7 @@ interface Args {
   outDir: string;
   limit: number | null;
   only: string | null;
+  restrictToHashes: string | null;
   json: boolean;
 }
 
@@ -89,11 +111,25 @@ function parseArgs(argv: string[]): Args {
     }
   }
 
+  // `readOption()` here returns null when the next token is another flag, which
+  // for most flags only means "not given". For this one it would be a silent
+  // disarming: `--restrict-to-hashes --json` would drop the cohort on the floor
+  // and build a batch for every mailable subscriber. Caught, not trusted.
+  const restrictToHashes = readOption(argv, "--restrict-to-hashes");
+  if (argv.includes("--restrict-to-hashes") && restrictToHashes === null) {
+    fail(
+      "--restrict-to-hashes needs a file path.",
+      "Given without one it would narrow nothing, silently, and build a batch",
+      "for every mailable subscriber."
+    );
+  }
+
   return {
     key,
     outDir: readOption(argv, "--out-dir") ?? "tmp/emails",
     limit,
     only: readOption(argv, "--only"),
+    restrictToHashes,
     json: argv.includes("--json"),
   };
 }
@@ -101,15 +137,32 @@ function parseArgs(argv: string[]): Args {
 async function main(): Promise<void> {
   const args = parseArgs(process.argv.slice(2));
 
+  // Read before the database is touched, so a mistyped path costs milliseconds
+  // rather than a Neon round trip. It is APPLIED further down, after
+  // suppression.
+  let restrict: RestrictSet | null = null;
+  if (args.restrictToHashes) {
+    try {
+      restrict = loadRestrictHashes(args.restrictToHashes);
+    } catch (error) {
+      if (error instanceof RestrictHashesError) {
+        const [message, ...details] = error.lines;
+        fail(message, ...details);
+      }
+      throw error;
+    }
+  }
+
   const candidates = await listMailableCandidates();
   const optouts = await listOptouts();
   const { mailable, excluded, returned } = selectMailable(candidates, optouts);
 
-  // --only and --limit are applied AFTER suppression, never before. Filtering
-  // first would let a narrow selection hide the fact that the wider list is
-  // full of suppressed addresses — the counts printed below would look clean
-  // and mean nothing.
+  // --only, --restrict-to-hashes and --limit are applied AFTER suppression,
+  // never before. Filtering first would let a narrow selection hide the fact
+  // that the wider list is full of suppressed addresses — the counts printed
+  // below would look clean and mean nothing.
   let selected = mailable;
+  let restricted: typeof mailable = [];
   if (args.only) {
     const wanted = hashEmail(args.only);
     selected = selected.filter((row) => row.emailHash.toLowerCase() === wanted);
@@ -117,6 +170,23 @@ async function main(): Promise<void> {
       fail(
         `--only matched no mailable subscriber.`,
         "The address has to be a confirmed subscriber that survived suppression.",
+        "This flag can only narrow the list; it cannot add anyone."
+      );
+    }
+  }
+  // After --only, so a cohort file can never widen a single-address test send
+  // back out. Before --limit, so `--limit 50` means the first 50 of the WARM
+  // cohort — the other order takes the first 50 rows and then intersects them,
+  // and the count that comes out is nobody's intention.
+  if (restrict) {
+    const split = narrowByHash(selected, restrict);
+    selected = split.kept;
+    restricted = split.dropped;
+    if (selected.length === 0) {
+      fail(
+        `--restrict-to-hashes matched no mailable subscriber.`,
+        "Every hash in it has to belong to a confirmed subscriber that survived",
+        "suppression.",
         "This flag can only narrow the list; it cannot add anyone."
       );
     }
@@ -136,10 +206,27 @@ async function main(): Promise<void> {
       firstName: row.firstName,
       lastName: row.lastName,
     })),
-    excluded: excluded.map((row) => ({ reason: row.reason })),
+    /**
+     * The narrowing filter this run applied, for audit. Same key and shape as
+     * `normalize-recipients.ts` writes, so a later reader can explain why 1,545
+     * rows became 412 without first having to work out which producer built the
+     * file.
+     */
+    restrictedTo: restrict ? { path: restrict.path, hashes: restrict.hashes.size } : null,
+    excluded: [
+      ...excluded.map((row) => ({ reason: row.reason })),
+      // The same reason string the CSV path uses, so `build-newsletter-batch.ts`
+      // — which groups `excluded` by reason — reports the narrowing in the send
+      // preflight without having to know two spellings of it.
+      ...restricted.map(() => ({ reason: "outside the restrict-to-hashes cohort" })),
+    ],
     counts: {
       subscribed: candidates.length,
+      // Suppression only. The cohort filter gets a line of its own: folding the
+      // two together would make the suppression number lie about who was
+      // refused a send, which is the one number here nobody may misread.
       suppressed: excluded.length,
+      restricted: restricted.length,
       resubscribed: returned.length,
       selected: selected.length,
     },
@@ -165,6 +252,13 @@ async function main(): Promise<void> {
       }
     }
     if (args.only) console.log(`  Narrowed by --only         1`);
+    if (restrict) {
+      console.log(`  Outside the warm cohort    ${restricted.length}`);
+      console.log(
+        `  Cohort file                ${restrict.hashes.size} hash(es) — send-order filter, not a consent source`
+      );
+      console.log(`                             ${restrict.path}`);
+    }
     if (args.limit !== null) console.log(`  Capped by --limit          ${args.limit}`);
     console.log(`  WILL BE MAILED             ${selected.length}`);
     console.log("");
