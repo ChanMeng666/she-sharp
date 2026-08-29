@@ -6,8 +6,9 @@
  * The pipeline is:
  *
  *   1. `fetchPulseSources()` — best-effort network reads (SEEK NZ employment
- *      report + NZ tech RSS feeds). Every fetch is time-boxed and swallowed to
- *      null/[] on failure so this layer can never throw.
+ *      report + NZ tech RSS feeds + the HRD NZ article sitemap). Every fetch is
+ *      time-boxed and swallowed to null/[] on failure so this layer can never
+ *      throw, and the three legs settle independently.
  *   2. `buildPulse()` — an OpenAI `gpt-4o-mini` pass that phrases a hero stat and
  *      up to three news bites from the fetched payloads, followed by a
  *      programmatic assertion, PER ITEM, that every displayed number appears
@@ -197,6 +198,34 @@ const RSS_AUCKLAND =
 const RSS_INDUSTRY = /New Zealand|Aotearoa|\bNZ\b|Kiwi|\bAI\b|startup|funding/i;
 
 /**
+ * Topic vocabulary for an HRD NZ **slug**, kept here with the RSS tiers so all
+ * of this module's topic matching reads in one place rather than drifting into
+ * two dialects.
+ *
+ * It runs against a URL slug, not a headline, which is why it is a separate
+ * constant: the delimiter is a hyphen, so the words are already separated and
+ * `\b` would be the wrong tool. `ai` is bounded by `(^|-)…(-|$)` for exactly
+ * the reason `\bintern(ships?|s)?\b` is bounded in `RSS_JOBS` — an unbounded
+ * `ai-` matches inside `thai-`, `chair-`, `repair-` and turns an unrelated
+ * article into a candidate. `pay-gap` is spelled with its hyphen because that
+ * is how it appears in a slug.
+ *
+ * `equity` is here because the researched word list did not have it and the
+ * unit tests caught that the list therefore MISSED
+ * `psa-scrapping-pay-equity-cost-new-zealand-135-billion-in-growth` — one of
+ * the two articles cited as evidence that this source was worth building. NZ
+ * writes "pay equity" at least as often as "pay gap". It is also already
+ * tier-0 vocabulary in `RSS_WOMEN`, so the two lists now agree.
+ *
+ * This is the WHOLE efficiency argument for the sitemap source: hcamag slugs
+ * read as titles ("ai-tools-create-workforce-imbalance-risk-for-employers"), so
+ * a month's ~260 articles are cut to a handful of candidates before a single
+ * article page is requested.
+ */
+const HRD_SLUG_TOPICAL =
+  /women|gender|diversity|pay-gap|equity|hiring|talent|salary|skills|(^|-)ai(-|$)|graduate|career/;
+
+/**
  * Ranks an RSS item title: 0 = women / diversity, 1 = jobs / hiring / skills,
  * 2 = an Auckland angle, 3 = the NZ tech industry generally, 4 = everything
  * else. Tiers 0-3 are also read as an item's "topic" by the mix rule in
@@ -381,9 +410,10 @@ function extractArticle(html: string): { title: string; text: string } {
 
 /**
  * Reads the configured RSS feeds (following `pages` where an entry declares
- * it), keeps recent items with usable text, removes cross-posts, ranks by the
- * newsletter's purpose and returns the combined top N. Every request is settled
- * independently, so a dead feed or a dead page costs only itself.
+ * it) and returns the recent items with usable text, capped per feed. Every
+ * request is settled independently, so a dead feed or a dead page costs only
+ * itself. Cross-source de-duplication, ranking and the pool cap belong to
+ * `mergeNewsItems()`, because the HRD sitemap source needs the same treatment.
  *
  * Wall clock: all feed pages go out in ONE round of concurrent requests, each
  * under `FETCH_TIMEOUT_MS`, so this leg is ~8s whether it issues 2 requests or
@@ -454,15 +484,34 @@ async function fetchRssItems(): Promise<PulseSourceData["newsItems"]> {
       .slice(0, RSS_MAX_PER_FEED);
   });
 
-  // Cross-post removal, across feeds, in feed-list order so the earlier entry
-  // wins. Some NZ organisations republish each other's articles under their own
-  // domain with an identical headline and date, so a URL comparison sees two
-  // different items and the section can end up running one story twice — the
-  // most visible failure a three-item list has.
+  return all;
+}
+
+/**
+ * Cross-post removal, ranking and the pool cap — the one place a list of
+ * candidate news items becomes THE pool, whatever source produced it.
+ *
+ * It was the tail of `fetchRssItems()` until the HRD sitemap source arrived.
+ * Lifting it out is what stops a second source needing a second copy of "the
+ * same story", "in mission order" and "how many we keep": a story reaching us
+ * from both an RSS feed and hcamag must collapse to one item, and an HRD item
+ * must be ranked against the RSS ones rather than appended after them.
+ *
+ * Earlier lists win a tie, so pass them in source-priority order.
+ *
+ * Some NZ organisations republish each other's articles under their own domain
+ * with an identical headline and date, so a URL comparison sees two different
+ * items and the section can end up running one story twice — the most visible
+ * failure a three-item list has. Exported so the merge can be unit-tested
+ * without a network.
+ */
+export function mergeNewsItems(
+  lists: readonly PulseSourceData["newsItems"][]
+): PulseSourceData["newsItems"] {
   const deduped: PulseSourceData["newsItems"] = [];
   const seenHeadlines = new Set<string>();
   const seenUrls = new Set<string>();
-  for (const item of all) {
+  for (const item of lists.flat()) {
     const headline = normaliseHeadline(item.title);
     if (seenUrls.has(item.url) || seenHeadlines.has(headline)) continue;
     seenUrls.add(item.url);
@@ -484,25 +533,359 @@ async function fetchRssItems(): Promise<PulseSourceData["newsItems"]> {
   return deduped.slice(0, RSS_TOP_N);
 }
 
+// --- HRD New Zealand (hcamag.com) sitemap source -----------------------------
+//
+// WHY A SITEMAP AND NOT A FEED. HRD NZ is the best available source of NZ
+// job-market and hiring news for women in tech — the last 60 days alone carried
+// "new-zealands-gender-pay-gap-sitting-at-53" and
+// "psa-scrapping-pay-equity-cost-new-zealand-135-billion-in-growth" — but its
+// Atom feed holds FIVE DAYS. A cron that fires once a month therefore sees one
+// sixth of the month and reaches maybe two of the 8-15 usable items, by luck of
+// timing. The per-year sitemap holds the whole year in one request: measured
+// 2026-08-29, `/nz/sitemaps/articles/2026/` returned HTTP 200,
+// `application/xml`, ~176 KB, 948 entries with `<lastmod>`, spanning 2026-01-05
+// to 2026-08-28, of which 260 fell in the last 60 days.
+//
+// TWO TRAPS, BOTH ALREADY PAID FOR — do not rediscover them:
+//
+//  1. PAGING ON HCAMAG IS A SILENT NO-OP. `?page=2`, `?paged=2`, `?p=2`,
+//     `?offset=30` and `?limit=100` all return HTTP 200 with the IDENTICAL 30
+//     items. That is worse than a 404, because paging code looks like it works.
+//     So hcamag must NEVER be added to `PULSE_RSS_FEEDS` with a `pages` value.
+//     There are no category feeds either — `/nz/feed`, `/nz/atom` and
+//     `/nz/specialisation/*/rss` are all 404.
+//  2. THE SITEMAP IS PER-YEAR. On 5 January `/2027/` holds four days, and this
+//     section would silently starve every January. `needsPreviousYearSitemap()`
+//     handles it, derived from the fetched data rather than from a date.
+//
+// ROBOTS. The sitemaps are advertised in `robots.txt`; the only `Disallow` for
+// `*` that touches NZ is `/nz/business-news/`, and `Claude-User` is allowed
+// explicitly. These articles live under `/nz/news/` and `/nz/specialisation/`.
+// `HRD_DISALLOWED_PATH` keeps the crawl honest even if a business-news URL ever
+// appears in this sitemap.
+
+/** Attribution printed beside an hcamag item; a subscriber reads this. */
+const HRD_SOURCE_LABEL = "HRD New Zealand";
+
+/** Per-year article sitemap; the year is appended with a trailing slash. */
+const HRD_SITEMAP_BASE = "https://www.hcamag.com/nz/sitemaps/articles/";
+
+/** The one path `robots.txt` disallows for `*` on the NZ edition. */
+const HRD_DISALLOWED_PATH = "/nz/business-news/";
+
+/**
+ * How many surviving candidates get their article page fetched.
+ *
+ * This is a MONTHLY CRON, not a crawler. A month yields roughly 260 hcamag
+ * articles and ~117 survive the slug filter; fetching those would be 117
+ * outbound requests to one publisher for a three-item news list. Six is chosen
+ * to match `RSS_MAX_PER_FEED` for the second reason too: the merged pool holds
+ * `RSS_TOP_N` items, and one prolific publisher must not own it.
+ */
+const HRD_MAX_ARTICLE_FETCHES = 6;
+
+/** One `<url>` entry from the sitemap. */
+export interface SitemapEntry {
+  loc: string;
+  lastmod: string;
+}
+
+/**
+ * Parses `<loc>` + `<lastmod>` pairs out of a sitemap, in document order.
+ *
+ * Regex rather than cheerio because a sitemap is flat, machine-generated XML
+ * and this runs over ~176 KB on a cron; an entry missing either element is
+ * skipped rather than half-kept, since an undated entry can never be shown to
+ * satisfy the recency window. Exported so parsing is testable without a
+ * network. hcamag's `<lastmod>` is date-only ("2026-08-28"), which `Date.parse`
+ * reads as UTC midnight — a few hours' skew against Pacific/Auckland that is
+ * immaterial against a 35-day window.
+ */
+export function parseSitemapEntries(xml: string): SitemapEntry[] {
+  const entries: SitemapEntry[] = [];
+  const urlBlocks = xml.match(/<url\b[\s\S]*?<\/url>/g) ?? [];
+  for (const block of urlBlocks) {
+    const loc = block.match(/<loc>\s*([\s\S]*?)\s*<\/loc>/)?.[1];
+    const lastmod = block.match(/<lastmod>\s*([\s\S]*?)\s*<\/lastmod>/)?.[1];
+    if (!loc || !lastmod) continue;
+    entries.push({ loc, lastmod });
+  }
+  return entries;
+}
+
+/** The article sitemap URL for one calendar year. */
+export function hrdSitemapUrl(year: number): string {
+  return `${HRD_SITEMAP_BASE}${year}/`;
+}
+
+/**
+ * Whether the previous year's sitemap must also be fetched, decided from the
+ * DATA rather than from the calendar.
+ *
+ * True when the year's sitemap does not reach back as far as the recency
+ * cutoff — i.e. its oldest entry is still newer than the cutoff — or when it
+ * yielded nothing at all (1 January, before the year's first article, the file
+ * may not exist yet). Eleven months of the year the oldest entry is from
+ * January and this is false, so the second request is never made.
+ *
+ * A date-based `if (month === 0)` would be a bug that only appears in January,
+ * which is precisely the kind nobody connects to this code when it fires.
+ */
+export function needsPreviousYearSitemap(
+  entries: readonly SitemapEntry[],
+  cutoff: number
+): boolean {
+  if (entries.length === 0) return true;
+  let oldest = Infinity;
+  for (const entry of entries) {
+    const stamp = Date.parse(entry.lastmod);
+    if (!Number.isNaN(stamp) && stamp < oldest) oldest = stamp;
+  }
+  // No parsable date anywhere is as uninformative as no entries at all.
+  if (oldest === Infinity) return true;
+  return oldest > cutoff;
+}
+
+/**
+ * The article slug from an hcamag URL: the last path segment that is not the
+ * numeric article id, e.g.
+ * `/nz/news/general/ai-tools-create-workforce-imbalance-risk/587819`
+ * → `ai-tools-create-workforce-imbalance-risk`. Returns "" for a URL that will
+ * not parse or carries no slug.
+ */
+export function hrdSlugFromUrl(url: string): string {
+  let path: string;
+  try {
+    path = new URL(url).pathname;
+  } catch {
+    return "";
+  }
+  const segments = path.split("/").filter(Boolean);
+  // The trailing segment is the numeric article id on every measured URL.
+  if (segments.length > 1 && /^\d+$/.test(segments[segments.length - 1])) {
+    segments.pop();
+  }
+  return (segments.pop() ?? "").toLowerCase();
+}
+
+/** Whether an hcamag URL's slug carries a topic this newsletter is about. */
+export function hrdSlugIsTopical(url: string): boolean {
+  return HRD_SLUG_TOPICAL.test(hrdSlugFromUrl(url));
+}
+
+/**
+ * A slug read back as a rough headline, so `rssRelevanceRank()` can order the
+ * candidates by the SAME mission tiers the merged pool is sorted by. hcamag
+ * slugs are near-verbatim titles, which is what makes this sound: ranking here
+ * decides which handful of articles is worth spending a request on.
+ */
+function hrdSlugAsTitle(slug: string): string {
+  return slug.replace(/-/g, " ");
+}
+
+/**
+ * Cuts a year (or two) of sitemap entries down to the few article pages worth
+ * fetching: inside the recency window, not under a disallowed path, slug says
+ * it is on topic, then ranked by the newsletter's own tiers (newest first
+ * inside a tier) and capped at `HRD_MAX_ARTICLE_FETCHES`.
+ *
+ * Every filter here is applied BEFORE any article is requested — that is the
+ * whole point of the source. Exported so the window, the filter and the cap can
+ * be tested with no network.
+ */
+export function selectHrdCandidates(
+  entries: readonly SitemapEntry[],
+  cutoff: number
+): SitemapEntry[] {
+  const seen = new Set<string>();
+  return entries
+    .filter((entry) => !entry.loc.includes(HRD_DISALLOWED_PATH))
+    .filter((entry) => {
+      // Unlike the RSS path, an undated entry is DROPPED rather than kept: a
+      // sitemap covers a whole year, so "keep it, we cannot date it" would let
+      // an eight-month-old article into a monthly newsletter.
+      const stamp = Date.parse(entry.lastmod);
+      return !Number.isNaN(stamp) && stamp >= cutoff;
+    })
+    .filter((entry) => hrdSlugIsTopical(entry.loc))
+    .filter((entry) => {
+      // Two years of sitemaps can overlap on a re-published article.
+      if (seen.has(entry.loc)) return false;
+      seen.add(entry.loc);
+      return true;
+    })
+    .sort((a, b) => {
+      const relA = rssRelevanceRank(hrdSlugAsTitle(hrdSlugFromUrl(a.loc)));
+      const relB = rssRelevanceRank(hrdSlugAsTitle(hrdSlugFromUrl(b.loc)));
+      if (relA !== relB) return relA - relB;
+      return Date.parse(b.lastmod) - Date.parse(a.lastmod);
+    })
+    .slice(0, HRD_MAX_ARTICLE_FETCHES);
+}
+
+/** What an hcamag article page yields once its `og:` tags are read. */
+export interface HrdArticleMeta {
+  ogTitle: string;
+  ogDescription: string;
+  bodyText: string;
+}
+
+/**
+ * Reads `og:title` and `og:description` from an article page, plus the body
+ * text the existing article extractor produces.
+ *
+ * hcamag pages are server-rendered and clean, and both tags are present on
+ * every measured article — a ready-made headline and a ready-made one-sentence
+ * summary, so no body-scraping heuristic has to guess at either.
+ */
+export function extractHrdArticleMeta(html: string): HrdArticleMeta {
+  const $ = cheerio.load(html);
+  const ogTitle = $('meta[property="og:title"]').attr("content")?.trim() ?? "";
+  const ogDescription =
+    $('meta[property="og:description"]').attr("content")?.trim() ?? "";
+  return { ogTitle, ogDescription, bodyText: extractArticle(html).text };
+}
+
+/**
+ * Maps one sitemap entry plus its article metadata into the shared news-item
+ * shape. Returns null when the page carried NEITHER `og:` tag — there would be
+ * nothing to summarise and nothing to verify a number against, and the item
+ * could only ever be dropped further down, so it is not worth a slot.
+ *
+ * ON `og:description`, AND WHY IT IS NOT PRINTED VERBATIM.
+ *
+ * `og:description` is the publisher's own one-sentence summary, written for
+ * exactly this purpose, so the tempting move is to render it as the news bite
+ * directly: perfect accuracy, zero model risk. It is deliberately NOT done.
+ * Two reasons, in this order.
+ *
+ * First, attribution. Printing a publisher's sentence verbatim under a headline
+ * of our own is republishing their copy, not summarising it, and the section
+ * gives a source label and a link — not a quotation mark. Every other item in
+ * the list is our own sentence about someone else's reporting; one item that is
+ * silently theirs is the kind of inconsistency nobody notices until a publisher
+ * does.
+ *
+ * Second, voice and mix. The model is not decoration here: it re-angles an item
+ * towards women in tech, names an Auckland connection when the source states
+ * one, and chooses a SPREAD of three topics. An item that arrives pre-written
+ * opts out of all of that and reads as a pasted teaser beside two edited ones.
+ *
+ * The accuracy the direct route would have bought is bought instead by the
+ * guards, which are unchanged and which this item passes exactly like an RSS
+ * one: its URL must be one we fetched, and every number in the drafted title
+ * and summary must appear verbatim in the text below. So `og:description`
+ * becomes the model's `snippet`, and `sourceText` is that description followed
+ * by the article body — the same reasoning as the full-article RSS feed, where
+ * verifying against more retrieved text is strictly better attribution, since a
+ * number the model could not even see still had to come from this article.
+ */
+export function buildHrdNewsItem(
+  entry: SitemapEntry,
+  meta: HrdArticleMeta
+): PulseSourceData["newsItems"][number] | null {
+  if (!meta.ogTitle && !meta.ogDescription) return null;
+
+  const title = meta.ogTitle || hrdSlugAsTitle(hrdSlugFromUrl(entry.loc));
+  if (!title) return null;
+
+  const summaryFirst = [meta.ogDescription, meta.bodyText]
+    .filter(Boolean)
+    .join(" ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  // The same minimum the RSS path applies: an item with a headline and almost
+  // no text cannot be summarised and cannot have a number verified against it,
+  // so it would spend one of three slots on something the guards were always
+  // going to drop.
+  if (summaryFirst.length < MIN_ITEM_TEXT_CHARS) return null;
+
+  return {
+    title,
+    url: entry.loc,
+    source: HRD_SOURCE_LABEL,
+    // A real publication date from `<lastmod>`, so the item carries a dateline
+    // like any other rather than a guessed one.
+    isoDate: new Date(entry.lastmod).toISOString(),
+    snippet: (meta.ogDescription || summaryFirst).slice(0, SNIPPET_MODEL_CHARS),
+    sourceText: summaryFirst.slice(0, SNIPPET_VERIFY_CHARS),
+  };
+}
+
+/**
+ * The HRD NZ leg: one sitemap request (rarely two), a slug filter, then at most
+ * `HRD_MAX_ARTICLE_FETCHES` article pages fetched CONCURRENTLY.
+ *
+ * Wall clock, worst case: the two sitemap requests are necessarily sequential
+ * (the second is only made when the first says the year is too short), so
+ * 2 × `FETCH_TIMEOUT_MS`, plus one concurrent round of article fetches at
+ * `FETCH_TIMEOUT_MS` — about 24s, and 8s in the ordinary case where the
+ * sitemap covers the window and the articles answer promptly. Never throws:
+ * every failure degrades to fewer items, and the whole leg is settled beside
+ * the others in `fetchPulseSources()`, so a slow hcamag cannot stall the run.
+ */
+async function fetchHrdItems(): Promise<PulseSourceData["newsItems"]> {
+  const cutoff = Date.now() - RSS_MAX_AGE_DAYS * 24 * 60 * 60 * 1000;
+  const year = new Date().getUTCFullYear();
+
+  const currentXml = await fetchText(hrdSitemapUrl(year), FEED_ACCEPT);
+  const entries = currentXml ? parseSitemapEntries(currentXml) : [];
+
+  // Trap 2: in the first weeks of a year this year's file holds only days.
+  if (needsPreviousYearSitemap(entries, cutoff)) {
+    const previousXml = await fetchText(hrdSitemapUrl(year - 1), FEED_ACCEPT);
+    if (previousXml) entries.push(...parseSitemapEntries(previousXml));
+  }
+
+  const candidates = selectHrdCandidates(entries, cutoff);
+  if (candidates.length === 0) return [];
+
+  const settled = await Promise.allSettled(
+    candidates.map(async (entry) => {
+      const html = await fetchText(entry.loc);
+      if (!html) return null;
+      return buildHrdNewsItem(entry, extractHrdArticleMeta(html));
+    })
+  );
+
+  return settled.flatMap((result) =>
+    result.status === "fulfilled" && result.value ? [result.value] : []
+  );
+}
+
 /**
  * Gathers all pulse source payloads in parallel. Never throws; any component
  * that fails comes back as null / an empty array so the caller can degrade.
  *
- * Worst-case wall clock is ~32s and is set by the SEEK leg, which is
- * necessarily sequential: up to two candidate hosts × (listing + article), each
- * capped at `FETCH_TIMEOUT_MS`. The RSS leg runs beside it and costs ~8s no
- * matter how many feeds or pages it issues, because they all go out at once.
- * Adding feeds therefore does not move this number.
+ * Worst-case wall clock is STILL ~32s, and is still set by the SEEK leg, which
+ * is necessarily sequential: up to two candidate hosts × (listing + article),
+ * each capped at `FETCH_TIMEOUT_MS`. The RSS leg runs beside it and costs ~8s
+ * no matter how many feeds or pages it issues, because they all go out at once.
+ * The HRD leg also runs beside them at ~24s worst case (up to two sequential
+ * sitemap requests, then one concurrent round of article fetches), which is
+ * inside the SEEK leg's budget. So neither adding feeds nor adding this source
+ * moves the number; only a leg that could exceed 4 × `FETCH_TIMEOUT_MS` would.
+ *
+ * Each leg is settled independently, so a hanging hcamag, a dead feed and a
+ * missing SEEK report each cost only their own items.
  */
 export async function fetchPulseSources(): Promise<PulseSourceData> {
-  const [seek, rss] = await Promise.allSettled([
+  const [seek, rss, hrd] = await Promise.allSettled([
     fetchSeekArticle(),
     fetchRssItems(),
+    fetchHrdItems(),
   ]);
+
+  const rssItems = rss.status === "fulfilled" ? rss.value : [];
+  const hrdItems = hrd.status === "fulfilled" ? hrd.value : [];
 
   return {
     seekArticle: seek.status === "fulfilled" ? seek.value : null,
-    newsItems: rss.status === "fulfilled" ? rss.value : [],
+    // RSS first so an RSS entry wins a cross-post tie, matching the "earlier
+    // list wins" rule and keeping the pre-existing ordering stable; ranking
+    // then judges every item on its topic, whichever source produced it.
+    newsItems: mergeNewsItems([rssItems, hrdItems]),
   };
 }
 
