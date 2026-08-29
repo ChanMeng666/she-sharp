@@ -43,11 +43,13 @@ All commands below are PowerShell-first (this repo's primary shell on Windows).
 6. `POSTGRES_URL` — the recipient list is read from this project's own database
    (the `newsletter_subscribers` table), not from Resend.
 
-   **Read this before you plan a send.** As of today that table is **empty**.
-   The ~1,560 people on the Mailchimp list have **not** been imported yet — that
-   import is a later phase of this migration and has not happened. So a real
-   batch built today would contain **nobody**. The live newsletter still goes
-   out from **Mailchimp**; nothing has been cut over. If someone asks you to
+   **Read this before you plan a send.** That table now holds **1,545**
+   subscribers, imported from the 2026-08-17 Mailchimp export on 2026-08-29, so
+   a batch built today would reach real people. But **nothing has ever been sent
+   from it**, and the live newsletter still goes out from **Mailchimp** — the
+   cutover has not happened. The first real send is a deliberate, separately
+   approved step, and it should be ramped (`recipients-from-db.ts --limit`)
+   rather than going to all 1,545 at once. If someone asks you to
    "send this month's newsletter" through this skill, you can do every step up
    to and including the test send, and then you must **stop and say that the
    subscriber list is empty** rather than producing an empty batch and calling
