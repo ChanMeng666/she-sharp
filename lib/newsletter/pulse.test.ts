@@ -7,9 +7,9 @@
 import assert from "node:assert";
 
 import {
+  applyPulseDraft,
   assertNumbersVerbatim,
   buildHrdNewsItem,
-  buildPulse,
   dropStaleWomenItemsWhenFreshOnesExist,
   evergreenPulse,
   extractHrdArticleMeta,
@@ -22,16 +22,19 @@ import {
   needsPreviousYearSitemap,
   normaliseHeadline,
   parseSitemapEntries,
-  PULSE_MODEL,
   PULSE_RSS_FEEDS,
-  pulseModel,
   pulsePreflightLines,
+  RSS_TIER_LABELS,
   rssRelevanceRank,
   selectHrdCandidates,
+  seekNewsCandidate,
   selectNewsBites,
+  TRIMMED_HOLLOW_CLOSER,
+  validatePulseDraft,
   type PulseSourceData,
   type SitemapEntry,
 } from "./pulse";
+import { hasCopyErrors } from "./pulse-copy";
 import {
   AUCKLAND_FACTS,
   NZ_WIDE_FACTS,
@@ -117,36 +120,8 @@ const DRAFT_WOMEN_TWO = {
   url: "https://itbrief.co.nz/story/women-engineers-nominations",
 };
 
-/** What the stubbed model returns on its next call; swapped per check. */
-let stubbedPayload: unknown = null;
-
 /**
- * ONE stub function object, reused for every stubbed check. The OpenAI SDK
- * captures `globalThis.fetch` when the client is CONSTRUCTED, and `pulse.ts`
- * caches that client for the process — so installing a fresh closure per check
- * silently leaves the second check talking to the first check's stub. Reading a
- * mutable payload from a stable function is what makes the swap take effect.
- */
-const stubFetch = (async () =>
-  new Response(
-    JSON.stringify({
-      id: "chatcmpl-test",
-      object: "chat.completion",
-      created: 0,
-      model: "gpt-4o-mini",
-      choices: [
-        {
-          index: 0,
-          message: { role: "assistant", content: JSON.stringify(stubbedPayload) },
-          finish_reason: "stop",
-        },
-      ],
-    }),
-    { status: 200, headers: { "content-type": "application/json" } }
-  )) as typeof globalThis.fetch;
-
-/**
- * The SEEK report as `buildPulse` offers it to the news selector: fetched and
+ * The SEEK report as `applyPulseDraft` offers it to the news selector: fetched and
  * parsed like any other source, with no dateline (the report covers a period)
  * and no teaser (the model receives the report in its own prompt block).
  */
@@ -163,7 +138,7 @@ const SEEK_CANDIDATE: PulseSourceData["newsItems"][number] = {
     "9.9% on a year ago, with Auckland up 5.0%, while ads nationally rose 0.2% in June.",
 };
 
-/** The candidate pool as `buildPulse` builds it: RSS items plus the SEEK report. */
+/** The candidate pool as the apply step builds it: RSS items plus the SEEK report. */
 const FETCHED_WITH_SEEK = new Map([...FETCHED_BY_URL, [SEEK_URL, SEEK_CANDIDATE]]);
 
 /** A faithful job-market draft built on the SEEK report — July 2026's best item. */
@@ -228,27 +203,6 @@ Stats NZ said, having been 8.6% a decade earlier.</p></article></body></html>`;
 const HRD_ARTICLE_HTML_NO_OG = `<!doctype html><html><head><title>Untagged</title></head>
 <body><article><p>A short piece with no open-graph metadata at all, but enough
 body text that a length rule alone would let it through.</p></article></body></html>`;
-
-/**
- * Runs `fn` with the model stubbed to answer `payload`, so `buildPulse`
- * exercises its real parse → validate → select path with no network call and no
- * API key. Restores `fetch` and the environment afterwards.
- */
-async function withStubbedModel<T>(payload: unknown, fn: () => Promise<T>): Promise<T> {
-  const realFetch = globalThis.fetch;
-  const realKey = process.env.OPENAI_API_KEY;
-  stubbedPayload = payload;
-  process.env.OPENAI_API_KEY = "test-key-not-used";
-  globalThis.fetch = stubFetch;
-  try {
-    return await fn();
-  } finally {
-    globalThis.fetch = realFetch;
-    stubbedPayload = null;
-    if (realKey === undefined) delete process.env.OPENAI_API_KEY;
-    else process.env.OPENAI_API_KEY = realKey;
-  }
-}
 
 let passed = 0;
 function check(label: string, fn: () => void | Promise<void>): Promise<void> {
@@ -322,22 +276,51 @@ async function main(): Promise<void> {
     );
   });
 
-  // 3. buildPulse falls back to evergreen when there are no sources (no network).
-  console.log("3. buildPulse fallback (no sources, no live calls):");
-  await check("null sources yield the evergreen pulse", async () => {
-    const emptySources: PulseSourceData = { seekArticle: null, newsItems: [] };
-    const pulse = await buildPulse(emptySources, { monthLabel: "July 2026" });
-    pulseSchema.parse(pulse);
-    // "July" → month index 6; must equal the deterministic evergreen pulse.
-    assert.deepStrictEqual(pulse, evergreenPulse(6));
+  // 3. applyPulseDraft with nothing to work from still yields a valid section.
+  console.log("3. applyPulseDraft fallback (no sources, no draft):");
+  await check("an empty draft over empty sources yields the evergreen pulse", () => {
+    const empty: PulseSourceData = { seekArticle: null, newsItems: [] };
+    const result = applyPulseDraft(
+      { heroStat: null, newsBites: [] },
+      empty,
+      { monthLabel: "July 2026" }
+    );
+    assert.deepStrictEqual(result.problems, [], "an empty draft breaks no rule");
+    pulseSchema.parse(result.pulse);
+    // "July" → month index 6, so hero and didYouKnow are the evergreen ones.
+    // `newsBites: []` rather than the omitted key is the ONE deliberate
+    // difference: an explicit empty array records that we looked and found
+    // nothing usable, and keeps every generated issue the same shape.
+    assert.deepStrictEqual(result.pulse, { ...evergreenPulse(6), newsBites: [] });
+    assert.strictEqual(result.heroFromEvergreen, true);
   });
-  await check("unknown month label still produces a valid pulse", async () => {
-    const emptySources: PulseSourceData = { seekArticle: null, newsItems: [] };
-    const pulse = await buildPulse(emptySources, { monthLabel: "Smarch 2026" });
-    pulseSchema.parse(pulse);
-    assert.deepStrictEqual(pulse, evergreenPulse(0));
+  await check("unknown month label still produces a valid pulse", () => {
+    const empty: PulseSourceData = { seekArticle: null, newsItems: [] };
+    const result = applyPulseDraft({ heroStat: null, newsBites: [] }, empty, {
+      monthLabel: "Smarch 2026",
+    });
+    pulseSchema.parse(result.pulse);
+    assert.deepStrictEqual(result.pulse, { ...evergreenPulse(0), newsBites: [] });
   });
-
+  await check("a hero stat written with no SEEK report is refused, not published", () => {
+    // The one case where writing MORE is the mistake: with no report fetched
+    // there is nothing for the number to be checked against, so the honest
+    // answer is `heroStat: null` and the evergreen rotation.
+    const empty: PulseSourceData = { seekArticle: null, newsItems: [] };
+    const result = applyPulseDraft(
+      {
+        heroStat: { value: "5.3%", label: "made up", context: "Invented for this test." },
+        newsBites: [],
+      },
+      empty,
+      { monthLabel: "July 2026" }
+    );
+    assert.strictEqual(result.pulse, null, "refused");
+    assert.ok(
+      result.problems.some((problem) => problem.includes("no SEEK report")),
+      "and the refusal says to write heroStat: null instead",
+    );
+  });
   // 4. Auckland facts are well-formed and reachable as hero stats.
   console.log("4. Auckland facts:");
   await check("every Auckland fact has an id, text, label and valid URL", () => {
@@ -694,27 +677,82 @@ async function main(): Promise<void> {
     );
   });
 
-  // 9. buildPulse end-to-end over a stubbed model response (still no network).
-  console.log("9. buildPulse news list (stubbed model, no network):");
-  await check("emits newsBites and leaves the legacy newsBite null", async () => {
-    const pulse = await withStubbedModel(
-      {
-        heroStat: null,
-        newsBites: [DRAFT_WOMEN, DRAFT_JOBS, DRAFT_INDUSTRY],
-      },
-      () => buildPulse({ seekArticle: null, newsItems: FETCHED }, { monthLabel: "July 2026" })
+  // 9. applyPulseDraft end-to-end — the agent's draft, and the four refusals.
+  //
+  // THIS IS THE WHOLE CONTRACT. The writing moved to whichever agent runs the
+  // skill; what makes that safe is that these guards run on the output whoever
+  // produced it. Each of the four checks below is one of them refusing, and a
+  // refusal must write NOTHING rather than quietly publish a shorter section —
+  // a two-item Pulse is a legitimate thin month, and it is also exactly what a
+  // guard eating a good story looks like, so they must not be the same outcome.
+  console.log("9. applyPulseDraft (no network, no API key):");
+
+  /*
+   * A third publisher, local to this section.
+   *
+   * The shared FETCHED pool is three IT Brief items and one TechDay one, which
+   * is right for the selector checks above (they are about repeats) and wrong
+   * here: `applyPulseDraft` REFUSES two items from one publisher, so a clean
+   * three-item draft needs three publishers to exist.
+   */
+  const AI_FORUM_ITEM: PulseSourceData["newsItems"][number] = {
+    title: "AI Forum sets out an Aotearoa skills plan",
+    url: "https://aiforum.org.nz/story/skills-plan",
+    source: "AI Forum NZ",
+    isoDate: "2026-07-22T02:00:00.000Z",
+    snippet: "The plan names 3,400 new roles over three years.",
+    sourceText: "The plan names 3,400 new roles over three years.",
+  };
+  const DRAFT_AI_FORUM = {
+    title: "A skills plan that names the roles it wants filled",
+    summary: "The AI Forum's plan names 3,400 new roles over three years.",
+    url: AI_FORUM_ITEM.url,
+  };
+
+  /** The corpus the guards check against, as the candidate file preserves it. */
+  const SOURCES: PulseSourceData = {
+    seekArticle: null,
+    newsItems: [...FETCHED, AI_FORUM_ITEM],
+  };
+  const SOURCES_WITH_SEEK: PulseSourceData = {
+    seekArticle: {
+      title: SEEK_CANDIDATE.title,
+      url: SEEK_URL,
+      text: SEEK_CANDIDATE.sourceText,
+    },
+    newsItems: FETCHED,
+  };
+
+  await check("a clean draft is accepted and emits newsBites, not the legacy key", () => {
+    const result = applyPulseDraft(
+      { heroStat: null, newsBites: [DRAFT_WOMEN, DRAFT_JOBS, DRAFT_AI_FORUM] },
+      SOURCES,
+      { monthLabel: "July 2026" }
     );
-    pulseSchema.parse(pulse);
-    assert.ok(pulse, "pulse present");
-    assert.strictEqual(pulse!.newsBite, null, "legacy single bite stays null");
-    assert.strictEqual(pulse!.newsBites?.length, 3, "three items in the list");
+    assert.deepStrictEqual(result.problems, [], "nothing to refuse");
+    assert.ok(result.pulse, "and therefore a section to write");
+    pulseSchema.parse(result.pulse);
+    assert.strictEqual(result.pulse!.newsBite, null, "legacy single bite stays null");
+    assert.strictEqual(result.pulse!.newsBites?.length, 3, "three items in the list");
     // No SEEK article was supplied, so the hero stat falls back to evergreen.
-    assert.strictEqual(pulse!.heroStat.sourceLabel.length > 0, true);
+    assert.strictEqual(result.heroFromEvergreen, true);
+    assert.ok(result.pulse!.heroStat.sourceLabel.length > 0);
   });
-  await check("a SEEK-sourced bite reaches the output beside a SEEK hero stat", async () => {
-    // End to end: `buildPulse` is where the SEEK article becomes a news
-    // candidate, so the helper checks above cannot prove this wiring.
-    const pulse = await withStubbedModel(
+
+  await check("attribution comes from our fetched item, never from the draft", () => {
+    // DRAFT_WOMEN claims "Some Other Publication". It must not survive.
+    const result = applyPulseDraft({ heroStat: null, newsBites: [DRAFT_WOMEN] }, SOURCES, {
+      monthLabel: "July 2026",
+    });
+    assert.strictEqual(
+      result.pulse!.newsBites![0].sourceLabel,
+      "IT Brief NZ",
+      "a story cannot be credited to a publication that did not run it",
+    );
+  });
+
+  await check("a SEEK-sourced bite reaches the output beside a SEEK hero stat", () => {
+    const result = applyPulseDraft(
       {
         heroStat: {
           value: "107.3%",
@@ -723,45 +761,286 @@ async function main(): Promise<void> {
         },
         newsBites: [DRAFT_SEEK, DRAFT_WOMEN],
       },
-      () =>
-        buildPulse(
-          {
-            seekArticle: {
-              title: SEEK_CANDIDATE.title,
-              url: SEEK_URL,
-              text: SEEK_CANDIDATE.sourceText,
-            },
-            newsItems: FETCHED,
-          },
-          { monthLabel: "July 2026" }
-        )
+      SOURCES_WITH_SEEK,
+      { monthLabel: "July 2026" }
     );
-    pulseSchema.parse(pulse);
-    assert.strictEqual(pulse!.heroStat.value, "107.3%", "hero stat comes from SEEK");
-    assert.strictEqual(pulse!.heroStat.sourceUrl, SEEK_URL);
+    assert.deepStrictEqual(result.problems, []);
+    pulseSchema.parse(result.pulse);
+    assert.strictEqual(result.pulse!.heroStat.value, "107.3%", "hero stat comes from SEEK");
+    assert.strictEqual(result.pulse!.heroStat.sourceUrl, SEEK_URL);
+    assert.strictEqual(result.heroFromEvergreen, false);
     // Membership, not position — the order is 8c's business.
     assert.deepStrictEqual(
-      [...(pulse!.newsBites ?? [])].map((bite) => bite.url).sort(),
+      [...(result.pulse!.newsBites ?? [])].map((bite) => bite.url).sort(),
       [DRAFT_WOMEN.url, SEEK_URL].sort(),
-      "the job-market bite is sourced from the report we already fetched"
+      "the job-market bite is sourced from the report we already fetched",
     );
     assert.strictEqual(
-      pulse!.newsBites?.find((bite) => bite.url === SEEK_URL)?.sourceLabel,
-      "SEEK NZ Employment Report"
+      result.pulse!.newsBites?.find((bite) => bite.url === SEEK_URL)?.sourceLabel,
+      "SEEK NZ Employment Report",
     );
-    assert.strictEqual(pulse!.newsBite, null);
   });
-  await check("a model list of one invented URL degrades to an empty list", async () => {
-    const pulse = await withStubbedModel(
+
+  // --- Refusal 1 of 4: a URL that is not in the candidate file ---------------
+  await check("REFUSED: a url not in the candidate file", () => {
+    // The failure the whole design exists to prevent — an agent citing
+    // something it found elsewhere. It is refused for the same reason the model
+    // was: the guard says "a document THIS PROCESS DOWNLOADED", and a real
+    // story from a real publisher is still not one of those.
+    const result = applyPulseDraft(
       {
         heroStat: null,
-        newsBites: [{ ...DRAFT_WOMEN, url: "https://example.com/invented" }],
+        newsBites: [{ ...DRAFT_WOMEN, url: "https://example.com/found-by-searching" }],
       },
-      () => buildPulse({ seekArticle: null, newsItems: FETCHED }, { monthLabel: "July 2026" })
+      SOURCES,
+      { monthLabel: "July 2026" }
     );
-    pulseSchema.parse(pulse);
-    assert.deepStrictEqual(pulse!.newsBites, [], "degraded, not fabricated");
-    assert.strictEqual(pulse!.newsBite, null);
+    assert.strictEqual(result.pulse, null, "nothing is written");
+    assert.ok(
+      result.problems.some((problem) => problem.includes("not a URL in the candidate file")),
+      "and the refusal names the rule",
+    );
+  });
+
+  // --- Refusal 2 of 4: a number that is not in that item's own source --------
+  await check("REFUSED: a number not verbatim in that item's own source", () => {
+    // 9.9% is real — it is in the TechDay item — but this bite is about the
+    // summit. A number that belongs to a different story is a mis-attribution,
+    // not a near miss: the link printed beside it would not support it.
+    const result = applyPulseDraft(
+      {
+        heroStat: null,
+        newsBites: [{ ...DRAFT_WOMEN, summary: "Attendance rose 9.9% on last year." }],
+      },
+      SOURCES,
+      { monthLabel: "July 2026" }
+    );
+    assert.strictEqual(result.pulse, null, "nothing is written");
+    assert.ok(
+      result.problems.some(
+        (problem) => problem.includes("not present verbatim") && problem.includes("9.9%")
+      ),
+      "and the offending token is named so it can be removed",
+    );
+  });
+
+  await check("REFUSED: a hero number not verbatim in the SEEK report", () => {
+    const result = applyPulseDraft(
+      {
+        heroStat: {
+          value: "42.7%",
+          label: "of something nobody measured",
+          context: "Job ads mentioning AI skills are up 42.7% year on year.",
+        },
+        newsBites: [],
+      },
+      SOURCES_WITH_SEEK,
+      { monthLabel: "July 2026" }
+    );
+    assert.strictEqual(result.pulse, null, "nothing is written");
+    assert.ok(
+      result.problems.some((problem) => problem.includes("does not appear verbatim")),
+      "the literal-substring check catches it",
+    );
+  });
+
+  await check("REFUSED: a single-digit hero value the token guard would wave through", () => {
+    // `assertNumbersVerbatim` ignores one-character tokens as ordinary English
+    // ("1 in 5"), which is right for prose and wrong for the one number the
+    // section leads with. The hero value is checked as a literal substring for
+    // exactly this case, and this is the check that would catch a regression.
+    const seekWithoutNine: PulseSourceData = {
+      ...SOURCES_WITH_SEEK,
+      seekArticle: { title: SEEK_CANDIDATE.title, url: SEEK_URL, text: "Ads rose by a third." },
+    };
+    const result = applyPulseDraft(
+      { heroStat: { value: "9", label: "made up", context: "Ads rose by a third." }, newsBites: [] },
+      seekWithoutNine,
+      { monthLabel: "July 2026" }
+    );
+    assert.strictEqual(result.pulse, null, "a bare digit is not a free pass");
+  });
+
+  // --- Refusal 3 of 4: a house-style error ----------------------------------
+  await check("REFUSED: a house-style error", () => {
+    // The publisher's own headline, copied. Nothing about it is untrue, and it
+    // is refused anyway — style is a separate layer from truth, and it has its
+    // own veto over what gets written.
+    const result = applyPulseDraft(
+      {
+        heroStat: null,
+        newsBites: [
+          {
+            title: FETCHED[0].title,
+            summary: "About 240 people filled the AUT venue for the summit.",
+            url: FETCHED[0].url,
+          },
+        ],
+      },
+      SOURCES,
+      { monthLabel: "July 2026" }
+    );
+    assert.strictEqual(result.pulse, null, "nothing is written");
+    assert.deepStrictEqual(result.problems, [], "the copy is TRUE — this is not a truth failure");
+    assert.ok(hasCopyErrors(result.styleIssues), "it is a style failure, and that is enough");
+    assert.ok(
+      result.styleIssues.some((issue) => issue.rule === "title-copies-source"),
+      "and the rule is named so it can be fixed",
+    );
+    assert.strictEqual(result.bites.length, 1, "the item is still reportable by headline");
+  });
+
+  // --- Refusal 4 of 4: two items from one publisher (SEEK included) ----------
+  await check("REFUSED: two items from the same publisher", () => {
+    // DRAFT_WOMEN and DRAFT_WOMEN_TWO are both IT Brief NZ. `selectNewsBites`
+    // would keep the second as a SPARE and publish both; `applyPulseDraft`
+    // refuses, because an agent choosing from the whole candidate list never
+    // needs the exception a hand-curating human has.
+    const result = applyPulseDraft(
+      { heroStat: null, newsBites: [DRAFT_WOMEN, DRAFT_WOMEN_TWO] },
+      SOURCES,
+      { monthLabel: "July 2026" }
+    );
+    assert.strictEqual(result.pulse, null, "nothing is written");
+    assert.ok(
+      result.problems.some((problem) => problem.includes("same publisher")),
+      "and the refusal says to pick a different sourceLabel",
+    );
+  });
+
+  await check("REFUSED: two bites from the SEEK report", () => {
+    // The report is one URL under one sourceLabel, so this is caught twice
+    // over: as a duplicate article and as a repeated publisher.
+    const result = applyPulseDraft(
+      {
+        heroStat: null,
+        newsBites: [DRAFT_SEEK, { ...DRAFT_SEEK, title: "A second look at the same report" }],
+      },
+      SOURCES_WITH_SEEK,
+      { monthLabel: "July 2026" }
+    );
+    assert.strictEqual(result.pulse, null, "at most one item may come from the report");
+    assert.ok(result.problems.some((problem) => problem.includes("same article twice")));
+  });
+
+  await check("REFUSED: a SEEK bite built on the hero stat's own figure", () => {
+    const result = applyPulseDraft(
+      {
+        heroStat: {
+          value: "9.9%",
+          label: "more NZ tech job ads than a year ago",
+          context: "Tech job ads rose 9.9% on a year ago.",
+        },
+        newsBites: [DRAFT_SEEK],
+      },
+      SOURCES_WITH_SEEK,
+      { monthLabel: "July 2026" }
+    );
+    assert.strictEqual(result.pulse, null, "the same number twice reads as an editing mistake");
+    assert.ok(result.problems.some((problem) => problem.includes("repeats the hero stat figure")));
+  });
+
+  await check("a trimmed hollow closer is a NOTE, not a refusal", () => {
+    // The one drop that is a fix rather than a judgement. `hollowClosers` only
+    // matches a sentence with no digit, no spelled-out quantity and no proper
+    // noun, so deleting it cannot lose a fact — refusing a whole section over
+    // a sentence the code already removed correctly is how a rule gets
+    // switched off.
+    const result = applyPulseDraft(
+      {
+        heroStat: null,
+        newsBites: [
+          {
+            ...DRAFT_JOBS,
+            summary:
+              "Tech job ads rose 9.9% on a year ago while all ads managed 0.2%. " +
+              "This highlights the ongoing need for change.",
+          },
+        ],
+      },
+      SOURCES,
+      { monthLabel: "July 2026" }
+    );
+    assert.deepStrictEqual(result.problems, [], "not a refusal");
+    assert.ok(result.pulse, "the section is still written");
+    assert.strictEqual(result.notes.length, 1, "but the operator is told it happened");
+    assert.ok(
+      !result.pulse!.newsBites![0].summary.includes("This highlights"),
+      "and the sentence is gone",
+    );
+  });
+
+  await check("more than three items is refused with a countable reason", () => {
+    const result = applyPulseDraft(
+      {
+        heroStat: null,
+        newsBites: [DRAFT_WOMEN, DRAFT_JOBS, DRAFT_AI_FORUM, DRAFT_WOMEN_TWO],
+      },
+      SOURCES,
+      { monthLabel: "July 2026" }
+    );
+    assert.strictEqual(result.pulse, null);
+    assert.strictEqual(result.proposed, 4, "what the agent offered is reported back");
+    assert.ok(result.problems.some((problem) => problem.includes("has 4 items")));
+  });
+
+  await check("one fault is reported once, not once per layer", () => {
+    // `validatePulseDraft` names the item by index and `selectNewsBites` names
+    // it by URL as it discards it, so a bad URL used to produce two lines about
+    // one mistake — and an agent reading that reasonably wonders which second
+    // rule it broke.
+    const result = applyPulseDraft(
+      {
+        heroStat: null,
+        newsBites: [{ ...DRAFT_WOMEN, url: "https://example.com/found-by-searching" }],
+      },
+      SOURCES,
+      { monthLabel: "July 2026" }
+    );
+    assert.strictEqual(result.problems.length, 1, "one mistake, one line");
+  });
+
+  await check("validatePulseDraft is usable on its own, with no assembly", () => {
+    const problems = validatePulseDraft(
+      { heroStat: null, newsBites: [{ ...DRAFT_JOBS, url: "https://example.com/nope" }] },
+      { seekCorpus: "", newsByUrl: FETCHED_BY_URL }
+    );
+    assert.strictEqual(problems.length, 1);
+    assert.ok(problems[0].includes("newsBites[0].url"), "the index is named, so one item is fixable");
+  });
+
+  await check("seekNewsCandidate builds the one shared SEEK candidate", () => {
+    // Both halves of the loop must agree about what the report said, so there
+    // is one construction of it and both call this.
+    const candidate = seekNewsCandidate({
+      title: SEEK_CANDIDATE.title,
+      url: SEEK_URL,
+      text: SEEK_CANDIDATE.sourceText,
+    });
+    assert.strictEqual(candidate!.source, "SEEK NZ Employment Report");
+    assert.strictEqual(candidate!.isoDate, null, "a period, not a publication instant");
+    assert.strictEqual(candidate!.sourceText, SEEK_CANDIDATE.sourceText);
+    assert.strictEqual(seekNewsCandidate(null), null);
+  });
+
+  await check("the trim reason is a shared constant, not matched on prose", () => {
+    // `applyPulseDraft` decides refuse-vs-note by comparing against this exact
+    // string. If it were matched on prose, rewording the message would silently
+    // turn every trimmed closer into a refusal.
+    let seen: string | null = null;
+    selectNewsBites(
+      [
+        {
+          ...DRAFT_JOBS,
+          summary:
+            "Tech job ads rose 9.9% on a year ago while all ads managed 0.2%. " +
+            "This highlights the ongoing need for change.",
+        },
+      ],
+      FETCHED_BY_URL,
+      { onDrop: (_url, reason) => { seen = reason; } }
+    );
+    assert.strictEqual(seen, TRIMMED_HOLLOW_CLOSER);
   });
 
   // 10. The HRD NZ sitemap source. No network: every check runs against the
@@ -1182,68 +1461,12 @@ async function main(): Promise<void> {
     }
   });
 
-  // 8d. The model is pinned, and says so.
-  console.log("8d. Model pinning:");
-
-  await check("OPENAI_MODEL is ignored here, loudly", () => {
-    const before = process.env.OPENAI_MODEL;
-    try {
-      process.env.OPENAI_MODEL = "gpt-4.1-mini";
-      const { model, notes } = pulseModel();
-      assert.strictEqual(model, PULSE_MODEL, "the shared override does not change the Pulse");
-      assert.ok(
-        notes.some((note) => note.includes("IGNORED")),
-        "and the operator is told, rather than left to wonder",
-      );
-    } finally {
-      if (before === undefined) delete process.env.OPENAI_MODEL;
-      else process.env.OPENAI_MODEL = before;
-    }
-  });
-
-  await check("PULSE_OPENAI_MODEL is the deliberate, this-call-only escape hatch", () => {
-    const before = process.env.PULSE_OPENAI_MODEL;
-    try {
-      process.env.PULSE_OPENAI_MODEL = "gpt-4.1";
-      const { model, notes } = pulseModel();
-      assert.strictEqual(model, "gpt-4.1");
-      assert.ok(notes.some((note) => note.includes("overrides the pin")), "and it is reported");
-    } finally {
-      if (before === undefined) delete process.env.PULSE_OPENAI_MODEL;
-      else process.env.PULSE_OPENAI_MODEL = before;
-    }
-  });
-
-  await check("with no override, the pinned model is used and nothing is warned about", () => {
-    const beforeShared = process.env.OPENAI_MODEL;
-    const beforeOwn = process.env.PULSE_OPENAI_MODEL;
-    try {
-      delete process.env.OPENAI_MODEL;
-      delete process.env.PULSE_OPENAI_MODEL;
-      const { model, notes } = pulseModel();
-      assert.strictEqual(model, PULSE_MODEL);
-      assert.deepStrictEqual(notes, []);
-    } finally {
-      if (beforeShared !== undefined) process.env.OPENAI_MODEL = beforeShared;
-      if (beforeOwn !== undefined) process.env.PULSE_OPENAI_MODEL = beforeOwn;
-    }
-  });
-
-  // 8e. The preflight tells an operator what they are about to get.
-  console.log("8e. Preflight:");
-
-  await check("a missing API key is called out, with what happens instead", () => {
-    const before = process.env.OPENAI_API_KEY;
-    try {
-      delete process.env.OPENAI_API_KEY;
-      const text = pulsePreflightLines().join("\n");
-      assert.ok(text.includes("OPENAI_API_KEY: MISSING"), "the key is reported as missing");
-      assert.ok(text.includes("EVERGREEN"), "and the consequence is spelled out");
-    } finally {
-      if (before === undefined) delete process.env.OPENAI_API_KEY;
-      else process.env.OPENAI_API_KEY = before;
-    }
-  });
+  // 8d. The preflight tells an operator what they are about to get.
+  //
+  // What it used to report — a pinned model, a seed, whether an API key was
+  // present — is gone with the model call. What is left is the only thing that
+  // can still differ between two laptops: which sources answered.
+  console.log("8d. Preflight:");
 
   await check("every configured feed is listed", () => {
     const text = pulsePreflightLines().join("\n");
@@ -1254,16 +1477,44 @@ async function main(): Promise<void> {
     assert.ok(text.includes("seek"), "and the SEEK report");
   });
 
-  await check("the key itself is never printed", () => {
-    const before = process.env.OPENAI_API_KEY;
+  await check("it says the writing is the agent's and the guards are ours", () => {
+    const text = pulsePreflightLines().join("\n");
+    assert.ok(text.includes("No OpenAI key"), "a developer with no key is not misled");
+    assert.ok(text.includes("assertNumbersVerbatim"), "and the guards are named");
+  });
+
+  await check("no environment variable can change what the Pulse is written by", () => {
+    // The Pulse used to read `OPENAI_MODEL`, which is shared with lib/matching
+    // and lib/recruitment — so retuning the mentorship matcher silently changed
+    // the newsletter's voice. There is no model here now, so there is nothing
+    // for a stray variable to change, and this check is what says so.
+    const before = process.env.OPENAI_MODEL;
     try {
-      process.env.OPENAI_API_KEY = "sk-do-not-print-me";
-      assert.ok(!pulsePreflightLines().join("\n").includes("sk-do-not-print-me"));
+      process.env.OPENAI_MODEL = "gpt-4.1-mini";
+      const withVar = pulsePreflightLines().join("\n");
+      delete process.env.OPENAI_MODEL;
+      assert.strictEqual(withVar, pulsePreflightLines().join("\n"));
     } finally {
-      if (before === undefined) delete process.env.OPENAI_API_KEY;
-      else process.env.OPENAI_API_KEY = before;
+      if (before === undefined) delete process.env.OPENAI_MODEL;
+      else process.env.OPENAI_MODEL = before;
     }
   });
+
+  await check("the tier labels line up with rssRelevanceRank", () => {
+    // Published in the candidate file so an agent can see WHY the list is in
+    // the order it is; a label that drifted from its rank would mislead it.
+    assert.strictEqual(RSS_TIER_LABELS.length, 5, "ranks 0-4");
+    assert.strictEqual(
+      RSS_TIER_LABELS[rssRelevanceRank("Women in tech summit fills Auckland venue")],
+      RSS_TIER_LABELS[0],
+    );
+    assert.strictEqual(
+      RSS_TIER_LABELS[rssRelevanceRank("Tech job ads lift across the country")],
+      RSS_TIER_LABELS[1],
+    );
+    assert.ok(RSS_TIER_LABELS.every((label) => label.length > 0));
+  });
+
 
   console.log(`\nAll ${passed} checks passed.`);
 }
