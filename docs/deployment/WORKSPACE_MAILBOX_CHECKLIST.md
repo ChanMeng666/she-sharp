@@ -119,16 +119,34 @@ never values. They are on this page because each one is a mailbox.
 ### 5. 删除生产环境的 `NEWSLETTER_ADMIN_EMAIL`
 
 This variable addressed the monthly "draft ready for review" email. That email
-is gone — the newsletter is no longer generated in the cloud, so nothing reads
-the variable any more. It is still set on Vercel production, where it may still
-name a personal Gmail. It is dead config rather than a live leak, but delete it
-so nobody later concludes a review copy is being posted somewhere.
+is gone — the newsletter is no longer generated in the cloud, so nothing read
+the variable any more. It was dead config rather than a live leak, but it may
+still have named a personal Gmail, so it was deleted on **2026-08-30** with
+`vercel env rm NEWSLETTER_ADMIN_EMAIL production`; `vercel env ls production` no
+longer lists it.
+
+One thing worth knowing before deleting any variable, because it happened here:
+a `vercel env pull` taken immediately beforehand returned this variable as `""`,
+while `BASE_URL`, `CRON_SECRET` and `EMAIL_UNSUBSCRIBE_SECRET` in the same pull
+came back with real values. That is the trap CLAUDE.md documents — CLI ≥54
+defaults new variables to **Sensitive**, and `pull` returns those as an empty
+string, which is indistinguishable from a genuinely empty one. So **no
+exact-value rollback was ever possible**, and none was needed: nothing reads it.
+Take that as the rule — capture a value you might want back *before* the pull
+tells you it is empty, because it may not be telling you that at all.
 
 这个变量原本是月度"草稿已就绪"邮件的收件人。那封邮件已经不存在了——通讯不再在云端生成，
-代码里也再没有任何地方读它。它仍然设在 Vercel 生产环境，值可能还是一个私人 Gmail。
-这是死配置而不是活的泄露，但请删掉它，以免日后有人误以为审阅稿还在往那里寄。
+代码里也再没有任何地方读它。它是死配置而不是活的泄露，但值可能还是一个私人 Gmail，
+所以已于 **2026-08-30** 用 `vercel env rm NEWSLETTER_ADMIN_EMAIL production` 删除，
+`vercel env ls production` 里已经看不到它了。
 
-- [ ] Done / 完成
+删除前值得记住一件事，因为这次就遇上了：紧接删除之前的一次 `vercel env pull` 把这个变量
+读成了 `""`，而同一次 pull 里的 `BASE_URL`、`CRON_SECRET`、`EMAIL_UNSUBSCRIBE_SECRET`
+都拿到了真实的值。这正是 CLAUDE.md 里记着的坑——CLI ≥54 默认把新变量设为 Sensitive，
+`pull` 会把它们返回成空字符串，与真的为空无法区分。所以**当时根本无法按原值回滚**，
+好在也不需要：没有任何代码读它。
+
+- [x] Done / 完成 — 2026-08-30
 
 ### 6. Decide about the AUT address on two old event pages
 ### 6. 决定两个旧活动页上那个 AUT 邮箱怎么办

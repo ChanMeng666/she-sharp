@@ -51,9 +51,9 @@ invites the assumption that it is populated:
   double-opted-in — in Mailchimp.
 - **Nothing has ever been sent** from it, and the live newsletter still goes out
   from Mailchimp. A populated list is not a cutover.
-- The **live newsletter still goes out from Mailchimp.**
-- The Resend segment and topic still physically exist and hold nothing. They
-  were deleted on 2026-08-29, and are no longer the consent record.
+- The Resend segment and topic were **deleted on 2026-08-29**, holding nobody at
+  the time, and their two env vars came off Vercel production with them. Nothing
+  in Resend is the consent record any more; the table is.
 
 ## The four audience tiers
 
@@ -152,9 +152,17 @@ link. That is honest and it is sufficient. It is also not the same thing as
 route 1, and the table refuses to pretend otherwise: writing an import date into
 `confirmedAt` would fabricate an act that never happened.
 
-The same applies to the Mailchimp carry-over when it eventually runs. Those rows
-will carry that account's `OPTIN_TIME` in `consentDate` and the export's
-provenance sentence in `consentSource`, and `confirmedAt` will stay null.
+**The Mailchimp carry-over is not one of those three, and it already ran.** Its
+1,545 rows carry that account's `OPTIN_TIME` in `consentDate`, the export's
+provenance sentence in `consentSource`, and — unlike routes 2, 3 and 4 — a
+**real `confirmedAt`**, read from the export's own `CONFIRM_TIME`. That is not
+fabricating an act: those people did press a confirmation button, in Mailchimp,
+and we have the date they pressed it. Writing a null there would have thrown
+away evidence, which is the opposite failure. What keeps them visibly distinct
+from route 1 is `source = 'mailchimp-import'` plus that provenance sentence, and
+between them they answer "why is this person on our list?" more completely than
+a null could. The header of `scripts/email/import-mailchimp-subscribers.ts` sets
+out the same reasoning at the point where it is enforced.
 
 ### If you cannot pick one
 
@@ -228,9 +236,15 @@ and breaching it takes password resets down with the newsletter. A second
 complaint from an address that already filed one is the most expensive email She
 Sharp can send.
 
-Note also what an **import** cannot do: a row with a null `confirmedAt` never
-outranks a suppression, because its consent predates the register by
-construction. An import can never resurrect someone.
+Note also what an **import** cannot do. `selectMailable()` re-admits a
+suppressed subscriber only when their `confirmedAt` is **later** than the
+suppression covering them, and an import's consent is older than the register by
+construction. A row with no confirmation evidence carries a null and loses
+outright. The Mailchimp carry-over's `confirmedAt` is *not* null — but it is a
+2019–2026 `CONFIRM_TIME`, and the register entry that would block such a person
+was stamped by `pull-mailchimp` on the day it was pulled, which is later than
+any of them. Either way the suppression is the newer act. An import can never
+resurrect someone.
 
 If someone tells you "actually she does want it again", the answer is to send
 her the subscribe link, not to flip anything.
@@ -277,8 +291,9 @@ recollection. Every subscriber carries:
 - `source` — the machine-readable route (`website-form`, or the import's name)
 - `consentSource` — the sentence a human wrote and would have to stand behind
 - `consentDate` — when they agreed
-- `confirmedAt` — when they clicked our confirmation button, or null if they
-  came from an import with external provenance
+- `confirmedAt` — when they clicked a confirmation button: ours, or the sending
+  platform's where an import carried that date (the Mailchimp carry-over did,
+  from `CONFIRM_TIME`). Null only for an import with no such evidence
 - `consentIp` and `consentUserAgent` — captured by the website form only
 
 Read one row with:

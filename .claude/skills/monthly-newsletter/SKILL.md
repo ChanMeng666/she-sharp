@@ -39,8 +39,14 @@ All commands below are PowerShell-first (this repo's primary shell on Windows).
 repo and nothing else. They are the prerequisites for the steps that follow.
 
 1. Working directory is the repo root (contains `lib/newsletter/`).
-2. `OPENAI_API_KEY` — for the pulse refresh in Step 4a. Without it that section
-   falls back to the evergreen pool, which is a correct outcome, not a failure.
+2. ~~`OPENAI_API_KEY`~~ — **not needed anywhere in this loop.** The line is kept,
+   struck through and still numbered, because deleting it would only invite the
+   next reader to reinstate it. The Pulse in Step 4a is written by *you*, the AI
+   agent running this skill, against a candidate file the repo fetches itself;
+   the model call that used to sit there went with the cloud draft. Somebody who
+   has just cloned the repo can produce a month's Pulse with nothing else. If
+   something tells you an OpenAI key is required here, it is this line's older
+   self.
 3. `RESEND_API_KEY` — for test sends, and for the `resend` CLI that a human uses
    to send the batches in Step 8e.
 4. `BLOB_READ_WRITE_TOKEN` — for the photo step (read from env or `.env.local`).
@@ -72,7 +78,16 @@ repo and nothing else. They are the prerequisites for the steps that follow.
    Account detail: `docs/deployment/EMAIL_AUTHENTICATION.md`.
 7. `EMAIL_UNSUBSCRIBE_SECRET` — signs each recipient's personal unsubscribe
    link. The batch build in Step 8d **hard-fails without it**; there is no
-   fallback and no way to skip it.
+   fallback and no way to skip it. It lives on Vercel production and is **not**
+   in the local `.env`, so pull it rather than invent one —
+   `vercel env pull .env.production.local --environment production --yes` — and
+   read the value out of that file. It is not marked Sensitive, so the pull
+   returns the real 66-character value rather than the `""` a Sensitive variable
+   comes back as (CLAUDE.md, "Vercel environment variables"); if you ever see an
+   empty string here, that is the trap, not the value. A batch built with a
+   different secret still
+   builds: it signs links that then fail to verify, so every recipient's
+   one-click unsubscribe is broken, on the one send where that matters most.
 8. For approve: production `BASE_URL` + `CRON_SECRET`.
 
 ---
@@ -721,7 +736,7 @@ send is interrupted — resume without double-mailing (8f).
 ### Step 8a — Deliverability check (before approving)
 
 The newsletter is the only recurring bulk send on this domain, so this monthly
-loop is where the domain's health gets looked at. Four things, ~5 minutes:
+loop is where the domain's health gets looked at. Six things, ~5 minutes:
 
 1. **DMARC report.** Cloudflare dashboard → `shesharp.org.nz` → Email → DMARC
    Management. Every sending source should be one you recognise — normally just
@@ -738,7 +753,24 @@ loop is where the domain's health gets looked at. Four things, ~5 minutes:
    ```powershell
    npx tsx scripts/email/suppression.ts sync
    ```
-4. **Reconcile the subscriber table against the registers.** This reports anyone
+4. **Pull Mailchimp's own unsubscribes.** `sync` above sees only the opt-outs
+   that reached *our* infrastructure. Mailchimp is still the platform that
+   actually sends the newsletter, so someone who unsubscribed from a real issue
+   since the 2026-08-17 export exists **only** in Mailchimp's record, and this
+   is the one command in the checklist that can see them. Dry run first:
+   ```powershell
+   npx tsx scripts/email/suppression.ts pull-mailchimp --dry-run
+   npx tsx scripts/email/suppression.ts pull-mailchimp
+   ```
+   **It has already paid for itself once.** Run immediately before the
+   2026-08-29 import, it moved the committed register 2,138 → **2,144** — and
+   six of the fifteen rows that import then held back were those six people, who
+   had left in the two days since the export was taken. Every file is a snapshot
+   of an afternoon, and people leave after it. **Run it every month until the
+   cutover is done, and if it adds anyone, say the number.** Needs
+   `MAILCHIMP_API_KEY`. Mailing someone who has already opted out is a
+   complaint, and the ceiling is account-wide.
+5. **Reconcile the subscriber table against the registers.** This reports anyone
    who is marked subscribed *and* sits on a suppression register:
    ```powershell
    npx tsx scripts/email/suppression.ts reconcile
@@ -747,6 +779,40 @@ loop is where the domain's health gets looked at. Four things, ~5 minutes:
    not an emergency. But a count that keeps growing month after month means some
    part of the site is not writing unsubscribes back to the subscriber table —
    **report the number to the user; don't just move on.**
+6. **Check for people who have JOINED since the last import.** Items 3-5 all run
+   in one direction — they take people *off* the send. Nothing takes anyone on,
+   and while Mailchimp is still the live sender, that is where new subscribers
+   keep arriving. Measured on **2026-08-30**: Mailchimp's audience held **1,552**
+   subscribed members against our **1,545** mailable rows — a strict subset, 7
+   in Mailchimp and not in our table, 0 the other way, and all seven with a
+   `last_changed` after the 2026-08-17 export (18, 19, 19, 20, 27, 28, 28 Aug).
+   A send that night would have silently skipped seven people who had just asked
+   to be on the list, and the gap widens every month Mailchimp keeps sending.
+
+   The check is a **comparison, not a command**: the live audience's subscribed
+   count against the count `recipients-from-db.ts` will actually mail (Step 8c
+   prints it). **If Mailchimp is higher, those people are about to be skipped —
+   say the number and stop.**
+
+   Closing the gap needs no new code: a fresh `subscribed` CSV export from
+   Mailchimp, re-run through `scripts/email/import-mailchimp-subscribers.ts`,
+   writes only the new people — it skips `already a subscriber` and
+   `on the suppression register`, and ends in `onConflictDoNothing` on
+   `emailHash`. The order is the one this checklist already uses:
+   `pull-mailchimp`, **then** the import, **then** `reconcile`.
+
+   **It has to be the CSV, not an API delta.** The Mailchimp API cannot supply
+   `CONFIRM_TIME` — 1,560 rows populated in the export against 129 for
+   `timestamp_signup` — so an API import would write `confirmedAt = null` and
+   record *weaker* consent evidence than those people actually have. A manual
+   export step is the cheaper price. That export is a file of real addresses:
+   it belongs in the gitignored vault (`/private/`), never in the repo, under
+   "Handling the files" in `.claude/skills/update-mailing-list/references/consent-rules.md`.
+
+   **Do not run the import from here.** Adding anyone to `newsletter_subscribers`
+   is `/update-mailing-list`'s job and needs its own approval, exactly as the
+   "does not do" list at the end of this document says. Step 8a's job is to
+   **detect** the gap and stop.
 
 If any of these is out of bounds — or a single send would exceed ~1,000
 recipients — that is the pre-agreed trigger to move marketing onto a separate
@@ -998,8 +1064,9 @@ Also non-negotiable:
   hand-write a recipients file, never paste addresses into one, never add
   someone to a list the script produced. If a person needs to receive the
   newsletter, they belong in `newsletter_subscribers` — that is the whole point
-  of the table. The `--only` and `--limit` flags exist because they can only
-  narrow the list; nothing in this loop may widen it.
+  of the table. The `--only`, `--limit` and `--restrict-to-hashes` flags exist
+  because every one of them can only narrow the list; nothing in this loop may
+  widen it.
 - **Approve reads the deployed bundle, not Redis** — always commit + deploy
   (Step 7) before approving (Step 8b).
 - **The assistant does not send the batches.** Steps 8c and 8d are safe to run;
@@ -1034,8 +1101,13 @@ Also non-negotiable:
 - Manage who is on the mailing list. Subscribing, unsubscribing and importing
   people into `newsletter_subscribers` all happen outside this loop; this skill
   only reads the list as it stands.
-- Import the Mailchimp subscribers. That has not happened yet and is not a step
-  here — see Prerequisite 6.
+- Import the Mailchimp subscribers. That already happened, on **2026-08-29** —
+  1,560 read, 15 held back by the suppression register, **1,545 rows written** —
+  in a one-off run of `scripts/email/import-mailchimp-subscribers.ts`, not from
+  here. Nor is there a next one to run from here: putting anybody into
+  `newsletter_subscribers`, then or now, is `/update-mailing-list`'s job and is
+  gated by that skill's `references/consent-rules.md`. See Prerequisite 6 for
+  what the table holds today.
 - Actually run the `resend emails batch` commands (a human does, Step 8e).
 - Send transactional or auth email.
 - Publish the web version to search — the archive card links it, `noindex` stays.
