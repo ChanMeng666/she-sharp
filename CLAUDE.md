@@ -190,10 +190,19 @@ skill defers to it.
 **The table held 1,549 rows as at 2026-08-30**, and it is not equal to any one
 export — nor will it stay at that number. It is the 2026-08-17 Mailchimp export
 **minus** the suppression register **plus** a later delta: 1,560 read on
-2026-08-29 and 15 held back, then 4 more added on 2026-08-30 from the API. Every
-row carries a real `confirmedAt`. Read the live number from `npx tsx
-scripts/email/suppression.ts reconcile` rather than from this sentence — the
-delta is the point, and it will move again.
+2026-08-29 and 15 held back, then 4 more added on 2026-08-30 from the API.
+**The two halves carry different grades of consent.** The 1,545 from the export
+have a real `confirmedAt`, read from its `CONFIRM_TIME`; the 4 from the API have
+**null**, because the Marketing API exposes no `CONFIRM_TIME` equivalent and
+writing the opt-in time there would fabricate a confirmation nobody made. That
+is the two-grades rule in `consent-rules.md` working, not a gap, and the null is
+load-bearing: `selectMailable()` compares `confirmedAt` against a suppression
+timestamp to let a later re-subscription outrank an earlier suppression.
+**All 1,549 share `source = 'mailchimp-import'`** — the importer hardcodes it, so
+`source` does **not** separate the four. Query the null `confirmedAt`, or the
+`consentSource` sentence that names the API pull. Read the live number from
+`npx tsx scripts/email/suppression.ts reconcile` rather than from this
+sentence — the delta is the point, and it will move again.
 **Nothing has been sent from it**: the live
 newsletter still goes out from Mailchimp, so do not describe the migration as
 done. Run `scripts/email/suppression.ts pull-mailchimp` before any further
