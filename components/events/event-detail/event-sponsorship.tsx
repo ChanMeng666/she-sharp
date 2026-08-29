@@ -4,6 +4,7 @@ import { EventV3 } from "@/types/event";
 import { Button } from "@/components/ui/button";
 import { CurtainReveal } from "@/components/ui/reveal";
 import { curatedImages } from "@/public/img/curated";
+import { globalStats } from "@/lib/data/stats";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Heart, Users, Sparkles } from "lucide-react";
@@ -13,9 +14,15 @@ interface EventSponsorshipProps {
   className?: string;
 }
 
+// The event count is READ, not typed. It is derived from the event register by
+// `getEventsHeldCount()`, so a literal here goes wrong the next time an event
+// happens — which is how three pages came to say "95+" while the register said
+// 96. Members and sponsors stay literal: `globalStats` records both as
+// UNSOURCED round numbers, and reading them from there would dress a rounded
+// figure up as a derived one.
 const HIGHLIGHTS = [
   { icon: Users, text: "3,500+ community members reached" },
-  { icon: Heart, text: "95+ events since 2014" },
+  { icon: Heart, text: `${globalStats.events.total}+ events since 2014` },
   { icon: Sparkles, text: "50+ corporate sponsors" },
 ];
 

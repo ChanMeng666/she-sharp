@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { LegalPageLayout } from "@/components/legal-page-layout";
 import { LEGAL_EMAIL } from "@/lib/config/contact-addresses";
 import "@/styles/components/legal-page.css";
+import { globalStats } from "@/lib/data/stats";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
@@ -29,7 +30,7 @@ export default function TermsOfServicePage() {
           <p>
             She Sharp is a registered New Zealand charity dedicated to bridging the gender gap in STEM fields.
             We provide networking, mentorship, and career development opportunities for women in technology.
-            Since 2014, we have hosted 95+ events empowering women in tech.
+            Since 2014, we have hosted {globalStats.events.total}+ events empowering women in tech.
           </p>
         </section>
 

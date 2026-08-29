@@ -134,7 +134,12 @@ source behind them is in `docs/development/PUBLIC_CLAIMS_PROVENANCE.md`.
 **Key Statistics**:
 - 3500+ Members
 - 50+ Sponsors
-- 95+ Events Since 2014 (derived — `getEventsHeldCount()` in `lib/data/events.ts` feeds `globalStats.events.total`)
+- Events Since 2014 — **derived, so do not write the number here or anywhere
+  else.** `getEventsHeldCount()` in `lib/data/events.ts` feeds
+  `globalStats.events.total`; read it from there. This line itself used to say
+  "95+", and so did three components, while the register said 96 — a page could
+  show both figures at once. A derived statistic with a literal copy beside it
+  is a statistic with a wrong copy beside it, one event later.
 - Not all of these have a source. See `docs/development/PUBLIC_CLAIMS_PROVENANCE.md`
   before quoting any of them in a funding application or sponsorship deck
 
