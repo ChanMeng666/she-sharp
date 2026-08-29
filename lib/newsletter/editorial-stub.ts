@@ -11,10 +11,18 @@
  * pass, and outlived it when that pass was deleted (the generated draft was
  * rewritten by hand every month anyway). It is NOT in `schema.ts`, even though
  * that module owns the shape: the stub needs `evergreenPulse` from `pulse.ts`,
- * which pulls in the OpenAI SDK, cheerio and rss-parser, and `schema.ts` is a
- * pure-zod leaf imported by the render path, the approve route and the issue
- * registry. Folding the stub in there would put that whole dependency graph
- * behind every schema import.
+ * and `schema.ts` is a pure-zod leaf imported by the render path, the approve
+ * route and the issue registry. Folding the stub in there would put `pulse.ts`'s
+ * dependency graph behind every schema import.
+ *
+ * That graph is smaller than it was when this file was written. The reason
+ * given here was "the OpenAI SDK, cheerio and rss-parser", and **the OpenAI SDK
+ * is gone** — `lib/newsletter/` no longer imports it anywhere, since the Pulse
+ * is now written by whichever agent runs the skill and only validated by code.
+ * `cheerio` and `rss-parser` remain, which is still enough reason to keep the
+ * separation. Recorded rather than quietly corrected because a stale reason is
+ * how a decision stops being reviewable: if those two ever go as well, this
+ * module can fold into `schema.ts` and nobody has to re-derive why it did not.
  */
 
 import { evergreenPulse } from "./pulse";
