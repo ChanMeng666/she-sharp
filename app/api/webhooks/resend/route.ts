@@ -2,31 +2,60 @@
  * Resend deliverability webhook.
  *
  * Bounces and spam complaints are the two signals that decide whether the
- * domain keeps reaching inboxes, and until now nothing in this codebase saw
- * them: they lived in the Resend dashboard until somebody thought to look.
- * This route turns them into rows in `email_optouts`, which `sendEmail()`
+ * domain keeps reaching inboxes, and until this route existed nothing in this
+ * codebase saw them: they lived in the Resend dashboard until somebody thought
+ * to look. It turns them into rows in `email_optouts`, which `sendEmail()`
  * consults on every notification-class send.
  *
+ * Since the newsletter moved in-house it also has a second job. Resend's
+ * account-wide complaint ceiling is **0.08%**, about 1.25 complaints on a full
+ * 1,545-recipient send, and breaching it can take password resets and donation
+ * receipts down with the newsletter. Suppression alone cannot see that coming —
+ * it produces a numerator and no denominator — so every delivery and engagement
+ * event is now also written to `email_events`, and
+ * `scripts/email/send-stats.ts` reports the rate against the ceiling.
+ *
  * What each event does, and why:
+ *  - `email.sent` / `email.delivered` / `email.opened` / `email.clicked`
+ *                          — recorded only. **None of them suppresses anything**;
+ *                          no delivery or engagement signal implicates an
+ *                          address, and suppressing on one would opt people out
+ *                          for reading the newsletter.
  *  - `email.bounced`     — the address does not exist or refused delivery.
- *                          Suppress everything but transactional mail.
- *  - `email.complained`  — someone pressed "report spam". Suppress, and post to
- *                          Slack: a complaint rate above ~0.1% is what makes a
- *                          domain start landing in Junk, and it needs a human
- *                          to notice the same day, not at the next newsletter.
- *  - `email.failed`      — a provider-side send failure. Log only; the address
- *                          is not implicated.
+ *                          Recorded, then suppressed for everything but
+ *                          transactional mail (transient bounces excepted).
+ *  - `email.complained`  — someone pressed "report spam". Recorded, suppressed,
+ *                          and posted to Slack: a complaint rate above ~0.1% is
+ *                          what makes a domain start landing in Junk, and it
+ *                          needs a human to notice the same day, not at the next
+ *                          newsletter.
+ *  - `email.failed`      — a provider-side send failure. Recorded, because it is
+ *                          a terminal non-delivery; the address is not
+ *                          implicated, so nothing is suppressed.
  *  - `email.delivery_delayed` — a greylist or a temporarily full mailbox. Log
- *                          only. Suppressing on a delay would opt people out
- *                          for a problem that resolves itself in minutes.
+ *                          only. Suppressing on a delay would opt people out for
+ *                          a problem that resolves itself in minutes, and
+ *                          recording one would invent an outcome the message has
+ *                          not reached.
+ *
+ * The event dispatch itself lives in `lib/email/events.ts` so it can be tested
+ * with fake effects — see `lib/email/events.test.ts`. This file keeps signature
+ * verification and the two suppression writes, which are unchanged.
  *
  * Register the endpoint in the Resend dashboard (Webhooks → Add Endpoint) and
- * put the signing secret in `RESEND_WEBHOOK_SECRET`. See
- * `docs/deployment/EMAIL_AUTHENTICATION.md`.
+ * put the signing secret in `RESEND_WEBHOOK_SECRET`. The four new event types
+ * must be ticked on that endpoint, and open/click tracking enabled on the
+ * domain, before any of them arrive; until then this route behaves exactly as
+ * it did. See `docs/deployment/EMAIL_AUTHENTICATION.md`.
  */
 
 import { NextRequest, NextResponse } from "next/server";
 
+import {
+  handleResendEvent,
+  recordEmailEvent,
+  type ResendWebhookEvent,
+} from "@/lib/email/events";
 import { hashEmail } from "@/lib/email/hash";
 import { recordOptout, type OptoutReason } from "@/lib/email/optouts";
 import {
@@ -38,23 +67,6 @@ import { readSvixHeaders, verifySvixSignature } from "@/lib/email/webhook-verify
 // node:crypto and the database driver both need the Node.js runtime.
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-
-/** The subset of the Resend event payload this route relies on. */
-interface ResendWebhookEvent {
-  type?: string;
-  data?: {
-    to?: string | string[];
-    email_id?: string;
-    subject?: string;
-    bounce?: { type?: string; subType?: string };
-  };
-}
-
-/** Normalizes the `to` field, which is a string for some event types. */
-function readRecipients(data: ResendWebhookEvent["data"]): string[] {
-  if (!data?.to) return [];
-  return Array.isArray(data.to) ? data.to : [data.to];
-}
 
 /**
  * Posts a complaint alert to Slack, best-effort.
@@ -76,7 +88,8 @@ async function alertComplaint(recipients: string[], subject?: string): Promise<v
     `:warning: Spam complaint received${subject ? ` for "${subject}"` : ""}. ` +
     `Recipient hash: ${hashes || "unknown"}. ` +
     `They are now suppressed for all non-transactional mail. ` +
-    `Check the complaint rate before the next broadcast — above 0.1% is trouble.`;
+    `Check the complaint rate before the next broadcast — above 0.1% is trouble. ` +
+    `npx tsx scripts/email/send-stats.ts --tag newsletter:<YYYY-MM>`;
 
   try {
     await fetch(url, {
@@ -100,7 +113,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   // the signature.
   const rawBody = await request.text();
 
-  if (!verifySvixSignature(rawBody, readSvixHeaders(request), process.env.RESEND_WEBHOOK_SECRET)) {
+  const svixHeaders = readSvixHeaders(request);
+  if (!verifySvixSignature(rawBody, svixHeaders, process.env.RESEND_WEBHOOK_SECRET)) {
     console.error("[email] Resend webhook signature verification failed");
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
@@ -112,43 +126,17 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
-  const recipients = readRecipients(event.data);
-
   try {
-    switch (event.type) {
-      case "email.bounced": {
-        // Soft bounces (a full mailbox, a temporary block) resolve on their own;
-        // opting the address out for one would be an overreaction.
-        if (event.data?.bounce?.type?.toLowerCase() === "transient") {
-          console.log("[email] Transient bounce; not suppressing.");
-          break;
-        }
-        await suppressAll(recipients, "bounce");
-        break;
-      }
-
-      case "email.complained": {
-        await suppressAll(recipients, "complaint");
-        await alertComplaint(recipients, event.data?.subject);
-        break;
-      }
-
-      case "email.failed":
-        console.error(
-          `[email] Send failed (id ${event.data?.email_id ?? "unknown"}).`
-        );
-        break;
-
-      case "email.delivery_delayed":
-        console.warn(
-          `[email] Delivery delayed (id ${event.data?.email_id ?? "unknown"}).`
-        );
-        break;
-
-      default:
-        // Resend adds event types over time; an unknown one is not an error.
-        break;
-    }
+    // `svix-id` was read and discarded before telemetry existed. It is the only
+    // value in the request that is stable across Resend's retries, which makes
+    // it the natural idempotency key for the event row — and verification above
+    // has already proved it is the id the signature was computed over, so it
+    // cannot be spoofed to force a duplicate.
+    await handleResendEvent(event, svixHeaders.id ?? "", {
+      recordEvent: recordEmailEvent,
+      suppress: suppressAll,
+      alertComplaint,
+    });
   } catch (error) {
     // Return 500 so Resend retries: losing a bounce means emailing a dead
     // address again, which is exactly what damages the domain's reputation.

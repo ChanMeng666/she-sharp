@@ -389,6 +389,106 @@ export const newsletterSubscribers = pgTable('newsletter_subscribers', {
 }));
 
 // ============================================================================
+// EMAIL DELIVERY EVENTS (the denominator the complaint rate needs)
+// ============================================================================
+
+/**
+ * One row per Resend webhook event: sent, delivered, opened, clicked, bounced,
+ * complained.
+ *
+ * This table exists because of a single number. Resend's Acceptable Use Policy
+ * sets an account-wide complaint ceiling of **0.08%** — about 1.25 complaints on
+ * a 1,545-recipient send — and breaching it means the account "may be shut down
+ * without warning", which would take password resets and donation receipts down
+ * with the newsletter. Until this table existed the codebase stored no per-send
+ * record at all, so there was no denominator to compute that rate against: a
+ * complaint arrived, suppressed one address, and left no trace of how many
+ * messages it was one of.
+ *
+ * **`email_optouts` could not be reused, and the reason is structural rather
+ * than stylistic.** Its primary key is `email_hash` — one row per person,
+ * written with `onConflictDoNothing` precisely so a repeated bounce is a no-op.
+ * That shape cannot hold N events for one address, which is exactly what a rate
+ * needs. The two tables answer different questions: `email_optouts` answers
+ * "may we mail this person?", this one answers "what happened to that send?".
+ *
+ * Three decisions worth stating:
+ *
+ * 1. **Keyed on `emailHash`, never the plaintext address.** Every other
+ *    delivery-signal store here is: `email_optouts`, the committed
+ *    `lib/data/json/email-suppression-hashes.json`, even the Slack complaint
+ *    alert, which posts a 12-character hash prefix. An opens-and-clicks log is
+ *    behavioural data about named people if it carries addresses, and a
+ *    statistic if it does not — only the statistic is needed here. The hash
+ *    comes from `hashEmail()` in `lib/email/hash.ts`, so it still joins to
+ *    `newsletter_subscribers.email_hash` and to `email_optouts` when a human
+ *    genuinely has to resolve one.
+ *
+ * 2. **No `user_id` foreign key**, for the same reason `email_optouts` has none:
+ *    almost nobody on the mailing list has a `users` row, so a foreign key would
+ *    silently drop most of the list.
+ *
+ * 3. **`svixId` is unique, and that is the idempotency mechanism.** The webhook
+ *    route returns 500 on a handler failure specifically so Resend retries, so
+ *    duplicate deliveries are guaranteed rather than hypothetical — and a
+ *    duplicated `email.complained` would inflate the very rate this table exists
+ *    to measure. Svix's `svix-id` header is stable across retries of one event,
+ *    which makes it the natural key; the insert is `onConflictDoNothing` on it.
+ *
+ * Deliberately absent: the click event's `ipAddress` and `userAgent`. Resend
+ * sends both and neither is stored — recording an IP beside a hash would
+ * reintroduce exactly the identifiability the hash was chosen to avoid.
+ *
+ * `issueTag` carries the `newsletter:<YYYY-MM>` tag that
+ * `scripts/newsletter/build-newsletter-batch.ts` stamps on every message, which
+ * is what lets `scripts/email/send-stats.ts` report one issue rather than the
+ * whole account's traffic.
+ */
+export const emailEvents = pgTable('email_events', {
+  id: serial('id').primaryKey(),
+  // The Svix delivery id. Unique — see (3) above; this is the retry guard.
+  svixId: varchar('svix_id', { length: 64 }).notNull().unique(),
+  // Resend's `data.email_id`: the join key across every event for one message,
+  // so a sent → delivered → opened chain can be followed without an address.
+  emailId: varchar('email_id', { length: 64 }),
+  // The Resend event name, stored verbatim ("email.opened") rather than mapped
+  // onto an enum: a new event type must be recordable without a migration.
+  type: varchar('type', { length: 32 }).notNull(),
+  emailHash: varchar('email_hash', { length: 64 }).notNull(),
+  // Read from the message's own tags, never inferred from the sender.
+  stream: varchar('stream', { length: 32 }),
+  issueTag: varchar('issue_tag', { length: 64 }),
+  /**
+   * Resend's `data.bounce.type` — "Permanent" or "Transient" — on
+   * `email.bounced` only, null everywhere else.
+   *
+   * Without it there is no hard-bounce rate, only a bounce rate. The webhook
+   * already branches on this exact field to skip suppressing transient bounces,
+   * so the distinction was arriving on every payload and being thrown away one
+   * line later. Lumping the two together matters most on the send this
+   * instrument was built for: a ramped first mailing to 1,545 people will
+   * produce routine transient bounces — full mailboxes, greylisting — and a
+   * combined rate would read as OVER against the 2% house trigger on a send
+   * that is entirely healthy. A monitor that cries wolf on its first outing is
+   * one nobody reads by the third batch.
+   */
+  bounceType: varchar('bounce_type', { length: 32 }),
+  // When Resend says it happened, not when we stored it. A retry that lands
+  // hours later must not move the event into the wrong reporting window.
+  occurredAt: timestamp('occurred_at').notNull(),
+  // Clicks only. The destination is our own already-public URL, and it is the
+  // one field that says which link in an issue actually worked.
+  linkUrl: text('link_url'),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+}, (table) => ({
+  // The three questions asked of this table: everything about one message,
+  // everything about one issue, and how many of each type.
+  emailIdIdx: index('idx_email_events_email_id').on(table.emailId),
+  issueTagIdx: index('idx_email_events_issue_tag').on(table.issueTag),
+  typeIdx: index('idx_email_events_type').on(table.type),
+}));
+
+// ============================================================================
 // RELATIONS
 // ============================================================================
 
@@ -478,6 +578,8 @@ export type EmailOptout = typeof emailOptouts.$inferSelect;
 export type NewEmailOptout = typeof emailOptouts.$inferInsert;
 export type NewsletterSubscriber = typeof newsletterSubscribers.$inferSelect;
 export type NewNewsletterSubscriber = typeof newsletterSubscribers.$inferInsert;
+export type EmailEvent = typeof emailEvents.$inferSelect;
+export type NewEmailEvent = typeof emailEvents.$inferInsert;
 
 // ============================================================================
 // ACTIVITY TYPES
