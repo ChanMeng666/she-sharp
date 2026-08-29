@@ -519,9 +519,9 @@ safe *because* the Return-Path did not move at the same time.
 > **This is a record of what the 2026-08-28 account migration changed, not a
 > description of current configuration.** `RESEND_NEWSLETTER_SEGMENT_ID` and
 > `RESEND_NEWSLETTER_TOPIC_ID` were superseded a day later, when the consent
-> record moved into the database. Nothing in the repo reads them any more and
-> they are gone from `.env.example`; they are **still set on Vercel production**
-> pending the maintainer's approval to remove — outstanding-work item 8g.
+> record moved into the database. Nothing in the repo reads them any more, they
+> are gone from `.env.example`, and they were **removed from Vercel production
+> with `vercel env rm` on 2026-08-29** — item 8g, done.
 
 `RESEND_API_KEY`, `RESEND_WEBHOOK_SECRET`, `RESEND_NEWSLETTER_SEGMENT_ID`,
 `RESEND_NEWSLETTER_TOPIC_ID`. **Deliberately not touched:**
@@ -715,8 +715,8 @@ pointed at a segment called "Newsletter Pilot" — the name 1,560 real subscribe
 would have landed under. The 2026-08-28 account move recreated every segment from
 scratch and renamed it to "Newsletter". A day later the consent record moved into
 the database, so **no segment was ever the import target**: the 1,545 rows landed
-in `newsletter_subscribers`. The segment still exists in the account, holds
-nobody, and is item 8g.
+in `newsletter_subscribers`. The segment was deleted from the account on
+2026-08-29, holding nobody — item 8g, done.
 
 ### The subscribe funnel was Mailchimp too — not just the sending
 
