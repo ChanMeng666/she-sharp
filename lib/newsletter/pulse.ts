@@ -121,16 +121,64 @@ export interface PulseFeed {
  * the socket count grows.
  */
 export const PULSE_RSS_FEEDS: readonly PulseFeed[] = [
-  // General NZ tech industry desk — the "what happened in NZ tech" leg.
-  // Measured 2026-08: 10 items spanning roughly ONE HOUR. No paging on this
-  // network, so a monthly run sees only what published just before it ran.
-  { url: "https://itbrief.co.nz/feed", source: "IT Brief NZ" },
-  // Same network, different desk; general NZ tech + business technology.
-  // Measured 2026-08: 10 items spanning about a day. No paging here either.
+  // --- The women-in-tech leg -------------------------------------------------
+  //
+  // The only NZ publisher that exists to write about women in tech, and the one
+  // whose items are close to 100% on-mission. Low volume is the POINT: 1.19
+  // posts a month over 7.5 years, and page 1 alone spans ~5 months, so a monthly
+  // run never misses one. Paging it buys nothing a monthly newsletter can use.
+  { url: "https://techwomen.nz/feed/", source: "TechWomen NZ" },
+
+  // --- The NZ industry leg ---------------------------------------------------
+  //
+  // Formerly NZTech; `nztech.org.nz/feed/` 308s here, so the new host is
+  // hardcoded. ~12 posts a month of which 3–5 are usable — the rest are member
+  // AGM notices. The ONLY feed in this list where page 1 misses the month:
+  // measured cumulative reach is p1 = 16 days, p2 = 44, p3 = 63. Hence `pages`.
+  { url: "https://technewzealand.org.nz/feed/", source: "Tech New Zealand", pages: 3 },
+
+  // Ecosystem, events and AI policy; ~2.5 posts a month, rarely women-specific.
+  // Page 1 spans ~5 months.
+  { url: "https://aiforum.org.nz/feed/", source: "AI Forum NZ" },
+
+  // --- Depth, and the one feed that ships whole articles ----------------------
+  //
+  // ~24-day window, about one relevant NZ piece a month — but its
+  // `contentSnippet` is the FULL article (measured at 9,060 characters), which
+  // is far more text for `assertNumbersVerbatim` to verify a statistic against
+  // than a teaser. CC BY-ND and built for republication.
+  { url: "https://theconversation.com/nz/articles.atom", source: "The Conversation NZ" },
+
+  // --- Tech hiring commentary ------------------------------------------------
+  //
+  // A recruiter's blog, so read it as commentary and NEVER as a data source.
+  // Only ~0.6 posts a month, but page 1 spans ~14 months, so it costs one
+  // request and occasionally carries the only NZ tech-hiring piece of the month.
+  { url: "https://absoluteit.co.nz/feed/", source: "Absolute IT" },
+
+  // --- General NZ tech trade press -------------------------------------------
+  //
+  // Kept as a long shot, and deliberately ONE feed rather than two. IT Brief was
+  // dropped: its feed holds roughly ONE HOUR of stories, and the TechDay network
+  // publishes the same pool across six sibling desks (60 titles across them were
+  // only 43 unique), so a second feed bought duplicates rather than reach.
+  // TechDay's own window is about a day — still nearly blind to a monthly run,
+  // which is why it now sorts below everything above it.
   { url: "https://techday.co.nz/feed", source: "TechDay NZ" },
-  // TODO(sources): the verified women-in-tech, job-market and NZ-industry feeds
-  // are being confirmed separately — several are WordPress and will carry
-  // `pages`. They are more lines here, and nothing else in this file changes.
+
+  // NOT here, on purpose, so nobody adds it back: **RNZ**. It publishes exactly
+  // the right stories, and its robots.txt names `anthropic-ai` and
+  // `ChatGPT-User` and disallows them. The generic `*` rule does permit a plain
+  // fetch — but this module does not merely read a feed, it passes the text to
+  // an LLM to be summarised, which is the use RNZ explicitly refused. A charity
+  // should not be hunting for the technically-permitted reading of a
+  // publisher's "no". Its 2.3-day window means a monthly run would nearly
+  // always have missed the story anyway.
+  //
+  // Also not here: hcamag (HRD New Zealand). It is fetched through its SITEMAP,
+  // not a feed — see `fetchHrdItems()`. Its Atom feed holds five days, and
+  // `?page=`/`?paged=`/`?offset=` all return HTTP 200 with the identical 30
+  // items, so paging code against it looks like it works and does not.
 ];
 
 /**
@@ -145,6 +193,30 @@ export const PULSE_RSS_FEEDS: readonly PulseFeed[] = [
  * alternative if a month's feeds cannot fill three items.
  */
 const RSS_MAX_AGE_DAYS = 35;
+
+/**
+ * The same window, widened for items that rank as women/diversity news.
+ *
+ * Not a preference — a measured fix for the one slot that could not fill.
+ * TechWomen NZ is the only NZ publisher writing about women in tech and posts
+ * 1.19 times a month, so at 35 days a *specifically* women-in-tech story lands
+ * in roughly **62%** of months. At 90 days that becomes roughly **92%**, and it
+ * costs nothing: page 1 of that feed already spans about five months, so the
+ * items are fetched either way and the narrower window was simply discarding
+ * them.
+ *
+ * Deliberately NOT applied to the HRD sitemap leg. That source already yields
+ * ~2.8 women/gender/pay-equity articles a month and filled every one of the
+ * seven months measured, so widening it would add no coverage and would spend
+ * the article-fetch budget re-reading older stories.
+ *
+ * Three months is the outer edge of what still reads as news rather than as an
+ * archive trawl, which is why this is 90 and not 180.
+ */
+const WOMEN_MAX_AGE_DAYS = 90;
+
+/** Rank returned by {@link rssRelevanceRank} for women/diversity items. */
+const WOMEN_RANK = 0;
 
 /**
  * Hard ceiling on pages per feed, whatever an entry asks for. A mistyped
@@ -425,6 +497,7 @@ async function fetchRssItems(): Promise<PulseSourceData["newsItems"]> {
   const parser = new Parser();
 
   const cutoff = Date.now() - RSS_MAX_AGE_DAYS * 24 * 60 * 60 * 1000;
+  const womenCutoff = Date.now() - WOMEN_MAX_AGE_DAYS * 24 * 60 * 60 * 1000;
 
   // One flat list of (feed, page) requests. Paging must not cost one timeout
   // per page, so pages are fanned out beside the feeds rather than walked.
@@ -472,7 +545,13 @@ async function fetchRssItems(): Promise<PulseSourceData["newsItems"]> {
       // three slots on an item the guard was always going to drop. Skip it
       // here rather than pay a model call to find out.
       .filter((item) => item.sourceText.length >= MIN_ITEM_TEXT_CHARS)
-      .filter((item) => withinAgeWindow(item.isoDate, cutoff))
+      // Women/diversity items get the wider window — see WOMEN_MAX_AGE_DAYS.
+      .filter((item) =>
+        withinAgeWindow(
+          item.isoDate,
+          rssRelevanceRank(item.title) === WOMEN_RANK ? womenCutoff : cutoff
+        )
+      )
       .filter((item) => {
         // Pages overlap when a publisher posts mid-fetch; same story, same feed.
         if (seenInFeed.has(item.url)) return false;
@@ -1099,7 +1178,8 @@ ABSOLUTE ANTI-HALLUCINATION RULES — these override everything:
 
 EDITORIAL MIX (the section reads as a list, so the items must not be three angles on one story):
 - Aim for a spread of three: one thing useful to women in tech, one about the job market or hiring, and one about the New Zealand tech industry generally.
-- If the available items cannot fill all three, write fewer rather than repeating a topic — but do not force it: two items on the same theme are fine if both are genuinely worth a reader's minute.
+- That spread is a preference, NOT a quota, and the order of priority when it cannot be met is: (1) three items each worth a reader's minute, (2) the spread, (3) fewer items. So if the women-in-tech candidates include two strong stories and the only industry candidates are vendor product announcements, take BOTH women stories — this newsletter is read by women in tech, and a second story they will actually read beats a third slot filled with a press release. Do not leave a slot empty while a strong on-mission story goes unused.
+- Write fewer than three only when fewer than three are genuinely worth reading. Padding is worse than a short section.
 - Never use two items from the same article, and avoid two that would leave a reader thinking they had read the same story twice.
 
 LOCAL PREFERENCE (never overrides the rules above):
@@ -1113,6 +1193,7 @@ Return a SINGLE JSON object and nothing else, matching:
 }
 
 - heroStat: pick ONE VERBATIM number from the SEEK employment report text. Prefer a number about technology, ICT, software, AI, digital skills, or women/gender if one is present; otherwise choose the most striking overall. "value" is that exact number as written (e.g. "5.2%", "12,000"). "label" is a short phrase (≤8 words) naming what it measures. "context" is one sentence of plain-English framing; any number inside it must also be verbatim from the source. You may add an Auckland framing to the context ONLY if the source text itself mentions Auckland — otherwise keep it as written (SEEK is a nationwide report, and that is fine). If no SEEK text is provided, return heroStat: null.
+- Every "title" must be a headline a reader would stop on, never the source document's own name. This matters most for the SEEK report, whose article title is literally "SEEK NZ Employment Report - <Month>" — that is a filing label, not a story. Say what the numbers mean for someone reading: "If you shelved a job search, take it back off the shelf" is a headline; "SEEK NZ Employment Report - July" is not.
 - The SEEK employment report is ALSO eligible as ONE of the news items, using its own exact URL. It is the only job-market DATA source available — the news feeds carry industry stories, not employment figures — so it is usually the right choice for the job-market leg of the mix. Two rules: use AT MOST ONE item from the SEEK report, and do NOT build that item on the same number you used for the hero stat. Choose a different figure from the report, or write no SEEK item at all.
 - newsBites: choose UP TO THREE news items following the editorial mix above, ordered most interesting first. For each: "title" is a short headline of your own (it may re-angle the original, but it must not add a fact the article does not state), "summary" is at most two sentences, and "url" is that item's exact URL. Do not write a source name — we attach it ourselves. If the item's text names an Auckland location, campus, or company, name it in the summary. If no news items are provided, return newsBites: [].
 
@@ -1251,8 +1332,24 @@ function datelineFor(isoDate: string | null): string | null {
 export function selectNewsBites(
   drafted: readonly { title: string; summary: string; url: string }[],
   fetched: ReadonlyMap<string, FetchedNewsItem>,
-  opts: { seekUrl?: string | null; heroValue?: string | null } = {}
+  opts: {
+    seekUrl?: string | null;
+    heroValue?: string | null;
+    /**
+     * Called once per dropped item, with the reason.
+     *
+     * Every drop below is a silent `continue`, and silence is the wrong default
+     * here: a two-item Pulse is a legitimate outcome when the month is thin,
+     * and it is also what a guard rejecting a good story looks like. Those need
+     * different responses from whoever is curating the issue — accept it, or go
+     * and find out why a verified source failed verification — and from the
+     * outside they are indistinguishable. Optional so the pure function stays
+     * testable without a logger.
+     */
+    onDrop?: (url: string, reason: string) => void;
+  } = {}
 ): PulseNewsItem[] {
+  const drop = (url: string, reason: string) => opts.onDrop?.(url, reason);
   const preferred: PulseNewsItem[] = [];
   const spares: PulseNewsItem[] = [];
   const seenUrls = new Set<string>();
@@ -1261,13 +1358,22 @@ export function selectNewsBites(
 
   for (const draft of drafted) {
     const source = fetched.get(draft.url);
-    if (!source) continue; // invented, edited, or hallucinated URL
-    if (seenUrls.has(draft.url)) continue; // the same article twice
+    if (!source) {
+      drop(draft.url, "url was not one we fetched (invented, edited or hallucinated)");
+      continue;
+    }
+    if (seenUrls.has(draft.url)) {
+      drop(draft.url, "the same article twice");
+      continue;
+    }
     // Same normalisation as the fetch-layer cross-post removal, so "the same
     // story" means one thing in this file. Cross-posts are already gone from the
     // pool; this catches a pair that reached the model anyway.
     const headline = normaliseHeadline(source.title);
-    if (seenHeadlines.has(headline)) continue;
+    if (seenHeadlines.has(headline)) {
+      drop(draft.url, "same headline as an item already kept (cross-post)");
+      continue;
+    }
 
     const draftText = `${draft.title} ${draft.summary}`;
 
@@ -1282,11 +1388,18 @@ export function selectNewsBites(
     // the same figure is a second publication corroborating it, which is worth
     // printing, not a duplicate.
     if (opts.seekUrl && opts.heroValue && draft.url === opts.seekUrl) {
-      if (draftText.includes(opts.heroValue)) continue;
+      if (draftText.includes(opts.heroValue)) {
+        drop(draft.url, "repeats the hero stat figure " + opts.heroValue);
+        continue;
+      }
     }
 
     const ownText = `${source.title} ${source.sourceText}`;
-    if (!assertNumbersVerbatim(draftText, ownText).ok) continue;
+    const numbers = assertNumbersVerbatim(draftText, ownText);
+    if (!numbers.ok) {
+      drop(draft.url, "numbers not verbatim in the source: " + numbers.offending.join(", "));
+      continue;
+    }
 
     seenUrls.add(draft.url);
     seenHeadlines.add(headline);
@@ -1437,10 +1550,21 @@ export async function buildPulse(
 
   // The hero stat is settled first so a SEEK-sourced bite can be checked
   // against the figure the section is already leading with.
-  const newsBites = selectNewsBites(model?.newsBites ?? [], newsByUrl, {
+  const proposed = model?.newsBites ?? [];
+  const newsBites = selectNewsBites(proposed, newsByUrl, {
     seekUrl: seekCandidate?.url ?? null,
     heroValue: heroStat.value,
+    // Say what was rejected and why. A short Pulse is a legitimate outcome and
+    // is also what a guard eating a good story looks like; whoever is curating
+    // the issue has to be able to tell those apart, and until this logged
+    // nothing they could not.
+    onDrop: (url, reason) => console.warn(`[pulse] dropped ${url} — ${reason}`),
   });
+  if (proposed.length !== newsBites.length) {
+    console.warn(
+      `[pulse] kept ${newsBites.length} of ${proposed.length} proposed news item(s)`
+    );
+  }
 
   const didYouKnow = evergreenDidYouKnow(monthIndex, heroStat.sourceUrl);
 
