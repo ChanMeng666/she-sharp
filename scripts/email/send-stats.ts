@@ -162,6 +162,24 @@ async function main(): Promise<void> {
   const failed = people("email.failed");
 
   /**
+   * Whether opens and clicks were measured at all.
+   *
+   * Open and click tracking is OFF on the sending domain by decision
+   * (`docs/deployment/EMAIL_AUTHENTICATION.md` → "Open and click tracking"), and
+   * neither event can fire without it. So a send with deliveries and no
+   * engagement events was not ignored — it was not measured, and the two are
+   * different findings. Reporting the first as `0%` is a precise number that
+   * misleads, and the misreading is expensive: somebody watching a ramp sees a
+   * 0% open rate, concludes the mail is landing in spam, and halts a send that
+   * is healthy.
+   *
+   * Inferred rather than queried on purpose: this is a database report, and
+   * making it fail when the network is down — or when Resend's API is — to
+   * annotate a caveat would trade a working tool for a footnote.
+   */
+  const engagementMeasured = !(opened === 0 && clicked === 0);
+
+  /**
    * Complaints are measured against what actually arrived.
    *
    * A message that bounced could not be reported as spam, so including it in
@@ -204,8 +222,13 @@ async function main(): Promise<void> {
             hardBounceVerdict: verdict(bounces.hard, sent, BOUNCE_CEILING),
             houseComplaintTriggerPct: HOUSE_COMPLAINT_TRIGGER,
             houseBounceTriggerPct: HOUSE_BOUNCE_TRIGGER,
-            uniqueOpenPct: base === 0 ? null : (opened / base) * 100,
-            uniqueClickPct: base === 0 ? null : (clicked / base) * 100,
+            // `null` already means "cannot be computed" here, so an unmeasured
+            // engagement rate uses it rather than reporting a measured-looking
+            // zero. `engagementMeasured` lets a consumer tell the two nulls
+            // apart: no recipients, versus tracking switched off.
+            engagementMeasured,
+            uniqueOpenPct: base === 0 || !engagementMeasured ? null : (opened / base) * 100,
+            uniqueClickPct: base === 0 || !engagementMeasured ? null : (clicked / base) * 100,
           },
           mailchimpBaseline: baseline,
           caveats: [
@@ -282,8 +305,19 @@ async function main(): Promise<void> {
     `                   excluded from the rate above, and not suppressed either.`
   );
   console.log("");
-  console.log(`  Unique open      ${pct(opened, base)}`);
-  console.log(`  Unique click     ${pct(clicked, base)}`);
+  // See `engagementMeasured` above for why a zero is withheld rather than shown.
+  if (base > 0 && !engagementMeasured) {
+    console.log("  Unique open      not measured");
+    console.log("  Unique click     not measured");
+    console.log("                   No open or click events were stored. Unless tracking");
+    console.log("                   has been enabled since, neither can fire — this is a");
+    console.log("                   0 that means 'not measured', not 'nobody opened'.");
+    console.log("                   Delivery, bounces and complaints above need no");
+    console.log("                   tracking and ARE measured.");
+  } else {
+    console.log(`  Unique open      ${pct(opened, base)}`);
+    console.log(`  Unique click     ${pct(clicked, base)}`);
+  }
   console.log("");
   console.log("  Mailchimp baseline, for context only:");
   console.log(
