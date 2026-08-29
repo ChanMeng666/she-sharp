@@ -118,15 +118,10 @@ const RUN_SHEET_LABELS: Record<string, string> = {
   "Roundtable discussions based on panel topics": "Roundtables on the panel's topics",
 };
 
-/* The website still lists doors at 5:00. This slide is shown after people are
-   in the room — the eyebrow is "Grab a plate, then sit" — so the registration
-   row is already happening and crowding out the rest of the night. */
-const RUN_SHEET_ROWS = RUN_SHEET.items
-  .filter((row) => !/registration/i.test(row.label))
-  .map((row) => ({
-    ...row,
-    label: RUN_SHEET_LABELS[row.label] ?? row.label,
-  }));
+const RUN_SHEET_ROWS = RUN_SHEET.items.map((row) => ({
+  ...row,
+  label: RUN_SHEET_LABELS[row.label] ?? row.label,
+}));
 
 const SPEAKERS = speakerGroupsFrom(event);
 
@@ -230,11 +225,11 @@ const EVENING: Slide[] = [
     title: "The Shape of Tonight",
     /* NO LEAD, and this is a layout constraint rather than a style choice. The
        agenda layout sets the lead in a narrow column, so an eleven-word one
-       wrapped to two lines and pushed the last row — "Networking and event
+       wrapped to two lines and pushed the fifth row — "Networking and event
        close" — down into the archive band at the foot of the slide, where it
        was unreadable. It did that at 1920×1080 as well as at 4:3, and neither
        `lint-deck.ts` nor `deck.test.ts` can see it: overflow is only visible on
-       a rendered stage. Four rows is what this slide now has. */
+       a rendered stage. Five rows is what this slide has room for. */
     items: RUN_SHEET_ROWS,
     note: "The most-looked-at slide of the night. Leave it up while people are still finding seats, and come back to it at the break. Read only the next two rows aloud — people photograph the slide for the rest.",
   },
