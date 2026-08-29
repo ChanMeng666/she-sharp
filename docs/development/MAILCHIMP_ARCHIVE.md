@@ -205,16 +205,24 @@ Each of these is a claim the data will appear to support and does not.
    "Order email", FNAME/LNAME = the buyer's first and last name
    (<https://help.humanitix.com/en/articles/8888537-connect-to-mailchimp>).
 
-   Confirmed live on 2026-08-30. Three contacts added to the audience on 27, 28
-   and 28 August 2026 already carried both `Event: She Sharp & Les Mills: No
-   Pain, All Gain - Getting fit for AI` and `Ticket Type: Tickets - Professionals`
-   or `Ticket Type: Tickets - Students`, with `source: "Mahsa McCauley NZD"` — a
+   Confirmed live on 2026-08-30. Three contacts joined the audience on 27, 28
+   and 28 August 2026 carrying both `Event: She Sharp & Les Mills: No Pain, All
+   Gain - Getting fit for AI` and `Ticket Type: Tickets - Professionals` or
+   `Ticket Type: Tickets - Students`, with `source: "Mahsa McCauley NZD"` — a
    person's name followed by the currency, which is Humanitix's documented
-   `Store` mapping and nothing a human would type. The corroboration was already
-   committed: `manifest.json`'s `ecommerce-stores` entry records three stores
-   that are "artefacts of connected integrations rather than a shop: no
+   `Store` mapping and nothing a human would type. The tags were there from the
+   write: each contact's `last_changed` is within eleven seconds of its
+   `timestamp_opt`, so nothing was added afterwards. The corroboration was
+   already committed: `manifest.json`'s `ecommerce-stores` entry records three
+   stores that are "artefacts of connected integrations rather than a shop: no
    platform, no domain, no orders, empty addresses, and `money_format` NZD",
    each named after a natural person.
+
+   **`timestamp_opt` is when a person joined the list, not when a tag was
+   applied**, and the two coincide above only because those three joined at
+   checkout. Most contacts carrying an event tag joined years earlier and were
+   tagged when they later bought a ticket. Never date a tag from an opt-in
+   timestamp.
 
    One gap between the documentation and this account: Humanitix describes a
    bare event-name tag, while every `Event:` tag here carries the `Event: `

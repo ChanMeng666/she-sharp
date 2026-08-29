@@ -113,22 +113,30 @@ out of it.
 If the `unsubscribe` gate fires, the usual cause is `engine: "layout"` —
 the transactional layout has no opt-out footer. Switch to `engine: "react"`.
 
-## The list is currently empty
+## The list is real, and nothing has ever been sent from it
 
-`newsletter_subscribers` holds **nobody**. The double opt-in flow is live, but
-nothing has been imported into it and nothing has been sent from it.
+`newsletter_subscribers` holds **1,549 mailable subscribers** (2026-08-30 — read
+the live number with `npx tsx scripts/email/suppression.ts reconcile`, never a
+remembered one). The double opt-in flow is live, the Mailchimp list has been
+imported, and a send from this skill reaches real people.
 
-The real list — about **1,560 subscribers** — is still in Mailchimp, and **the
-monthly newsletter still goes out from there.** The Resend segment and topic
-that used to hold Tier 0 still exist in the account, hold nothing, and are
-deleted from the Resend account on 2026-08-29; there is no count to read.
+**No message has ever gone out from this list.** That is the fact to hold on to.
+Everything you send here is the first thing 1,549 people receive from this
+system, and there is no scheduler and no cancellation window — so the test send,
+the plan block and the chunk-by-chunk send are the gates that matter, and none
+of them is a formality. **The monthly newsletter still goes out from
+Mailchimp**; this has not taken over. The Resend segment and topic that used to
+hold Tier 0 were deleted from the Resend account on 2026-08-29 and are not the
+record of anything.
 
-That is not a reason to send to a database query instead. It is a reason to run
-`/update-mailing-list` first — that skill is this skill's hard prerequisite.
+None of that is a reason to send to a database query instead. The subscriber
+table is still the only audience.
 
-**Stop and ask when fewer than 5 people will be mailed.** Below that, the send is
-a rehearsal, and the user should know that before approving it, not after. Say it
-plainly and give three options — run the list skill first, send anyway as a
+**Stop and ask when fewer than 5 people will be mailed.** That is no longer the
+normal state — a handful is now far more likely a wrong database or a broken
+connection than a real list, and sending would be a rehearsal the user should
+know about before approving it, not after. Say it plainly and give three
+options — check `POSTGRES_URL` and re-run the count, send anyway as a labelled
 rehearsal, or stop. Do not pick for them, and do not quietly send to a list of
 one as though it were a campaign.
 

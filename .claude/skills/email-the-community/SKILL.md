@@ -17,8 +17,10 @@ Four things, in this order, every time:
   permanently. This skill exists to put a plan block, a test send and a set of
   gates between the user's approval and that.
 - **This skill only READS the list.** Adding, importing or suppressing people is
-  `/update-mailing-list` — also this skill's hard prerequisite, because the
-  subscriber table currently holds **nobody at all**.
+  `/update-mailing-list`. The table holds **1,549 mailable subscribers**
+  (2026-08-30), so a send here reaches real people — and **nothing has ever been
+  sent from this list**, which makes the test send, the Step 6 plan block and
+  the chunk-by-chunk Step 8 the gates that matter, not paperwork.
 
 Input: a topic and a paragraph. Output: one sent batch, its record in
 `state/broadcasts.json`, and a report. Commands are PowerShell-first.
@@ -149,13 +151,13 @@ Note the **WILL BE MAILED** number — it is the one that goes in the plan block
 **If fewer than 5 people will be mailed, stop and say this:**
 
 ```
-Heads up: the subscriber list currently has 0 confirmed subscribers.
-Sending this now reaches nobody at all.
+Heads up: the subscriber list currently has <n> confirmed subscriber(s).
+Sending this now would reach almost nobody.
 
-She Sharp's newsletter still goes out through Mailchimp; the ~1,560
-people on that list have not been imported here yet.
+That is far below the 1,549 the table held on 2026-08-30, so it is much
+more likely a wrong database or a broken connection than a real list.
 
-  (1) run /update-mailing-list first, then come back
+  (1) check POSTGRES_URL points at production, then re-run this step
   (2) send anyway as a rehearsal — I'll note it as such
   (3) stop here
 ```
