@@ -115,14 +115,15 @@ the transactional layout has no opt-out footer. Switch to `engine: "react"`.
 
 ## The list is real, and nothing has ever been sent from it
 
-`newsletter_subscribers` holds **1,549 mailable subscribers** (2026-08-30 — read
-the live number with `npx tsx scripts/email/suppression.ts reconcile`, never a
-remembered one). The double opt-in flow is live, the Mailchimp list has been
-imported, and a send from this skill reaches real people.
+`newsletter_subscribers` holds the whole imported Mailchimp list — **1,549
+mailable as at 2026-08-30**, and that figure moves. Read the live number with
+`npx tsx scripts/email/suppression.ts reconcile`, never a remembered one. The
+double opt-in flow is live, the Mailchimp list has been imported, and a send
+from this skill reaches real people.
 
 **No message has ever gone out from this list.** That is the fact to hold on to.
-Everything you send here is the first thing 1,549 people receive from this
-system, and there is no scheduler and no cancellation window — so the test send,
+Everything you send here is the first thing this list has ever received, and
+there is no scheduler and no cancellation window — so the test send,
 the plan block and the chunk-by-chunk send are the gates that matter, and none
 of them is a formality. **The monthly newsletter still goes out from
 Mailchimp**; this has not taken over. The Resend segment and topic that used to

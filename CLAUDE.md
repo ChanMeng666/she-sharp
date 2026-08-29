@@ -187,12 +187,13 @@ subscribing. The gate is
 `.claude/skills/update-mailing-list/references/consent-rules.md`; every sending
 skill defers to it.
 
-**The table holds 1,549 rows**, and it is not equal to any one export. It is the
-2026-08-17 Mailchimp export **minus** the suppression register **plus** a later
-delta: 1,560 read on 2026-08-29 and 15 held back, then 4 more added on
-2026-08-30 from the API. Every row carries a real `confirmedAt`. Read the live
-number from `npx tsx scripts/email/suppression.ts reconcile` rather than from
-this sentence — the delta is the point, and it will move again.
+**The table held 1,549 rows as at 2026-08-30**, and it is not equal to any one
+export — nor will it stay at that number. It is the 2026-08-17 Mailchimp export
+**minus** the suppression register **plus** a later delta: 1,560 read on
+2026-08-29 and 15 held back, then 4 more added on 2026-08-30 from the API. Every
+row carries a real `confirmedAt`. Read the live number from `npx tsx
+scripts/email/suppression.ts reconcile` rather than from this sentence — the
+delta is the point, and it will move again.
 **Nothing has been sent from it**: the live
 newsletter still goes out from Mailchimp, so do not describe the migration as
 done. Run `scripts/email/suppression.ts pull-mailchimp` before any further

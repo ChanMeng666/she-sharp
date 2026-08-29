@@ -17,10 +17,11 @@ Four things, in this order, every time:
   permanently. This skill exists to put a plan block, a test send and a set of
   gates between the user's approval and that.
 - **This skill only READS the list.** Adding, importing or suppressing people is
-  `/update-mailing-list`. The table holds **1,549 mailable subscribers**
-  (2026-08-30), so a send here reaches real people — and **nothing has ever been
-  sent from this list**, which makes the test send, the Step 6 plan block and
-  the chunk-by-chunk Step 8 the gates that matter, not paperwork.
+  `/update-mailing-list`. The table holds the whole imported Mailchimp list
+  (**1,549 mailable as at 2026-08-30**, and it moves — Step 1 prints the live
+  number), so a send here reaches real people. **Nothing has ever been sent from
+  this list**, which makes the test send, the Step 6 plan block and the
+  chunk-by-chunk Step 8 the gates that matter, not paperwork.
 
 Input: a topic and a paragraph. Output: one sent batch, its record in
 `state/broadcasts.json`, and a report. Commands are PowerShell-first.
