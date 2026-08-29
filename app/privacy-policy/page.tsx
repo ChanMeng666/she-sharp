@@ -75,6 +75,13 @@ export default function PrivacyPolicyPage() {
             </li>
           </ul>
           <p>
+            When we send a newsletter we also record whether it was delivered,
+            whether it was opened, and which links in it were clicked. We keep
+            those records against a one-way code made from your email address
+            rather than the address itself, and we use them to check that our
+            mail is arriving and to see which stories people found useful.
+          </p>
+          <p>
             Every newsletter we send carries an unsubscribe link. One click stops
             the newsletter; you do not need an account, a password, or to explain
             why. You can also ask us to remove you by emailing{" "}
