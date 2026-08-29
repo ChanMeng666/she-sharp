@@ -132,6 +132,36 @@ const stubFetch = (async () =>
   )) as typeof globalThis.fetch;
 
 /**
+ * The SEEK report as `buildPulse` offers it to the news selector: fetched and
+ * parsed like any other source, with no dateline (the report covers a period)
+ * and no teaser (the model receives the report in its own prompt block).
+ */
+const SEEK_URL = "https://nz.seek.com/about/news/article/seek-nz-employment-report-june26";
+
+const SEEK_CANDIDATE: PulseSourceData["newsItems"][number] = {
+  title: "SEEK NZ Employment Report - June 2026",
+  url: SEEK_URL,
+  source: "SEEK NZ Employment Report",
+  isoDate: null,
+  snippet: "",
+  sourceText:
+    "Job ads mentioning AI skills are up 107.3% year on year. Tech job ads rose " +
+    "9.9% on a year ago, with Auckland up 5.0%, while ads nationally rose 0.2% in June.",
+};
+
+/** The candidate pool as `buildPulse` builds it: RSS items plus the SEEK report. */
+const FETCHED_WITH_SEEK = new Map([...FETCHED_BY_URL, [SEEK_URL, SEEK_CANDIDATE]]);
+
+/** A faithful job-market draft built on the SEEK report — July 2026's best item. */
+const DRAFT_SEEK = {
+  title: "If you shelved a job search, take it back off the shelf",
+  summary:
+    "Tech job ads rose 9.9% on a year ago and Auckland is up 5.0%, while ads " +
+    "nationally rose just 0.2% in June.",
+  url: SEEK_URL,
+};
+
+/**
  * Runs `fn` with the model stubbed to answer `payload`, so `buildPulse`
  * exercises its real parse → validate → select path with no network call and no
  * API key. Restores `fetch` and the environment afterwards.
@@ -518,6 +548,79 @@ async function main(): Promise<void> {
     });
   });
 
+  // 8b. The SEEK report as a news item — a source we already fetch, not a
+  // relaxation of the "URL must be one we retrieved" guard.
+  console.log("8b. SEEK-sourced news bites:");
+  await check("a SEEK-sourced bite survives and is attributed to the report", () => {
+    const bites = selectNewsBites([DRAFT_SEEK, DRAFT_WOMEN], FETCHED_WITH_SEEK, {
+      seekUrl: SEEK_URL,
+      heroValue: "107.3%",
+    });
+    assert.strictEqual(bites.length, 2, "both items survive");
+    assert.strictEqual(bites[0].url, SEEK_URL);
+    assert.strictEqual(bites[0].sourceLabel, "SEEK NZ Employment Report");
+    assert.strictEqual(bites[0].dateLabel, undefined, "the report ships no dateline");
+  });
+  await check("the URL guard still binds: a SEEK-looking URL we did not fetch is dropped", () => {
+    // The guard is unchanged — SEEK is allowed because it IS fetched, not
+    // because anything about seek.co.nz is trusted.
+    const lookalike = {
+      ...DRAFT_SEEK,
+      url: "https://nz.seek.com/about/news/article/seek-nz-employment-report-may26",
+    };
+    const bites = selectNewsBites([lookalike, DRAFT_WOMEN], FETCHED_WITH_SEEK, {
+      seekUrl: SEEK_URL,
+      heroValue: "107.3%",
+    });
+    assert.deepStrictEqual(bites.map((bite) => bite.url), [DRAFT_WOMEN.url]);
+  });
+  await check("a SEEK bite with a number absent from the report is dropped, others survive", () => {
+    const fabricated = { ...DRAFT_SEEK, summary: "Tech job ads rose 31.4% on a year ago." };
+    const bites = selectNewsBites([fabricated, DRAFT_WOMEN, DRAFT_JOBS], FETCHED_WITH_SEEK, {
+      seekUrl: SEEK_URL,
+      heroValue: "107.3%",
+    });
+    assert.deepStrictEqual(
+      bites.map((bite) => bite.url),
+      [DRAFT_WOMEN.url, DRAFT_JOBS.url],
+      "the invented figure takes its item with it"
+    );
+  });
+  await check("a SEEK bite repeating the hero stat's number is dropped", () => {
+    // The hero stat leads the section with this figure; repeating it a few
+    // lines down reads as an editing mistake, so the bite goes.
+    const echo = {
+      ...DRAFT_SEEK,
+      summary: "Job ads mentioning AI skills are up 107.3% year on year.",
+    };
+    const bites = selectNewsBites([echo, DRAFT_WOMEN], FETCHED_WITH_SEEK, {
+      seekUrl: SEEK_URL,
+      heroValue: "107.3%",
+    });
+    assert.deepStrictEqual(bites.map((bite) => bite.url), [DRAFT_WOMEN.url]);
+  });
+  await check("an RSS bite citing the same number as the hero stat is KEPT", () => {
+    // A second publication corroborating the figure is worth printing; the
+    // no-repeat rule is deliberately limited to the hero's own source.
+    const bites = selectNewsBites([DRAFT_JOBS], FETCHED_WITH_SEEK, {
+      seekUrl: SEEK_URL,
+      heroValue: "9.9%",
+    });
+    assert.strictEqual(bites.length, 1, "corroboration is not duplication");
+  });
+  await check("the SEEK report can supply at most one item", () => {
+    const second = { ...DRAFT_SEEK, title: "Another read of the same report" };
+    const bites = selectNewsBites([DRAFT_SEEK, second, DRAFT_WOMEN], FETCHED_WITH_SEEK, {
+      seekUrl: SEEK_URL,
+      heroValue: "107.3%",
+    });
+    assert.deepStrictEqual(
+      bites.map((bite) => bite.url),
+      [SEEK_URL, DRAFT_WOMEN.url],
+      "one report, one item"
+    );
+  });
+
   // 9. buildPulse end-to-end over a stubbed model response (still no network).
   console.log("9. buildPulse news list (stubbed model, no network):");
   await check("emits newsBites and leaves the legacy newsBite null", async () => {
@@ -534,6 +637,42 @@ async function main(): Promise<void> {
     assert.strictEqual(pulse!.newsBites?.length, 3, "three items in the list");
     // No SEEK article was supplied, so the hero stat falls back to evergreen.
     assert.strictEqual(pulse!.heroStat.sourceLabel.length > 0, true);
+  });
+  await check("a SEEK-sourced bite reaches the output beside a SEEK hero stat", async () => {
+    // End to end: `buildPulse` is where the SEEK article becomes a news
+    // candidate, so the helper checks above cannot prove this wiring.
+    const pulse = await withStubbedModel(
+      {
+        heroStat: {
+          value: "107.3%",
+          label: "more NZ job ads mention AI skills",
+          context: "Job ads mentioning AI skills are up 107.3% year on year.",
+        },
+        newsBites: [DRAFT_SEEK, DRAFT_WOMEN],
+      },
+      () =>
+        buildPulse(
+          {
+            seekArticle: {
+              title: SEEK_CANDIDATE.title,
+              url: SEEK_URL,
+              text: SEEK_CANDIDATE.sourceText,
+            },
+            newsItems: FETCHED,
+          },
+          { monthLabel: "July 2026" }
+        )
+    );
+    pulseSchema.parse(pulse);
+    assert.strictEqual(pulse!.heroStat.value, "107.3%", "hero stat comes from SEEK");
+    assert.strictEqual(pulse!.heroStat.sourceUrl, SEEK_URL);
+    assert.deepStrictEqual(
+      pulse!.newsBites?.map((bite) => bite.url),
+      [SEEK_URL, DRAFT_WOMEN.url],
+      "the job-market bite is sourced from the report we already fetched"
+    );
+    assert.strictEqual(pulse!.newsBites![0].sourceLabel, "SEEK NZ Employment Report");
+    assert.strictEqual(pulse!.newsBite, null);
   });
   await check("a model list of one invented URL degrades to an empty list", async () => {
     const pulse = await withStubbedModel(

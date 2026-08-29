@@ -70,6 +70,13 @@ const USER_AGENT =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
   "(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36";
 
+/**
+ * Attribution for anything quoted from the SEEK report. One constant because it
+ * is printed twice now — under the hero stat and, when the model uses it, beside
+ * a news item — and the two must never read as different publications.
+ */
+const SEEK_SOURCE_LABEL = "SEEK NZ Employment Report";
+
 /** SEEK NZ monthly employment report listing (primary + mirror host). */
 const SEEK_LISTING_URLS = [
   "https://www.seek.co.nz/about/news/category/seek-employment-reports",
@@ -141,6 +148,11 @@ const RSS_MAX_AGE_DAYS = 35;
 /**
  * Hard ceiling on pages per feed, whatever an entry asks for. A mistyped
  * `pages: 50` should cost a clamp, not fifty outbound requests from a cron.
+ *
+ * Read it as "enough for a monthly newsletter", NOT "the whole archive": a
+ * paged feed can run to a hundred posts and several years, and five pages will
+ * not exhaust one. That is correct — this section wants the last month or two,
+ * and `RSS_MAX_AGE_DAYS` discards the rest anyway.
  */
 const MAX_FEED_PAGES = 5;
 
@@ -699,7 +711,7 @@ const PULSE_SYSTEM_PROMPT = `You are the data editor of She Sharp's monthly news
 ABSOLUTE ANTI-HALLUCINATION RULES — these override everything:
 - Every number you write MUST be copied character-for-character from the source text provided. Never compute, round, estimate, combine, or invent a number. If a number is not present verbatim in the source, do not write any number.
 - Only use facts stated in the provided source text. Do not add outside knowledge.
-- For a news item, you MUST use one of the exact article URLs given; never invent or modify a URL. Every number in that item's title and summary must appear in THAT article's own text — not in another article's.
+- For a news item, you MUST use one of the exact URLs given — one of the news articles, or the SEEK report's own URL; never invent or modify a URL. Every number in that item's title and summary must appear in THAT source's own text — not in another source's.
 - Writing fewer items is always better than stretching one. Two well-sourced items beat three where one is guesswork.
 
 EDITORIAL MIX (the section reads as a list, so the items must not be three angles on one story):
@@ -718,6 +730,7 @@ Return a SINGLE JSON object and nothing else, matching:
 }
 
 - heroStat: pick ONE VERBATIM number from the SEEK employment report text. Prefer a number about technology, ICT, software, AI, digital skills, or women/gender if one is present; otherwise choose the most striking overall. "value" is that exact number as written (e.g. "5.2%", "12,000"). "label" is a short phrase (≤8 words) naming what it measures. "context" is one sentence of plain-English framing; any number inside it must also be verbatim from the source. You may add an Auckland framing to the context ONLY if the source text itself mentions Auckland — otherwise keep it as written (SEEK is a nationwide report, and that is fine). If no SEEK text is provided, return heroStat: null.
+- The SEEK employment report is ALSO eligible as ONE of the news items, using its own exact URL. It is the only job-market DATA source available — the news feeds carry industry stories, not employment figures — so it is usually the right choice for the job-market leg of the mix. Two rules: use AT MOST ONE item from the SEEK report, and do NOT build that item on the same number you used for the hero stat. Choose a different figure from the report, or write no SEEK item at all.
 - newsBites: choose UP TO THREE news items following the editorial mix above, ordered most interesting first. For each: "title" is a short headline of your own (it may re-angle the original, but it must not add a fact the article does not state), "summary" is at most two sentences, and "url" is that item's exact URL. Do not write a source name — we attach it ourselves. If the item's text names an Auckland location, campus, or company, name it in the summary. If no news items are provided, return newsBites: [].
 
 Return only the JSON object.`;
@@ -757,7 +770,11 @@ ${seek ? JSON.stringify(seek, null, 2) : "(none available)"}
 
 NZ tech news items (choose up to three for the news list; use each one's exact url):
 ${news.length ? JSON.stringify(news, null, 2) : "(none available)"}
-
+${
+  seek
+    ? `\nThe SEEK report above is ALSO eligible as ONE news item — its exact url is ${seek.url}. Quote a different figure from it than the one you used for the hero stat.`
+    : ""
+}
 Return ONLY the JSON object described in your instructions.`;
 }
 
@@ -837,6 +854,10 @@ function datelineFor(isoDate: string | null): string | null {
  *
  * Attribution and the dateline come from our fetched item, not from the model.
  *
+ * `opts.seekUrl` / `opts.heroValue` cover the one case the guards cannot see:
+ * the SEEK report is both the hero stat's source and an eligible news item, so
+ * a bite built on the hero's own figure would print the same number twice.
+ *
  * The mix rule is the cheap half of "not three angles on one story": at most one
  * item per (publication, topic tier) pair is preferred, and the rest are kept as
  * spares rather than discarded — a monotonous news month should still get three
@@ -846,7 +867,8 @@ function datelineFor(isoDate: string | null): string | null {
  */
 export function selectNewsBites(
   drafted: readonly { title: string; summary: string; url: string }[],
-  fetched: ReadonlyMap<string, FetchedNewsItem>
+  fetched: ReadonlyMap<string, FetchedNewsItem>,
+  opts: { seekUrl?: string | null; heroValue?: string | null } = {}
 ): PulseNewsItem[] {
   const preferred: PulseNewsItem[] = [];
   const spares: PulseNewsItem[] = [];
@@ -864,8 +886,24 @@ export function selectNewsBites(
     const headline = normaliseHeadline(source.title);
     if (seenHeadlines.has(headline)) continue;
 
+    const draftText = `${draft.title} ${draft.summary}`;
+
+    // The SEEK report is ONE candidate with ONE url, so the de-duplication
+    // above already caps it at a single item — the section cannot become three
+    // readings of one report. What that does not catch is the report being
+    // quoted twice in the same section: once as the hero stat, once as a bite
+    // built on the same figure. A number repeated a few lines apart reads as an
+    // editing mistake, so the bite goes and the hero keeps the number.
+    //
+    // Deliberately limited to the SEEK item. An RSS story that happens to cite
+    // the same figure is a second publication corroborating it, which is worth
+    // printing, not a duplicate.
+    if (opts.seekUrl && opts.heroValue && draft.url === opts.seekUrl) {
+      if (draftText.includes(opts.heroValue)) continue;
+    }
+
     const ownText = `${source.title} ${source.sourceText}`;
-    if (!assertNumbersVerbatim(`${draft.title} ${draft.summary}`, ownText).ok) continue;
+    if (!assertNumbersVerbatim(draftText, ownText).ok) continue;
 
     seenUrls.add(draft.url);
     seenHeadlines.add(headline);
@@ -916,7 +954,43 @@ export async function buildPulse(
   // news item's numbers must be in that item's own text, which is why the news
   // side is a URL-keyed map rather than one pooled string.
   const seekCorpus = sources.seekArticle?.text ?? "";
+
+  /**
+   * The SEEK report is a news candidate as well as the hero stat's source.
+   *
+   * **This is not a widening of the URL guard, and the distinction is the one a
+   * future reader will collapse.** The guard says the model may only cite a
+   * document THIS PROCESS DOWNLOADED. The SEEK article is fetched, parsed and
+   * quoted on every run; putting it in the candidate map lets the model cite a
+   * source that was already retrieved and already verified. It cannot reach
+   * anything new, and the invariant is untouched: every URL that survives into
+   * `newsBites` is a URL we fetched, and every number in it is checked verbatim
+   * against that document's own text, exactly as for an RSS item.
+   *
+   * Why it earns its place: SEEK's monthly report is the only NZ JOB-MARKET
+   * DATA source in the pipeline — the tech feeds carry industry stories and
+   * commentary, not employment figures — and the job market is one of the three
+   * legs of the editorial mix. July 2026's strongest hand-written item ("tech
+   * job ads up 9.9% on a year ago, Auckland up 5.0%, all ads up 0.2%") came
+   * from this report and was unreachable to the generator until now.
+   */
+  const seekCandidate: FetchedNewsItem | null = sources.seekArticle
+    ? {
+        title: sources.seekArticle.title,
+        url: sources.seekArticle.url,
+        source: SEEK_SOURCE_LABEL,
+        // The report covers a period rather than carrying a publication instant
+        // we can trust, so it ships with no dateline rather than a guessed one.
+        isoDate: null,
+        // The model already receives the full report in its own prompt block;
+        // repeating it inside the news list would only inflate the prompt.
+        snippet: "",
+        sourceText: sources.seekArticle.text,
+      }
+    : null;
+
   const newsByUrl = new Map(sources.newsItems.map((item) => [item.url, item]));
+  if (seekCandidate) newsByUrl.set(seekCandidate.url, seekCandidate);
 
   const messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
     { role: "system", content: PULSE_SYSTEM_PROMPT },
@@ -971,14 +1045,19 @@ export async function buildPulse(
         value: model!.heroStat!.value,
         label: model!.heroStat!.label,
         context: model!.heroStat!.context,
-        sourceLabel: "SEEK NZ Employment Report",
+        sourceLabel: SEEK_SOURCE_LABEL,
         sourceUrl: sources.seekArticle!.url,
       }
     : heroStatFromFact(
         NZ_TECH_NUMERIC_FACTS[wrap(monthIndex, NZ_TECH_NUMERIC_FACTS.length)]
       );
 
-  const newsBites = selectNewsBites(model?.newsBites ?? [], newsByUrl);
+  // The hero stat is settled first so a SEEK-sourced bite can be checked
+  // against the figure the section is already leading with.
+  const newsBites = selectNewsBites(model?.newsBites ?? [], newsByUrl, {
+    seekUrl: seekCandidate?.url ?? null,
+    heroValue: heroStat.value,
+  });
 
   const didYouKnow = evergreenDidYouKnow(monthIndex, heroStat.sourceUrl);
 
