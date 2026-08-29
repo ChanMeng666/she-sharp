@@ -177,14 +177,28 @@ export const NZ_WIDE_FACTS: readonly NzTechFact[] = [
     id: "she-sharp-growth",
     text: `She Sharp has grown to ${globalStats.members.current}+ members, ${globalStats.sponsors.current}+ sponsors and ${globalStats.events.total}+ events since 2014.`,
     sourceLabel: "She Sharp",
-    sourceUrl: "https://www.shesharp.org.nz/about",
-    // The only fact whose source is ourselves, and the only one that cannot
-    // drift from its source: the text is interpolated from `globalStats`, and
-    // the cited page renders the same constants, so the two move together by
-    // construction. There is no external publisher to wait on — keeping
-    // `globalStats` honest is a different job with its own provenance rules
-    // (`docs/development/PUBLIC_CLAIMS_PROVENANCE.md`).
-    verifiedAt: JULY_2026_PASS,
+    // `/donate`, NOT `/about`, and not the home page either. Both alternatives
+    // were tried against the live site and both fail, for different reasons —
+    // which is worth recording, because the obvious choice is wrong twice over.
+    //
+    // The comment here used to claim the cited page "renders the same constants,
+    // so the two move together by construction". That was false: `/about`
+    // renders the member count and nothing else, so this fact cited a page
+    // carrying neither its sponsor figure nor its event count. `check-facts.ts`
+    // found it on its first live run — an invariant asserted in a comment is not
+    // an invariant.
+    //
+    // The home page looks like the answer and is not: its impact block IS built
+    // from these constants, but it renders CLIENT-side, so the numbers exist
+    // only in the hydration payload and never in the server-rendered text. A
+    // fetcher cannot see them, which means neither this check nor anyone
+    // verifying the claim by hand can. `/donate` renders all three server-side.
+    sourceUrl: "https://www.shesharp.org.nz/donate",
+    // The only fact whose source is ourselves, so there is no external
+    // publisher to wait on. Keeping `globalStats` honest is a different job
+    // with its own provenance rules — see
+    // `docs/development/PUBLIC_CLAIMS_PROVENANCE.md`.
+    verifiedAt: "2026-08-30",
     refresh: "none",
   },
 ];

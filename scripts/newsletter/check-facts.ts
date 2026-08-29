@@ -423,9 +423,21 @@ const MIN_TOKEN_LEN = 2;
  * not as proof.
  */
 export function numberSearchCorpus(text: string): string {
-  return text
+  const folded = text
     .replace(/[    ]/g, " ")
     .replace(/(\d)\s*(?:per\s*cent|percent|pct)\b/gi, "$1%");
+
+  // Thousands separators are presentation, not quantity. The `she-sharp-growth`
+  // fact interpolates `globalStats.members.current` and so says "3500", while
+  // every page that renders it prints "3,500+" — the same number, formatted for
+  // a reader, reported as a failure. Both spellings are kept: the ungrouped copy
+  // is what lets "3500" match, and the original stays so a genuinely
+  // comma-carrying figure elsewhere on the page is still findable.
+  //
+  // Only runs of exactly three digits are unpicked, so a decimal such as "5.3%"
+  // cannot be mangled into something matching a number the page does not have.
+  const ungrouped = folded.replace(/\b\d{1,3}(?:,\d{3})+\b/g, (m) => m.replace(/,/g, ""));
+  return ungrouped === folded ? folded : `${folded}\n${ungrouped}`;
 }
 
 /**
