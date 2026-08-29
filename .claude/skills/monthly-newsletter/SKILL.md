@@ -1051,8 +1051,9 @@ Also non-negotiable:
   hand-write a recipients file, never paste addresses into one, never add
   someone to a list the script produced. If a person needs to receive the
   newsletter, they belong in `newsletter_subscribers` — that is the whole point
-  of the table. The `--only` and `--limit` flags exist because they can only
-  narrow the list; nothing in this loop may widen it.
+  of the table. The `--only`, `--limit` and `--restrict-to-hashes` flags exist
+  because every one of them can only narrow the list; nothing in this loop may
+  widen it.
 - **Approve reads the deployed bundle, not Redis** — always commit + deploy
   (Step 7) before approving (Step 8b).
 - **The assistant does not send the batches.** Steps 8c and 8d are safe to run;
