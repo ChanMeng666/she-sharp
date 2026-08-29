@@ -10,6 +10,7 @@ import {
   assertNumbersVerbatim,
   buildHrdNewsItem,
   buildPulse,
+  dropStaleWomenItemsWhenFreshOnesExist,
   evergreenPulse,
   extractHrdArticleMeta,
   extractNumberTokens,
@@ -1036,6 +1037,57 @@ async function main(): Promise<void> {
       url: `https://techday.co.nz/story/tech-job-ads-lift-${i}`,
     }));
     assert.strictEqual(mergeNewsItems([many]).length, 12);
+  });
+
+  // --- The wide women's window is a FALLBACK, not a default -------------------
+  //
+  // Measured 2026-08-29 against the live pool: twelve items aged 1 to 24 days,
+  // plus exactly one at 75 days that `WOMEN_MAX_AGE_DAYS` had admitted — a June
+  // newsletter digest competing with five current women's stories. A monthly
+  // newsletter's news section is about the month, so the reach-back has to
+  // apply only when the month genuinely produced nothing.
+  console.log("\n11. the 90-day women's window only applies when nothing is fresh:");
+
+  const daysAgo = (n: number) => new Date(Date.now() - n * 86400000).toISOString();
+  const womenItem = (title: string, days: number): PulseSourceData["newsItems"][number] => ({
+    ...FETCHED[0],
+    title,
+    url: `https://techwomen.nz/${days}`,
+    isoDate: daysAgo(days),
+  });
+  const otherItem: PulseSourceData["newsItems"][number] = {
+    ...FETCHED[1],
+    title: "Tech job ads lift across the country",
+    url: "https://techday.co.nz/story/other",
+    isoDate: daysAgo(3),
+  };
+
+  await check("a stale women item is dropped when a fresh one exists", () => {
+    const stale = womenItem("Women in tech: a June newsletter round-up", 75);
+    const kept = dropStaleWomenItemsWhenFreshOnesExist([
+      womenItem("Women in tech leadership hits a new high", 5),
+      stale,
+      otherItem,
+    ]);
+    assert.strictEqual(kept.length, 2, "the 75-day women item goes");
+    assert.ok(!kept.some((item) => item.url === stale.url), "and it is the stale one that went");
+  });
+
+  await check("a stale women item SURVIVES when it is the only one", () => {
+    const kept = dropStaleWomenItemsWhenFreshOnesExist([
+      womenItem("Women in tech: a June newsletter round-up", 75),
+      otherItem,
+    ]);
+    assert.strictEqual(kept.length, 2, "nothing is dropped when no fresher women item exists");
+  });
+
+  await check("the rule never removes a non-women item", () => {
+    const oldOther = { ...otherItem, url: "https://techday.co.nz/story/old", isoDate: daysAgo(200) };
+    const kept = dropStaleWomenItemsWhenFreshOnesExist([
+      womenItem("Women in tech leadership hits a new high", 5),
+      oldOther,
+    ]);
+    assert.strictEqual(kept.length, 2, "only women items are ever subject to it");
   });
 
   console.log(`\nAll ${passed} checks passed.`);
