@@ -275,6 +275,34 @@ three items — was **typed into the fixture by hand**, which is why it never
 happened again. Read that as the warning it is: a section nobody has a procedure
 for is a section that is excellent once and thin afterwards.
 
+### Preflight — run this BEFORE anything else
+
+```powershell
+npx tsx scripts/newsletter/lint-pulse.ts --preflight
+```
+
+It prints the model, the sampling settings, whether the shared `OPENAI_MODEL` is
+set (it is **ignored** here — see below), whether `OPENAI_API_KEY` is present,
+and every feed that will be read. Thirty seconds, and it answers the question
+that otherwise costs an hour: *why does my Pulse not look like the founder's?*
+
+Two answers it gives you up front:
+
+- **`OPENAI_API_KEY: MISSING`** — `buildPulse()` will return the **evergreen**
+  pulse: a rotated fact from `lib/data/nz-tech-facts.ts` and **no news items**.
+  That is a correct fallback, not a failure, but it is not the section anyone
+  else is looking at. Scripts read `.env`, **not** `.env.local`.
+- **`OPENAI_MODEL` set to something** — it is disregarded for this section, on
+  purpose. That variable is shared with `lib/matching`, `lib/recruitment` and
+  `generate.ts`, so setting it for the mentorship matcher used to silently
+  change the newsletter's voice with nothing printed to say so. The Pulse now
+  pins `gpt-4o-mini`, temperature 0, with a fixed seed. If you genuinely mean to
+  change *this* call, set `PULSE_OPENAI_MODEL`; either way the model in use is
+  printed on every run.
+
+The seed narrows run-to-run variance. OpenAI treats it as best-effort, so it
+does not remove it — do not expect two runs to be byte-identical.
+
 ### Refresh it, then judge it
 
 ```powershell
@@ -285,7 +313,19 @@ npx tsx scripts/newsletter/refresh-pulse.ts 2026-08 --apply
 This rebuilds **only** `editorial.pulse` against the live sources. It is the one
 part of `editorial` that is machine-produced, and this is the only way to
 refresh it without regenerating the whole draft and taking the founder's note
-with it. Run it whenever the draft is more than a few days old.
+with it. Run it whenever the draft is more than a few days old. It reprints the
+preflight, so you also get the model line beside the output it produced.
+
+Two things it now decides for you, so do not fight them by hand:
+
+- **The order of the three items** is a stable sort — relevance tier (women and
+  diversity, then the job market, then Auckland, then the industry), then
+  recency. The model chooses *which* stories; it no longer chooses, differently
+  each run, which one a reader sees first.
+- **A generated item that breaks the house style is retried once with the
+  violations named, then kept and REPORTED** — never silently dropped. A
+  `[pulse] house style (error) …` line in the output is a thing for you to fix
+  by hand in the next step, not a thing that removed itself.
 
 ### What the sources can honestly supply
 
@@ -331,7 +371,63 @@ month.
   her.
 - **Bad:** international infrastructure announcements with no NZ hook.
 
+### The house style, in full
+
+This is what `lib/newsletter/pulse-copy.ts` checks, what the model is told, and
+what you should hold your own hand-written headlines to. Stated here so an agent
+reading this skill in Cursor is aiming at the same target as one reading it in
+Claude Code.
+
+- **The headline is ours, never the publisher's.** Do not copy, trim, or lightly
+  reword the article's own title. If every meaningful word of your headline
+  already appears in the source's headline, you have not written one.
+- **Sentence case.** First word and proper nouns; nothing else.
+- **At most 14 words**, aim for about ten.
+- **No quotation marks carried over** from the source's headline.
+- **The subject is what changed for the reader**, not the company or the report
+  that announced it. No `, according to X` or `, the report shows` tail — the
+  source is already printed beside the item.
+- **Summary: two sentences, about 35 words.** The fact, then what it means for a
+  woman working in or entering tech in New Zealand. A third sentence is allowed
+  and only earns its place when it is that second half. No sentence that adds no
+  fact ("This initiative aims to…", "This highlights ongoing disparities…").
+- **No trade-press words anywhere**: unveils, launches, solutions, leverages,
+  empowers, "is set to", cutting-edge, seamless, world-class, game-changer.
+- **Across the three:** do not let all of them open with a number, and prefer one
+  item per publisher.
+
+**Worked example** — the left-hand side is real August 2026 generator output:
+
+| | |
+|---|---|
+| Source article title | ShadowTech26 opens the door to tech careers for 1,500+ girls across Aotearoa |
+| **Bad** | *ShadowTech26 opens the door to tech careers for 1,500+ girls across Aotearoa* — the publisher's headline, copied |
+| **Bad** | *ShadowTech26 Opens Doors for 1,500 Girls* — Title Case, and still only the source's headline with words removed |
+| **Good** | *Know a Year 9 girl? August is when to nudge her* |
+| Good summary | TechWomen NZ's ShadowTech26 places 1,500 secondary school girls in tech workplaces this August, for Years 9 to 11. If you know one, this is the month to tell her about it. |
+
+The good version **invents nothing** — every number and every fact is still the
+source's, copied verbatim. Only whose voice it is in has changed. That order of
+priority is absolute: if re-angling a headline would need a number the source
+does not have, **the original wording wins and the item stays**. Style never
+buys a relaxation of the verbatim-number rule.
+
 ### Checking it, in this order
+
+0. **Run the checker.** This is what makes the standard mechanical instead of a
+   matter of whose taste happened to run the skill — including on the headlines
+   *you* rewrote by hand a minute ago, which break the house style exactly as
+   easily as a generated one.
+
+   ```powershell
+   npx tsx scripts/newsletter/lint-pulse.ts 2026-08
+   ```
+
+   Every violation comes with the offending text and one instruction. `MUST FIX`
+   exits non-zero; `look at` is an advisory you may overrule with a reason. It
+   reads the file on disk, so run it again after every edit. One rule — "is this
+   the publisher's own headline?" — is checked against the article's URL slug,
+   and the report says which items it could not check that way.
 
 1. **Every `sourceUrl` and every item `url` opens**, and the page says what the
    item says it says. The pipeline guarantees the URL was fetched and that every

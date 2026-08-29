@@ -42,7 +42,11 @@ import "dotenv/config";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { buildPulse, fetchPulseSources } from "../../lib/newsletter/pulse";
+import {
+  buildPulse,
+  fetchPulseSources,
+  pulsePreflightLines,
+} from "../../lib/newsletter/pulse";
 import { newsletterIssueSchema } from "../../lib/newsletter/schema";
 
 const ISSUE_DIR = join(process.cwd(), "lib", "data", "json", "newsletter-issues");
@@ -114,6 +118,15 @@ async function main(): Promise<void> {
   newsletterIssueSchema.parse(raw);
 
   console.log(`Refreshing the Pulse for ${issueId} (${monthLabel(issueId)})`);
+  console.log("");
+
+  // Printed unconditionally, not behind a flag. Two people running this script
+  // on two laptops get different sections when their environments differ, and
+  // until this printed there was nothing to compare — a missing API key in
+  // particular produced a thin evergreen section that looks like a bad month.
+  for (const line of pulsePreflightLines()) console.log(`  ${line}`);
+
+  console.log("");
   console.log("  Fetching live sources…");
 
   const sources = await fetchPulseSources();
