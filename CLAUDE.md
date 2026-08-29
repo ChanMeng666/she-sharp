@@ -455,8 +455,11 @@ through `lib/data/mailchimp.ts`. Same split as Humanitix: the raw CSVs are
 gitignored vault (`/private/`) and in the private archive repo, never in git.
 Three traps before quoting anything: the list is **1,560**, not 3,689 (the rest
 left, bounced, or never subscribed); Mailchimp's own dashboard says **3,145**
-because it excludes the 544 hard-bounced; and a `Ticket Type:`/`Event:` tag is a
-pasted ticket list, **not attendance** — Humanitix is authoritative for that.
+because it excludes the 544 hard-bounced; and a `Ticket Type:`/`Event:` tag is
+written by the live Humanitix→Mailchimp integration and says a ticket was
+**bought**, which is **not attendance** — Humanitix is authoritative for that.
+(Nobody pastes those tags in; that was the reading here until 2026-08-30, and
+the evidence that overturned it is in `MAILCHIMP_ARCHIVE.md`'s fifth trap.)
 The non-subscribers are hashed into `email-suppression-hashes.json` so no future
 import can re-add them — **2,144** as of 2026-08-29, and
 `suppression.ts pull-mailchimp` keeps it current while Mailchimp is still the

@@ -1,18 +1,23 @@
 ---
 name: promote-event
-description: Announce ONE upcoming She Sharp event to the newsletter subscribers, building the email from the event's own record in `lib/data/json/events-custom.json` so the date, time, venue and registration link cannot disagree with the website. Use whenever someone wants the subscribers told about an event that has not happened yet — phrases like "email the list about the Les Mills panel", "tell everyone about next month's event", "promote Thursday's night to the mailing list", "send out the event announcement", "can we let subscribers know about the hackathon", "宣传一下下个月的活动", "给邮件名单发个活动通知", "把这场活动群发给订阅者", "发个活动预告", "通知订阅者来参加". It generates the MessageSpec with `scripts/email/event-announcement-spec.ts` and then HANDS OVER to `/email-the-community` from its Step 3 onward for rendering, gating, preview, test send, plan block, batch build and send — it duplicates none of that. Not for emailing people who registered (that is `/send-event-emails`), not for the monthly newsletter, and it sends to the newsletter subscriber table, which now holds about 1,545 confirmed subscribers — so a send here reaches real people, and nothing has ever been sent from that list before.
+description: Announce ONE upcoming She Sharp event to the newsletter subscribers, building the email from the event's own record in `lib/data/json/events-custom.json` so the date, time, venue and registration link cannot disagree with the website. Use whenever someone wants the subscribers told about an event that has not happened yet — phrases like "email the list about the Les Mills panel", "tell everyone about next month's event", "promote Thursday's night to the mailing list", "send out the event announcement", "can we let subscribers know about the hackathon", "宣传一下下个月的活动", "给邮件名单发个活动通知", "把这场活动群发给订阅者", "发个活动预告", "通知订阅者来参加". It generates the MessageSpec with `scripts/email/event-announcement-spec.ts` and then HANDS OVER to `/email-the-community` from its Step 3 onward for rendering, gating, preview, test send, plan block, batch build and send — it duplicates none of that. Not for emailing people who registered (that is `/send-event-emails`), not for the monthly newsletter, and it sends to the newsletter subscriber table, which now holds about 1,549 confirmed subscribers — so a send here reaches real people, and nothing has ever been sent from that list before.
 ---
 
 # Announce one upcoming event to the mailing list
 
-**Read this first: the mailing list is empty, so this skill cannot finish
-today.** The `newsletter_subscribers` table — the double opt-in list that is now
-the only record of who asked to hear from She Sharp — holds **nobody**. The
-~1,560 people on the Mailchimp list have not been imported, nothing has been
-sent, and the newsletter people actually receive still goes out from
-**Mailchimp**. Nothing is wrong with the machinery; there is simply nobody to
-send to yet. Step 2 checks the live count and stops there if it is still true.
-Run `/update-mailing-list` first; then come back and this works end to end.
+**Read this first: the list is real now, and nothing has ever been sent from
+it.** The `newsletter_subscribers` table — the double opt-in list that is now
+the only record of who asked to hear from She Sharp — holds **1,549 mailable
+subscribers** (the Mailchimp list was imported on 2026-08-29; verified again on
+2026-08-30 with `npx tsx scripts/email/suppression.ts reconcile`). So a send
+here reaches real people, and it would be the **first** send this list has ever
+received: the newsletter people actually receive still goes out from
+**Mailchimp**. None of that is a reason not to proceed — it is the reason to read
+the gates before you finish. `/email-the-community`'s test send, its Step 6 plan
+block ("nothing is sent until the user says send") and its chunk-by-chunk Step 8
+are not paperwork here; they are the only thing between a draft and 1,549 inboxes
+that have never had a message from this system. Step 2 reads the live count out
+loud before anything is built.
 
 Four facts shape everything below.
 
@@ -92,8 +97,9 @@ add a fact the event record does not have.** No fee, no capacity, no deadline, n
    is how a wrong date reaches the whole community.
 3. **The event has not happened yet.** The generator refuses a past event (exit
    3) because its one button points at a closed registration page. See Step 1.
-4. **Confirmed subscribers to send to.** Step 2 checks. Today there are none —
-   see the banner at the top of this page.
+4. **Confirmed subscribers to send to.** Step 2 checks and prints the live
+   number; it was 1,549 on 2026-08-30. Never quote a remembered figure — a
+   subscriber can unsubscribe between two runs of this skill.
 5. **`POSTGRES_URL` in `.env`** for Step 2, which reads the subscriber table, and
    the **`resend` CLI on PATH and authenticated** for the handover — `resend
    whoami` must print the She Sharp account.
@@ -137,16 +143,20 @@ To see the table itself, masked, including people who started subscribing but
 never pressed the confirmation button:
 `npx tsx scripts/email/inspect-subscribers.ts --limit 20`.
 
+The expected answer is now four figures — 1,549 on 2026-08-30. A number in the
+low single digits means something has gone wrong with the database connection or
+the import, not that the list is small; **it is no longer the normal state.**
+
 **Fewer than 5 will be mailed → stop and say this, in these words:**
 
 ```
 Heads up: the subscriber list currently has <n> confirmed subscriber(s).
 
-She Sharp's newsletter still goes out through Mailchimp; those ~1,560 people
-have never been imported here. Sending this announcement now would reach
-almost nobody.
+That is far below the 1,549 the table held on 2026-08-30, so this is much
+more likely a wrong database or a broken connection than a real list.
+Sending now would reach almost nobody.
 
-  (1) run /update-mailing-list first, then come back here
+  (1) check POSTGRES_URL points at production, then re-run this step
   (2) send anyway as a rehearsal — I'll label it as one
   (3) stop here
 ```
