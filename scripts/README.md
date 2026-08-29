@@ -129,7 +129,7 @@ un-leaked by a later edit.
 
 | Job | Runs |
 | --- | --- |
-| `verify-image-paths` | `scripts/verify-image-paths.ts`, `scripts/check-hackathon-facts.ts`, `.claude/skills/sync-event-from-slack/scripts/state-lib.test.ts`, `.claude/skills/sync-event-from-slack/scripts/audit-read-state.ts`, `scripts/events/event-status.test.ts`, `lib/data/humanitix.test.ts`, `lib/data/mailchimp.test.ts` |
+| `verify-image-paths` | `scripts/verify-image-paths.ts`, `scripts/newsletter/email-covers.ts --check`, `scripts/assets/event-assets.test.ts`, `scripts/check-hackathon-facts.ts`, `.claude/skills/sync-event-from-slack/scripts/state-lib.test.ts`, `.claude/skills/sync-event-from-slack/scripts/audit-read-state.ts`, `scripts/events/event-status.test.ts`, `lib/docs/playbook.test.ts`, `scripts/events/poster-assets.test.ts`, `lib/data/humanitix.test.ts`, `lib/data/mailchimp.test.ts` |
 | `typecheck-scripts` | `pnpm typecheck:scripts` — covers this directory and `.claude/`, which the root tsconfig skips |
 | `typecheck` | `pnpm typecheck` |
 | `lint` | `pnpm lint` (errors only) |

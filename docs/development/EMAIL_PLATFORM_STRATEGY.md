@@ -498,18 +498,47 @@ Both defects are fixed — a committed email-safe JPEG twin (`cover-email.jpg`)
 beside each cover, generated and verified by
 `scripts/newsletter/email-covers.ts` (`--check`), with the six twins registered
 in `KNOWN_UNREFERENCED` in `scripts/verify-image-paths.ts` and the reason written
-at each entry. Note that `email-covers.ts --check` is **not in CI** — it is a
-local command, so today the only thing standing between a renamed cover and a
-broken send is somebody running it.
+at each entry. `email-covers.ts --check` **runs in CI** — a step in the
+`verify-image-paths` job, immediately after the image-path gate it completes.
 
-**The refs.ts exclusion is not fixed, and deserves a decision.** Its documented
-premise is that an absolute URL in a *newsletter test fixture* is not a reference
-to a file in `public/`. That premise no longer holds: those fixtures are now the
-live source for a real send to a real list. The exclusion was not changed in
-passing — a CI guard's semantics is not something to rewrite as a side effect of
-a bug fix — but somebody has to decide whether the corpus should learn to
-recognise `https://www.shesharp.org.nz/img/...` as a `public/` reference, or
-whether adding `email-covers.ts --check` to `verify.yml` is the permanent answer.
+**Decided: the CI step is the permanent answer; `refs.ts` keeps its exclusion.**
+
+The tempting alternative was to teach the corpus that
+`https://www.shesharp.org.nz/img/...` is a `public/` reference, on the grounds
+that the fixtures are now the live source for a real send rather than test data.
+It does not survive contact with the repo. Six files hold an absolute
+`shesharp.org.nz/img/...` URL. The three issue fixtures hold six such URLs and
+all six resolve under `public/` — they are the `cover-email.jpg` twins. But
+`lib/newsletter/render.test.ts` holds absolute URLs on fourteen lines resolving
+to **eleven distinct paths, none of which exists** — `/img/events/june.jpg`,
+`/img/newsletter/cover-june.jpg`, `/img/events/one.jpg` and so on, deliberate
+invented fixtures, and exactly the "eleven invented fixture paths" the comment at
+`scripts/assets/refs.ts` names. One regex cannot tell the two apart, so widening
+the corpus turns eleven fixtures into eleven broken images. `NON_USE_SOURCES`
+does not rescue it: `verify-image-paths.ts` applies `isNonUseSource` to the
+**reverse** pass only, so the fix would need a new forward-exemption for a test
+file. And `Reference.form` is a `"site" | "repo"` union that
+`scripts/assets/apply-move.ts` consumes to decide what to substitute; an absolute
+URL is neither.
+
+The exclusion is therefore load-bearing, and the residual risk it leaves is
+sharper than "the gate cannot see the fixtures". **A bare rename does fail**
+`verify-image-paths.ts` — the twin becomes an orphan and its `KNOWN_UNREFERENCED`
+entry goes stale. The dangerous case is a rename done properly. Those six paths
+have exactly one source in the reference corpus: the allow-list entry in
+`verify-image-paths.ts` itself. `apply-move.ts` rewrites that entry along with
+the file, and the issue fixture — invisible to the corpus — is left pointing at a
+path that no longer exists. All three checks then pass while the cover is dead.
+So the corpus is blind to the fixtures in both directions: it neither guards them
+nor moves them.
+
+`email-covers.ts --check` closes it because it reads the fixtures themselves. It
+is pure filesystem — `existsSync`/`readFileSync`/`statSync`; the
+`execFileSync("ffmpeg", …)` call is only reached on the non-`--check` branch — so
+it needs no network, no database and no image toolchain on the runner. It also
+fails when the **source** image behind a twin has gone, which a reference corpus
+can never see, because the twin's source is derived from the twin's name rather
+than referenced anywhere.
 
 ---
 

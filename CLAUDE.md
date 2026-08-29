@@ -550,9 +550,9 @@ connection. → `docs/deployment/`, `docs/ARCHITECTURE.md` §8
 `npx tsx <file>`; each prints `ok - …` and exits non-zero on failure.
 
 CI (`.github/workflows/verify.yml`, PRs to `main`) runs five jobs: image-path
-verification (plus the hackathon-facts, Slack read-state, and Humanitix and
-Mailchimp archive checks), `typecheck`, `typecheck:scripts`, `lint`, and the deck
-checks. The two archive checks are leak guards as much as data checks — they
+verification (plus the newsletter email-safe cover check, the hackathon-facts,
+Slack read-state, and Humanitix and Mailchimp archive checks), `typecheck`,
+`typecheck:scripts`, `lint`, and the deck checks. The two archive checks are leak guards as much as data checks — they
 fail the build if an address, an IP or a code-shaped value reaches
 `lib/data/json/`.
 
