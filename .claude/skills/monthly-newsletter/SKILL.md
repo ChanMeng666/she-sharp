@@ -287,57 +287,137 @@ three items — was **typed into the fixture by hand**, which is why it never
 happened again. Read that as the warning it is: a section nobody has a procedure
 for is a section that is excellent once and thin afterwards.
 
-### Preflight — run this BEFORE anything else
+**You write this section.** Not a model in the cloud, not an OpenAI key — you,
+the AI agent running this skill, whichever tool you are: Claude Code, Cursor,
+Codex. There is no API key anywhere in this step, and a developer who has just
+cloned the repo can produce a month's Pulse with nothing else.
+
+What has *not* moved is every check. The code still fetches the sources, still
+ranks them, and still verifies your words against them — a URL you did not get
+from the candidate file is refused, a number that is not verbatim in its own
+source is refused, and a headline that breaks house style is refused. That is
+the deal: you get the writing, the repo keeps the truth.
+
+### The loop, in three commands
 
 ```powershell
-npx tsx scripts/newsletter/lint-pulse.ts --preflight
+npx tsx scripts/newsletter/pulse-candidates.ts 2026-08     # 1. code fetches
+#                                                            2. YOU write the draft
+npx tsx scripts/newsletter/pulse-apply.ts 2026-08          # 3. code validates (dry run)
+npx tsx scripts/newsletter/pulse-apply.ts 2026-08 --apply  #    then writes
 ```
 
-It prints the model, the sampling settings, whether the shared `OPENAI_MODEL` is
-set (it is **ignored** here — see below), whether `OPENAI_API_KEY` is present,
-and every feed that will be read. Thirty seconds, and it answers the question
-that otherwise costs an hour: *why does my Pulse not look like the founder's?*
+**Step 1 — fetch the candidates.** `pulse-candidates.ts` reads the SEEK NZ
+employment report, six RSS feeds and the HRD New Zealand article sitemap, and
+writes `tmp/newsletter/pulse-candidates-2026-08.json`. It prints the list to the
+terminal too, in mission order, so you can see what the month has. `tmp/` is
+gitignored; the file is regenerable and is never a source of truth.
 
-Two answers it gives you up front:
+**Do not go and search the web for stories instead.** Not as a supplement,
+not "just to check". Three reasons, and the third is the one that bites: agents
+differ in whether they even have web search, so the section would change with
+whoever ran it; the retention windows, the `?paged=N` depths, the hcamag sitemap
+quirks and the deliberate exclusions are all encoded in `lib/newsletter/pulse.ts`
+and would be rediscovered badly every month; and `pulse-apply.ts` checks your
+draft against **the candidate file**, so a URL from anywhere else is refused
+however real the story is.
 
-- **`OPENAI_API_KEY: MISSING`** — `buildPulse()` will return the **evergreen**
-  pulse: a rotated fact from `lib/data/nz-tech-facts.ts` and **no news items**.
-  That is a correct fallback, not a failure, but it is not the section anyone
-  else is looking at. Scripts read `.env`, **not** `.env.local`.
-- **`OPENAI_MODEL` set to something** — it is disregarded for this section, on
-  purpose. That variable is shared with `lib/matching`, `lib/recruitment` and
-  `generate.ts`, so setting it for the mentorship matcher used to silently
-  change the newsletter's voice with nothing printed to say so. The Pulse now
-  pins `gpt-4o-mini`, temperature 0, with a fixed seed. If you genuinely mean to
-  change *this* call, set `PULSE_OPENAI_MODEL`; either way the model in use is
-  printed on every run.
+**Step 2 — you write the draft.** Open the candidate file. It carries, for every
+candidate, the URL, the publisher, the publication date and age, the relevance
+tier in words, the publisher's own headline, a teaser, and `text` — the retrieved
+article text. `text` is load-bearing: it is the *same string* the number guard
+checks you against, so **a number you can see in it is a number you may use, and
+a number that is not in it is one you may not.** There is no third case.
 
-The seed narrows run-to-run variance. OpenAI treats it as best-effort, so it
-does not remove it — do not expect two runs to be byte-identical.
+The file also carries `editorialBrief` and `houseStyle`, copied verbatim out of
+the code that enforces them. Read those two fields; they are the rules, and they
+cannot drift from the checker because they are the checker's own strings.
 
-### Refresh it, then judge it
+**Step 3 — apply.** `pulse-apply.ts` re-runs every guard on what you wrote and,
+only if all of them pass, writes `editorial.pulse` into the issue fixture and
+nothing else. Dry run by default. `--apply` must be spelled out.
 
-```powershell
-npx tsx scripts/newsletter/refresh-pulse.ts 2026-08            # dry run, prints before/after
-npx tsx scripts/newsletter/refresh-pulse.ts 2026-08 --apply
+### What you write, exactly
+
+Write this file to `tmp/newsletter/pulse-draft-<issue>.json` (the candidate
+file's `writeDraftTo` names the exact path). Three fields per item, no more:
+`sourceLabel`, the dateline and the ordering are attached by the code from the
+candidate, so that a story can never be credited to a publication that did not
+run it.
+
+```json
+{
+  "heroStat": {
+    "value": "9.9%",
+    "label": "more NZ tech job ads than a year ago",
+    "context": "Tech job ads rose 9.9% on a year ago, while ads nationally rose just 0.2%."
+  },
+  "newsBites": [
+    {
+      "title": "Know a Year 9 girl? August is when to nudge her",
+      "summary": "TechWomen NZ's ShadowTech26 places 1,500 secondary school girls in tech workplaces this August, for Years 9 to 11. If you know one, this is the month to tell her about it.",
+      "url": "https://techwomen.nz/shadowtech26/"
+    },
+    {
+      "title": "The gender pay gap did not move this year",
+      "summary": "Stats NZ put the gap at 5.3% for the June 2026 quarter, unchanged on last year. If you are heading into a pay review, that is the number the conversation starts from.",
+      "url": "https://www.hcamag.com/nz/specialisation/diversity-inclusion/new-zealands-gender-pay-gap-sitting-at-53/587457"
+    },
+    {
+      "title": "If you shelved a job search, take it back off the shelf",
+      "summary": "Tech job ads rose 9.9% on a year ago and Auckland is up 5.0%, while ads nationally rose just 0.2%.",
+      "url": "https://www.seek.co.nz/about/news/article/seek-nz-employment-report-june26"
+    }
+  ]
+}
 ```
 
-This rebuilds **only** `editorial.pulse` against the live sources. It is the one
-part of `editorial` that is machine-produced, and this is the only way to
-refresh it without regenerating the whole draft and taking the founder's note
-with it. Run it whenever the draft is more than a few days old. It reprints the
-preflight, so you also get the model line beside the output it produced.
+Every `url` above is copied character-for-character from a candidate. Every
+number is verbatim in that candidate's own `text`.
 
-Two things it now decides for you, so do not fight them by hand:
+- **`heroStat` may be `null`**, and sometimes must be. It has to come from the
+  SEEK report; if no report was fetched this month, write `null` and the code
+  rotates a sourced evergreen fact in its place. Writing a hero stat with no
+  report to check it against is refused, and rightly.
+- **`heroStat.value` is checked as a literal substring** of the report, `%` sign
+  included — stricter than the rule for prose, because it is the one number the
+  section leads with.
+- **`newsBites` may have fewer than three items, or none.** See the fill rates
+  below before you decide that is a problem.
+- **The SEEK report is also eligible as one news item**, using its own URL. It is
+  the only NZ job-market *data* source here. Two rules, both enforced: at most
+  **one** item from it, and it must not be built on the figure the hero stat
+  already uses.
+- **Prefer one item per publisher — but do not drop a good story for it.** Two
+  from one publisher is reported as a `look at`, never refused. See the fill
+  rates below for why some months it is simply the right answer.
 
-- **The order of the three items** is a stable sort — relevance tier (women and
-  diversity, then the job market, then Auckland, then the industry), then
-  recency. The model chooses *which* stories; it no longer chooses, differently
-  each run, which one a reader sees first.
-- **A generated item that breaks the house style is retried once with the
-  violations named, then kept and REPORTED** — never silently dropped. A
-  `[pulse] house style (error) …` line in the output is a thing for you to fix
-  by hand in the next step, not a thing that removed itself.
+### When apply refuses
+
+It will print `REFUSED — nothing was written`, name every rule you broke, and
+exit non-zero. **That is the guard working, not a bug and not something to route
+around.**
+
+The fix is always to correct the copy in your draft and run it again. It is
+never to edit a guard, relax a rule, add a flag, hand-write the number straight
+into the issue JSON, or "just apply it anyway". `docs/development/CONTENT_RULES.md`
+exists because numbers reached the public that nobody could source, and this is
+the section where that is easiest to do by accident.
+
+Dropping an item you cannot source is always allowed and is often the right fix.
+
+| What it says | What you did | What to do |
+|---|---|---|
+| `is not a URL in the candidate file` | cited something you found elsewhere, or retyped a URL | copy the `url` field from a candidate, exactly |
+| `numbers not present verbatim in that candidate's own text` | rounded, recomputed, or used a real number from a *different* story | copy the figure character-for-character from that item's own `text`, or drop the number |
+| `heroStat.value … does not appear verbatim` | the hero number is not a literal substring of the report | copy it including the `%`, or write `heroStat: null` |
+| `repeats the hero stat figure` | the SEEK bite is built on the number the hero already leads with | pick a different figure from the report, or drop the SEEK bite |
+| `the same article twice` | two bites share a URL | keep the better one |
+| `[MUST FIX] Headline is the publisher's, not ours` | you copied or lightly reworded their title | read the candidate's `text` and say what it means for a woman in tech in NZ; a headline does not need a number |
+| any other `[MUST FIX]` | a house-style rule | the report prints the one instruction for each |
+
+A `note:` line is not a refusal — it tells you the code deleted a closing
+sentence that added no fact. Check that you are happy with what is left.
 
 ### What the sources can honestly supply
 
@@ -357,6 +437,15 @@ sometimes specifically about women in tech.** That is what the measured rates
 support. The flattering version — "a fresh women-in-tech story every month" — is
 false at 62%, and writing it here would make an operator go looking for
 something to fill the gap.
+
+**Two of the three items coming from HRD New Zealand is expected in some
+months, and is not an error.** Read the table again: HRD fills the job-market
+slot every month *and* is the second source of women's stories, so a month where
+its best women's story and its best job-market story are the two strongest
+things available is a predicted outcome, not a mistake. `lint-pulse.ts` and
+`pulse-apply.ts` both flag it as a `look at` so you notice it; neither refuses
+it. Do not go hunting for a third publisher that did not publish anything worth
+a reader's minute.
 
 **Two items is a correct outcome.** 宁缺毋滥. One strong local story beats three
 where two are vendor press releases, and the reader cannot tell you padded but
@@ -385,10 +474,10 @@ month.
 
 ### The house style, in full
 
-This is what `lib/newsletter/pulse-copy.ts` checks, what the model is told, and
-what you should hold your own hand-written headlines to. Stated here so an agent
-reading this skill in Cursor is aiming at the same target as one reading it in
-Claude Code.
+This is what `lib/newsletter/pulse-copy.ts` checks, what the candidate file
+hands you, and what you should hold your own hand-written headlines to. Stated
+here so an agent reading this skill in Cursor is aiming at the same target as
+one reading it in Claude Code.
 
 - **The headline is ours, never the publisher's.** Do not copy, trim, or lightly
   reword the article's own title. If every meaningful word of your headline
@@ -405,8 +494,8 @@ Claude Code.
   fact ("This initiative aims to…", "This highlights ongoing disparities…").
 - **No trade-press words anywhere**: unveils, launches, solutions, leverages,
   empowers, "is set to", cutting-edge, seamless, world-class, game-changer.
-- **Across the three:** do not let all of them open with a number, and prefer one
-  item per publisher.
+- **Across the three:** do not let all of them open with a number, and prefer
+  one item per publisher.
 
 **Worked example** — the left-hand side is real August 2026 generator output:
 
@@ -426,10 +515,10 @@ buys a relaxation of the verbatim-number rule.
 
 ### Checking it, in this order
 
-0. **Run the checker.** This is what makes the standard mechanical instead of a
-   matter of whose taste happened to run the skill — including on the headlines
-   *you* rewrote by hand a minute ago, which break the house style exactly as
-   easily as a generated one.
+0. **Run the checker.** `pulse-apply.ts` has already run it once on your draft —
+   but the Pulse is then CURATED BY HAND, and a headline *you* rewrote in the
+   fixture a minute ago breaks the house style exactly as easily as a generated
+   one. Nothing checks the file after that edit except this.
 
    ```powershell
    npx tsx scripts/newsletter/lint-pulse.ts 2026-08
@@ -438,8 +527,9 @@ buys a relaxation of the verbatim-number rule.
    Every violation comes with the offending text and one instruction. `MUST FIX`
    exits non-zero; `look at` is an advisory you may overrule with a reason. It
    reads the file on disk, so run it again after every edit. One rule — "is this
-   the publisher's own headline?" — is checked against the article's URL slug,
-   and the report says which items it could not check that way.
+   the publisher's own headline?" — is checked against the article's URL slug
+   here rather than against the fetched headline `pulse-apply.ts` had, and the
+   report says which items it could not check that way.
 
 1. **Every `sourceUrl` and every item `url` opens**, and the page says what the
    item says it says. The pipeline guarantees the URL was fetched and that every
@@ -448,19 +538,20 @@ buys a relaxation of the verbatim-number rule.
 2. **No item duplicates another.** Tech New Zealand cross-posts TechWomen
    articles at a different URL with an identical title; dedup is by normalised
    title for that reason, but check with your eyes too.
-3. **At most one item from any single publisher**, unless the second is
-   genuinely better than anything else available.
-4. **Read the three aloud as a set.** Three AI stories is not a Pulse, it is a
+3. **Read the three aloud as a set.** Three AI stories is not a Pulse, it is a
    theme.
 
 ### Removing an item
 
-Delete it from `newsBites`. Do not replace it with something you found yourself
-unless you can meet the same standard: a real NZ-relevant source, a URL that
-opens, and every number verbatim in that source. **Never hand-write a number
-into this section.** `docs/development/CONTENT_RULES.md` exists because numbers
-were published that nobody could source, and this is the section where that is
-easiest to do by accident.
+Delete it from `newsBites` in the draft and run apply again — that keeps the
+guards in the loop. If you are editing the issue fixture directly instead,
+delete it from `newsBites` there and re-run `lint-pulse.ts`. Do not replace it
+with something you found yourself unless you can meet the same standard: a real
+NZ-relevant source, a URL that opens, and every number verbatim in that source.
+**Never hand-write a number into this section.**
+`docs/development/CONTENT_RULES.md` exists because numbers were published that
+nobody could source, and this is the section where that is easiest to do by
+accident.
 
 ### Check the evergreen pool before you send
 
@@ -520,6 +611,20 @@ with a source attached, which is the strongest claim the newsletter makes.
 - Stats NZ, MBIE and Education Counts cannot be fetched at all — a JS-only app,
   a bot wall that returns HTTP 200 with a challenge page, and a Cloudflare 403
   respectively. Their numbers reach us through the evergreen pool by hand.
+- **A source that answers slowly or not at all costs you its items and nothing
+  else.** Each leg is fetched independently and swallowed on failure, so
+  `SEEK report: NOT FOUND` or a short candidate list is a thin month, not a
+  broken script. Re-run it; if it is still thin, write the shorter section.
+
+### If you want to see what a run will read first
+
+```powershell
+npx tsx scripts/newsletter/lint-pulse.ts --preflight
+```
+
+Thirty seconds, and it lists every feed that will be read and where the writing
+and the checking each happen. It is also printed at the top of every
+`pulse-candidates.ts` run, so you get it either way.
 
 ## Step 5 — Preview loop
 

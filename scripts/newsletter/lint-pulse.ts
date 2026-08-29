@@ -9,10 +9,11 @@
  * WHY THIS EXISTS
  * ---------------
  * The CLI half of `lib/newsletter/pulse-copy.ts`, and the exact counterpart of
- * `scripts/deck/lint-deck.ts`. `buildPulse()` already checks its own output and
- * retries once, but the Pulse is then CURATED BY HAND — items get deleted,
- * headlines get rewritten — and a hand-written headline breaks the house style
- * just as easily as a generated one. Nothing checked the file after that edit.
+ * `scripts/deck/lint-deck.ts`. `pulse-apply.ts` already checks the agent's draft
+ * and refuses on any error, but the Pulse is then CURATED BY HAND — items get
+ * deleted, headlines get rewritten — and a hand-written headline breaks the house
+ * style just as easily as a written-by-agent one. Nothing checks the file on disk
+ * after that edit except this.
  *
  * It is what makes the standard mechanical rather than a matter of whose taste
  * happened to run the skill. Run it after Step 4a's curation, and again before
@@ -31,84 +32,15 @@ import {
   sourceTitleFromUrl,
   type PulseCopyIssue,
 } from "../../lib/newsletter/pulse-copy";
+import { printIssue } from "./pulse-report";
 
 const ISSUE_DIR = join(process.cwd(), "lib", "data", "json", "newsletter-issues");
 const ISSUE_ID = /^\d{4}-(0[1-9]|1[0-2])$/;
-
-/** Plain-English name for each rule, shown as the problem headline. */
-const RULE_TITLES: Record<string, string> = {
-  "title-empty": "Headline is empty",
-  "title-length": "Headline is too long",
-  "title-case": "Headline is in Title Case",
-  "title-quote-marks": "Headline carries the source's quotation marks",
-  "title-attribution": "Headline ends with an attribution clause",
-  "title-vendor-subject": "Headline's subject is a company, not the reader",
-  "title-register": "Headline uses trade-press language",
-  "title-copies-source": "Headline is the publisher's, not ours",
-  "summary-empty": "Summary is empty",
-  "summary-length": "Summary is too long",
-  "summary-sentences": "Summary runs to too many sentences",
-  "summary-register": "Summary uses trade-press language",
-  "summary-padding": "Summary has a sentence that adds no fact",
-  "set-one-per-publisher": "Two items from the same publisher",
-  "set-all-open-with-number": "Every headline opens with a number",
-  "set-duplicate-headline": "Two headlines say the same thing",
-  "hero-label-length": "Hero label is too long",
-  "hero-label-case": "Hero label is in Title Case",
-  "hero-context-length": "Hero context is too long",
-  "hero-context-sentences": "Hero context runs to too many sentences",
-  "hero-register": "Hero stat uses trade-press language",
-};
-
-/** What to actually do about each rule. One instruction, no theory. */
-const RULE_FIXES: Record<string, string> = {
-  "title-empty": "Write a headline, or delete the item.",
-  "title-length": "Cut it to about ten words. Keep the change, drop the detail.",
-  "title-case":
-    "Lower-case everything but the first word and proper nouns. \"Job ads fell for a third month\", not \"Job Ads Fell For A Third Month\".",
-  "title-quote-marks":
-    "Say it in our own words without the quotes. A quoted phrase in a headline is nearly always the publisher's.",
-  "title-attribution":
-    "Delete the \", according to X\" / \", the report shows\" tail. The source is printed beside the item already.",
-  "title-vendor-subject":
-    "Rewrite so the subject is what changed for a reader, not the company that announced it.",
-  "title-register": "Replace the word with plain English.",
-  "title-copies-source":
-    "Write a headline that says what the story means for a woman working in or entering tech in New Zealand. Open the article, read the first two paragraphs, and say the thing the publisher's own headline does not.",
-  "summary-empty": "Write two sentences, or delete the item.",
-  "summary-length": "Cut to the fact and what it means. About 35 words.",
-  "summary-sentences":
-    "Two sentences. A third earns its place only when it says what the number means for the reader.",
-  "summary-register": "Replace the word with plain English.",
-  "summary-padding":
-    "Delete the sentence or replace it with a fact. \"This initiative aims to…\" and \"This highlights…\" tell a reader nothing.",
-  "set-one-per-publisher":
-    "Swap the second one out, unless it is genuinely better than anything else available — see Step 4a.",
-  "set-all-open-with-number":
-    "Rewrite one headline to lead with the change rather than the figure.",
-  "set-duplicate-headline":
-    "Delete one of them. A reader who has read one has read both.",
-  "hero-label-length":
-    "The label is read as the continuation of the number, so keep it to a phrase.",
-  "hero-label-case": "Sentence case.",
-  "hero-context-length": "One or two plain sentences.",
-  "hero-context-sentences": "Two sentences at most.",
-  "hero-register": "Replace the word with plain English.",
-};
 
 interface IssuePulse {
   heroStat?: { value?: string; label: string; context: string } | null;
   newsBites?: { title: string; summary: string; url: string; sourceLabel?: string }[] | null;
   newsBite?: { title: string; summary: string; url: string; sourceLabel?: string } | null;
-}
-
-function printIssue(entry: PulseCopyIssue): void {
-  const label = RULE_TITLES[entry.rule] ?? entry.rule;
-  const mark = entry.severity === "error" ? "MUST FIX" : "look at";
-  console.log(`    [${mark}] ${label}`);
-  console.log(`      ${entry.message}`);
-  const fix = RULE_FIXES[entry.rule];
-  if (fix) console.log(`      → ${fix}`);
 }
 
 /** Checks one issue file and prints its report. Returns the must-fix count. */
@@ -176,7 +108,7 @@ function reportIssue(issueId: string): number {
         ? "  The section as a whole"
         : `  Item ${index + 1} — "${bites[index]?.title ?? "?"}" [${bites[index]?.sourceLabel ?? "?"}]`;
     console.log(heading);
-    byIndex.get(index)!.forEach(printIssue);
+    byIndex.get(index)!.forEach((entry) => printIssue(entry));
     console.log("");
   }
 
@@ -189,7 +121,7 @@ function main(): void {
   const argv = process.argv.slice(2);
 
   if (argv.includes("--preflight")) {
-    console.log("NZ Tech Pulse — what a generation run will use");
+    console.log("NZ Tech Pulse — who writes it, and what a candidate run will read");
     console.log("");
     for (const line of pulsePreflightLines()) console.log(line);
     console.log("");

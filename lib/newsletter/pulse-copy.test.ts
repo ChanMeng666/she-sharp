@@ -28,7 +28,6 @@ import {
   checkNewsBiteSet,
   countSentences,
   countWords,
-  describeIssuesForModel,
   hasCopyErrors,
   headlineSimilarity,
   lintPulseCopy,
@@ -502,26 +501,6 @@ function main(): void {
       PULSE_HOUSE_STYLE_RULES.includes(`At most ${PULSE_COPY_LIMITS.titleWords} words`),
       "the limit is interpolated, so the two cannot drift",
     );
-  });
-
-  check("describeIssuesForModel names only the errors, one per line", () => {
-    const issues = [
-      ...checkBiteTitle("Women Underrepresented in AI Roles", {
-        index: 0,
-        sourceTitle: COPIED_UNDERREPRESENTED,
-      }),
-      // Advisory-only on purpose: "ecosystem" is a soft-register word, but the
-      // sentence names Auckland, so it is not a fact-free closer and does not
-      // rise to an error. It used to be "This initiative aims to inspire.",
-      // which became an ERROR when fact-free closers were promoted — and the
-      // test then failed for the right reason, so the example moved rather than
-      // the rule.
-      ...checkBiteSummary("Auckland's startup ecosystem grew again.", { index: 1 }),
-    ];
-    const text = describeIssuesForModel(issues);
-    assert.ok(text.includes("newsBites[0].title"), "the failing field is named");
-    assert.ok(!text.includes("newsBites[1].summary"), "advisories are not sent back to the model");
-    assert.strictEqual(text.split("\n").length, errorsOnly(issues).length);
   });
 
   check("checkNewsBite runs both halves", () => {

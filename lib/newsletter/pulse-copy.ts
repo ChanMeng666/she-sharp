@@ -37,14 +37,17 @@
  * functions, no I/O and no network. That is what lets one list of rules be read
  * by three consumers that must not drift apart —
  *
- *   1. the model prompt          (`PULSE_HOUSE_STYLE_RULES`, spliced into
- *                                 `PULSE_SYSTEM_PROMPT` in `pulse.ts`),
- *   2. the generator             (`buildPulse` checks what came back and
- *                                 retries once with the violations named), and
+ *   1. the brief the agent writes to (`PULSE_HOUSE_STYLE_RULES`, published
+ *                                 verbatim into the candidate file by
+ *                                 `scripts/newsletter/pulse-candidates.ts`),
+ *   2. the checker                (`applyPulseDraft` in `pulse.ts` refuses to
+ *                                 write a section with any error), and
  *   3. `scripts/newsletter/lint-pulse.ts` (what an operator runs after
  *                                 curating an issue by hand).
  *
- * A rule stated only in a prompt is advice again.
+ * A rule stated only in a brief is advice again — which is exactly why the
+ * writing could be handed to a different agent every month without loosening
+ * anything: consumer 1 changed, consumers 2 and 3 did not.
  *
  * WHAT THIS MODULE IS NOT
  * -----------------------
@@ -914,25 +917,10 @@ export function lintPulseCopy(
   return issues;
 }
 
-/**
- * The violations, phrased for the model's follow-up turn.
- *
- * The generator names them rather than repeating the whole style block: a
- * retry that restates every rule invites the model to rewrite the items that
- * were already fine, and rewriting a passing item is how a verified number gets
- * lost.
- */
-export function describeIssuesForModel(issues: readonly PulseCopyIssue[]): string {
-  return issues
-    .filter((entry) => entry.severity === "error")
-    .map((entry) => `- ${entry.field}: ${entry.message}`)
-    .join("\n");
-}
-
-// --- The prompt half of the contract ----------------------------------------
+// --- The brief half of the contract -----------------------------------------
 
 /**
- * The house style as the model is told it.
+ * The house style as the writer is told it.
  *
  * Kept HERE, beside the checker, so the two cannot drift. The single worked
  * example is real: it is the 2026-08 generator output that copied TechWomen
@@ -943,9 +931,9 @@ export function describeIssuesForModel(issues: readonly PulseCopyIssue[]): strin
  * checker counted them.
  *
  * The numbers are interpolated from `PULSE_COPY_LIMITS` so that changing a
- * limit changes what the model is asked for, in one edit.
+ * limit changes what the writer is asked for, in one edit.
  */
-export const PULSE_HOUSE_STYLE_RULES = `HOUSE STYLE — how a news item must be written (the output is checked against these and sent back if it fails):
+export const PULSE_HOUSE_STYLE_RULES = `HOUSE STYLE — how a news item must be written (pulse-apply.ts checks every one of these and REFUSES to write the section if any fails):
 - The "title" is OUR headline, never the publisher's. Do not copy, trim, or lightly reword the article's own title. If every meaningful word of your headline already appears in the source's headline, you have not written one.
 - Sentence case. Capitalise the first word and proper nouns; nothing else. "Job ads fell for a third month" — not "Job Ads Fell For A Third Month".
 - At most ${PULSE_COPY_LIMITS.titleWords} words, and aim for about ten.
