@@ -545,6 +545,14 @@ The flag reaches the Humanitix API as `Order.organiserMailListOptIn`, and reache
 Mailchimp through the live Humanitix integration as a `subscribed` contact rather
 than a non-subscribed one — see `docs/development/MAILCHIMP_ARCHIVE.md`.
 
+Getting those ticks into She Sharp's own consent record is a separate, manual
+step: export **reports → orders → Export CSV** from the Humanitix console, run
+it through `scripts/email/normalize-recipients.ts --for-import`, then
+`scripts/email/import-optin-subscribers.ts` (dry run by default). Nothing does
+this automatically, and nothing should — `lib/humanitix/client.ts` deliberately
+implements no `/orders` call, because that endpoint carries names, addresses and
+live access codes.
+
 ### The channel, and its first message
 
 Two things about `#event-…` channels surprise people:

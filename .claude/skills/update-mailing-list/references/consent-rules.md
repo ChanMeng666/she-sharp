@@ -124,13 +124,37 @@ people here.
 
 **2. A tick-box on a registration form.**
 Record: the exact question text, the event name, and the event date — e.g.
-`Humanitix checkout question "Can we email you about future She Sharp events?",
-AUT July 2026`. Two conditions, both mandatory:
+`Humanitix checkout opt-in "Keep me updated on the latest news, events, and
+exclusive offers from the event host" — AUT July Workshop, 2026-07-15`. Two
+conditions, both mandatory:
 - The form must genuinely have had that question. Look at the CSV column. If
   there is no opt-in column, there was no opt-in — a form that only asked for a
   name and a ticket type cannot retroactively have asked for consent.
 - Only rows that answered **yes** may be imported. `--for-import` drops the
   rest automatically; do not override it.
+
+This is the one of routes 2–4 that has a tool, because it is the only one whose
+evidence arrives as a column in a file rather than as somebody's recollection.
+**`scripts/email/import-optin-subscribers.ts`** reads the recipients file
+`normalize-recipients.ts --for-import` wrote and writes the ticks into the
+table. It composes the sentence above from `--event-name`, `--event-date` and
+the question text rather than accepting a free-text one, because a sentence
+that can omit the event is a rule that can be skipped. **It refuses outright
+when the file has no opt-in column** — that check cannot be left to
+`--for-import`, whose filter only fires when an opt-in column was actually
+mapped, so a file with none passes through it intact and looks clean. Dry run
+is the default; `--apply` writes.
+
+For **Humanitix**, the opt-in is a built-in, uneditable checkout control
+(`organiserMailListOptIn` on the order) whose wording is fixed to the sentence
+quoted above. It is not one of the host's own additional questions, and it
+reaches you as a "marketing opt-in" column in **reports → orders → Export
+CSV** — the orders report, not the attendees one. Any other platform's wording
+must be passed explicitly with `--question "…"`.
+
+**Routes 3 and 4 still have no tool and are not getting one**: a paper sheet and
+a written request are one person at a time, and the honest answer to a stack of
+them is the subscribe link.
 
 **3. A paper sign-in sheet.**
 Record: the event, the date, and confirmation that the sheet carried opt-in
@@ -288,7 +312,10 @@ list of real addresses whose only purpose is bulk mail. Treat both accordingly.
 You must be able to answer, and now the answer is a row rather than a
 recollection. Every subscriber carries:
 
-- `source` — the machine-readable route (`website-form`, or the import's name)
+- `source` — the machine-readable route: `website-form`, `registration-optin`
+  (route 2), or the import's name (`mailchimp-import`). It names the route, not
+  the platform — the platform is in the sentence below, beside the question it
+  asked
 - `consentSource` — the sentence a human wrote and would have to stand behind
 - `consentDate` — when they agreed
 - `confirmedAt` — when they clicked a confirmation button: ours, or the sending
