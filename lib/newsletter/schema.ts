@@ -5,10 +5,11 @@
  * validated against `newsletterIssueSchema`. The file has two content blocks with
  * different ownership rules:
  *
- * - `editorial`: AI-drafted once, then human-edited. Regeneration must NEVER
- *   overwrite this block (only an explicit `force` regeneration may).
- * - `auto`: snapshot of site data (events, stats) taken by `assemble.ts` at
- *   generation time. Regeneration refreshes this block freely.
+ * - `editorial`: human-owned copy. `scripts/newsletter/new-issue.ts` writes an
+ *   empty stub of it (`editorial-stub.ts`) and a human writes the issue from
+ *   there. Nothing machine-generates this block.
+ * - `auto`: snapshot of site data (events, stats) taken by `assemble.ts` when
+ *   the issue is created, then refreshed by the local photo pipeline.
  */
 
 import { z } from "zod";
@@ -212,8 +213,8 @@ export const autoSchema = z.object({
   }),
   /**
    * Photo highlights of the month. Populated by the local photo pipeline
-   * (`scripts/newsletter/photos.ts`) during the review loop — the serverless
-   * cron leaves it empty (it cannot run ffmpeg/harvesting).
+   * (`scripts/newsletter/photos.ts`) during the review loop —
+   * `scripts/newsletter/new-issue.ts` leaves it empty.
    *
    * The ceiling is 13 rather than a round number because `PhotoStrip` leads
    * with one full-width photo and pairs the rest into rows of two: only an ODD

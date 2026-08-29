@@ -1,23 +1,24 @@
 ---
 name: monthly-newsletter
-description: Guides a Claude Code session through She Sharp's monthly newsletter loop — pulling the AI-staged draft, adding the required human editorial polish (founder note, cover, photo of the month, subject/preview), curating the month's REAL event photos onto Vercel Blob, sanity-checking the NZ Tech Pulse data section, previewing and test-sending, then approving the issue and building the per-recipient send batch from the subscriber database to the June 2026 showcase quality bar. Use whenever the user wants to work on the monthly newsletter — phrases like "review this month's newsletter", "let's do the newsletter draft", "edit the newsletter", "approve the newsletter", "send the newsletter", "the newsletter for August", or anything about turning the staged monthly draft into an email that goes out. Reference issue (THE approved template): lib/data/json/newsletter-issues/2026-06.json.
+description: Guides a Claude Code session through She Sharp's monthly newsletter loop — creating the month's issue file locally, writing the human editorial content (founder note, cover, photo of the month, subject/preview), curating the month's REAL event photos onto Vercel Blob, sanity-checking the NZ Tech Pulse data section, previewing and test-sending, then approving the issue and building the per-recipient send batch from the subscriber database to the June 2026 showcase quality bar. Use whenever the user wants to work on the monthly newsletter — phrases like "review this month's newsletter", "let's do the newsletter draft", "edit the newsletter", "approve the newsletter", "send the newsletter", "the newsletter for August", or anything about turning the month's issue file into an email that goes out. Reference issue (THE approved template): lib/data/json/newsletter-issues/2026-06.json.
 ---
 
 # Run the monthly newsletter loop
 
-This skill walks Claude Code through one month's newsletter, from the
-machine-staged draft to a send that a human runs, one batch at a time, with the
-recipient list built from She Sharp's own database. Every issue is a JSON file
-at `lib/data/json/newsletter-issues/<YYYY-MM>.json` with two blocks
-(`lib/newsletter/schema.ts`):
+This skill walks Claude Code through one month's newsletter, from an empty
+issue file created on your own machine to a send that a human runs, one batch at
+a time, with the recipient list built from She Sharp's own database. Every issue
+is a JSON file at `lib/data/json/newsletter-issues/<YYYY-MM>.json` with two
+blocks (`lib/newsletter/schema.ts`):
 
-- **`auto`** — machine snapshot of events + stats + the photo strip. Refreshed
-  freely on every (re)generation and by the local photo pipeline. Never
-  hand-edit it except the one documented exception (pruning `photoStrip`).
+- **`auto`** — machine snapshot of events + stats + the photo strip, written by
+  `scripts/newsletter/new-issue.ts` and refreshed by the local photo pipeline.
+  Never hand-edit it except the one documented exception (pruning `photoStrip`).
 - **`editorial`** — human-owned copy (founder note, cover, photo of the month,
-  subject/preview, CTA, sponsor thanks, pulse). The AI writes a *placeholder*
-  draft once; a human must give it real voice. **Regeneration must never
-  silently overwrite this** (only a `force` regen does — see Guardrails).
+  subject/preview, CTA, sponsor thanks, pulse). It starts as an **empty stub**
+  with placeholder text in every slot; a human writes the issue. Nothing in this
+  repo generates it, and `new-issue.ts` refuses to overwrite a file that exists,
+  so nothing can silently replace what you wrote.
 
 ## Reference issue — the quality bar
 
@@ -34,8 +35,12 @@ All commands below are PowerShell-first (this repo's primary shell on Windows).
 
 ## Prerequisites
 
+**Starting an issue (Step 1) needs none of these** — `new-issue.ts` reads the
+repo and nothing else. They are the prerequisites for the steps that follow.
+
 1. Working directory is the repo root (contains `lib/newsletter/`).
-2. `CRON_SECRET` — Bearer token for the admin/cron endpoints (must match Vercel).
+2. `OPENAI_API_KEY` — for the pulse refresh in Step 4a. Without it that section
+   falls back to the evergreen pool, which is a correct outcome, not a failure.
 3. `RESEND_API_KEY` — for test sends, and for the `resend` CLI that a human uses
    to send the batches in Step 8e.
 4. `BLOB_READ_WRITE_TOKEN` — for the photo step (read from env or `.env.local`).
@@ -71,34 +76,40 @@ All commands below are PowerShell-first (this repo's primary shell on Windows).
 
 ---
 
-## Step 1 — Fetch the staged draft
+## Step 1 — Create the issue file, locally
 
-The issue id is the **current NZ month** as `YYYY-MM` (e.g. `2026-08`). Pull the
-Redis-staged draft the monthly cron produced and save it as the repo fixture,
-pretty-printed:
-
-```powershell
-curl.exe -s -H "Authorization: Bearer $env:CRON_SECRET" `
-  https://www.shesharp.org.nz/api/admin/newsletter/draft/2026-08 `
-  -o lib/data/json/newsletter-issues/2026-08.json
-
-# Pretty-print in place (preserves key order; ConvertTo-Json would reorder keys)
-node -e "const f='lib/data/json/newsletter-issues/2026-08.json';const fs=require('fs');fs.writeFileSync(f, JSON.stringify(JSON.parse(fs.readFileSync(f,'utf8')),null,2)+'\n')"
-```
-
-**If the fetch returns 404** (`No staged draft found`), trigger generation, then
-re-fetch:
+The issue id is the **current NZ month** as `YYYY-MM` (e.g. `2026-08`). One
+command creates it:
 
 ```powershell
-curl.exe -s -X POST -H "Authorization: Bearer $env:CRON_SECRET" `
-  -H "Content-Type: application/json" `
-  -d '{"month":"2026-08","force":true}' `
-  https://www.shesharp.org.nz/api/cron/newsletter-draft
+npx tsx scripts/newsletter/new-issue.ts 2026-08
 ```
 
-`force:true` bypasses the draft-day gate and the already-staged guards. The
-generated draft already includes a source-verified **pulse** section (see
-`lib/newsletter/pulse.ts`) — you sanity-check it in Step 3, you do not author it.
+That writes `lib/data/json/newsletter-issues/2026-08.json` with:
+
+- the **`auto`** block — this month's events and stats, snapshotted from
+  `lib/data/*` by `assembleAutoData()`;
+- an **empty `editorial`** block — the valid *shape* of the human copy, with
+  generic placeholder text in every slot and an evergreen pulse. It is a form to
+  fill in, not a draft to edit.
+
+**No API key. No `CRON_SECRET`. No network call.** Everything comes out of the
+repo, so a fresh clone can start a month's newsletter.
+
+**It refuses to overwrite an existing issue.** If the file is already there, that
+is a month somebody has been editing — do not reach for `--force` to get past the
+message. `--force` exists only for a deliberate "start this month over", and it
+destroys the founder note.
+
+> **There is no AI draft any more, and this is the point of the change.** The
+> newsletter used to be generated by a Vercel cron and pulled down from Redis;
+> its copy was rewritten by hand every single month, so the machine was paying
+> for an OpenAI call to produce something always discarded. Steps 3–4 are not
+> polish on a draft — they are where the issue gets written. Budget for that.
+>
+> The one machine-written part that remains is the **pulse** section, which is
+> refreshed by its own script in Step 4a. The stub's pulse is an evergreen
+> fallback; Step 4a replaces it.
 
 ## Step 2 — Register the issue
 
@@ -119,7 +130,7 @@ Without this the web version and the approve endpoint can't find the issue.
 
 **Run the photo step on EVERY issue** — a strong issue is carried by real event
 photos. It uploads email-safe JPEGs to Vercel Blob and populates `auto.photoStrip`
-+ `auto.photoAlbumUrl` (the serverless cron cannot — no ffmpeg/harvesting).
++ `auto.photoAlbumUrl`, which `new-issue.ts` leaves empty.
 
 ```powershell
 # Preview the selection + conversion plan (no upload, no write):
@@ -219,10 +230,11 @@ Rules:
 - Once real photos land, prefer re-running the normal Step 3 path (add the
   event's `galleryUrl` and let `photos.ts` harvest) over hand-uploading.
 
-## Step 4 — Edit the `editorial` block (give it real voice)
+## Step 4 — Write the `editorial` block (this is the newsletter)
 
-The AI draft is a starting point. Match the tone and structure of the reference
-issue (`2026-06.json`). **Required:**
+The stub is placeholder text in the right shape — every field below has to be
+written, not adjusted. Match the tone and structure of the reference issue
+(`2026-06.json`). **Required:**
 
 - **`founderNote.bodyMd`** — rewrite in the founder's warm, in-person Auckland
   voice (NZ spelling), naming real venues/neighbourhoods and **one concrete
@@ -852,12 +864,13 @@ Never resume by hand-picking who "probably didn't get it" — use the manifest.
    be swapped before the real send.
 7. **Voice.** Warm in-person Auckland community voice, NZ spelling, real venue
    names, one concrete in-the-room detail in the founder note. Subject ≤50
-   (≤1 emoji); preview ≤120 (complements, not repeats); ONE primary CTA. The AI
-   draft is a starting point — hand-polish to the `2026-06.json` bar.
+   (≤1 emoji); preview ≤120 (complements, not repeats); ONE primary CTA. The
+   stub is a form, not a draft — write to the `2026-06.json` bar.
 
 Also non-negotiable:
-- **Never regenerate over human-edited editorial.** `force:true` overwrites the
-  `editorial` block — only before a human has edited, or on explicit "start over".
+- **Never re-run `new-issue.ts --force` over a written issue.** It rewrites the
+  whole file, founder note included. Without `--force` the script refuses, which
+  is the guard — do not reach past it to get rid of an error message.
 - **All image URLs absolute** (`https://…`). Email clients don't resolve
   site-relative paths.
 - **The first test send always goes to `chanmeng6666@gmail.com` alone.** Widening
@@ -898,7 +911,8 @@ Also non-negotiable:
 
 ## What this skill does *not* do
 
-- Generate the AI draft itself (the monthly cron / the `force` POST does).
+- Write the editorial copy for you. There is no AI draft: the newsletter is not
+  generated in the cloud, and Step 4 is where the issue is actually written.
 - Manage who is on the mailing list. Subscribing, unsubscribing and importing
   people into `newsletter_subscribers` all happen outside this loop; this skill
   only reads the list as it stands.

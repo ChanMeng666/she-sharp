@@ -115,19 +115,18 @@ never values. They are on this page because each one is a mailbox.
 
 - [ ] Done / 完成
 
-### 5. Check the production `NEWSLETTER_ADMIN_EMAIL`
-### 5. 检查生产环境的 `NEWSLETTER_ADMIN_EMAIL`
+### 5. Remove the production `NEWSLETTER_ADMIN_EMAIL`
+### 5. 删除生产环境的 `NEWSLETTER_ADMIN_EMAIL`
 
-Every newsletter draft is mailed to this address for review before it goes out.
-Locally it is set to a personal Gmail. If production is the same, the review
-copy of every issue is landing in a personal account rather than a She Sharp
-one. Verify with `vercel env pull` (see
-`docs/deployment/VERCEL_ENV_VARIABLES_GUIDE.md`) — `website@` is the intended
-value.
+This variable addressed the monthly "draft ready for review" email. That email
+is gone — the newsletter is no longer generated in the cloud, so nothing reads
+the variable any more. It is still set on Vercel production, where it may still
+name a personal Gmail. It is dead config rather than a live leak, but delete it
+so nobody later concludes a review copy is being posted somewhere.
 
-每期通讯在发出前都会寄一份草稿到这个地址供审阅。本地环境里它是一个私人 Gmail。
-如果生产环境也是这样，那么每一期的审阅稿都落在私人账号而不是 She Sharp 的账号。
-用 `vercel env pull` 核实，应有的值是 `website@`。
+这个变量原本是月度"草稿已就绪"邮件的收件人。那封邮件已经不存在了——通讯不再在云端生成，
+代码里也再没有任何地方读它。它仍然设在 Vercel 生产环境，值可能还是一个私人 Gmail。
+这是死配置而不是活的泄露，但请删掉它，以免日后有人误以为审阅稿还在往那里寄。
 
 - [ ] Done / 完成
 

@@ -1,11 +1,13 @@
 /**
- * Redis-backed staging for monthly newsletter drafts and their lifecycle status.
+ * Redis-backed record of where a monthly newsletter issue is in the send
+ * pipeline (draft → approved → scheduled → sent).
  *
- * The cron routine assembles + AI-drafts an issue and `saveDraft`s it; a human
- * (via an admin endpoint / Claude Code session) later `getDraft`s it to review,
- * edit, and commit as the canonical JSON fixture. `markStatus` records where an
- * issue is in the send pipeline (draft → approved → scheduled → sent) plus the
- * Resend broadcast id once known.
+ * `markStatus` is written by the approve route; `getStatus` is its idempotency
+ * guard, so approving the same issue twice is a no-op rather than a second
+ * Slack post. Nothing else lives here any more: the draft-staging half
+ * (`saveDraft` / `getDraft` / `hasDraft`) went with the cloud generation step,
+ * because an issue now starts life as a file on a developer's disk written by
+ * `scripts/newsletter/new-issue.ts`, not as a blob in Redis.
  *
  * Every function degrades gracefully — returning false/null rather than
  * throwing — when Redis is unconfigured, mirroring `lib/chatbot/redis.ts`.
@@ -13,14 +15,11 @@
 
 import { Redis } from "@upstash/redis";
 
-import { newsletterIssueSchema, type IssueMeta, type NewsletterIssueData } from "./schema";
+import type { IssueMeta } from "./schema";
 
-const DRAFT_PREFIX = "newsletter:draft:";
 const STATUS_PREFIX = "newsletter:status:";
 
-/** Drafts live long enough to span a full month's review window. */
-const DRAFT_TTL_SECONDS = 45 * 24 * 60 * 60;
-/** Status outlives the draft so a sent issue's record survives draft expiry. */
+/** Status outlives an issue's review window, so a sent issue's record survives it. */
 const STATUS_TTL_SECONDS = 90 * 24 * 60 * 60;
 
 let redis: Redis | null = null;
@@ -49,9 +48,7 @@ function getNewsletterRedis(): Redis | null {
 
   const creds = resolveCreds();
   if (!creds) {
-    console.warn(
-      "[Newsletter] Upstash Redis not configured (draft staging disabled)"
-    );
+    console.warn("[Newsletter] Upstash Redis not configured (status tracking disabled)");
     return null;
   }
 
@@ -74,57 +71,6 @@ function coerceObject(value: unknown): Record<string, unknown> | null {
   }
   if (typeof value === "object") return value as Record<string, unknown>;
   return null;
-}
-
-/**
- * Stages a full issue draft under `newsletter:draft:<id>` with a 45-day TTL.
- * Returns false when Redis is unavailable or the write fails.
- */
-export async function saveDraft(issue: NewsletterIssueData): Promise<boolean> {
-  const r = getNewsletterRedis();
-  if (!r) return false;
-
-  try {
-    await r.set(`${DRAFT_PREFIX}${issue.id}`, JSON.stringify(issue), {
-      ex: DRAFT_TTL_SECONDS,
-    });
-    return true;
-  } catch (error) {
-    console.error("[Newsletter] Failed to save draft:", error);
-    return false;
-  }
-}
-
-/**
- * Reads and zod-validates the staged draft for `id`. Returns null when missing,
- * invalid, or Redis is unavailable.
- */
-export async function getDraft(id: string): Promise<NewsletterIssueData | null> {
-  const r = getNewsletterRedis();
-  if (!r) return null;
-
-  try {
-    const raw = coerceObject(await r.get(`${DRAFT_PREFIX}${id}`));
-    if (!raw) return null;
-    const parsed = newsletterIssueSchema.safeParse(raw);
-    return parsed.success ? parsed.data : null;
-  } catch (error) {
-    console.error("[Newsletter] Failed to read draft:", error);
-    return null;
-  }
-}
-
-/** True when a staged draft exists for `id`. False on any error / no Redis. */
-export async function hasDraft(id: string): Promise<boolean> {
-  const r = getNewsletterRedis();
-  if (!r) return false;
-
-  try {
-    return (await r.exists(`${DRAFT_PREFIX}${id}`)) === 1;
-  } catch (error) {
-    console.error("[Newsletter] Failed to check draft existence:", error);
-    return false;
-  }
 }
 
 /**

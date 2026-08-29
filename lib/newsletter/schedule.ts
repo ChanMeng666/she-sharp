@@ -3,16 +3,19 @@ import { TZDate } from '@date-fns/tz';
 /**
  * Newsletter scheduling in New Zealand time (Pacific/Auckland).
  *
- * Timing rules:
- * - Send moment: last Thursday of the issue month, 10:00 local Pacific/Auckland
- *   time (NZST UTC+12 / NZDT UTC+13, DST-correct).
- * - Draft day: the send day minus 2 calendar days (the Tuesday of that week).
+ * Timing rule: the send moment is the last Thursday of the issue month, 10:00
+ * local Pacific/Auckland time (NZST UTC+12 / NZDT UTC+13, DST-correct). It is
+ * the slot of record an operator honours by hand — nothing is queued against
+ * it.
+ *
+ * There is no draft day any more. `draftDayFor`/`isDraftDay` computed the
+ * Tuesday before the send and gated a Vercel cron; both went when the
+ * newsletter stopped being generated in the cloud.
  */
 
 const TIME_ZONE = 'Pacific/Auckland';
 const THURSDAY = 4;
 const SEND_HOUR = 10;
-const DRAFT_OFFSET_DAYS = 2;
 
 /**
  * Returns the number of days in the given month, independent of time zone.
@@ -40,49 +43,6 @@ export function lastThursdaySendAt(year: number, month: number): Date {
     }
   }
   throw new Error(`No Thursday found in ${year}-${month}`);
-}
-
-/**
- * Returns the draft-generation calendar day in NZ (send day minus 2), as
- * {year, month, day} in Pacific/Auckland.
- *
- * @param year Four-digit year.
- * @param month Month, 1-12.
- */
-export function draftDayFor(
-  year: number,
-  month: number,
-): { year: number; month: number; day: number } {
-  const sendInstant = lastThursdaySendAt(year, month);
-  const sendNz = new TZDate(sendInstant.getTime(), TIME_ZONE);
-  const draftNz = new TZDate(
-    year,
-    month - 1,
-    sendNz.getDate() - DRAFT_OFFSET_DAYS,
-    SEND_HOUR,
-    0,
-    0,
-    TIME_ZONE,
-  );
-  return {
-    year: draftNz.getFullYear(),
-    month: draftNz.getMonth() + 1,
-    day: draftNz.getDate(),
-  };
-}
-
-/**
- * Returns true if `nowUtc` falls on the draft day for its own NZ-calendar month.
- *
- * @param nowUtc The instant to test.
- */
-export function isDraftDay(nowUtc: Date): boolean {
-  const nz = new TZDate(nowUtc.getTime(), TIME_ZONE);
-  const year = nz.getFullYear();
-  const month = nz.getMonth() + 1;
-  const day = nz.getDate();
-  const draft = draftDayFor(year, month);
-  return draft.year === year && draft.month === month && draft.day === day;
 }
 
 /**

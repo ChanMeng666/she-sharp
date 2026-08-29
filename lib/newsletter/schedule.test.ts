@@ -1,11 +1,6 @@
 import assert from 'node:assert';
 import { TZDate } from '@date-fns/tz';
-import {
-  lastThursdaySendAt,
-  draftDayFor,
-  isDraftDay,
-  issueIdFor,
-} from './schedule';
+import { lastThursdaySendAt, issueIdFor } from './schedule';
 
 const TIME_ZONE = 'Pacific/Auckland';
 const THURSDAY = 4;
@@ -58,7 +53,7 @@ check('September 2026 last Thursday is 2026-09-24, NZST (UTC+12)', () => {
 
 // 3. Month-end weekday matrix across all of 2026.
 console.log('3. Month-end matrix (every month of 2026):');
-check('each month: send is a Thursday in the last 7 days; draft is 2 days earlier, same month', () => {
+check('each month: send is a Thursday in the last 7 days of that month', () => {
   for (let month = 1; month <= 12; month++) {
     const send = lastThursdaySendAt(2026, month);
     const nz = new TZDate(send.getTime(), TIME_ZONE);
@@ -71,44 +66,11 @@ check('each month: send is a Thursday in the last 7 days; draft is 2 days earlie
       nz.getDate() > lastDay - 7 && nz.getDate() <= lastDay,
       `month ${month}: send day ${nz.getDate()} not in last 7 days (dim=${lastDay})`,
     );
-
-    const draft = draftDayFor(2026, month);
-    assert.strictEqual(draft.year, 2026, `month ${month}: draft year`);
-    assert.strictEqual(draft.month, month, `month ${month}: draft not same month`);
-    assert.strictEqual(
-      draft.day,
-      nz.getDate() - 2,
-      `month ${month}: draft not send-minus-2`,
-    );
   }
 });
 
-// 4. isDraftDay around the July 2026 draft day.
-// July 2026 send day = 30 (Thu); draft day = 28 (Tue).
-// Tuesday 08:30 NZ (NZST UTC+12) on 2026-07-28 == 2026-07-27T20:30:00Z (Monday in UTC).
-console.log('4. isDraftDay:');
-check('true on Tuesday 08:30 NZ draft day (UTC date != NZ date)', () => {
-  const instant = new Date('2026-07-27T20:30:00.000Z');
-  const nz = new TZDate(instant.getTime(), TIME_ZONE);
-  assert.strictEqual(nz.getDate(), 28); // NZ says 28th
-  assert.strictEqual(instant.getUTCDate(), 27); // UTC says 27th
-  assert.strictEqual(isDraftDay(instant), true);
-});
-check('false on the Tuesday one week earlier (2026-07-21 NZ)', () => {
-  assert.strictEqual(
-    isDraftDay(new Date('2026-07-20T20:30:00.000Z')),
-    false,
-  );
-});
-check('false on the Wednesday after the draft day (2026-07-29 NZ)', () => {
-  assert.strictEqual(
-    isDraftDay(new Date('2026-07-28T20:30:00.000Z')),
-    false,
-  );
-});
-
-// 5. issueIdFor around midnight NZ vs UTC.
-console.log('5. issueIdFor across the NZ/UTC date line:');
+// 4. issueIdFor around midnight NZ vs UTC.
+console.log('4. issueIdFor across the NZ/UTC date line:');
 check('2026-07-31T13:00:00Z is already Aug 1 in NZ -> "2026-08"', () => {
   assert.strictEqual(issueIdFor(new Date('2026-07-31T13:00:00.000Z')), '2026-08');
 });
