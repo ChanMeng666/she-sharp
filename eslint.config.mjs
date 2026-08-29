@@ -20,6 +20,17 @@ const eslintConfig = [
       "lib/db/migrations/**",
       ".vercel/**",
       "next-env.d.ts",
+      // A git worktree is a second full checkout of this repo living inside it.
+      // `.gitignore` covers `.claude/*`, so git never mentions one — but ESLint
+      // walks the filesystem, not the index, and happily lints the copy. With
+      // one worktree open `pnpm lint` reported 836 warnings instead of 421, and
+      // a genuine error inside the worktree would be reported against a path
+      // that does not exist in git, which is a bad afternoon.
+      //
+      // Same shape as the trap CLAUDE.md records under "Working directories are
+      // gitignored, not invisible": Grep, Glob and find read those paths exactly
+      // like source. So does this.
+      ".claude/worktrees/**",
     ],
   },
   ...compat.extends("next/core-web-vitals", "next/typescript"),
