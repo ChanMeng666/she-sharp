@@ -187,9 +187,23 @@ subscribing. The gate is
 `.claude/skills/update-mailing-list/references/consent-rules.md`; every sending
 skill defers to it.
 
-**The table holds 1,545 rows** — the 2026-08-17 Mailchimp export, imported on
-2026-08-29 (1,560 read, 15 held back by the suppression register, every row
-carrying a real `confirmedAt`). **Nothing has been sent from it**: the live
+**The table held 1,549 rows as at 2026-08-30**, and it is not equal to any one
+export — nor will it stay at that number. It is the 2026-08-17 Mailchimp export
+**minus** the suppression register **plus** a later delta: 1,560 read on
+2026-08-29 and 15 held back, then 4 more added on 2026-08-30 from the API.
+**The two halves carry different grades of consent.** The 1,545 from the export
+have a real `confirmedAt`, read from its `CONFIRM_TIME`; the 4 from the API have
+**null**, because the Marketing API exposes no `CONFIRM_TIME` equivalent and
+writing the opt-in time there would fabricate a confirmation nobody made. That
+is the two-grades rule in `consent-rules.md` working, not a gap, and the null is
+load-bearing: `selectMailable()` compares `confirmedAt` against a suppression
+timestamp to let a later re-subscription outrank an earlier suppression.
+**All 1,549 share `source = 'mailchimp-import'`** — the importer hardcodes it, so
+`source` does **not** separate the four. Query the null `confirmedAt`, or the
+`consentSource` sentence that names the API pull. Read the live number from
+`npx tsx scripts/email/suppression.ts reconcile` rather than from this
+sentence — the delta is the point, and it will move again.
+**Nothing has been sent from it**: the live
 newsletter still goes out from Mailchimp, so do not describe the migration as
 done. Run `scripts/email/suppression.ts pull-mailchimp` before any further
 import — the register moves under a frozen export.
@@ -455,8 +469,11 @@ through `lib/data/mailchimp.ts`. Same split as Humanitix: the raw CSVs are
 gitignored vault (`/private/`) and in the private archive repo, never in git.
 Three traps before quoting anything: the list is **1,560**, not 3,689 (the rest
 left, bounced, or never subscribed); Mailchimp's own dashboard says **3,145**
-because it excludes the 544 hard-bounced; and a `Ticket Type:`/`Event:` tag is a
-pasted ticket list, **not attendance** — Humanitix is authoritative for that.
+because it excludes the 544 hard-bounced; and a `Ticket Type:`/`Event:` tag is
+written by the live Humanitix→Mailchimp integration and says a ticket was
+**bought**, which is **not attendance** — Humanitix is authoritative for that.
+(Nobody pastes those tags in; that was the reading here until 2026-08-30, and
+the evidence that overturned it is in `MAILCHIMP_ARCHIVE.md`'s fifth trap.)
 The non-subscribers are hashed into `email-suppression-hashes.json` so no future
 import can re-add them — **2,144** as of 2026-08-29, and
 `suppression.ts pull-mailchimp` keeps it current while Mailchimp is still the

@@ -191,9 +191,47 @@ Each of these is a claim the data will appear to support and does not.
    3,689, which is Mailchimp's way of saying it has seen little or no engagement.
 
 5. **A `Ticket Type:` or `Event:` tag read as attendance.** It records a ticket
-   list somebody pasted into Mailchimp, not a scanned check-in.
+   somebody **bought**, not a scanned check-in.
    **`lib/data/humanitix.ts` is authoritative for who turned up.** The two
    archives describe overlapping people and answer different questions.
+
+   Those tags are written by the **live Humanitix→Mailchimp integration**, which
+   pushes each event's registrants into the `She#` audience and tags them — not
+   by anybody pasting a ticket list into Mailchimp. This page said the pasting
+   thing until 2026-08-30; `tag-rules.json` had the mechanism right first, and
+   it is the file to believe. Humanitix documents the mapping itself: Store =
+   "User account name + Currency", Product = "Event name + Event date", Product
+   variant **and** Tag = "Ticket type", Tag = "Event name", Contact email =
+   "Order email", FNAME/LNAME = the buyer's first and last name
+   (<https://help.humanitix.com/en/articles/8888537-connect-to-mailchimp>).
+
+   Confirmed live on 2026-08-30. Three contacts joined the audience on 27, 28
+   and 28 August 2026 carrying both `Event: She Sharp & Les Mills: No Pain, All
+   Gain - Getting fit for AI` and `Ticket Type: Tickets - Professionals` or
+   `Ticket Type: Tickets - Students`, with `source: "Mahsa McCauley NZD"` — a
+   person's name followed by the currency, which is Humanitix's documented
+   `Store` mapping and nothing a human would type. The tags were there from the
+   write: each contact's `last_changed` is within eleven seconds of its
+   `timestamp_opt`, so nothing was added afterwards. The corroboration was
+   already committed: `manifest.json`'s `ecommerce-stores` entry records three
+   stores that are "artefacts of connected integrations rather than a shop: no
+   platform, no domain, no orders, empty addresses, and `money_format` NZD",
+   each named after a natural person.
+
+   **`timestamp_opt` is when a person joined the list, not when a tag was
+   applied**, and the two coincide above only because those three joined at
+   checkout. Most contacts carrying an event tag joined years earlier and were
+   tagged when they later bought a ticket. Never date a tag from an opt-in
+   timestamp.
+
+   One gap between the documentation and this account: Humanitix describes a
+   bare event-name tag, while every `Event:` tag here carries the `Event: `
+   prefix. The live writes above show the prefix is present on what the
+   integration itself writes, so it is not a later hand-edit.
+
+   **None of this softens the warning.** Knowing which system wrote the tag
+   changes who to ask about it, not what it means: buying a ticket is still not
+   turning up.
 
 6. **`TAGS` split on commas.** The cell is a CSV document nested inside a CSV
    cell, and Mailchimp **truncates a tag at 100 characters without re-closing
