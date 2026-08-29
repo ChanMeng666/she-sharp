@@ -242,7 +242,7 @@ function commandShow(argv: string[]): void {
     console.log("");
     console.log("  No import has been recorded yet.");
     console.log("  Remember: this log is NOT the subscriber list. For who is actually");
-    console.log("  subscribed right now, run `resend contacts list --json`.");
+    console.log("  subscribed right now, run `npx tsx scripts/email/inspect-subscribers.ts`.");
     console.log("");
     return;
   }

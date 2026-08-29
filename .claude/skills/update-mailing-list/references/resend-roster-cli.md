@@ -27,6 +27,11 @@ subscriber; nothing else is. `references/consent-rules.md` is the rule, and
 Every one of those masks addresses (`j****@gmail.com`) or prints truncated
 hashes, so the output is safe to paste into a PR or Slack.
 
+This skill's own `scripts/diff-roster.ts` went with the rest, deleted 2026-08-30:
+it diffed a recipient file against the Resend roster, and the last two rows of
+that table answer what it used to answer. `scripts/roster-state.ts` stays — it
+logs which *files* have been imported, by sha256, and never touched Resend.
+
 `audience-report.ts` still accepts `--include-resend` and will still report a
 Tier 0 count from Resend. **That number is zero and means nothing.** Quote the
 database instead.

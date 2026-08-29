@@ -237,9 +237,20 @@ six of the fifteen rows that import then held back were those six people, who ha
 unsubscribed or hard-bounced in the days since the export was taken. Every file
 you are handed is a snapshot of an afternoon, and people leave after it.
 
-**`diff-roster.ts` in this skill's `scripts/` folder is obsolete.** It queries
-Resend contacts, which are empty and are no longer the list. Do not run it and
-do not report its output as the roster.
+**`diff-roster.ts` was deleted on 2026-08-30.** It diffed a recipient file
+against the Resend contact roster, which holds nobody and is no longer the list.
+Its question is now answered by the two commands above, which are the same two
+rows `references/resend-roster-cli.md` gives:
+
+| You want to | Use |
+|---|---|
+| Look one person up, with their consent provenance | `npx tsx scripts/email/inspect-subscribers.ts --email someone@example.com` |
+| See whether the stores have drifted apart | `npx tsx scripts/email/suppression.ts reconcile` |
+
+Those read `newsletter_subscribers` and the committed suppression register — the
+same source `selectMailable()` uses on the send path — so there is exactly one
+implementation of "who may be mailed" and nothing for a second one to disagree
+with.
 
 The repeat-file check still works and is still worth doing:
 

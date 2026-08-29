@@ -1382,10 +1382,10 @@ by exactly one writer, so "who did this and when?" always has an answer.
 | `public/img/events/<slug>/index.ts` | `build-event-poster.ts --speaker` | the campaign set, so unreferenced files are accounted for |
 | `.claude/skills/send-event-emails/state/event-emails.json` | `event-ledger.ts` | which stage reached whom, as sha256 hashes — what makes a failed send resume rather than restart |
 | `.claude/skills/email-the-community/state/broadcasts.json` | `broadcast-ledger.ts` | broadcast id and status, so one announcement cannot go twice |
-| `.claude/skills/update-mailing-list/state/roster.json` | `diff-roster.ts` | import history — **Resend itself is the consent record, not this file** |
+| `.claude/skills/update-mailing-list/state/roster.json` | `roster-state.ts` | which FILES have been imported, by sha256 — **`newsletter_subscribers` is the consent record, not this file** |
 | `.claude/skills/reply-to-contact-messages/state/inbox-state.json` | `inbox-state.ts` | a run log, **not** a gate — `reviewed_at` in the database is the idempotency truth |
 | `lib/data/event-archive-photos.ts` | `scripts/build-event-archive.mts` | harvested gallery photos per slug |
-| `lib/docs/playbook.ts` | `scripts/docs/build-playbook.mts` — **generated, never hand-edited** | both halves of `/internal/event-playbook`, compiled from `AI_SKILLS_GUIDE.md` and this file |
+| `lib/docs/playbook.ts` | `scripts/docs/build-playbook.mts` — **generated, never hand-edited** | `/internal/event-playbook`, compiled from exactly one source, `docs/development/EVENT_PLAYBOOK.md` — **not this file**, so editing this document never needs the generator re-run |
 
 Eleven skills live in `.claude/skills/`. Nine of them appear somewhere above;
 `/run-event-playbook` conducts the rest, and `/reply-to-contact-messages` sits
