@@ -32,6 +32,7 @@ import type { NewEmailEvent } from "@/lib/db/schema";
 import {
   buildEmailEventRow,
   handleResendEvent,
+  isTransientBounce,
   readTagValue,
   type ResendEventEffects,
   type ResendWebhookEvent,
@@ -204,6 +205,10 @@ async function main(): Promise<void> {
       "a bounce also writes a telemetry row",
       rows.length === 1 && rows[0]?.type === "email.bounced"
     );
+    // Stored verbatim, so the row can be classified at read time rather than
+    // trusting a boolean written months earlier.
+    check("a permanent bounce records its type", rows[0]?.bounceType === "Permanent");
+    check("a permanent bounce is not classed transient", !isTransientBounce(rows[0]?.bounceType));
   }
 
   {
@@ -215,6 +220,48 @@ async function main(): Promise<void> {
     );
     check("a transient bounce does not suppress", suppressed.length === 0);
     check("a transient bounce is still counted", rows.length === 1);
+    check("a transient bounce records its type", rows[0]?.bounceType === "Transient");
+    check("a transient bounce is classed transient", isTransientBounce(rows[0]?.bounceType));
+  }
+
+  // The two bounce kinds must be distinguishable in the stored rows, because the
+  // hard-bounce rate is computed by excluding one of them. A ramped send to
+  // 1,545 people produces routine transient bounces, and a combined rate would
+  // read OVER against the 2% house trigger on a healthy send.
+  {
+    const { effects, rows } = fakeEffects();
+    await handleResendEvent(
+      payload("email.bounced", { bounce: { type: "Permanent" } }),
+      "msg_split_hard",
+      effects
+    );
+    await handleResendEvent(
+      payload("email.bounced", { bounce: { type: "Transient" } }),
+      "msg_split_soft",
+      effects
+    );
+    const hard = rows.filter((row) => !isTransientBounce(row.bounceType));
+    const transient = rows.filter((row) => isTransientBounce(row.bounceType));
+    check("two bounces split one hard and one transient", hard.length === 1 && transient.length === 1);
+  }
+
+  // Resend gives no type on some bounce payloads. Suppression treats that as
+  // permanent, so the rate must too — counting it as transient would report a
+  // cleaner send than the one whose address was just opted out.
+  {
+    const { effects, rows, suppressed } = fakeEffects();
+    await handleResendEvent(payload("email.bounced"), "msg_typeless_bounce", effects);
+    check("a bounce with no type records null", rows[0]?.bounceType === null);
+    check("a bounce with no type counts as hard", !isTransientBounce(rows[0]?.bounceType));
+    check("a bounce with no type still suppresses", suppressed[0]?.reason === "bounce");
+  }
+
+  // Only bounces carry the column; a stray value on another type would be
+  // counted by `countBouncesByTag`, which filters on the event type alone.
+  {
+    const { effects, rows } = fakeEffects();
+    await handleResendEvent(payload("email.delivered"), "msg_delivered_no_bounce", effects);
+    check("a non-bounce event records no bounce type", rows[0]?.bounceType === null);
   }
 
   {

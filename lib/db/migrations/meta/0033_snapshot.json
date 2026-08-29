@@ -1,5 +1,5 @@
 {
-  "id": "197fd720-cd35-4646-8c59-117b6e5a0e8f",
+  "id": "6304eb02-d034-4a20-b1a3-d57dacc3faca",
   "prevId": "9441e687-fa54-465d-a585-0adb719c52e5",
   "version": "7",
   "dialect": "postgresql",
@@ -4775,6 +4775,12 @@
         "issue_tag": {
           "name": "issue_tag",
           "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bounce_type": {
+          "name": "bounce_type",
+          "type": "varchar(32)",
           "primaryKey": false,
           "notNull": false
         },

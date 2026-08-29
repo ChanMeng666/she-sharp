@@ -27,7 +27,7 @@
  * about suppression behaviour changed when the dispatch moved.
  */
 
-import { desc, eq, isNotNull, sql } from "drizzle-orm";
+import { and, desc, eq, isNotNull, sql } from "drizzle-orm";
 
 import { db } from "@/lib/db/drizzle";
 import { emailEvents, type NewEmailEvent } from "@/lib/db/schema";
@@ -150,9 +150,33 @@ export function buildEmailEventRow(
     // "newsletter" and its value is the issue id. Stored with the prefix so one
     // column can also hold a future campaign tag without ambiguity.
     issueTag: buildIssueTag(event.data?.tags),
+    // Stored verbatim ("Permanent" / "Transient"), not normalised to a boolean.
+    // The vault rule applies to any provider payload: record what the API said,
+    // and let the reader classify. A boolean would also have thrown away
+    // `subType`-adjacent detail the moment Resend adds a third value.
+    bounceType:
+      event.type === "email.bounced"
+        ? event.data?.bounce?.type?.slice(0, 32) ?? null
+        : null,
     occurredAt: Number.isNaN(occurredAt.getTime()) ? new Date() : occurredAt,
     linkUrl: event.type === "email.clicked" ? event.data?.click?.link ?? null : null,
   };
+}
+
+/**
+ * Reports whether a stored bounce was the transient kind.
+ *
+ * The one place this classification is made, so the rate reported by
+ * `send-stats.ts` and the suppression decision taken by the webhook cannot
+ * drift apart. **A null or unrecognised value counts as hard**, matching what
+ * suppression actually does: the route suppresses unless the type is explicitly
+ * "transient", so a rate that treated an unknown as transient would report a
+ * cleaner send than the one whose addresses we just opted out.
+ *
+ * @param bounceType The stored `bounceType`, as Resend sent it.
+ */
+export function isTransientBounce(bounceType: string | null | undefined): boolean {
+  return bounceType?.toLowerCase() === "transient";
 }
 
 /**
@@ -214,6 +238,44 @@ export async function countEventsByTag(issueTag: string): Promise<EmailEventType
     .from(emailEvents)
     .where(eq(emailEvents.issueTag, issueTag))
     .groupBy(emailEvents.type);
+}
+
+/** Bounces for one send, split by the kind Resend reported. */
+export interface BounceSplit {
+  /** Recipients whose bounce was permanent, or whose type Resend did not give. */
+  hard: number;
+  /** Recipients whose bounce was transient — a full mailbox, a greylist. */
+  transient: number;
+}
+
+/**
+ * Splits one send's bounces into hard and transient.
+ *
+ * Kept apart from {@link countEventsByTag} because they are counted differently
+ * and conflating them is the whole reason `bounceType` exists: a ramped send to
+ * 1,545 people produces routine transient bounces, and folding those into the
+ * hard-bounce rate would report OVER against the 2% house trigger on a healthy
+ * send. Counts distinct recipients, like every other rate here.
+ *
+ * @param issueTag The stored tag, e.g. "newsletter:2026-08".
+ */
+export async function countBouncesByTag(issueTag: string): Promise<BounceSplit> {
+  const rows = await db
+    .select({
+      bounceType: emailEvents.bounceType,
+      people: sql<number>`count(distinct ${emailEvents.emailHash})::int`,
+    })
+    .from(emailEvents)
+    .where(and(eq(emailEvents.issueTag, issueTag), eq(emailEvents.type, "email.bounced")))
+    .groupBy(emailEvents.bounceType);
+
+  let hard = 0;
+  let transient = 0;
+  for (const row of rows) {
+    if (isTransientBounce(row.bounceType)) transient += row.people;
+    else hard += row.people;
+  }
+  return { hard, transient };
 }
 
 /**
@@ -309,8 +371,12 @@ export async function handleResendEvent(
       await recordSafely(effects, event, svixId);
       // Soft bounces (a full mailbox, a temporary block) resolve on their own;
       // opting the address out for one would be an overreaction. The row above
-      // is still written, because a transient bounce is real delivery data.
-      if (event.data?.bounce?.type?.toLowerCase() === "transient") {
+      // is still written, because a transient bounce is real delivery data —
+      // and it carries `bounceType`, so `send-stats.ts` can report it on its own
+      // line instead of inflating the hard-bounce rate. Same classifier both
+      // places, so what is excluded from the rate is exactly what was not
+      // suppressed.
+      if (isTransientBounce(event.data?.bounce?.type)) {
         console.log("[email] Transient bounce; not suppressing.");
         break;
       }

@@ -6,6 +6,7 @@ CREATE TABLE "email_events" (
 	"email_hash" varchar(64) NOT NULL,
 	"stream" varchar(32),
 	"issue_tag" varchar(64),
+	"bounce_type" varchar(32),
 	"occurred_at" timestamp NOT NULL,
 	"link_url" text,
 	"created_at" timestamp DEFAULT now() NOT NULL,

@@ -458,6 +458,21 @@ export const emailEvents = pgTable('email_events', {
   // Read from the message's own tags, never inferred from the sender.
   stream: varchar('stream', { length: 32 }),
   issueTag: varchar('issue_tag', { length: 64 }),
+  /**
+   * Resend's `data.bounce.type` — "Permanent" or "Transient" — on
+   * `email.bounced` only, null everywhere else.
+   *
+   * Without it there is no hard-bounce rate, only a bounce rate. The webhook
+   * already branches on this exact field to skip suppressing transient bounces,
+   * so the distinction was arriving on every payload and being thrown away one
+   * line later. Lumping the two together matters most on the send this
+   * instrument was built for: a ramped first mailing to 1,545 people will
+   * produce routine transient bounces — full mailboxes, greylisting — and a
+   * combined rate would read as OVER against the 2% house trigger on a send
+   * that is entirely healthy. A monitor that cries wolf on its first outing is
+   * one nobody reads by the third batch.
+   */
+  bounceType: varchar('bounce_type', { length: 32 }),
   // When Resend says it happened, not when we stored it. A retry that lands
   // hours later must not move the event into the wrong reporting window.
   occurredAt: timestamp('occurred_at').notNull(),

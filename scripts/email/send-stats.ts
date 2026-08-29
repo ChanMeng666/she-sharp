@@ -11,19 +11,23 @@
  * time, suppressed one address each, and nothing could say what fraction of a
  * send they were.
  *
- * What it will not do:
+ * Two things it will not do:
  *  - **Print an address.** Counts and truncated hashes only, so the output can
  *    go straight into a plan block, a PR or Slack.
- *  - **Compare open rates across the Apple Mail Privacy Protection boundary.**
- *    Mailchimp's history reports two unique-open series that are identical for
- *    every campaign before 2022 and diverge after it, so the baseline below
- *    prints both and names the break. Picking one and staying on it is the
- *    caller's job; this at least refuses to hide the choice.
- *  - **Distinguish a hard bounce from a soft one.** `email_events` stores
- *    Resend's event type, and `email.bounced` covers both, so the bounce rate
- *    printed here is an **upper bound** on the hard-bounce rate. An upper bound
- *    fails loudly rather than passing quietly, which is the right direction for
- *    a limit, but it is not the same number and is labelled as such.
+ *  - **Hand the reader a boundary year for Apple Mail Privacy Protection.**
+ *    Mailchimp reports two unique-open series and the baseline prints both, with
+ *    the caveat in words. It deliberately does not name the year they first
+ *    differ: that difference is one open in 8,811, a precise number that
+ *    misleads, while the gap that would change a decision opens up later and
+ *    gradually. The honest instruction is "pick one series and stay on it", and
+ *    that is what it prints.
+ *
+ * Hard and transient bounces are reported **separately**, which is why
+ * `email_events.bounce_type` exists. A ramped first send produces routine
+ * transient bounces — full mailboxes, greylisting — and folding them into the
+ * hard-bounce rate would report OVER against the house 2% trigger on a send
+ * that is entirely healthy. A monitor that cries wolf on its first outing is one
+ * nobody reads by the third batch.
  *
  * Usage:
  *   npx tsx scripts/email/send-stats.ts --tag newsletter:2026-08 [--json]
@@ -39,7 +43,7 @@ import "dotenv/config";
 
 import { mailchimpCampaigns } from "../../lib/data/mailchimp";
 import { client } from "../../lib/db/drizzle";
-import { countEventsByTag, listIssueTags } from "../../lib/email/events";
+import { countBouncesByTag, countEventsByTag, listIssueTags } from "../../lib/email/events";
 
 /**
  * Resend's AUP ceilings, as percentages.
@@ -112,20 +116,20 @@ function verdict(numerator: number, denominator: number, ceiling: number): strin
 }
 
 /**
- * The pre-migration Mailchimp baseline, and the boundary it must not be read
- * across.
+ * The pre-migration Mailchimp baseline, for context only.
  *
- * The two unique-open series are equal for every campaign sent before Apple Mail
- * Privacy Protection started pre-fetching images; the first year in which they
- * differ is computed here rather than hardcoded, so the caveat cannot drift away
- * from the data it describes.
+ * Both unique-open series are returned and neither is presented as *the* number.
+ * They were effectively identical while Apple Mail Privacy Protection did not
+ * exist and separate materially once it did, so the corrected series is the one
+ * to compare a self-hosted send against — and a comparison has to pick one
+ * series and stay on it either way.
+ *
+ * No boundary year is computed. Any single year would be a precise-looking
+ * answer to a question that does not have one: the series first differ by a
+ * rounding error and only diverge meaningfully later.
  */
 function mailchimpBaseline() {
   const totals = mailchimpCampaigns.totals;
-  const firstDivergentYear =
-    mailchimpCampaigns.bySendYear.find(
-      (year) => year.uniqueOpens !== year.proxyExcludedUniqueOpens
-    )?.year ?? null;
 
   return {
     campaignsSent: totals.campaignsSent,
@@ -136,7 +140,7 @@ function mailchimpBaseline() {
     uniqueClickRate: (totals.uniqueClicks / totals.emailsSent) * 100,
     complaintRate: (totals.abuseReports / totals.emailsSent) * 100,
     hardBounceRate: (totals.hardBounces / totals.emailsSent) * 100,
-    firstDivergentYear,
+    softBounceRate: (totals.softBounces / totals.emailsSent) * 100,
   };
 }
 
@@ -144,6 +148,8 @@ async function main(): Promise<void> {
   const args = parseArgs(process.argv.slice(2));
 
   const counts = await countEventsByTag(args.tag);
+  // Serial, not Promise.all: Neon throttles concurrent connection attempts.
+  const bounces = await countBouncesByTag(args.tag);
   const people = (type: string) => counts.find((row) => row.type === type)?.people ?? 0;
   const events = (type: string) => counts.find((row) => row.type === type)?.events ?? 0;
 
@@ -179,6 +185,8 @@ async function main(): Promise<void> {
             opened,
             clicked,
             bounced,
+            hardBounced: bounces.hard,
+            transientBounced: bounces.transient,
             complained,
             failed,
             openEvents: events("email.opened"),
@@ -190,9 +198,10 @@ async function main(): Promise<void> {
             complaintPct: base === 0 ? null : (complained / base) * 100,
             complaintCeilingPct: COMPLAINT_CEILING,
             complaintVerdict: verdict(complained, base, COMPLAINT_CEILING),
-            bounceUpperBoundPct: sent === 0 ? null : (bounced / sent) * 100,
-            bounceCeilingPct: BOUNCE_CEILING,
-            bounceVerdict: verdict(bounced, sent, BOUNCE_CEILING),
+            hardBouncePct: sent === 0 ? null : (bounces.hard / sent) * 100,
+            transientBouncePct: sent === 0 ? null : (bounces.transient / sent) * 100,
+            hardBounceCeilingPct: BOUNCE_CEILING,
+            hardBounceVerdict: verdict(bounces.hard, sent, BOUNCE_CEILING),
             houseComplaintTriggerPct: HOUSE_COMPLAINT_TRIGGER,
             houseBounceTriggerPct: HOUSE_BOUNCE_TRIGGER,
             uniqueOpenPct: base === 0 ? null : (opened / base) * 100,
@@ -200,8 +209,9 @@ async function main(): Promise<void> {
           },
           mailchimpBaseline: baseline,
           caveats: [
-            "email.bounced covers hard and transient bounces, so the bounce rate is an upper bound on the hard-bounce rate.",
-            `Mailchimp's two unique-open series are equal before ${baseline.firstDivergentYear ?? "the Apple MPP boundary"} and diverge after it; pick one series and stay on it.`,
+            "Transient bounces (full mailbox, greylist) are excluded from the hard-bounce rate and reported separately; they are not suppressed either, so the two agree.",
+            "A bounce whose type Resend did not give counts as hard, matching what suppression does.",
+            "Mailchimp's corrected unique-open series is the one to compare against. The two series were effectively identical before Apple Mail Privacy Protection existed and separate materially afterwards; pick one and stay on it.",
             "The Resend complaint ceiling is account-wide, not per-send.",
           ],
         },
@@ -243,7 +253,7 @@ async function main(): Promise<void> {
   console.log(`  Failed           ${failed}`);
   console.log(`  Opened           ${opened}  (${events("email.opened")} open events)`);
   console.log(`  Clicked          ${clicked}  (${events("email.clicked")} click events)`);
-  console.log(`  Bounced          ${bounced}`);
+  console.log(`  Bounced          ${bounced}  (${bounces.hard} hard, ${bounces.transient} transient)`);
   console.log(`  Complained       ${complained}`);
   console.log("");
   console.log(`  Rates are over ${base} ${baseLabel} recipients, counting people not events.`);
@@ -255,13 +265,21 @@ async function main(): Promise<void> {
     `                   Resend's ceiling is account-wide; our own trigger is ${HOUSE_COMPLAINT_TRIGGER}%.`
   );
   console.log(
-    `  Bounce rate      ${pct(bounced, sent)}   ${verdict(bounced, sent, BOUNCE_CEILING)}`
+    `  Hard bounce      ${pct(bounces.hard, sent)}   ${verdict(bounces.hard, sent, BOUNCE_CEILING)}`
   );
   console.log(
-    `                   UPPER BOUND on the hard-bounce rate: email.bounced covers`
+    `                   Permanent bounces only, over ${sent} sent. Our own trigger is ${HOUSE_BOUNCE_TRIGGER}%.`
   );
   console.log(
-    `                   transient bounces too. Our own trigger is ${HOUSE_BOUNCE_TRIGGER}%.`
+    `                   A bounce Resend gave no type for counts here, matching`
+  );
+  console.log(`                   what suppression does.`);
+  console.log(`  Transient bounce ${pct(bounces.transient, sent)}   (not a ceiling)`);
+  console.log(
+    `                   Full mailboxes and greylisting. Routine on a ramped send,`
+  );
+  console.log(
+    `                   excluded from the rate above, and not suppressed either.`
   );
   console.log("");
   console.log(`  Unique open      ${pct(opened, base)}`);
@@ -277,19 +295,23 @@ async function main(): Promise<void> {
   );
   console.log(`    Unique click ${baseline.uniqueClickRate.toFixed(1)}%`);
   console.log(`    Complaints   ${baseline.complaintRate.toFixed(3)}%`);
+  console.log(
+    `    Bounces      ${baseline.hardBounceRate.toFixed(1)}% hard, ${baseline.softBounceRate.toFixed(1)}% soft`
+  );
   console.log("");
   console.log(
-    `    The two open figures are IDENTICAL for every campaign before ${baseline.firstDivergentYear ?? "the boundary"}`
+    "    Compare against the corrected figure. Apple Mail Privacy Protection"
   );
   console.log(
-    "    and diverge after it, because Apple Mail Privacy Protection pre-fetches"
+    "    pre-fetches images and registers opens nobody performed: the two series"
   );
   console.log(
-    "    images and registers opens nobody performed. Pick one series and stay on"
+    "    were effectively identical before it existed and separate materially"
   );
   console.log(
-    "    it; a comparison that crosses the break is measuring Apple, not readers."
+    "    afterwards. Pick one series and stay on it — a comparison that mixes"
   );
+  console.log("    them is measuring Apple, not readers.");
   console.log("");
 
   await client.end();
