@@ -124,6 +124,11 @@ the Resend bounce/complaint webhook (endpoint
 `https://www.shesharp.org.nz/api/webhooks/resend`, listening for
 `email.bounced`, `email.complained`, `email.failed`, `email.delivery_delayed`).
 
+**Widened 2026-08-29** to eight events — the four above plus `email.sent`,
+`email.delivered`, `email.opened` and `email.clicked` — so the account-wide
+complaint ceiling has a denominator and not only a numerator. See "Open and
+click tracking" below: two of those four cannot fire yet, deliberately.
+
 The live records now read:
 
 ```
@@ -467,7 +472,7 @@ poll `domains claim get` until `completed` → update DKIM in DNS →
 | Domain id | `86d3a2e3-3178-4bc1-a3dd-7cb4561eaee4` (now `failed` there) | `0e8e0ee5-3dd9-437b-a08d-a595d1f4e487` |
 | Region | us-east-1 | us-east-1 — **deliberately the same** |
 | Return-Path | `send.shesharp.org.nz` | `send.shesharp.org.nz` — unchanged |
-| Webhook | → `https://www.shesharp.org.nz/api/webhooks/resend` | `facbd62e-7c3e-47fa-abf1-0d36b37cd71c`, same URL, same four events, **new `whsec_` secret** |
+| Webhook | → `https://www.shesharp.org.nz/api/webhooks/resend` | `facbd62e-7c3e-47fa-abf1-0d36b37cd71c`, same URL, same four events, **new `whsec_` secret**. Widened to **eight** on 2026-08-29 |
 | Contacts | 2 test addresses | **0 — nothing was imported** |
 
 Segments and topics do **not** travel with a claim; they were recreated. Their
@@ -981,6 +986,55 @@ the thing that will tell us whether the trigger was right.
 
 The tension this resolves is written up as risk 3 in
 [`../development/EMAIL_PLATFORM_STRATEGY.md`](../development/EMAIL_PLATFORM_STRATEGY.md) §6.
+
+## Open and click tracking — off, by decision, 2026-08-29
+
+`open_tracking` and `click_tracking` on the domain are **`false`**, and the
+first newsletter send goes out that way. This is a decision, not an oversight.
+
+**It is also not two flags.** That was the assumption going in, and it is wrong
+in a way worth recording, because the API lets you believe it:
+
+```
+resend domains update <id> --open-tracking --click-tracking   → success
+PATCH /domains/<id> {"open_tracking":true,"click_tracking":true} → HTTP 200
+GET /domains                                        → "open_tracking": false
+```
+
+The write is accepted and silently does nothing. Resend's own reference says why
+— *"This setting is only applied if a `tracking_subdomain` is configured and
+verified"* — and this account has none. Enabling tracking therefore means
+**creating a tracking subdomain and adding a CNAME in Cloudflare**
+(`links.shesharp.org.nz` → `linksN.resend-dns.com`), not flipping a switch.
+`GET /domains/<id>` does not return the tracking fields at all, so only
+`GET /domains` can be used to verify. **A 200 here proves nothing; read the
+value back.** The same rule as the Vercel environment variables above, on a
+different surface.
+
+**Why it stays off for the first send.**
+
+1. **What it buys is the least reliable number available.** Apple Mail Privacy
+   Protection inflates opens so heavily that this organisation's own Mailchimp
+   baseline is *two* figures — 37.9% and 33.1% — diverging by 12% from 2024
+   (`docs/development/MAILCHIMP_ARCHIVE.md`). A first-send open rate could not be
+   compared cleanly against either, and would decide nothing.
+2. **What actually gates the ramp needs no tracking at all.** `email.sent`,
+   `email.delivered`, `email.bounced` and `email.complained` fire regardless, so
+   the complaint rate and the hard-bounce rate — the two arms above that measure
+   real damage — already have both a numerator and a denominator, via
+   `email_events` and `scripts/email/send-stats.ts`.
+3. **Click tracking rewrites the unsubscribe link.** It rewrites every `<a href>`
+   in the body, and the footer's unsubscribe link is one
+   (`emails/components/Footer.tsx`). That would route the AUP's seven-day
+   obligation through a brand-new hostname with no reputation, on the first send
+   from a new platform. An unsubscribe that silently fails becomes a spam
+   complaint, against an account-wide ceiling of ~1.25 complaints. It is the
+   wrong trade for a metric that changes no decision.
+
+This is the same reasoning as the section above, applied to a smaller change:
+one variable at a time, and the first send is not the moment to add one.
+**Revisit once the send is boring**, on the same evidence-not-calendar basis.
+Nothing is foreclosed — it remains one CNAME and one API call.
 
 ---
 

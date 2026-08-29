@@ -323,9 +323,40 @@ For items 1–4, built means the code exists, is typechecked and has its own tes
    idempotency key, hash ledger, manifest shape and chunk-file naming and swaps
    only the renderer. **Neither script sends.** They write files and print the
    `resend emails batch --file` commands a human runs.
-5. **Open/click analytics** — **not built, and not required.** If wanted: enable
-   domain-level tracking and capture `email.opened` / `email.clicked` webhook
-   events into our own table.
+5. ~~**Open/click analytics** — not built, and not required.~~ **Built
+   2026-08-29, and the framing above was wrong.** What is not required is
+   open/click; what turned out to be *load-bearing* is the rest of the same
+   table, and this item had it filed as optional analytics.
+
+   Risk 2 below names the 0.08% ceiling as the single largest operational risk
+   in the plan — and nothing was watching it. The webhook suppressed the odd
+   bouncing address and stored no per-send record at all, so the complaint rate
+   had a numerator arriving one complaint at a time and **no denominator
+   anywhere**. `email_events` (migration `0033_crazy_morg`, applied to
+   production 2026-08-29) fixes that: the webhook now records `email.sent`,
+   `delivered`, `opened`, `clicked`, `bounced`, `complained` and `failed`,
+   idempotent on the `svix-id` header because the route returns 500 *so that*
+   Resend retries. `scripts/email/send-stats.ts --tag newsletter:<YYYY-MM>`
+   reports the complaint rate against 0.08% and the hard-bounce rate against 4%,
+   naming this repo's own stricter triggers (0.10% / 2%) beside them.
+
+   Two details worth carrying:
+
+   - **`bounce_type` is a column, not a derived flag.** `email.bounced` covers
+     hard *and* transient bounces, and a ramped send to 1,545 people produces
+     routine transient ones. Folding them together reported OVER against the 2%
+     trigger on a healthy send — a monitor that cries wolf on its first outing
+     is one nobody reads by the third batch. `isTransientBounce()` in
+     `lib/email/events.ts` is the single classifier, used by both the
+     suppression branch and the rate query, so what is excluded from the rate is
+     exactly what was not suppressed.
+   - **Open and click tracking is still off, deliberately**, and it is not two
+     flags: it requires a verified `tracking_subdomain` and a Cloudflare CNAME,
+     and the API accepts a write enabling it while silently doing nothing. The
+     decision and the no-op are recorded in `../deployment/EMAIL_AUTHENTICATION.md`
+     → "Open and click tracking". So opens and clicks are the one part of this
+     item that remains genuinely optional — which is where the original
+     framing was right.
 6. **A bulk importer, so the existing list could move in.** **Done, and run,
    2026-08-29.** This was the item the whole plan stalled on: double opt-in
    through the form was the only route to `status = 'subscribed'`, and 1,560
