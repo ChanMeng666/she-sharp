@@ -569,7 +569,8 @@ distinct people have ever ticked it.**
 **Reading 2 is wrong too, but it was closer.** The post-2022 `Mahsa McCauley NZD`
 writes into Mailchimp *are* the Humanitix integration — that string is a
 Mailchimp **ecommerce store**, `id 5e328b71a912950007fd7f91_NZD`,
-`email_address events@shesharp.co.nz`, read from
+with its `email_address` still an `events@` mailbox on the **old `shesharp.co.nz`
+domain**, read from
 `mailchimp/2026-08-28-api/ecommerce-stores.json`, and Humanitix documents the
 store name as *user account name + currency*. Over the 1,549 people now in
 `newsletter_subscribers`, **887 carry that source and 886 of them are Humanitix

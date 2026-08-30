@@ -555,7 +555,8 @@ opt-in".
 this section used to hold open were wrong, and the second was wrong in an
 instructive way. `source: "Mahsa McCauley NZD"` **is** the Humanitix integration
 — it is a Mailchimp **ecommerce store**, `id 5e328b71a912950007fd7f91_NZD`,
-`email_address events@shesharp.co.nz`, read from the API vault's
+with its `email_address` still an `events@` mailbox on the **old `shesharp.co.nz`
+domain**, read from the API vault's
 `ecommerce-stores.json`; Humanitix documents the store name as *user account name
 + currency*. What made the writes continue after May 2022 was the integration's
 **"Sync contacts who haven't opted-in"** setting, ON until it was switched off on
