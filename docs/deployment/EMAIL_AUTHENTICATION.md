@@ -683,10 +683,13 @@ the procedure because the same shape applies to any future audience carry-over:
    mailed six people who had just left. The gap between an export and an import
    is never zero, so neither is the top-up.
 
-**Having an API key does not retire the manual export.** Mailchimp's API has no
-equivalent of `CONFIRM_TIME` — 1,560 contacts carry it in the CSV against 129
-for the nearest API field, `timestamp_signup` — and the archive's reading of
-consent rests on that column. The API is a second, independent reading of the
+**Having an API key does not retire the manual export.** The API's
+`timestamp_signup` **is** `CONFIRM_TIME` — measured 2026-08-30, the two agree to
+the New Zealand offset (125 rows at +12h, 4 at +13h, none at any other) — but the
+API carries it only where Mailchimp recorded a *separate* confirmation: **129**
+rows against **1,560** in the CSV, which populates the column for everyone by
+copying `OPTIN_TIME` when there was no second act. The archive's reading of
+consent rests on that column, and only the CSV has it for the other 1,431. The API is a second, independent reading of the
 account; it is not the download. (Same on Humanitix, for a blunter reason:
 `/payouts`, `/access-codes` and `/discounts` are 404. Full detail for both in
 `docs/development/PLATFORM_APIS.md`.)
@@ -866,8 +869,11 @@ which are now real columns on the row (`consent_source`, `consent_date`,
 > existing consent record rather than a fresh confirmation click:
 > `source = 'mailchimp-import'`, a `consentSource` sentence naming the audience
 > and the export, and `confirmedAt` taken from the export's `CONFIRM_TIME` —
-> which all 1,560 rows carried, so the double opt-in it records is an act that
-> happened in Mailchimp, not one we invented. No sign-up IPs were imported.
+> which all 1,560 rows carried, so the date it records is one Mailchimp logged,
+> not one we invented. **It is not a double opt-in for all of them**: measured
+> 2026-08-30, that column *equals* `OPTIN_TIME` on **1,431** of the 1,560 and
+> differs on only **128**, and Mailchimp writes it either way. No sign-up IPs
+> were imported.
 >
 > It defaults to a **dry run** and needs `--apply` spelled out; it **refuses the
 > `unsubscribed` / `cleaned` / `nonsubscribed` exports by filename**; and it
@@ -909,17 +915,27 @@ Resend's analytics. `email_optouts` is the in-repo cross-check — the webhook
 writes to it on every bounce and complaint.
 
 **The Mailchimp baseline is now in the repo**, at
-`lib/data/json/mailchimp/campaigns.json`: 180 sends and 188,796 emails from
-2019-07 to 2026-08, **37.9% unique open** — or **33.1%** with Apple's proxy
+`lib/data/json/mailchimp/campaigns.json` — **and it is a snapshot, already stale
+by at least one send**: its `totals.lastSend` is 2026-08-22, while a read-only
+`GET /lists/{id}` on 2026-08-30 returns `campaign_last_sent` 2026-08-27 and
+`campaign_count` 217. Mailchimp is still the live sender, so it will keep
+drifting; check `metadata.exportId` before quoting a total. It holds 180 sends
+and 188,796 emails from 2019-07 to 2026-08, **37.9% unique open** — or **33.1%** with Apple's proxy
 opens excluded — 881 hard bounces, 797 unsubscribes and 4 abuse reports across
 the whole history. Before this file the only campaign statistics anywhere were
 figures somebody had transcribed into a `.docx`.
 
-Two traps in comparing against it. **Pick one open-rate figure and stay on it**:
-the proxy-excluded series equals the headline series exactly for every campaign
-sent before 2022, because Apple Mail Privacy Protection did not exist yet, and
-diverges afterwards — so an open rate from 2020 and one from 2024 are not the
-same measurement, and **open rates cannot be compared across 2021**. And read
+Two traps in comparing against it. **Pick one open-rate figure and stay on it.**
+The boundary has two honest answers and they are answers to different questions,
+so give both rather than choosing. **Equality** starts in **2022**: Apple Mail
+Privacy Protection did not exist before, so the proxy-excluded series is exactly
+equal to the headline series for every campaign sent up to 2021. **Materiality**
+starts in **2024**: 2022 differs by 1 unique open in 8,811 and 2023 by 5 in
+13,435 — both noise — against 17,343 vs 15,284 in 2024. So an open rate from 2020
+and one from 2024 are not the same measurement and **cannot be compared across
+2021**; but do not read a 2023 figure as "corrected", and do not read a 2022 gap
+as a trend. The open- and click-tracking note further down this file says the divergence is
+"from 2024", and that is the materiality answer, not a second boundary. And read
 `growth[].subscribed` as a stock, not a flow: 86 months of end-of-month list
 size, peaking at **1,742 in 2025-11** and standing at **1,555** in 2026-08. The
 list has been shrinking through 2026, which is the trend any post-migration
@@ -983,8 +999,13 @@ the thing that will tell us whether the trigger was right.
 - The **complaint-rate (>0.10%) and hard-bounce-rate (>2%) arms are untouched**
   and still fire. Those measure real damage. Nothing here weakens them.
 - The **recipient-count arm is deferred, not deleted.** It is a proxy for volume
-  risk, and the honest answer is that ~1,560 a month is still two orders of
-  magnitude under the bulk-sender thresholds. **Revisit it once the send is
+  risk, and the honest answer is that ~1,550 a month is still two orders of
+  magnitude under the bulk-sender thresholds. (This paragraph and the decision
+  25 lines above it used to give **1,549** and **~1,560** for the same list. It
+  is one list; it moves; `npx tsx scripts/email/suppression.ts reconcile` prints
+  the live figure, and what it prints is `candidates.length` — the count
+  *before* `selectMailable()` applies the two suppression registers, so an upper
+  bound on a send rather than the send size.) **Revisit it once the send is
   boring** — after two or three clean issues with the rates in bounds, decide on
   evidence rather than on a number chosen in advance.
 - Nothing is foreclosed. Resend Pro allows 10 domains, and the split remains a
@@ -1090,21 +1111,31 @@ the split trigger above depends on.
 Everything not yet done, with what is actually blocking it. Nothing here is
 forgotten or deliberately skipped unless it says so.
 
+> **The DMARC schedule has slipped, and rows 2 and 4 carry dates that have
+> passed.** Checked 2026-08-30: `_dmarc.shesharp.org.nz` is still
+> `v=DMARC1; p=none; rua=…` with **no `np=`** and no `ri=`, so neither stage
+> landed. The cause is a single unmet prerequisite — **row 1, "read the first
+> DMARC reports", has never been done** — and every downstream stage is gated on
+> it, so nothing below row 1 could have proceeded. **No new dates are set here**:
+> the schedule is relative ("2 weeks of clean reports"), and inventing a fresh
+> absolute date without doing row 1 would only reproduce this. Re-date rows 2 and
+> 4 from the day the reports are first read.
+
 | # | Task | Blocked on | Do it when |
 |---|---|---|---|
-| 1 | **Read the first DMARC reports** — Cloudflare → Email → DMARC Management. Confirm every source is recognised (expect only Google, Amazon SES, forwarders). | ~24h after 2026-07-31 | Now, then weekly |
-| 2 | **Stage 3a — `np=reject`** | 2 weeks of clean reports | ~2026-08-14 |
+| 1 | **Read the first DMARC reports** — Cloudflare → Email → DMARC Management. Confirm every source is recognised (expect only Google, Amazon SES, forwarders). **Nothing has been read.** This has been unblocked since ~2026-08-01 and is the prerequisite everything below it waits on. | nothing — unblocked since ~2026-08-01 | **Overdue.** Now, then weekly |
+| 2 | **Stage 3a — `np=reject`** — **not done; the ~2026-08-14 date passed.** Blocked on #1, which nobody has done. | #1: 2 weeks of *read* reports | Re-date from the day #1 is first read, not from the old schedule |
 | 3 | **Resend DKIM 1024 → 2048** | a quiet window **after** a newsletter send | Before quarantine, never after `p=reject` |
-| 4 | **Stage 3b — `p=quarantine`** | reports show every source identified, no third-party sender hiding in the failures | ~2026-08-30 |
+| 4 | **Stage 3b — `p=quarantine`** — **not done; the ~2026-08-30 date passed.** Also blocked on #1. | reports show every source identified, no third-party sender hiding in the failures | After #2, re-dated from #1 |
 | 5 | **Stage 2b — Google DKIM** | ⚠️ **Workspace super-admin.** `website@` cannot open `admin.google.com`. Request text is in Stage 2, and it is folded into `docs/deployment/WORKSPACE_MAILBOX_CHECKLIST.md` so the admin does one sitting rather than two. | Whenever an admin is available |
 | 6 | **Stage 4 — `p=reject`** + root SPF `-all` | **hard-gated on #5** | Not before #5 |
 | 7 | **Decide the legacy SPF include** — drop `include:_spf.1stdomains.co.nz` if reports show nothing sends from those IPs (budget 4/10 → 1/10) | the reports from #1 | With #4 |
 | 8 | **Migrate the newsletter sending off Mailchimp** — see the section above. **The send path is built** (29 Aug 2026): `recipients-from-db.ts` → `build-newsletter-batch.ts` → a human runs the printed `resend emails batch` commands, off the transactional batch API rather than a Resend broadcast. **List hygiene is done** (18 Aug 2026): all four statuses exported and archived, and the non-subscribers are in the suppression register — **2,138 as at 2026-08-27**, not the 2,129 the export gave, so run `suppression.ts pull-mailchimp` immediately before the import rather than trusting the file. **The ramp cohort is no longer blocked** (27 Aug 2026): `scripts/mailchimp/recent-openers.ts` builds it from the API, and since 30 Aug 2026 `recipients-from-db.ts --restrict-to-hashes` applies it to a database-backed send (#8e). **The import is done** (29 Aug 2026): `newsletter_subscribers` holds **1,545** rows — 1,560 read, 15 held back by the register, which had been topped up to **2,144** first. What remains is **the send itself**, and it must be **ramped** — the whole list in one burst is the shape this document spends a section warning against. **Nothing has been sent.** | must NOT share a month with #2/#4 | A month with no DMARC change |
 | 8b | ~~**Migrate the subscribe funnel**~~ — **Done 29 Aug 2026.** `/api/newsletter/subscribe` now writes a `pending` row to `newsletter_subscribers` and sends a confirmation email; the person becomes mailable only by pressing the button on `/newsletter/confirm` (POST, never GET — a link scanner must not be able to confirm). All **six** `MAILCHIMP_CONFIG.subscribeUrl` links now point at `/newsletter/subscribe`, and `subscribeUrl` has been deleted from the config. (This row previously said "16 links"; there were 6, plus 1 `archiveUrl`.) | — | **Done** |
 | 8c | **Decide `MAILCHIMP_CONFIG.archiveUrl`'s replacement.** Partly done: since 2026-08 each new issue is listed in `lib/data/newsletters-manual.ts` pointing at its on-site render (still `noindex`, by design). What remains is the "Open full archive" button, which is the only route to the pre-2026-08 back catalogue. | the back catalogue re-hosted, or the button repointed at `/resources/newsletters` | With #8 |
-| 8d | **Repoint or switch off the Humanitix → Mailchimp contact integration — still outstanding, and now the most urgent of these.** Configured in Humanitix, invisible from this repo, and it pushes event contacts into the `She#` audience on its own. "Sync contacts who haven't opted-in" was switched **off** and the checkout opt-in question **on** (both 2026-08-27), which fixes the consent shape but **not** the destination — nothing has been repointed. The 29 Aug import is what sharpened this: the audience it feeds is no longer where the list lives, so every opt-in Humanitix collects from here lands in a copy that is already stale and that nobody will send from. Those sign-ups are lost rather than merely misplaced, and the loss is silent. | — | **Now** — ahead of the first send, not after it |
+| 8d | **Repoint or switch off the Humanitix → Mailchimp contact integration — still outstanding, and now the most urgent of these.** Configured in Humanitix, invisible from this repo, and it pushes event contacts into the `She#` audience on its own. "Sync contacts who haven't opted-in" was switched **off** and the checkout opt-in question **on** (both 2026-08-27), which fixes the consent shape but **not** the destination — nothing has been repointed. The 29 Aug import is what sharpened this: the audience it feeds is no longer where the list lives, so every opt-in Humanitix collects from here lands in a copy that is already stale and that nobody will send from. **And a measurement on 2026-08-30 sharpened it again, in the other direction**: while "Sync contacts who haven't opted-in" was on, the integration wrote **752 non-opted-in ticket buyers** into the `She#` audience, and the 29 Aug import carried every one of them into `newsletter_subscribers` — **48.5% of the list**. It was not merely writing to the wrong place; it was writing the wrong people. The founder-facing runbook for switching it off is `HUMANITIX_INTEGRATION_SHUTDOWN.md`. Those sign-ups are lost rather than merely misplaced, and the loss is silent. | — | **Now** — ahead of the first send, not after it |
 | 8e | ~~**Teach `recipients-from-db.ts` to take a hash allow-list.**~~ — **Done, 30 Aug 2026.** `--restrict-to-hashes <path>` now exists on the database path too, so the warm cohort from `recent-openers.ts` can be applied to the send a newsletter is actually built from; `--limit` ramps by row order, this ramps by engagement. The loader is shared with the CSV path (`scripts/email/restrict-hashes.ts`) rather than copied, it is applied after `--only` and before `--limit`, and on this path it cannot widen anything **by construction** — its input is already `selectMailable()`'s output, so a hash that is not a mailable subscriber adds nobody. A cohort that matches nothing is a hard error, not a silent batch of nobody. | — | **Done** |
-| 8f | ~~**Build the bulk-import path into `newsletter_subscribers`.**~~ — **Done, and run, 29 Aug 2026.** `scripts/email/import-mailchimp-subscribers.ts` carried the Mailchimp list over: 1,560 read, **15** held back by the suppression register, 0 malformed, **1,545 rows written**, each with `source = 'mailchimp-import'`, a provenance sentence in `consent_source`, and a real `confirmedAt` from the export's `CONFIRM_TIME`. Dry-run by default; `--apply` must be spelled out. It is the **Mailchimp carry-over only** — a general opt-in CSV importer (routes 2–4 of `consent-rules.md`) still does not exist, and `/update-mailing-list` still says so. | — | **Done** |
+| 8f | ~~**Build the bulk-import path into `newsletter_subscribers`.**~~ — **Done, and run, 29 Aug 2026.** `scripts/email/import-mailchimp-subscribers.ts` carried the Mailchimp list over: 1,560 read, **15** held back by the suppression register, 0 malformed, **1,545 rows written**, each with `source = 'mailchimp-import'`, a provenance sentence in `consent_source`, and a real `confirmedAt` from the export's `CONFIRM_TIME`. Dry-run by default; `--apply` must be spelled out. It is the **Mailchimp carry-over only**. **Route 2 has had its own importer since 30 Aug 2026** — `scripts/email/import-optin-subscribers.ts`, dry-run by default, and `--apply` also demands `--event-unsubscribers-checked`. **Routes 3 and 4 still have no importer, deliberately**, and `/update-mailing-list` still says so. | — | **Done** |
 | 8g | ~~**Decommission the Resend Marketing objects**~~ — **done, 29 Aug 2026.** In code: `lib/newsletter/resend-api.ts`, `scripts/newsletter/setup-resend.ts`, `scripts/newsletter/seed-pilot-contacts.ts` and its example CSV deleted; the two env vars out of `.env.example`. In the Resend account: segment `Newsletter` (`95d452f5-…`) and topic `Monthly Newsletter` (`08e59693-…`) **deleted** — both held 0 contacts, verified before and after in both the dashboard and `resend segments list`. The team-default segment `General` (`9d195cb7-…`) was deliberately left alone. On Vercel production: `RESEND_NEWSLETTER_SEGMENT_ID` and `RESEND_NEWSLETTER_TOPIC_ID` **removed** with `vercel env rm`; `RESEND_API_KEY`, `RESEND_WEBHOOK_SECRET` and `EMAIL_UNSUBSCRIBE_SECRET` were confirmed untouched afterwards. No redeploy was needed — nothing read them. | — | **Done** |
 | 9 | **Retire the Mailchimp DNS records** (`k2`/`k3._domainkey`) | 2–3 clean Resend sends **and** #8b | After #8 proves out |
 | 10 | ~~**Confirm someone reads `newsletter@`**~~ — **answered 2026-08-23: no.** Nobody on the team had its password on 2026-08-17, and a direct question in Slack went unanswered. It is no longer the Reply-To (that is now `info@`); it remains the From, which is correct and must not change. Naming an owner is item 3 on `WORKSPACE_MAILBOX_CHECKLIST.md`. | — | **Done** |
@@ -1112,7 +1143,7 @@ forgotten or deliberately skipped unless it says so.
 | 12 | **TLS-RPT** (`_smtp._tls`) | needs a real inbox to receive reports (super-admin to create) | Optional, low value |
 | 13 | **MTA-STS** | a second Vercel domain + route | Optional — the only item here whose misconfiguration breaks *inbound* mail |
 | 14 | **BIMI** | a VMC (~USD 1,000–1,500/yr + trademark) | **Deliberately skipped** — not a defensible non-profit spend |
-| 15 | **Split marketing onto `news.`** — **the recipient-count arm fires on send one (~1,560) and we decided on 2026-08-29 not to split**; see "Decision 2026-08-29" above for the reasoning. The complaint and bounce arms are untouched and still fire. | the two rate arms (complaints >0.10%, hard bounces >2%); the recipient-count arm is **deferred by decision**, to be revisited on evidence | Only if a rate arm fires — or when the send is boring and the count arm can be re-decided |
+| 15 | **Split marketing onto `news.`** — **the recipient-count arm fires on send one (~1,550) and we decided on 2026-08-29 not to split**; see "Decision 2026-08-29" above for the reasoning. The complaint and bounce arms are untouched and still fire. | the two rate arms (complaints >0.10%, hard bounces >2%); the recipient-count arm is **deferred by decision**, to be revisited on evidence | Only if a rate arm fires — or when the send is boring and the count arm can be re-decided |
 
 **Sequencing rule that governs several of these:** never change the ESP and the
 DMARC policy in the same month. If deliverability dips you must be able to say
@@ -1182,5 +1213,7 @@ signature      = base64(HMAC-SHA256(signed payload, base64decode(secret without 
 headers        = svix-id, svix-timestamp, svix-signature: "v1,<signature>"
 ```
 
-Always clean up the test row — `email_optouts` should return to 0 rows if you
-have no real opt-outs yet.
+Always clean up the test row. This used to say `email_optouts` "should return to
+0 rows"; it has not been 0 for some time — **10 rows as at 2026-08-30**, every one
+a real bounce or complaint the webhook recorded. Note the count before you start
+and check it returns to that, rather than expecting an empty table.
