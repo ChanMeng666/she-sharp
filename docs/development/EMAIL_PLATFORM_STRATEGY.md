@@ -329,8 +329,11 @@ For items 1–4, built means the code exists, is typechecked and has its own tes
    **six** `MAILCHIMP_CONFIG.subscribeUrl` links (footer, newsletters page, and
    four mentorship surfaces) now point at `/newsletter/subscribe`, and
    `subscribeUrl` has been **deleted** from `MAILCHIMP_CONFIG` in
-   `lib/data/newsletters.ts` so no seventh one can appear. `archiveUrl` remains —
-   it is still the only route to the pre-2026-08 back catalogue.
+   `lib/data/newsletters.ts` so no seventh one can appear. `archiveUrl` went the
+   same way on 2026-08-30 — it was the file's last field, so the file was deleted
+   too — once `/resources/newsletters/<id>` became able to serve all 179 sent
+   campaigns from this repo. The back catalogue no longer has a Mailchimp route
+   to lose.
 3. ~~**Double opt-in**~~ **Done**, and it is what produces the evidence the AUP's
    "explicitly opted in" requires. A subscribe request never writes a mailable
    row: the row is `pending` until the person presses the button on

@@ -95,7 +95,7 @@ event-lesmills-03-september-2026 — No Pain, All Gain – Getting Fit for AI
   Deck         done     /present/event-lesmills-03-september-2026 · 25 slides
   Feedback     done     www.shesharp.org.nz/f/l03s26
   Announcement missing  no announcement broadcast has ever been recorded
-                        → /email-the-community  (needs a consented Resend segment first)
+                        → /email-the-community  (sends to the newsletter_subscribers table)
   Emails       n/a      sent from Humanitix -> Email campaigns; this repo keeps no record of it
   Photos       n/a      the event has not happened yet
 
@@ -111,12 +111,16 @@ softer `missing`:**
 - **`n/a`** — not work. A past event's poster set is not outstanding; a past
   event's photographs are.
 
-**One line in that report has rotted.** The Announcement row still says "needs a
-consented Resend segment first". The mailing list moved off Resend: the consent
-record is now the `newsletter_subscribers` table in She Sharp's own database, and
-what the announcement is waiting for is **people in that table** — it holds
-nobody. The skill it names, `/email-the-community`, is still the right one. Say
-the gate in the new words when you translate the report in Step 1.
+**What the Announcement row is waiting for.** The mailing list is the
+`newsletter_subscribers` table in She Sharp's own database, not a Resend segment
+— that moved on 2026-08-29, and this paragraph used to warn that the row still
+said otherwise. It does not any more, and the table is not empty: **1,549
+mailable as at 2026-08-30**
+(`npx tsx scripts/email/suppression.ts reconcile`, the
+`Mailable after suppression` line). So `/email-the-community` from here reaches
+real people. **Nothing has ever been sent from that table**, which makes the
+first send a deliberate, approved step rather than a routine one — say that when
+you translate the report in Step 1.
 
 Other selections:
 

@@ -66,10 +66,16 @@ order, with every gate and what goes wrong, is in
 the live website without stopping to ask, which is deliberate, and it is only for
 the small change you need on screen in the next five minutes.
 
-**One skill cannot finish today, and that is expected.** `/promote-event` needs a
-mailing list in Resend, and the newsletter still goes out through Mailchimp, so
-the Resend list is effectively empty. Run `/update-mailing-list` first. The skill
-says so itself rather than failing in a confusing way.
+**The mailing list is no longer in Resend, and this paragraph used to say it
+was.** `/promote-event` and `/email-the-community` send to the
+`newsletter_subscribers` table in our own database — **1,549 mailable as at
+2026-08-30**, and `npx tsx scripts/email/suppression.ts reconcile` prints the
+live figure on its `Mailable after suppression` line. Resend's own segment and
+topic were retired on 2026-08-29 and hold nobody. So a send here reaches real
+people, and **nothing has ever been sent from that table**: the newsletter
+subscribers actually receive still goes out from Mailchimp. If a skill reports
+almost nobody on the list, that is a database connection to check
+(`POSTGRES_URL` in `.env`), not a list to go and build.
 
 ---
 

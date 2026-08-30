@@ -104,8 +104,16 @@ voice — do not add facts to it. Never invent a date, fee, deadline or capacity
    stop and ask them for it — `docs/deployment/VERCEL_ENV_VARIABLES_GUIDE.md`
    covers pulling it. Without both, Step 7 refuses and writes nothing, which is
    the correct outcome, not a bug to work around.
-4. **Subscribers to send to.** Step 1 checks; under 5, stop and ask, and run
-   `/update-mailing-list` first.
+4. **Subscribers to send to.** Step 1 checks. Under 5 is almost never a real
+   list — the table held **1,549 mailable rows on 2026-08-30**
+   (`npx tsx scripts/email/suppression.ts reconcile`, the
+   `Mailable after suppression` line) — so treat it as a **connection fault
+   first**: check `POSTGRES_URL` in `.env` points at production, that scripts are
+   reading `.env` and not `.env.local`, and re-run Step 1. `/update-mailing-list`
+   cannot fix this; it reads the same database through the same variable, so it
+   will report the same wrong number. Only once the count is real, and really is
+   tiny, is adding people the answer — and that is `/update-mailing-list`'s job,
+   not something to do inside a send.
 5. **`resend` CLI on PATH and authenticated** — `resend whoami` must print the
    She Sharp account. Not found → install it; auth error → ask the user to run
    `resend login`. Never hand-roll an API call instead.

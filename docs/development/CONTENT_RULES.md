@@ -72,10 +72,17 @@ source behind them is in `docs/development/PUBLIC_CLAIMS_PROVENANCE.md`.
   photographer freed up personal storage) and not Dropbox ("Dropbox is not
   ours, it is temporary"). One album per event, named
   `{Title of the Event} @ {Company} - {Month | Year}`.
-- **Newsletter links must be the public `mailchi.mp/…` or
-  `us3.campaign-archive.com/…` form**, never `us3.admin.mailchimp.com/…`,
-  which only works for someone logged in. Never a link carrying a merge tag —
-  one archive page ended up greeting every reader by one person's name.
+- **Newsletter links point at this site: `/resources/newsletters/<id>`.** Since
+  2026-08-30 all 179 sent campaigns are served from `lib/data/newsletter-archive/`,
+  and `scripts/mailchimp/archive-guard.test.ts` fails CI if a card is pointed
+  back at Mailchimp. The old rule still governs the historical `source` field in
+  `lib/data/newsletters-archive.ts`, which records the link the legacy site
+  served: it must be the public `mailchi.mp/…` or `us3.campaign-archive.com/…`
+  form, never `us3.admin.mailchimp.com/…`, which only works for someone logged
+  in. Never a link carrying a merge tag — one archive page ended up greeting
+  every reader by one person's name — and never one carrying Mailchimp's
+  per-recipient `?e=<hash>`, which named a real subscriber in seven committed
+  rows until they were stripped on 2026-08-30.
 - **She Sharp does not run a job board.** Recruitment placements are open to
   paying sponsors only; an outside request to circulate a role was refused as
   recently as 2025.

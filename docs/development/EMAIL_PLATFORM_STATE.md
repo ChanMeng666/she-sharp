@@ -301,6 +301,13 @@ now a numbered step — item 6 of **Step 8a** in `.claude/skills/monthly-newslet
 — and it is deliberately a *detection* step: it stops and reports, it does not
 import.
 
+**Closing it belongs to `/update-mailing-list`**, Step 6 § "Closing the joiner
+gap", which carries the procedure and the order (`pull-mailchimp`, then the
+import over a **fresh** `subscribed` export, then `reconcile`). That skill's
+"do not re-run the importer" is about the frozen 2026-08-17 export and forbids
+none of this; the two skills were briefly readable as contradicting each other
+and no longer are.
+
 **Do not remember any of these numbers.** Run the comparison. The audience's
 `last_sub_date` on 2026-08-30 was **2026-08-28**, so it moves.
 
@@ -425,21 +432,26 @@ general clause is loose, so this is not a reason to touch production data** — 
 is recorded here so nobody reads that sentence as a statement about the API in
 general. Whether to reword it is the maintainer's call.
 
-### The archive page shows six months, not the archive
+### The archive page showed six months, not the archive — and the button is gone
 
 `MAILCHIMP_CONFIG.archiveUrl` — the site's **"Open full archive"** button and the
-**"Read past issues"** footer link on every page — returns **HTTP 200** with
+**"Read past issues"** footer link on every page — returned **HTTP 200** with
 exactly **20** `<li class="campaign">` entries across **17 distinct dates**,
 oldest **14 February 2026** (fetched 2026-08-30, reproduced for this file).
 Mailchimp's own help page says the archive "shows links to the 20 most recent
 emails sent to your audience"
 (<https://mailchimp.com/help/about-email-campaign-archives-and-pages/>).
 
-The button is therefore **already wrong today, on a paid plan**, and always was.
-This is recorded in [`../deployment/MAILCHIMP_CANCELLATION.md`](../deployment/MAILCHIMP_CANCELLATION.md)
-§ "The 'Open full archive' button is already wrong" with the two honest fixes.
-**Do not re-litigate it here** — it is listed only so nobody discovers it a third
-time and files it as a cancellation casualty. It is not one.
+The button was therefore **already wrong on a paid plan**, and always had been.
+**Both renderings were deleted on 2026-08-30**, along with `archiveUrl` itself
+and the `lib/data/newsletters.ts` it was the last field of: the footer link now
+points at `/resources/newsletters`, and the button was removed rather than
+repointed because that page *is* the archive now — all 179 sent campaigns are
+committed to `lib/data/newsletter-archive/` and served from
+`/resources/newsletters/<id>`. Recorded in
+[`../deployment/MAILCHIMP_CANCELLATION.md`](../deployment/MAILCHIMP_CANCELLATION.md)
+§4. **Do not re-litigate it here** — it is listed only so nobody discovers the
+old defect a third time and files it as a cancellation casualty. It was not one.
 
 ### Cancelling: the one fact that constrains everything else
 
@@ -761,14 +773,17 @@ nobody mistakes an open question for a settled one.
    Cheapest next step: read the "Manage your host profile followers" help
    article and open the host profile, neither of which sends anything.
 
-3. **What happens to Mailchimp's hosted campaign pages after a downgrade.**
-   **51** live links on the public site point at `mailchi.mp` and
-   `us3.campaign-archive.com` URLs — the same 51 per-campaign card URLs counted
-   in `MAILCHIMP_CANCELLATION.md` §"The 'Open full archive' button is already
-   wrong", not a second, rounder estimate of the same thing. **Mailchimp documents nothing** about their
-   fate on a downgraded plan. This is why the runbook's order puts the export
-   first: it is the one step that does not depend on the answer. See
-   `MAILCHIMP_CANCELLATION.md` §3.
+3. ~~**What happens to Mailchimp's hosted campaign pages after a downgrade.**~~
+   **Made moot 2026-08-30, not answered.** Mailchimp still documents nothing
+   about their fate on a downgraded plan; what changed is that the site no
+   longer depends on the answer. The **51** live links that pointed at
+   `mailchi.mp` and `us3.campaign-archive.com` — the 51 per-campaign card URLs
+   counted in `MAILCHIMP_CANCELLATION.md` §4, not a second, rounder estimate of
+   the same thing — are now **zero**: every card opens
+   `/resources/newsletters/<id>` on this site, and
+   `scripts/mailchimp/archive-guard.test.ts` fails CI if one is pointed back.
+   The runbook's order still puts the export first, for the same reason it
+   always did: it is the step that does not depend on the answer.
 
 4. ~~**How much Humanitix email has actually been sent.**~~ **Established
    2026-08-30**: somebody paged through the console and wrote it down. **127
@@ -801,7 +816,7 @@ nobody mistakes an open question for a settled one.
 | Humanitix API surface | `curl https://api.humanitix.com/v1/documentation/json` and count `paths` |
 | `organiserMailListOptIn` placement | Search that OpenAPI document's `components.schemas` |
 | `organiserId` across events | `GET /v1/events` with `x-api-key` |
-| The archive page's 20 entries | `curl` `MAILCHIMP_CONFIG.archiveUrl`; count `<li class="campaign">` |
+| The archive page's 20 entries | `curl 'https://us3.campaign-archive.com/home/?u=1bcf1c40837f51b409973326f&id=31bd05e8eb'`; count `<li class="campaign">`. The `MAILCHIMP_CONFIG.archiveUrl` constant this used to name was deleted with `lib/data/newsletters.ts` on 2026-08-30; the URL is the account's own and is kept here only so the measurement stays re-takeable |
 | The Humanitix campaign list, its banner, the unsubscriber list, the host profile | **Not re-takeable from code.** Sign in to the Humanitix console and look; there is no API, no export and no history view |
 
 `MAILCHIMP_API_KEY` is **local tooling only** and nothing under `app/` may read

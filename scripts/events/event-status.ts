@@ -603,7 +603,7 @@ function announcementCheck(slug: string, upcoming: boolean): StatusCheck {
     "announcement",
     "Announcement",
     "no announcement broadcast has ever been recorded",
-    "/email-the-community  (needs a consented Resend segment first)",
+    "/email-the-community  (sends to the newsletter_subscribers table)",
   );
 }
 
