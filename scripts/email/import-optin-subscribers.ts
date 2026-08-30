@@ -52,6 +52,13 @@
  * - **Both do-not-contact registers are consulted**: the committed hash file
  *   and the runtime `email_optouts` table. An import can never resurrect
  *   somebody who left.
+ * - **A third register exists that this script cannot read**, so `--apply` also
+ *   requires `--event-unsubscribers-checked`: Humanitix keeps a per-event
+ *   unsubscriber list in its console, reachable by no API and no export. The
+ *   flag is an acknowledgement rather than a verification, and
+ *   `assertUnsubscriberCheck()` in `optin-rows.ts` says so at length —
+ *   including what would replace it. `--exclude <address>` acts on a hit
+ *   without writing the address anywhere.
  * - **`confirmedAt` is null on every row.** These people ticked a box on
  *   somebody else's checkout; they never clicked a confirmation link of ours.
  * - **`consentDate` is the order's own completion date**, per row, read from
@@ -64,7 +71,8 @@
  * Usage:
  *   npx tsx scripts/email/import-optin-subscribers.ts tmp/emails/recipients-<key>.json \
  *     --event-name "…" --event-date YYYY-MM-DD \
- *     [--question "…"] [--form "…"] [--date-column "…"] [--limit <n>] [--apply]
+ *     [--question "…"] [--form "…"] [--date-column "…"] [--limit <n>] \
+ *     [--exclude <address>]… [--event-unsubscribers-checked] [--apply]
  */
 
 import { readFileSync } from "node:fs";
@@ -72,13 +80,17 @@ import { basename, resolve } from "node:path";
 
 import {
   asRecipientsFile,
+  assertUnsubscriberCheck,
   composeConsentSource,
   countReasons,
   DEFAULT_FORM_NAME,
   HUMANITIX_OPTIN_QUESTION,
   OptinImportError,
+  parseExclusions,
   planOptinImport,
   resolveColumns,
+  UNSUBSCRIBER_ACK_FLAG,
+  unsubscriberCheckLines,
   type PlannedRow,
 } from "./optin-rows";
 import { hashEmail, loadSuppressionHashes } from "./suppression";
@@ -97,6 +109,7 @@ const VALUE_FLAGS = new Set([
   "--form",
   "--date-column",
   "--limit",
+  "--exclude",
 ]);
 
 /** Prints an error and exits. */
@@ -112,6 +125,20 @@ function readOption(argv: string[], flag: string): string | null {
   if (index === -1) return null;
   const value = argv[index + 1];
   return value !== undefined && !value.startsWith("--") ? value : null;
+}
+
+/** Reads every occurrence of a repeatable flag, in the order given. */
+function readOptions(argv: string[], flag: string): string[] {
+  const values: string[] = [];
+  for (let index = 0; index < argv.length; index += 1) {
+    if (argv[index] !== flag) continue;
+    const value = argv[index + 1];
+    // A trailing `--exclude` with nothing after it, or followed by another
+    // flag, is a typo rather than an empty exclusion. Pass it through as an
+    // empty string so parseExclusions() refuses it by name.
+    values.push(value !== undefined && !value.startsWith("--") ? value : "");
+  }
+  return values;
 }
 
 /** The first argument that is neither a flag nor a flag's value. */
@@ -160,6 +187,8 @@ async function main(): Promise<void> {
   const form = readOption(argv, "--form") ?? DEFAULT_FORM_NAME;
   const dateColumn = readOption(argv, "--date-column");
   const apply = argv.includes("--apply");
+  const acknowledged = argv.includes(UNSUBSCRIBER_ACK_FLAG);
+  const excludeValues = readOptions(argv, "--exclude");
 
   const limitRaw = readOption(argv, "--limit");
   const limit = limitRaw === null ? null : Number(limitRaw);
@@ -180,11 +209,29 @@ async function main(): Promise<void> {
   }
 
   // Every refusal happens here, before a database module is even loaded.
-  let file, consentSource, columns;
+  let file, consentSource, columns, excluded;
   try {
     file = asRecipientsFile(parsed);
     consentSource = composeConsentSource({ form, question, eventName, eventDate });
     columns = resolveColumns(file, dateColumn);
+    excluded = parseExclusions(excludeValues, hashEmail);
+
+    // The one register this script cannot read, gated here rather than beside
+    // the write so that — like every other refusal in this tool — it fires
+    // without a database. The count is therefore the file's own ticks minus the
+    // hand exclusions, before the two suppression registers narrow it further,
+    // which is why the procedure says "up to". It bounds the check, which is
+    // all it is there to do: the whole unsubscriber list is a few dozen rows.
+    const bound = planOptinImport({
+      file,
+      consentSource,
+      dateColumn,
+      excluded,
+      suppressed: new Set(),
+      existing: new Set(),
+      hashEmail,
+    });
+    assertUnsubscriberCheck({ apply, acknowledged, eventName, count: bound.rows.length });
   } catch (error) {
     if (error instanceof OptinImportError) fail(...error.lines);
     throw error;
@@ -222,6 +269,7 @@ async function main(): Promise<void> {
     file,
     consentSource,
     dateColumn,
+    excluded,
     suppressed,
     existing,
     hashEmail,
@@ -243,6 +291,12 @@ async function main(): Promise<void> {
     console.log(`  Held back             ${entry.count} × ${entry.reason}`);
   }
   console.log(`  Suppression register  ${committedCount} committed + ${optouts.length} runtime opt-out(s)`);
+  if (excluded.length > 0) {
+    const matched = excluded.length - plan.unmatchedExclusions.length;
+    console.log(
+      `  Excluded by hand      ${excluded.length} address(es) named, ${matched} found in this file`
+    );
+  }
   console.log(`  Already in the table  ${existing.size}`);
   console.log(`  WOULD IMPORT          ${selected.length}`);
   if (limit !== null && plan.rows.length > selected.length) {
@@ -256,11 +310,25 @@ async function main(): Promise<void> {
       console.log(`    ${row.emailHash.slice(0, 12)}…  ${row.reason}`);
     }
   }
-  console.log("");
+  // An exclusion that matched nobody is reported loudly rather than shrugged
+  // off: the operator typed it because they believed that person was in this
+  // import, and a wrong file or a mistyped address both look like success.
+  if (plan.unmatchedExclusions.length > 0) {
+    console.log("  --exclude matched nobody in this file:");
+    for (const entry of plan.unmatchedExclusions) {
+      console.log(`    ${entry.masked}  (${entry.hash.slice(0, 12)}…)`);
+    }
+    console.log("  Check the address, or check you are importing the file you meant to.");
+    console.log("");
+  }
 
   if (!apply) {
     console.log("  DRY RUN — nothing was written.");
-    console.log("  Re-run with --apply to write these rows.");
+    console.log(`  Re-run with --apply ${UNSUBSCRIBER_ACK_FLAG} to write these rows.`);
+    console.log("");
+    for (const line of unsubscriberCheckLines(eventName, selected.length)) {
+      console.log(`  ${line}`.trimEnd());
+    }
     console.log("");
     await client.end();
     return;
