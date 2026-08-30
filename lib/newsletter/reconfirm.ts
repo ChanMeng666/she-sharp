@@ -29,12 +29,25 @@
  * ## What it writes, and what it refuses to write
  *
  * On success: `confirmedAt = now`, and a sentence appended to `consentSource`
- * naming the act, the issue it came from and the date. `source` is left alone —
- * it records where the row *came from*, and a re-confirmation does not change
- * that; overwriting it would destroy the only machine-readable trace of the
- * Mailchimp carry-over, which is the very thing the tiering above was computed
- * from. The later act belongs in `consentSource` and `confirmedAt`, which is
- * where `consent-rules.md` says a human-readable act and its date go.
+ * naming the act, the issue it came from and the date.
+ *
+ * **`source` is left alone.** `consent-rules.md` defines it as the
+ * machine-readable route the person *arrived by* — `website-form`,
+ * `registration-optin`, or the import's name. A re-confirmation is not a new
+ * arrival; it is fresh evidence about an existing one, so rewriting `source`
+ * would erase how they actually got onto the list. The question the record has
+ * to answer is "why is this person on our list?", and after a re-confirmation
+ * the honest answer is *both* facts: they arrived through the Mailchimp import,
+ * **and** they pressed a button in a named issue. Keeping `source` and
+ * appending to `consentSource` records both; overwriting `source` would record
+ * only the second and lose the first.
+ *
+ * (What `source` is *not* is a way to tell the cohorts apart.
+ * `import-mailchimp-subscribers.ts` hardcodes `mailchimp-import`, so all 1,549
+ * rows carry it and it distinguishes nobody — the evidence tiering above was
+ * computed from the Mailchimp API members dump in the private archive, whose
+ * own `source` field carries `Mahsa McCauley NZD`, `Import`, `Embed Form` and
+ * the rest. Do not reach for this column to reproduce those numbers.)
  *
  * ## The suppression edge, which is the sharp one
  *

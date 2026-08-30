@@ -413,10 +413,10 @@ const reconfirmSource = readFileSync(
 );
 
 check("the write never touches `source`", () => {
-  // `source` records where the row came from. A re-confirmation is a later act,
-  // not a different origin, and overwriting it would destroy the only
-  // machine-readable trace of the Mailchimp carry-over — the field the 1,168
-  // figure was computed from in the first place.
+  // `source` names the route the person arrived by. A re-confirmation is not a
+  // new arrival but fresh evidence about an existing one, so rewriting it would
+  // erase how they actually got onto the list — leaving a record that answers
+  // "why is this person on our list?" with only the later half of the truth.
   const setBlock = reconfirmSource.slice(
     reconfirmSource.indexOf(".update(newsletterSubscribers)")
   );
