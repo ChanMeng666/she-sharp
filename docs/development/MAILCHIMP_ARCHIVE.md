@@ -491,8 +491,21 @@ stops being run.
 | Mailchimp credentials | `SECURITY/credentials-to-rotate.md` Tier 1 #1 in the private repo — password plus a 2FA QR pinned in Slack. Unrotated. This archive raises what that costs |
 | The subscribe funnel | Still Mailchimp's. `EMAIL_AUTHENTICATION.md` item 8b |
 
+## Closing the account
+
+The founder will cancel the Mailchimp subscription once Resend takes over.
+**`docs/deployment/MAILCHIMP_DECOMMISSION.md` is the list to work through first**
+— it is written to be handed to somebody who does not work in this codebase, and
+three of its items cannot be undone: the hand-export of what no API reaches
+(`CONFIRM_TIME`, templates, landing pages, automations, per-recipient activity),
+the final `suppression.ts pull-mailchimp`, and the choice to *pause or downgrade*
+rather than delete. Nothing in this archive replaces that export: what is
+committed here is a summary of the account, not the account.
+
 ## Related
 
+- `docs/deployment/MAILCHIMP_DECOMMISSION.md` — what must happen before the
+  account is closed, and what is lost if it is deleted instead of paused
 - `docs/deployment/EMAIL_AUTHENTICATION.md` — the migration runbook this feeds
 - `docs/development/EMAIL_OPERATIONS.md` — how mail is actually sent
 - `.claude/skills/update-mailing-list/references/consent-rules.md` — the gate on
