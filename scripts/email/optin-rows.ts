@@ -556,7 +556,22 @@ export function countReasons(dropped: DroppedRow[]): { reason: string; count: nu
  */
 export const UNSUBSCRIBER_ACK_FLAG = "--event-unsubscribers-checked";
 
-/** Where that list lives in the Humanitix console. */
+/**
+ * Where that list lives in the Humanitix console, as loaded on 2026-08-30.
+ *
+ * Two things about this string. The console is on **`console.humanitix.com`**,
+ * not `events.humanitix.com` — that is the public ticket-buyer origin, where
+ * `/host/dashboard` returns Humanitix's own "Not found"; `dashboard.humanitix.com`
+ * does not resolve at all. And the page self-redirects to
+ * `?page=1&query=&loc=NZ`, which is deliberately **not** recorded here: those
+ * are pagination and a region filter the page fills in itself, and a frozen
+ * `loc=NZ` would look authoritative while being wrong for anyone else.
+ *
+ * The procedure prints the in-app navigation beside it because guessing console
+ * paths mostly fails in the worst way: `/console/email-campaigns` and
+ * `/console/promote/host-profiles` both render a plausible page title over an
+ * empty pane rather than an honest 404.
+ */
 export const HUMANITIX_UNSUBSCRIBER_URL =
   "https://console.humanitix.com/console/comms/email-campaigns-unsubscriptions";
 
@@ -641,8 +656,11 @@ export function unsubscriberCheckLines(eventName: string, count: number): string
     "event and then bought a ticket to it is not somebody to add to a marketing",
     "list — that is a contradiction inside one event, not a guess across events.",
     "",
-    "  1. Open the Humanitix console → Email campaigns → Unsubscriber list",
+    "  1. Open the Humanitix console → Email campaigns (top nav) →",
+    "     Unsubscriber list (tab).",
     `     ${HUMANITIX_UNSUBSCRIBER_URL}`,
+    "     Navigate in-app if that URL does not land: a wrong console path shows",
+    "     a plausible page title over an empty pane rather than a 404.",
     `  2. Search it for "${eventName}". The register is a few dozen rows and is`,
     "     scoped per event, so the realistic overlap here is zero or one.",
     "  3. If nobody from this import appears, re-run with:",
@@ -667,10 +685,13 @@ export function unsubscriberCheckLines(eventName: string, count: number): string
  * that the check has to be declined deliberately rather than never occurring to
  * anyone — the same thing `--apply` itself buys.
  *
- * Nothing stronger is available. The Humanitix public API has no route to this
- * list: verified 2026-08-30 against the live OpenAPI document (v1.21.0), where
- * the strings `campaign`, `unsubscri`, `notify`, `follower` and `send` do not
- * appear anywhere in the spec. The console page has no export button either. So
+ * Nothing stronger is available, and the reason is worth stating exactly: it is
+ * not that nobody has written the client, it is that **no endpoint exists**.
+ * The Humanitix public API is v1.21.0 with 14 endpoints, and the strings
+ * `campaign`, `unsubscri`, `notify`, `follower`, `send` and `host profile` are
+ * absent from the entire OpenAPI document — verified 2026-08-30 against the
+ * live spec at `https://api.humanitix.com/v1/documentation/json`. There is
+ * therefore nothing to call, and the console page has no export button. So
  * the alternatives were an acknowledgement or nothing, and the third option —
  * asking an operator to type a dozen real addresses into a file so a script
  * could match them — would create a register of unsubscribers' addresses on

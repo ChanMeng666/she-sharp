@@ -350,7 +350,12 @@ list. That is a contradiction inside one event, not an inference across events,
 which is the whole reason this check is narrow:
 
 1. Open
-   <https://console.humanitix.com/console/comms/email-campaigns-unsubscriptions>.
+   <https://console.humanitix.com/console/comms/email-campaigns-unsubscriptions>
+   — or navigate there: console → **Email campaigns** (top nav) →
+   **Unsubscriber list** (tab). Prefer the navigation if the link does not
+   land. The console is on `console.humanitix.com`; `events.humanitix.com` is
+   the public ticket-buyer site, and a wrong console path renders a plausible
+   page title over an empty pane rather than an honest 404.
 2. Search it for the event you passed to `--event-name`. The register is a few
    dozen rows spanning several years and it is scoped per event, so the
    realistic overlap with one import is **zero or one**.
@@ -372,10 +377,11 @@ you meant to.
 
 **Be honest about what the flag is** if anyone asks: an acknowledgement, not a
 verification. Nothing checks that you looked, and a person can type it without
-opening the page. It is there because there is no alternative — Humanitix's API
-has no route to that list and the console page has no export button, so nothing
-in this repo can read it. If Humanitix ever exposes it, the flag goes and the
-importer drops the overlap itself.
+opening the page. It is there because there is no alternative: the Humanitix
+public API is 14 endpoints and none of them touches email campaigns at all — the
+word does not appear in its spec — and the console page has no export button. If
+Humanitix ever exposes the list, the flag goes and the importer drops the
+overlap itself.
 
 Only then:
 
