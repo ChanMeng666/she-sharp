@@ -32,7 +32,9 @@ rather than built: the guard defends the file, not the run that produced it.
 `lib/data/json/` holds derived **aggregates** — counts, vocabularies, crosswalks
 — under a leak guard (`lib/data/mailchimp.test.ts`) that exists to keep free
 text and per-contact identifiers out. These are the newsletters themselves:
-8.0 MB of body HTML, deliberately full of free text. A different kind of thing
+8.0 MB of body HTML, deliberately full of free text — **0.58 MB once git has
+packed it**, because 179 renders of four Mailchimp templates delta-compress
+almost completely away. A different kind of thing
 belongs under a different guard, and folding them in would mean loosening the
 one that protects the audience archive.
 
@@ -64,6 +66,15 @@ In short:
 | `data-mc-delinked` | 21 `<a>` | the href was removed on purpose. `opaque-track-click` (7) or `personal-address` (14) |
 | `data-mc-legacy-domain` | 75 `<a>` | points at `shesharp.co.nz`, the pre-2026 domain |
 
+**177 `<img src>` occurrences, in 36 files, carry no marker.** They sit inside
+`<!--[if mso]>` conditional comments — Outlook-only fallbacks that a browser
+never fetches — and a comment is not an element, so no DOM rule reaches them.
+145 point at `mcusercontent.com`, 12 at `dim.mcusercontent.com`, 19 at a
+third-party bucket and 1 at `cdn-images.mailchimp.com`. PR 2 has to decide
+between stripping the MSO blocks outright (they do nothing on a web page) and
+rewriting them with a text pass; leaving them is the only option that keeps a
+Mailchimp URL in a file, even an unfetched one.
+
 **There are no issue-to-issue cross-links.** Every one of the 166 archive
 markers is a self-link. That was worth measuring rather than assuming: the
 147 raw `mailchi.mp` references in the corpus read like a web of cross-links
@@ -86,10 +97,26 @@ Three things PR 3 inherits and this PR deliberately did not decide:
 ## `index.json`
 
 The join between a card on the site and a file here. Three keys, tried in
-order, resolve all 52 Mailchimp URLs in `lib/data/newsletters-archive.ts` and
-`lib/data/newsletters-manual.ts`; the resolver is
-`resolveCampaignByArchiveUrl()` in `scripts/mailchimp/archive-index.ts`, and the
-guard asserts every card still joins.
+order, resolve all **51 distinct** Mailchimp URLs in
+`lib/data/newsletters-archive.ts` and `lib/data/newsletters-manual.ts`; the
+resolver is `resolveCampaignByArchiveUrl()` in
+`scripts/mailchimp/archive-index.ts`, and the guard asserts every one still
+joins.
+
+**51 distinct URLs across 52 card entries.** The retracted `2026-02` card shares
+the March 2026 campaign's URL, because the legacy Webflow site pointed February
+at the March send. `NEWSLETTER_RETRACTED` suppresses it at render time, so the
+grid shows 51 Mailchimp cards, not 52. Count URLs, not entries.
+
+**`YYYY-MM` is not a key here, and PR 3 must not treat it as one.** The 179
+campaigns span 74 months and **55 of those months hold more than one** — eight
+in August 2022. Most of the 179 are event announcements, reminders and
+apologies rather than monthly issues, which is also why only **51 of the 179**
+are reachable from a card on the site today; the other 128 have no card at all,
+and whether to expose them is PR 3's decision. The campaign id is the key; the
+existing `/resources/newsletters/[issue]` route keys on `YYYY-MM` through
+`lib/newsletter/issues-registry.ts` and covers only the three 2026 issues
+rendered in this repo.
 
 One of the 180 sent campaigns, `a487b3025c`, has **neither** `html` nor
 `archive_html` in the vault and therefore no file here. It is listed in

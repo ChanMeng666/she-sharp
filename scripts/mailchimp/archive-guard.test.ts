@@ -186,16 +186,26 @@ check(
 
 const lookup = buildArchiveLookup(index.entries);
 const archivedIds = new Set(index.entries.map((entry) => entry.id));
-const siteUrls = [...NEWSLETTER_ARCHIVE, ...NEWSLETTER_MANUAL]
-  .map((issue) => issue.url)
-  .filter((url) => /mailchi\.mp|campaign-archive\.com|eepurl\.com/.test(url));
+
+// DISTINCT urls, not card entries. The two files hold 52 entries pointing at a
+// Mailchimp page and 51 distinct URLs: the retracted `2026-02` card shares the
+// March 2026 campaign's URL, because the legacy site pointed February at the
+// March send. Counting entries would put 52 in a PR description and a doc, and
+// the number a reader can verify on the live site is 51.
+const siteUrls = [
+  ...new Set(
+    [...NEWSLETTER_ARCHIVE, ...NEWSLETTER_MANUAL]
+      .map((issue) => issue.url)
+      .filter((url) => /mailchi\.mp|campaign-archive\.com|eepurl\.com/.test(url))
+  ),
+];
 
 const unjoinable = siteUrls.filter((url) => {
   const id = resolveCampaignByArchiveUrl(lookup, url);
   return id === null || !archivedIds.has(id);
 });
 check(
-  `all ${siteUrls.length} Mailchimp newsletter cards join to an archived campaign`,
+  `all ${siteUrls.length} distinct Mailchimp newsletter URLs join to an archived campaign`,
   unjoinable.length === 0,
   first(unjoinable.map((url) => `no archived campaign for ${url}`)) +
     "\n      The three join keys are documented in scripts/mailchimp/archive-index.ts." +
@@ -208,6 +218,6 @@ if (failures > 0) {
   process.exit(1);
 }
 console.log(
-  `${index.entries.length} archived newsletters, ${siteUrls.length} site cards joined, ` +
+  `${index.entries.length} archived newsletters, ${siteUrls.length} distinct site URLs joined, ` +
     "no Mailchimp plumbing and no unlisted address."
 );
