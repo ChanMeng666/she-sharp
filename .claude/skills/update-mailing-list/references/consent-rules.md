@@ -54,10 +54,13 @@ it exists.** Console → Email campaigns → **Unsubscriber list**
 (<https://console.humanitix.com/console/comms/email-campaigns-unsubscriptions>).
 Its own description: attendees and buyers who unsubscribed "will no longer
 receive emails sent through email campaigns **for the event**". Observed live on
-2026-08-30: about 20 rows, 13 distinct addresses, columns Email / Event /
-Unsubscribed at, spanning 2021-08 → 2025-11 with nothing in 2026, one page, and
-**no export button**. One row is She Sharp's own mailbox unsubscribing from a
-She Sharp event.
+2026-08-30, from two screenshots rather than an export, so **read every figure
+here as approximate and as at that date**: roughly 20 rows, 13 distinct
+addresses, columns Email / Event / Unsubscribed at, spanning 2021-08 → 2025-11
+with nothing in 2026, and **no export control visible**. Clicking the next-page
+arrow did not change the view — **evidence** that this is the whole list, not
+proof of it. One row is She Sharp's own mailbox unsubscribing from a She Sharp
+event.
 
 **It is event-scoped, so it is emphatically NOT a general do-not-contact list,
 and it is deliberately not folded into the two registers above.** Each row says
@@ -89,13 +92,31 @@ invites the assumption that it is populated:
 - The subscriber table is populated — **1,549 mailable as at 2026-08-30**, and
   it moves; `npx tsx scripts/email/suppression.ts reconcile` prints the live
   figure. Most of it is the 2026-08-17 Mailchimp export, imported on 2026-08-29
-  (1,560 read, 15 held back by the suppression register, 1,545 written); every
-  one of those rows carries the export's own `CONFIRM_TIME`, so each one
-  double-opted-in — in Mailchimp. The four added from the Marketing API on
-  2026-08-30 carry a **null** `confirmedAt`, because the API exposes no
-  `CONFIRM_TIME` equivalent and writing one would fabricate a confirmation.
-- **Nothing has ever been sent** from it, and the live newsletter still goes out
-  from Mailchimp. A populated list is not a cutover.
+  (1,560 read, 15 held back by the suppression register, 1,545 written), and
+  every one of those rows carries the export's own `CONFIRM_TIME`. **Recording
+  that timestamp is right; reading it as a double opt-in for everybody is not.**
+  Measured 2026-08-30 over the export: `CONFIRM_TIME` is populated on all 1,560,
+  but it is **equal to `OPTIN_TIME` on 1,431** of them — the same instant, not a
+  second act — and differs on only **128**. Mailchimp writes the column either
+  way, copying the opt-in time when it never recorded a separate confirmation.
+  So the honest claim is that we hold a consent timestamp Mailchimp wrote, not
+  that 1,545 people clicked a confirmation link. The four added from the
+  Marketing API on 2026-08-30 carry a **null** `confirmedAt`; the API's
+  `timestamp_signup` is the same column, and it is empty for exactly those four.
+- **Nothing has been sent to the list.** The live newsletter still goes out from
+  Mailchimp, and a populated list is not a cutover. The pipeline itself has run:
+  `email_events` holds 6 rows for 1 person, from test sends to the maintainer's
+  own address. No subscriber has received anything.
+- **Three quarters of the list cannot answer "why is this person here?"**
+  Measured 2026-08-30: **752 of the 1,549** are on it because they bought a
+  Humanitix ticket and never ticked any opt-in, and a further **416** have
+  unrecoverable provenance (`Import`, `API - Generic`, `Admin Add`, `Unknown`).
+  The Humanitix → Mailchimp integration wrote the first group in with its "Sync
+  contacts who haven't opted-in" setting on. This is **not** proof they lack
+  consent — but the evidence that would establish it does not exist either, and
+  that is the same operational answer. The tiering, its limits and what follows
+  are in `docs/development/EMAIL_PLATFORM_STATE.md` § "How the list was actually
+  acquired". **It changes no rule below.**
 - The Resend segment and topic were **deleted on 2026-08-29**, holding nobody at
   the time, and their two env vars came off Vercel production with them. Nothing
   in Resend is the consent record any more; the table is.
