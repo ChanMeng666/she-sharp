@@ -80,11 +80,70 @@ const SECRET_PATTERNS: { label: string; re: RegExp }[] = [
   { label: "URL query token (?token=…)", re: /[?&]token=/ },
 ];
 
-/** Words that put a nearby uppercase token under suspicion of being a code. */
-const CODE_KEYWORDS = ["code", "promo", "voucher", "discount", "access", "passcode"];
+/** Words that put a nearby token under suspicion of being a code. */
+const CODE_KEYWORDS = [
+  "code",
+  "promo",
+  "voucher",
+  "discount",
+  "access",
+  "passcode",
+  // "pin" joined the family after a pre-publication screen of the 179 archived
+  // newsletter bodies found two Kahoot "Game PIN" numbers this scan had never
+  // surfaced (campaigns 2cbc2a858a and a9402aed0f, 2020). A number printed
+  // beside the word "PIN" is the shape of the June 2026 incident in which
+  // registration codes reached a public page. The `\b` on either side keeps it
+  // off "pinned", "Pinterest" and "shipping"; measured over that corpus the
+  // word stands alone five times, four of them the PINs themselves.
+  "pin",
+];
 
 /** How many characters either side of a keyword count as "nearby". */
 const CODE_PROXIMITY = 60;
+
+/**
+ * A numeric secret sitting beside a code word — a Kahoot game PIN, a Zoom
+ * passcode. Kept as its own pattern rather than left to the uppercase-token
+ * regex, which matches digits only incidentally and only while they run
+ * unbroken.
+ *
+ * **Six digits is the floor.** It is the shortest real value either platform
+ * issues (Zoom's numeric passcode, Kahoot's shortest game PIN), and it clears
+ * everything ordinary prose puts beside these words — a year, a time, a street
+ * number, a dollar amount and a percentage are all four digits or fewer.
+ * Measured over the 179 archived newsletter bodies, a floor of five costs
+ * nothing and a floor of four adds exactly two hits, "2025" near "Code" and
+ * "2019" near "Pin", both years. Five and six are therefore indistinguishable
+ * on the evidence, and six is taken as the tighter of two equal options and the
+ * shortest value either platform actually issues.
+ *
+ * **Twelve is the ceiling** the uppercase-token rule already used; past it a
+ * digit run is an order or account number, not a code somebody types in.
+ *
+ * **A single space, and only a space, may separate groups** — that is how both
+ * platforms print the value on screen, so that is how somebody copying it out
+ * will paste it, and dropping the tolerance loses the two Zoom meeting IDs in
+ * the corpus outright. A hyphen is deliberately not a separator: allowing one
+ * matched the same six values and nothing more, while admitting "2020-2021" and
+ * "021-555-1234", so it was noise with no measured upside. A comma-grouped
+ * price never matches for the same reason. The length test counts digits, not
+ * characters.
+ */
+const NUMERIC_CODE_PATTERN = /\b\d(?: ?\d){5,11}\b/g;
+
+/**
+ * Keywords whose value is numeric by definition, and which therefore skip the
+ * uppercase-token rule.
+ *
+ * A PIN is a *number*; the alphabetic half of that rule can only add noise
+ * beside it. Measured over the 179 archived bodies it did exactly that and
+ * nothing else — the word "pin" stands alone five times, and the only
+ * uppercase token any of those windows contains is "TONIGHT", from "Game PIN:
+ * 006055277 SEE YOU TONIGHT!". The numeric rule caught both real PINs in the
+ * same windows. `code`, `promo` and the rest keep both rules, because an
+ * alphanumeric discount code is the normal shape there.
+ */
+const NUMERIC_ONLY_KEYWORDS = new Set(["pin"]);
 
 /** Caps how many offenders a single gate message enumerates. */
 const MAX_LISTED = 5;
@@ -478,7 +537,8 @@ function collectRedactionCandidates(
   const haystack = `${html}\n${text}`;
   const candidates: string[] = [];
 
-  // Discount / access codes: an uppercase token sitting next to a code word.
+  // Discount / access codes and PINs: an uppercase token, or a run of digits,
+  // sitting next to a code word.
   const keywordRe = new RegExp(`\\b(${CODE_KEYWORDS.join("|")})\\b`, "gi");
   const tokenRe = /\b[A-Z0-9]{6,12}\b/g;
   const seenCodes = new Set<string>();
@@ -486,17 +546,25 @@ function collectRedactionCandidates(
   while ((keywordMatch = keywordRe.exec(text)) !== null) {
     const start = Math.max(0, keywordMatch.index - CODE_PROXIMITY);
     const window = text.slice(start, keywordMatch.index + CODE_PROXIMITY);
-    let tokenMatch: RegExpExecArray | null;
-    tokenRe.lastIndex = 0;
-    while ((tokenMatch = tokenRe.exec(window)) !== null) {
-      const token = tokenMatch[0];
-      if (CODE_KEYWORDS.includes(token.toLowerCase())) continue;
-      if (seenCodes.has(token)) continue;
-      seenCodes.add(token);
-      candidates.push(
-        `Possible access/discount code "${token}" near "${keywordMatch[0]}" — ` +
-          `internal codes must not be published.`
-      );
+    const patterns = NUMERIC_ONLY_KEYWORDS.has(keywordMatch[0].toLowerCase())
+      ? [NUMERIC_CODE_PATTERN]
+      : [tokenRe, NUMERIC_CODE_PATTERN];
+    for (const pattern of patterns) {
+      let tokenMatch: RegExpExecArray | null;
+      pattern.lastIndex = 0;
+      while ((tokenMatch = pattern.exec(window)) !== null) {
+        const token = tokenMatch[0];
+        if (CODE_KEYWORDS.includes(token.toLowerCase())) continue;
+        // A grouped run ("008 961 475") and its unbroken form are one secret,
+        // so both dedupe on the digits alone.
+        const seenKey = /^\d/.test(token) ? token.replace(/ /g, "") : token;
+        if (seenCodes.has(seenKey)) continue;
+        seenCodes.add(seenKey);
+        candidates.push(
+          `Possible access/discount code "${token}" near "${keywordMatch[0]}" — ` +
+            `internal codes must not be published.`
+        );
+      }
     }
   }
 

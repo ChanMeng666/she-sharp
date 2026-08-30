@@ -264,6 +264,71 @@ check("a tag value with a space is blocked", gateIds(spec({ tags: [{ name: "stre
 check("a valid tag value is allowed", !gateIds(spec({ tags: [{ name: "stream", value: "marketing" }] })).includes("tag-charset"));
 check("noreply@ with no Reply-To warns", gateIds(spec({ from: "She Sharp <noreply@shesharp.org.nz>", replyTo: undefined })).includes("no-reply-path"));
 
+// --- Redaction candidates: codes and PINs ----------------------------------
+// The regression these guard: a pre-publication screen of the 179 archived
+// newsletter bodies found two Kahoot "Game PIN" numbers (campaigns 2cbc2a858a
+// and a9402aed0f, 2020) that this scan had never surfaced, because "pin" was
+// not one of its code words. An independent prose read found them; the scan
+// could not. That is the shape of the June 2026 incident in which registration
+// codes reached a public page.
+//
+// The scan REPORTS — it must never block — so the cost of a miss is that
+// nobody is shown the number, and the cost of noise is that nobody reads the
+// list. Both directions are asserted below.
+
+/** The redaction one-liners the shipped gate raises for a body of text. */
+function redactions(text: string): string[] {
+  return runEmailGates(HTML, text, spec(), { mode: "broadcast" }).redactionCandidates;
+}
+
+/** Only the code/PIN-class one-liners. */
+function codeRedactions(text: string): string[] {
+  return redactions(text).filter((c) => c.startsWith("Possible access/discount code"));
+}
+
+const KAHOOT = "Trailblazing Women in Tech: Part One - Game PIN: 008961475";
+
+check("a Kahoot game PIN beside the word PIN is surfaced", codeRedactions(KAHOOT).some((c) => c.includes("008961475")));
+check("the PIN is attributed to the keyword that found it", codeRedactions(KAHOOT).some((c) => c.includes('near "PIN"')));
+// Kahoot prints the PIN grouped on screen, so that is how it gets pasted.
+check("a PIN in Kahoot's grouped form is surfaced", codeRedactions("Game PIN: 008 961 475").some((c) => c.includes("008 961 475")));
+// The other half of a Zoom join credential: the meeting ID, which the old
+// unbroken-token rule could not see through the spaces Zoom prints.
+check("a grouped Zoom meeting ID beside its passcode is surfaced", codeRedactions("Meeting ID: 820 6115 6980 Passcode: 848569").some((c) => c.includes("820 6115 6980")));
+check("the 6-digit passcode is still surfaced too", codeRedactions("Meeting ID: 820 6115 6980 Passcode: 848569").some((c) => c.includes("848569")));
+// Unchanged behaviour: an alphanumeric code beside a code word.
+check("an alphanumeric promo code is still surfaced", codeRedactions("Use promo SHESHARP20 at checkout.").some((c) => c.includes("SHESHARP20")));
+
+// Noise. A detector that fires on every date or dollar amount stops being read,
+// and then it protects nothing. Six digits is the floor precisely because
+// everything below is prose: measured over the corpus, dropping it to four adds
+// exactly two hits, "2025" near "Code" and "2019" near "Pin", and nothing else.
+check("a year near a code word is not a code", codeRedactions("Applications close in 2025 — use the code above.").length === 0);
+check("a price near a code word is not a code", codeRedactions("Members get a discount: $25 instead of $40.").length === 0);
+check("a date and time near a code word is not a code", codeRedactions("Access opens 6:30 PM on 15 Oct 2020.").length === 0);
+// A hyphen is not a group separator, so neither of these reads as one number.
+check("a hyphenated year range near a code word is not a code", codeRedactions("Access runs 2020-2021 for members.").length === 0);
+check("a hyphenated phone number near a code word is not a code", codeRedactions("For access call 021-555-1234.").length === 0);
+// The one real "pin" in 179 archived bodies that is not a PIN.
+check("prose using 'pin' as a noun raises nothing", codeRedactions("In 2019 she was awarded a Gold Pin for her board game at the Best Awards.").length === 0);
+check("'pinned' and 'Pinterest' do not arm the scan", codeRedactions("We pinned 1234567 posts on Pinterest.").length === 0);
+// A PIN is a number, so the uppercase-token half of the rule is switched off
+// beside it — it can only add noise. This is the fixture that proved it:
+// "Game PIN: 006055277 SEE YOU TONIGHT!" surfaced "TONIGHT" as a code.
+check("an all-caps word beside a PIN is not reported as a code", !codeRedactions("Game PIN: 006055277 SEE YOU TONIGHT!").some((c) => c.includes("TONIGHT")));
+check("...while the PIN in that same line still is", codeRedactions("Game PIN: 006055277 SEE YOU TONIGHT!").some((c) => c.includes("006055277")));
+
+// Proximity, unchanged at 60 characters: a number far from the keyword is not
+// "beside" it and must not be dragged in.
+check("a number well outside the proximity window is not a code", codeRedactions(`Game PIN follows.${" ".repeat(120)}Call us on 0800 123 456.`).length === 0);
+
+// The scan reports; it does not block. A PIN in the body must leave the report
+// sendable, or every gated send with a legitimate number in it would stop.
+check("a surfaced PIN blocks nothing", (() => {
+  const report = runEmailGates(HTML, KAHOOT, spec(), { mode: "broadcast" });
+  return report.ok && report.redactionCandidates.length > 0;
+})());
+
 // --- Svix webhook signatures -----------------------------------------------
 
 const SECRET = `whsec_${Buffer.from("a-test-signing-key").toString("base64")}`;
