@@ -104,6 +104,10 @@ export function emptyEditorialStub(
     sponsorThanks:
       "A heartfelt thank you to the sponsors, host venues, and volunteers who make our events possible. This community would not exist without you.",
     heroImageUrl: null,
+    // Off in the stub, and a deliberate decision each time it goes on: the
+    // re-permission ask is a campaign with an end, and an issue that carries it
+    // every month reads as nagging.
+    askToReconfirm: false,
     pulse: evergreenPulse(monthIndex),
   };
 }

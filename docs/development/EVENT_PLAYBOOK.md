@@ -184,9 +184,14 @@ repeating.
 
 ### Telling the mailing list
 
-**Not possible yet.** The subscriber list still lives on the old system, and the
-new one is empty. Nothing you type will change that — it needs the list moved
-across first. Ask in `#website-team` rather than assuming it is broken.
+**Not possible yet**, but the reason has changed. The list *has* been moved
+across — it is no longer empty. What is missing is everything that has to happen
+before the first send from it: nothing has ever been sent from the new system,
+and the approval steps are still being put in place. Ask in `#website-team`
+rather than assuming it is broken.
+
+The rules about who may be emailed, which system sends what, and how often, are
+on their own page: **the email playbook**, at `/internal/email-playbook`.
 
 ---
 
@@ -283,6 +288,9 @@ plainly what is missing.
 
 Nothing above requires it, and none of it is on this page on purpose.
 
+- **the email playbook**, at `/internal/email-playbook` — the same treatment for
+  email: who may be emailed, which system sends what, and what has to happen
+  before a send goes out. Read it before anything reaches the mailing list
 - `docs/development/AI_SKILLS_GUIDE.md` — the long setup walkthrough, and what to
   do when something goes wrong
 - `docs/development/EVENT_LIFECYCLE_SOP.md` — the full procedure, with the

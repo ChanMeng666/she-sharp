@@ -76,6 +76,7 @@ import {
   substituteUnsubscribeUrl,
 } from "../../lib/email/unsubscribe-headers";
 import { getIssue } from "../../lib/newsletter/issues-registry";
+import { substituteReconfirmUrl } from "../../lib/newsletter/reconfirm-link";
 import { renderNewsletter } from "../../lib/newsletter/render";
 import { issueIdSchema } from "../../lib/newsletter/schema";
 // Imported rather than reimplemented: two copies of an idempotency key that drift
@@ -335,6 +336,59 @@ function assertNoMergeTags(content: string, part: "html" | "text"): string {
   return content;
 }
 
+/**
+ * Refuses content that still carries a `%%SHESHARP_…%%` placeholder.
+ *
+ * The substitution helpers throw when a placeholder survives their own pass,
+ * which covers a substitution that ran and failed. It does not cover the case
+ * that actually happens: a template grows a new placeholder and nobody adds the
+ * matching call here, so the substitution never runs, nothing throws, and the
+ * literal text ships to the whole list. This is the backstop for that.
+ *
+ * @param content Rendered html or text, after every substitution.
+ * @param part Which half, for the error message.
+ * @returns The content unchanged when it is clean.
+ */
+function assertNoPlaceholders(content: string, part: "html" | "text"): string {
+  const leftover = content.match(/%%SHESHARP_[A-Z_]*%%/);
+  if (leftover) {
+    fail(
+      `A per-recipient placeholder survived into the ${part}: ${leftover[0]}`,
+      "Nothing substitutes it at send time, so it would be delivered as literal text.",
+      "Add the matching substitution to this builder.",
+      "Nothing has been written."
+    );
+  }
+  return content;
+}
+
+/**
+ * Applies every per-recipient substitution, in one place.
+ *
+ * One function so the gate preview below and the real messages cannot diverge:
+ * a gate that reads a message assembled differently from the one that ships is
+ * checking a stand-in.
+ *
+ * @param content Rendered html or text.
+ * @param email The recipient the links are signed for.
+ * @param baseUrl The site origin, with no trailing slash.
+ * @param issueId The issue, recorded in the re-confirmation evidence.
+ * @returns The recipient's copy.
+ */
+function personalise(
+  content: string,
+  email: string,
+  baseUrl: string,
+  issueId: string
+): string {
+  return substituteReconfirmUrl(
+    substituteUnsubscribeUrl(content, email, baseUrl),
+    email,
+    baseUrl,
+    issueId
+  );
+}
+
 async function main(): Promise<void> {
   const args = parseArgs(process.argv.slice(2));
 
@@ -426,7 +480,7 @@ async function main(): Promise<void> {
   // build-batch renders per recipient because `composeMessage` personalises
   // `{firstName}` under engine="layout". The newsletter deliberately dropped
   // personalisation — the body is byte-identical for every subscriber and only
-  // the unsubscribe token differs — so rendering it 1,563 times would be pure
+  // the signed tokens differ — so rendering it 1,563 times would be pure
   // waste (and would multiply the template's own work by the size of the list).
   // The per-recipient step below is a string substitution, nothing more.
   let rendered: { html: string; text: string; sizeKb: number };
@@ -478,8 +532,8 @@ async function main(): Promise<void> {
   // Gate 4 — the strict broadcast gates, on the first recipient's real message.
   // Substitution happens first so the gate reads a signed https opt-out URL
   // rather than the template's placeholder, which is what actually ships.
-  const firstHtml = substituteUnsubscribeUrl(rendered.html, pending[0].email, baseUrl);
-  const firstText = substituteUnsubscribeUrl(rendered.text, pending[0].email, baseUrl);
+  const firstHtml = personalise(rendered.html, pending[0].email, baseUrl, args.issueId);
+  const firstText = personalise(rendered.text, pending[0].email, baseUrl, args.issueId);
   const report = runEmailGates(firstHtml, firstText, gateSpec, { mode: "broadcast" });
   console.log(formatGateReport(report));
   console.log("");
@@ -493,12 +547,12 @@ async function main(): Promise<void> {
     to: [recipient.email],
     replyTo: identity.replyTo,
     subject,
-    html: assertNoMergeTags(
-      substituteUnsubscribeUrl(rendered.html, recipient.email, baseUrl),
+    html: assertNoPlaceholders(
+      assertNoMergeTags(personalise(rendered.html, recipient.email, baseUrl, args.issueId), "html"),
       "html"
     ),
-    text: assertNoMergeTags(
-      substituteUnsubscribeUrl(rendered.text, recipient.email, baseUrl),
+    text: assertNoPlaceholders(
+      assertNoMergeTags(personalise(rendered.text, recipient.email, baseUrl, args.issueId), "text"),
       "text"
     ),
     tags,

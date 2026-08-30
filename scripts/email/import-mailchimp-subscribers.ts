@@ -23,17 +23,39 @@
  *   output is safe in a plan block, a PR or Slack.
  *
  * **On consent, and why `confirmedAt` is set.** Every one of the 1,560 rows
- * carries a `CONFIRM_TIME`: these people completed a double opt-in, in
- * Mailchimp. Recording that timestamp is not fabricating an act — the act
- * happened, and we have its date. What distinguishes them from someone who
- * confirmed through our own form is `source = 'mailchimp-import'` plus the
- * provenance sentence in `consentSource`, which together answer "why is this
- * person on our list?" more completely than a null ever could.
+ * carries a `CONFIRM_TIME`, so recording that timestamp is not fabricating an
+ * act — Mailchimp logged one, and we have its date. **It is not a double opt-in
+ * for all of them, and this comment used to say it was.** Measured 2026-08-30
+ * over the same export, `CONFIRM_TIME` *equals* `OPTIN_TIME` on **1,431** of the
+ * 1,560 and differs on only **128**: Mailchimp writes the column either way,
+ * copying the opt-in instant when it never recorded a separate confirmation. So
+ * the row evidences a consent date, and for 128 of them a second act. What
+ * distinguishes any of them from someone who confirmed through our own form is
+ * `source = 'mailchimp-import'` plus the provenance sentence in `consentSource`,
+ * which together answer "why is this person on our list?" more completely than a
+ * null ever could.
  *
- * Times are recorded as written in the export (`YYYY-MM-DD HH:MM:SS`, no zone).
- * Mailchimp exports in the account's timezone and most rows carry no GMTOFF, so
- * they are read as UTC. A consent timestamp out by a few hours does not change
- * what it evidences, and inventing a zone would be worse than admitting one.
+ * Times are recorded as written in the export (`YYYY-MM-DD HH:MM:SS`, no zone)
+ * and read as UTC. **They are in fact New Zealand local time** — measured
+ * 2026-08-30 against the Marketing API, which returns UTC: `timestamp_opt` vs
+ * `OPTIN_TIME` differs by exactly +12h on 950 rows and +13h on 600, with none at
+ * any other offset. So every imported `confirmedAt` is 12–13 hours late.
+ *
+ * **Measured before deciding not to fix it.** The one thing the skew could break
+ * is `selectMailable()`, which re-admits a suppressed address when
+ * `confirmedAt > suppressedAt` — a value that is too late could manufacture a
+ * re-admission. Zero of the 1,545 are affected, across **both** registers, and
+ * zero is structural: every committed register timestamp is at or after
+ * 2026-08-17T13:55Z and every export `CONFIRM_TIME` at or before
+ * 2026-08-17T06:35Z, because the register was built *from* that export. The
+ * closest gap across the 15 rows that appear in both is 6,923 hours. On the
+ * runtime side, 9 of the 10 `email_optouts` rows are She Sharp's own mailboxes
+ * and the tenth is not in the export at all, so no imported row pairs with a
+ * runtime opt-out either — the comparison never runs. **Fix the parse before any re-import** — a fresh export's stamps
+ * can land within 13h of a register entry — but do not bulk-shift the stored
+ * values to correct an error that changes no decision. Full working:
+ * `docs/development/EMAIL_PLATFORM_STATE.md` § "Every imported `confirmedAt` is
+ * 12-13 hours late".
  *
  * Usage:
  *   npx tsx scripts/email/import-mailchimp-subscribers.ts <subscribed.csv> \

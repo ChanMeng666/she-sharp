@@ -92,6 +92,16 @@ scripts/newsletter/pilot-contacts.local.csv
 # Real email addresses — never commit these.
 **/*.local.csv
 
+# Same rule in JSON. The newsletter reviewer roster is split in two: the NAMES
+# and roles are committed in lib/email/newsletter-reviewers.ts so a diff shows
+# who is on the round, and the ADDRESSES live in
+# .claude/skills/monthly-newsletter/state/reviewers.local.json, which this
+# covers. Most reviewers hold personal off-domain mailboxes, and an address in
+# git is permanent — a volunteer who leaves stays in the history.
+# `*.local.example.json` does NOT match this pattern, so the committed example
+# (fake addresses, for the shape) stays tracked.
+**/*.local.json
+
 # ...but the hashed suppression list carries no PII and MUST stay tracked.
 !lib/data/json/email-suppression-hashes.json
 

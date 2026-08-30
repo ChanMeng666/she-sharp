@@ -35,6 +35,11 @@ const STATIC_ROUTES: Array<{
   // internal host tooling, are served `robots: { index: false }` by
   // `app/present/layout.tsx`, and must never be listed here.
   //
+  // /internal/* — the event playbook and the email playbook — is absent on the
+  // same grounds. Both are staff handbooks, both are served
+  // `robots: { index: false }` by `app/internal/layout.tsx`, and adding a third
+  // one later must not add a row here either.
+  //
   // /events/*/feedback and its /f/<code> alias are absent too. The feedback
   // form is one content-free page replicated across every event slug — the
   // thin-duplicate pattern GSC files under "Duplicate, Google chose a different
@@ -49,10 +54,10 @@ const STATIC_ROUTES: Array<{
   { path: "/resources/podcasts", priority: 0.6, changeFrequency: "monthly" },
   { path: "/resources/newsletters", priority: 0.6, changeFrequency: "monthly" },
   { path: "/resources/photo-gallery", priority: 0.6, changeFrequency: "monthly" },
-  // The newsletter sign-up landing page. Its partner /newsletter/confirm is
-  // absent and must stay absent: it is `noindex`, reachable only from a token
-  // in an email, and listing it here is the "Submitted URL marked 'noindex'"
-  // contradiction noted above.
+  // The newsletter sign-up landing page. Its partners /newsletter/confirm and
+  // /newsletter/reconfirm are absent and must stay absent: both are `noindex`,
+  // reachable only from a token in an email, and listing one here is the
+  // "Submitted URL marked 'noindex'" contradiction noted above.
   { path: "/newsletter/subscribe", priority: 0.7, changeFrequency: "monthly" },
   { path: "/join-our-team", priority: 0.7, changeFrequency: "monthly" },
   { path: "/donate", priority: 0.7, changeFrequency: "monthly" },

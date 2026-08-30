@@ -68,7 +68,10 @@ Trigger conditions (examples — don't wait for an exact match):
 - "send the event announcement out" / "把这场活动群发给订阅者"
 - "can we let the community know about the hackathon before tickets close?"
 
-Unsure? Run Step 1. It reads the repo and writes nothing.
+Unsure? Run Step 1. It reads the repo, sends nothing, and touches nothing
+outside `tmp/` — on a match it also writes the spec to
+`tmp/specs/announce-<slug>.json`, which is gitignored scratch you can ignore
+or delete.
 
 ## When NOT to apply
 
@@ -229,9 +232,10 @@ What it fixes for you, and why you must not "improve" on any of it:
 
 What it fixes for you, and why you must not "improve" on any of it:
 
-- **`engine: "react"`** — the only engine whose footer carries an unsubscribe
-  link at all. `"layout"` is the transactional design with no opt-out footer and
-  fails the `unsubscribe` gate outright.
+- **`engine: "react"`** — the branded announcement template, and the one that
+  supports the cover image. Not a gate decision: `composeMessage` appends the
+  unsubscribe placeholder to *any* marketing spec, so both engines fail
+  `unsubscribe` and `absolute-urls` identically at Step 3 (see that row's note).
 - **`category: "marketing"`** — makes the gates strict, and switches on the
   refusals in `/email-the-community`'s Step 7 that protect the opt-out link.
 - **From `newsletter@shesharp.org.nz`, Reply-To `info@shesharp.org.nz`** — the
@@ -303,7 +307,7 @@ one. **`<slug>` in the paths below is really `<slug>-<stage>`** — Step 3 wrote
 
 | Its step | What happens | Anything different for an event announcement |
 |---|---|---|
-| **Step 3 — Render and gate** | `npx tsx scripts/email/render-message.ts tmp/specs/announce-<slug>.json --mode broadcast` | A red gate here is a bug in the generator, **not** a reason to hand-edit the spec. Say what failed. Ignore the `resend broadcasts create` block the script prints afterwards — there is no segment to send to |
+| **Step 3 — Render and gate** | `npx tsx scripts/email/render-message.ts tmp/specs/announce-<slug>.json --mode broadcast` | **`absolute-urls` and `unsubscribe` fail here on every marketing spec, and that is the generator working.** The footer carries the literal `%%SHESHARP_UNSUBSCRIBE_URL%%` (`emails/announcement.tsx:293`) until `build-batch.ts` signs one per recipient, so at render time it is neither an `https://` URL nor an opt-out link yet. Those two are really enforced at Step 7, on the substituted message — `build-batch.ts` swaps the placeholder and *then* runs the same strict gates, and exits 1 writing nothing if they fail. So nothing is waved through here. **Any other red gate** — `image-format`, `size-100kb`, `merge-tags`, `secret-scan`, or an `absolute-urls` that names anything besides the placeholder — **is a bug in the generator**, not a reason to hand-edit the spec: say what failed |
 | **Step 4 — DRAFT-banner preview** | `--mode preview --draft-banner --open` | Check the cover is not a broken box, and that the date in the email matches the event page |
 | **Step 5 — Test send** | `resend emails send` to a mailbox **the user names**, dry-run first | Open the event page from the test email and check every fact against it. The footer's unsubscribe link shows as literal `%%SHESHARP_UNSUBSCRIBE_URL%%` in a test — that is expected |
 | **Step 6 — Plan block, then stop** | The full block, including the `Redactions:` line | Add an `Event:` line naming the slug and its date, and a `Stage:` line naming which of the three this is and which have already gone out — so approval is of a specific email, not of "the campaign" |

@@ -22,6 +22,7 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { renderModule } from "../../scripts/docs/build-playbook.mjs";
 import { PLAYBOOK_HTML, PLAYBOOK_SOURCES } from "./playbook";
 
 const REPO_ROOT = path.resolve(
@@ -63,6 +64,41 @@ check("the handbook still names the document it is built from", () => {
     PLAYBOOK_SOURCES.length > 0,
     `PLAYBOOK_SOURCES is empty. Run: ${REBUILD}`,
   );
+});
+
+check("the page is byte-for-byte what the documents render to", () => {
+  // Added 2026-08-30, when the same gap was found while building the email
+  // playbook's guard beside this one. Every check in this file reads either the
+  // markdown or the RENDERED page, and the hash below covers the markdown only.
+  // Nothing here noticed a hand-edit of the generated module — which is
+  // ordinary committed TypeScript, so anyone can change a sentence in it, and
+  // the changed sentence is what a volunteer then reads. A hash of the input
+  // cannot detect a forged output.
+  //
+  // Re-rendering and comparing the whole module closes that, catches the stale
+  // module the hash already caught, and names the differing line instead of
+  // reporting a digest mismatch.
+  const expected = renderModule(
+    PLAYBOOK_SOURCES.map((source) => ({
+      spec: { key: source.key, label: source.label, path: source.path },
+      markdown: markdown.get(source.path) ?? "",
+    })),
+  );
+  const actual = toLf(
+    readFileSync(path.join(REPO_ROOT, "lib", "docs", "playbook.ts"), "utf8"),
+  );
+
+  if (toLf(expected) !== actual) {
+    const a = actual.split("\n");
+    const b = toLf(expected).split("\n");
+    const at = a.findIndex((line, i) => line !== b[i]);
+    assert.fail(
+      `lib/docs/playbook.ts is not what its source(s) render to (first ` +
+        `difference at line ${at + 1}). Either the module was edited by hand — ` +
+        `it is generated, so any edit there is lost on the next build — or a ` +
+        `document moved on. Run: ${REBUILD}`,
+    );
+  }
 });
 
 for (const source of PLAYBOOK_SOURCES) {

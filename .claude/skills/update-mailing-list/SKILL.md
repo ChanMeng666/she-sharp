@@ -24,10 +24,12 @@ borderline.
 Mailchimp list, carried over on 2026-08-29 — so the list is real now, and a
 question like "how many subscribers do we have?" has a database answer for the
 first time. Go and read that answer rather than repeating one from this file:
-`npx tsx scripts/email/suppression.ts reconcile` prints it (**1,549 mailable as
-at 2026-08-30**, and it moves). What has **not** happened is a send: the monthly
-newsletter still goes out from Mailchimp, and nothing has ever been sent from
-this system. Two consequences to keep straight. Someone who unsubscribes from a
+`npx tsx scripts/email/suppression.ts reconcile` prints it on the
+**`Mailable after suppression`** line — the one to quote, because the
+`Subscribed rows` line above it is the table's own count before the two
+suppression registers are applied (**1,549 mailable as at 2026-08-30**, and it
+moves). What has **not** happened is a send: the monthly newsletter still goes
+out from Mailchimp, and nothing has ever been sent from this system. Two consequences to keep straight. Someone who unsubscribes from a
 real newsletter this month does so *in Mailchimp*, and only
 `suppression.ts pull-mailchimp` brings that back — so run it before you quote the
 list as current. And the Resend segment and topic still exist in the account
@@ -69,7 +71,8 @@ not to the suppression register. Reads are always fine, and local files under
 
 1. **Working directory is the repo root** (contains `scripts/email/` and
    `lib/newsletter/subscribers.ts`).
-2. **`POSTGRES_URL` (or `DATABASE_URL`) in `.env`.** Scripts read `.env`, not
+2. **`POSTGRES_URL` in `.env`.** That name only — `DATABASE_URL` is
+   `drizzle-kit`'s and no script here reads it. Scripts read `.env`, not
    `.env.local`. Without it the roster cannot be read at all — say so and stop.
    **Never substitute a guess, or a query of some other table, for the roster.**
 3. **CSV readable and in a permitted location** — under `tmp/` or named

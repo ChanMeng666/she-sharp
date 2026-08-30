@@ -56,10 +56,12 @@ repo and nothing else. They are the prerequisites for the steps that follow.
 
    **Read this before you plan a send.** That table holds the Mailchimp list,
    imported on 2026-08-29 — **1,549 mailable as at 2026-08-30**, and it moves;
-   `npx tsx scripts/email/suppression.ts reconcile` prints the live figure. So
-   a batch built today would reach real people. But **nothing has ever been sent
-   from it**, and the live newsletter still goes out from **Mailchimp** — the
-   cutover has not happened.
+   `npx tsx scripts/email/suppression.ts reconcile` prints the live figure on
+   its **`Mailable after suppression`** line. Read that one, not the
+   `Subscribed rows` line above it: the second is the table's own count and the
+   first is what a send actually reaches. So a batch built today would reach
+   real people. But **nothing has ever been sent from it**, and the live
+   newsletter still goes out from **Mailchimp** — the cutover has not happened.
 
    So if someone asks you to "send this month's newsletter" through this skill,
    the answer is not "yes" and not "no" — it is the **three-stage approval
@@ -71,9 +73,10 @@ repo and nothing else. They are the prerequisites for the steps that follow.
       are the developer — not `chanmeng6666@gmail.com`, which this file used to
       hardcode as "the single approved test mailbox". One person, proving the
       render.
-   2. **The review round** (Step 6b). The founder together with the internal
-      staff on the roster, one email each. This is **how the founder sees the
-      issue**, so it comes *before* her approval, not after it.
+   2. **The review round** (Step 6b). The founder together with the **newsletter
+      team**, one email each — marketing and events are on the roster but not on
+      the default round. This is **how the founder sees the issue**, so it comes
+      *before* her approval, not after it.
    3. **The founder's approval** (Step 8b), with the evidence for it — a Slack
       permalink, her email, or plainly "said so on the call". **Only this gates
       the broadcast.** The first send from this list is the organisation's
@@ -717,7 +720,7 @@ Iterate Steps 3–6 until it matches the June bar — **email UI quality is the
 pilot's acceptance bar.** Re-recording stage 1 after a fix is fine; it
 overwrites, keeping the latest.
 
-### Step 6b — Stage 2: the review round (the founder AND internal staff)
+### Step 6b — Stage 2: the review round (the founder AND the newsletter team)
 
 **This is not optional, and it is not gated on the founder's approval.** It is
 *how she sees the issue.* The old version of this step required "the founder has
@@ -725,31 +728,89 @@ explicitly approved widening" before the round could go out, which asked her to
 approve an issue nobody had shown her. Her approval is stage 3, and it comes
 after this.
 
-Resolve who is on the round first — this script reads the roster in
-`lib/email/newsletter-reviewers.ts` and prints the commands that follow:
+**Who is on it, by default: 4 people at 5 addresses** — the founder (Mahsa
+McCauley, who holds two mailboxes, one organisational and one academic) plus the
+three on the newsletter team (Lesley Gao, Tharaneetharan Thavarasan, Chan Meng).
+Marketing and events (Marriane Bentigan, Len Estioko, Sara Ghafoor, Nikita
+Kumari) are on the roster with their roles recorded but are **not** on the
+default round — `--reviewers` adds anyone for one issue.
+
+**The `role` field records which loop a person runs, not their job title, and it
+deliberately disagrees with `lib/data/team.ts`.** Lesley and Chan are
+Website/Product roles on the team page; Tharaneetharan is an Events Coordinator
+there, and his own bio says he contributes to monthly newsletter preparation.
+All three are `newsletter` here. **Do not "fix" the roster against the team
+page** — that would silently drop three of the four reviewers. `team.ts` is the
+authority on spelling (a test enforces it) and on public titles; the roster is
+the authority on who reviews what.
+
+**Chan Meng usually runs this skill and is also a reviewer.** So the same person
+can be your stage-1 test mailbox and a stage-2 recipient. That is fine and
+nothing collapses the two: stage 1 asks "does the render survive my inbox",
+stage 2 asks "does the team endorse this issue". Record both.
+
+Resolve the round first. This prints the addresses and the commands that follow:
 
 ```powershell
 npx tsx .claude/skills/monthly-newsletter/scripts/review-round.ts --issue 2026-08
 ```
 
-**It will refuse today, and that is correct.** The roster names only the founder
-(`mahsa`, the one reviewer mailbox this repo has on record and probed), because
-the rest of the newsletter, marketing and events reviewers have not been
-supplied yet. A "the team reviewed it" round sent to one person is not a review
-round, so the script exits non-zero rather than shrinking silently. Name the
-round explicitly:
+**The roster is deliberately in two halves.** The reviewers' **names and roles**
+are committed in `lib/email/newsletter-reviewers.ts`, so a diff shows who is on
+the round. Their **addresses are not** — they live in
+`.claude/skills/monthly-newsletter/state/reviewers.local.json`, which is
+gitignored (`**/*.local.json`). Most reviewers hold personal off-domain
+mailboxes, and an address in git is permanent: a volunteer who leaves stays in
+the history. The founder holds **two** addresses, one organisational and one
+academic, and the round goes to both — she is one person with two mailboxes, not
+two reviewers.
+
+**First run on a machine:** copy the example beside it and fill it in.
+
+```powershell
+Copy-Item .claude/skills/monthly-newsletter/state/reviewers.local.example.json `
+          .claude/skills/monthly-newsletter/state/reviewers.local.json
+```
+
+Never commit that file, and never paste its contents into a PR, a commit message
+or a Slack thread.
+
+**If the script refuses, read what it says — it will not send a partial round.**
+Four refusals, all of them deliberate:
+
+- *"No reviewer address file at …"* → the local file has not been created on
+  this machine. Copy the example.
+- *"The only person on the review round is … the founder"* → the round has
+  collapsed to one person, which is not a joint review: it shows the issue to
+  nobody but the person whose approval is the next stage. Since the roster names
+  four, this now means the other three are unaddressed in your local file. Add
+  them.
+- *"These reviewers are on the committed roster but have no address"* → the
+  local file has fallen behind the roster, and it **names the people**. Add
+  them. This is the failure the whole split exists to catch: a round that
+  quietly leaves somebody out looks exactly like one that reached everybody,
+  and the person most likely to be missing from a stale local file is the
+  founder — whose approval is the very next stage.
+- *"… is marked `expected: "missing"` in own-mailboxes.ts"* → an
+  `@shesharp.org.nz` address that the 2026-08-23 delivery probe could not reach.
+  Sending *as* a non-existent address works fine, so a dead on-domain reviewer
+  is invisible from the sender's side; seven addresses this project published
+  for a year had never been created. **That check applies to on-domain
+  addresses only** — `OWN_MAILBOXES` is a register of She Sharp's own mailboxes,
+  so a Gmail's absence from it proves nothing, and a personal address is
+  accepted without a lookup.
+
+To add somebody for one issue only, name the round yourself. On-domain addresses
+are still checked:
 
 ```powershell
 npx tsx .claude/skills/monthly-newsletter/scripts/review-round.ts --issue 2026-08 `
-  --reviewers "mahsa@shesharp.org.nz,someone@shesharp.org.nz"
+  --reviewers "someone@example.com,another@example.com"
 ```
 
-Then ask the maintainer to add those people to `NEWSLETTER_REVIEWERS` so the
-next issue does not have to be told again. Every entry there is cross-checked
-against `OWN_MAILBOXES` by `npx tsx lib/email/newsletter-reviewers.test.ts` —
-seven addresses this project published for a year had never been created, and
-mail to a mailbox that does not exist looks, from the sender's side, exactly
-like mail that worked.
+If they belong on every issue, ask the maintainer to add their **name** to
+`NEWSLETTER_REVIEWERS` and their address to everyone's local file.
+`npx tsx lib/email/newsletter-reviewers.test.ts` covers both halves.
 
 The protections on the send itself are unchanged:
 
@@ -761,16 +822,21 @@ The protections on the send itself are unchanged:
 - Never the mailing list, and never anyone who merely attended an event.
 
 ```powershell
-npx tsx scripts/newsletter/send-test.ts lib/data/json/newsletter-issues/2026-08.json "a@shesharp.org.nz,b@shesharp.org.nz" --dry-run
-npx tsx scripts/newsletter/send-test.ts lib/data/json/newsletter-issues/2026-08.json "a@shesharp.org.nz,b@shesharp.org.nz"
+npx tsx scripts/newsletter/send-test.ts lib/data/json/newsletter-issues/2026-08.json "<the list review-round.ts printed>" --dry-run
+npx tsx scripts/newsletter/send-test.ts lib/data/json/newsletter-issues/2026-08.json "<the list review-round.ts printed>"
 ```
 
-Record stage 2 — hashes and counts only, as before:
+Record stage 2 — hashes and counts only, as before. `review-round.ts` prints
+this command with `--people` already filled in:
 
 ```powershell
 npx tsx .claude/skills/monthly-newsletter/scripts/issue-ledger.ts record-review `
-  --issue 2026-08 --to "a@shesharp.org.nz,b@shesharp.org.nz"
+  --issue 2026-08 --to "a@example.com,b@example.com" --people 2
 ```
+
+`recipientCount` in the ledger counts **addresses**; `--people` records how many
+**people** that was. They differ whenever the founder is on the round, and
+recording only the first would make a two-person round read as three reviewers.
 
 **Stage 3 cannot be recorded until this is on the record.** `record-approval`
 refuses outright when stage 2 is missing, and `check` refuses an approval whose
@@ -1216,12 +1282,19 @@ Also non-negotiable:
   site-relative paths.
 - **The three-stage approval chain is not skippable, and it runs in this order:**
   (1) a test send to the caller's OWN mailbox, (2) the review round to the
-  founder and internal staff — which is how she sees the issue — and (3) her
-  approval, with evidence, which is the only thing that gates the broadcast.
-  Each stage is recorded with
+  founder **and the newsletter team** — which is how she sees the issue — and
+  (3) her approval, with evidence, which is the only thing that gates the
+  broadcast. Each stage is recorded with
   `.claude/skills/monthly-newsletter/scripts/issue-ledger.ts`, and Step 8d's
   build is gated on `issue-ledger.ts check` exiting 0. Never widen the round
-  beyond the named reviewers (max 25), and never widen on your own initiative.
+  beyond the roster plus an explicit `--reviewers` (max 25), and never widen on
+  your own initiative.
+- **Reviewer names are committed; reviewer addresses are not.**
+  `lib/email/newsletter-reviewers.ts` holds the people and roles;
+  `state/reviewers.local.json` holds the addresses and is gitignored. If a
+  person on the roster has no address there, `review-round.ts` **names them and
+  refuses** — never send the round to whoever it could resolve, and never
+  "fix" it by dropping somebody from the roster to make the error go away.
 - **Three marketing sends per calendar month, across skills.** `/monthly-newsletter`,
   `/email-the-community` and `/promote-event` reach the same people; the ledger
   counts all three. A fourth needs `--override-frequency "<reason>"`, which is
@@ -1240,7 +1313,9 @@ Also non-negotiable:
 - **Never write an email address into `state/issues.json`.** It is committed.
   The ledger stores counts and truncated hashes, and the recording commands do
   the hashing for you — pass real addresses on the command line, never edit the
-  file by hand.
+  file by hand. The one file in this skill that holds real addresses is
+  `state/reviewers.local.json`, which is gitignored; keep it that way and keep
+  its contents out of PRs, commit messages and Slack.
 - **Listed, but not indexed.** Every issue gets an archive card (Step 7b); the
   web version keeps `noindex` and stays out of `app/sitemap.ts`.
 

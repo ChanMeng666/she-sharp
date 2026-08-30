@@ -6,9 +6,10 @@ suppression seam, the subscribe funnel with double opt-in, the send path off the
 batch API, and now **the import**: `newsletter_subscribers` holds **1,545** rows
 carried over from the 2026-08-17 Mailchimp export. The code that read Resend's
 Marketing objects is deleted. **What has not happened is the send.** Nothing has
-gone out from this system, the live newsletter **still goes out from Mailchimp**,
-and the two Resend objects and their two Vercel env vars still exist in the
-accounts. Section 5 marks each item.
+gone out from this system and the live newsletter **still goes out from
+Mailchimp**. The two Resend Marketing objects and their two Vercel env vars were
+**deleted on 2026-08-29** — this header claimed they still existed while §5 below
+already recorded their removal. Section 5 marks each item.
 
 > **The decision, in one line.** She Sharp keeps **Resend Transactional Pro
 > ($20/month)**, does **not** buy Marketing Pro, and **builds its own newsletter
@@ -68,7 +69,7 @@ Free's 3,000/month is roughly sixty times more headroom than needed.
 
 ### Where the daily cap actually bites
 
-1. **The newsletter.** 1,563 recipients in one send is impossible under
+1. **The newsletter.** ~1,550 recipients in one send is impossible under
    100/day, and spreading a monthly newsletter across sixteen days is not a
    newsletter.
 2. **Event fulfilment mail.** ~~`/send-event-emails` mails a Humanitix
@@ -203,14 +204,28 @@ Comfortably. The constraints are nowhere near binding.
 
 | Constraint | Value | Our need | Verdict |
 |---|---|---|---|
-| Batch endpoint | **100 emails / request** | 1,563 → **16 requests** | fine |
+| Batch endpoint | **100 emails / request** | ~1,550 → **16 requests** | fine |
 | API rate limit | **10 requests/second per team**, raisable on request | 16 requests ≈ **2 seconds** | fine |
 | Monthly allowance (Pro) | 50,000 | ~1,600 | fine |
-| Daily allowance (Pro) | unlimited | 1,563 in one burst | fine |
+| Daily allowance (Pro) | unlimited | ~1,550 in one burst | fine |
 
 **Since measured, not just projected.** On 2026-08-29 the builder was run against
 the imported list: 1,545 recipients produced exactly **16 chunk files** and 1,545
 distinct signed unsubscribe URLs. The estimate above held. Nothing was sent.
+
+> **Where the old `1,563` in this section came from, and why it is gone.** It
+> was a **line count** of the 2026-08-17 `subscribed` export, not a record count:
+> the file is 1,564 lines and **1,560 records**, because one contact's street
+> address carries embedded newlines. It matched no measurement of anything. The
+> figures above are now approximate on purpose — the list moves, and per the
+> repo's own decision (`EMAIL_PLATFORM_STATE.md` decision log, 2026-08-30) the
+> live number is a command, not a constant:
+> `npx tsx scripts/email/suppression.ts reconcile`, read at its
+> **`Mailable after suppression`** line. It prints four, and the first —
+> `Subscribed rows` — is the count *before* `selectMailable()` applies the two
+> registers, so it is an upper bound on a send rather than the send size. On
+> 2026-08-30 both read **1,549**, which is when the distinction is easiest to
+> miss and cheapest to get wrong later.
 
 Batch specifics worth knowing before building:
 
@@ -344,10 +359,14 @@ For items 1–4, built means the code exists, is typechecked and has its own tes
    bouncing address and stored no per-send record at all, so the complaint rate
    had a numerator arriving one complaint at a time and **no denominator
    anywhere**. `email_events` (migration `0033_crazy_morg`, applied to
-   production 2026-08-29) fixes that: the webhook now records `email.sent`,
-   `delivered`, `opened`, `clicked`, `bounced`, `complained` and `failed`,
+   production 2026-08-29) fixes that: the webhook now **subscribes to eight**
+   events — `email.sent`, `delivered`, `opened`, `clicked`, `bounced`,
+   `complained`, `failed` and `delivery_delayed` — and **records seven** of them,
    idempotent on the `svix-id` header because the route returns 500 *so that*
-   Resend retries. `scripts/email/send-stats.ts --tag newsletter:<YYYY-MM>`
+   Resend retries. `delivery_delayed` is subscribed and deliberately **not**
+   recorded: a greylist is not an outcome, and `buildEmailEventRow()` returns
+   null for it (asserted in `lib/email/events.test.ts`). Count the subscription
+   and the ledger separately, or the two numbers read as a discrepancy. `scripts/email/send-stats.ts --tag newsletter:<YYYY-MM>`
    reports the complaint rate against 0.08% and the hard-bounce rate against 4%,
    naming this repo's own stricter triggers (0.10% / 2%) beside them.
 
@@ -378,6 +397,16 @@ For items 1–4, built means the code exists, is typechecked and has its own tes
    `confirmedAt` from the export's `CONFIRM_TIME`, which every one of the 1,560
    rows carried. Recording that timestamp is not manufacturing a consent act; the
    act happened, in Mailchimp, and we have its date.
+
+   **But it is not 1,545 double opt-ins, and this file used to imply it was.**
+   Measured 2026-08-30 over the same export: `CONFIRM_TIME` equals `OPTIN_TIME`
+   on **1,431** of the 1,560 rows — one instant, not two — and differs on **128**.
+   Mailchimp populates the column either way. What the import records is a
+   consent timestamp Mailchimp wrote; only for the 128 does it evidence a
+   separate confirmation. `EMAIL_PLATFORM_STATE.md` § "Two columns, and which one
+   survives an API pull" has the join against the API that confirms it, and
+   § "How the list was actually acquired" has what the rest of the list rests on
+   instead.
 
    **1,560 read, 15 held back by the suppression register, 0 malformed → 1,545
    rows.** Six of the fifteen were found only because
@@ -440,14 +469,14 @@ unsubscribe machinery that keeps complaint rates low. Building it means owning
 it. A broken unsubscribe link for one day converts unsubscribes into spam
 complaints.
 
-**2. The complaint ceiling is account-wide and unforgiving.** 0.08% of 1,563
-recipients is **1.25 complaints**. Two "mark as spam" clicks on a single send
+**2. The complaint ceiling is account-wide and unforgiving.** 0.08% of **1,549**
+recipients — the measured list as at 2026-08-30 — is **1.24 complaints**. Two "mark as spam" clicks on a single send
 exceeds the per-send rate. Transactional volume dilutes the account-wide
 denominator, but the consequence of breaching it — *"your account may be shut
 down without warning"* — would take **password resets and donation receipts down
 with the newsletter**. This is the single largest operational risk in the plan.
 
-**3. A 1,563-recipient send trips our own documented subdomain trigger.**
+**3. A full-list send trips our own documented subdomain trigger.**
 `EMAIL_AUTHENTICATION.md` lists a single send above ~1,000 recipients as a
 trigger for splitting marketing onto `news.shesharp.org.nz`.
 
@@ -565,7 +594,7 @@ the same IP reputation — not self-hosting an MTA.
 | | Cost | Notes |
 |---|---|---|
 | Resend Transactional Pro | $20 / month | current |
-| **AWS SES direct** | **~$0.16 / month** | $0.10 per 1,000, flat, **charged per recipient**; (1,563 + ~50) ≈ 1,613 |
+| **AWS SES direct** | **~$0.16 / month** | $0.10 per 1,000, flat, **charged per recipient**; (~1,550 + ~50) ≈ 1,600 |
 
 Accounts created on or after 2025-07-15 get **no SES free tier**; SES is covered
 by up to $200 of AWS credits, then standard rates. New accounts start in

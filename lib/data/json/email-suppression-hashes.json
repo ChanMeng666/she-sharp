@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-08-28T20:41:39.889Z",
+  "updatedAt": "2026-08-30T04:14:43.021Z",
   "entries": [
     {
       "hash": "004729c114395eb17d6b22bd9f4df1392eb43e5311743c266262f5d5c6ca627b",
@@ -9571,6 +9571,11 @@
       "hash": "e6f9fd7e83bd7d06d30ed08c2cb5181aebd4b90f9bb289f751e365ab32529333",
       "reason": "mailchimp-never-subscribed",
       "at": "2026-08-17T13:55:50.577Z"
+    },
+    {
+      "hash": "e70b0e932b7b3340c924b67254bd4bc31441a4a19fb2b3b6deb8354ca0236a5c",
+      "reason": "bounce",
+      "at": "2026-08-28T08:21:17.908Z"
     },
     {
       "hash": "e720a0c350647520eacc9df6db44764b29d9151647ab67d0003db8603a948d49",

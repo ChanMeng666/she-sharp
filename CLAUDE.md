@@ -204,16 +204,33 @@ export — nor will it stay at that number. It is the 2026-08-17 Mailchimp expor
 2026-08-29 and 15 held back, then 4 more added on 2026-08-30 from the API.
 **The two halves carry different grades of consent.** The 1,545 from the export
 have a real `confirmedAt`, read from its `CONFIRM_TIME`; the 4 from the API have
-**null**, because the Marketing API exposes no `CONFIRM_TIME` equivalent and
-writing the opt-in time there would fabricate a confirmation nobody made. That
+**null**, and the reason is narrower than "the API has no equivalent".
+`timestamp_signup` **is** `CONFIRM_TIME` — they agree to the NZ offset wherever
+both exist — but the API carries it only where Mailchimp logged a *separate*
+confirmation, and it is empty for these four. The null is right on the facts as
+well as on the rule; writing the opt-in time there would fabricate a
+confirmation nobody made.
+**And a `CONFIRM_TIME` is not by itself a double opt-in.** Over the 2026-08-17
+export it *equals* `OPTIN_TIME` on **1,431** of 1,560 and differs on **128** —
+Mailchimp writes the column either way. Four docs said otherwise until
+2026-08-30. Related: **752 of the 1,549** are on the list because they bought a
+Humanitix ticket and never ticked any opt-in, which is not proof they lack
+consent but is the absence of the evidence `consent-rules.md` requires; the
+tiering and its three limits are in
+`docs/development/EMAIL_PLATFORM_STATE.md` § "How the list was actually
+acquired". That
 is the two-grades rule in `consent-rules.md` working, not a gap, and the null is
 load-bearing: `selectMailable()` compares `confirmedAt` against a suppression
 timestamp to let a later re-subscription outrank an earlier suppression.
 **All 1,549 share `source = 'mailchimp-import'`** — the importer hardcodes it, so
 `source` does **not** separate the four. Query the null `confirmedAt`, or the
-`consentSource` sentence that names the API pull. Read the live number from
+`consentSource` sentence that names the API pull. Read the live number from the
+**`Mailable after suppression`** line of
 `npx tsx scripts/email/suppression.ts reconcile` rather than from this
-sentence — the delta is the point, and it will move again.
+sentence — the delta is the point, and it will move again. That command prints
+four lines and the first, `Subscribed rows`, is the count *before*
+`selectMailable()` strips the two registers; the two were equal on 2026-08-30,
+which is when reading the wrong one costs nothing and becomes a habit.
 **Nothing has been sent from it**: the live
 newsletter still goes out from Mailchimp, so do not describe the migration as
 done. Run `scripts/email/suppression.ts pull-mailchimp` before any further
@@ -374,9 +391,13 @@ route to the settlement report, the 124-code access registry, the discount or
 affiliate codes, top-purchasers, or earnings-by-ticket-type, so six of the
 eighteen reports in the vault exist only because somebody downloaded them.
 Mailchimp matches the CSVs on counts and on IPs (`OPTIN_IP` is `ip_opt`;
-`CONFIRM_IP` is `ip_signup` — the names invert between the surfaces) but
-**`CONFIRM_TIME` has no equivalent**, 1,560 populated in the CSV against 129 for
-`timestamp_signup`, and the archive's reading of consent rests on it.
+`CONFIRM_IP` is `ip_signup` — the names invert between the surfaces) and
+**`timestamp_signup` *is* `CONFIRM_TIME`** — but the API populates it on **129**
+rows against **1,560** in the CSV, because it carries the column only where a
+*separate* confirmation was recorded and never the copied-from-`OPTIN_TIME`
+fallback. The archive's reading of consent rests on that column, so only the CSV
+has it for the other 1,431. (This file said "no equivalent" until 2026-08-30;
+the distinction is which rows, not whether the field exists.)
 
 **The vault stores verbatim payloads, never mapped objects.** A sha256 over a
 mapped object proves what the mapper kept, not what the API said.
