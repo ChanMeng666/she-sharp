@@ -306,6 +306,59 @@ pull across the 1,545 contacts present in both:
 separate confirmation for the other **1,416**, where the CSV's `CONFIRM_TIME` is
 a copy of `OPTIN_TIME` rather than evidence of a second act.
 
+### Every imported `confirmedAt` is 12-13 hours late, and it changes nothing
+
+**The defect.** `import-mailchimp-subscribers.ts` reads the export's stamps as
+UTC — its header said so, and said most rows carry no `GMTOFF` as the reason.
+They are **New Zealand local**. Measured 2026-08-30 against the API, which
+returns UTC: `timestamp_opt` vs `OPTIN_TIME` differs by exactly **+12h on 950
+rows and +13h on 600**, none at any other offset. So every one of the 1,545
+stored `confirmedAt` values is **12-13 hours later than the instant it records**.
+
+**Why that is not merely cosmetic in principle.** `selectMailable()` re-admits a
+suppressed address when `confirmedAt > suppressedAt` — a later deliberate act
+outranks an earlier suppression. A stored value that is too *late* can therefore
+manufacture a re-admission that the true instant would not support, which is a
+send to somebody who had opted out. That is the one thing this skew could break,
+so it was measured rather than assumed.
+
+**Measured 2026-08-30: zero rows are affected, and zero is structural.**
+
+| | |
+|---|---:|
+| Export rows also in the committed register | **15** — the same 15 the import held back |
+| of those, a terminal reason (comparison never runs) | 0 |
+| of the rest, `confirmedAt > suppressedAt` (would re-admit) | **0** |
+| of those, within 13h of the suppression (flippable) | **0** |
+| closest gap in either direction, across all 15 | **6,923 hours (~288 days)** |
+
+The margin is **530x** the largest possible skew, and the reason is that the two
+ranges do not overlap at all. Every committed register timestamp is at or after
+**2026-08-17T13:55Z**; every export `CONFIRM_TIME` is at or before
+**2026-08-17T06:35Z**. The register was built *from* that export, hours after it
+was taken, so no imported confirmation can postdate a suppression by
+construction. Every later `pull-mailchimp` pushes register timestamps further
+forward, widening the gap rather than narrowing it.
+
+It is doubly moot today: `reconcile` on 2026-08-30 read `Subscribed rows: 1549`
+and `Mailable after suppression: 1549`, so **no subscriber row intersects either
+register** and the comparison does not run for anybody.
+
+**So this is not an emergency and nobody should re-open it as one.** It is also
+not nothing:
+
+- **Do not fix it by shifting the stored values.** Nothing depends on the 13
+  hours, and a bulk `UPDATE` over 1,545 consent timestamps to correct an error
+  that changes no decision is the larger risk.
+- **The one way it could ever bite is a re-import.** A future run against a
+  fresh Mailchimp export would write `CONFIRM_TIME`s from *after* 2026-08-17,
+  which can land within 13h of a register entry. Fix the parse before that run,
+  not before this sentence.
+- **Website sign-ups are unaffected** — `confirmSubscription()` writes
+  `new Date()`, which is a real instant.
+
+The importer's header comment now says the stamps are NZ local and points here.
+
 **Read that carefully before building an API-delta importer, because the obvious
 summary of it is wrong.** The API is **not** strictly weaker than the CSV for
 everybody: for the 129 it carries a real, correct confirmation timestamp, and an

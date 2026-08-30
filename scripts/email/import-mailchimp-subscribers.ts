@@ -39,9 +39,20 @@
  * and read as UTC. **They are in fact New Zealand local time** — measured
  * 2026-08-30 against the Marketing API, which returns UTC: `timestamp_opt` vs
  * `OPTIN_TIME` differs by exactly +12h on 950 rows and +13h on 600, with none at
- * any other offset. So every imported `confirmedAt` is 12–13 hours late. That
- * does not change what the timestamp evidences, which is why this is recorded
- * rather than corrected; a re-import would be the place to fix it.
+ * any other offset. So every imported `confirmedAt` is 12–13 hours late.
+ *
+ * **Measured before deciding not to fix it.** The one thing the skew could break
+ * is `selectMailable()`, which re-admits a suppressed address when
+ * `confirmedAt > suppressedAt` — a value that is too late could manufacture a
+ * re-admission. Zero of the 1,545 are affected, and zero is structural: every
+ * committed register timestamp is at or after 2026-08-17T13:55Z and every export
+ * `CONFIRM_TIME` at or before 2026-08-17T06:35Z, because the register was built
+ * *from* that export. The closest gap across the 15 rows that appear in both is
+ * 6,923 hours. **Fix the parse before any re-import** — a fresh export's stamps
+ * can land within 13h of a register entry — but do not bulk-shift the stored
+ * values to correct an error that changes no decision. Full working:
+ * `docs/development/EMAIL_PLATFORM_STATE.md` § "Every imported `confirmedAt` is
+ * 12-13 hours late".
  *
  * Usage:
  *   npx tsx scripts/email/import-mailchimp-subscribers.ts <subscribed.csv> \
