@@ -295,7 +295,7 @@ used for, quoted from Humanitix's own help centre, is in
 § "What Humanitix sends" — registrants only, always from a Humanitix address,
 and the tool stops 14 days after the event ends.
 
-Observed in the console on **2026-08-30**: an HCLTech reminder and thank-you
+Recorded from the console on **2026-08-30**: an HCLTech reminder and thank-you
 (Nov 2025), IWD × AcademyEX (Mar 2026), a Metlifecare "Own Your Energy" pair
 (Apr 2026), a MYOB thank-you (6 Aug 2026), and a Les Mills reminder in **draft**.
 The console's own banner warns that Email Campaigns "should never be used for
@@ -303,11 +303,14 @@ Marketing and Promotional material… only to communicate service-level info
 related to a customer's purchase" — the same fulfilment-only line drawn from our
 side by `lib/email/audience.ts`.
 
-> **Provenance.** The campaign list and the banner wording are console
-> observations from that day, not API reads, and the console shows no history
-> view that would let anyone re-take them as a complete list. Treat them as
-> evidence that the tool is in habitual use — which is what they were collected
-> to show — rather than as a register of every campaign ever sent.
+> **Provenance — weaker than everything else in this file.** The campaign list
+> and the banner wording come from a **console session on 2026-08-30**, recorded
+> second-hand; they are the only claims here that were **not** independently
+> re-derived when this file was written, because there is no API, no export and
+> no history view to re-derive them from. Treat them as evidence that the tool is
+> in habitual use — which is what they were collected to show — and not as a
+> register of every campaign ever sent. If a detail here matters to a decision,
+> open the console and look.
 
 **Decided 2026-08-30: this stays in Humanitix, by hand, and is not coming into
 this codebase.** `/send-event-emails` was deleted for exactly that reason
@@ -318,7 +321,7 @@ are in `EMAIL_RESPONSIBILITY_BOUNDARIES.md` § "Why the boundary is where it is"
 
 Console → Email campaigns → **Unsubscriber list**
 (<https://console.humanitix.com/console/comms/email-campaigns-unsubscriptions>).
-Observed 2026-08-30: about **20 rows**, **13 distinct addresses**, spanning
+Recorded from the console on 2026-08-30: about **20 rows**, **13 distinct addresses**, spanning
 **2021-08 → 2025-11** with nothing in 2026, on one page, with **no export
 button**.
 
