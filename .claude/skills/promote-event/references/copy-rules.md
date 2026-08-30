@@ -24,14 +24,57 @@ the footer with it**, which takes the unsubscribe link out of the email — the
 is a fact that will disagree with itself the first time the venue changes: the
 page can be corrected, the email cannot.
 
+## The three stages say different things
+
+One event gets up to three emails, and they are three messages rather than one
+message sent three times. What each carries is fixed in the generator's stage
+table, so the difference cannot quietly erode into a changed headline:
+
+| | `save-the-date` | `line-up` | `last-call` |
+|---|---|---|---|
+| Leads with | the description | the description | the **When/Where table** |
+| Speaker names | **withheld** | named | named |
+| Full description | included | included | **dropped** |
+| Preview text | the day, **no time** | day and time | `This <Weekday>` inside a week |
+| Button | `See the details` → the **event page** | `Register` → the ticket link | `Book your seat` → the ticket link |
+| Subject | `Save the date: …` | the event title | `Last call: …` |
+
+Three reasons those are the differences and not others:
+
+- **The line-up is the campaign's one scoop.** Spending it in the save-the-date
+  leaves the second email with nothing new to say. It is also the fact most
+  likely to still be changing six weeks out — speaker bios and headshots are
+  routinely late, sometimes two weeks out.
+- **A save-the-date asks for a diary entry, not a ticket.** At six weeks out the
+  Humanitix page usually does not exist (it goes live at T-4w), so the button
+  points at the event page, which is correct at every point in the campaign.
+  The generator withholds the registration link even when the record has one,
+  and says so in `Left out on purpose`.
+- **A last call is read by someone who already decided.** What they still need is
+  when and where, not a third reading of the pitch — so the table goes above the
+  prose and the description is dropped. That also keeps the third email the
+  shortest, which is the one people are least willing to read.
+
+**A stage sent outside its window is refused, not warned about** (exit 4), and
+there is no override flag. The window is the lifecycle SOP's own beat. Writing
+"last call" on an email that lands three weeks out is not early — it is untrue,
+and it cannot be corrected once sent.
+
 ## Subject — 50 characters, at most one emoji
 
 Longer truncates mid-word on a phone, which is where most of this list reads
 mail. Two or more emoji reads as spam to both filters and people.
 
-The generator defaults to the event title, falls back to the subtitle when the
-title is too long, and truncates only as a last resort — it says which it did.
-When it truncated, write a real one with `--subject`.
+The generator defaults to the stage's prefix plus the event title, falls back to
+the subtitle when the title is too long for what the prefix leaves, and truncates
+only as a last resort — it says which it did. When it truncated, write a real one
+with `--subject`. The prefix is kept and the title shortened around it, never the
+other way round: the prefix is what makes the second and third email read as new.
+
+**Never reuse an earlier stage's subject.** Three sends with one subject line are
+one message delivered three times, and that is what earns a complaint rather than
+an unsubscribe — which matters because the account complaint ceiling is 0.08% and
+is shared with password resets and donation receipts.
 
 A good subject says what the reader gets, not what the organisation is doing.
 "AI is everyone's job now" beats "She Sharp x Les Mills — September event".

@@ -944,7 +944,7 @@ flowchart LR
     B2["T-4w · the ticket page<br/>goes live"]
     B3["T-4w · <i>this is happening</i><br/>+ <i>here is the line-up</i>"]
     B4["T-4w → T-1w · one speaker<br/>a week, feed and story"]
-    B5["T-3w · the announcement<br/>to the mailing list"]
+    B5["T-6w+ / T-3w / T-1w ·<br/>save-the-date, line-up,<br/>last call — to the mailing list"]
     B6["T-2w → T-1d · countdown,<br/>then the registrant emails"]
   end
 
@@ -974,6 +974,15 @@ Two or three email sends per event is the norm, and the social campaign runs one
 speaker a week alongside them. Posts are drafted and scheduled ahead — a whole
 event's campaign is normally built in one sitting and scheduled out, not posted
 day by day.
+
+**The mailing-list half of that does NOT work like the social half.** There are
+three stages (`/promote-event --stage save-the-date | line-up | last-call`) but
+they cannot be built in one sitting and scheduled out: there is no scheduler
+anywhere in the send path, each stage needs its own approval at its own moment,
+and `/email-the-community` refuses a fourth marketing send to the list in one NZ
+calendar month — the monthly newsletter counting towards the same three. So a
+three-stage campaign whose stages land in one month leaves no room for the
+newsletter; spread the stages, or drop one.
 
 ### The artwork, and where each piece goes
 
@@ -1368,7 +1377,7 @@ reaches a projector or a poster.
 | T-4w | approved artwork, and a banner at 3200×1600 | build the Humanitix page and the access codes; **switch on the mailing-list opt-in** (per event, defaults off) | Event Manager | human | a live ticket page |
 | T-4w | every speaker has a headshot in the event record | `/make-event-poster --speaker all --lineup` | Marketing | skill | one graphic per person + the line-up tile |
 | T-4w → T-1w | the graphics exist | post the campaign, one speaker a week | marketing | human | the campaign |
-| T-3w | the mailing list has consented contacts | `/promote-event` → `/email-the-community` | Comms | **blocked** | one scheduled broadcast |
+| T-6w+ / T-3w / T-1w | the mailing list has consented contacts | `/promote-event --stage save-the-date \| line-up \| last-call` → `/email-the-community`, **once per stage** | Comms | **blocked** | up to three batch sends, each separately approved — there is no scheduler, and three marketing sends a month is the cap across every skill |
 | T-2w | the event is ticketed on Humanitix, and the sender has access | write the welcome mail in **Humanitix -> Email campaigns** | Events or Comms | **human, outside this repo** | a send recorded in Humanitix's console — **nothing here** |
 | T-1w | a run sheet in the event data | `/build-event-slides` | you drive, developer operates | skill | `/present/<slug>` |
 | T-7d | agenda, parking and transport known | the week-before mail in **Humanitix -> Email campaigns** | Events or Comms | **human, outside this repo** | nothing here |

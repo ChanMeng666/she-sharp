@@ -1,9 +1,9 @@
 ---
 name: promote-event
-description: Announce ONE upcoming She Sharp event to the newsletter subscribers, building the email from the event's own record in `lib/data/json/events-custom.json` so the date, time, venue and registration link cannot disagree with the website. Use whenever someone wants the subscribers told about an event that has not happened yet — phrases like "email the list about the Les Mills panel", "tell everyone about next month's event", "promote Thursday's night to the mailing list", "send out the event announcement", "can we let subscribers know about the hackathon", "宣传一下下个月的活动", "给邮件名单发个活动通知", "把这场活动群发给订阅者", "发个活动预告", "通知订阅者来参加". It generates the MessageSpec with `scripts/email/event-announcement-spec.ts` and then HANDS OVER to `/email-the-community` from its Step 3 onward for rendering, gating, preview, test send, plan block, batch build and send — it duplicates none of that. Not for emailing people who registered (that is done in Humanitix -> Email campaigns, not from this repo), not for the monthly newsletter, and it sends to the newsletter subscriber table, which now holds the whole imported Mailchimp list — so a send here reaches real people, and nothing has ever been sent from that list before.
+description: Promote ONE upcoming She Sharp event to the newsletter subscribers, across up to three campaign stages — a save-the-date, a line-up reveal and a last call — each a different email, built from the event's own record in `lib/data/json/events-custom.json` so the date, time, venue and registration link cannot disagree with the website. Use whenever someone wants the subscribers told about an event that has not happened yet — phrases like "email the list about the Les Mills panel", "tell everyone about next month's event", "promote Thursday's night to the mailing list", "send out the event announcement", "send the save the date", "do the last call for the hackathon", "can we let subscribers know about the hackathon", "宣传一下下个月的活动", "给邮件名单发个活动通知", "把这场活动群发给订阅者", "发个活动预告", "通知订阅者来参加". It generates one stage's MessageSpec with `scripts/email/event-announcement-spec.ts --stage <name>` and then HANDS OVER to `/email-the-community` from its Step 3 onward for rendering, gating, preview, test send, plan block, batch build and send — it duplicates none of that, and runs once per stage. Not for emailing people who registered (that is done in Humanitix -> Email campaigns, not from this repo), not for the monthly newsletter, and it sends to the newsletter subscriber table, which now holds the whole imported Mailchimp list — so a send here reaches real people, and nothing has ever been sent from that list before.
 ---
 
-# Announce one upcoming event to the mailing list
+# Promote one upcoming event to the mailing list
 
 **Read this first: the list is real now, and nothing has ever been sent from
 it.** The `newsletter_subscribers` table — the double opt-in list that is now
@@ -18,7 +18,21 @@ until the user says send") and its chunk-by-chunk Step 8 are not paperwork here;
 they are the only thing between a draft and a list that has never had a message
 from this system. Step 2 reads the live count out loud before anything is built.
 
-Four facts shape everything below.
+**One event, up to three emails.** A campaign is not a single send. The event
+lifecycle SOP's own beat is a save-the-date while the date is still worth
+holding, a line-up reveal once the speakers are confirmed, and a last call in the
+final week — same event, different angle, different button, different facts held
+back. **You run this skill once per stage**, and each run is a full trip through
+`/email-the-community`'s gates. The stages, and when each may be sent, are in
+Step 3; `--list-stages` prints them.
+
+**Three is the ceiling, and it is shared.** `/email-the-community` refuses a
+fourth marketing send to this list in one NZ calendar month, counting the
+newsletter too — so a three-stage campaign whose stages fall in one month leaves
+no room for the monthly issue. Spread them, or drop a stage. The reason is in
+Step 5.
+
+Five facts shape everything below.
 
 - **The event lives in the repo, and the email is built from it.** Title, date,
   time, venue, speakers, partner and the registration link are read through
@@ -31,9 +45,14 @@ Four facts shape everything below.
   bought a ticket asked about *that event*, not to hear from She Sharp again.
   `references/consent-rules.md` in `/update-mailing-list` is the binding version
   of this.
-- **This skill is thin.** It resolves the event, builds a spec, and hands over.
-  Every consent check, gate, preview, test send, plan block, ledger entry and
-  send belongs to `/email-the-community`, which already does all of it.
+- **This skill is thin.** It resolves the event, picks a stage, builds a spec,
+  and hands over. Every consent check, gate, preview, test send, plan block,
+  frequency check, ledger entry and send belongs to `/email-the-community`,
+  which already does all of it.
+- **A stage is a moment, not a label.** The generator refuses a "last call"
+  three weeks out and a "save the date" the day before, against the event's own
+  date — exit 4. There is no override, because the fix is naming the stage that
+  fits, which the refusal prints.
 - **Email cannot be recalled.** Which is why the handover happens at the step
   where that skill starts being careful, not after it.
 
@@ -77,10 +96,11 @@ Les Mills thing" is a complete request; everything else already has a default.
 | Question it asks | Default when the user shrugs |
 |---|---|
 | Which event? | Whatever they said — Step 1 resolves it and reads it back |
-| Subject line | The event title, if it fits in 50 characters |
-| Preview text | `<Weekday D Month YYYY, time> · <venue>` — the facts the subject has no room for |
+| Which stage? | **`line-up`** — the one send the SOP already describes. Step 3 offers the others and refuses any that does not fit the date |
+| Subject line | The stage's default: the event title, prefixed for the save-the-date and the last call |
+| Preview text | The stage's default — the day and place, with the time added from the line-up on |
 | A strapline? | **None.** Only add one if the user offers a framing sentence |
-| Button wording | `Register`, pointing at the event's registration URL |
+| Button wording | The stage's: `See the details` → the event page for a save-the-date, `Register` / `Book your seat` → the registration URL for the other two |
 | A cover image? | The event's own JPEG poster if one exists on disk; otherwise **no cover** |
 | Who does it go to? | Everyone in the subscriber table with status `subscribed`. There is no other option, and `/email-the-community`'s Step 1 reads the count out loud |
 | When does it go out? | **Ask.** A batch has no scheduler — it goes out when the command is run, so pick a sensible NZ-local moment and wait for it |
@@ -99,6 +119,8 @@ add a fact the event record does not have.** No fee, no capacity, no deadline, n
    is how a wrong date reaches the whole community.
 3. **The event has not happened yet.** The generator refuses a past event (exit
    3) because its one button points at a closed registration page. See Step 1.
+   It separately refuses a stage that does not belong at this distance from the
+   event (exit 4). See Step 3.
 4. **Confirmed subscribers to send to.** Step 2 checks and prints the live
    number; it was 1,549 on 2026-08-30. Never quote a remembered figure — a
    subscriber can unsubscribe between two runs of this skill.
@@ -124,6 +146,7 @@ The resolver behind it accepts a slug or half-remembered words. Its exit codes:
 | 1 | Nothing matched | `npx tsx scripts/events/resolve-event.ts --list` to browse, or run `/sync-event-from-slack` |
 | 2 | Several candidates, listed with dates | **Ask the user which one.** She Sharp has run same-named events in several years |
 | 3 | The event has already happened | Almost always the wrong event or the wrong skill. `--allow-past` overrides it, for a genuine re-run or recap |
+| 4 | The stage does not belong this far from the event | Re-run with the stage it names. There is no override — see Step 3 |
 
 **Read the title, date, time and venue back to the user and wait for a yes.**
 Every later step quotes these exact strings, and this is the cheapest moment to
@@ -166,15 +189,46 @@ Sending now would reach almost nobody.
 Then wait. Do not choose for them, and do not quietly send to a list of one as
 though it were a campaign.
 
-## Step 3 — Generate the announcement spec
+## Step 3 — Pick the stage, and generate that stage's spec
+
+**First decide which email this is.** Three stages exist, and the generator
+prints them:
 
 ```powershell
-npx tsx scripts/email/event-announcement-spec.ts --slug event-lesmills-03-september-2026
+npx tsx scripts/email/event-announcement-spec.ts --list-stages
 ```
 
-It writes `tmp/specs/announce-<slug>.json` and prints, to the console, what it
-built and what it deliberately left out. Nothing is sent; nothing outside `tmp/`
-is touched.
+| Stage | When it may be sent | What it says, and what it withholds |
+|---|---|---|
+| `save-the-date` | 14+ days out | The date exists and is worth holding. Subject `Save the date: …`, preview text the **day without the time** — at six weeks out the start time is the fact most likely to move. Button `See the details` → the **event page**, not the registration link, because the ticket page usually does not exist yet (SOP: it goes live at T-4w). **The speaker line-up is deliberately withheld** — it is the next stage's news, and at this range the record's speakers are often unconfirmed |
+| `line-up` | 5–42 days out | The full announcement: description, When, Where, **Speaking**, and the partner. Subject is the event title. Button `Register` → the registration link. This is the T-3w send the lifecycle SOP already describes, and it is the default |
+| `last-call` | 0–10 days out | The logistics, for people who have already decided. **Details table above the prose, the description dropped entirely.** Subject `Last call: …`, preview text `This <Weekday> · <venue>` inside a week. Button `Book your seat` |
+
+**Ask the user which one**, unless they said (a save-the-date, the last call).
+Then generate it:
+
+```powershell
+npx tsx scripts/email/event-announcement-spec.ts `
+  --slug event-lesmills-03-september-2026 --stage last-call
+```
+
+It writes `tmp/specs/announce-<slug>-<stage>.json` and prints, to the console,
+what it built and what it deliberately left out. Nothing is sent; nothing outside
+`tmp/` is touched.
+
+**Exit 4 means the stage does not belong at this distance from the event**, and
+it names the one that does. A last call three weeks out and a save-the-date the
+day before are both un-recallable once sent and both look fine to a duplicate
+check — which is why this refusal is against the event's own date and **has no
+override flag**. Re-run with the stage it names, or say to the user that this
+event is past the point where the stage they asked for means anything.
+
+The `Campaign so far` block in the output reads `/email-the-community`'s ledger
+and shows which stages have already gone out. It is advisory — the gate is that
+skill's Step 7.1 — but read it to the user: it is how they see that the line-up
+went out ten days ago before they approve a last call.
+
+What it fixes for you, and why you must not "improve" on any of it:
 
 What it fixes for you, and why you must not "improve" on any of it:
 
@@ -207,49 +261,68 @@ Two lines in its output need a decision:
 
 ## Step 4 — Let the user set the words
 
-Show them the subject, the preview text and the button label, and offer the three
+Show them the subject, the preview text and the button label, and offer the four
 flags. Re-run Step 3 with whatever they choose; the script is cheap and
 idempotent.
 
 ```powershell
-npx tsx scripts/email/event-announcement-spec.ts --slug <slug> `
+npx tsx scripts/email/event-announcement-spec.ts --slug <slug> --stage line-up `
   --subject "AI is everyone's job now" `
   --preheader "Thu 3 Sept, Les Mills Auckland City — four leaders, four functions." `
   --strapline "We're bringing this one to a gym, and we mean that literally." `
   --cta "Save me a seat"
 ```
 
+Every override is per stage, so a subject written for the line-up does not leak
+into the last call — the stage flag is part of the command, not a setting.
+
 The limits and what earns a place in the email at all are in
 `references/copy-rules.md`. Read it before you write a subject line.
 
+**A later stage must not repeat an earlier one's subject.** Three sends with the
+same subject line read as one message delivered three times, and that is what
+gets a complaint rather than an unsubscribe. If the user overrides the subject,
+check it against what the earlier stage actually sent — the `Campaign so far`
+block names the ledger keys, and `broadcast-ledger.ts show --key <k>` prints the
+digest.
+
 Anything else the user wants changed — a different order of facts, an extra
-paragraph, a photo — is a hand edit to `tmp/specs/announce-<slug>.json` after
-this step. That file is an ordinary `MessageSpec`; `lib/email/message.ts` lists
-all nine block types.
+paragraph, a photo — is a hand edit to `tmp/specs/announce-<slug>-<stage>.json`
+after this step. That file is an ordinary `MessageSpec`; `lib/email/message.ts`
+lists all nine block types.
 
 ## Step 5 — Hand over to `/email-the-community`, from its Step 3
 
 **Say this to the user explicitly**, then do it:
 
-> The spec is ready at `tmp/specs/announce-<slug>.json`. From here I'm following
-> `/email-the-community` — it owns the gates, the preview, the test send, the
-> approval block and the send itself, and I'm not going to duplicate any of it.
+> The `<stage>` spec is ready at `tmp/specs/announce-<slug>-<stage>.json`. From
+> here I'm following `/email-the-community` — it owns the gates, the preview, the
+> test send, the approval block and the send itself, and I'm not going to
+> duplicate any of it.
 
 Then run its steps, in order, with your generated spec in place of a hand-written
-one:
+one. **`<slug>` in the paths below is really `<slug>-<stage>`** — Step 3 wrote
+`tmp/specs/announce-<slug>-<stage>.json`, and the ledger key is
+`announce-<slug>-<stage>`:
 
 | Its step | What happens | Anything different for an event announcement |
 |---|---|---|
 | **Step 3 — Render and gate** | `npx tsx scripts/email/render-message.ts tmp/specs/announce-<slug>.json --mode broadcast` | **`absolute-urls` and `unsubscribe` fail here on every marketing spec, and that is the generator working.** The footer carries the literal `%%SHESHARP_UNSUBSCRIBE_URL%%` (`emails/announcement.tsx:293`) until `build-batch.ts` signs one per recipient, so at render time it is neither an `https://` URL nor an opt-out link yet. Those two are really enforced at Step 7, on the substituted message — `build-batch.ts` swaps the placeholder and *then* runs the same strict gates, and exits 1 writing nothing if they fail. So nothing is waved through here. **Any other red gate** — `image-format`, `size-100kb`, `merge-tags`, `secret-scan`, or an `absolute-urls` that names anything besides the placeholder — **is a bug in the generator**, not a reason to hand-edit the spec: say what failed |
 | **Step 4 — DRAFT-banner preview** | `--mode preview --draft-banner --open` | Check the cover is not a broken box, and that the date in the email matches the event page |
 | **Step 5 — Test send** | `resend emails send` to a mailbox **the user names**, dry-run first | Open the event page from the test email and check every fact against it. The footer's unsubscribe link shows as literal `%%SHESHARP_UNSUBSCRIBE_URL%%` in a test — that is expected |
-| **Step 6 — Plan block, then stop** | The full block, including the `Redactions:` line | Add an `Event:` line naming the slug and its date, so approval is of a specific event |
-| **Step 7 — Build the batch** | Ledger check, `recipients-from-db.ts`, then `build-batch.ts` with `BASE_URL` and `EMAIL_UNSUBSCRIBE_SECRET` set in the shell | The ledger key is the spec's `key` — `announce-<slug>` — so the same event cannot be announced twice |
+| **Step 6 — Plan block, then stop** | The full block, including the `Redactions:` line | Add an `Event:` line naming the slug and its date, and a `Stage:` line naming which of the three this is and which have already gone out — so approval is of a specific email, not of "the campaign" |
+| **Step 7.1 — Ledger check** | `broadcast-ledger.ts check --key announce-<slug>-<stage>` | The key carries the stage, so each stage is recorded separately and `no-op` stops **this stage** going twice. A `no-op` on the line-up does **not** block the last call, and must not be read as one |
+| **Step 7.2 — Frequency check** | `marketing-frequency-check.ts check --key announce-<slug>-<stage>` | **This is where a multi-stage campaign gets refused.** Three marketing sends a month across every skill, newsletter included; it exits non-zero. If the stages plus this month's newsletter come to four, the answer is normally to move a stage into the next month, not to override |
+| **Step 7.3–7.6 — Build the batch** | `recipients-from-db.ts`, then `build-batch.ts` with `BASE_URL` and `EMAIL_UNSUBSCRIBE_SECRET` set in the shell | Nothing event-specific |
 | **Step 8 — Send, chunk by chunk** | `resend emails batch` per chunk, recording as you go | **There is no scheduler.** Run it at a time that is well before the doors open — an announcement landing after the event has started is worse than not sending |
-| **Step 9 — Verify** | `resend logs list`, record `sent`, report | Say plainly if the announcement promised anything the team now has to do |
+| **Step 9 — Verify** | `resend logs list`, record `sent`, report | Say plainly if the announcement promised anything the team now has to do. Then say which stage this was and which remain, so the next one is a decision rather than a habit |
 
 Every guardrail in that skill applies here unchanged. Where the two disagree, it
 wins — it is the one that owns the send.
+
+**Then stop.** One run of this skill is one stage. The next stage is a new run,
+at its own moment in the campaign, with its own approval — never queued up
+behind this one.
 
 ---
 
@@ -286,6 +359,24 @@ wins — it is the one that owns the send.
    approving rather than after.
 9. **Nothing is sent until the user approves `/email-the-community`'s Step 6
    plan block.** *Why:* that skill owns the send, and email has no recall.
+10. **A stage is sent in its own window, or not at all.** The generator refuses
+    exit 4 against the event date and there is no override flag. *Why:* a "last
+    call" three weeks out and a "save the date" the day before are both untrue
+    at the moment they land, and a duplicate check cannot see it — the ledger
+    only knows the stage has not been sent, never that it is the wrong one.
+11. **One run of this skill is ONE stage.** Never build two stages in a session,
+    never queue the last call behind the line-up. *Why:* each stage needs its own
+    approval at its own moment, and a campaign approved in advance is a campaign
+    nobody looked at when it went out.
+12. **Three marketing sends per NZ calendar month, across every skill.** Step 7.2
+    refuses the fourth. *Why:* the Resend account complaint ceiling is 0.08% —
+    about 1.25 complaints on a full send — and the account is shared, so
+    breaching it takes password resets and donation receipts down with the
+    marketing mail. Frequency is what drives complaints, and three stages plus
+    the monthly newsletter is four emails to the same people.
+13. **Never repeat an earlier stage's subject line.** *Why:* three sends with one
+    subject read as one message delivered three times, which earns a complaint
+    where a different angle earns a click.
 
 ## What this skill does *not* do
 
@@ -296,8 +387,12 @@ wins — it is the one that owns the send.
 - Email the people who registered for the event. That is done in Humanitix ->
   Email campaigns, not from this repo, and the line between them is consent, not
   convenience.
-- Duplicate `/email-the-community`'s gates, ledger, approval block or batch
-  build. One implementation, one place.
+- Duplicate `/email-the-community`'s gates, ledger, approval block, frequency
+  check or batch build. One implementation, one place.
+- Run a whole campaign. It builds **one stage** and hands over; the next stage
+  is a separate run, days or weeks later, decided then.
+- Schedule anything. There is no scheduler anywhere in this path — a stage goes
+  out when a human runs the batch command.
 - Edit `lib/data/json/events-custom.json`. A wrong date is fixed in the event
   record, where the website and the poster read it too — never in the email only.
 - Build artwork. `/make-event-poster` writes the JPEG this skill looks for.
@@ -305,8 +400,11 @@ wins — it is the one that owns the send.
 
 ## Reference
 
-- `references/copy-rules.md` — what belongs in an event announcement, the
-  subject and preheader limits, and the redaction rule.
+- `references/copy-rules.md` — what belongs in an event announcement, what each
+  stage carries and withholds, the subject and preheader limits, and the
+  redaction rule.
+- `docs/development/EVENT_LIFECYCLE_SOP.md` §7 — the campaign beat the three
+  stages are drawn from, and where the mailing list sits in it.
 - `.claude/skills/email-the-community/SKILL.md` — Steps 3–9, and the gate
   troubleshooting table. This skill hands over into it and does not restate it.
 - `.claude/skills/update-mailing-list/references/consent-rules.md` — the four
