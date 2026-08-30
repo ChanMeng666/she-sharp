@@ -173,8 +173,10 @@ Choose a **key** first: kebab-case, describing the announcement, e.g.
 key that stops this announcement going out twice — so reuse it across re-renders
 of the same message, and change it only for a genuinely different message.
 
-Write the spec to `tmp/specs/announce-<slug>.json` (shape in
-`lib/email/message.ts`):
+Write the spec to `tmp/specs/<key>.json` — named after the key you just chose
+(shape in `lib/email/message.ts`). When `/promote-event` generates it for you
+instead, the key and the filename carry the campaign stage:
+`announce-<slug>-<stage>.json`.
 
 ```json
 {
