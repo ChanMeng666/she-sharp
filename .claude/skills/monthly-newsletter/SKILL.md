@@ -718,7 +718,7 @@ Iterate Steps 3–6 until it matches the June bar — **email UI quality is the
 pilot's acceptance bar.** Re-recording stage 1 after a fix is fine; it
 overwrites, keeping the latest.
 
-### Step 6b — Stage 2: the review round (the founder AND internal staff)
+### Step 6b — Stage 2: the review round (the founder AND the newsletter team)
 
 **This is not optional, and it is not gated on the founder's approval.** It is
 *how she sees the issue.* The old version of this step required "the founder has
@@ -726,10 +726,26 @@ explicitly approved widening" before the round could go out, which asked her to
 approve an issue nobody had shown her. Her approval is stage 3, and it comes
 after this.
 
-**Who is on it, by default: the founder plus the newsletter team.** Marketing
-and events are on the roster with their roles recorded but are **not** on the
-default round — `--reviewers` adds anyone for one issue. Say which you mean;
-"internal staff" reads either way.
+**Who is on it, by default: 4 people at 5 addresses** — the founder (Mahsa
+McCauley, who holds two mailboxes, one organisational and one academic) plus the
+three on the newsletter team (Lesley Gao, Tharaneetharan Thavarasan, Chan Meng).
+Marketing and events (Marriane Bentigan, Len Estioko, Sara Ghafoor, Nikita
+Kumari) are on the roster with their roles recorded but are **not** on the
+default round — `--reviewers` adds anyone for one issue.
+
+**The `role` field records which loop a person runs, not their job title, and it
+deliberately disagrees with `lib/data/team.ts`.** Lesley and Chan are
+Website/Product roles on the team page; Tharaneetharan is an Events Coordinator
+there, and his own bio says he contributes to monthly newsletter preparation.
+All three are `newsletter` here. **Do not "fix" the roster against the team
+page** — that would silently drop three of the four reviewers. `team.ts` is the
+authority on spelling (a test enforces it) and on public titles; the roster is
+the authority on who reviews what.
+
+**Chan Meng usually runs this skill and is also a reviewer.** So the same person
+can be your stage-1 test mailbox and a stage-2 recipient. That is fine and
+nothing collapses the two: stage 1 asks "does the render survive my inbox",
+stage 2 asks "does the team endorse this issue". Record both.
 
 Resolve the round first. This prints the addresses and the commands that follow:
 
@@ -762,12 +778,11 @@ Four refusals, all of them deliberate:
 
 - *"No reviewer address file at …"* → the local file has not been created on
   this machine. Copy the example.
-- *"The only person on the review round is … the founder"* → the newsletter
-  team's **names** are not on the committed roster yet, so the round has
-  collapsed to one person. That is not a joint review: it shows the issue to
-  nobody but the person whose approval is the next stage. **This is the state
-  the roster is in today**, so expect it. Ask the maintainer for the names, or
-  name the round yourself with `--reviewers`.
+- *"The only person on the review round is … the founder"* → the round has
+  collapsed to one person, which is not a joint review: it shows the issue to
+  nobody but the person whose approval is the next stage. Since the roster names
+  four, this now means the other three are unaddressed in your local file. Add
+  them.
 - *"These reviewers are on the committed roster but have no address"* → the
   local file has fallen behind the roster, and it **names the people**. Add
   them. This is the failure the whole split exists to catch: a round that

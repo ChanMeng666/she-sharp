@@ -30,9 +30,10 @@
  */
 
 import assert from "node:assert";
-import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 import { OWN_MAILBOXES } from "../../scripts/email/own-mailboxes";
 import {
@@ -47,6 +48,9 @@ import {
   type Reviewer,
   type ReviewerAddressBook,
 } from "./newsletter-reviewers";
+
+/** Repo root, resolved from this file so the run is cwd-independent. */
+const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 
 let failures = 0;
 
@@ -110,6 +114,44 @@ check("no duplicate reviewer ids", () => {
     ids.length,
     "ids key the local address files on every machine; a duplicate silently merges two people"
   );
+});
+
+check("the REAL roster's default round is 4 people: the founder + the newsletter team", () => {
+  const round = defaultReviewRound();
+  assert.deepStrictEqual(
+    round.map((r) => r.id),
+    ["mahsa", "lesley", "tharaneetharan", "chan"],
+    "founder first, then the newsletter team"
+  );
+  assert.deepStrictEqual(
+    round.map((r) => r.role),
+    ["founder", "newsletter", "newsletter", "newsletter"]
+  );
+});
+
+check("marketing and events are on the roster but NOT on the round", () => {
+  const off = NEWSLETTER_REVIEWERS.filter((r) => !r.newsletterReviewer);
+  assert.deepStrictEqual(
+    off.map((r) => r.id).sort(),
+    ["len", "marriane", "nikita", "sara"],
+    "recorded so a future marketing or events send needs no code change"
+  );
+  // Named explicitly because she holds two addresses and is a Marketing Lead,
+  // which is exactly the shape somebody would mistake for a reviewer.
+  const sara = NEWSLETTER_REVIEWERS.find((r) => r.id === "sara");
+  assert.strictEqual(sara?.newsletterReviewer, false, "Sara Ghafoor is deliberately off the round");
+});
+
+check("every reviewer's name matches lib/data/team.ts exactly", () => {
+  // team.ts is the spelling authority. A roster name that drifts from it is a
+  // person misnamed in an internal record, and nothing else would catch it.
+  const teamSource = readFileSync(join(REPO_ROOT, "lib", "data", "team.ts"), "utf8");
+  for (const reviewer of NEWSLETTER_REVIEWERS) {
+    assert.ok(
+      teamSource.includes(`name: "${reviewer.name}"`),
+      `"${reviewer.name}" does not appear in lib/data/team.ts — check the spelling there`
+    );
+  }
 });
 
 check("the default round is the founder plus the newsletter team, founder first", () => {
@@ -331,12 +373,12 @@ check("BREAK: a round that resolves to the founder ALONE is refused", () => {
       return true;
     }
   );
-  // …and the real committed roster is in exactly that state right now.
+  // The real roster is no longer in that state — the newsletter team's names
+  // landed on 2026-08-30 — but a local file holding only the founder still is,
+  // because the other three are then unaddressed rather than absent.
   assert.throws(
     () => resolveReviewRound(book({ mahsa: ["mahsa@shesharp.org.nz"] })),
-    /not a joint review/,
-    "if this stops throwing, the newsletter team's names have been added — update this " +
-      "assertion and the 'names still needed' comment in newsletter-reviewers.ts"
+    /Refusing to send a partial round/
   );
 });
 

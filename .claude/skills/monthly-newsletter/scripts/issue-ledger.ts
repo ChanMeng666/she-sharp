@@ -28,8 +28,15 @@
  *
  *   1. TEST     — the caller's own mailbox, named by them. One person proving
  *                 the render in their own inbox.
- *   2. REVIEW   — the founder together with internal staff, one email each.
- *                 This is HOW the founder sees the issue.
+ *   2. REVIEW   — the founder together with the newsletter team, one email
+ *                 each. This is HOW the founder sees the issue.
+ *
+ *                 The SAME PERSON may legitimately appear in both 1 and 2 —
+ *                 Chan Meng usually runs this skill and is also on the review
+ *                 round. Nothing here collapses them, and nothing should:
+ *                 stage 1 is "does the render survive my inbox" and stage 2 is
+ *                 "does the team endorse this issue". Two different acts, two
+ *                 separate records, even when the hash is identical.
  *   3. APPROVAL — the founder's word, with the evidence for it. Only this gates
  *                 the broadcast.
  *

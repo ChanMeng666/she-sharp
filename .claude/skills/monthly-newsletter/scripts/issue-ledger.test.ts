@@ -203,6 +203,31 @@ check("BREAK: a review round dated before the test send is refused", () => {
   assert.ok(v.problems.includes("out-of-order"));
 });
 
+check("the same person in stage 1 AND stage 2 is not collapsed", () => {
+  // Chan Meng usually runs this skill and is also on the review round, so the
+  // two stages will routinely share a hash. They are different acts — "does the
+  // render survive my inbox" and "does the team endorse this issue" — and a
+  // ledger that deduplicated them would report a review round that never
+  // happened as having happened.
+  const same = maskAddress("chan@example.com");
+  const at1 = "2026-08-10T00:00:00.000Z";
+  const at2 = "2026-08-11T00:00:00.000Z";
+  const ledger = ledgerWith({
+    test: { at: at1, recipientCount: 1, people: 1, recipientHashes: [same], note: "" },
+    review: { at: at2, recipientCount: 4, people: 4, recipientHashes: [same, "a".repeat(16), "b".repeat(16), "c".repeat(16)], note: "" },
+    approval: { at: "2026-08-12T00:00:00.000Z", by: "Mahsa", evidence: "Slack" },
+  });
+  const v = assessChain(ledger, "2026-08", NO_COMMUNITY);
+  assert.strictEqual(v.ok, true, v.lines.join("\n"));
+  assert.strictEqual(ledger.issues["2026-08"].test?.at, at1);
+  assert.strictEqual(ledger.issues["2026-08"].review?.at, at2);
+  assert.notStrictEqual(
+    ledger.issues["2026-08"].test?.at,
+    ledger.issues["2026-08"].review?.at,
+    "the two stages keep their own timestamps even when a recipient is shared"
+  );
+});
+
 check("PASS: a complete, in-order chain is allowed", () => {
   const v = assessChain(
     ledgerWith({

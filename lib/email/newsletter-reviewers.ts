@@ -43,7 +43,13 @@
  * Most reviewers hold **personal, off-domain** addresses (a Gmail, a Hotmail, a
  * university address). Only the founder is on `@shesharp.org.nz`, and she holds
  * two — one organisational, one academic — which is why one person maps to a
- * LIST of addresses rather than appearing twice as two people.
+ * LIST of addresses rather than appearing twice as two people. Sara Ghafoor
+ * holds two as well.
+ *
+ * The default round is **4 people at 5 addresses**: the founder plus the three
+ * on the newsletter team. Marketing and events are on the roster with their
+ * roles recorded but off the round, so a future marketing send does not need a
+ * code change to know who to reach.
  *
  * ── THE FAILURE THIS PREVENTS ──────────────────────────────────────────────
  *
@@ -87,12 +93,21 @@ import { OWN_MAILBOXES } from "../../scripts/email/own-mailboxes";
 export const OWN_DOMAIN = "shesharp.org.nz";
 
 /**
- * Which part of the organisation the person speaks for in a review round.
+ * Which LOOP the person runs — deliberately not their job title.
  *
- * The role is not decoration: it says what their sign-off covers. `founder`
- * owns the decision to send at all; `newsletter` owns the copy; `marketing`
- * owns the voice and the CTA; `events` owns whether the events named in the
- * issue are described correctly.
+ * The role says what their sign-off covers: `founder` owns the decision to send
+ * at all; `newsletter` owns the copy; `marketing` owns the voice and the CTA;
+ * `events` owns whether the events an issue names are described correctly.
+ *
+ * **It will disagree with `lib/data/team.ts`, and that is correct.** Lesley Gao
+ * and Chan Meng are Website/Product roles on the team page; Tharaneetharan
+ * Thavarasan is an Events Coordinator there, and his own bio says he
+ * contributes to monthly newsletter preparation. All three are `newsletter`
+ * here because that is the loop they run. Do NOT "fix" this roster against the
+ * team page — doing so would silently drop three of the four people from the
+ * review round, which is exactly the kind of quiet subtraction the rest of this
+ * file exists to prevent. `team.ts` is the authority on spelling and on public
+ * titles; this field is the authority on who reviews what.
  */
 export type ReviewerRole = "founder" | "newsletter" | "marketing" | "events";
 
@@ -131,22 +146,65 @@ export interface Reviewer {
 export const NEWSLETTER_REVIEWERS: Reviewer[] = [
   {
     id: "mahsa",
-    name: "Dr. Mahsa McCauley",
+    name: "Mahsa McCauley",
     role: "founder",
     newsletterReviewer: true,
-    note: "founder and chair; her approval is stage 3 and gates the send. Two addresses — one organisational, one academic — and the round goes to both",
+    note: "Founder and Chair; her approval is stage 3 and gates the send. Two addresses in the local file — one organisational, one academic — and the round goes to both, as ONE person",
   },
 
-  // --- The newsletter, marketing and events reviewers ------------------------
-  //
-  // NAMES STILL NEEDED. The maintainer has the roster; the names and roles are
-  // committed (they are not addresses), the addresses are not. One line each:
-  //
-  //   { id: "<slug>", name: "<their name>", role: "newsletter",
-  //     newsletterReviewer: true, note: "…" },
-  //
-  // `role: "marketing"` and `role: "events"` entries are recorded the same way
-  // with `newsletterReviewer: false` — on the roster, off the default round.
+  // The newsletter team — the other three quarters of the default round.
+  {
+    id: "lesley",
+    name: "Lesley Gao",
+    role: "newsletter",
+    newsletterReviewer: true,
+    note: "Product Designer / Website Engineer in team.ts; reviews the newsletter. `role` records the loop, not the public title",
+  },
+  {
+    id: "tharaneetharan",
+    name: "Tharaneetharan Thavarasan",
+    role: "newsletter",
+    newsletterReviewer: true,
+    note: "Events Coordinator in team.ts, and his own bio says he contributes to monthly newsletter preparation — which is the loop this field records",
+  },
+  {
+    id: "chan",
+    name: "Chan Meng",
+    role: "newsletter",
+    newsletterReviewer: true,
+    note: "Website Team Lead in team.ts; usually the person RUNNING this skill, so she is often both the stage-1 test mailbox and a stage-2 reviewer — two different acts, recorded separately",
+  },
+
+  // On the roster, off the newsletter round. Recorded now so a future marketing
+  // or events send does not need a code change to know who to reach.
+  {
+    id: "marriane",
+    name: "Marriane Bentigan",
+    role: "marketing",
+    newsletterReviewer: false,
+    note: "Marketing Lead; owns voice and CTA when a marketing send needs a reviewer",
+  },
+  {
+    id: "len",
+    name: "Len Estioko",
+    role: "marketing",
+    newsletterReviewer: false,
+    note: "Marketing Lead; same as above",
+  },
+  {
+    id: "sara",
+    name: "Sara Ghafoor",
+    role: "marketing",
+    newsletterReviewer: false,
+    note: "Marketing Lead; two addresses in the local file. Deliberately NOT on the newsletter round — do not add her to it",
+  },
+  {
+    id: "nikita",
+    name: "Nikita Kumari",
+    role: "events",
+    newsletterReviewer: false,
+    note: "Event Manager; owns whether the events an issue names are described correctly, when an issue needs that check",
+  },
 ];
 
 /** The default round: the founder plus the newsletter team. */

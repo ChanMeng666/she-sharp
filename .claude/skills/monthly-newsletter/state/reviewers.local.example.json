@@ -5,16 +5,43 @@
     "this example is committed, so every address in it is deliberately fake.",
     "",
     "Keys are the `id` of a reviewer in lib/email/newsletter-reviewers.ts. A person can",
-    "hold more than one address — the founder holds two, one organisational and one",
-    "academic — and the round goes to all of them.",
+    "hold more than one address — Mahsa holds two (one organisational, one academic) and",
+    "so does Sara — and the round goes to all of them, counted as ONE person.",
     "",
     "Every reviewer marked `newsletterReviewer: true` in the committed roster MUST have",
-    "at least one address here. A reviewer with none makes the round REFUSE by name",
-    "rather than send to whoever it could resolve."
+    "at least one address here: mahsa, lesley, tharaneetharan, chan. A reviewer with none",
+    "makes the round REFUSE by name rather than send to whoever it could resolve.",
+    "",
+    "The marketing and events entries are optional — they are not on the newsletter",
+    "round — but filling them in now means a future marketing send needs no new setup."
   ],
   "version": 1,
   "addresses": {
-    "mahsa": ["mahsa@shesharp.org.nz", "not-a-real-address@example.edu"],
-    "example-newsletter-person": ["not-a-real-address@example.com"]
+    "mahsa": [
+      "mahsa@shesharp.org.nz",
+      "not-a-real-address@example.edu"
+    ],
+    "lesley": [
+      "not-a-real-address@example.com"
+    ],
+    "tharaneetharan": [
+      "not-a-real-address@example.com"
+    ],
+    "chan": [
+      "not-a-real-address@example.com"
+    ],
+    "marriane": [
+      "not-a-real-address@example.com"
+    ],
+    "len": [
+      "not-a-real-address@example.com"
+    ],
+    "sara": [
+      "not-a-real-address@example.com",
+      "not-a-real-address@example.net"
+    ],
+    "nikita": [
+      "not-a-real-address@example.com"
+    ]
   }
 }
