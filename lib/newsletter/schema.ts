@@ -126,6 +126,19 @@ export const editorialSchema = z.object({
   /** Short sponsor thank-you paragraph; null omits the section. */
   sponsorThanks: z.string().nullable(),
   /**
+   * Whether this issue carries the re-permission ask — the "still want this?"
+   * panel whose button upgrades the sender's own consent evidence.
+   *
+   * Off by default, and per-issue rather than permanent, for two reasons. It is
+   * a campaign with an end: it runs until the 1,168 rows with weak provenance
+   * have had a few chances, then stops, and a flag is how it stops without a
+   * code change. And an issue that asks every month reads as nagging, which
+   * earns the unsubscribes and complaints the ask exists to avoid.
+   *
+   * Rendered only in broadcast mode — see `emails/components/ReconfirmAsk.tsx`.
+   */
+  askToReconfirm: z.boolean().default(false),
+  /**
    * Optional REAL photo (absolute URL, email-safe JPEG) used as the cover under
    * the masthead — e.g. the best shot from last month. Null = no cover photo.
    */
