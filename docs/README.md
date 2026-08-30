@@ -24,7 +24,7 @@ happened, **dormant** is a runbook for a state the site is not in.
 |---|---|---|
 | `EMAIL_AUTHENTICATION.md` | SPF/DKIM/DMARC records, the staged move to enforcement, Mailchimp → Resend runbook | current |
 | `WORKSPACE_MAILBOX_CHECKLIST.md` | The Google Workspace side of the 2026-08 mailbox audit — bilingual, for the super-admin | current |
-| `MAILCHIMP_DECOMMISSION.md` | What must happen before the Mailchimp account is closed — bilingual, for the founder; three items are irreversible | current — the closure has not happened |
+| `MAILCHIMP_CANCELLATION.md` | What cancelling the paid Mailchimp subscription does and does not put at risk — bilingual, for the founder. The account is **not** being deleted, and the file exists largely to keep those two apart | current — the cancellation has not happened |
 | `MAINTENANCE_MODE.md` | `MAINTENANCE_MODE=true` → branded 503 for the whole site | current |
 | `VERCEL_ENV_VARIABLES_GUIDE.md` | Setting env vars without silently corrupting them | current |
 | `DOMAIN_MIGRATION_2026-06-19.md` | The cutover to `www.shesharp.org.nz`, layer by layer | historical record |
