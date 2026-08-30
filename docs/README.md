@@ -25,6 +25,7 @@ happened, **dormant** is a runbook for a state the site is not in.
 | `EMAIL_AUTHENTICATION.md` | SPF/DKIM/DMARC records, the staged move to enforcement, Mailchimp → Resend runbook | current |
 | `WORKSPACE_MAILBOX_CHECKLIST.md` | The Google Workspace side of the 2026-08 mailbox audit — bilingual, for the super-admin | current |
 | `MAILCHIMP_CANCELLATION.md` | What cancelling the paid Mailchimp subscription does and does not put at risk — bilingual, for the founder. The account is **not** being deleted, and the file exists largely to keep those two apart | current — the cancellation has not happened |
+| `HUMANITIX_INTEGRATION_SHUTDOWN.md` | Switching off the Humanitix → Mailchimp contact integration — bilingual, for the founder. Why (it wrote 752 non-opted-in ticket buyers into the list), what breaks, and the per-event route-2 import that replaces it | current — nobody here can press the button |
 | `MAINTENANCE_MODE.md` | `MAINTENANCE_MODE=true` → branded 503 for the whole site | current |
 | `VERCEL_ENV_VARIABLES_GUIDE.md` | Setting env vars without silently corrupting them | current |
 | `DOMAIN_MIGRATION_2026-06-19.md` | The cutover to `www.shesharp.org.nz`, layer by layer | historical record |
