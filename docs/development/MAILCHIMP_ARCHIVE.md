@@ -487,25 +487,35 @@ stops being run.
 |---|---|
 | Account-level ZIP (campaign statistics, templates, audience history) | **Closed 2026-08-27 — but not by the ZIP.** The API supplied the campaign statistics and the audience-size history directly, and they are committed as `campaigns.json`. Recorded in `manifest.json` as `closedBy: "2026-08-27-api"`. **Templates and landing-page content are still missing** — the API does not carry them and the ZIP is still the only source |
 | Per-campaign per-recipient opens/clicks (180 campaigns) | Still open. Deliberately skipped — one manual export per campaign. Blocks the "recent openers" sub-segment the migration runbook wants for the first send. (The gap entry says 209, the count believed at the time; 180 is the number of campaigns actually sent) |
-| Automations, signup-form designs, landing pages | **Not in any Mailchimp export.** Must be screenshotted before the account is closed |
+| Automations, signup-form designs, landing pages | **Not in any Mailchimp export.** Must be screenshotted before the plan is downgraded — they sit behind paid features |
+| The site's "Open full archive" button | **Broken today, on a paid plan, and unrelated to the cancellation.** `MAILCHIMP_CONFIG.archiveUrl` (`lib/data/newsletters.ts`) is rendered as "Open full archive" on `/resources/newsletters` and "Read past issues" in the footer of every page. Fetched 2026-08-30 it returns HTTP 200 with exactly **20** `<li class="campaign">` entries across 17 dates, oldest **2026-02-14** — Mailchimp's archive page "shows links to the 20 most recent emails sent to your audience", so the ~180-campaign history the label implies has never been reachable from it. The real back catalogue is the 51 per-campaign URLs in `newsletters-archive.ts` / `newsletters-manual.ts`, already rendered as the grid on the same page. Fix the label or the destination when the on-site archive is built |
 | Mailchimp credentials | `SECURITY/credentials-to-rotate.md` Tier 1 #1 in the private repo — password plus a 2FA QR pinned in Slack. Unrotated. This archive raises what that costs |
 | The subscribe funnel | Still Mailchimp's. `EMAIL_AUTHENTICATION.md` item 8b |
 
-## Closing the account
+## Cancelling the subscription
 
-The founder will cancel the Mailchimp subscription once Resend takes over.
-**`docs/deployment/MAILCHIMP_DECOMMISSION.md` is the list to work through first**
-— it is written to be handed to somebody who does not work in this codebase, and
-three of its items cannot be undone: the hand-export of what no API reaches
-(`CONFIRM_TIME`, templates, landing pages, automations, per-recipient activity),
-the final `suppression.ts pull-mailchimp`, and the choice to *pause or downgrade*
-rather than delete. Nothing in this archive replaces that export: what is
-committed here is a summary of the account, not the account.
+The founder will cancel the paid Mailchimp subscription once Resend takes over.
+**The account is not being deleted, and this archive is not a rescue.**
+`docs/deployment/MAILCHIMP_CANCELLATION.md` is the list to work through first —
+written to be handed to somebody who does not work in this codebase. Its
+premise is the distinction Mailchimp's own UI blurs: **cancelling keeps the
+data, deleting destroys it permanently with no grace period**, and only the
+first is happening.
+
+Two of its items still have to happen before the plan changes, for reasons that
+survive the cancellation: the hand-export of what no API reaches (`CONFIRM_TIME`,
+templates, landing pages, automations, per-recipient activity), because a Free
+plan hides some of the tooling; and a final `suppression.ts pull-mailchimp`,
+because nobody has established whether the Marketing API answers on a paused or
+Free account and a pull that returns nothing is indistinguishable from one that
+found nothing. Nothing in this archive replaces that export: what is committed
+here is a summary of the account, not the account.
 
 ## Related
 
-- `docs/deployment/MAILCHIMP_DECOMMISSION.md` — what must happen before the
-  account is closed, and what is lost if it is deleted instead of paused
+- `docs/deployment/MAILCHIMP_CANCELLATION.md` — what must happen before the paid
+  subscription is cancelled, and what would be lost if somebody deleted the
+  account instead of pausing or downgrading it
 - `docs/deployment/EMAIL_AUTHENTICATION.md` — the migration runbook this feeds
 - `docs/development/EMAIL_OPERATIONS.md` — how mail is actually sent
 - `.claude/skills/update-mailing-list/references/consent-rules.md` — the gate on

@@ -606,7 +606,7 @@ cannot be replaced by writing more code.
 
 ## Related documents
 
-- [`../deployment/MAILCHIMP_DECOMMISSION.md`](../deployment/MAILCHIMP_DECOMMISSION.md) — the founder-facing list for the other end of this decision: what to export, what breaks, and why the account must be paused or downgraded rather than deleted
+- [`../deployment/MAILCHIMP_CANCELLATION.md`](../deployment/MAILCHIMP_CANCELLATION.md) — the founder-facing list for the other end of this decision: what to export, what breaks, and why stopping the billing means pausing or downgrading, never deleting
 - [`EMAIL_RESPONSIBILITY_BOUNDARIES.md`](EMAIL_RESPONSIBILITY_BOUNDARIES.md) — which system sends which mail once this decision lands: subscribers from here through Resend, one event's registrants from Humanitix
 - [`../deployment/EMAIL_AUTHENTICATION.md`](../deployment/EMAIL_AUTHENTICATION.md) — SPF/DKIM/DMARC, the account migration, the subdomain-split trigger
 - [`EMAIL_OPERATIONS.md`](EMAIL_OPERATIONS.md) — the four sending streams and what currently lives in Resend vs the database
