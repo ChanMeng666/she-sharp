@@ -105,8 +105,69 @@ file's. What the table *contains* is:
   which names the API pull and its date in full. If you need "which rows came
   from the API?", query `confirmed_at IS NULL`, not `source`.
 
-**Nothing has ever been sent from this table.** A populated list is not a
-cutover. The live newsletter still goes out from Mailchimp.
+**Nothing has been sent to this list.** A populated list is not a cutover, and
+the live newsletter still goes out from Mailchimp. Say it that way rather than
+"nothing has ever been sent", because the send pipeline itself has run:
+`email_events` holds **6 rows for 1 distinct person**, from test sends to the
+maintainer's own address. No row of this table has ever received anything.
+
+### How the list was actually acquired
+
+**Measured 2026-08-30**, offline, from the two vault exports and the two API
+pulls. No address was written to disk; every identity is a `hashEmail()` digest.
+The population was reconstructed exactly as `import-mailchimp-subscribers.ts`
+builds it — the deduped valid rows of the 2026-08-17 `subscribed` export minus
+the suppression register (1,545), plus the four the API delta added (4) — and it
+comes to **1,549**, the same figure the table gives. That agreement is what makes
+the offline tiering usable as a statement about the table.
+
+Each person is counted **once**, in the strongest tier they qualify for:
+
+| Tier | What it means | People | Share |
+|---|---|---:|---:|
+| **T1** | Self-service sign-up in Mailchimp — `source` is `Embed Form` or `Hosted Signup Form` | **198** | 12.8% |
+| **T2** | A separate confirmation act — the export's `CONFIRM_TIME` differs from its `OPTIN_TIME` | **128** | 8.3% |
+| **T3** | Ticked the Humanitix checkout opt-in (consent route 2), and not already T1/T2 | **55** | 3.6% |
+| **T4** | **Bought a ticket and never ticked anything** | **752** | 48.5% |
+| **T5** | **Provenance unrecoverable** — `Import` 354, `API - Generic` 60, `Unknown` 1, `Admin Add` 1 | **416** | 26.9% |
+| | | **1,549** | |
+
+**T4 is not a coincidence of two datasets overlapping.** `source` is a near
+perfect classifier here: **887** of the 1,549 carry
+`source: "Mahsa McCauley NZD"`, **886** of those are Humanitix ticket buyers, and
+**no contact from any other source is a buyer at all**. That string is a Mailchimp
+**ecommerce store** — the Humanitix integration's endpoint — so for the 752 in T4
+the recorded provenance is *"the integration wrote them in"*, and nothing else.
+Inside T4, `CONFIRM_TIME == OPTIN_TIME` on **all 752**: not one has a separate
+confirmation.
+
+**Three limits, which must travel with those numbers.**
+
+1. **This does not prove the 1,168 in T4+T5 lack consent.** They may have
+   subscribed separately, before or after the ticket. The Mailchimp **CSV**
+   export carries no `SOURCE` column at all; only the API members dump does, and
+   only since the key was created on 2026-08-27.
+2. **`source` records the first write and is never rewritten.** A buyer the
+   integration wrote in during 2021 who later used the website form still reads
+   `Mahsa McCauley NZD`. The tiering therefore scores the *weakest* plausible
+   story for anyone who has more than one, and the zero overlap between
+   `Embed Form` and the buyer set is that effect, not evidence that no buyer ever
+   signed up.
+3. **The evidence that would establish their consent does not exist either.**
+   There is no per-contact activity history in the export and none in the API. So
+   the honest position is not "these people did not consent" but "we cannot
+   answer the question `consent-rules.md` requires us to answer" — which, for a
+   send, is the same operational answer.
+
+**What follows.** A ramped first send should be ordered by tier rather than by
+row order: T1 + T2 + T3 is **381** people with a nameable consent story, and
+`--restrict-to-hashes` on both recipient builders already takes a hash list.
+Nothing here justifies deleting rows — weak provenance is not proof that consent
+is absent, and the suppression file is one-way.
+
+**Re-take it with** the four sources named above and a set union in a scratch
+script; do not put addresses on disk. The reconstruction, not the database, is
+what makes it repeatable offline.
 
 ### The other two tables, and the committed register
 
@@ -288,8 +349,8 @@ immediately while keeping the data.**
 
 That fixes the order of the whole migration: **the last Mailchimp send comes
 before the downgrade, and the exports come before both.** Everything else —
-which of pause or downgrade to pick, the one-per-lifetime downgrade, the ~50 live
-site links into Mailchimp, what to export first — is in
+which of pause or downgrade to pick, the one-per-lifetime downgrade, the **51**
+live site links into Mailchimp, what to export first — is in
 [`../deployment/MAILCHIMP_CANCELLATION.md`](../deployment/MAILCHIMP_CANCELLATION.md).
 **Cancel is not delete**, and that file exists largely to keep those apart.
 
@@ -403,30 +464,50 @@ updated on the latest news, events, and exclusive offers from the event host"*.
 Recorded per order; it reaches us as a "marketing opt-in" column in the console's
 **reports → orders → Export CSV** (the orders report, not the attendees one).
 
-### The 2022 claim was wrong, and what replaced it is an open question
+### The 2022 question is closed: the switch was off, and the integration wrote everyone anyway
 
-Two files in this repo used to say the checkout opt-in stopped being used after
-May 2022. **They were corrected in PR #223** and the full working — the
-measurement, both surviving readings, and what would settle it — is in
+This section held an open question through two revisions. **It was settled on
+2026-08-30** by opening the one file both revisions named as decisive and nobody
+had read: the Humanitix console's **reports → orders → Export CSV**, sitting in
+the vault since 2026-08-17 at
+`private/humanitix/2026-08-17/order-report-(exported-2026-08-17@09.59.31).csv`.
+
+**The `Marketing opt-in` column never lapsed.** 4,145 orders, 43 columns, **224
+Yes / 3,921 No / zero blanks**, populated on every order right through to the
+export date — and **0 Yes** across all 2,579 orders from 2023 onward. The
+Humanitix API agrees from a different surface on a different date: over 4,169
+orders, `organiserMailListOptIn === true` on **223** (2020: 137, 2021: 47,
+2022: 38) plus **exactly one in 2026**, on **2026-08-26**, on the Les Mills event
+`6a422a2d01e463796c170142`. **188 distinct people have ever ticked it**, and
+before that 2026 row the last tick was **2022-05-30**. The full working, with the
+per-year table and how to re-take it, is in
 [`EVENT_LIFECYCLE_SOP.md`](EVENT_LIFECYCLE_SOP.md) § "Turn on the mailing-list
-opt-in", with a shorter note in [`HUMANITIX_ARCHIVE.md`](HUMANITIX_ARCHIVE.md)
-§ `marketingOptIn`.
+opt-in".
 
-The part that belongs here, because it is a **state** fact about a live crossing:
-writes into Mailchimp with `source: "Mahsa McCauley NZD"` did **not** stop in
-2022. Re-measured independently for this file on 2026-08-30, across all four
-member statuses, counting arrivals by `timestamp_opt`: **663 with status
-`subscribed` after 2022-05**, spiking at 2023-10: 80, 2023-11: 73, 2024-06: 85,
-2025-06: 62, 2025-10: 80, spread over **41 of the 51 months from 2022-06 to
-2026-08**, and still arriving in 2026 (2026-06: 2, 2026-07: 3, 2026-08: 5).
-Counting *all* four statuses rather than
-`subscribed` alone gives **996** over the same period. **Crossing 1 below is
-live, not historical.**
+**So the writes were the integration, and they were not opt-ins.** Both readings
+this section used to hold open were wrong, and the second was wrong in an
+instructive way. `source: "Mahsa McCauley NZD"` **is** the Humanitix integration
+— it is a Mailchimp **ecommerce store**, `id 5e328b71a912950007fd7f91_NZD`,
+`email_address events@shesharp.co.nz`, read from the API vault's
+`ecommerce-stores.json`; Humanitix documents the store name as *user account name
++ currency*. What made the writes continue after May 2022 was the integration's
+**"Sync contacts who haven't opted-in"** setting, ON until it was switched off on
+**2026-08-27**. A non-opted-in buyer was written into the `She#` audience as
+`subscribed` all the same.
 
-**Two readings survive and neither is proven** — the opt-in has been collecting
-all along and only the export column lapsed, *or* some of those writes are not
-the integration but another API write under the same key. **Do not pick one.**
-The orders CSV would settle it.
+The state fact that belongs here is unchanged and still true: those writes did
+**not** stop in 2022. Re-measured on 2026-08-30 across all four member statuses
+by `timestamp_opt`: **663 with status `subscribed` after 2022-05**, spiking at
+2023-10: 80, 2023-11: 73, 2024-06: 85, 2025-06: 62, 2025-10: 80, spread over
+**41 of the 51 months** from 2022-06 to 2026-08 and still arriving in 2026
+(2026-06: 2, 2026-07: 3, 2026-08: 5); **996** counting all four statuses.
+**Crossing 1 below is live, not historical.**
+
+**What this costs the list** is measured in "How the list was actually acquired"
+below. **What follows operationally** is that the integration should be switched
+off — the maintainer's decision as at 2026-08-30 — and that consent route 2 has
+to be harvested per event instead:
+[`../deployment/HUMANITIX_INTEGRATION_SHUTDOWN.md`](../deployment/HUMANITIX_INTEGRATION_SHUTDOWN.md).
 
 ### A free channel nobody has looked at: notify-followers
 
@@ -528,6 +609,8 @@ its diff.
 | **2026-08-30** | Mailchimp is **cancelled, not closed**; the account and its data stay | The reading that cancellation means deletion (PR #229) |
 | **2026-08-30** | Live subscriber counts are **not** hardcoded in prose | Stale numbers in eight documents (PR #226) |
 | **2026-08-30** | **Do not downgrade Resend Pro** even though the newsletter is now its only justification | The "we could save $20" thread — answered, not open |
+| **2026-08-30** | The 2022 checkout-opt-in question is **closed** from the orders CSV: the switch was off, and the integration wrote non-opted-in buyers in regardless | Two surviving readings, both wrong; and the belief that nothing in this repo could settle it |
+| **2026-08-30** | **Switch the Humanitix → Mailchimp integration off now**, not at cancellation | `MAILCHIMP_CANCELLATION.md`'s "keep it while Mailchimp is still billing" |
 
 **Not yet decided, and blocking the cutover:** the date of the last Mailchimp
 send, and whether the Mailchimp exit is a pause or a downgrade. The runbook is
@@ -540,12 +623,16 @@ written; nobody has picked a date.
 Listed so that the next person spends their time on something else, and so that
 nobody mistakes an open question for a settled one.
 
-1. **Whether the Humanitix checkout opt-in has been collecting since 2022.** Two
-   readings survive: the opt-in has been collecting all along and only the
-   export's `marketingOptIn` column lapsed; or some `Mahsa McCauley NZD` writes
-   are not the integration but another API write under the same key. **The
-   Humanitix console's reports → orders → Export CSV would settle it** — it
-   carries a per-order marketing opt-in column. Nothing in this repository can.
+1. ~~**Whether the Humanitix checkout opt-in has been collecting since 2022.**~~
+   **Closed 2026-08-30.** It has not: the orders CSV that this item said would
+   settle it was already in the vault, and it reads **0 Yes** for every order
+   from 2023 onward with no blank cells anywhere. The writes into Mailchimp were
+   the integration syncing non-opted-in buyers. See § "The 2022 question is
+   closed" above. **The lesson worth keeping is the one about where the answer
+   was**: this item named the exact file, and the file had been sitting in
+   `private/humanitix/2026-08-17/` for thirteen days. Before recording something
+   as unestablished, check whether the thing that would establish it is already
+   downloaded.
 
 2. **Whether the notify-followers email has ever been sent** — and, before that,
    **whether a host profile is linked to our events at all.** A "She Sharp" host
@@ -558,8 +645,10 @@ nobody mistakes an open question for a settled one.
    article and open the host profile, neither of which sends anything.
 
 3. **What happens to Mailchimp's hosted campaign pages after a downgrade.**
-   About 50 live links on the public site point at `mailchi.mp` and
-   `us3.campaign-archive.com` URLs. **Mailchimp documents nothing** about their
+   **51** live links on the public site point at `mailchi.mp` and
+   `us3.campaign-archive.com` URLs — the same 51 per-campaign card URLs counted
+   in `MAILCHIMP_CANCELLATION.md` §"The 'Open full archive' button is already
+   wrong", not a second, rounder estimate of the same thing. **Mailchimp documents nothing** about their
    fate on a downgraded plan. This is why the runbook's order puts the export
    first: it is the one step that does not depend on the answer. See
    `MAILCHIMP_CANCELLATION.md` §3.
@@ -585,6 +674,8 @@ nobody mistakes an open question for a settled one.
 | Mailchimp audience counts, last send | `GET /lists/{id}` and `/lists/{id}/members?status=…`, dc `us3` |
 | Exactly one audience | `getLists()` in `lib/mailchimp/client.ts` |
 | The Mailchimp ↔ our-table gap | Hash both sides with `hashEmail()` and diff; **never write addresses to disk** |
+| The consent tiering of the 1,549 | Set union over the two vault exports and the two API pulls, in `hashEmail()` digests; reconstruct the population as the `subscribed` export minus the suppression register plus the API delta, and check it comes to the live figure before trusting it |
+| The `Marketing opt-in` column by year | The 2026-08-17 orders CSV, grouping on the four-digit year in `Order date` (`DD/MM/YYYY` — not the first four characters) |
 | `timestamp_opt` ↔ `OPTIN_TIME` | Join the vault export against a live pull; the difference is 12h or 13h |
 | Humanitix API surface | `curl https://api.humanitix.com/v1/documentation/json` and count `paths` |
 | `organiserMailListOptIn` placement | Search that OpenAPI document's `components.schemas` |
