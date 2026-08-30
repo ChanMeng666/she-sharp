@@ -47,6 +47,8 @@
  */
 import * as cheerio from "cheerio";
 
+import { isWithheldAsset } from "./withheld-images";
+
 /**
  * Every email address allowed to survive into a generated file.
  *
@@ -130,6 +132,7 @@ export interface SanitiseStats {
   imagesMarked: number;
   imagesUnknown: number;
   imagesLost: number;
+  imagesWithheld: number;
   archiveLinksMarked: number;
   archiveLinksUnresolved: number;
   legacyDomainLinks: number;
@@ -239,6 +242,7 @@ export function sanitiseArchiveHtml(html: string, options: SanitiseOptions): San
     imagesMarked: 0,
     imagesUnknown: 0,
     imagesLost: 0,
+    imagesWithheld: 0,
     archiveLinksMarked: 0,
     archiveLinksUnresolved: 0,
     legacyDomainLinks: 0,
@@ -361,6 +365,16 @@ export function sanitiseArchiveHtml(html: string, options: SanitiseOptions): San
       const image = options.imageByUrl(src);
       if (!image) {
         stats.imagesUnknown++;
+      } else if (isWithheldAsset(image.file)) {
+        // Withheld BEFORE the marker is written, never removed afterwards. PR 2
+        // selects `img[data-mc-asset]`, so an image that never gets that
+        // attribute cannot be re-hosted by it — the exclusion is structural
+        // rather than a note somebody has to remember to read. A deliberately
+        // different marker from `data-mc-asset-lost`: that one is gone, this one
+        // is a decision, and the two must stay tellable apart.
+        // See `withheld-images.ts` for the list and the reason for each entry.
+        node.attr("data-mc-asset-withheld", "1");
+        stats.imagesWithheld++;
       } else if (image.file && image.sha256) {
         node.attr("data-mc-asset", image.file).attr("data-mc-sha256", image.sha256);
         stats.imagesMarked++;

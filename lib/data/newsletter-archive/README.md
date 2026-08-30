@@ -58,13 +58,54 @@ In short:
 
 | Attribute | On | Means |
 |---|---|---|
-| `data-mc-asset` | 884 `<img>` | the vault-relative file that image resolves to. **PR 2** re-hosts these on Vercel Blob and rewrites `src` |
+| `data-mc-asset` | 878 `<img>` | the vault-relative file that image resolves to. **PR 2** re-hosts these on Vercel Blob and rewrites `src` |
 | `data-mc-sha256` | the same | that file's sha256, so the re-host can be verified rather than assumed |
 | `data-mc-asset-lost` | 1 `<img>` | the one image that was already gone before this archive existed — a Google user-content URL in the 2020-09-16 issue, HTTP 403. Recorded in `KNOWN_LOSSES` in `campaign-images.ts`. Do not try to recover it |
+| `data-mc-asset-withheld` | 6 `<img>`, 5 files | withheld from re-hosting on purpose. Carries **no** `data-mc-asset`, so PR 2's `img[data-mc-asset]` cannot select it. See below |
 | `data-mc-campaign` | 142 `<a>`, 24 `<meta property="og:url">` | the campaign id that URL resolves to. **PR 3** repoints these on-site |
 | `data-mc-campaign-self` | all 166 of them | the link points at the issue it is inside — the "View this email in your browser" preheader, and the `og:url` in the head |
 | `data-mc-delinked` | 21 `<a>` | the href was removed on purpose. `opaque-track-click` (7) or `personal-address` (14) |
 | `data-mc-legacy-domain` | 75 `<a>` | points at `shesharp.co.nz`, the pre-2026 domain |
+
+## Five images are withheld from re-hosting
+
+A pre-publication screen of all 442 content images found ten containing
+school-age children. **Five are excluded**: they must not be given a permanent
+URL. The list, with the reason for each, is
+`scripts/mailchimp/withheld-images.ts` — **AUTHORED**, and the one file in this
+pipeline the extractor must never rewrite, because these are decisions a person
+made. The rule they are screened against is
+`docs/development/PHOTOGRAPHING_MINORS.md`.
+
+The images stay in the private vault, unaltered. Nothing here deletes anything;
+it decides what gets a public URL. In the generated HTML each one carries
+`data-mc-asset-withheld="1"` and no `data-mc-asset` / `data-mc-sha256`, so PR 2's
+mechanical rewrite over `img[data-mc-asset]` cannot reach it — the exclusion is
+structural, not a note somebody has to remember to read. The guard asserts that
+no withheld path ever appears as a `data-mc-asset` value, and that
+`withheld` / `lost` / re-hostable never land on the same element.
+
+**Withheld is a different marker from lost, deliberately.** `data-mc-asset-lost`
+means the image is gone; `data-mc-asset-withheld` means it was kept out on
+purpose. One is an accident of the past and one is a decision, and a future
+reader has to be able to tell which.
+
+**One of the five is excluded pending confirmation, not permanently.**
+`assets/8070797-IMG_2938.jpg` is a whole-class group shot, which the rule
+permits — but the school consent behind those particular workshops is recorded
+as unconfirmed, and publishing a new frame from them would answer that open
+question by default rather than by decision. If the consent is confirmed, remove
+the entry and re-run the extractor and the image is back.
+
+**The order matters, and it is the whole reason for excluding now.** A Vercel
+Blob URL is immutable for a year. Adding an image later is easy; un-publishing
+one is not available at any price. That asymmetry is why four of the five are
+excluded over an *unresolved* question rather than a resolved one — an
+unanswered question must not be answered by default, and it cannot be
+un-answered afterwards.
+
+The other five shortlisted images are kept. One of them is already live on the
+site, so withholding it would achieve nothing.
 
 **177 `<img src>` occurrences, in 36 files, carry no marker.** They sit inside
 `<!--[if mso]>` conditional comments — Outlook-only fallbacks that a browser

@@ -29,6 +29,7 @@ import { NEWSLETTER_ARCHIVE } from "@/lib/data/newsletters-archive";
 import { NEWSLETTER_MANUAL } from "@/lib/data/newsletters-manual";
 import { OWN_MAILBOXES } from "../email/own-mailboxes";
 import { ALLOWED_ADDRESSES, scanSanitised } from "./archive-html";
+import { WITHHELD_ASSETS } from "./withheld-images";
 import {
   ARCHIVE_HTML_DIR,
   ARCHIVE_INDEX_PATH,
@@ -157,6 +158,49 @@ check(
   unresolvedMarkers.length === 0,
   first(unresolvedMarkers) +
     "\n      An unresolved marker means PR 3 has a link it cannot repoint on-site."
+);
+
+// ---------------------------------------------------------------------------
+// The five images withheld from re-hosting. A pre-publication screen found ten
+// content images containing school-age children; five must never be given a
+// permanent URL. PR 2's re-host is a mechanical rewrite over
+// `img[data-mc-asset]`, so the exclusion holds only for as long as none of them
+// carries that attribute — which is what these two checks are.
+// ---------------------------------------------------------------------------
+
+const wronglyMarked: string[] = [];
+for (const [file, text] of bodies) {
+  for (const match of text.matchAll(/data-mc-asset="([^"]+)"/g)) {
+    if (WITHHELD_ASSETS.has(match[1])) wronglyMarked.push(`${file}: ${match[1]}`);
+  }
+}
+check(
+  `none of the ${WITHHELD_ASSETS.size} withheld images carries a re-host marker`,
+  wronglyMarked.length === 0,
+  first(wronglyMarked) +
+    "\n      An image on the WITHHELD_IMAGES list in scripts/mailchimp/withheld-images.ts" +
+    "\n      must never carry `data-mc-asset`, because PR 2 re-hosts everything that does." +
+    "\n      Removing an entry from that list is a judgement about a photograph of a child."
+);
+
+const conflated: string[] = [];
+for (const [file, text] of bodies) {
+  for (const tag of text.matchAll(/<img\b[^>]*>/g)) {
+    const withheld = tag[0].includes("data-mc-asset-withheld");
+    const lost = tag[0].includes("data-mc-asset-lost");
+    const marked = /data-mc-asset="/.test(tag[0]);
+    if ((withheld && lost) || (withheld && marked) || (lost && marked)) {
+      conflated.push(`${file}: withheld=${withheld} lost=${lost} marked=${marked}`);
+    }
+  }
+}
+check(
+  "withheld, lost and re-hostable are mutually exclusive on every image",
+  conflated.length === 0,
+  first(conflated) +
+    "\n      `data-mc-asset-lost` means the image is gone; `data-mc-asset-withheld`" +
+    "\n      means it was kept out of the re-host on purpose. An element carrying" +
+    "\n      both, or either alongside `data-mc-asset`, makes the two unreadable."
 );
 
 // ---------------------------------------------------------------------------
