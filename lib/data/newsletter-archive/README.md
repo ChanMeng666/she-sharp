@@ -15,9 +15,10 @@ npx tsx scripts/mailchimp/archive-guard.test.ts
 
 ## Why it is committed
 
-51 of the 59 newsletter cards on `/resources/newsletters` open a page hosted by
-**Mailchimp**, and the founder is cancelling the paid subscription. Mailchimp
-documents nothing about what a downgrade or a pause does to those hosted pages —
+51 of the 59 newsletter cards on `/resources/newsletters` used to open a page
+hosted by **Mailchimp**, and the founder is cancelling the paid subscription.
+Mailchimp documents nothing about what a downgrade or a pause does to those
+hosted pages —
 its plan-change help page and its campaign-archive help page each say nothing
 about the other, checked 2026-08-30 — so the honest response to the unknown is
 the cheap ordering rather than a prediction: **archive first, cancel second.**
@@ -121,19 +122,32 @@ markers is a self-link. That was worth measuring rather than assuming: the
 147 raw `mailchi.mp` references in the corpus read like a web of cross-links
 and are not one.
 
-Three things PR 3 inherits and this PR deliberately did not decide:
+Three things this PR deliberately did not decide, and how the routing PR
+settled them:
 
 1. Each body is a **complete HTML document** — its own `<head>`, `<style>`,
    `<title>` and Open Graph tags, including a `<link>` to `fonts.googleapis.com`
-   in some issues. Serving one inside a site page means deciding what to do with
-   all of that.
+   in some issues. **Settled: serve it whole**, as a route handler response
+   rather than inside a site page, so the issue looks the way it looked in the
+   inbox. Only the URLs are touched, and only on the way out — see
+   `localiseArchivedHtml()` in `lib/newsletter/archive.ts`.
 2. One subject line in `index.json` is Mailchimp's stored template and contains
    `*|FNAME|*` (campaign `f4a4bab4d6`, 5 June 2023). It is kept verbatim because
-   that is what was sent; a card title has to handle it.
+   that is what was sent. **Still unhandled, and now harmless:** nothing renders
+   a subject. The cards are generated from `month`/`year`, and each served
+   document keeps its own `<title>`.
 3. `MAILCHIMP_CONFIG.archiveUrl` — the "Open full archive" button and the
-   footer's "Read past issues" — is already wrong today, on a paid plan: it
-   returns the 20 most recent campaigns, not the back catalogue.
-   `docs/deployment/MAILCHIMP_CANCELLATION.md` §4.
+   footer's "Read past issues" — was already wrong on a paid plan: it returns
+   the 20 most recent campaigns, not the back catalogue. **Settled: deleted.**
+   The footer link points at `/resources/newsletters`, the button is gone
+   because that page is the archive, and `lib/data/newsletters.ts` had nothing
+   else in it. `docs/deployment/MAILCHIMP_CANCELLATION.md` §4.
+
+A fourth thing this PR did not see, and could not have: **42 Facebook and
+Twitter share buttons** carry the campaign's own `mailchi.mp` page
+percent-encoded inside their query string. The marker pass never looked at
+them, because the host in the `href` is `facebook.com`. They are rewritten at
+serve time with the same resolver, and the guard fails if one survives.
 
 ## `index.json`
 
@@ -141,23 +155,29 @@ The join between a card on the site and a file here. Three keys, tried in
 order, resolve all **51 distinct** Mailchimp URLs in
 `lib/data/newsletters-archive.ts` and `lib/data/newsletters-manual.ts`; the
 resolver is `resolveCampaignByArchiveUrl()` in
-`scripts/mailchimp/archive-index.ts`, and the guard asserts every one still
-joins.
+`lib/newsletter/archive-index.ts` (re-exported from
+`scripts/mailchimp/archive-index.ts`, which keeps the filesystem paths), and
+the guard asserts every one still joins — reading each card's `source`, which
+is where that URL now lives.
 
 **51 distinct URLs across 52 card entries.** The retracted `2026-02` card shares
 the March 2026 campaign's URL, because the legacy Webflow site pointed February
 at the March send. `NEWSLETTER_RETRACTED` suppresses it at render time, so the
 grid shows 51 Mailchimp cards, not 52. Count URLs, not entries.
 
-**`YYYY-MM` is not a key here, and PR 3 must not treat it as one.** The 179
-campaigns span 74 months and **55 of those months hold more than one** — eight
-in August 2022. Most of the 179 are event announcements, reminders and
-apologies rather than monthly issues, which is also why only **51 of the 179**
-are reachable from a card on the site today; the other 128 have no card at all,
-and whether to expose them is PR 3's decision. The campaign id is the key; the
-existing `/resources/newsletters/[issue]` route keys on `YYYY-MM` through
-`lib/newsletter/issues-registry.ts` and covers only the three 2026 issues
-rendered in this repo.
+**`YYYY-MM` is not a key here.** The 179 campaigns span 74 months and **55 of
+those months hold more than one** — eight in August 2022. Most of the 179 are
+event announcements, reminders and apologies rather than monthly issues, which
+is also why only **51 of the 179** were reachable from a card on the site. The
+campaign id is the key, which is why each card carries an explicit `campaign`
+rather than the route deriving one from a month.
+
+**Routed, but not all carded.** `/resources/newsletters/<id>` answers to a
+10-hex campaign id for all 179 and to a `YYYY-MM` card id for the 59 the grid
+renders; a campaign with a card is canonical at the readable path, and its hex
+path says so in `og:url`. Routing all of them costs the same as routing 51, so
+nothing in the archive is unreachable — but the other 121 get no card, because
+"we sent this" and "this is an issue of the newsletter" are different claims.
 
 One of the 180 sent campaigns, `a487b3025c`, has **neither** `html` nor
 `archive_html` in the vault and therefore no file here. It is listed in

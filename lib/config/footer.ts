@@ -1,5 +1,3 @@
-import { MAILCHIMP_CONFIG } from "@/lib/data/newsletters";
-
 export interface FooterLink {
   name: string;
   href: string;
@@ -99,16 +97,17 @@ export const footerConfig = {
   /**
    * The back catalogue of past issues, rendered as an ordinary text link.
    *
-   * The href is Mailchimp's campaign archive and stays that way for now: it is
-   * the only route to the issues sent before August 2026, none of which were
-   * sent from this codebase. Re-hosting them here is a later phase, which is
-   * why the URL is read from `MAILCHIMP_CONFIG` rather than copied — that one
-   * constant in `lib/data/newsletters.ts` is the single place the destination
-   * changes when it does. Subscribing is `/newsletter/subscribe`, not this.
+   * The href was Mailchimp's campaign archive until the 179 sent campaigns
+   * were archived in this repo and `/resources/newsletters` became able to
+   * serve every one of them. It had to stop being Mailchimp's: the founder is
+   * cancelling the subscription, and Mailchimp documents nothing about what a
+   * downgraded plan does to hosted campaign pages. That link was already
+   * wrong on a paid plan, besides — it returns the 20 most recent campaigns,
+   * not the back catalogue. Subscribing is `/newsletter/subscribe`, not this.
    */
   newsletterArchive: {
     name: "Read past issues",
-    href: MAILCHIMP_CONFIG.archiveUrl,
+    href: "/resources/newsletters",
   } as FooterLink,
 
   /**

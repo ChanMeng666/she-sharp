@@ -1,11 +1,10 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { ExternalLink, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { Button } from "@/components/ui/button";
 import { NewslettersGrid } from "@/components/resources";
-import { MAILCHIMP_CONFIG } from "@/lib/data/newsletters";
 import { getAllNewsletters } from "@/lib/data/newsletters-manual";
 
 export const metadata: Metadata = {
@@ -16,7 +15,17 @@ export const metadata: Metadata = {
 };
 
 export default function NewslettersPage() {
-  const issues = getAllNewsletters();
+  // Only the display fields. NewslettersGrid is a client component, so its
+  // props are serialised into the RSC payload — and `source` would ship all
+  // 51 Mailchimp URLs to the browser on the one page whose point is that it
+  // no longer links to them.
+  const issues = getAllNewsletters().map(({ id, month, year, url, theme }) => ({
+    id,
+    month,
+    year,
+    url,
+    theme,
+  }));
 
   return (
     <Section spacing="section" className="pt-28 pb-16 md:py-24 lg:py-32">
@@ -32,7 +41,15 @@ export default function NewslettersPage() {
           </p>
         </div>
 
-        {/* Subscribe / archive call to action */}
+        {/*
+          Subscribe, and nothing beside it. There used to be a second button,
+          "Open full archive", pointing at `MAILCHIMP_CONFIG.archiveUrl`. It was
+          wrong twice over: on a paid plan that URL returns the 20 most recent
+          campaigns rather than the back catalogue, and it dies with the
+          subscription the founder is cancelling. The full archive is the grid
+          below — every issue is served from this site now — so the button
+          would have linked this page to itself.
+        */}
         <div className="mb-10 md:mb-14 flex flex-col gap-3 sm:flex-row sm:items-center">
           <Button asChild size="lg" variant="brand">
             <Link
@@ -41,17 +58,6 @@ export default function NewslettersPage() {
             >
               <Mail className="h-4 w-4" />
               Subscribe
-            </Link>
-          </Button>
-          <Button asChild size="lg" variant="outline">
-            <Link
-              href={MAILCHIMP_CONFIG.archiveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2"
-            >
-              Open full archive
-              <ExternalLink className="h-4 w-4" />
             </Link>
           </Button>
         </div>

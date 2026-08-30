@@ -26,7 +26,17 @@ import { createHash } from "node:crypto";
 import { join } from "node:path";
 
 import { NEWSLETTER_ARCHIVE } from "@/lib/data/newsletters-archive";
-import { NEWSLETTER_MANUAL } from "@/lib/data/newsletters-manual";
+import {
+  NEWSLETTER_MANUAL,
+  NEWSLETTER_RETRACTED,
+  getAllNewsletters,
+} from "@/lib/data/newsletters-manual";
+import {
+  NEWSLETTER_ISSUE_PREFIX,
+  localiseArchivedHtml,
+  pathForCampaign,
+  resolveIssue,
+} from "@/lib/newsletter/archive";
 import { OWN_MAILBOXES } from "../email/own-mailboxes";
 import { ALLOWED_ADDRESSES, scanSanitised } from "./archive-html";
 import { WITHHELD_ASSETS } from "./withheld-images";
@@ -231,16 +241,26 @@ check(
 const lookup = buildArchiveLookup(index.entries);
 const archivedIds = new Set(index.entries.map((entry) => entry.id));
 
-// DISTINCT urls, not card entries. The two files hold 52 entries pointing at a
-// Mailchimp page and 51 distinct URLs: the retracted `2026-02` card shares the
-// March 2026 campaign's URL, because the legacy site pointed February at the
-// March send. Counting entries would put 52 in a PR description and a doc, and
-// the number a reader can verify on the live site is 51.
+// DISTINCT urls, not card entries. The two files hold 52 entries whose issue
+// was published at a Mailchimp page and 51 distinct URLs: the retracted
+// `2026-02` card shares the March 2026 campaign's URL, because the legacy site
+// pointed February at the March send. Counting entries would put 52 in a PR
+// description and a doc, and the number a reader can verify is 51.
+//
+// Read from `source`, NOT from `url`. `url` is the on-site path now, so a
+// check written against it would find zero Mailchimp URLs and pass while
+// asserting nothing — the failure mode this repo has already been bitten by
+// twice. `source` is where the issue was published, kept verbatim for exactly
+// this: the campaign id on each card is re-derived from it below rather than
+// trusted.
 const siteUrls = [
   ...new Set(
     [...NEWSLETTER_ARCHIVE, ...NEWSLETTER_MANUAL]
-      .map((issue) => issue.url)
-      .filter((url) => /mailchi\.mp|campaign-archive\.com|eepurl\.com/.test(url))
+      .map((issue) => issue.source)
+      .filter(
+        (url): url is string =>
+          Boolean(url) && /mailchi\.mp|campaign-archive\.com|eepurl\.com/.test(url as string)
+      )
   ),
 ];
 
@@ -252,10 +272,189 @@ check(
   `all ${siteUrls.length} distinct Mailchimp newsletter URLs join to an archived campaign`,
   unjoinable.length === 0,
   first(unjoinable.map((url) => `no archived campaign for ${url}`)) +
-    "\n      The three join keys are documented in scripts/mailchimp/archive-index.ts." +
+    "\n      The three join keys are documented in lib/newsletter/archive-index.ts." +
     "\n      A card that cannot be joined stays pointed at Mailchimp after the cancellation."
 );
 
+// ---------------------------------------------------------------------------
+// The site no longer links to Mailchimp, and everything it links to instead
+// exists.
+//
+// These two are the point of the whole archive. 51 of the 59 rendered cards
+// opened a `mailchi.mp` or `us3.campaign-archive.com` page; Mailchimp
+// documents nothing about what a cancelled subscription does to those pages,
+// so the entire back catalogue sat behind a billing change. Re-pointing them
+// once is not the same as keeping them re-pointed: the obvious way to undo it
+// is to paste a Mailchimp link into the file, the way every issue before
+// August 2026 was added.
+// ---------------------------------------------------------------------------
+
+const rendered = getAllNewsletters();
+const MAILCHIMP_HOST = /mailchi\.mp|campaign-archive\.com|eepurl\.com|list-manage\.com/i;
+
+const offSite = rendered.filter(
+  (issue) =>
+    MAILCHIMP_HOST.test(issue.url) ||
+    issue.url !== `${NEWSLETTER_ISSUE_PREFIX}/${issue.id}`
+);
+check(
+  `all ${rendered.length} rendered newsletter cards open this site, not Mailchimp`,
+  offSite.length === 0,
+  first(offSite.map((issue) => `${issue.id} -> ${issue.url}`)) +
+    `\n      Every card's url must be ${NEWSLETTER_ISSUE_PREFIX}/<its own id>. Put the` +
+    "\n      Mailchimp page in `source` and the campaign id in `campaign` instead;" +
+    "\n      the route serves the archived body from lib/data/newsletter-archive/."
+);
+
+const unservable = rendered.filter((issue) => {
+  const resolved = resolveIssue(issue.id);
+  if (!resolved) return true;
+  return resolved.kind === "campaign" && !archivedIds.has(resolved.campaignId);
+});
+check(
+  `all ${rendered.length} card paths resolve to an archived campaign or a registry issue`,
+  unservable.length === 0,
+  first(unservable.map((issue) => `${issue.id} (campaign ${issue.campaign ?? "none"})`)) +
+    "\n      resolveIssue() in lib/newsletter/archive.ts decides what the route serves." +
+    "\n      A card that resolves to nothing is a 404 the grid links to."
+);
+
+// A card that drops `source` skips both the join check above and the
+// re-derivation below, and the whole suite still exits 0 — measured, on the
+// first version of this file. So the pair is asserted directly: an issue that
+// names an archived campaign has to say where it was published.
+const halfRecorded = rendered.filter(
+  (issue) => Boolean(issue.campaign) !== Boolean(issue.source)
+);
+check(
+  "every card records either both a campaign and a source, or neither",
+  halfRecorded.length === 0,
+  first(
+    halfRecorded.map(
+      (issue) =>
+        `${issue.id}: campaign ${issue.campaign ?? "none"}, source ${issue.source ?? "none"}`
+    )
+  ) +
+    "\n      `source` is the URL the campaign id is re-derived from. Without it" +
+    "\n      the id is an unchecked hand-written hex string. An issue built AND" +
+    "\n      sent from this repo has neither, and renders from" +
+    "\n      lib/newsletter/issues-registry.ts."
+);
+
+const misjoined = rendered.filter((issue) => {
+  if (!issue.source || !MAILCHIMP_HOST.test(issue.source)) return false;
+  return issue.campaign !== resolveCampaignByArchiveUrl(lookup, issue.source);
+});
+check(
+  "every card's campaign id is the one its own source URL resolves to",
+  misjoined.length === 0,
+  first(
+    misjoined.map(
+      (issue) =>
+        `${issue.id}: declared ${issue.campaign}, source resolves to ` +
+        `${resolveCampaignByArchiveUrl(lookup, issue.source as string)}`
+    )
+  ) +
+    "\n      The campaign id is a hand-written hex string; this re-derives it from" +
+    "\n      the URL the legacy site actually served, so a typo cannot quietly serve" +
+    "\n      the wrong month to everyone who clicks that cover."
+);
+
+const claimed = new Map<string, string[]>();
+for (const issue of rendered) {
+  if (!issue.campaign) continue;
+  claimed.set(issue.campaign, [...(claimed.get(issue.campaign) ?? []), issue.id]);
+}
+const shared = [...claimed].filter(([, ids]) => ids.length > 1);
+check(
+  "no two rendered cards claim the same archived campaign",
+  shared.length === 0,
+  first(shared.map(([campaign, ids]) => `${campaign} claimed by ${ids.join(", ")}`)) +
+    "\n      pathForCampaign() has to name one canonical path per campaign, and a" +
+    "\n      campaign claimed twice makes that a coin toss."
+);
+
+// Retraction has to suppress a URL as well as a card, now that the card IS a
+// URL. `2026-02` still carries the March 2026 campaign, because that is what
+// the legacy site linked; what must not happen is
+// /resources/newsletters/2026-02 serving the March issue under February's name.
+const liveRetractions = NEWSLETTER_RETRACTED.filter((entry) => resolveIssue(entry.id));
+check(
+  `all ${NEWSLETTER_RETRACTED.length} retracted id(s) resolve to a 404`,
+  liveRetractions.length === 0,
+  first(liveRetractions.map((entry) => `${entry.id} still resolves`)) +
+    "\n      CAMPAIGN_BY_ISSUE_ID is built from getAllNewsletters(), which drops" +
+    "\n      NEWSLETTER_RETRACTED. If this fails, something reads the raw arrays."
+);
+
+// ---------------------------------------------------------------------------
+// What the route actually serves.
+//
+// The bodies on disk are allowed to carry Mailchimp URLs — the extractor marks
+// them rather than removing them, so the join stays auditable. What may not
+// carry one is the HTML the route hands a browser: an `og:url` naming
+// eepurl.com is this page telling a crawler it lives on a host that is about to
+// stop answering, and a share button whose query string carries the campaign's
+// mailchi.mp page shares a dead link. Those 42 share buttons were the ones
+// nobody had counted — the extractor's marker pass cannot see them, because the
+// host in the href is facebook.com.
+// ---------------------------------------------------------------------------
+
+const LIVE_MAILCHIMP_URL =
+  /https?:\/\/(?:[a-z0-9-]+\.)*(?:mailchi\.mp|eepurl\.com|campaign-archive\.com|list-manage\.com)/i;
+const served: string[] = [];
+for (const [file, html] of bodies) {
+  const out = localiseArchivedHtml(html);
+  for (const m of out.matchAll(/(?:href|content|src)="([^"]*)"/gi)) {
+    const value = decodeURIComponent(m[1].replace(/&amp;/g, "&").replace(/\+/g, " "));
+    if (LIVE_MAILCHIMP_URL.test(value)) served.push(`${file}: ${m[1].slice(0, 110)}`);
+  }
+}
+check(
+  "no served body carries a Mailchimp URL, including inside a share link's query string",
+  served.length === 0,
+  first(served) +
+    "\n      localiseArchivedHtml() in lib/newsletter/archive.ts rewrites these on" +
+    "\n      the way out; the file on disk is never edited, because its sha256 is in" +
+    "\n      index.json. A new one here means a shape the rewriter has not seen."
+);
+
+// Checked against the CARD, not against pathForCampaign's own answer. The
+// og:url check below compares each body to `pathForCampaign(id)`, so on its
+// own it cannot see that function change its mind — measured: making
+// pathForCampaign return the hex path for everything left the whole suite
+// green. This is the independent half.
+const wrongPreference = rendered.filter(
+  (issue) => issue.campaign && pathForCampaign(issue.campaign) !== issue.url
+);
+check(
+  "a campaign with a card is canonical at the card's readable path",
+  wrongPreference.length === 0,
+  first(
+    wrongPreference.map(
+      (issue) =>
+        `${issue.id}: card is ${issue.url}, pathForCampaign says ` +
+        `${pathForCampaign(issue.campaign as string)}`
+    )
+  ) +
+    "\n      Each carded campaign is reachable at two paths — its card id and its" +
+    "\n      hex id — and the readable one has to be the one every rewritten link" +
+    "\n      and every og:url names, or the two compete instead of one deferring."
+);
+
+const wrongCanonical = index.entries.filter((entry) => {
+  const out = localiseArchivedHtml(bodies.get(entry.file) as string);
+  const og = /<meta[^>]*property="og:url"[^>]*content="([^"]*)"/i.exec(out);
+  return og ? !og[1].endsWith(pathForCampaign(entry.id)) : false;
+});
+check(
+  "each served body declares its own canonical path in og:url",
+  wrongCanonical.length === 0,
+  first(wrongCanonical.map((e) => `${e.file} should declare ${pathForCampaign(e.id)}`)) +
+    "\n      The route is noindex by header and has no Next metadata, so og:url is" +
+    "\n      the only thing the document says about where it lives. A campaign with a" +
+    "\n      card is reachable at two paths and must name the readable one."
+);
 // ---------------------------------------------------------------------------
 // Re-hosted images
 //
@@ -324,5 +523,6 @@ if (failures > 0) {
 }
 console.log(
   `${index.entries.length} archived newsletters, ${siteUrls.length} distinct site URLs joined, ` +
+    `${rendered.length} cards served from this site, ` +
     "no Mailchimp plumbing and no unlisted address."
 );
