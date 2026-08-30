@@ -159,11 +159,16 @@ tile first, then one speaker a week.
 records no imports, the broadcast ledger records no broadcasts, and the
 newsletter people actually receive still goes out from **Mailchimp**.
 
-**Hand to.** `/promote-event`, which resolves the event, builds the spec, and
-hands over to `/email-the-community` **from its Step 3**.
+**Hand to.** `/promote-event`, which resolves the event, builds the spec for one
+campaign stage, and hands over to `/email-the-community` **from its Step 3**. It
+runs **once per stage** — `save-the-date`, `line-up`, `last-call` — and refuses a
+stage generated at the wrong distance from the event date.
 
-**Leaves behind.** `tmp/specs/announce-<slug>.json`, then — once there is a list
-— a Resend draft, then a scheduled broadcast, recorded in the broadcast ledger.
+**Leaves behind.** `tmp/specs/announce-<slug>-<stage>.json`, then batch chunk
+files and a manifest under `tmp/emails/`, recorded per stage in the broadcast
+ledger. **There is no scheduler and no Resend broadcast on this path**: a human
+runs the printed `resend emails batch` command for each chunk, and the
+three-per-calendar-month marketing cap is checked before the build.
 
 **Then check.** `Announcement` goes `done`. Note the check's own honesty: a
 broadcast key is free-form, so a populated ledger with no matching key reports

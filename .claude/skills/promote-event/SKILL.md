@@ -70,8 +70,8 @@ Trigger conditions (examples — don't wait for an exact match):
 
 Unsure? Run Step 1. It reads the repo, sends nothing, and touches nothing
 outside `tmp/` — on a match it also writes the spec to
-`tmp/specs/announce-<slug>.json`, which is gitignored scratch you can ignore
-or delete.
+`tmp/specs/announce-<slug>-<stage>.json`, which is gitignored scratch you can
+ignore or delete.
 
 ## When NOT to apply
 
@@ -307,7 +307,7 @@ one. **`<slug>` in the paths below is really `<slug>-<stage>`** — Step 3 wrote
 
 | Its step | What happens | Anything different for an event announcement |
 |---|---|---|
-| **Step 3 — Render and gate** | `npx tsx scripts/email/render-message.ts tmp/specs/announce-<slug>.json --mode broadcast` | **`absolute-urls` and `unsubscribe` fail here on every marketing spec, and that is the generator working.** The footer carries the literal `%%SHESHARP_UNSUBSCRIBE_URL%%` (`emails/announcement.tsx:293`) until `build-batch.ts` signs one per recipient, so at render time it is neither an `https://` URL nor an opt-out link yet. Those two are really enforced at Step 7, on the substituted message — `build-batch.ts` swaps the placeholder and *then* runs the same strict gates, and exits 1 writing nothing if they fail. So nothing is waved through here. **Any other red gate** — `image-format`, `size-100kb`, `merge-tags`, `secret-scan`, or an `absolute-urls` that names anything besides the placeholder — **is a bug in the generator**, not a reason to hand-edit the spec: say what failed |
+| **Step 3 — Render and gate** | `npx tsx scripts/email/render-message.ts tmp/specs/announce-<slug>-<stage>.json --mode broadcast` | **`absolute-urls` and `unsubscribe` fail here on every marketing spec, and that is the generator working.** The footer carries the literal `%%SHESHARP_UNSUBSCRIBE_URL%%` (`emails/announcement.tsx:293`) until `build-batch.ts` signs one per recipient, so at render time it is neither an `https://` URL nor an opt-out link yet. Those two are really enforced at Step 7, on the substituted message — `build-batch.ts` swaps the placeholder and *then* runs the same strict gates, and exits 1 writing nothing if they fail. So nothing is waved through here. **Any other red gate** — `image-format`, `size-100kb`, `merge-tags`, `secret-scan`, or an `absolute-urls` that names anything besides the placeholder — **is a bug in the generator**, not a reason to hand-edit the spec: say what failed |
 | **Step 4 — DRAFT-banner preview** | `--mode preview --draft-banner --open` | Check the cover is not a broken box, and that the date in the email matches the event page |
 | **Step 5 — Test send** | `resend emails send` to a mailbox **the user names**, dry-run first | Open the event page from the test email and check every fact against it. The footer's unsubscribe link shows as literal `%%SHESHARP_UNSUBSCRIBE_URL%%` in a test — that is expected |
 | **Step 6 — Plan block, then stop** | The full block, including the `Redactions:` line | Add an `Event:` line naming the slug and its date, and a `Stage:` line naming which of the three this is and which have already gone out — so approval is of a specific email, not of "the campaign" |

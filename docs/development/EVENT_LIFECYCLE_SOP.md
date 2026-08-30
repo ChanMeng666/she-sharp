@@ -260,8 +260,12 @@ only ever makes **one small change** — a word, a photograph, a name. Anything
 larger goes back through building the deck properly.
 
 *Sending email cannot be recalled.* Every sending tool stops and shows you a
-plan first. Read it. A scheduled broadcast can be cancelled for about an hour;
-a sent one cannot be cancelled at all.
+plan first. **Read it, because it is the only chance you get.** Nothing on this
+path is scheduled any more — the Resend broadcast product was retired, and a
+send now happens the moment a human runs the printed `resend emails batch`
+command, chunk by chunk. There is no cancellation window and nothing to call
+back. The plan block before the send is the safeguard; there is no second one
+after it.
 
 Setting yourself up takes an afternoon and no programming:
 `docs/development/AI_SKILLS_GUIDE.md`, which also covers the step this document

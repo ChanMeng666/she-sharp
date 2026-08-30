@@ -584,7 +584,13 @@ out from Mailchimp** — this is the replacement, piloted but not switched over.
 **Outbound email skills.** Four guided skills let teammates send mail without
 writing code: `/reply-to-contact-messages`, `/update-mailing-list`,
 `/email-the-community` and `/promote-event`. Repo scripts render, the Resend CLI
-sends. **Mail to one event's registrants is not among them** — it is composed
+sends. `/promote-event` runs **once per stage** — `save-the-date`, `line-up`,
+`last-call` — each a different email about the same event, refused if it is
+generated at the wrong distance from the event date. **Every marketing send from
+any skill is capped at three per calendar month**, counted across all of them
+including the newsletter, because frequency is what produces the complaints that
+would take password resets down with the campaign. **Mail to one event's
+registrants is not among them** — it is composed
 and sent in Humanitix's own Email campaigns tool, against the ticket holders
 Humanitix already has. `/send-event-emails` did it here until 2026-08-30 and was
 retired because its only input was a Humanitix export, so it could never reach
