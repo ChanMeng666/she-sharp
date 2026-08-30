@@ -176,7 +176,7 @@ Measured 2026-08-30:
 | | Rows | Note |
 |---|---|---|
 | `email_events` | **6**, for **1 distinct person** | Test sends only. This is the whole send history of the new pipeline |
-| `email_optouts` | **10** | Runtime opt-outs, written by the webhook and the one-click endpoint |
+| `email_optouts` | **10** | Runtime opt-outs, written by the webhook and the one-click endpoint. **9 of the 10 are She Sharp's own mailboxes** — hard bounces from `probe-mailboxes.ts`, which `suppression.ts sync` deliberately refuses to fold into the committed register. Only **one** is a real contact, and `sync --dry-run` on 2026-08-30 reported it as **not yet in the register**: one entry of undrifted drift, waiting for somebody to run `sync` |
 | `lib/data/json/email-suppression-hashes.json` | **2,144** hashes | Committed, hash-only, and the reason 15 rows were held back at import |
 
 Both registers are do-not-contact lists and neither is a record of consent —
@@ -322,11 +322,14 @@ manufacture a re-admission that the true instant would not support, which is a
 send to somebody who had opted out. That is the one thing this skew could break,
 so it was measured rather than assumed.
 
-**Measured 2026-08-30: zero rows are affected, and zero is structural.**
+**Measured 2026-08-30: zero rows are affected, and zero is structural.** Both
+registers were checked, because `selectMailable()` reads both.
+
+**The committed register (2,144 hashes).**
 
 | | |
 |---|---:|
-| Export rows also in the committed register | **15** — the same 15 the import held back |
+| Export rows also on it | **15** — the same 15 the import held back |
 | of those, a terminal reason (comparison never runs) | 0 |
 | of the rest, `confirmedAt > suppressedAt` (would re-admit) | **0** |
 | of those, within 13h of the suppression (flippable) | **0** |
@@ -340,9 +343,20 @@ was taken, so no imported confirmation can postdate a suppression by
 construction. Every later `pull-mailchimp` pushes register timestamps further
 forward, widening the gap rather than narrowing it.
 
-It is doubly moot today: `reconcile` on 2026-08-30 read `Subscribed rows: 1549`
-and `Mailable after suppression: 1549`, so **no subscriber row intersects either
-register** and the comparison does not run for anybody.
+**`email_optouts` (10 rows).** This one cannot be read from the vault, so it was
+read with `suppression.ts sync --dry-run`, which writes nothing. **Nine of the
+ten are She Sharp's own mailboxes** — hard bounces from
+`scripts/email/probe-mailboxes.ts`, which the sync deliberately refuses to fold
+into the register because they belong to the runtime table. The **tenth** is the
+only real one (`e70b0e932b7b…`, `bounce`, 2026-08-28), and it **is not in the
+2026-08-17 `subscribed` export at all**, so it was never imported and is not one
+of the 1,549. Nothing on this register pairs with an imported `confirmedAt`
+either.
+
+**So the flip count is zero for a stronger reason than "it comes out the same
+way": the comparison never runs for anybody.** `reconcile` says so independently
+— *"No drift: every mailable subscriber is clear of both registers"* — against
+`Runtime opt-outs: 10` and `Committed register: 2144`, with all 1,549 mailable.
 
 **So this is not an emergency and nobody should re-open it as one.** It is also
 not nothing:

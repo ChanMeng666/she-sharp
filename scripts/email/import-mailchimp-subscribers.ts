@@ -44,11 +44,14 @@
  * **Measured before deciding not to fix it.** The one thing the skew could break
  * is `selectMailable()`, which re-admits a suppressed address when
  * `confirmedAt > suppressedAt` — a value that is too late could manufacture a
- * re-admission. Zero of the 1,545 are affected, and zero is structural: every
- * committed register timestamp is at or after 2026-08-17T13:55Z and every export
- * `CONFIRM_TIME` at or before 2026-08-17T06:35Z, because the register was built
- * *from* that export. The closest gap across the 15 rows that appear in both is
- * 6,923 hours. **Fix the parse before any re-import** — a fresh export's stamps
+ * re-admission. Zero of the 1,545 are affected, across **both** registers, and
+ * zero is structural: every committed register timestamp is at or after
+ * 2026-08-17T13:55Z and every export `CONFIRM_TIME` at or before
+ * 2026-08-17T06:35Z, because the register was built *from* that export. The
+ * closest gap across the 15 rows that appear in both is 6,923 hours. On the
+ * runtime side, 9 of the 10 `email_optouts` rows are She Sharp's own mailboxes
+ * and the tenth is not in the export at all, so no imported row pairs with a
+ * runtime opt-out either — the comparison never runs. **Fix the parse before any re-import** — a fresh export's stamps
  * can land within 13h of a register entry — but do not bulk-shift the stored
  * values to correct an error that changes no decision. Full working:
  * `docs/development/EMAIL_PLATFORM_STATE.md` § "Every imported `confirmedAt` is
