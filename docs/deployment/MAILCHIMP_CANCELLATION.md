@@ -147,10 +147,17 @@ and downgrading later still spends the single lifetime downgrade.
 
 **这一点 Mailchimp 官方没有写，我们也不会去猜。**
 
-The newsletter back catalogue is not hosted on our site. It is a grid of covers
-that open **Mailchimp-hosted campaign pages** — `mailchi.mp/...` and
-`us3.campaign-archive.com/...` URLs. What a **downgrade or pause** does to those
-pages is stated nowhere:
+Until 2026-08-30 the newsletter back catalogue was not hosted on our site: it
+was a grid of covers that opened **Mailchimp-hosted campaign pages** —
+`mailchi.mp/...` and `us3.campaign-archive.com/...` URLs. **It is now** — §4
+below — so the website no longer depends on the answer to this section. The
+question itself is still unanswered, and the ordering rule it produces still
+stands for everything else in the account. What a **downgrade or pause** does to
+those pages is stated nowhere:
+
+在 2026-08-30 之前，往期通讯并不由本站托管：封面网格点开的是 **Mailchimp 托管的
+邮件页面**。**现在已经由本站托管**（见下面第 4 节），所以网站本身不再依赖本节的
+答案。但这个问题本身依然没有答案，由它得出的顺序规则对账号里的其他内容依然成立。
 
 - <https://mailchimp.com/help/about-email-campaign-archives-and-pages/> describes
   the audience archive page and the per-campaign hosted pages, and says nothing
@@ -231,9 +238,11 @@ emails sent to your audience".
 
 **So the button promises the full archive and delivers about six months of it.**
 The ~180-campaign history it implies has never been reachable from that link, on
-any plan. The real back catalogue is the **51 per-campaign card URLs** in
+any plan. The real back catalogue was the **51 per-campaign card URLs** in
 `lib/data/newsletters-archive.ts` and `lib/data/newsletters-manual.ts`, which the
-grid on the same page already renders.
+grid on the same page already rendered — and those 51 now point at this site
+rather than at Mailchimp, so the count of live Mailchimp links on the public
+site is **zero**.
 
 **所以这个按钮承诺"完整存档"，实际只给出大约半年。** 它暗示的约 180 期历史，从来
 就不曾能通过这个链接访问——在任何套餐下都不能。真正的往期目录是那 51 个单期链接，

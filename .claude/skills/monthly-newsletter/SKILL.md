@@ -938,6 +938,20 @@ loop is where the domain's health gets looked at. Six things, ~5 minutes:
    not an emergency. But a count that keeps growing month after month means some
    part of the site is not writing unsubscribes back to the subscriber table —
    **report the number to the user; don't just move on.**
+
+   **Then commit the register, on its own.** Items 3 and 4 both write
+   `lib/data/json/email-suppression-hashes.json`, which is committed — leave it
+   dirty and the do-not-contact instruction exists only on this laptop, and the
+   next send built from a clean checkout will not have it. If the diff is
+   non-empty:
+   ```powershell
+   git add lib/data/json/email-suppression-hashes.json
+   git commit -m "chore(email): sync the suppression register"
+   ```
+   Nothing else in that commit, and say the before-and-after count in the body if
+   the numbers moved. The rule and the reasoning live in
+   `/update-mailing-list` Step 8, "Commit a suppression change on its own"; this
+   is the same rule, not a second one.
 6. **Check for people who have JOINED since the last import.** Items 3-5 all run
    in one direction — they take people *off* the send. Nothing takes anyone on,
    and while Mailchimp is still the live sender, that is where new subscribers
@@ -956,25 +970,19 @@ loop is where the domain's health gets looked at. Six things, ~5 minutes:
    prints it). **If Mailchimp is higher, those people are about to be skipped —
    say the number and stop.**
 
-   Closing the gap needs no new code: a fresh `subscribed` CSV export from
-   Mailchimp, re-run through `scripts/email/import-mailchimp-subscribers.ts`,
-   writes only the new people — it skips `already a subscriber` and
-   `on the suppression register`, and ends in `onConflictDoNothing` on
-   `emailHash`. The order is the one this checklist already uses:
-   `pull-mailchimp`, **then** the import, **then** `reconcile`.
+   **Detect and hand over. Do not run the import from here.** Adding anyone to
+   `newsletter_subscribers` is `/update-mailing-list`'s job, needs its own plan
+   and its own approval, and has a written procedure there — Step 6, "Closing
+   the joiner gap", which owns the fresh-export import and the order it runs in
+   (`pull-mailchimp`, **then** the import, **then** `reconcile`) and explains
+   why it has to be the CSV export rather than an API delta. Do not restate that
+   procedure here and do not improvise a shorter one; say the number, name the
+   skill, and stop.
 
-   **It has to be the CSV, not an API delta.** The Mailchimp API cannot supply
-   `CONFIRM_TIME` — 1,560 rows populated in the export against 129 for
-   `timestamp_signup` — so an API import would write `confirmedAt = null` and
-   record *weaker* consent evidence than those people actually have. A manual
-   export step is the cheaper price. That export is a file of real addresses:
-   it belongs in the gitignored vault (`/private/`), never in the repo, under
-   "Handling the files" in `.claude/skills/update-mailing-list/references/consent-rules.md`.
-
-   **Do not run the import from here.** Adding anyone to `newsletter_subscribers`
-   is `/update-mailing-list`'s job and needs its own approval, exactly as the
-   "does not do" list at the end of this document says. Step 8a's job is to
-   **detect** the gap and stop.
+   Nothing about "do not re-run the importer" in `/update-mailing-list` forbids
+   this. That prohibition is about the frozen 2026-08-17 export, which has
+   already been imported. A **fresh** `subscribed` export is a different file and
+   a sanctioned operation.
 
 If any of these is out of bounds — or a single send would exceed ~1,000
 recipients — that is the pre-agreed trigger to move marketing onto a separate

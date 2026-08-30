@@ -36,12 +36,16 @@ logs which *files* have been imported, by sha256, and never touched Resend.
 Tier 0 count from Resend. **That number is zero and means nothing.** Quote the
 database instead.
 
-## The Resend objects that still exist
+## The Resend objects are gone
 
 They were recreated on 2026-08-28 when the domain and sending setup moved to the
-She Sharp–owned Resend team (**shesharp**, owned by `website@shesharp.org.nz`).
-They hold **nobody**, nothing writes to them, and deleting them is waiting on the
-maintainer — it is an action on a live account, not a code change.
+She Sharp–owned Resend team (**shesharp**, owned by `website@shesharp.org.nz`),
+and **deleted on 2026-08-29** — segment `95d452f5…` and topic `08e59693…`, both
+holding nobody at the time, with their two env vars taken off Vercel production
+in the same change. Nothing in this repo reads a Resend segment or topic any
+more. This section used to say the deletion was still waiting on the maintainer;
+it is not. `consent-rules.md` records the same fact as a consent statement:
+nothing in Resend is the consent record, the `newsletter_subscribers` table is.
 
 | Object | Name | ID |
 |---|---|---|

@@ -1,6 +1,6 @@
 ---
 name: update-mailing-list
-description: Inspect and safely change who is on She Sharp's newsletter mailing list — the `newsletter_subscribers` table, which is now the organisation's marketing-consent record — using `scripts/email/inspect-subscribers.ts`, `scripts/email/audience-report.ts`, `scripts/email/normalize-recipients.ts` and `scripts/email/suppression.ts`. Use whenever the user wants to see or change who is on the list — phrases like "add these attendees to the mailing list", "who's on our email list?", "import this sign-up sheet", "subscribe these people", "take her off the list", "how many subscribers do we have?", "why is this person getting our emails?" — or anything about unsubscribes, bounces, complaints or suppression. Covers roster reporting from the database, any-shape CSV normalisation, the four-way consent gate, and the do-not-contact registers; nothing is changed before an explicit plan approval. Read `references/consent-rules.md` first — registering for an event is not subscribing. The list holds the Mailchimp audience, carried over on 2026-08-29, and `scripts/email/import-optin-subscribers.ts` now imports the people who ticked a registration form's opt-in box (consent route 2); a paper sign-in sheet and a written request (routes 3 and 4) still have no tool and stay one person at a time. It is the hard prerequisite for `email-the-community`.
+description: Inspect and safely change who is on She Sharp's newsletter mailing list — the `newsletter_subscribers` table, which is now the organisation's marketing-consent record — using `scripts/email/inspect-subscribers.ts`, `scripts/email/audience-report.ts`, `scripts/email/normalize-recipients.ts` and `scripts/email/suppression.ts`. Use whenever the user wants to see or change who is on the list — phrases like "add these attendees to the mailing list", "who's on our email list?", "import this sign-up sheet", "subscribe these people", "take her off the list", "how many subscribers do we have?", "why is this person getting our emails?" — or anything about unsubscribes, bounces, complaints or suppression. Covers roster reporting from the database, any-shape CSV normalisation, the four-way consent gate, and the do-not-contact registers; nothing is changed before an explicit plan approval. Read `references/consent-rules.md` first — registering for an event is not subscribing. The list holds the Mailchimp audience, carried over on 2026-08-29, and `scripts/email/import-optin-subscribers.ts` now imports the people who ticked a registration form's opt-in box (consent route 2); a paper sign-in sheet and a written request (routes 3 and 4) still have no tool and stay one person at a time. It also **owns closing the joiner gap** — the people who sign themselves up on Mailchimp's own forms while Mailchimp is still the live sender; `/monthly-newsletter` only detects that gap and hands it here. It is the hard prerequisite for `email-the-community`.
 ---
 
 # Look after the mailing list
@@ -32,8 +32,9 @@ moves). What has **not** happened is a send: the monthly newsletter still goes
 out from Mailchimp, and nothing has ever been sent from this system. Two consequences to keep straight. Someone who unsubscribes from a
 real newsletter this month does so *in Mailchimp*, and only
 `suppression.ts pull-mailchimp` brings that back — so run it before you quote the
-list as current. And the Resend segment and topic still exist in the account
-holding nobody; they are not the list and never will be.
+list as current. And the Resend segment and topic were **deleted on 2026-08-29**
+holding nobody; nothing in Resend is the list, and nothing in this repo reads
+one.
 
 **This skill sends no email.** It reads and edits a list. Sending belongs to
 `email-the-community` and `reply-to-contact-messages` — and, for the people who
@@ -447,17 +448,65 @@ add nobody, and offer the subscribe link.
 > The subscribe link puts them on the list today with better evidence than an
 > import gives — shall I write you something to send them?
 
-### The Mailchimp importer is not a second route
+### The Mailchimp importer is not a second consent route — but it is this skill's job
 
-`scripts/email/import-mailchimp-subscribers.ts` exists and was run once, on
-2026-08-29, to carry the Mailchimp audience over — 1,560 rows read, 15 held back
-by the suppression register, **1,545 written**. It is not a general importer and
-cannot be pointed at a sign-up sheet: it reads the Mailchimp export's own columns
-(`Email Address`, `First Name`, `Last Name`, `CONFIRM_TIME`) and refuses files
-whose names say they are the `unsubscribed`, `cleaned` or `nonsubscribed`
-exports. Its whole justification is that every one of those people carried a
-`CONFIRM_TIME` — a double opt-in that actually happened, elsewhere, with a date.
-Do not re-run it.
+`scripts/email/import-mailchimp-subscribers.ts` carried the Mailchimp audience
+over on 2026-08-29 — 1,560 rows read, 15 held back by the suppression register,
+**1,545 written**. It is not a general importer and cannot be pointed at a
+sign-up sheet: it reads the Mailchimp export's own columns (`Email Address`,
+`First Name`, `Last Name`, `CONFIRM_TIME`) and refuses files whose names say they
+are the `unsubscribed`, `cleaned` or `nonsubscribed` exports. Its whole
+justification is that every one of those people carried a `CONFIRM_TIME` — a
+double opt-in that actually happened, elsewhere, with a date. It adds **no new
+consent route**; it carries route 1 evidence that was recorded on another
+platform.
+
+**"Do not re-run it" means do not re-import the frozen 2026-08-17 export.** That
+file has already been imported; running it again re-offers the same people and
+tells you nothing. It does **not** mean the script is retired.
+
+### Closing the joiner gap — a fresh export, and this skill owns it
+
+Mailchimp is still the platform that actually sends, so it is still where new
+subscribers arrive: people who fill in Mailchimp's own hosted or embedded signup
+form join *there* and appear in this table only if somebody brings them across.
+Nothing does that automatically. **Measured 2026-08-30: 3 people were subscribed
+in Mailchimp and absent here** — a strict subset, 0 the other way — every one of
+them having opted in on 27 or 28 August, after the export was taken. That is
+consent route 1, the strongest grade there is, sitting outside the list for want
+of a pull.
+
+`/monthly-newsletter` Step 8a **detects** this gap every month and stops; it does
+not import, and it hands over to you. **This is the sanctioned operation, and
+the order is not optional:**
+
+```powershell
+npx tsx scripts/email/suppression.ts pull-mailchimp   # 1. the register moves under a frozen export
+npx tsx scripts/email/import-mailchimp-subscribers.ts <the fresh subscribed export>
+npx tsx scripts/email/suppression.ts reconcile        # 3. prove the stores agree
+```
+
+1. **`pull-mailchimp` first.** Anyone who unsubscribed since the export was taken
+   exists only in Mailchimp's record, and an export is a snapshot of an
+   afternoon. Run before the 2026-08-29 import it moved the register 2,138 →
+   2,144, and six of the fifteen rows the import then held back were those six
+   people. Skip it and you re-add someone who has left.
+2. **Then the import.** It writes only the new people — it skips
+   `already a subscriber` and `on the suppression register`, and ends in
+   `onConflictDoNothing` on `emailHash`, so a person who is already here cannot
+   be duplicated or have their `confirmedAt` overwritten.
+3. **Then `reconcile`**, and quote the **`Mailable after suppression`** line.
+
+**It has to be the CSV export, not an API pull.** The Marketing API exposes no
+`CONFIRM_TIME` equivalent — `timestamp_signup` is populated on 129 members
+against 1,560 rows in the export — so an API import writes `confirmedAt = null`
+and records *weaker* consent evidence than those people actually have. A manual
+export step is the cheaper price. That file is real addresses: it goes in the
+gitignored vault (`/private/`), never in the repo — "Handling the files" in
+`references/consent-rules.md`.
+
+Everything else about this operation is a normal run of this skill: it needs the
+Step 5 plan and an explicit yes like any other import, and Step 9 reports it.
 
 `scripts/email/recipients-from-db.ts` is not an importer either. It reads *out
 of* the table to build a send; it never writes into it.
@@ -515,6 +564,28 @@ both monthly, and always **before** an import.
 sit on a register (drift, which means a write path is broken) and, separately,
 people a later confirmation legitimately brought back (allowed, and expected).
 It exits 1 when there is drift.
+
+### Commit a suppression change on its own
+
+`sync`, `pull-mailchimp` and `suppression.ts add` all write
+`lib/data/json/email-suppression-hashes.json`, which is **committed**. An
+uncommitted change to it is a do-not-contact instruction that exists on one
+laptop, and the next person to build a send from a clean checkout will not have
+it.
+
+So whenever that file's diff is non-empty:
+
+```powershell
+git add lib/data/json/email-suppression-hashes.json
+git commit -m "chore(email): sync the suppression register"
+```
+
+**Its own commit, nothing else in it.** A register change is a record that
+specific people asked not to be contacted; bundled into a feature commit it
+cannot be found, reviewed or reverted on its own. Say the before-and-after count
+in the commit body if the numbers moved. This applies wherever the commands are
+run from — `/monthly-newsletter` Step 8a runs all three and the rule is the
+same there.
 
 ## Step 9 — Report
 
@@ -641,9 +712,8 @@ harmless; still tell the user.
 
 **Someone asks you to run a Resend contacts command** — `resend contacts`,
 `segments`, `topics`, `contacts imports`. Explain that the newsletter list moved
-out of Resend; the segment and topic still exist in the account but hold nobody,
-and their deletion is waiting on the maintainer. Nothing in this repo reads them
-any more. `references/resend-roster-cli.md` has the detail.
+out of Resend; the segment and topic were deleted on 2026-08-29 holding nobody,
+and nothing in this repo reads them any more. `references/resend-roster-cli.md` has the detail.
 
 **Someone says "so we've emailed them all now?"** — no. The list moved; no send
 has happened. The monthly newsletter still goes out from Mailchimp, and the first
@@ -657,8 +727,12 @@ send from this system is a separate, approved, **ramped** step.
   sign-in sheet) and 4 (a written request) have no tool, and improvising one is
   forbidden. Route 2 does: `import-optin-subscribers.ts` (Step 6). The one-off
   Mailchimp importer is not a general path.
-- **Migrate the Mailchimp list** — already done, on 2026-08-29, by
-  `scripts/email/import-mailchimp-subscribers.ts`. Do not re-run it.
+- **Re-import the frozen 2026-08-17 Mailchimp export** — that migration is done,
+  on 2026-08-29, by `scripts/email/import-mailchimp-subscribers.ts`. Running it
+  over that same file again only re-offers the same people. Running it over a
+  **fresh** `subscribed` export to close the joiner gap is a different,
+  sanctioned operation and it belongs to this skill: Step 6, "Closing the joiner
+  gap".
 - **Send anything, or switch the newsletter off Mailchimp** — the list is here,
   the sending is not.
 - **Manage the monthly newsletter** — drafting, editorial and scheduling belong

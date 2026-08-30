@@ -1329,7 +1329,7 @@ event-lesmills-03-september-2026 — No Pain, All Gain – Getting Fit for AI
   Deck         done     /present/event-lesmills-03-september-2026 · 25 slides
   Feedback     done     www.shesharp.org.nz/f/l03s26
   Announcement missing  no announcement broadcast has ever been recorded
-                        → /email-the-community  (needs a consented Resend segment first)
+                        → /email-the-community  (sends to the newsletter_subscribers table)
   Emails       n/a      sent from Humanitix -> Email campaigns; this repo keeps no record of it
   Photos       n/a      the event has not happened yet
 ```

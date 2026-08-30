@@ -581,6 +581,24 @@ it; a human runs the printed batch commands. **The live newsletter still goes
 out from Mailchimp** — this is the replacement, piloted but not switched over.
 → `docs/development/EMAIL_OPERATIONS.md`
 
+**The on-site newsletter archive.** `lib/data/newsletter-archive/` holds the
+**179 sent Mailchimp campaigns** as sanitised HTML plus an `index.json` keyed by
+10-hex campaign id, and `/resources/newsletters/<id>` prerenders every one of
+them. It is committed because it comes from the private vault and CI can never
+regenerate it — and the bodies are **generated and checksummed, never
+hand-edited**: `scripts/mailchimp/archive-guard.test.ts` (in the
+`verify-image-paths` job) fails on a changed sha256. Images are re-hosted on
+Vercel Blob under `NEWSLETTER_ARCHIVE_IMAGE_PREFIX` (`lib/config/assets.ts`) and
+**five are withheld by decision, not by accident** —
+`scripts/mailchimp/withheld-images.ts` is authored rather than generated, and
+each entry is a judgement about a photograph of a child. **A `YYYY-MM` id cannot
+address a body**: the 179 span 74 months and 55 of those hold more than one
+campaign, so a card carries an explicit `campaign` id. The route is `noindex` by
+header, therefore **absent from `app/sitemap.ts`** and deliberately **not**
+`Disallow`ed. `MAILCHIMP_CONFIG.archiveUrl` and `lib/data/newsletters.ts` were
+deleted with it, so nothing on the site links to Mailchimp any more.
+→ `docs/deployment/MAILCHIMP_CANCELLATION.md` §4, `lib/newsletter/archive.ts`
+
 **Outbound email skills.** Four guided skills let teammates send mail without
 writing code: `/reply-to-contact-messages`, `/update-mailing-list`,
 `/email-the-community` and `/promote-event`. Repo scripts render, the Resend CLI

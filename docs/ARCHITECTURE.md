@@ -94,6 +94,7 @@ everything below it to choose for itself.
 | `(site)/events/[slug]` | SSG via `generateStaticParams()` (~97 pages) | Every slug is known at build time |
 | `(dashboard)/dashboard/*` | Dynamic | Its own layout awaits `getUser()` and `cookies()` |
 | `present/[deck]` | Server-rendered on demand | No `generateStaticParams()`; one render of static data, then fully client-side |
+| `(site)/resources/newsletters/[issue]` | `dynamic = "force-static"` + `dynamicParams = false` (238 ids: 179 campaign ids plus 59 `YYYY-MM` ids, the three registry issues among them) | A route handler, not a page — it returns the whole HTML document the subscriber received. Prerendering it keeps 8.7 MB of `lib/data/newsletter-archive/` out of any lambda; `dynamicParams = false` 404s every other id without running the handler. `noindex` by `X-Robots-Tag`, so it is **not** in `app/sitemap.ts` and **not** `Disallow`ed |
 | `app/llms-full.txt` | `revalidate = 3600` | Cheap to regenerate, should not go stale |
 | `api/cron/*`, webhooks, unsubscribe | `force-dynamic` | Must never be cached |
 
@@ -197,7 +198,7 @@ Three stores, chosen by who writes the file and how big it is:
 | Store | Holds | Referenced by |
 |---|---|---|
 | `public/` (in the repo, ~154 MB) | Site imagery, logos, brand marks, icons, `llms.txt` | Literal `/img/...` paths |
-| **Vercel Blob** | The impact-report/pitch PDFs and the five MP4s (~63 MB) | Constants in `lib/config/assets.ts` |
+| **Vercel Blob** | The impact-report/pitch PDFs and the five MP4s (~63 MB), plus the 428 re-hosted newsletter-archive images (342.2 MB of vault originals → 38.3 MB of WebP) | Constants in `lib/config/assets.ts` |
 | **Cloudinary** | User uploads — profile photos, CVs | `lib/cloudinary/config.ts` |
 
 `public/docs/` and `public/video/` no longer exist. Those files never change, are
@@ -238,6 +239,7 @@ path that does not exist.
 | Volunteer recruitment pipeline | `lib/recruitment/` | `stages.ts` is the stage vocabulary; `ai-screening.ts` |
 | Email sending, streams, gates, suppression | `lib/email/` | Single Resend call site in `service.ts` |
 | Monthly newsletter | `lib/newsletter/` | Assemble / render / generate / schedule / approve |
+| The 179 archived Mailchimp sends | `lib/data/newsletter-archive/` + `lib/newsletter/archive.ts` | Sanitised HTML bodies, `index.json` keyed by 10-hex campaign id, `images.json` naming the Blob object for each. **Generated and checksummed — never hand-edit a body.** `archive.ts` holds the `/resources/newsletters/<id>` resolution order and the reason a `YYYY-MM` id cannot address a body |
 | Mailchimp Marketing API v3 | `lib/mailchimp/` | `client.ts`, a typed `fetch` wrapper. **Local tooling only** — nothing under `app/` reads `MAILCHIMP_API_KEY`, and `listMembers()` defaults to a narrow `fields` projection because the full member object carries `ip_signup`/`ip_opt`/`location` |
 | Humanitix Public API v1 | `lib/humanitix/` | `client.ts`, same shape. **PII-free endpoints only**: `listEvents`, `getEvent`, `getCheckInCount`, `listTags`. `/orders` and `/tickets` are deliberately unimplemented — that absence is the safety mechanism. `docs/development/PLATFORM_APIS.md` |
 | Visitor chatbot | `lib/chatbot/` | AI SDK 6 agent, tools over live data, Redis rate limit |
@@ -277,7 +279,7 @@ Run by CI (`.github/workflows/verify.yml`, on PRs to `main`) — five jobs:
 
 | Job | Runs |
 |---|---|
-| `verify-image-paths` | `scripts/verify-image-paths.ts`, `scripts/check-hackathon-facts.ts`, and the two Slack read-state checks |
+| `verify-image-paths` | `scripts/verify-image-paths.ts` **and every other offline check**, because they are pure data and ride its checkout for free: newsletter email-safe covers, event- and poster-asset ownership, event status, the two docs-page checks, the hackathon facts, the two Slack read-state checks, the Humanitix and Mailchimp archive checks, the event-announcement stages, the marketing frequency cap, and `scripts/mailchimp/archive-guard.test.ts`. A new check needing neither a database nor the network belongs here, not in a sixth job |
 | `typecheck` | `pnpm typecheck` — `app/`, `components/`, `lib/`, `hooks/`, `types/`, `proxy.ts` |
 | `typecheck-scripts` | `pnpm typecheck:scripts` — `scripts/` and `.claude/`, both missed by the root tsconfig |
 | `lint` | `pnpm lint` — ESLint 9 flat config, **errors gate**; legacy violations are demoted to warnings in `eslint.config.mjs` and paid down separately |

@@ -1,9 +1,13 @@
 /**
  * Proves which images the newsletter archive still has, and fetches the rest.
  *
- * `MAILCHIMP_CONFIG.archiveUrl` is a live hyperlink to `us3.campaign-archive.com`.
- * When the Mailchimp account is cancelled it stops resolving with no code change
- * and no deploy, and every image inside the archived newsletters goes with it.
+ * When this ran, the site's only route to the back catalogue was
+ * `MAILCHIMP_CONFIG.archiveUrl`, a live hyperlink to `us3.campaign-archive.com`.
+ * When the Mailchimp account is cancelled that stops resolving with no code
+ * change and no deploy, and every image inside the archived newsletters goes
+ * with it. (That field and its `lib/data/newsletters.ts` were deleted on
+ * 2026-08-30, once `/resources/newsletters/<id>` could serve all 179 sends from
+ * this repo — which is exactly what this crosswalk made possible.)
  * The bodies themselves are already safe — `<vault>/content/<campaignId>.json`
  * holds `html`, `archive_html` and `plain_text` for all 180 sent campaigns — but
  * an HTML body full of dead `<img src>` is not an archive of a newsletter.
