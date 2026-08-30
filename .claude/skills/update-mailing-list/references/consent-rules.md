@@ -73,10 +73,13 @@ those two facts are about the same event and they disagree; do not add them.
 `import-optin-subscribers.ts` enforces exactly that much and no more: `--apply`
 refuses without `--event-unsubscribers-checked`, and `--exclude <address>` drops
 a hit by hash without ever writing the address anywhere. **The flag is an
-acknowledgement, not a verification** — no API reaches this list (verified
-2026-08-30 against the live OpenAPI document: `campaign`, `unsubscri`, `notify`,
-`follower` and `send` appear nowhere in the spec) and the page has no export, so
-nothing in the repo can check it. A human looking is the only check there is.
+acknowledgement, not a verification**, and the reason is not that nobody has
+written the client — it is that **no endpoint exists**. The Humanitix public API
+is v1.21.0 with 14 endpoints, and `campaign`, `unsubscri`, `notify`, `follower`,
+`send` and `host profile` appear **nowhere** in its OpenAPI document (checked
+2026-08-30 against <https://api.humanitix.com/v1/documentation/json>). Add the
+missing export button and there is still nothing to call. A human looking is the
+only check there is.
 
 ### Where things actually stand
 
