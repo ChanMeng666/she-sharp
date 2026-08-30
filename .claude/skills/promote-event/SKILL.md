@@ -1,6 +1,6 @@
 ---
 name: promote-event
-description: Announce ONE upcoming She Sharp event to the newsletter subscribers, building the email from the event's own record in `lib/data/json/events-custom.json` so the date, time, venue and registration link cannot disagree with the website. Use whenever someone wants the subscribers told about an event that has not happened yet — phrases like "email the list about the Les Mills panel", "tell everyone about next month's event", "promote Thursday's night to the mailing list", "send out the event announcement", "can we let subscribers know about the hackathon", "宣传一下下个月的活动", "给邮件名单发个活动通知", "把这场活动群发给订阅者", "发个活动预告", "通知订阅者来参加". It generates the MessageSpec with `scripts/email/event-announcement-spec.ts` and then HANDS OVER to `/email-the-community` from its Step 3 onward for rendering, gating, preview, test send, plan block, batch build and send — it duplicates none of that. Not for emailing people who registered (that is `/send-event-emails`), not for the monthly newsletter, and it sends to the newsletter subscriber table, which now holds the whole imported Mailchimp list — so a send here reaches real people, and nothing has ever been sent from that list before.
+description: Announce ONE upcoming She Sharp event to the newsletter subscribers, building the email from the event's own record in `lib/data/json/events-custom.json` so the date, time, venue and registration link cannot disagree with the website. Use whenever someone wants the subscribers told about an event that has not happened yet — phrases like "email the list about the Les Mills panel", "tell everyone about next month's event", "promote Thursday's night to the mailing list", "send out the event announcement", "can we let subscribers know about the hackathon", "宣传一下下个月的活动", "给邮件名单发个活动通知", "把这场活动群发给订阅者", "发个活动预告", "通知订阅者来参加". It generates the MessageSpec with `scripts/email/event-announcement-spec.ts` and then HANDS OVER to `/email-the-community` from its Step 3 onward for rendering, gating, preview, test send, plan block, batch build and send — it duplicates none of that. Not for emailing people who registered (that is done in Humanitix -> Email campaigns, not from this repo), not for the monthly newsletter, and it sends to the newsletter subscriber table, which now holds the whole imported Mailchimp list — so a send here reaches real people, and nothing has ever been sent from that list before.
 ---
 
 # Announce one upcoming event to the mailing list
@@ -55,7 +55,7 @@ Unsure? Run Step 1. It reads the repo and writes nothing.
 
 | The ask is | Use instead |
 |---|---|
-| Joining details, a room number, a reminder or a thank-you for people who **registered** | `/send-event-emails` |
+| Joining details, a room number, a reminder or a thank-you for people who **registered** | Humanitix -> Email campaigns — no skill here does this |
 | An announcement that is not about one event — a mentoring round, a policy change, a call for volunteers | `/email-the-community` |
 | This month's newsletter issue | `/monthly-newsletter` |
 | Add these attendees to the mailing list | `/update-mailing-list` |
@@ -289,8 +289,9 @@ wins — it is the one that owns the send.
   send belongs to `/email-the-community`.
 - Add, remove, import or suppress anyone on the subscriber list —
   `/update-mailing-list` owns every write to it.
-- Email the people who registered for the event. That is `/send-event-emails`,
-  and the line between them is consent, not convenience.
+- Email the people who registered for the event. That is done in Humanitix ->
+  Email campaigns, not from this repo, and the line between them is consent, not
+  convenience.
 - Duplicate `/email-the-community`'s gates, ledger, approval block or batch
   build. One implementation, one place.
 - Edit `lib/data/json/events-custom.json`. A wrong date is fixed in the event

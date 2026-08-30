@@ -234,8 +234,7 @@ copy one, change the event name, and press Enter.
 | A poster, a Humanitix banner, social tiles | *"make a poster for the AUT night"* | **Marketing** |
 | A different version of the artwork | *"try it again with a darker picture"* | **Marketing** |
 | One graphic per speaker, plus the line-up | *"make a poster for each of the speakers"* | **Marketing** |
-| Email the people who registered | *"send the room number to everyone who registered for Thursday"* | **Events or Comms** |
-| Thanks, feedback and photos afterwards | *"the event's finished — send a thank-you and ask for feedback"* | **Events or Comms** |
+| Email the people who registered — reminders, the room number, the thank-you | **not here.** Humanitix -> Email campaigns | **Events or Comms** |
 | Tell the mailing list about an event | *"tell the list about next month's event"* | **Comms** · blocked today |
 | See or update who is on the mailing list | *"who's on our email list?"* | **Comms** |
 | Answer the people who wrote to us | *"who hasn't been replied to yet?"* | **Comms** |
@@ -246,10 +245,11 @@ copy one, change the event name, and press Enter.
 
 If you would rather use the exact command, every row above maps to one:
 `/run-event-playbook`, `/make-event-poster` (with `--speaker all --lineup` for
-the second and third rows), `/send-event-emails`, `/promote-event`,
-`/update-mailing-list`, `/reply-to-contact-messages`, `/tweak-event-slides`,
-`/build-event-slides`, `/sync-event-from-slack`, `/monthly-newsletter`. You do
-not need them. The plain sentence is the supported way in.
+the second and third rows), `/promote-event`, `/update-mailing-list`,
+`/reply-to-contact-messages`, `/tweak-event-slides`, `/build-event-slides`,
+`/sync-event-from-slack`, `/monthly-newsletter`. You do not need them. The plain
+sentence is the supported way in. The one row with no command is the registrant
+email: no sentence reaches it, because nothing here sends it.
 
 **Two warnings that go with the two easy ones.**
 
@@ -832,7 +832,7 @@ drawn in colour in section 1, and listed skill by skill under it.
 | The campaign calendar and coordination | **Len Estioko** — Marketing Lead; owns the run sheet's Marketing tab | **Sara Ghafoor** — Marketing Lead | human work |
 | Posting to social | **Sara Ghafoor** — Marketing Lead; social media | **Lesley Gao** runs RedNote | human work |
 | Email to the mailing list | **Len Estioko** — Marketing Lead; holds the current mailing platform | See section 7 for why the new path is blocked | `/promote-event` · **Comms runs it** · blocked |
-| Email to people who registered | **Events or Comms** — whoever holds the ticket export | Nikita Kumari, Nirmala Chinnappan, Moksha Shah, Len Estioko, Sara Ghafoor | `/send-event-emails` · **Events or Comms runs it** |
+| Email to people who registered | **Events or Comms** — whoever has the Humanitix login | Nikita Kumari, Nirmala Chinnappan, Moksha Shah, Len Estioko, Sara Ghafoor | Humanitix → Email campaigns · **not this repo** |
 | The slide deck | **Whoever is running the evening** decides every word; **Chan Meng** operates the tooling | Len Estioko has built decks too | `/build-event-slides` · **joint** |
 | A change to the slides, any time up to the doors | **whoever spots it** | Live in about three minutes, with no review step | `/tweak-event-slides` · **anyone runs it** |
 | Photography on the night | **Mike McCauley** — Finance and Assets Manager | Anyone with a phone; see the rule below | human work |
@@ -1287,8 +1287,7 @@ event-lesmills-03-september-2026 — No Pain, All Gain – Getting Fit for AI
   Feedback     done     www.shesharp.org.nz/f/l03s26
   Announcement missing  no announcement broadcast has ever been recorded
                         → /email-the-community  (needs a consented Resend segment first)
-  Emails       missing  welcome, week-before, day-before, thank-you unsent
-                        → /send-event-emails
+  Emails       n/a      sent from Humanitix -> Email campaigns; this repo keeps no record of it
   Photos       n/a      the event has not happened yet
 ```
 
@@ -1313,9 +1312,8 @@ flowchart TD
   A -->|missing| A1["/promote-event<br/>⚠ needs a populated list"]
   A -->|done| D{"Deck"}
   D -->|missing| D1["/build-event-slides"]
-  D -->|done| E{"Emails"}
-  E -->|missing| E1["/send-event-emails"]
-  E -->|done| G{"Photos"}
+  D -->|done| E["Emails — always n/a:<br/>sent from Humanitix,<br/>not from this repo"]
+  E --> G{"Photos"}
   G -->|missing| G1["set galleryUrl, then<br/>build-event-archive.mts"]
   G -->|done| DONE(["nothing outstanding"])
 
@@ -1342,21 +1340,45 @@ reaches a projector or a poster.
 | T-4w | every speaker has a headshot in the event record | `/make-event-poster --speaker all --lineup` | Marketing | skill | one graphic per person + the line-up tile |
 | T-4w → T-1w | the graphics exist | post the campaign, one speaker a week | marketing | human | the campaign |
 | T-3w | the mailing list has consented contacts | `/promote-event` → `/email-the-community` | Comms | **blocked** | one scheduled broadcast |
-| T-2w | a ticket export **with an attendee email column**, in `tmp/` | `/send-event-emails welcome` | Events or Comms | skill | a ledger entry |
+| T-2w | the event is ticketed on Humanitix, and the sender has access | write the welcome mail in **Humanitix -> Email campaigns** | Events or Comms | **human, outside this repo** | a send recorded in Humanitix's console — **nothing here** |
 | T-1w | a run sheet in the event data | `/build-event-slides` | you drive, developer operates | skill | `/present/<slug>` |
-| T-7d | agenda, parking and transport known | `/send-event-emails week-before` | Events or Comms | skill | a ledger entry |
-| T-1d | room, level or the join link known | `/send-event-emails day-before` | Events or Comms | skill | a ledger entry |
+| T-7d | agenda, parking and transport known | the week-before mail in **Humanitix -> Email campaigns** | Events or Comms | **human, outside this repo** | nothing here |
+| T-1d | room, level or the join link known | the day-before mail in **Humanitix -> Email campaigns** | Events or Comms | **human, outside this repo** | nothing here |
 | T-1h | the deck already exists | `/tweak-event-slides` | anyone | skill | pushed to `main`, live in ~3 min |
 | **T+0** | — | project the deck; the `/f/<code>` QR is on the feedback slide | whoever is clicking | human | — |
-| T+1d | a feedback form URL, and the album if it exists | `/send-event-emails thank-you` | Events or Comms | skill | a ledger entry |
+| T+1d | a feedback form URL, the album if it exists, and **under 14 days since the event ended** | the thank-you in **Humanitix -> Email campaigns** | Events or Comms | **human, outside this repo** | nothing here |
 | T+3d | — | **nothing — it happens by itself** | — | automatic | the feedback digest in Slack |
 | T+1w | the photo album URL is known | post it in `#website-team`; set `galleryUrl`; `build-event-archive.mts --slug <slug>` | Event Manager, then developer | human + skill | a past-event page with its photographs |
 | T+2w | — | `/monthly-newsletter` | developer | skill | the event in the month's issue |
 | — | a fresh ticketing export and a signed-off crosswalk | attendance figures | developer | skill | `attendees` and `checkedIn` on the page |
 
 **Four emails about a two-hour evening is too many.** For a single-session event,
-`welcome` + `day-before` is usually the whole programme, with `thank-you`
-afterwards. A stage nobody asked for is not sent.
+a welcome and a day-before note is usually the whole programme, with a thank-you
+afterwards. An email nobody asked for is not sent.
+
+**Three constraints ride on those four rows, and none of them is fixable here.**
+Registrant mail was sent by a `/send-event-emails` skill until 2026-08-30; it was
+retired because it had never sent anything, because the team had been doing the
+job in Humanitix for a year, and — decisively — because its only input was a
+Humanitix CSV export, so it could serve no event Humanitix's own tool could not.
+What that costs, stated plainly rather than discovered later:
+
+1. **The mail no longer comes from `shesharp.org.nz`.** Humanitix campaigns "are
+   always sent from the Humanitix email domain"; applying a host profile changes
+   the sender *name* only. None of the SPF, DKIM or DMARC work in
+   `docs/deployment/EMAIL_AUTHENTICATION.md` applies to it.
+2. **There is a 14-day cliff.** "You can send an email campaign to any event that
+   has ended within the last 14 days." A gallery or write-up follow-up later than
+   that has no tool at all — which is why the T+1d row is a real deadline and not
+   a preference.
+3. **The tier boundary is unchanged.** Humanitix's own rule is that campaigns
+   "cannot be sent to external databases of email addresses, such as for event
+   invitations, and should not be used for promotional or marketing material" —
+   the same fulfilment-only line `lib/email/audience.ts` draws. Registrants are
+   Tier 2 and subscribers are Tier 0, wherever the mail is sent from.
+
+Source for the quotations:
+<https://help.humanitix.com/en/articles/8888873-contact-your-guests-using-the-email-campaign-tool>
 
 ---
 
@@ -1425,18 +1447,19 @@ by exactly one writer, so "who did this and when?" always has an answer.
 | `.claude/skills/sync-event-from-slack/state/sync-state.json` | `update-state.ts` (read), `discover-channels.ts` (scan) | per-conversation read + triage positions, event mapping, the carried digest |
 | `lib/deck/registry.ts`, `lib/deck/index-meta.ts` | `scripts/deck/sync-registry.ts` — **generated, never hand-edited** | which decks exist and what the site may say about them |
 | `public/img/events/<slug>/index.ts` | `build-event-poster.ts --speaker` | the campaign set, so unreferenced files are accounted for |
-| `.claude/skills/send-event-emails/state/event-emails.json` | `event-ledger.ts` | which stage reached whom, as sha256 hashes — what makes a failed send resume rather than restart |
 | `.claude/skills/email-the-community/state/broadcasts.json` | `broadcast-ledger.ts` | broadcast id and status, so one announcement cannot go twice |
 | `.claude/skills/update-mailing-list/state/roster.json` | `roster-state.ts` | which FILES have been imported, by sha256 — **`newsletter_subscribers` is the consent record, not this file** |
 | `.claude/skills/reply-to-contact-messages/state/inbox-state.json` | `inbox-state.ts` | a run log, **not** a gate — `reviewed_at` in the database is the idempotency truth |
 | `lib/data/event-archive-photos.ts` | `scripts/build-event-archive.mts` | harvested gallery photos per slug |
 | `lib/docs/playbook.ts` | `scripts/docs/build-playbook.mts` — **generated, never hand-edited** | `/internal/event-playbook`, compiled from exactly one source, `docs/development/EVENT_PLAYBOOK.md` — **not this file**, so editing this document never needs the generator re-run |
 
-Eleven skills live in `.claude/skills/`. Nine of them appear somewhere above;
+Ten skills live in `.claude/skills/`. Eight of them appear somewhere above;
 `/run-event-playbook` conducts the rest, and `/reply-to-contact-messages` sits
 outside the event pipeline entirely — it answers the people who write in through
 the contact form, and it is the only skill needing the database, Slack and the
-mail sender at once.
+mail sender at once. **One step in the table above has no skill and no state
+file**: the mail to an event's registrants, which is sent from Humanitix and
+leaves no trace here by design.
 
 ## 15. What fails the build
 
@@ -1446,8 +1469,8 @@ reason `/tweak-event-slides` runs its three checks locally before it pushes.
 
 - `scripts/verify-image-paths.ts` — every referenced image resolves, every file
   is referenced, every event image sits in its own event's folder
-- `scripts/events/event-status.test.ts` — the lifecycle report still reads all
-  seven of its sources
+- `scripts/events/event-status.test.ts` — the lifecycle report still reads every
+  source it depends on
 - `.claude/skills/sync-event-from-slack/scripts/state-lib.test.ts` and
   `audit-read-state.ts` — the read-position rules, and no unread backlog
 - `lib/deck/deck.test.ts` — every deck registered, copy and rhythm limits, and

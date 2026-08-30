@@ -67,7 +67,7 @@ Trigger conditions (examples — don't wait for an exact match):
 | The ask is | Use instead |
 |---|---|
 | Put the event on the website in the first place | `sync-event-from-slack` |
-| Email the people who registered | `send-event-emails` |
+| Email the people who registered | Humanitix -> Email campaigns, not this repo |
 | Tell the mailing list about the event | `email-the-community` |
 | The monthly newsletter | `monthly-newsletter` |
 

@@ -53,7 +53,7 @@ the real subscriber count usually settles the question.
 |---|---|
 | This month's newsletter issue — founder note, recap, photos, pulse | `/monthly-newsletter` |
 | To add, remove, import or suppress people on the list | `/update-mailing-list` |
-| Joining instructions or a reminder for one event's registrants | `/send-event-emails` |
+| Joining instructions or a reminder for one event's registrants | Humanitix -> Email campaigns — no skill here does this |
 | To answer someone who wrote in through the contact form | `/reply-to-contact-messages` |
 
 The tell: if the recipients are defined by *something they individually did*
@@ -544,13 +544,15 @@ the committed register.
 |---|---|---|---|---|
 | One announcement to the whole list | `marketing` | `recipients-from-db.ts` → `build-batch.ts` → `resend emails batch` | Signed per-recipient link | **this one** |
 | The monthly newsletter issue | `marketing` | `scripts/newsletter/approve.ts` | Signed per-recipient link | `/monthly-newsletter` |
-| Joining details for people who registered for an event | `transactional` | `normalize-recipients.ts` → `build-batch.ts` | Not applicable | `/send-event-emails` |
+| Joining details for people who registered for an event | `transactional` | Humanitix -> Email campaigns | Not applicable | — (not sent from this repo) |
 | A reply to someone who wrote in | `transactional` | `emails send`, one recipient | Not applicable | `/reply-to-contact-messages` |
 | Password reset, receipt, application update | `transactional` | the app's own `lib/email/service.ts` | Not applicable | — (app code) |
 
 If the user wants a `marketing` send to people who are not subscribers, the
 answer is never "loop `emails send`". It is either invite them to subscribe
-(`/update-mailing-list`) or re-scope it as fulfilment (`/send-event-emails`).
+(`/update-mailing-list`) or re-scope it as fulfilment — and fulfilment mail to
+one event's registrants is sent from Humanitix -> Email campaigns, not from
+here. Re-scoping it does not turn it back into a job for this skill.
 
 ## Common failure modes and how to recover
 

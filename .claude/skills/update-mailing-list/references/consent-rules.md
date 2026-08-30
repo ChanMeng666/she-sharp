@@ -1,9 +1,16 @@
 # Consent rules — who She Sharp may email, and why
 
 This is the shared compliance baseline for every She Sharp email skill
-(`update-mailing-list`, `send-event-emails`, `email-the-community`,
-`reply-to-contact-messages`). When any of them has to decide "may we send this
-to these people?", the answer is here.
+(`update-mailing-list`, `email-the-community`, `reply-to-contact-messages`).
+When any of them has to decide "may we send this to these people?", the answer
+is here.
+
+It also states the rule for mail this repo no longer sends. Tier 2 fulfilment
+mail to one event's registrants is now sent from **Humanitix -> Email
+campaigns**, and the tier below is what may go in it — the boundary did not move
+when the tool did. Humanitix draws the same line from its own side: campaigns
+"cannot be sent to external databases of email addresses, such as for event
+invitations, and should not be used for promotional or marketing material".
 
 It is written for the person who would have to explain the decision afterwards —
 to a recipient who is annoyed, to a board member, or to the Privacy

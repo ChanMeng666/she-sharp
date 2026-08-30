@@ -80,12 +80,15 @@ jobs:
         run: npx tsx .claude/skills/sync-event-from-slack/scripts/audit-read-state.ts
 
       # Also shares this checkout — offline and pure data. The lifecycle report
-      # is the front door of the event pipeline: it reads seven separate state
+      # is the front door of the event pipeline: it reads several separate state
       # sources to say what is still outstanding for an event. Every one of them
       # is owned by something else, so the failure it must survive is a source
       # moving underneath it — a poster rebuilt under a new suffix, a deck slug
       # that stops matching its event, a ledger whose shape changed. The test
-      # runs against the real repository data for exactly that reason.
+      # runs against the real repository data for exactly that reason. It also
+      # holds the one check that can no longer be answered from a file: mail to
+      # an event's registrants is sent from Humanitix and must read `n/a`, never
+      # a `missing` nobody in this repo could ever clear.
       - name: Verify the event lifecycle report
         run: npx tsx scripts/events/event-status.test.ts
 

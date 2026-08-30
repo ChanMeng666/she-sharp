@@ -166,11 +166,25 @@ check("the deck check reports what DECK_INDEX says", () => {
   assert.ok(entry.detail.includes(String(deck.slideCount)), `slide count absent from: ${entry.detail}`);
 });
 
-check("nothing has been emailed or announced for it yet", () => {
-  const emails = checkById(upcoming, "emails");
-  assert.equal(emails.state, "missing");
-  assert.ok(emails.fix?.includes("send-event-emails"), `unhelpful fix: ${emails.fix}`);
+check("no announcement has gone out for it yet", () => {
   assert.equal(checkById(upcoming, "announcement").state, "missing");
+});
+
+// Registrant mail is sent from Humanitix's own Email campaigns tool and leaves
+// no trace in this repository, so the only thing worth asserting is that the
+// report says so rather than inventing an answer. It must never read `missing`:
+// a permanent outstanding line nobody in this repo can ever clear is exactly
+// the noise that teaches people to skip the report.
+check("registrant email is reported as Humanitix's, never as outstanding work", () => {
+  for (const report of [upcoming, past]) {
+    const emails = checkById(report, "emails");
+    assert.equal(emails.state, "n/a");
+    assert.equal(emails.fix, null);
+    assert.ok(
+      /humanitix/i.test(emails.detail),
+      `the line should name where the mail is actually sent from, got: ${emails.detail}`,
+    );
+  }
 });
 
 check("photos are not asked of an event that has not happened", () => {
@@ -210,7 +224,6 @@ check("every state file it reads is where it expects, or absent", () => {
   // `statusForEvent` above would already have thrown on one.
   for (const file of [
     ".claude/skills/sync-event-from-slack/state/sync-state.json",
-    ".claude/skills/send-event-emails/state/event-emails.json",
     ".claude/skills/email-the-community/state/broadcasts.json",
   ]) {
     const full = path.join(REPO_ROOT, file);
