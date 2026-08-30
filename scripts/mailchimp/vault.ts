@@ -2,9 +2,11 @@
  * Locates the Mailchimp export vault and reads files out of it.
  *
  * The vault holds the raw audience exports — 3,689 contacts with names,
- * employers, 1,586 opt-in IP addresses (`OPTIN_IP`; `CONFIRM_IP`, the one the
- * API calls `ip_signup`, is empty on every row), 162 phone numbers and 115
- * street addresses. It is gitignored (`/private/`), which means git will not back it
+ * employers, opt-in IP addresses, 162 phone numbers and 115 street addresses.
+ * The IP column is `OPTIN_IP`, populated on 1,586 of those 3,689 counting CSV
+ * records rather than lines (1,591 if the separate five-row `archived` export
+ * is included); `CONFIRM_IP` — what the API calls `ip_signup` — is empty in all
+ * five files, so none of these is a *sign-up* IP. It is gitignored (`/private/`), which means git will not back it
  * up and `git clean -xdf` will delete it. **The in-repo copy is a cache, not
  * the archive of record.**
  *

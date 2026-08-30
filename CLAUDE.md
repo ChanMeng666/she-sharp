@@ -478,11 +478,17 @@ payout, access-code or discount reports.
 **Mailchimp audience archive.** The `She#` audience export (2019→, 3,689
 contacts, 229 tags) reduced to counts in `lib/data/json/mailchimp/` and read
 through `lib/data/mailchimp.ts`. Same split as Humanitix: the raw CSVs are
-*entirely* addresses — names, phones, and **1,586 opt-in IPs** — so they live in
-the gitignored vault (`/private/`) and in the private archive repo, never in git.
-That 1,586 is `OPTIN_IP` over all 3,689 contacts, of which **861** sit on the
-1,560 subscribed; `CONFIRM_IP` — the column the API calls `ip_signup` — is empty
-on every row of every file, so do not call any of them sign-up IPs.
+*entirely* addresses — names, phones, and opt-in IPs — so they live in the
+gitignored vault (`/private/`) and in the private archive repo, never in git.
+The load-bearing fact about those IPs is the exact one: **`CONFIRM_IP` is empty
+in all five export files**, and `CONFIRM_IP` is the column the API calls
+`ip_signup` — so none of them is a *sign-up* IP, whatever this file used to say.
+`OPTIN_IP` is the populated one, and a total for it needs its counting rule
+stated: **1,586 over the four audience files** that make up the 3,689 contacts,
+**861** of them on the 1,560 subscribed, or 1,591 if you also count the separate
+five-row `archived` export. Count CSV **records, not lines** — one subscribed
+contact's street address carries embedded newlines, and that single row is the
+whole of the 1,560-vs-1,563 and 861-vs-860 wobble.
 Three traps before quoting anything: the list is **1,560**, not 3,689 (the rest
 left, bounced, or never subscribed); Mailchimp's own dashboard says **3,145**
 because it excludes the 544 hard-bounced; and a `Ticket Type:`/`Event:` tag is
