@@ -127,8 +127,11 @@ async function main(): Promise<void> {
 
   // One email per address, deliberately NOT a single send with an array `to:`.
   // An array would place every reviewer in one visible `To:` header and expose
-  // their addresses to each other. The ~600 ms spacing keeps us under Resend's
-  // default account limit of 2 requests per second.
+  // their addresses to each other. The ~600 ms spacing is a margin rather than
+  // the limit: Resend allows 10 requests/second per team, the same on every
+  // plan, and that budget is shared with the live site's transactional mail.
+  // This comment said "the free tier's 2 requests per second" until
+  // 2026-08-30, which was wrong about both the number and the reason.
   for (let i = 0; i < total; i++) {
     const recipient = recipients[i];
     const label = `[${String(i + 1).padStart(width, "0")}/${total}]`;
