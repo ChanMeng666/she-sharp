@@ -195,10 +195,11 @@ Write the spec to `tmp/specs/announce-<slug>.json` (shape in
 }
 ```
 
-- **`engine: "react"`** — the branded announcement template, and the only engine
-  whose footer carries an unsubscribe link at all. `"layout"` is the
-  transactional design with no opt-out footer and fails the `unsubscribe` gate
-  on marketing mail.
+- **`engine: "react"`** — the branded announcement template, and the one that
+  supports a cover image. `"layout"` is the transactional design. This is not a
+  gate decision: `composeMessage` appends the unsubscribe placeholder to *any*
+  marketing spec, so both engines fail `unsubscribe` and `absolute-urls`
+  identically at Step 3.
 - **`category: "marketing"`** — makes the gates strict, and switches on the
   three refusals in Step 7 that protect the opt-out link.
 - **Nine block types**, as a colleague would see them: `paragraph` (a paragraph;
@@ -226,22 +227,44 @@ npx tsx scripts/email/render-message.ts tmp/specs/announce-mentoring-round-open.
 ```
 
 `--mode broadcast` is what ships and is gated strictly. Files land at
-`tmp/emails/<key>.broadcast.{html,txt}`. A clean run ends:
+`tmp/emails/<key>.broadcast.{html,txt}`.
+
+**Two gates fail on every marketing spec, and that is the system working.** A
+good run of this step ends like this, not with a green line:
 
 ```
-Email gates — 13.9KB rendered
-  ✓ all gates passed
+Email gates — 12.9KB rendered
+  ✗ absolute-urls: … Offending: %%SHESHARP_UNSUBSCRIBE_URL%%
+  ✗ unsubscribe: category="marketing" requires an unsubscribe link: either the
+    {{{RESEND_UNSUBSCRIBE_URL}}} merge tag or an https:// opt-out link in the footer.
 ```
+
+The footer carries the literal `%%SHESHARP_UNSUBSCRIBE_URL%%`, because the real
+URL is signed per recipient and cannot exist before there is a recipient. The
+gates exempt `{{{merge tags}}}` from `absolute-urls` but not that placeholder,
+and `unsubscribe` accepts only the retired `{{{RESEND_UNSUBSCRIBE_URL}}}` tag or
+a real `https://…unsubscribe` href — so neither can pass at render time, on any
+marketing spec, on either engine. **Do not try to "fix" them.** Hand-writing an
+https opt-out link, or switching engine, replaces a working per-person
+unsubscribe with a broken one.
+
+**They are not being skipped — they are checked later, on the real bytes.**
+Step 7's `build-batch.ts` substitutes each person's signed URL and *then* runs
+these same strict gates on the substituted message, exiting 1 and writing
+nothing if they fail. That is the run that protects the opt-out link.
 
 `render-message.ts` now prints the two-step batch route itself — the recipient
 build and then the batch build. Neither sends.
 
 A failed gate exits 1 but **still writes the HTML and text**, so you can open the
-render and see what tripped:
+render and see what tripped. **Anything red beyond those two is real:**
 
-- **`unsubscribe`** (fail) — almost always `engine: "layout"`. Switch to `"react"`.
-- **`absolute-urls`** (fail) — a link written `/mentorship` rather than the full
+- **`absolute-urls`** naming anything *besides* the placeholder (fail) — a link
+  written `/mentorship` rather than the full
   `https://www.shesharp.org.nz/mentorship`. Email clients have no base URL.
+- **`unsubscribe` *without* the matching `absolute-urls` placeholder line**
+  (fail) — the footer's opt-out is missing rather than pending, which means
+  something hand-wrote `footerExtra`. Investigate; do not send.
 - **`image-format`** (fail) — a `.webp` cover, or an image with no extension.
 - **`size-100kb`** (fail) — Gmail clips above ~102KB, hiding the footer *and the
   unsubscribe link*. Trim copy or shrink the cover.
@@ -254,7 +277,8 @@ render and see what tripped:
   internal. Remove them, and declare what you removed on the plan block's
   `Redactions:` line so the user can overrule you.
 
-**Never build a batch from a red render.**
+**Never build a batch from a render that is red for any reason beyond those
+two placeholder failures.**
 
 ## Step 4 — Preview with the DRAFT banner
 
@@ -580,10 +604,6 @@ trim copy; do not send it anyway.
 
 **`✗ image-format: WebP image(s) found`** — Outlook cannot decode WebP and shows
 a broken-image box. Re-export the cover as JPEG and update `cover.url`.
-
-**The render script printed a `resend broadcasts create` command** — ignore it.
-`render-message.ts` still prints the pre-batch skeleton for marketing specs and
-there is no segment to fill into it. Step 7 is the real next step.
 
 **"Can I cancel the one I sent?"** — no. There is no scheduled state and no
 recall. If it is out, say so plainly and discuss a correction email instead.

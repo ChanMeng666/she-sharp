@@ -14,6 +14,7 @@
 import assert from "node:assert";
 
 import {
+  formatMailableCounts,
   isTerminal,
   selectMailable,
   type CommittedEntry,
@@ -211,6 +212,62 @@ check("mixed lists partition without loss", () => {
   );
   assert.strictEqual(result.mailable.length + result.excluded.length, 2);
   assert.strictEqual(result.mailable[0].emailHash, HASH_A);
+});
+
+// ---------------------------------------------------------------------------
+// The reconcile report's counts
+//
+// `suppression.ts reconcile` is named by CLAUDE.md, consent-rules.md and three
+// skills as THE command for "how big is the list?", so the line people read has
+// to be the number a send would reach. It used to be the pre-suppression count
+// under a label that said otherwise.
+// ---------------------------------------------------------------------------
+
+/** Reads one labelled value out of the formatted count block. */
+function countLine(lines: string[], label: string): number {
+  const hit = lines.find((line) => line.startsWith(`${label}:`));
+  assert.ok(hit, `no "${label}" line in: ${lines.join(" | ")}`);
+  return Number(hit.slice(hit.indexOf(":") + 1).trim());
+}
+
+check("the reported net figure is the post-suppression count, not the raw one", () => {
+  const result = selectMailable(
+    [sub(HASH_A, NEW), sub(HASH_B, OLD)],
+    [optout(HASH_B, "one-click", NEW)],
+    []
+  );
+  const lines = formatMailableCounts(result, 1, 0);
+
+  assert.strictEqual(countLine(lines, "Subscribed rows"), 2);
+  assert.strictEqual(
+    countLine(lines, "Mailable after suppression"),
+    1,
+    "the net line must exclude the suppressed row, or the list is quoted too large"
+  );
+});
+
+check("the two totals differ by exactly the drift count", () => {
+  const result = selectMailable(
+    [sub(HASH_A, NEW), sub(HASH_B, OLD)],
+    [optout(HASH_B, "one-click", NEW)],
+    []
+  );
+  const lines = formatMailableCounts(result, 1, 0);
+  const gap = countLine(lines, "Subscribed rows") - countLine(lines, "Mailable after suppression");
+  assert.strictEqual(gap, result.excluded.length);
+});
+
+check("a re-subscribed address counts as mailable, not as drift", () => {
+  const result = selectMailable([sub(HASH_A, NEW)], [optout(HASH_A, "one-click", OLD)], []);
+  const lines = formatMailableCounts(result, 1, 0);
+  assert.strictEqual(countLine(lines, "Subscribed rows"), 1);
+  assert.strictEqual(countLine(lines, "Mailable after suppression"), 1);
+});
+
+check("the count block carries the register sizes it was given", () => {
+  const lines = formatMailableCounts(selectMailable([sub(HASH_A, NEW)], [], []), 7, 2144);
+  assert.strictEqual(countLine(lines, "Runtime opt-outs"), 7);
+  assert.strictEqual(countLine(lines, "Committed register"), 2144);
 });
 
 // ---------------------------------------------------------------------------
