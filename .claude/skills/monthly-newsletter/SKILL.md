@@ -62,21 +62,35 @@ repo and nothing else. They are the prerequisites for the steps that follow.
    cutover has not happened.
 
    So if someone asks you to "send this month's newsletter" through this skill,
-   do every step up to and including the test send, and then **stop and ask.**
-   Two approvals are needed before a single real recipient is mailed, and
-   neither can be inferred from the other:
+   the answer is not "yes" and not "no" — it is the **three-stage approval
+   chain** below, in order. Each stage is recorded in the issue ledger, and the
+   batch build in Step 8d is gated on all three being on the record:
 
-   - **The founder's approval for this issue.** The first send from this list is
-     the organisation's cutover, not a technical step.
-   - **A per-batch approval for each ramp slice.** The first send is ramped
-     — `recipients-from-db.ts --restrict-to-hashes` for the warm cohort, or
-     `--limit` for a plain first-N slice — not fired at the whole list at once,
-     and each slice is approved on its own.
+   1. **Your own test mailbox** (Step 6). Whoever is running this skill names
+      their own inbox. Not the founder's, not a colleague's, and — unless you
+      are the developer — not `chanmeng6666@gmail.com`, which this file used to
+      hardcode as "the single approved test mailbox". One person, proving the
+      render.
+   2. **The review round** (Step 6b). The founder together with the internal
+      staff on the roster, one email each. This is **how the founder sees the
+      issue**, so it comes *before* her approval, not after it.
+   3. **The founder's approval** (Step 8b), with the evidence for it — a Slack
+      permalink, her email, or plainly "said so on the call". **Only this gates
+      the broadcast.** The first send from this list is the organisation's
+      cutover, not a technical step.
 
-   The reason is the account-wide complaint ceiling — **0.08%, about 1.25
-   complaints on a full send** — and the consequence of breaching it, which is
-   that password resets and donation receipts stop with the newsletter.
-   Account detail: `docs/deployment/EMAIL_AUTHENTICATION.md`.
+   Then, and separately, **each ramp slice is approved on its own**:
+   `recipients-from-db.ts --restrict-to-hashes` for the warm cohort, or
+   `--limit` for a plain first-N slice — never the whole list at once.
+
+   The reason all of this exists is the account-wide complaint ceiling —
+   **0.08%, about 1.25 complaints on a full send** — and the consequence of
+   breaching it, which is that password resets and donation receipts stop with
+   the newsletter. Account detail: `docs/deployment/EMAIL_AUTHENTICATION.md`.
+   The same ceiling is why there is a **frequency cap**: three marketing sends
+   per calendar month across `/monthly-newsletter`, `/email-the-community` and
+   `/promote-event`, counted for you by the ledger, because until 2026-08-30
+   none of those three skills could see what the other two had sent.
 7. `EMAIL_UNSUBSCRIBE_SECRET` — signs each recipient's personal unsubscribe
    link. The batch build in Step 8d **hard-fails without it**; there is no
    fallback and no way to skip it. It lives on Vercel production and is **not**
@@ -656,42 +670,98 @@ Writes `tmp/emails/newsletter-2026-08.<mode>.html`. Check:
 - Light **and** dark inbox appearance; all images load (URLs absolute); no photo
   repeats across cover / POM / strip / recap thumbnails.
 
-## Step 6 — Test send
+## Step 6 — Stage 1: test send, to YOUR OWN mailbox
 
-**Default: send ONLY to `chanmeng6666@gmail.com`** — the single approved test
-mailbox. This is always the first send, and by default the only one.
+**Ask the person running this skill for their own address, and send only there.**
+One mailbox, theirs.
+
+Until 2026-08-30 this step hardcoded `chanmeng6666@gmail.com` and called it "the
+single approved test mailbox". That is the *developer's* personal inbox, and
+this skill is run by the newsletter department — so the instruction sent a
+newsletter person's proof copy to somebody else, and gave them no way to see
+their own render. If you *are* the developer, that address is still the right
+one. If you are not, it is the wrong one.
 
 ```powershell
 $env:RESEND_API_KEY="re_…"
-npx tsx scripts/newsletter/send-test.ts lib/data/json/newsletter-issues/2026-08.json chanmeng6666@gmail.com
+npx tsx scripts/newsletter/send-test.ts lib/data/json/newsletter-issues/2026-08.json you@example.com
 ```
 
 This uses the transactional `sendEmail` helper with a `[TEST]` subject prefix — it
 does NOT touch the subscriber list and does NOT send a batch. Inspect in Gmail (web + mobile)
 and Outlook: layout, images, links, preheader.
 
-### Step 6b — Reviewer round (only on explicit approval)
-
-Sometimes the founder wants a wider human review before the real send. That is
-allowed under all of these conditions:
-
-- Step 6 has already been sent **and the founder has explicitly approved widening**.
-  Never expand the recipient list on your own initiative.
-- The list is a named reviewer list supplied by the founder — never the mailing
-  list, never anyone who merely attended an event.
-- **Maximum 25 addresses** (the script hard-caps this).
-- **One email per address.** The script loops rather than passing an array to
-  `to:`, so reviewers never see each other's addresses.
+Then put it on the record. **No address is stored** — the ledger keeps a count
+and a truncated hash, because `state/issues.json` is committed:
 
 ```powershell
-npx tsx scripts/newsletter/send-test.ts lib/data/json/newsletter-issues/2026-08.json "a@x.com,b@y.com" --dry-run
-npx tsx scripts/newsletter/send-test.ts lib/data/json/newsletter-issues/2026-08.json "a@x.com,b@y.com"
+npx tsx .claude/skills/monthly-newsletter/scripts/issue-ledger.ts record-test `
+  --issue 2026-08 --to "you@example.com"
 ```
 
-Always `--dry-run` first and read the parsed list back before the real send.
-
 Iterate Steps 3–6 until it matches the June bar — **email UI quality is the
-pilot's acceptance bar.**
+pilot's acceptance bar.** Re-recording stage 1 after a fix is fine; it
+overwrites, keeping the latest.
+
+### Step 6b — Stage 2: the review round (the founder AND internal staff)
+
+**This is not optional, and it is not gated on the founder's approval.** It is
+*how she sees the issue.* The old version of this step required "the founder has
+explicitly approved widening" before the round could go out, which asked her to
+approve an issue nobody had shown her. Her approval is stage 3, and it comes
+after this.
+
+Resolve who is on the round first — this script reads the roster in
+`lib/email/newsletter-reviewers.ts` and prints the commands that follow:
+
+```powershell
+npx tsx .claude/skills/monthly-newsletter/scripts/review-round.ts --issue 2026-08
+```
+
+**It will refuse today, and that is correct.** The roster names only the founder
+(`mahsa`, the one reviewer mailbox this repo has on record and probed), because
+the rest of the newsletter, marketing and events reviewers have not been
+supplied yet. A "the team reviewed it" round sent to one person is not a review
+round, so the script exits non-zero rather than shrinking silently. Name the
+round explicitly:
+
+```powershell
+npx tsx .claude/skills/monthly-newsletter/scripts/review-round.ts --issue 2026-08 `
+  --reviewers "mahsa@shesharp.org.nz,someone@shesharp.org.nz"
+```
+
+Then ask the maintainer to add those people to `NEWSLETTER_REVIEWERS` so the
+next issue does not have to be told again. Every entry there is cross-checked
+against `OWN_MAILBOXES` by `npx tsx lib/email/newsletter-reviewers.test.ts` —
+seven addresses this project published for a year had never been created, and
+mail to a mailbox that does not exist looks, from the sender's side, exactly
+like mail that worked.
+
+The protections on the send itself are unchanged:
+
+- **Maximum 25 addresses** (`send-test.ts` hard-caps this; `review-round.ts`
+  refuses at the same number before you get there).
+- **One email per address.** The script loops rather than passing an array to
+  `to:`, so reviewers never see each other's addresses.
+- **Always `--dry-run` first** and read the parsed list back before the real send.
+- Never the mailing list, and never anyone who merely attended an event.
+
+```powershell
+npx tsx scripts/newsletter/send-test.ts lib/data/json/newsletter-issues/2026-08.json "a@shesharp.org.nz,b@shesharp.org.nz" --dry-run
+npx tsx scripts/newsletter/send-test.ts lib/data/json/newsletter-issues/2026-08.json "a@shesharp.org.nz,b@shesharp.org.nz"
+```
+
+Record stage 2 — hashes and counts only, as before:
+
+```powershell
+npx tsx .claude/skills/monthly-newsletter/scripts/issue-ledger.ts record-review `
+  --issue 2026-08 --to "a@shesharp.org.nz,b@shesharp.org.nz"
+```
+
+**Stage 3 cannot be recorded until this is on the record.** `record-approval`
+refuses outright when stage 2 is missing, and `check` refuses an approval whose
+timestamp lands before the review round it is supposed to follow — that
+backwards order *is* the bug this chain replaces.
 
 ## Step 7 — Ship (commit + deploy)
 
@@ -728,12 +798,19 @@ deliberate state: the archive is for people who follow the link, not for search.
 ## Step 8 — Approve, then build and send the batches
 
 This step used to be one command. It is now six small ones, in order: check the
-domain's health (8a), mark the issue approved (8b), build the recipient list from
-the database (8c), build the batch files (8d), send them (8e), and — only if a
-send is interrupted — resume without double-mailing (8f).
+domain's health (8a), record the founder's approval and mark the issue approved
+(8b), build the recipient list from the database (8c), build the batch files
+behind the approval-chain gate (8d), send them (8e), and — only if a send is
+interrupted — resume without double-mailing (8f).
 
 **Nothing in 8a–8d sends any email.** The only step that puts mail in inboxes is
 8e, and a **human** runs it.
+
+Before starting, see where the issue stands:
+
+```powershell
+npx tsx .claude/skills/monthly-newsletter/scripts/issue-ledger.ts show --issue 2026-08
+```
 
 ### Step 8a — Deliverability check (before approving)
 
@@ -836,7 +913,30 @@ The **Reply-To is `info@shesharp.org.nz`**, and that difference is deliberate.
 password and a direct "does anyone read this inbox?" in Slack went unanswered,
 so every subscriber who pressed Reply was writing into nothing.
 
-### Step 8b — Approve the issue
+### Step 8b — Stage 3: record the founder's approval, then approve the issue
+
+**Two different things, in this order.** The first is the organisational fact —
+the founder said yes. The second is the server-side marker that makes the web
+version and the send slot official.
+
+First, only once she has actually said yes, and with what proves it:
+
+```powershell
+npx tsx .claude/skills/monthly-newsletter/scripts/issue-ledger.ts record-approval `
+  --issue 2026-08 --by "Mahsa" `
+  --evidence "https://shesharp.slack.com/archives/C0ABC/p1756512345"
+```
+
+`--evidence` is **mandatory and the command refuses without it.** An approval
+with nothing behind it is somebody's recollection written into a file that will
+outlive the conversation; a Slack permalink, the subject line of her email, or
+plainly `"said so on the 10am call, 2026-08-30"` are all fine. What is not fine
+is an empty string, and `check` treats blank evidence as no approval at all.
+
+It also **refuses if stage 2 is not on the record** — she cannot have approved
+an issue she was never sent.
+
+Then the existing server-side approval, unchanged:
 
 ```powershell
 $env:BASE_URL="https://www.shesharp.org.nz"; $env:CRON_SECRET="…"
@@ -901,7 +1001,8 @@ add anyone who is not already a confirmed, unsuppressed subscriber:
 
 - `--only <address>` — narrow to one person. This is how you do a **real batch
   test**: the same machinery as the live send, aimed at a single confirmed
-  mailbox.
+  mailbox. Use your own address if it is a confirmed subscriber; the one below
+  is an example, not a default.
   ```powershell
   npx tsx scripts/email/recipients-from-db.ts --key newsletter-2026-08 --only chanmeng6666@gmail.com
   ```
@@ -926,14 +1027,50 @@ add anyone who is not already a confirmed, unsuppressed subscriber:
 **Whether to ramp, and how big the first slice is, is the founder's decision,
 not yours.** Ask.
 
-### Step 8d — Build the batch files
+### Step 8d — Build the batch files (behind the approval-chain gate)
+
+**Run it as one command with the gate in front.** The `&&` is the point: the
+ledger's `check` exits non-zero when any stage of the chain is missing, so the
+build cannot run on an issue nobody approved, and the step cannot be
+half-performed by someone scrolling past a warning.
 
 ```powershell
-npx tsx scripts/newsletter/build-newsletter-batch.ts 2026-08 `
-  --recipients tmp/emails/recipients-newsletter-2026-08.json
+npx tsx .claude/skills/monthly-newsletter/scripts/issue-ledger.ts check --issue 2026-08 `
+  && npx tsx scripts/newsletter/build-newsletter-batch.ts 2026-08 `
+       --recipients tmp/emails/recipients-newsletter-2026-08.json
 ```
 
-This renders the issue once, then for each recipient substitutes their own
+If `check` fails it prints exactly which stage is missing and the command that
+records it. Do not work around it — go back and do the stage. The two refusals
+worth naming in advance:
+
+- *"FREQUENCY CAP: N marketing send(s) already on the record"* → three marketing
+  emails have already gone to these inboxes this calendar month, counting
+  `/email-the-community` and `/promote-event` as well as this skill. If sending
+  anyway is genuinely the right call, it is a decision somebody makes on the
+  record:
+  ```powershell
+  npx tsx .claude/skills/monthly-newsletter/scripts/issue-ledger.ts check --issue 2026-08 `
+    --override-frequency "why this fourth send is worth the complaint risk"
+  ```
+  The override is written into the ledger with the reason and the count it
+  overrode, and it stays there. It applies to that month only.
+- *"an approval dated BEFORE the review round"* → the record has the founder
+  approving before she was shown the issue. Fix the record, or fix the order.
+
+After each chunk goes out in 8e, record it, so an interrupted ramp is resumable
+and the frequency count is accurate:
+
+```powershell
+npx tsx .claude/skills/monthly-newsletter/scripts/issue-ledger.ts record-batch `
+  --issue 2026-08 --chunk 1 --of 3 --recipients 100 --idempotency-key "…"
+```
+
+A ramp counts as **one** marketing send for the cap, not one per chunk — the cap
+is about how often a person's inbox is touched, and a ramp touches each inbox
+once.
+
+The build itself is unchanged. It renders the issue once, then for each recipient substitutes their own
 signed unsubscribe link, runs the pre-send gates (the same size and image checks
 as the preview), splits the list into chunks of **100** — the maximum Resend
 accepts in one request — and writes the batch files plus a **manifest** into
@@ -1063,9 +1200,18 @@ Also non-negotiable:
   is the guard — do not reach past it to get rid of an error message.
 - **All image URLs absolute** (`https://…`). Email clients don't resolve
   site-relative paths.
-- **The first test send always goes to `chanmeng6666@gmail.com` alone.** Widening
-  to a named reviewer list (Step 6b, max 25) requires explicit founder approval
-  each time — never widen on your own initiative.
+- **The three-stage approval chain is not skippable, and it runs in this order:**
+  (1) a test send to the caller's OWN mailbox, (2) the review round to the
+  founder and internal staff — which is how she sees the issue — and (3) her
+  approval, with evidence, which is the only thing that gates the broadcast.
+  Each stage is recorded with
+  `.claude/skills/monthly-newsletter/scripts/issue-ledger.ts`, and Step 8d's
+  build is gated on `issue-ledger.ts check` exiting 0. Never widen the round
+  beyond the named reviewers (max 25), and never widen on your own initiative.
+- **Three marketing sends per calendar month, across skills.** `/monthly-newsletter`,
+  `/email-the-community` and `/promote-event` reach the same people; the ledger
+  counts all three. A fourth needs `--override-frequency "<reason>"`, which is
+  recorded and stays recorded.
 - **A real batch is only ever built from `recipients-from-db.ts` output.** Never
   hand-write a recipients file, never paste addresses into one, never add
   someone to a list the script produced. If a person needs to receive the
@@ -1077,6 +1223,10 @@ Also non-negotiable:
   (Step 7) before approving (Step 8b).
 - **The assistant does not send the batches.** Steps 8c and 8d are safe to run;
   the `resend emails batch` commands in 8e are handed to a human.
+- **Never write an email address into `state/issues.json`.** It is committed.
+  The ledger stores counts and truncated hashes, and the recording commands do
+  the hashing for you — pass real addresses on the command line, never edit the
+  file by hand.
 - **Listed, but not indexed.** Every issue gets an archive card (Step 7b); the
   web version keeps `noindex` and stays out of `app/sitemap.ts`.
 
