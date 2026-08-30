@@ -303,6 +303,20 @@ partners/venues present in the event data, or `null` to omit).
   produces this list and leaves the legacy `newsBite` null. Curating it is
   **Step 4a**, which carries the fill rates, the editorial bar and the checks.
 
+**From the September 2026 issue on — REQUIRES PR #238, NOT YET MERGED:**
+
+- **`editorial.askToReconfirm`** — set it to `true` from `2026-09` onward. It
+  defaults to `false` and is decided per issue, so nothing sets it for you; the
+  August issue ships without it. **This field does not exist on `main` today** —
+  if the schema rejects it, PR #238 (`feat/newsletter-reconfirm`) has not landed
+  yet, and the correct action is to leave it out, not to add it to the schema.
+  It exists because 1,168 of the 1,549 subscribers have weak or unknown consent
+  evidence (752 bought a ticket and never ticked anything; 416 have unrecoverable
+  provenance), after the Humanitix→Mailchimp "sync contacts who haven't opted in"
+  option was left on until 2026-08-27. The ask lets those people refresh their
+  own consent over the coming issues — it is **not** an ultimatum, and nobody is
+  dropped for ignoring it.
+
 Never re-add a spotlight / featured-mentee section — it was removed. Only feature
 a person when you can verify a real photo + source (there is no schema slot for it
 today, so in practice: don't).
