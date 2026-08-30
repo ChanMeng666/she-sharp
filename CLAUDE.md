@@ -211,9 +211,13 @@ load-bearing: `selectMailable()` compares `confirmedAt` against a suppression
 timestamp to let a later re-subscription outrank an earlier suppression.
 **All 1,549 share `source = 'mailchimp-import'`** — the importer hardcodes it, so
 `source` does **not** separate the four. Query the null `confirmedAt`, or the
-`consentSource` sentence that names the API pull. Read the live number from
+`consentSource` sentence that names the API pull. Read the live number from the
+**`Mailable after suppression`** line of
 `npx tsx scripts/email/suppression.ts reconcile` rather than from this
-sentence — the delta is the point, and it will move again.
+sentence — the delta is the point, and it will move again. That command prints
+four lines and the first, `Subscribed rows`, is the count *before*
+`selectMailable()` strips the two registers; the two were equal on 2026-08-30,
+which is when reading the wrong one costs nothing and becomes a habit.
 **Nothing has been sent from it**: the live
 newsletter still goes out from Mailchimp, so do not describe the migration as
 done. Run `scripts/email/suppression.ts pull-mailchimp` before any further

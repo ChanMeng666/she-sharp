@@ -91,7 +91,11 @@ invites the assumption that it is populated:
 
 - The subscriber table is populated — **1,549 mailable as at 2026-08-30**, and
   it moves; `npx tsx scripts/email/suppression.ts reconcile` prints the live
-  figure. Most of it is the 2026-08-17 Mailchimp export, imported on 2026-08-29
+  figure. **Read the `Mailable after suppression` line**, not the first one —
+  `reconcile` prints four, and `Subscribed rows` is the count *before*
+  `selectMailable()` applies the two registers. They agreed on 2026-08-30
+  (1,549 and 1,549, no drift), which is exactly when the difference is invisible
+  and the habit of reading the wrong line forms. Most of it is the 2026-08-17 Mailchimp export, imported on 2026-08-29
   (1,560 read, 15 held back by the suppression register, 1,545 written), and
   every one of those rows carries the export's own `CONFIRM_TIME`. **Recording
   that timestamp is right; reading it as a double opt-in for everybody is not.**

@@ -1002,10 +1002,11 @@ the thing that will tell us whether the trigger was right.
   risk, and the honest answer is that ~1,550 a month is still two orders of
   magnitude under the bulk-sender thresholds. (This paragraph and the decision
   25 lines above it used to give **1,549** and **~1,560** for the same list. It
-  is one list; it moves; `npx tsx scripts/email/suppression.ts reconcile` prints
-  the live figure, and what it prints is `candidates.length` — the count
-  *before* `selectMailable()` applies the two suppression registers, so an upper
-  bound on a send rather than the send size.) **Revisit it once the send is
+  is one list; it moves; the **`Mailable after suppression`** line of
+  `npx tsx scripts/email/suppression.ts reconcile` is the live figure. Read that
+  line specifically: the command prints four, and `Subscribed rows` is the count
+  *before* `selectMailable()` applies the two registers — an upper bound on a
+  send rather than the send size.) **Revisit it once the send is
   boring** — after two or three clean issues with the rates in bounds, decide on
   evidence rather than on a number chosen in advance.
 - Nothing is foreclosed. Resend Pro allows 10 domains, and the split remains a

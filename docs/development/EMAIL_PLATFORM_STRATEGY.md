@@ -220,9 +220,12 @@ distinct signed unsubscribe URLs. The estimate above held. Nothing was sent.
 > figures above are now approximate on purpose — the list moves, and per the
 > repo's own decision (`EMAIL_PLATFORM_STATE.md` decision log, 2026-08-30) the
 > live number is a command, not a constant:
-> `npx tsx scripts/email/suppression.ts reconcile`. Note what it prints is
-> `candidates.length` — the count *before* `selectMailable()` applies the two
-> suppression registers — so it is an upper bound on a send, not the send size.
+> `npx tsx scripts/email/suppression.ts reconcile`, read at its
+> **`Mailable after suppression`** line. It prints four, and the first —
+> `Subscribed rows` — is the count *before* `selectMailable()` applies the two
+> registers, so it is an upper bound on a send rather than the send size. On
+> 2026-08-30 both read **1,549**, which is when the distinction is easiest to
+> miss and cheapest to get wrong later.
 
 Batch specifics worth knowing before building:
 
