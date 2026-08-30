@@ -51,7 +51,7 @@
  * Usage (run from the repo root):
  *   issue-ledger.ts show [--issue <id>] [--json]
  *   issue-ledger.ts record-test     --issue <id> --to "<addr>[,<addr>…]" [--note "…"]
- *   issue-ledger.ts record-review   --issue <id> --to "<addr>[,<addr>…]" [--note "…"]
+ *   issue-ledger.ts record-review   --issue <id> --to "<addr>[,<addr>…]" [--people <n>] [--note "…"]
  *   issue-ledger.ts record-approval --issue <id> --evidence "<what proves it>" [--by "<name>"]
  *   issue-ledger.ts record-batch    --issue <id> --chunk <n> --of <m> --recipients <count>
  *                                   [--idempotency-key <k>]
@@ -107,7 +107,23 @@ export function statePath(): string {
 /** A stage-1 or stage-2 send: when, how many, and who — as hashes. */
 export interface StageRecord {
   at: string;
+  /**
+   * ADDRESSES mailed, not people.
+   *
+   * The two differ: the founder holds two mailboxes, one organisational and one
+   * academic, and the round goes to both. Naming this field for what it counts
+   * is cheaper than a reader assuming it means people and quietly concluding
+   * that a three-address round reached three reviewers.
+   */
   recipientCount: number;
+  /**
+   * Distinct PEOPLE the round reached, when the caller knew it.
+   *
+   * Null when the round was typed as a bare `--reviewers` list, because nothing
+   * maps those addresses back to people. `review-round.ts` fills it in from the
+   * roster, so the usual case is a real number.
+   */
+  people: number | null;
   /** First 16 hex chars of sha256(lowercased, trimmed address). Never an address. */
   recipientHashes: string[];
   note: string;
@@ -221,13 +237,17 @@ export function saveLedger(ledger: IssueLedger, path: string = statePath()): voi
     frequencyCapPerMonth: ledger.frequencyCapPerMonth ?? DEFAULT_MONTHLY_CAP,
     issues: {},
   };
+  /** An explicit `people: null` beats a missing key a reader has to interpret. */
+  const stage = (record: StageRecord | null): StageRecord | null =>
+    record === null ? null : { ...record, people: record.people ?? null };
+
   for (const key of Object.keys(ledger.issues).sort()) {
     const e = ledger.issues[key];
     ordered.issues[key] = {
       issueId: e.issueId,
       createdAt: e.createdAt,
-      test: e.test,
-      review: e.review,
+      test: stage(e.test),
+      review: stage(e.review),
       approval: e.approval,
       batches: [...e.batches].sort((a, b) => a.chunk - b.chunk),
       frequencyOverride: e.frequencyOverride,
@@ -481,6 +501,7 @@ interface Args {
   chunk: number | null;
   of: number | null;
   recipients: number | null;
+  people: number | null;
   idempotencyKey: string | null;
   overrideFrequency: string | null;
   json: boolean;
@@ -490,7 +511,7 @@ const USAGE = [
   "Usage:",
   "  issue-ledger.ts show [--issue <id>] [--json]",
   '  issue-ledger.ts record-test     --issue <id> --to "<addr>[,<addr>…]" [--note "…"]',
-  '  issue-ledger.ts record-review   --issue <id> --to "<addr>[,<addr>…]" [--note "…"]',
+  '  issue-ledger.ts record-review   --issue <id> --to "<addr>[,<addr>…]" [--people <n>] [--note "…"]',
   '  issue-ledger.ts record-approval --issue <id> --evidence "<what proves it>" [--by "<name>"]',
   "  issue-ledger.ts record-batch    --issue <id> --chunk <n> --of <m> --recipients <count>",
   "                                  [--idempotency-key <k>]",
@@ -513,6 +534,7 @@ function parseArgs(argv: string[]): Args {
     chunk: null,
     of: null,
     recipients: null,
+    people: null,
     idempotencyKey: null,
     overrideFrequency: null,
     json: false,
@@ -562,6 +584,9 @@ function parseArgs(argv: string[]): Args {
       case "--recipients":
         args.recipients = number(flag, ++i);
         break;
+      case "--people":
+        args.people = number(flag, ++i);
+        break;
       case "--idempotency-key":
         args.idempotencyKey = value(flag, ++i);
         break;
@@ -590,8 +615,12 @@ function requireIssue(args: Args): string {
 
 function formatStage(label: string, stage: StageRecord | null): string[] {
   if (!stage) return [`    ${label.padEnd(9)}: — not recorded`];
+  const who =
+    (stage.people ?? null) === null
+      ? `${stage.recipientCount} address(es)`
+      : `${stage.people} person(s) / ${stage.recipientCount} address(es)`;
   return [
-    `    ${label.padEnd(9)}: ${stage.at}  ${stage.recipientCount} recipient(s)`,
+    `    ${label.padEnd(9)}: ${stage.at}  ${who}`,
     `                 ${stage.recipientHashes.map((h) => `${h}…`).join(" ")}`,
     ...(stage.note ? [`                 note: ${stage.note}`] : []),
   ];
@@ -689,6 +718,7 @@ function runRecordStage(args: Args, stage: "test" | "review"): number {
   const record: StageRecord = {
     at: now,
     recipientCount: addresses.length,
+    people: args.people,
     recipientHashes: addresses.map(maskAddress),
     note: args.note ?? "",
   };
@@ -702,7 +732,8 @@ function runRecordStage(args: Args, stage: "test" | "review"): number {
     `Recorded stage ${stage === "test" ? "1 (test send)" : "2 (review round)"} for ${issueId}:`
   );
   console.log(`  when       : ${now}`);
-  console.log(`  recipients : ${record.recipientCount}`);
+  console.log(`  addresses  : ${record.recipientCount}`);
+  console.log(`  people     : ${record.people ?? "not recorded (a bare --reviewers list)"}`);
   console.log(`  hashes     : ${record.recipientHashes.map((h) => `${h}…`).join(" ")}`);
   console.log(`  written to ${statePath()} — addresses are NOT stored.`);
   console.log("");
@@ -854,7 +885,10 @@ function runCheck(args: Args): number {
     console.log("PASS — all three stages are on the record, in order.");
     console.log(`  1 test    : ${entry.test?.at} to ${entry.test?.recipientCount} mailbox(es)`);
     console.log(
-      `  2 review  : ${entry.review?.at} to ${entry.review?.recipientCount} reviewer(s)`
+      `  2 review  : ${entry.review?.at} to ` +
+        (entry.review?.people === null || entry.review?.people === undefined
+          ? `${entry.review?.recipientCount} address(es)`
+          : `${entry.review.people} reviewer(s) at ${entry.review.recipientCount} address(es)`)
     );
     console.log(`  3 approval: ${entry.approval?.at} by ${entry.approval?.by}`);
     console.log(`              evidence: ${entry.approval?.evidence}`);

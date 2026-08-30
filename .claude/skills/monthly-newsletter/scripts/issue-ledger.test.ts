@@ -85,9 +85,10 @@ function ledgerWith(overrides: Partial<IssueLedger["issues"]["x"]> = {}): IssueL
   };
 }
 
-const stage = (at: string) => ({
+const stage = (at: string, people: number | null = 1) => ({
   at,
   recipientCount: 1,
+  people,
   recipientHashes: [maskAddress("someone@example.com")],
   note: "",
 });
@@ -380,6 +381,7 @@ check("no address can reach the saved file", () => {
   base.issues["2026-08"].test = {
     at: new Date().toISOString(),
     recipientCount: 1,
+    people: 1,
     recipientHashes: [maskAddress("reviewer@shesharp.org.nz")],
     note: "",
   };
@@ -391,6 +393,21 @@ check("no address can reach the saved file", () => {
 // ---------------------------------------------------------------------------
 // Month boundaries
 // ---------------------------------------------------------------------------
+
+check("a stage written without `people` gains an explicit null on save", () => {
+  // An absent key is a thing a reader has to interpret; `null` says "not known".
+  const path = join(dir, "people-null.json");
+  const base = approvedLedger();
+  base.issues["2026-08"].review = { ...stage(new Date().toISOString(), null) };
+  saveLedger(base, path);
+  const back = loadLedger(path);
+  assert.strictEqual(back.issues["2026-08"].review?.people, null);
+  assert.strictEqual(
+    back.issues["2026-08"].review?.recipientCount,
+    1,
+    "recipientCount counts ADDRESSES and is unaffected"
+  );
+});
 
 check("months are New Zealand months, not UTC ones", () => {
   // 2026-08-31T21:00Z is 2026-09-01 09:00 in Auckland (NZST, UTC+12).

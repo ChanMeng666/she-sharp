@@ -9,32 +9,42 @@
  * anywhere in the loop was the developer's personal Gmail, hardcoded as "the
  * single approved test mailbox" in a skill run by the newsletter department.
  *
- * This resolves the round from `lib/email/newsletter-reviewers.ts` — the typed
- * roster, cross-checked by `newsletter-reviewers.test.ts` against the delivery
- * probe, so a reviewer whose mailbox does not exist fails a test rather than
- * silently hard-bouncing. While that roster names only the founder it REFUSES
- * to stand in for a round, and this script exits non-zero: a round of one
- * person is not a joint review, and shrinking to one silently is exactly the
- * failure mode this repository has recorded twice.
+ * The round comes from two places, deliberately: the NAMES and roles are
+ * committed in `lib/email/newsletter-reviewers.ts`, and the ADDRESSES are in
+ * `state/reviewers.local.json`, which is gitignored. Most reviewers hold
+ * personal off-domain mailboxes and an address in git is permanent, so the
+ * addresses stay out of history while the who stays auditable in a diff.
+ *
+ * The default round is the founder plus the newsletter team. Marketing and
+ * events are on the roster with their roles recorded but are NOT on it;
+ * `--reviewers` adds anyone for one issue.
+ *
+ * IT REFUSES RATHER THAN SHRINKS. If a person on the committed roster has no
+ * address in the local file, this exits non-zero and names them. A round that
+ * quietly left somebody out would look exactly like one that reached everybody,
+ * and the person most likely to be missing from a stale local file is the
+ * founder — whose approval is the next stage.
  *
  * IT SENDS NOTHING. `scripts/newsletter/send-test.ts` sends; a human runs it.
  * This only decides who, applies the same 25-address ceiling that script
  * enforces at its own line 84, and prints the two commands that follow.
  *
  * Usage (from the repo root):
- *   npx tsx .claude/skills/monthly-newsletter/scripts/review-round.ts \
- *     --issue 2026-08 --reviewers "first@shesharp.org.nz,second@shesharp.org.nz"
+ *   npx tsx .claude/skills/monthly-newsletter/scripts/review-round.ts --issue 2026-08
+ *   npx tsx .claude/skills/monthly-newsletter/scripts/review-round.ts --issue 2026-08 \
+ *     --reviewers "someone@example.com,another@example.com"
  *
  * Exit codes: 0 when a round was resolved; 1 when it could not be, which is the
- * point — the caller has to name the reviewers rather than proceed without them.
+ * point — the caller fixes the roster or the local file rather than proceeding
+ * without somebody.
  */
 
 import { basename } from "node:path";
 
 import {
-  requireReviewRoundRecipients,
-  RosterIncompleteError,
-  rosterIsComplete,
+  resolveRequestedRound,
+  ReviewerAddressError,
+  type ResolvedRound,
 } from "../../../../lib/email/newsletter-reviewers";
 
 /**
@@ -51,7 +61,7 @@ const MAX_RECIPIENTS = 25;
 const USAGE = [
   "Usage:",
   "  npx tsx .claude/skills/monthly-newsletter/scripts/review-round.ts \\",
-  '    --issue <YYYY-MM> [--reviewers "a@shesharp.org.nz,b@shesharp.org.nz"] [--json]',
+  '    --issue <YYYY-MM> [--reviewers "a@example.com,b@example.com"] [--json]',
 ].join("\n");
 
 interface Args {
@@ -88,54 +98,37 @@ function parseArgs(argv: string[]): Args {
   return args;
 }
 
-function main(): number {
-  const args = parseArgs(process.argv.slice(2));
-  if (!args.issue || !/^\d{4}-(0[1-9]|1[0-2])$/.test(args.issue)) {
-    throw new Error(`--issue must be a YYYY-MM issue id.\n${USAGE}`);
-  }
+/** Prints the round and the commands that follow it. */
+function report(issue: string, round: ResolvedRound, fromExplicitList: boolean): void {
+  const issuePath = `lib/data/json/newsletter-issues/${issue}.json`;
+  const list = round.addresses.join(",");
 
-  let recipients: string[];
-  try {
-    recipients = requireReviewRoundRecipients(args.reviewers);
-  } catch (error) {
-    if (error instanceof RosterIncompleteError) {
-      console.error("");
-      console.error(`Cannot resolve a review round for ${args.issue}.`);
-      console.error("");
-      console.error(error.message);
-      console.error("");
-      return 1;
-    }
-    throw error;
-  }
-
-  if (recipients.length > MAX_RECIPIENTS) {
-    throw new Error(
-      `${recipients.length} reviewers exceeds the cap of ${MAX_RECIPIENTS}. A review ` +
-        "round this size is a mailing list — check what was pasted."
-    );
-  }
-
-  const issuePath = `lib/data/json/newsletter-issues/${args.issue}.json`;
-  const list = recipients.join(",");
-
-  if (args.json) {
-    console.log(JSON.stringify({ issue: args.issue, recipients, source: args.reviewers ? "--reviewers" : "roster" }, null, 2));
-    return 0;
-  }
-
-  console.log("");
-  console.log(`Review round for ${args.issue} — ${recipients.length} reviewer(s)`);
-  console.log("===================================");
-  for (const r of recipients) console.log(`  ${r}`);
   console.log("");
   console.log(
-    args.reviewers
-      ? "  Source: --reviewers, supplied on the command line. Add these people to"
-      : "  Source: the roster in lib/email/newsletter-reviewers.ts."
+    `Review round for ${issue} — ${round.peopleCount} person(s), ${round.addresses.length} address(es)`
   );
-  if (args.reviewers && !rosterIsComplete()) {
-    console.log("  NEWSLETTER_REVIEWERS so the next issue does not have to be told again.");
+  console.log("===================================");
+  if (round.people.length > 0) {
+    for (const { reviewer, addresses } of round.people) {
+      console.log(`  ${reviewer.name} (${reviewer.role})`);
+      for (const address of addresses) console.log(`      ${address}`);
+    }
+  } else {
+    for (const address of round.addresses) console.log(`  ${address}`);
+  }
+  console.log("");
+  console.log(
+    fromExplicitList
+      ? "  Source: --reviewers, typed on the command line. If these people belong on every"
+      : "  Source: the committed roster in lib/email/newsletter-reviewers.ts, with addresses"
+  );
+  console.log(
+    fromExplicitList
+      ? "  issue, add their NAMES to lib/email/newsletter-reviewers.ts and their addresses"
+      : "  from state/reviewers.local.json (gitignored — never commit or paste it)."
+  );
+  if (fromExplicitList) {
+    console.log("  to state/reviewers.local.json, which is gitignored.");
   }
   console.log("");
   console.log("  Dry run first, and read the parsed list back:");
@@ -146,10 +139,59 @@ function main(): number {
   console.log("");
   console.log("  Then record stage 2, so the founder's approval has something to follow:");
   console.log(
-    `    npx tsx .claude/skills/monthly-newsletter/scripts/issue-ledger.ts record-review \\`
+    "    npx tsx .claude/skills/monthly-newsletter/scripts/issue-ledger.ts record-review \\"
   );
-  console.log(`      --issue ${args.issue} --to "${list}"`);
+  console.log(`      --issue ${issue} --to "${list}" --people ${round.peopleCount}`);
   console.log("");
+}
+
+function main(): number {
+  const args = parseArgs(process.argv.slice(2));
+  if (!args.issue || !/^\d{4}-(0[1-9]|1[0-2])$/.test(args.issue)) {
+    throw new Error(`--issue must be a YYYY-MM issue id.\n${USAGE}`);
+  }
+
+  let round: ResolvedRound;
+  try {
+    round = resolveRequestedRound(args.reviewers);
+  } catch (error) {
+    if (error instanceof ReviewerAddressError) {
+      console.error("");
+      console.error(`Cannot resolve a review round for ${args.issue}.`);
+      console.error("");
+      console.error(error.message);
+      console.error("");
+      return 1;
+    }
+    throw error;
+  }
+
+  if (round.addresses.length > MAX_RECIPIENTS) {
+    throw new Error(
+      `${round.addresses.length} addresses exceeds the cap of ${MAX_RECIPIENTS}. A review ` +
+        "round this size is a mailing list — check what was pasted."
+    );
+  }
+
+  if (args.json) {
+    // Addresses are printed here on purpose: the caller asked for the list they
+    // are about to send to. Do not pipe this into a file that gets committed.
+    console.log(
+      JSON.stringify(
+        {
+          issue: args.issue,
+          peopleCount: round.peopleCount,
+          addresses: round.addresses,
+          source: args.reviewers ? "--reviewers" : "roster",
+        },
+        null,
+        2
+      )
+    );
+    return 0;
+  }
+
+  report(args.issue, round, args.reviewers !== null);
   return 0;
 }
 

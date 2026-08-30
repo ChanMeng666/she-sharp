@@ -1,0 +1,20 @@
+{
+  "_readme": [
+    "Copy this file to reviewers.local.json in the same directory and replace the",
+    "addresses with the real ones. reviewers.local.json is gitignored (**/*.local.json);",
+    "this example is committed, so every address in it is deliberately fake.",
+    "",
+    "Keys are the `id` of a reviewer in lib/email/newsletter-reviewers.ts. A person can",
+    "hold more than one address — the founder holds two, one organisational and one",
+    "academic — and the round goes to all of them.",
+    "",
+    "Every reviewer marked `newsletterReviewer: true` in the committed roster MUST have",
+    "at least one address here. A reviewer with none makes the round REFUSE by name",
+    "rather than send to whoever it could resolve."
+  ],
+  "version": 1,
+  "addresses": {
+    "mahsa": ["mahsa@shesharp.org.nz", "not-a-real-address@example.edu"],
+    "example-newsletter-person": ["not-a-real-address@example.com"]
+  }
+}
