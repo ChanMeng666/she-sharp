@@ -210,20 +210,29 @@ dedupe guard — curate so it never has to fire):
   the strip. A panoramic group shot works especially well here: it sits under the
   masthead as a wide band rather than a deep block.
 - **Photo of the month** (`editorial.photoOfTheMonth`) — the second-best shot,
-  **from a different event where the month has more than one**, with a `caption`
-  that names the real venue and an optional `eventSlug`. Move its Blob URL into
-  `photoOfTheMonth.src` and delete it from the strip.
+  **from a different event where the month has more than one**, with an `alt`
+  and an optional `eventSlug`. Move its Blob URL into `photoOfTheMonth.src` and
+  delete it from the strip.
 - **Strip** (`auto.photoStrip`) — the varied remaining shots. **Caps at 13**, and
   an ODD count is what you want: the first photo runs full width and the rest
   pair into rows of two, so `1 + 2n` fills every row and an even count leaves a
-  gap in the last one. Write a real `alt` for each — see the caption note below.
+  gap in the last one. Write an `alt` for each — see the caption rule below.
 
-**Captions.** `PhotoStrip` overrides a photo's `alt` with
-"&lt;event&gt; · &lt;location&gt;" whenever its `eventSlug` resolves to a recap event. That
-is right when the strip spans several events and wrong when it does not: a
-single-event month would print the same caption up to thirteen times. In that
-case **drop `eventSlug` from the strip entries** and write the venue into the
-`alt` yourself, one line per photo, describing what is actually in the frame.
+**No photograph carries a caption, and `alt` is not a caption.** The template
+printed a line of text under every photo until 2026-08-31. Those lines were
+written *about* frames rather than read *off* them, so they asserted things the
+photograph did not show, and the founder's instruction was to drop the lot: the
+photograph alone is the honest version. `PhotoStrip` and the photo-of-the-month
+block now render the image and nothing else, and `render.test.ts` fails if a
+caption comes back.
+
+`alt` survives, because a screen reader still needs something — and it is held
+to the same standard, since a described-from-memory `alt` is a fabrication read
+aloud to the one reader who cannot check it. **Write the event's own title,
+verbatim from `auto.recapEvents[].title`, and nothing else.** Do not describe
+the frame, name a person, or add a venue the photo may not show. Repeating one
+title across thirteen strip photos is correct when the month was one event;
+`photos.ts` already writes exactly this.
 
 All photo URLs must be **absolute Blob JPEGs** — never WebP, never Google-hotlinked,
 never site-relative. If the month's recap events have no photos and no album, all
@@ -257,9 +266,9 @@ That is the whole point: **swapping in real photos = re-uploading to the same si
 paths. The issue JSON never changes.**
 
 Rules:
-- Placeholder strip entries carry **no `eventSlug`**. `PhotoStrip.captionFor()`
-  overrides `alt` when the slug resolves, which would caption a synthetic image
-  with a real venue name.
+- Placeholder strip entries carry **no `eventSlug`**, and their `alt` says they
+  are placeholders. A placeholder is a generated purple card, not a photograph
+  of a room, so it must never be tied to a real event.
 - Never ship placeholders to the real send if real photos exist. Swap first.
 - Once real photos land, prefer re-running the normal Step 3 path (add the
   event's `galleryUrl` and let `photos.ts` harvest) over hand-uploading.
@@ -391,7 +400,11 @@ Write this file to `tmp/newsletter/pulse-draft-<issue>.json` (the candidate
 file's `writeDraftTo` names the exact path). Three fields per item, no more:
 `sourceLabel`, the dateline and the ordering are attached by the code from the
 candidate, so that a story can never be credited to a publication that did not
-run it.
+run it. Since 2026-08-31 the email does not *print* `sourceLabel` — every source
+link reads "Source", "(Source)" or the item's own dateline — but the field stays
+in the data and stays accurate: it is the provenance record `check-facts.ts`,
+`lint-pulse.ts` and `pulse-copy.ts` read, and the link still points at the
+source. Do not delete it, and do not put a publication's name back in the copy.
 
 ```json
 {
@@ -1259,7 +1272,7 @@ Never resume by hand-picking who "probably didn't get it" — use the manifest.
 2. **Zero photo repeats.** Cover, photo of the month, strip, and recap thumbnails
    must all be disjoint. Curate them apart (Step 3); never rely on the renderer's
    dedupe guard. Cover = best landscape people-shot; POM = second-best, from a
-   different event where the month has one, with a venue-named caption; strip =
+   different event where the month has one, `alt` = that event's title; strip =
    an ODD number of varied others up to 13, so every paired row is full;
    `photoAlbumUrl` = the month's album.
 3. **Founder signature is fixed.** `founderNote.signature` = exactly
@@ -1337,7 +1350,7 @@ Also non-negotiable:
 | Founder note | `editorial.founderNote` | always | hand-written; fixed signature + photoUrl |
 | Headline event | `editorial.headline` | ONE upcoming event deserves top billing | human curation; facts read from the matching `auto.upcomingEvents` entry |
 | Photo strip | `auto.photoStrip` | ≥1 real event photo | `photos.ts` upload, then human-pruned to an odd count ≤13 |
-| Photo of the month | `editorial.photoOfTheMonth` | a second good shot exists | second-best photo (different event) + venue caption |
+| Photo of the month | `editorial.photoOfTheMonth` | a second good shot exists | second-best photo (different event); no caption, `alt` = the event title |
 | Last-month recap | recap cards | recap events exist OR POM set | `auto.recapEvents` + `editorial.eventBlurbs` |
 | Upcoming + CTA | `auto.upcomingEvents`, `editorial.primaryCta` | upcoming events exist | event data; CTA = next event's registration link. The promoted headline event is filtered out of this list, and the button is suppressed here when a headline block is present (that block carries the issue's one CTA) |
 | NZ Tech Pulse | `editorial.pulse` | pipeline produced verified data | `lib/newsletter/pulse.ts` (SEEK + RSS, verbatim-guarded) |

@@ -6,7 +6,8 @@
  * Builds a representative issue and asserts the unsubscribe placeholder per
  * mode (in the HTML *and* the plain-text part), that no Resend merge tag
  * survives, size budget, absolute image URLs, presence of the signature
- * gradient, the real-photo cover, and venue-grounded snapshot captions.
+ * gradient, the real-photo cover, that NO photo carries a caption, and that
+ * the NZ Tech Pulse never names a source.
  */
 
 import assert from "node:assert";
@@ -20,6 +21,19 @@ const COVER_URL = "https://www.shesharp.org.nz/img/newsletter/cover-june.jpg";
 /** The founder's signature headshot, unique so the avatar row can be asserted. */
 const FOUNDER_PHOTO_URL =
   "https://www.shesharp.org.nz/img/newsletter/founder-signature.jpg";
+
+/**
+ * The two recap event titles, reused verbatim as the photos' `alt` text —
+ * which is the whole of the no-caption rule: no photo carries visible text,
+ * and its `alt` identifies the event and describes nothing.
+ *
+ * They double as the caption detectors. Each title is printed once as VISIBLE
+ * text by its own recap card, so with the `alt` attributes stripped out of the
+ * html each must still appear exactly once; a second occurrence is a caption
+ * rendered under a photo.
+ */
+const NETWORKING_TITLE = "June Networking Night";
+const WORKSHOP_TITLE = "Intro to Data Science Workshop";
 
 const sample: NewsletterIssueData = newsletterIssueSchema.parse({
   id: "2026-07",
@@ -42,7 +56,7 @@ const sample: NewsletterIssueData = newsletterIssueSchema.parse({
     },
     photoOfTheMonth: {
       src: "https://www.shesharp.org.nz/img/events/cover.jpg",
-      caption: "Our June networking night at AUT City Campus.",
+      alt: NETWORKING_TITLE,
     },
     recapIntro: "Here's what we got up to last month.",
     eventBlurbs: {
@@ -92,7 +106,7 @@ const sample: NewsletterIssueData = newsletterIssueSchema.parse({
     recapEvents: [
       {
         slug: "june-networking",
-        title: "June Networking Night",
+        title: NETWORKING_TITLE,
         dateLabel: "Thursday, June 26",
         startIso: "2026-06-26T18:00:00+12:00",
         timeLabel: "6:00 PM",
@@ -104,7 +118,7 @@ const sample: NewsletterIssueData = newsletterIssueSchema.parse({
       },
       {
         slug: "june-workshop",
-        title: "Intro to Data Science Workshop",
+        title: WORKSHOP_TITLE,
         dateLabel: "Saturday, June 14",
         startIso: "2026-06-14T10:00:00+12:00",
         timeLabel: "10:00 AM",
@@ -145,17 +159,17 @@ const sample: NewsletterIssueData = newsletterIssueSchema.parse({
     photoStrip: [
       {
         src: "https://www.shesharp.org.nz/img/events/one.jpg",
-        alt: "Members networking at the June event",
+        alt: NETWORKING_TITLE,
         eventSlug: "june-networking",
       },
       {
         src: "https://www.shesharp.org.nz/img/events/two.jpg",
-        alt: "Speakers on stage during the panel",
+        alt: NETWORKING_TITLE,
         eventSlug: "june-networking",
       },
       {
         src: "https://www.shesharp.org.nz/img/events/three.jpg",
-        alt: "Attendees collaborating in the workshop",
+        alt: WORKSHOP_TITLE,
       },
     ],
     photoAlbumUrl: "https://photos.google.com/share/example-album",
@@ -276,6 +290,31 @@ function assertAllImagesHttps(html: string, label: string): void {
   }
 }
 
+/**
+ * The html with every `alt="…"` attribute removed — i.e. what a sighted reader
+ * actually sees. Alt text is allowed to name the event; visible text under a
+ * photo is not, and stripping the attributes is what tells the two apart.
+ */
+function visibleOnly(html: string): string {
+  return html.replace(/\salt="[^"]*"/gi, "");
+}
+
+/**
+ * Matches a Pulse source link's label followed by its arrow. React Email emits
+ * a `<!-- -->` separator between two adjacent text nodes, so the arrow is never
+ * literally adjacent to the label in the rendered html.
+ */
+function arrowAfter(label: string): RegExp {
+  return new RegExp(`${label}(?:<!-- -->)?\\s*(?:→|&#x2192;)`);
+}
+
+/** Counts <img> tags whose alt attribute is exactly the given text. */
+function countImgAlt(html: string, text: string): number {
+  return [...html.matchAll(/<img[^>]*\salt="([^"]*)"/gi)].filter(
+    (m) => m[1] === text
+  ).length;
+}
+
 /** Counts how many <img> tags carry exactly the given src URL. */
 function countImgSrc(html: string, url: string): number {
   return [...html.matchAll(/<img[^>]+src="([^"]*)"/gi)].filter(
@@ -378,6 +417,38 @@ async function main(): Promise<void> {
     "pulse section kicker must appear in the html"
   );
 
+  // The Pulse links to its sources but never names them. `sourceLabel` stays in
+  // the data — it is the provenance record `check-facts.ts` and `lint-pulse.ts`
+  // read — and the link carries the attribution, so the copy does not repeat it.
+  for (const label of [
+    sample.editorial.pulse!.heroStat.sourceLabel,
+    sample.editorial.pulse!.newsBite!.sourceLabel,
+    sample.editorial.pulse!.didYouKnow!.sourceLabel,
+  ]) {
+    assert.ok(
+      !preview.html.includes(label),
+      `pulse must not name its source in the copy → ${label}`
+    );
+    assert.ok(
+      !preview.text.includes(label),
+      `pulse must not name its source in the plain-text part → ${label}`
+    );
+  }
+  assert.ok(
+    preview.html.includes(">Source<") || preview.html.includes(">Source "),
+    "the hero stat's source link must read \"Source\""
+  );
+  assert.ok(
+    preview.html.includes("(Source)"),
+    'the "Did you know?" source link must read "(Source)"'
+  );
+  // A news bite with no dateLabel falls back to "Source" rather than rendering
+  // a bare arrow — `sample`'s single bite is exactly that case.
+  assert.ok(
+    arrowAfter("Source").test(preview.html),
+    'a news bite with no dateLabel must read "Source →"'
+  );
+
   // Photo strip: each photo <img> and the album link are present.
   for (const src of [
     "https://www.shesharp.org.nz/img/events/one.jpg",
@@ -398,11 +469,44 @@ async function main(): Promise<void> {
     "photo strip section kicker must appear when photos are present"
   );
 
-  // Snapshot captions are venue-grounded: "<short event title> · <location>",
-  // resolved from the photo's matching recap event.
+  // NO photograph carries a caption. Every caption the template used to print
+  // was written about a frame rather than read off it, so the photograph now
+  // runs on its own and the `alt` attribute is the only text about it.
+  //
+  // Three shapes, one per path that used to produce a caption:
+  const previewVisible = visibleOnly(preview.html);
+  //   1. the venue-grounded strip caption, built from a resolved eventSlug.
   assert.ok(
-    preview.html.includes("June Networking Night · AUT City Campus, Auckland"),
-    "venue-grounded caption must appear for a strip photo with a matching recap event"
+    !preview.html.includes("June Networking Night · AUT City Campus, Auckland"),
+    "no venue-grounded caption may be rendered under a strip photo"
+  );
+  //   2. the strip's fallback caption — the photo's own alt, printed as text,
+  //      for a photo whose eventSlug does not resolve.
+  assert.strictEqual(
+    countOccurrences(previewVisible, WORKSHOP_TITLE),
+    1,
+    "a strip photo's alt must not also be printed as visible text under it " +
+      "(expected only the recap card's own mention of the event title)"
+  );
+  //   3. the italic caption under the photo of the month.
+  assert.strictEqual(
+    countOccurrences(previewVisible, NETWORKING_TITLE),
+    1,
+    "the photo of the month's alt must not also be printed as a caption " +
+      "(expected only the recap card's own mention of the event title)"
+  );
+  // And the alt attributes are still there — a photo stripped of both its
+  // caption and its alt is worse for a screen reader, not better.
+  assert.ok(
+    countImgAlt(preview.html, NETWORKING_TITLE) >= 1 &&
+      countImgAlt(preview.html, WORKSHOP_TITLE) >= 1,
+    "every photo must keep a non-empty alt naming its event"
+  );
+  assert.ok(
+    ![...preview.html.matchAll(/<img[^>]*>/gi)].some(
+      (m) => !/\salt="[^"]+"/i.test(m[0])
+    ),
+    "no <img> may render with a missing or empty alt"
   );
 
   // No legacy AI-art asset paths survive anywhere in the output. The needle is
@@ -486,6 +590,18 @@ async function main(): Promise<void> {
     headline.html.includes("What we&#x27;re reading") ||
       headline.html.includes("What we're reading"),
     "multi-item news list label must appear when newsBites has more than one item"
+  );
+  // A bite WITH a dateLabel shows the dateline and the arrow — and still not
+  // the publication's name.
+  for (let i = 1; i <= BITE_URLS.length; i++) {
+    assert.ok(
+      arrowAfter(`${i} Jul`).test(headline.html),
+      `news bite ${i} must read "${i} Jul →"`
+    );
+  }
+  assert.ok(
+    !headline.html.includes("IT Brief NZ"),
+    "a news bite must not name its publication"
   );
 
   // The promoted event is dropped from the "What's next" list, so its title is

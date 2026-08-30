@@ -17,7 +17,7 @@
     },
     "photoOfTheMonth": {
       "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-06/photos/peyvand-academy-20-june-2026-potm-DdNYLBYXqqIKbFwW4b1PbF7AIxHwRa.jpg",
-      "caption": "Hands on at Fruitvale Primary School: a She Sharp facilitator and a table full of young makers bring their electronics kits to life during our June Youth Tech Series.",
+      "alt": "Youth Tech Series — Electronics Workshop",
       "eventSlug": "peyvand-academy-20-june-2026"
     },
     "recapIntro": "Three very different rooms, one shared mission — here is what June looked like across our community.",
@@ -138,32 +138,32 @@
     "photoStrip": [
       {
         "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-06/photos/her-waka-june-2026-1-XKJsbKKj4JqMYWsJN3AoX0ZAU7e3oi.jpg",
-        "alt": "Her Waka (June 2026) — Personal Branding & Growth Tips — academyEX, Auckland",
+        "alt": "Her Waka (June 2026) — Personal Branding & Growth Tips",
         "eventSlug": "her-waka-june-2026"
       },
       {
         "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-06/photos/peyvand-academy-13-june-2026-1-rj1zNSNj6SFGXj6fFKGhPKc7NvJvp5.jpg",
-        "alt": "Youth Tech Series — AI & Electronics Workshop — Fruitvale Primary School, Auckland",
+        "alt": "Youth Tech Series — AI & Electronics Workshop",
         "eventSlug": "peyvand-academy-13-june-2026"
       },
       {
         "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-06/photos/peyvand-academy-20-june-2026-3-s88Y8WBrLfujhsZyZ3E1HIvirZi3JW.jpg",
-        "alt": "Youth Tech Series — Electronics Workshop — Fruitvale Primary School, Auckland",
+        "alt": "Youth Tech Series — Electronics Workshop",
         "eventSlug": "peyvand-academy-20-june-2026"
       },
       {
         "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-06/photos/her-waka-june-2026-2-txHSeKzyeeM9Jnhj4j7D4E91NOVZ5K.jpg",
-        "alt": "Her Waka (June 2026) — Personal Branding & Growth Tips — academyEX, Auckland",
+        "alt": "Her Waka (June 2026) — Personal Branding & Growth Tips",
         "eventSlug": "her-waka-june-2026"
       },
       {
         "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-06/photos/peyvand-academy-13-june-2026-2-H11g8LoEXID4BSx1CaWE1mLHQjNhxY.jpg",
-        "alt": "Youth Tech Series — AI & Electronics Workshop — Fruitvale Primary School, Auckland",
+        "alt": "Youth Tech Series — AI & Electronics Workshop",
         "eventSlug": "peyvand-academy-13-june-2026"
       },
       {
         "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-06/photos/peyvand-academy-20-june-2026-2-UgH5y6qNIqrmocqsCxZz3FKKPe9ISP.jpg",
-        "alt": "Youth Tech Series — Electronics Workshop — Fruitvale Primary School, Auckland",
+        "alt": "Youth Tech Series — Electronics Workshop",
         "eventSlug": "peyvand-academy-20-june-2026"
       }
     ],

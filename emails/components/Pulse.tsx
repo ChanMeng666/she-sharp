@@ -3,7 +3,12 @@
  *
  * A light-periwinkle band whose star is a single large statistic (the
  * `heroStat`), followed by an optional news bite (compact white card) and an
- * optional "Did you know?" line. Every figure carries a source link. A thin
+ * optional "Did you know?" line. Every figure carries a source link, but the
+ * link text never names the publication: it reads "Source", "(Source)", or the
+ * item's own dateline. `sourceLabel` stays in the data — `check-facts.ts`,
+ * `lint-pulse.ts` and `pulse-copy.ts` key on it, and it is the record of where
+ * each number came from — it is simply not spelled out in the copy, because
+ * the link already carries the attribution. A thin
  * signature gradient rule sits above the band as a coded transition from the
  * editorial sections into the data section. Rendered only when `pulse` is set.
  */
@@ -60,7 +65,7 @@ const statContext: React.CSSProperties = {
   textAlign: "center",
 };
 
-/** Small muted, underlined source attribution. */
+/** Small muted, underlined source attribution — a link, never a name. */
 const sourceLink: React.CSSProperties = {
   fontFamily: FONT_STACK,
   fontSize: "12px",
@@ -112,7 +117,7 @@ export function Pulse({ pulse }: { pulse: PulseData }): React.JSX.Element {
         <Text style={statContext}>{heroStat.context}</Text>
         <Text style={{ margin: `${SPACE.sm}px 0 0`, textAlign: "center" }}>
           <Link href={heroStat.sourceUrl} style={sourceLink}>
-            Source: {heroStat.sourceLabel}
+            Source
           </Link>
         </Text>
 
@@ -158,8 +163,7 @@ export function Pulse({ pulse }: { pulse: PulseData }): React.JSX.Element {
                   {item.summary}
                 </Text>
                 <Link href={item.url} style={sourceLink}>
-                  {item.dateLabel ? `${item.dateLabel} · ` : ""}
-                  {item.sourceLabel} →
+                  {item.dateLabel ?? "Source"} →
                 </Link>
               </Section>
             ))}
@@ -197,7 +201,7 @@ export function Pulse({ pulse }: { pulse: PulseData }): React.JSX.Element {
               </span>
               {didYouKnow.text}{" "}
               <Link href={didYouKnow.sourceUrl} style={sourceLink}>
-                ({didYouKnow.sourceLabel})
+                (Source)
               </Link>
             </Text>
           </Section>

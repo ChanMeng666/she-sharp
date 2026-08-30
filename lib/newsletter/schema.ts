@@ -95,11 +95,22 @@ export const editorialSchema = z.object({
     })
     .nullable()
     .default(null),
+  /**
+   * The month's single hero photograph, shown without a caption.
+   *
+   * This carried a `caption` until 2026-08-31. It was rendered twice — as
+   * italic text under the photo and as the `alt` — and it was written about
+   * the frame rather than read off it, so it asserted things the photograph
+   * did not show. The field is now `alt` and nothing else, because `alt` is
+   * the only text that still reaches a reader, and it is held to one rule:
+   * identify the event the photograph is from, describe nothing.
+   */
   photoOfTheMonth: z
     .object({
       /** Absolute URL. */
       src: z.string().url(),
-      caption: z.string().min(1),
+      /** Factual identification for screen readers — normally the event title. */
+      alt: z.string().min(1),
       eventSlug: z.string().optional(),
     })
     .nullable(),
@@ -235,6 +246,11 @@ export const autoEventSchema = z.object({
 export const stripPhotoSchema = z.object({
   /** Absolute URL of an email-optimized JPEG (never WebP — Outlook breaks). */
   src: z.string().url(),
+  /**
+   * Factual identification for screen readers — normally the event title.
+   * Nothing renders it as visible text; a described-from-memory `alt` is a
+   * fabrication read aloud to the one reader who cannot check it.
+   */
   alt: z.string().min(1),
   eventSlug: z.string().optional(),
 });
