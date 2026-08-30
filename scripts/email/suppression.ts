@@ -35,6 +35,11 @@
  *   remove   — confirms, or exits 1 if the address was not on the list.
  *   check    — prints SUPPRESSED / not suppressed; exit 0 if suppressed, 1 if not,
  *              so it can be used in a shell conditional.
+ *   reconcile
+ *          — the drift report, and the live size of the list. Prints
+ *            `Subscribed rows` (the table's own count) and `Mailable after
+ *            suppression` (what a send reaches); quote the second. Exits 1
+ *            when they differ. Needs POSTGRES_URL.
  *   sync   — folds the runtime `email_optouts` table (one-click unsubscribes,
  *            bounces and spam complaints captured by the Resend webhook) into
  *            this file. Both sides key on the same `hashEmail()`, so it is a
@@ -430,6 +435,11 @@ async function commandSync(dryRun: boolean): Promise<void> {
  * person the list believes it may email and the register says it may not, and
  * the register is always right.
  *
+ * It is also where the live size of the list is read from, so it prints two
+ * totals rather than one: `Subscribed rows` is the table's own count and
+ * `Mailable after suppression` is what a send would actually reach. Quote the
+ * second. They differ by exactly the drift count below them.
+ *
  * Prints hashes only, like everything else here, so the output is safe to paste
  * into Slack or a plan block. Exits 1 when there is drift, so it can gate a send
  * from a shell conditional.
@@ -440,7 +450,7 @@ async function commandReconcile(): Promise<void> {
 
   const { listMailableCandidates } = await import("../../lib/newsletter/subscribers");
   const { listOptouts } = await import("../../lib/email/optouts");
-  const { selectMailable } = await import("./mailable");
+  const { formatMailableCounts, selectMailable } = await import("./mailable");
   const { client } = await import("../../lib/db/drizzle");
 
   try {
@@ -452,11 +462,16 @@ async function commandReconcile(): Promise<void> {
     // would let the report and the send disagree, and the disagreement would be
     // invisible: the report would say "clean" while the builder dropped people,
     // or the report would cry drift about rows the builder happily mails.
-    const { excluded, returned } = selectMailable(candidates, optouts, committed.entries);
+    const result = selectMailable(candidates, optouts, committed.entries);
+    const { excluded, returned } = result;
 
-    console.log(`Mailable subscribers:      ${candidates.length}`);
-    console.log(`Runtime opt-outs:          ${optouts.length}`);
-    console.log(`Committed register:        ${committed.entries.length}`);
+    // "Mailable after suppression" is the figure to quote as the size of the
+    // list: it is what the recipient builder would hand to a send. The
+    // subscribed total above it is the table's own count, before the registers
+    // are applied, and the two differ by exactly the drift reported below.
+    for (const line of formatMailableCounts(result, optouts.length, committed.entries.length)) {
+      console.log(line);
+    }
     console.log("");
 
     if (returned.length > 0) {

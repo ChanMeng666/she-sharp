@@ -63,9 +63,11 @@ Sharp's voice — not to add facts to it.
 
 1. **Working directory is the repo root** (it has `lib/email/message.ts`). The
    scripts resolve `@/lib/…` through the repo tsconfig and fail elsewhere.
-2. **`DATABASE_URL` in `.env`** — that name, *not* `POSTGRES_URL`. Missing it
-   kills every DB script on connect and there is no offline mode for the queue,
-   so stop and tell the user.
+2. **`POSTGRES_URL` in `.env`** — that name. `lib/db/drizzle.ts` reads it and
+   nothing else; `DATABASE_URL` appears in `.env.example` for `drizzle-kit`
+   migrations and is read by no script this skill runs. Missing it kills every
+   DB script on connect and there is no offline mode for the queue, so stop and
+   tell the user.
 3. **`SLACK_BOT_TOKEN` in `.env`** (read scopes for reconcile, `chat:write` for
    the thread note). **If missing, do not stop** — degrade: run everything with
    `--no-slack`, treat every row as `db-only`, skip the thread note, say so.
@@ -454,8 +456,10 @@ went out (the printed `review_notes` carries the `resend=` id). **Do not send
 again.** Use `--force` only when the user explicitly wants a second audit line
 appended, e.g. after a genuine follow-up email.
 
-**Scripts die on connect / `DATABASE_URL` undefined** — the variable is missing
-from `.env`. It is `DATABASE_URL`, not `POSTGRES_URL`. No offline mode; stop.
+**`POSTGRES_URL environment variable is not set` / scripts die on connect** —
+the variable is missing from `.env`. Set the name the error gives you:
+`POSTGRES_URL`. Setting `DATABASE_URL` instead changes nothing here — it is
+`drizzle-kit`'s variable, not the runtime's. No offline mode; stop.
 
 **`resend: command not found`** — the CLI isn't on PATH. Install it and retry; do
 not substitute a hand-written API call, because the printed command's tags and

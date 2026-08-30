@@ -170,4 +170,39 @@ export function isTerminal(reason: string): boolean {
   return false;
 }
 
+/**
+ * Formats the count block that `suppression.ts reconcile` prints.
+ *
+ * It lives here, next to the rule, because the numbers are the rule's output
+ * and the report is the one place anybody reads them. Until 2026-08-30 the
+ * report printed `listMailableCandidates().length` under the label "Mailable
+ * subscribers" — the count *before* `selectMailable()` strips the two
+ * registers. With zero drift the two agree, which is why nobody noticed; with
+ * drift, the figure quoted everywhere as the size of the list was larger than
+ * the number of people a send would actually reach. Both figures are printed
+ * now, and the arithmetic between them is pinned by a test.
+ *
+ * @param result What `selectMailable()` returned.
+ * @param optoutCount Rows in the runtime `email_optouts` table.
+ * @param registerCount Entries in the committed suppression register.
+ * @returns The lines to print, in order, without a trailing blank.
+ */
+export function formatMailableCounts(
+  result: MailableResult,
+  optoutCount: number,
+  registerCount: number
+): string[] {
+  // Every candidate lands in exactly one of the two lists, so their sum is the
+  // pre-suppression total and nothing has to be passed in twice to disagree.
+  const subscribed = result.mailable.length + result.excluded.length;
+  const line = (label: string, value: number): string => `${`${label}:`.padEnd(28)}${value}`;
+
+  return [
+    line("Subscribed rows", subscribed),
+    line("Runtime opt-outs", optoutCount),
+    line("Committed register", registerCount),
+    line("Mailable after suppression", result.mailable.length),
+  ];
+}
+
 export { hashEmail };

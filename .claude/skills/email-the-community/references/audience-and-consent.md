@@ -117,7 +117,10 @@ the transactional layout has no opt-out footer. Switch to `engine: "react"`.
 
 `newsletter_subscribers` holds the whole imported Mailchimp list — **1,549
 mailable as at 2026-08-30**, and that figure moves. Read the live number with
-`npx tsx scripts/email/suppression.ts reconcile`, never a remembered one. The
+`npx tsx scripts/email/suppression.ts reconcile`, never a remembered one, and
+read it off the **`Mailable after suppression`** line: the `Subscribed rows`
+line above it is the table's own count, before the two suppression registers
+are applied, so it is the larger of the two whenever there is drift. The
 double opt-in flow is live, the Mailchimp list has been imported, and a send
 from this skill reaches real people.
 

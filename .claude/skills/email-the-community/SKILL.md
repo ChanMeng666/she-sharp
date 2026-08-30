@@ -581,10 +581,6 @@ trim copy; do not send it anyway.
 **`✗ image-format: WebP image(s) found`** — Outlook cannot decode WebP and shows
 a broken-image box. Re-export the cover as JPEG and update `cover.url`.
 
-**The render script printed a `resend broadcasts create` command** — ignore it.
-`render-message.ts` still prints the pre-batch skeleton for marketing specs and
-there is no segment to fill into it. Step 7 is the real next step.
-
 **"Can I cancel the one I sent?"** — no. There is no scheduled state and no
 recall. If it is out, say so plainly and discuss a correction email instead.
 

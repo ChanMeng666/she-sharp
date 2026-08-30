@@ -49,7 +49,10 @@ Trigger conditions (examples — don't wait for an exact match):
 - "send the event announcement out" / "把这场活动群发给订阅者"
 - "can we let the community know about the hackathon before tickets close?"
 
-Unsure? Run Step 1. It reads the repo and writes nothing.
+Unsure? Run Step 1. It reads the repo, sends nothing, and touches nothing
+outside `tmp/` — on a match it also writes the spec to
+`tmp/specs/announce-<slug>.json`, which is gitignored scratch you can ignore
+or delete.
 
 ## When NOT to apply
 
@@ -236,7 +239,7 @@ one:
 
 | Its step | What happens | Anything different for an event announcement |
 |---|---|---|
-| **Step 3 — Render and gate** | `npx tsx scripts/email/render-message.ts tmp/specs/announce-<slug>.json --mode broadcast` | A red gate here is a bug in the generator, **not** a reason to hand-edit the spec. Say what failed. Ignore the `resend broadcasts create` block the script prints afterwards — there is no segment to send to |
+| **Step 3 — Render and gate** | `npx tsx scripts/email/render-message.ts tmp/specs/announce-<slug>.json --mode broadcast` | A red gate here is a bug in the generator, **not** a reason to hand-edit the spec. Say what failed |
 | **Step 4 — DRAFT-banner preview** | `--mode preview --draft-banner --open` | Check the cover is not a broken box, and that the date in the email matches the event page |
 | **Step 5 — Test send** | `resend emails send` to a mailbox **the user names**, dry-run first | Open the event page from the test email and check every fact against it. The footer's unsubscribe link shows as literal `%%SHESHARP_UNSUBSCRIBE_URL%%` in a test — that is expected |
 | **Step 6 — Plan block, then stop** | The full block, including the `Redactions:` line | Add an `Event:` line naming the slug and its date, so approval is of a specific event |

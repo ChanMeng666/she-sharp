@@ -56,10 +56,12 @@ repo and nothing else. They are the prerequisites for the steps that follow.
 
    **Read this before you plan a send.** That table holds the Mailchimp list,
    imported on 2026-08-29 — **1,549 mailable as at 2026-08-30**, and it moves;
-   `npx tsx scripts/email/suppression.ts reconcile` prints the live figure. So
-   a batch built today would reach real people. But **nothing has ever been sent
-   from it**, and the live newsletter still goes out from **Mailchimp** — the
-   cutover has not happened.
+   `npx tsx scripts/email/suppression.ts reconcile` prints the live figure on
+   its **`Mailable after suppression`** line. Read that one, not the
+   `Subscribed rows` line above it: the second is the table's own count and the
+   first is what a send actually reaches. So a batch built today would reach
+   real people. But **nothing has ever been sent from it**, and the live
+   newsletter still goes out from **Mailchimp** — the cutover has not happened.
 
    So if someone asks you to "send this month's newsletter" through this skill,
    do every step up to and including the test send, and then **stop and ask.**
