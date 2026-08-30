@@ -175,17 +175,28 @@ broke a production deploy. On pnpm 11 use `npx drizzle-kit migrate` rather than
 The subscription record is **ours**: the `newsletter_subscribers` table
 (`lib/db/schema/system.ts`). Only `status = 'subscribed'` is mailable, and a row
 reaches it by double opt-in — `POST /api/newsletter/subscribe` writes `pending`,
-`/newsletter/confirm` requires a button press, never a GET. Resend's segment and
-topic are no longer the record — the code that read them is deleted, the two
-objects still sit in the Resend account holding nobody — so do not read consent
-out of them. A send reads the table through
-`scripts/email/recipients-from-db.ts`, which applies **both** suppression
-registers via `scripts/email/mailable.ts`.
+`/newsletter/confirm` requires a button press, never a GET. Resend's Marketing
+segment and topic are gone — the code that read them, both objects in the Resend
+account and their two Vercel variables were all deleted on 2026-08-29 — so this
+table is now the only marketing-consent record there is. A send reads the table
+through `scripts/email/recipients-from-db.ts`, which applies **both**
+suppression registers via `scripts/email/mailable.ts`.
 
 Registering, donating, applying, giving feedback or writing in is **not**
 subscribing. The gate is
 `.claude/skills/update-mailing-list/references/consent-rules.md`; every sending
 skill defers to it.
+
+Three tools exist so that nobody hand-rolls a worse one.
+`scripts/email/import-optin-subscribers.ts` is the only way to write consent
+route 2 (a registration-form opt-in): dry-run by default, and `--apply` also
+demands `--event-unsubscribers-checked`, because Humanitix keeps a per-event
+unsubscriber list no API and no export reaches.
+`normalize-recipients.ts --for-import` **refuses a file with no opt-in column**
+— until 2026-08-30 it passed such a file through whole and reported
+`Excluded 0`. And `--restrict-to-hashes`, on both recipient builders, ramps by
+engagement instead of row order; it is a send-order filter, never a consent
+route, and can only ever remove rows.
 
 **The table held 1,549 rows as at 2026-08-30**, and it is not equal to any one
 export — nor will it stay at that number. It is the 2026-08-17 Mailchimp export
@@ -336,7 +347,7 @@ before a local `CI=true npx next build`: stray files under `tmp/` break the
 build.
 
 Separately, `/private/` is the gitignored vault for the raw Humanitix and
-Mailchimp exports. It carries real names, addresses, sign-up IPs and live access
+Mailchimp exports. It carries real names, addresses, opt-in IPs and live access
 codes. Read it only when a task requires it, and never copy its contents into
 `lib/data/json/` — CI has leak guards for exactly that.
 
@@ -467,8 +478,17 @@ payout, access-code or discount reports.
 **Mailchimp audience archive.** The `She#` audience export (2019→, 3,689
 contacts, 229 tags) reduced to counts in `lib/data/json/mailchimp/` and read
 through `lib/data/mailchimp.ts`. Same split as Humanitix: the raw CSVs are
-*entirely* addresses — names, phones, and 1,586 sign-up IPs — so they live in the
+*entirely* addresses — names, phones, and opt-in IPs — so they live in the
 gitignored vault (`/private/`) and in the private archive repo, never in git.
+The load-bearing fact about those IPs is the exact one: **`CONFIRM_IP` is empty
+in all five export files**, and `CONFIRM_IP` is the column the API calls
+`ip_signup` — so none of them is a *sign-up* IP, whatever this file used to say.
+`OPTIN_IP` is the populated one, and a total for it needs its counting rule
+stated: **1,586 over the four audience files** that make up the 3,689 contacts,
+**861** of them on the 1,560 subscribed, or 1,591 if you also count the separate
+five-row `archived` export. Count CSV **records, not lines** — one subscribed
+contact's street address carries embedded newlines, and that single row is the
+whole of the 1,560-vs-1,563 and 861-vs-860 wobble.
 Three traps before quoting anything: the list is **1,560**, not 3,689 (the rest
 left, bounced, or never subscribed); Mailchimp's own dashboard says **3,145**
 because it excludes the 544 hard-bounced; and a `Ticket Type:`/`Event:` tag is
@@ -493,6 +513,15 @@ do not read a 2022 gap as a trend. The list peaked at **1,742 in 2025-11** and
 stood at **1,555** in 2026-08.
 → `docs/development/MAILCHIMP_ARCHIVE.md`, `PLATFORM_APIS.md`
 
+**Leaving Mailchimp.** The founder is cancelling the **paid subscription**, not
+closing the account — two different screens, and only one of them is reversible.
+Stopping the payment therefore means **pause or downgrade, never delete**; and
+because the Free plan holds sending above **250 contacts** against an audience
+an order of magnitude larger, **the last Mailchimp send must precede the
+downgrade**. None of it can be done from this repo — every step needs the
+Mailchimp account itself, which only the founder has.
+→ `docs/deployment/MAILCHIMP_CANCELLATION.md`
+
 **Presentation decks.** `/present/<slug>`, built from typed slide data with a
 build-failing copy and rhythm linter, per-event skins over a fixed house
 sequence, and a fluid 4:3–21:9 stage. Organisers use `/build-event-slides` and
@@ -504,17 +533,20 @@ never touch TypeScript. → `docs/development/DECK_SYSTEM.md`
 bounce/complaint capture. → `docs/development/EMAIL_OPERATIONS.md`; DNS, DMARC
 and the Mailchimp → Resend migration in `docs/deployment/EMAIL_AUTHENTICATION.md`
 
-**Decided 2026-08-28, half built:** the newsletter is **self-hosted** on Resend's
-transactional batch API rather than its Marketing product, which moves the
-marketing-consent record out of Resend and into our own database. **Built:** the
-`newsletter_subscribers` table, the double opt-in funnel, the six site entry
-points repointed at `/newsletter/subscribe`, and the send path
-(`recipients-from-db.ts` → `build-newsletter-batch.ts` → a human runs
-`resend emails batch`), and — since 2026-08-29 — the Mailchimp import itself;
-the consent section above says what the table holds and how to read the live
-figure. **Not built:** retiring the Resend segment, topic and their env vars —
-which still exist and must not be mistaken for live config. Reasoning, costs
-and the AWS SES fallback: `docs/development/EMAIL_PLATFORM_STRATEGY.md`
+**Decided 2026-08-28, built but not switched over:** the newsletter is
+**self-hosted** on Resend's transactional batch API rather than its Marketing
+product, which moves the marketing-consent record out of Resend and into our own
+database. The `newsletter_subscribers` table, the double opt-in funnel, the six
+site entry points repointed at `/newsletter/subscribe`, the send path
+(`recipients-from-db.ts` → `scripts/newsletter/build-newsletter-batch.ts` → a
+human runs `resend emails batch`), the Mailchimp import and the retirement of
+the Resend Marketing objects are **all done** — the last two on 2026-08-29, so
+nothing here is waiting on code. What is left is not code: nothing has ever been
+sent from the table and Mailchimp is still the live sender. The consent section
+above says what the table holds and how to read the live figure. Reasoning,
+costs and the AWS SES fallback: `docs/development/EMAIL_PLATFORM_STRATEGY.md`;
+which of the three platforms does what today:
+`docs/development/EMAIL_PLATFORM_STATE.md`
 
 **Monthly newsletter.** React Email rendered in this repo and sent through
 Resend's **batch** API — no broadcasts, no Resend-held contact list — run by the
@@ -528,21 +560,23 @@ it; a human runs the printed batch commands. **The live newsletter still goes
 out from Mailchimp** — this is the replacement, piloted but not switched over.
 → `docs/development/EMAIL_OPERATIONS.md`
 
-**Outbound email skills.** Three guided skills let teammates send mail without
+**Outbound email skills.** Four guided skills let teammates send mail without
 writing code: `/reply-to-contact-messages`, `/update-mailing-list`,
-`/email-the-community`. Repo scripts render, the Resend CLI sends.
-**Mail to one event's registrants is not among them** — it is sent from
-Humanitix's own Email campaigns tool, against the ticket holders Humanitix
-already has. `/send-event-emails` did it here until 2026-08-30 and was retired
-because its only input was a Humanitix export, so it could never reach anyone
-Humanitix could not. Two consequences to state rather than discover: that mail
-leaves the **Humanitix** domain, not `shesharp.org.nz`, so none of the SPF/DKIM/
-DMARC work applies to it; and Humanitix will not send to an event that ended
-more than **14 days** ago, so a late follow-up has no tool at all. The tier
-boundary is unchanged — registrants are Tier 2 fulfilment
+`/email-the-community` and `/promote-event`. Repo scripts render, the Resend CLI
+sends. **Mail to one event's registrants is not among them** — it is composed
+and sent in Humanitix's own Email campaigns tool, against the ticket holders
+Humanitix already has. `/send-event-emails` did it here until 2026-08-30 and was
+retired because its only input was a Humanitix export, so it could never reach
+anyone Humanitix could not. Two consequences to state rather than discover: that
+mail leaves the **Humanitix** domain, not `shesharp.org.nz`, so none of the
+SPF/DKIM/DMARC work applies to it; and Humanitix will not send to an event that
+ended more than **14 days** ago, so a late follow-up has no tool at all. The
+tier boundary is unchanged — registrants are Tier 2 fulfilment
 (`lib/email/audience.ts`), subscribers are Tier 0, and Humanitix draws the same
 line from its side.
-→ `docs/development/AI_SKILLS_GUIDE.md`, `docs/development/EMAIL_OPERATIONS.md`
+→ `docs/development/EMAIL_RESPONSIBILITY_BOUNDARIES.md` (which system sends to
+whom, and why registrant mail is not here),
+`docs/development/AI_SKILLS_GUIDE.md`, `docs/development/EMAIL_OPERATIONS.md`
 
 **Visitor chatbot.** AI SDK 6 `ToolLoopAgent` on OpenAI `gpt-4o-mini` (direct,
 not the AI Gateway), grounded in live data via tools over `lib/data/*`, with
@@ -580,12 +614,15 @@ connection. → `docs/deployment/`, `docs/ARCHITECTURE.md` §8
 **No test runner is configured.** Tests are plain `node:assert` scripts run with
 `npx tsx <file>`; each prints `ok - …` and exits non-zero on failure.
 
-CI (`.github/workflows/verify.yml`, PRs to `main`) runs five jobs: image-path
-verification (plus the newsletter email-safe cover check, the hackathon-facts,
-Slack read-state, and Humanitix and Mailchimp archive checks), `typecheck`,
-`typecheck:scripts`, `lint`, and the deck checks. The two archive checks are leak guards as much as data checks — they
-fail the build if an address, an IP or a code-shaped value reaches
-`lib/data/json/`.
+CI (`.github/workflows/verify.yml`, PRs to `main`) runs five jobs: `typecheck`,
+`typecheck:scripts`, `lint`, the deck checks, and image-path verification —
+which also carries every other offline check, because they are pure data and
+ride its checkout for free: the newsletter email-safe covers, event- and
+poster-asset ownership, event status, the playbook page, the hackathon facts,
+Slack read-state, and the Humanitix and Mailchimp archive checks. Those last two
+are leak guards as much as data checks — they fail the build if an address, an
+IP or a code-shaped value reaches `lib/data/json/`. **Adding a check that needs
+neither a database nor the network belongs in that job**, not in a sixth one.
 
 Not in CI — run these locally before pushing:
 
@@ -616,6 +653,17 @@ first — a stale server serves an OLD build and makes fixes look broken.
 Test new work at each small milestone rather than at the end, keep tests beside
 the code they cover, and prefer the minimum assertion that would actually catch
 the failure.
+
+**A guard is not verified until you have broken the thing it guards.** Reading
+one and agreeing with it is not a test. Two were caught on 2026-08-30, both
+reading as correct and gating nothing: `normalize-recipients.ts --for-import`
+promised to drop rows with no marketing opt-in, and passed the whole file when
+the column was **absent** — reporting `Excluded 0`, which reads as a clean
+file; and
+`--limit` on `recipients-from-db.ts` looked like "the first N in order" when
+every row shares one `created_at` from a single import, so the order was
+whatever Postgres felt like and the ramp was not reproducible. Both were found
+by handing the guard the input it was supposed to refuse.
 
 # Environment
 
