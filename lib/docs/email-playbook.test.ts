@@ -22,6 +22,7 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { renderModule } from "../../scripts/docs/build-email-playbook.mjs";
 import { EMAIL_PLAYBOOK_HTML, EMAIL_PLAYBOOK_SOURCES } from "./email-playbook";
 
 const REPO_ROOT = path.resolve(
@@ -57,6 +58,46 @@ check("the page still names the document it is built from", () => {
     1,
     `expected exactly one source. Run: ${REBUILD}`,
   );
+});
+
+check("the page is byte-for-byte what the document renders to", () => {
+  // The hash below covers the MARKDOWN. It says the document has not moved on
+  // without the page being rebuilt — and it says nothing at all about the
+  // generated module, which is ordinary committed TypeScript that anybody can
+  // edit. Measured 2026-08-30: changing "At most three marketing emails" to
+  // "nine" directly in `email-playbook.ts` left every other check on this page
+  // green, and the wrong number would have been what staff read. A hash of the
+  // input cannot detect a forged output.
+  //
+  // So the document is re-rendered here and compared to what is committed.
+  // That catches the hand-edit above, catches a stale module the hash would
+  // also have caught, and — because it compares the whole module rather than a
+  // digest — says which line differs. It runs the real generator, so a change
+  // to the renderer that alters every page is caught here too.
+  //
+  // `marked` is a devDependency reached only from this test and the generator.
+  // Neither is imported by anything under `app/`, so it stays out of the
+  // deployed bundle, which is the reason the page is a snapshot in the first
+  // place.
+  const [source] = EMAIL_PLAYBOOK_SOURCES;
+  const expected = renderModule(markdown.get(source.path) ?? "");
+  const actual = toLf(
+    readFileSync(path.join(REPO_ROOT, "lib", "docs", "email-playbook.ts"), "utf8"),
+  );
+
+  if (toLf(expected) !== actual) {
+    // Name the first differing line: on a 26 kB single-line HTML string, a
+    // bare "not equal" tells the reader nothing they can act on.
+    const a = actual.split("\n");
+    const b = toLf(expected).split("\n");
+    const at = a.findIndex((line, i) => line !== b[i]);
+    assert.fail(
+      `lib/docs/email-playbook.ts is not what ${source.path} renders to ` +
+        `(first difference at line ${at + 1}). Either the module was edited by ` +
+        `hand — it is generated, so any edit there is lost on the next build — ` +
+        `or the document moved on. Run: ${REBUILD}`,
+    );
+  }
 });
 
 for (const source of EMAIL_PLAYBOOK_SOURCES) {
