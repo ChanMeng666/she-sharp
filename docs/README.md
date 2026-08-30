@@ -37,6 +37,7 @@ happened, **dormant** is a runbook for a state the site is not in.
 | `ADD_EVENTS.md` | Editing events, stats, sponsors, podcasts and press in `lib/data/` | current |
 | `AI_SKILLS_GUIDE.md` | Non-technical walkthrough: installing Cursor and the tools, running any of the eleven `.claude/skills/` workflows, and getting your work back into the repo | current |
 | `EVENT_PLAYBOOK.md` | The one-page version for the whole team — one diagram, one section per team, a copy-paste prompt for every job. **This is what `/internal/event-playbook` serves** | current |
+| `INTERNAL_EMAIL_PLAYBOOK.md` | Its sibling for email, for the same non-technical reader: who may be emailed, which system sends what, the approval chain, the frequency cap, and how the list was actually acquired. **This is what `/internal/email-playbook` serves.** It summarises `consent-rules.md`, `EMAIL_RESPONSIBILITY_BOUNDARIES.md` and `MAILCHIMP_CANCELLATION.md` and defers to all three | current |
 | `CHATBOT_AI_AGENT.md` | The visitor chatbot: knowledge context, tools, rate limiting | current |
 | `CONTENT_RULES.md` | Counting and naming traps; read before publishing a number or a name | current |
 | `DECK_SYSTEM.md` | The `/present/*` deck system in full — data model, skins, linter, host controls | current |

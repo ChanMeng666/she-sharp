@@ -102,6 +102,17 @@ jobs:
       - name: Verify the playbook page matches its source document
         run: npx tsx lib/docs/playbook.test.ts
 
+      # Same snapshot arrangement, same failure, one page along:
+      # /internal/email-playbook is built from
+      # docs/development/INTERNAL_EMAIL_PLAYBOOK.md. Higher stakes than its
+      # sibling — a stale page here tells somebody a group of real people may be
+      # emailed when the rule has since said otherwise — so this one also checks
+      # that the handbook still POINTS AT the three documents it summarises,
+      # rather than having quietly become a second copy of them, and that no
+      # section quotes a subscriber count without the date it was taken.
+      - name: Verify the email playbook page matches its source document
+        run: npx tsx lib/docs/email-playbook.test.ts
+
       # Also shares this checkout — pure regex against two hard-coded lists.
       # An unreferenced image has two possible owners, the generated per-event
       # manifest and KNOWN_UNREFERENCED, and they mean different things. A file
