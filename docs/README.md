@@ -24,6 +24,7 @@ happened, **dormant** is a runbook for a state the site is not in.
 |---|---|---|
 | `EMAIL_AUTHENTICATION.md` | SPF/DKIM/DMARC records, the staged move to enforcement, Mailchimp → Resend runbook | current |
 | `WORKSPACE_MAILBOX_CHECKLIST.md` | The Google Workspace side of the 2026-08 mailbox audit — bilingual, for the super-admin | current |
+| `MAILCHIMP_DECOMMISSION.md` | What must happen before the Mailchimp account is closed — bilingual, for the founder; three items are irreversible | current — the closure has not happened |
 | `MAINTENANCE_MODE.md` | `MAINTENANCE_MODE=true` → branded 503 for the whole site | current |
 | `VERCEL_ENV_VARIABLES_GUIDE.md` | Setting env vars without silently corrupting them | current |
 | `DOMAIN_MIGRATION_2026-06-19.md` | The cutover to `www.shesharp.org.nz`, layer by layer | historical record |
@@ -42,6 +43,7 @@ happened, **dormant** is a runbook for a state the site is not in.
 | `EMAIL_ADDRESSES.md` | Every `@shesharp.org.nz` address, and which are mailboxes vs sending identities | current |
 | `EMAIL_OPERATIONS.md` | The four sending streams, unsubscribe handling, newsletter loop | current |
 | `EMAIL_PLATFORM_STRATEGY.md` | What the Resend plan buys, why the newsletter is being self-hosted rather than bought, and AWS SES as a costed future option | current, decision record |
+| `EMAIL_RESPONSIBILITY_BOUNDARIES.md` | Which system sends which mail — subscribers from this repo through Resend, one event's registrants from Humanitix — and the single sanctioned crossing between the two lists | current, decision record |
 | `EVENT_FEEDBACK.md` | The `/f/<code>` QR form: codes, rate limiting, digest, anonymisation | current |
 | `EVENT_LIFECYCLE_SOP.md` | One regular event end to end for the whole team — the partner conversation, the phase order, who does what, the promotion beats, close-out, and the developer machinery underneath. The reference `EVENT_PLAYBOOK.md` is built from | current |
 | `FUNDER_REPORTS.md` | Why `report/` is a separate Typst project and what gates a final build | current |
