@@ -1,0 +1,11 @@
+# The generated newsletter archive is checksummed byte-for-byte: every file's
+# sha256 is recorded in `lib/data/newsletter-archive/index.json` and re-checked
+# by `scripts/mailchimp/archive-guard.test.ts`, which is how a hand-edit to a
+# GENERATED file becomes visible. Git must therefore not rewrite the bytes.
+#
+# Without this, `core.autocrlf=true` — the default on Windows — turns every LF
+# into CRLF on checkout, so the guard goes red on a fresh clone here while CI,
+# on Linux, stays green. A checksum that depends on which machine cloned the
+# repository is not a checksum.
+lib/data/newsletter-archive/*.html -text
+lib/data/newsletter-archive/index.json -text
