@@ -256,6 +256,67 @@ check(
     "\n      A card that cannot be joined stays pointed at Mailchimp after the cancellation."
 );
 
+// ---------------------------------------------------------------------------
+// Re-hosted images
+//
+// The point of the archive is that it outlives the Mailchimp account. A body
+// whose text survives but whose pictures still load from `mcusercontent.com`
+// outlives it only halfway.
+// ---------------------------------------------------------------------------
+
+const imageMap = JSON.parse(
+  readFileSync(join(ARCHIVE_HTML_DIR, "images.json"), "utf8")
+) as { base: string; entries: { asset: string; sourceSha256: string; blobPath: string }[] };
+const hostedPaths = new Set(imageMap.entries.map((e) => e.blobPath));
+
+const MC_IMAGE_HOST =
+  /(?:dim\.)?mcusercontent\.com|cdn-images\.mailchimp\.com|gallery\.mailchimp\.com/;
+const stillOnMailchimp: string[] = [];
+const offMap: string[] = [];
+for (const [file, html] of bodies) {
+  for (const m of html.matchAll(/<(?:img|meta|link)\b[^>]*>/gi)) {
+    const attr = /(?:\bsrc|\bcontent|\bhref)="([^"]+)"/.exec(m[0]);
+    if (!attr) continue;
+    const url = attr[1].replace(/&amp;/g, "&");
+    if (MC_IMAGE_HOST.test(url)) {
+      stillOnMailchimp.push(`${file}: ${url}`);
+    } else if (url.startsWith(`${imageMap.base}/`)) {
+      const rest = url.slice(imageMap.base.length + 1);
+      if (!hostedPaths.has(rest)) offMap.push(`${file}: ${rest}`);
+    }
+  }
+}
+
+check(
+  "no body still loads an image from a Mailchimp host",
+  stillOnMailchimp.length === 0,
+  first(stillOnMailchimp) +
+    "\n      Re-run scripts/mailchimp/rehost-archive-images.ts --apply." +
+    "\n      A reference left here dies with the account this archive exists to outlive."
+);
+
+check(
+  "every hosted image URL is recorded in images.json",
+  offMap.length === 0,
+  first(offMap) +
+    "\n      A body pointing at an object the map does not record has no provenance —" +
+    "\n      nothing says which vault file it came from, or that it was cleared for publication."
+);
+
+// This check exists because its absence was measured. Withholding used to be
+// enforced per MARKED occurrence, and the markers were incomplete: ALL FIVE
+// withheld images still had at least one unmarked `<img src>` loading them live,
+// including a whole-class photograph of primary-school children. A guard that
+// asks what an earlier pass wrote down cannot see what it failed to write down,
+// so this one asks the file instead.
+const withheldInMap = imageMap.entries.filter((e) => WITHHELD_ASSETS.has(e.asset));
+check(
+  "no withheld image is in the hosted map",
+  withheldInMap.length === 0,
+  first(withheldInMap.map((e) => `${e.asset} -> ${e.blobPath}`)) +
+    "\n      A Blob URL is immutable for a year. See scripts/mailchimp/withheld-images.ts."
+);
+
 console.log("");
 if (failures > 0) {
   console.error(`${failures} check(s) failed.`);
