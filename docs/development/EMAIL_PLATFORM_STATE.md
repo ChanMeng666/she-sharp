@@ -217,32 +217,51 @@ is the difference between recording a confirmation and inventing one.
 **Measured 2026-08-30**, joining the 2026-08-17 vault export against a live API
 pull across the 1,545 contacts present in both:
 
-- **`timestamp_opt` *is* `OPTIN_TIME`.** Of the 1,545 shared contacts, 1,544 have
-  both values and **every one** differs by exactly the New Zealand offset —
-  **947 at +12h (NZST) and 597 at +13h (NZDT), with zero at any other offset.**
+- **`timestamp_opt` *is* `OPTIN_TIME`.** Of the 1,545 shared contacts, **1,544
+  have both values and every one differs by exactly the New Zealand offset —
+  947 at +12h (NZST) and 597 at +13h (NZDT), with zero at any other offset.**
   The CSV is account-local time; the API is UTC. This retires the "unverified,
   likeliest explanation is account-local time" caveat in
   [`PLATFORM_APIS.md`](PLATFORM_APIS.md) § "Mailchimp — the counts match" — the
-  explanation is now measured, not likely.
-- **`timestamp_signup` *is* `CONFIRM_TIME`, but only where a confirmation was a
-  separate act.** In the export, `CONFIRM_TIME` differs from `OPTIN_TIME` on
-  exactly **129** rows and repeats it on the other 1,431. The API populates
-  `timestamp_signup` on exactly **129** rows — and they are **the same 129
-  people**, agreeing on the instant to the NZ offset in every case (125 at +12h,
-  4 at +13h, none other).
+  explanation is now measured, not likely. The 1,545th contact has **no opt-in
+  time on either side**; it reappears immediately below, and it is the same row
+  both times.
+- **`timestamp_signup` *is* `CONFIRM_TIME`.** The API populates it on **129** of
+  the 1,545. On **128** of those the CSV's `CONFIRM_TIME` also differs from a
+  populated `OPTIN_TIME` — the signature of confirmation as a separate act. The
+  **129th is the contact with no `OPTIN_TIME` at all** (blank in the CSV, `null`
+  in the API), so there is nothing for its `CONFIRM_TIME` to differ *from*; it
+  still carries both a `CONFIRM_TIME` and a `timestamp_signup`.
+- **Across all 129, the two agree to the New Zealand offset: 125 at +12h, 4 at
+  +13h, zero at any other offset.**
 
-**So the API does not withhold the column; Mailchimp never recorded a separate
-confirmation for the other 1,416.** The operational conclusion is unchanged and
-should not be softened: an API-sourced import must leave `confirmedAt` null,
-because for 1,416 of 1,545 contacts the API has nothing to write, and the CSV's
-value there is a copy of the opt-in time rather than evidence of a second act.
-**A fresh CSV export, not an API delta, is the way to close the joiner gap.**
+> **Two counts, deliberately not merged.** 129 rows have `timestamp_signup`; 128
+> rows have a `CONFIRM_TIME` that differs from a populated `OPTIN_TIME`. Writing
+> either number as though it were both hides the one row that is in the first set
+> and not the second. Restricting the offset table to the 128 gives 125/**3**
+> rather than 125/**4** — same shape, one row apart, and it is that row.
 
-The four rows imported from the API on 2026-08-30 were checked individually:
-all four have `timestamp_signup: null`, so their null `confirmedAt` is correct on
-the facts as well as on the rule. Their stored `consentSource` sentence says the
-API "exposes no `CONFIRM_TIME` equivalent"; strictly it exposes one that is
-empty for them. The rows are right; only that clause is imprecise.
+**So the API does not withhold the column.** Mailchimp simply never recorded a
+separate confirmation for the other **1,416**, where the CSV's `CONFIRM_TIME` is
+a copy of `OPTIN_TIME` rather than evidence of a second act.
+
+**Read that carefully before building an API-delta importer, because the obvious
+summary of it is wrong.** The API is **not** strictly weaker than the CSV for
+everybody: for the 129 it carries a real, correct confirmation timestamp, and an
+importer could legitimately write `confirmedAt` from `timestamp_signup` **on
+exactly those rows**. It is weaker only for the 1,416 the API leaves empty — and
+because a delta pull cannot tell you in advance which group a new contact falls
+into, the safe default stands: **an API-sourced import writes `confirmedAt` null,
+and a fresh CSV export, not an API delta, is the way to close the joiner gap.**
+
+The four rows imported from the API on 2026-08-30 were checked individually: all
+four have `timestamp_signup: null`, so their null `confirmedAt` is **correct on
+the facts as well as on the rule** — they fall in the 1,416 group. Their stored
+`consentSource` sentence says the API "exposes no `CONFIRM_TIME` equivalent";
+strictly it exposes one that is empty for them. **The rows are right and only the
+general clause is loose, so this is not a reason to touch production data** — it
+is recorded here so nobody reads that sentence as a statement about the API in
+general. Whether to reword it is the maintainer's call.
 
 ### The archive page shows six months, not the archive
 
