@@ -28,7 +28,7 @@
     },
     "photoOfTheMonth": {
       "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-07/photos/she-sharp-and-myob-working-smarter-4-1CXkl2XC5GtXu9m9eWu4KJzwMo82kl.jpg",
-      "caption": "Working Smarter under way at MYOB's Albert Street office, with three of their team on what AI has changed for them.",
+      "alt": "Working Smarter: AI, MYOB, and the New Delivery Landscape",
       "eventSlug": "she-sharp-and-myob-working-smarter"
     },
     "recapIntro": "Just the one event in July.",
@@ -146,27 +146,27 @@
     "photoStrip": [
       {
         "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-07/photos/she-sharp-and-myob-working-smarter-3-OBb3Y3dCY2e8WtzU0NMuQpAEa2rPsM.jpg",
-        "alt": "Two attendees at the kai table before the session starts",
+        "alt": "Working Smarter: AI, MYOB, and the New Delivery Landscape",
         "eventSlug": "she-sharp-and-myob-working-smarter"
       },
       {
         "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-07/photos/she-sharp-and-myob-working-smarter-2-TliX6g0x8Arkt7BvR2R4XeYXWU81Lf.jpg",
-        "alt": "Kai laid out for arrivals at MYOB's Albert Street office",
+        "alt": "Working Smarter: AI, MYOB, and the New Delivery Landscape",
         "eventSlug": "she-sharp-and-myob-working-smarter"
       },
       {
         "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-07/photos/she-sharp-and-myob-working-smarter-5-uBdropqnBkUdpoUvUTG4KTCmhvOhib.jpg",
-        "alt": "The evening opens with a karakia",
+        "alt": "Working Smarter: AI, MYOB, and the New Delivery Landscape",
         "eventSlug": "she-sharp-and-myob-working-smarter"
       },
       {
         "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-07/photos/she-sharp-and-myob-working-smarter-6-acb7LyNcFKN32g2WCv7QvG8rQ2AoIt.jpg",
-        "alt": "Housekeeping before the talks begin, to a full room",
+        "alt": "Working Smarter: AI, MYOB, and the New Delivery Landscape",
         "eventSlug": "she-sharp-and-myob-working-smarter"
       },
       {
         "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-07/photos/she-sharp-and-myob-working-smarter-7-U3a5OA6VrzDeGPopkcTj69Xesbzwhs.jpg",
-        "alt": "Introducing She Sharp and the gender gap in STEM",
+        "alt": "Working Smarter: AI, MYOB, and the New Delivery Landscape",
         "eventSlug": "she-sharp-and-myob-working-smarter"
       }
     ],

@@ -522,7 +522,9 @@ reject a whole chunk rather than half-delivering it.
 
 If a chunk fails, **stop the loop** — do not skip ahead. Fix the cause and
 re-run that same chunk; its idempotency key makes the re-run safe. 600ms between
-chunks stays under Resend's ~2 requests/second.
+chunks is a margin, not the limit: Resend allows **10 requests/second per team**
+on every plan, and the pacing exists because that budget is shared with the live
+site's transactional mail.
 
 Then record it as sent:
 
@@ -668,8 +670,9 @@ a broken-image box. Re-export the cover as JPEG and update `cover.url`.
 **"Can I cancel the one I sent?"** — no. There is no scheduled state and no
 recall. If it is out, say so plainly and discuss a correction email instead.
 
-**`429` mid-loop** — faster than ~2 requests/second. Stop, wait ten seconds,
-resume from the failed chunk; never re-send one that succeeded.
+**`429` mid-loop** — the team's 10 requests/second was exceeded, which at 600ms
+pacing means something else was hitting the API at the same time. Stop, wait ten
+seconds, resume from the failed chunk; never re-send one that succeeded.
 
 **`resend: command not found`** — the CLI is not on PATH. Install it and retry.
 Do not substitute a hand-written API call.

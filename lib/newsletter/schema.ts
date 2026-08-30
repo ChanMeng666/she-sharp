@@ -95,14 +95,49 @@ export const editorialSchema = z.object({
     })
     .nullable()
     .default(null),
+  /**
+   * The month's single hero photograph, shown without a caption.
+   *
+   * This carried a `caption` until 2026-08-31. It was rendered twice — as
+   * italic text under the photo and as the `alt` — and it was written about
+   * the frame rather than read off it, so it asserted things the photograph
+   * did not show. The field is now `alt` and nothing else, because `alt` is
+   * the only text that still reaches a reader, and it is held to one rule:
+   * identify the event the photograph is from, describe nothing.
+   */
   photoOfTheMonth: z
     .object({
       /** Absolute URL. */
       src: z.string().url(),
-      caption: z.string().min(1),
+      /** Factual identification for screen readers — normally the event title. */
+      alt: z.string().min(1),
       eventSlug: z.string().optional(),
     })
     .nullable(),
+  /**
+   * Optional recap video for the "Looking back" section — the month's event
+   * film, linked rather than embedded.
+   *
+   * **No email client plays video.** A `<video>` tag or a YouTube iframe is
+   * stripped by Gmail and Outlook alike, so this is deliberately a URL and a
+   * title and nothing more: `emails/components/RecapVideo.tsx` renders a panel
+   * that links out to the watch page, which is a plain anchor and therefore
+   * survives every client. There is no poster-frame field because the obvious
+   * still — YouTube's own thumbnail — is usually the same frame as
+   * `photoOfTheMonth`, and the template already treats a repeated photo as a
+   * defect worth de-duplicating.
+   *
+   * Null omits the block.
+   */
+  recapVideo: z
+    .object({
+      /** Watch-page URL, e.g. a youtu.be link. */
+      url: z.string().url(),
+      /** Human title of the film, e.g. "Festival Recap — AUT City Campus". */
+      title: z.string().min(1),
+    })
+    .nullable()
+    .default(null),
   /** 1-2 sentences framing last month's recap section. */
   recapIntro: z.string().min(1),
   /** Optional per-event one-liners overriding auto shortDescription, keyed by slug. */
@@ -211,6 +246,11 @@ export const autoEventSchema = z.object({
 export const stripPhotoSchema = z.object({
   /** Absolute URL of an email-optimized JPEG (never WebP — Outlook breaks). */
   src: z.string().url(),
+  /**
+   * Factual identification for screen readers — normally the event title.
+   * Nothing renders it as visible text; a described-from-memory `alt` is a
+   * fabrication read aloud to the one reader who cannot check it.
+   */
   alt: z.string().min(1),
   eventSlug: z.string().optional(),
 });

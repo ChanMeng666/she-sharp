@@ -209,7 +209,8 @@ async function main() {
       console.error(`  ✗ ${t.name} — ${err}`);
     }
 
-    // Resend free tier rate limit: 2 emails/second
+    // A deliberate margin, not the limit: Resend allows 10 requests/second per
+    // team on every plan, and that budget is shared with the live site.
     await sleep(600);
   }
 

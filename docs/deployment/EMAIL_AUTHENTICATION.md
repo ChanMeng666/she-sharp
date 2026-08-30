@@ -54,6 +54,16 @@ Transactional 50,000/month renewing on the 27th; Marketing still Free). It was
 moved off the maintainer's personal team with Resend's Domain Claim flow — see
 "Resend account migration (2026-08-28)" below for the method and the DNS delta.
 
+**Getting into that team is a Google sign-in, not a password.** Resend holds no
+password for this account: the dashboard is entered with **Sign in with Google**
+as `website@shesharp.org.nz`. Established 2026-08-27 by Mahsa, after the sign-in
+was attempted as a password login and read as a lockout. Anyone who cannot get
+in should check which Google account the browser is signed into before assuming
+the credential is wrong — and note the consequence recorded in
+[`WORKSPACE_MAILBOX_CHECKLIST.md`](WORKSPACE_MAILBOX_CHECKLIST.md) §4: because
+the sign-in is Google's, the `website@` mailbox password reaches the Resend
+account, and rotating it is the only way to close that.
+
 The `include:_spf.1stdomains.co.nz` inside the root SPF is a **leftover from the
 old web host** (1stDomains → isx.net.nz → voyager.co.nz), not a sign of where DNS
 lives. See "Legacy SPF include" below — it is probably removable.
@@ -478,6 +488,16 @@ poll `domains claim get` until `completed` → update DKIM in DNS →
 Segments and topics do **not** travel with a claim; they were recreated. Their
 new ids are in `.claude/skills/update-mailing-list/references/resend-roster-cli.md`
 and in `docs/development/EMAIL_OPERATIONS.md`.
+
+**The old team held almost nothing, which is the fact worth keeping.** Two
+contacts, both the founder's own addresses; **zero** broadcasts, templates and
+automations; three segments and one topic, all created during the 2026-07
+newsletter pilot and never populated. Nothing was imported into the new team —
+it starts at zero contacts. Anyone reading a rule that says Resend's segment and
+topic membership is the marketing-consent record should note that on this date
+it protected nobody: the real 1,560-person list was in Mailchimp, and that rule
+has since been retired (`../development/EMAIL_OPERATIONS.md` § "Resend Marketing
+objects — retired").
 
 The old team was cleared out after the move, so its full pre-migration state —
 including both Cloudflare zone dumps — lives only in the private archive repo at

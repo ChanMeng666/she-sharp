@@ -61,7 +61,17 @@ import { hashEmail } from "./suppression";
 /** Resend refuses more than 100 messages in one batch request. */
 const MAX_CHUNK = 100;
 
-/** Resend's free tier allows 2 requests/second; 600ms between chunks is safe. */
+/**
+ * 600ms between chunks — a deliberate margin, not the documented limit.
+ *
+ * Resend's rate limit is **10 requests/second per team**, raisable on request,
+ * and it is the same on every plan; this comment claimed "the free tier allows
+ * 2/second" until 2026-08-30, which was wrong on both the number and the reason
+ * (She Sharp has been on Transactional Pro since 2026-08-28). The pacing stays
+ * because the limit is per *team*: a full-list send shares it with whatever
+ * transactional mail the live site is emitting at the same moment, and 600ms
+ * costs about ten seconds across sixteen chunks. Do not shorten it for speed.
+ */
 const CHUNK_DELAY_MS = 600;
 
 /** Length of the per-message de-duplication key. */

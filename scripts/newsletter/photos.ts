@@ -598,12 +598,11 @@ async function runPlaceholders(
   raw.editorial.heroImageUrl = urlBySlot.get("hero");
   raw.editorial.photoOfTheMonth = {
     src: urlBySlot.get("photo-of-the-month"),
-    caption: `Placeholder — real photos from ${PLACEHOLDER_EVENT_LABEL} are coming soon.`,
+    alt: `Placeholder — real photos from ${PLACEHOLDER_EVENT_LABEL} are coming soon.`,
   };
-  // NOTE: no `eventSlug` on these entries, on purpose. PhotoStrip.captionFor()
-  // OVERRIDES `alt` whenever the slug resolves to a recap event, which would
-  // caption a synthetic purple card "Working Smarter · MYOB, Auckland" — a
-  // generated image presented as a real venue shot.
+  // NOTE: no `eventSlug` on these entries, on purpose. A placeholder is a
+  // generated purple card, not a photograph of a room, so it must never be
+  // tied to a real event — the `alt` says what it actually is.
   raw.auto.photoStrip = PLACEHOLDER_STRIP_NUMBERS.map((n) => ({
     src: urlBySlot.get(`strip-${n}`),
     alt: `${PLACEHOLDER_EVENT_LABEL} — photo coming soon (${n} of ${PLACEHOLDER_STRIP_COUNT})`,
@@ -824,16 +823,13 @@ async function main(): Promise<void> {
   }
 
   // Write the strip back into the issue JSON (mutate raw to preserve field order).
-  // Alt text is venue-grounded: "<event title> — <location>" (falls back to a
-  // generic label when the recap event has no location).
-  const locationBySlug = new Map(
-    issue.auto.recapEvents.map((e) => [e.slug, e.locationLabel])
-  );
+  // Alt text is the event's own title and nothing else. Nothing renders it as
+  // visible text any more, so its only reader is a screen reader — and a
+  // sentence describing a frame this script never looked at would be a
+  // fabrication read aloud to the one person who cannot check it.
   const photoStrip = prepared.map((p, i) => ({
     src: uploaded[i].url,
-    alt: `${p.candidate.eventTitle} — ${
-      locationBySlug.get(p.candidate.eventSlug) || "She Sharp event"
-    }`,
+    alt: p.candidate.eventTitle,
     eventSlug: p.candidate.eventSlug,
   }));
 

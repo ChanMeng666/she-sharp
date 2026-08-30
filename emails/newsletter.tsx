@@ -32,12 +32,13 @@ import type { IssueAuto, NewsletterIssueData } from "@/lib/newsletter/schema";
 import { UNSUBSCRIBE_URL_PLACEHOLDER } from "@/lib/email/unsubscribe-headers";
 import { RECONFIRM_URL_PLACEHOLDER } from "@/lib/newsletter/reconfirm-link";
 import { SITE_URL } from "@/lib/seo/site";
-import { COLORS, styles, SPACE, RADIUS, FONT_STACK, CONTAINER_WIDTH } from "./brand";
+import { COLORS, styles, SPACE, RADIUS, CONTAINER_WIDTH } from "./brand";
 import { Header } from "./components/Header";
 import { Cover } from "./components/Cover";
 import { FounderNote } from "./components/FounderNote";
 import { HeadlineEvent } from "./components/HeadlineEvent";
 import { PhotoStrip } from "./components/PhotoStrip";
+import { RecapVideo } from "./components/RecapVideo";
 import { RecapEventCard, UpcomingEventCard } from "./components/EventCard";
 import { Pulse } from "./components/Pulse";
 import { StatStrip } from "./components/StatStrip";
@@ -152,11 +153,7 @@ export function NewsletterEmail({
   const narrativeFirst = Boolean(editorial.headline && headlineEvent);
 
   const photoStripBlock = (
-    <PhotoStrip
-      photos={photoStrip}
-      recapEvents={auto.recapEvents}
-      albumUrl={auto.photoAlbumUrl}
-    />
+    <PhotoStrip photos={photoStrip} albumUrl={auto.photoAlbumUrl} />
   );
 
   return (
@@ -191,11 +188,14 @@ export function NewsletterEmail({
               </Heading>
               <Text style={styles.bodyText}>{editorial.recapIntro}</Text>
 
+              {/* No caption under the photo — see `alt` in the schema: the
+                  photograph speaks for itself, and the only text about it is
+                  the one a screen reader needs. */}
               {editorial.photoOfTheMonth ? (
                 <Section style={{ marginBottom: `${SPACE.xl}px` }}>
                   <Img
                     src={editorial.photoOfTheMonth.src}
-                    alt={editorial.photoOfTheMonth.caption}
+                    alt={editorial.photoOfTheMonth.alt}
                     width="536"
                     height="auto"
                     style={{
@@ -206,19 +206,6 @@ export function NewsletterEmail({
                       border: `1px solid ${COLORS.border}`,
                     }}
                   />
-                  <Text
-                    style={{
-                      margin: `${SPACE.sm}px 0 0`,
-                      fontFamily: FONT_STACK,
-                      fontSize: "13px",
-                      lineHeight: "19px",
-                      fontStyle: "italic",
-                      textAlign: "center",
-                      color: COLORS.textMuted,
-                    }}
-                  >
-                    {editorial.photoOfTheMonth.caption}
-                  </Text>
                 </Section>
               ) : null}
 
@@ -234,6 +221,10 @@ export function NewsletterEmail({
                   isLast={idx === auto.recapEvents.length - 1}
                 />
               ))}
+
+              {editorial.recapVideo ? (
+                <RecapVideo video={editorial.recapVideo} />
+              ) : null}
             </Section>
           ) : null}
 
