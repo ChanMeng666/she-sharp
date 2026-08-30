@@ -105,9 +105,14 @@ export type IssueResolution =
  * `2026-07` the issue that actually reached subscribers is the Mailchimp
  * campaign the card already linked. Preferring the registry there would swap a
  * real send for a draft nobody received, and would silently change what those
- * two cards open onto. `2026-08` has no Mailchimp campaign — it was built here
- * and mailed through Resend — so it carries no `campaign` and falls through to
- * the registry, which is the only artefact of that issue there is.
+ * two cards open onto.
+ *
+ * `2026-08` has no Mailchimp campaign — it was composed in this repo rather
+ * than in Mailchimp — so it carries no `campaign` and falls through to the
+ * registry, which is the only artefact of that issue there is. A `campaign`
+ * asserts exactly one thing, that the issue also exists as a Mailchimp send;
+ * its absence means there is no send to prefer, NOT that the send happened
+ * somewhere else. Nothing has ever been sent from `newsletter_subscribers`.
  */
 export function resolveIssue(id: string): IssueResolution | null {
   const carded = CAMPAIGN_BY_ISSUE_ID.get(id);

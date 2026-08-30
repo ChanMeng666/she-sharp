@@ -23,8 +23,8 @@
  * 51 ways for the back catalogue to disappear.
  *
  * An issue sent from Mailchimp names the archived send in `campaign`, and keeps
- * the URL it was published at in `source`. An issue built AND sent from this
- * repo has neither: `/resources/newsletters/<id>` renders it from
+ * the URL it was published at in `source`. An issue composed here rather than
+ * in Mailchimp has neither: `/resources/newsletters/<id>` renders it from
  * `lib/newsletter/issues-registry.ts`. Add the fixture there, then the card
  * here.
  *
@@ -43,14 +43,17 @@ export const NEWSLETTER_MANUAL: NewsletterIssue[] = [
   //   year: 2026,
   //   url: "/resources/newsletters/2026-09",
   // },
-  // The one issue with no Mailchimp campaign behind it: August 2026 was built
-  // in this repo and mailed through Resend, so the copy this site serves IS the
-  // issue and there is no archived send to prefer over it. That is exactly what
-  // the missing `campaign` means — see `resolveIssue()` in
-  // `lib/newsletter/archive.ts`, which prefers the send everywhere there is
-  // one, because the other two registry fixtures are drafts of issues that
-  // actually went out from Mailchimp. The route stays `noindex` and out of
-  // `app/sitemap.ts` — it is linked from here, not published to search.
+  // The one issue with no Mailchimp campaign behind it: August 2026 was
+  // composed in this repo rather than in Mailchimp, so the registry render is
+  // the only artefact of it that exists. It has not been sent — nothing has
+  // ever been sent from `newsletter_subscribers`, and this comment is not
+  // evidence to the contrary.
+  //
+  // The missing `campaign` says only that there is no Mailchimp send to serve.
+  // See `resolveIssue()` in `lib/newsletter/archive.ts`, which prefers the send
+  // wherever there is one, because the other two registry fixtures are drafts
+  // of issues that did go out from Mailchimp. The route stays `noindex` and out
+  // of `app/sitemap.ts` — it is linked from here, not published to search.
   {
     id: "2026-08",
     month: 8,

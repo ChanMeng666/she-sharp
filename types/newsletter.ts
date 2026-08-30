@@ -50,8 +50,12 @@ export interface NewsletterIssue {
   source?: string;
   /**
    * The archived Mailchimp campaign (`lib/data/newsletter-archive/<id>.html`)
-   * that `url` serves. Absent when the issue has no Mailchimp send — either it
-   * was built and mailed from this repo, or it is retracted.
+   * that `url` serves.
+   *
+   * Its presence means one thing only: **this issue also exists as a Mailchimp
+   * send.** Absent, there is no send to serve, so the route falls through to
+   * the issue fixture in `lib/newsletter/issues-registry.ts`. Absence says
+   * nothing about whether the issue was ever mailed, from here or anywhere.
    */
   campaign?: string;
   /** Optional explicit cover theme index; when omitted the grid rotates by position. */
