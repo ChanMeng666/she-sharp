@@ -178,9 +178,10 @@ is touched.
 
 What it fixes for you, and why you must not "improve" on any of it:
 
-- **`engine: "react"`** — the only engine whose footer carries an unsubscribe
-  link at all. `"layout"` is the transactional design with no opt-out footer and
-  fails the `unsubscribe` gate outright.
+- **`engine: "react"`** — the branded announcement template, and the one that
+  supports the cover image. Not a gate decision: `composeMessage` appends the
+  unsubscribe placeholder to *any* marketing spec, so both engines fail
+  `unsubscribe` and `absolute-urls` identically at Step 3 (see that row's note).
 - **`category: "marketing"`** — makes the gates strict, and switches on the
   refusals in `/email-the-community`'s Step 7 that protect the opt-out link.
 - **From `newsletter@shesharp.org.nz`, Reply-To `info@shesharp.org.nz`** — the
