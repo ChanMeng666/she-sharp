@@ -29,12 +29,11 @@ Background: `docs/development/MAILCHIMP_ARCHIVE.md` (what the archive holds),
 **Take the export first, run the suppression pull before the last Mailchimp
 send, and then stop the billing by *pausing or downgrading* — never by
 deleting.** Cancelling keeps the data; deleting destroys it, permanently, with
-no grace period, and about fifty links on the live website point into the
-account.
+no grace period, and **51** links on the live website point into the account.
 
 **先做导出，在最后一次用 Mailchimp 发信之前跑一次退订同步，然后用"暂停"或"降级"
 来停止扣费——绝不要用"删除"。** 取消订阅保留数据；删除会永久销毁数据，没有任何
-恢复宽限期，而网站上大约有五十个链接指向这个账号。
+恢复宽限期，而网站上有 51 个链接指向这个账号。
 
 ---
 
@@ -386,54 +385,92 @@ another reason not to delete it.
 ### The Humanitix → Mailchimp integration — a decision, not a to-do
 ### Humanitix → Mailchimp 的对接 —— 这是一个决定，不是待办
 
-A live integration pushes each event's opted-in ticket buyers into the `She#`
-audience and tags them with `Event:` and `Ticket Type:`. It has been running for
-about six years. Confirmed still live on 2026-08-30: three contacts joined on
-27–28 August 2026 carrying those tags and a `source` of `"Mahsa McCauley NZD"`,
-which is Humanitix's documented `Store` mapping and nothing a human would type.
+A live integration pushes each event's ticket buyers into the `She#` audience and
+tags them with `Event:` and `Ticket Type:`. It has been running for about six
+years. Confirmed still live on 2026-08-30: three contacts joined on 27–28 August
+2026 carrying those tags and a `source` of `"Mahsa McCauley NZD"`, which is
+Humanitix's documented `Store` mapping and nothing a human would type.
 
-有一个仍在运行的对接，会把每场活动中勾选了营销选项的购票者推进 `She#` 受众，并打上
-`Event:` 和 `Ticket Type:` 标签，已经跑了大约六年。2026-08-30 确认仍然活跃。
+**It has not been pushing only the *opted-in* buyers, and that is the whole
+reason this section changed.** Measured 2026-08-30: **887** of the 1,549 people
+now in `newsletter_subscribers` carry that `source`, **886** of them are
+Humanitix ticket buyers, and **752 of those never ticked any opt-in** — because
+the integration's *"Sync contacts who haven't opted-in"* setting was on until
+2026-08-27. So the integration wrote nearly half our current list in without a
+consent act, and the 29 August import carried them across. The measurement is in
+`../development/EMAIL_PLATFORM_STATE.md` § "How the list was actually acquired".
+
+**这个对接推送的并不只是"勾选过"的购票者，这正是本节改写的原因。** 2026-08-30 测得：
+目前 `newsletter_subscribers` 里的 1,549 人中，有 **887** 人来源为该对接，其中
+**886** 人是 Humanitix 购票者，而这些人里有 **752** 人从未勾选过任何订阅选项——因为
+对接的 *"Sync contacts who haven't opted-in"*（同步未勾选联系人）开关一直开着，直到
+2026-08-27 才关掉。也就是说，这个对接在没有任何同意行为的情况下，把我们现有名单的近
+一半写了进去，而 8 月 29 日的导入又把他们全部带了过来。
+
+有一个仍在运行的对接，会把每场活动的购票者推进 `She#` 受众，并打上 `Event:` 和
+`Ticket Type:` 标签，已经跑了大约六年。2026-08-30 确认仍然活跃。
 
 **It is the live acquisition channel for the Humanitix checkout opt-in — consent
-route 2 — but only on Mailchimp's side.** Be precise about this, because the two
-halves are easy to conflate: the integration writes the opted-in buyer into the
-`She#` audience, and nothing else. The *same* opt-in reaches our own consent
+route 2 — but only on Mailchimp's side, and it does not filter on the opt-in.**
+Be precise about this, because the halves are easy to conflate: the integration
+writes the buyer into the `She#` audience — opted in or not, while that setting
+was on — and nothing else. The *same* opt-in reaches our own consent
 record (`newsletter_subscribers`) by a completely separate manual path — the
 orders CSV, then `scripts/email/import-optin-subscribers.ts`. So switching the
 integration off ends the automatic growth of the Mailchimp audience; it does
 **not** end route 2, which never depended on it.
 
 **它是 Humanitix 结账勾选（"同意来源二"）目前实际的获客渠道，但只作用在 Mailchimp
-那一侧。** 这两半很容易混为一谈：对接只把勾选过的购票者写进 `She#` 受众，仅此而已。
+那一侧，而且它并不按勾选与否筛选。** 这几件事很容易混为一谈：对接把购票者写进 `She#`
+受众（在那个开关打开期间，勾没勾选都写），仅此而已。
 同一个勾选要进入我们自己的同意记录（`newsletter_subscribers`），走的是完全独立的
 手动路径——先导出订单 CSV，再跑 `scripts/email/import-optin-subscribers.ts`。所以
 关掉对接只是停止 Mailchimp 受众的自动增长，**并不会**断掉"同意来源二"。
 
-**The maintainer's decision as at 2026-08-30 is to keep it while Mailchimp is
-still billing.** Its trigger is a state, not a date:
+**The maintainer's decision as at 2026-08-30 is to switch it off now**, ahead of
+the first send and without waiting for the cancellation. **This reverses what
+this section said earlier the same day** — "keep it while Mailchimp is still
+billing" — and it is worth recording why, because the old reading was not silly.
+It weighed one cost: a disconnected integration stops feeding the Mailchimp
+audience. What it did not know was the measurement above. The integration is not
+a source of consented contacts that would be lost; **for four years it has been
+a source of non-consented ones**, and every day it keeps running is more rows
+whose provenance nobody can defend. Keeping it costs more than losing it.
 
-**截至 2026-08-30 的决定是：只要 Mailchimp 还在计费，就保留它。** 触发条件是一个
-状态，不是一个日期：
+**截至 2026-08-30 的决定是：现在就关掉它**，在第一次群发之前，不必等到取消订阅。
+**这推翻了本节当天早些时候的说法**（"只要 Mailchimp 还在计费就保留它"）。记录原因是
+因为原来的判断并不荒唐：它权衡的是"断开对接会让 Mailchimp 受众不再增长"这一项成本，
+但当时还不知道上面那组数据。这个对接并不是一个会因断开而失去的"已同意联系人"来源；
+**四年来它一直是"未同意联系人"的来源**。它多跑一天，就多一批我们无法解释来源的数据。
 
-> **Once the subscription is cancelled, the integration keeps syncing opted-in
-> buyers into an audience nobody sends from.** At that moment it stops being
-> useful and becomes a silent write into a dormant list — so disconnect it, and
-> make sure `scripts/email/import-optin-subscribers.ts` is being run per event,
-> because it is then the only way a checkout opt-in reaches any list we can send
-> from. Note the added reason under a *cancellation* rather than a closure: the
-> audience is still there, still growing, and still looks alive in the
-> dashboard. That is precisely what makes forgetting it easy.
+**Nobody in this repository can press that button.** It is configured inside the
+Humanitix account, and only the founder has it. The step-by-step, in plain
+language, is in
+[`HUMANITIX_INTEGRATION_SHUTDOWN.md`](HUMANITIX_INTEGRATION_SHUTDOWN.md).
 
-> **一旦订阅被取消，这个对接就变成往一个没人发信的受众里静默写数据。** 那时请断开
-> 它，并确保每场活动都实际跑过 `scripts/email/import-optin-subscribers.ts`——那时
-> 它是结账勾选进入可发信名单的唯一途径。取消（而非关闭）还多了一层理由：受众仍然
-> 存在、仍在增长、在后台看起来仍然是活的，所以特别容易被忘掉。
+**这个按钮不在这个代码库里，任何人都按不到。** 它配置在 Humanitix 账号内部，只有
+创始人有权限。逐步操作说明（用非技术语言写的）见
+[`HUMANITIX_INTEGRATION_SHUTDOWN.md`](HUMANITIX_INTEGRATION_SHUTDOWN.md)。
 
-The consent rules for that path do not change:
+**What switching it off costs, stated plainly so nobody is surprised.** New
+Humanitix checkout opt-ins stop reaching Mailchimp. That *is* the point —
+Mailchimp is no longer where the list lives — but it means the per-event manual
+harvest becomes the only route, and it is a route somebody has to actually walk:
+export the orders CSV, run `scripts/email/normalize-recipients.ts --for-import`,
+then `scripts/email/import-optin-subscribers.ts`. Miss an event and those ticks
+are lost, because Humanitix keeps no history you can go back for. The consent
+rules for that path do not change:
 `.claude/skills/update-mailing-list/references/consent-rules.md`, route 2.
 
-- [ ] Integration decision reviewed at the trigger / 触发时已重新评估这个对接
+**关掉之后会失去什么，说清楚以免措手不及。** 新的 Humanitix 结账勾选将不再进入
+Mailchimp。这正是目的——名单已经不在 Mailchimp 了——但这意味着每场活动的手动导入成为
+唯一途径，而且必须真的有人去做：导出订单 CSV，跑
+`scripts/email/normalize-recipients.ts --for-import`，再跑
+`scripts/email/import-optin-subscribers.ts`。漏掉一场活动，那些勾选就永久丢失，
+因为 Humanitix 不保留可以事后补取的记录。
+
+- [ ] Integration switched off in Humanitix / 已在 Humanitix 中关闭该对接
+- [ ] Route-2 import run for the most recent event / 最近一场活动已跑过"同意来源二"导入
 
 ---
 

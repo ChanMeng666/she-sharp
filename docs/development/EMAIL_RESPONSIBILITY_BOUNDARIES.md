@@ -205,12 +205,18 @@ carrying a "Get Tickets" link. It is **toggled ON by default**, can be sent only
 **once per event**, fires at the moment of publication (or at a chosen later
 date), and does not appear at all if no host profile is linked.
 
-**The preconditions are met on our events.** Checked against the Humanitix API
-on 2026-08-30 (`GET /v1/events`, 59 events): every one is `published: true` and
-every one carries the same non-null `organiserId`, `5e3388f9a912950007fda1c7`.
-51 of the 59 are `public: true`, the 8 others private. The 3 September 2026 Les
-Mills event (`_id` `6a422a2d01e463796c170142`) is public, published, and carries
-that `organiserId`.
+**The preconditions *appear* met on our events — appear, not are.** Checked
+against the Humanitix API on 2026-08-30 (`GET /v1/events`, 59 events): every one
+is `published: true` and every one carries the same non-null `organiserId`,
+`5e3388f9a912950007fda1c7`. 51 of the 59 are `public: true`, the 8 others
+private. The 3 September 2026 Les Mills event (`_id`
+`6a422a2d01e463796c170142`) is public, published, and carries that
+`organiserId`. That is consistent with a linked host profile and is **not proof
+of one** — the API exposes no host-profile object, so the field cannot be matched
+to the profile the feature requires, and if no profile is in fact linked the
+whole question is moot. `EMAIL_PLATFORM_STATE.md` § "A free channel nobody has
+looked at" states it the same way; this sentence used to assert it flatly and
+contradicted that file.
 
 Two things that check does **not** establish, stated so nobody over-reads it:
 

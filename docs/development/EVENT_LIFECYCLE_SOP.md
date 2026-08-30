@@ -527,48 +527,73 @@ posted into the event channel and pinned.
 in"*. It is a **per-event** switch and it defaults to **off**, so it is lost by
 omission on every new event unless somebody sets it.
 
-**Whether the switch has actually been off since 2022 is an open question, and
-this paragraph used to answer it too confidently.** It said the switch had been
-off since roughly the middle of 2022, on the strength of the ticketing archive:
-224 opted-in orders from 187 distinct addresses, every one between 14 July 2020
-and 30 May 2022, and none after. That is a true statement about the archive. It
-is not a safe statement about the switch.
+**The switch has been off since May 2022, and it was turned back on for the
+September 2026 event.** This paragraph twice said something weaker than the
+evidence supports — first that the switch had certainly been off (asserted from a
+frozen archive), then, after that was withdrawn, that two readings survived and
+nothing in this repository could separate them. The file that separates them was
+already in the vault; nobody had opened it.
 
-The measurement that unsettled it, taken 2026-08-30 against the live Mailchimp
-audience across all four member statuses, grouping every write whose `source` is
-`Mahsa McCauley NZD` — the string Humanitix documents as
-`Store = User account name + Currency`:
+**Measured 2026-08-30** from
+`private/humanitix/2026-08-17/order-report-(exported-2026-08-17@09.59.31).csv` —
+the console's **reports → orders → Export CSV**, 4,145 orders, 43 columns,
+column `Marketing opt-in`:
 
-```
-arrivals after 2022-05: 903 total, 663 of them status=subscribed
-2023-10: 80   2023-11: 73   2024-06: 85   2025-06: 62   2025-10: 80
-… continuous through 2026-06 (2), 2026-07 (3), 2026-08 (5)
-```
+| Order year | No | Yes |
+|---|---:|---:|
+| 2020 | 468 | 137 |
+| 2021 | 247 | 47 |
+| 2022 | 627 | 40 |
+| 2023 | 730 | **0** |
+| 2024 | 856 | **0** |
+| 2025 | 471 | **0** |
+| 2026 | 522 | **0** |
 
-The spikes land on event months and have the shape of ticket cohorts, and
-Humanitix's own documentation says only opted-in buyers sync as `subscribed`.
-So **"nothing since May 2022" does not describe reality**, and roughly 3,500
-registrations is not a safe count of people who were never asked.
+**224 Yes, 3,921 No, and not one blank cell in the file.** The column did not
+lapse: it is populated on every order through to the export date and it reads
+`No` for all 2,579 orders from 2023 onward. Reading 1 — "the opt-in has been
+collecting all along and only the export column lapsed" — is dead.
 
-**Two readings survive, and nothing in this repository separates them:**
+The API agrees, from a different surface and a different date.
+`she-sharp-slack-archive/humanitix/2026-08-28-api/orders/` (59 files, 4,169
+orders) has `organiserMailListOptIn === true` on **223** — 2020: 137, 2021: 47,
+2022: 38, and **exactly one in 2026**, dated **2026-08-26**, on the Les Mills
+event `6a422a2d01e463796c170142`. That one row is the switch being set again for
+the September 2026 event, and it is the first tick since **2022-05-30**. **188
+distinct people have ever ticked it.**
 
-1. The checkout opt-in has been collecting all along, and what stopped in
-   May 2022 is the `marketingOptIn` column being **populated in the export** —
-   not the field being used.
-2. Some of those `source` writes are not the Humanitix integration at all, but
-   another API write under the same key.
+**Reading 2 is wrong too, but it was closer.** The post-2022 `Mahsa McCauley NZD`
+writes into Mailchimp *are* the Humanitix integration — that string is a
+Mailchimp **ecommerce store**, `id 5e328b71a912950007fd7f91_NZD`,
+`email_address events@shesharp.co.nz`, read from
+`mailchimp/2026-08-28-api/ecommerce-stores.json`, and Humanitix documents the
+store name as *user account name + currency*. Over the 1,549 people now in
+`newsletter_subscribers`, **887 carry that source and 886 of them are Humanitix
+ticket buyers, while no contact from any other source is a buyer at all.**
 
-**What would settle it** is the Humanitix console's **reports → orders →
-Export CSV**, which carries a per-order `marketing opt-in` column — the same
-file `scripts/email/import-optin-subscribers.ts` consumes. Pull one covering
-2023 onward and the answer is a column of Yes/No rather than an inference. Until
-somebody does, quote the archive figure as a fact about the archive and this
-question as open. `lib/data/json/humanitix/aggregates.json` keeps its own caveat
-for the same reason: it is a frozen export, and a field it stopped recording is
-not the same as a field nobody used.
+What the writes are *not* is evidence of an opt-in. They are the integration's
+**"Sync contacts who haven't opted-in"** setting, which was ON until it was
+switched off on **2026-08-27** (`../deployment/EMAIL_AUTHENTICATION.md` item 8d).
+With that setting on, a buyer who left the box unticked was still written into
+the `She#` audience as `subscribed` — which is how **752 of the 1,549** people on
+the list today are there for no recorded reason beyond a ticket purchase. The
+full tiering is in `EMAIL_PLATFORM_STATE.md` § "How the list was actually
+acquired".
 
-Whatever the answer, **set the switch on every new event**: it costs one click,
-and the reading where it has been off is the expensive one.
+**Re-take it with:** the orders CSV above, grouping `Marketing opt-in` by the
+year in `Order date` (which is `DD/MM/YYYY`, so take the four-digit group, not
+the first four characters); and `organiserMailListOptIn` over the archive's
+order files. Both are offline. Neither needs the database.
+
+**What is still not established** is whether every event between 2022-06 and
+2026-08 had the switch off, or only that none of them collected a tick. A `No`
+in that column is written both when the buyer declined and when the question was
+never asked, and Humanitix exposes no per-event record of the setting. For the
+purpose of this section the distinction does not matter — either way nobody
+consented — but do not quote the column as "3,921 people declined".
+
+**Set the switch on every new event.** It costs one click, and four years of
+events were run without it.
 
 It matters more than it looks, because it is the only place She Sharp collects a
 consent record that is **per person, timestamped, and made by the person
@@ -578,9 +603,13 @@ route 2; a registration with no opt-in column is not consent, however full the
 room was. Every event run with this switch off is a mailing list that could have
 grown honestly and did not.
 
-The flag reaches the Humanitix API as `Order.organiserMailListOptIn`, and reaches
-Mailchimp through the live Humanitix integration as a `subscribed` contact rather
-than a non-subscribed one — see `docs/development/MAILCHIMP_ARCHIVE.md`.
+The flag reaches the Humanitix API as `Order.organiserMailListOptIn`. It also
+reaches Mailchimp through the live Humanitix integration — but **the integration
+does not distinguish on it**, and did not while its "Sync contacts who haven't
+opted-in" setting was on, so a Mailchimp contact written by the integration is
+not evidence that this box was ticked. Only the orders CSV and
+`organiserMailListOptIn` are. See `docs/development/MAILCHIMP_ARCHIVE.md` and
+`../deployment/HUMANITIX_INTEGRATION_SHUTDOWN.md`.
 
 Getting those ticks into She Sharp's own consent record is a separate, manual
 step: export **reports → orders → Export CSV** from the Humanitix console, run
