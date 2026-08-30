@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastRunAt": "2026-08-30T13:07:36.723Z",
+  "lastRunAt": "2026-08-30T21:33:23.761Z",
   "frequencyCapPerMonth": 3,
   "issues": {
     "2026-08": {
@@ -8,7 +8,7 @@
       "createdAt": "2026-08-30T13:07:36.723Z",
       "test": null,
       "review": {
-        "at": "2026-08-30T13:07:36.723Z",
+        "at": "2026-08-30T21:33:23.761Z",
         "recipientCount": 5,
         "people": 4,
         "recipientHashes": [
@@ -18,7 +18,7 @@
           "356651591da3b72a",
           "1228cadeea9b2ab8"
         ],
-        "note": ""
+        "note": "second round: the founder's own replacement text for A note from our founder"
       },
       "approval": null,
       "batches": [],
