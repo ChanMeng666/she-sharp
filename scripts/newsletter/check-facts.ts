@@ -6,7 +6,7 @@
  * The pool is the anti-hallucination safety net under "NZ Tech Pulse": when the
  * live source fetch fails, the hero stat and the "did you know" line are built
  * from the thirteen human-verified facts it holds instead of from a
- * model-invented number. It goes out to ~1,545 subscribers.
+ * model-invented number. It goes out to the whole subscriber list.
  *
  * On 2026-08-29 one of those facts was found to be false. It read "New Zealand's
  * gender pay gap fell to 5.2% in the June 2025 quarter — the lowest on record",

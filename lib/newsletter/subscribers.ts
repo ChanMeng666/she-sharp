@@ -372,11 +372,13 @@ export interface MailableSubscriber {
  * The order every bulk enumeration of the list is served in.
  *
  * `createdAt` is the intent — oldest subscriber first — but on its own it is
- * not a total order, and the gap is not theoretical. All 1,545 rows arrived in
- * the single `import-mailchimp-subscribers.ts` run on 2026-08-29 and carry one
- * identical `created_at`: measured 2026-08-30, the whole mailable list has
- * exactly ONE distinct value. The sort is therefore a single tie group of
- * 1,545 rows, and Postgres may return any permutation of it on any run.
+ * not a total order, and the gap is not theoretical. 1,545 rows arrived in the
+ * single `import-mailchimp-subscribers.ts` run on 2026-08-29 and carry one
+ * identical `created_at`: measured 2026-08-30, the mailable list held two
+ * distinct values across 1,549 rows — that one, and the four added from a
+ * Marketing API delta pull the next day. The sort is therefore one tie group
+ * spanning almost the whole list, and Postgres may return any permutation of it
+ * on any run.
  *
  * That matters because `--limit N` in `scripts/email/recipients-from-db.ts` is
  * how the first send is ramped, and a ramp only means something if "the first

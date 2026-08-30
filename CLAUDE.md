@@ -490,7 +490,7 @@ campaign sent up to 2021. The *difference* only becomes material in **2024** —
 2022 differs by 1 unique open in 8,811 and 2023 by 5 in 13,435, both noise,
 against 17,343 vs 15,284 in 2024. So do not read a 2023 figure as corrected, and
 do not read a 2022 gap as a trend. The list peaked at **1,742 in 2025-11** and
-is **1,555** now.
+stood at **1,555** in 2026-08.
 → `docs/development/MAILCHIMP_ARCHIVE.md`, `PLATFORM_APIS.md`
 
 **Presentation decks.** `/present/<slug>`, built from typed slide data with a
@@ -510,10 +510,11 @@ marketing-consent record out of Resend and into our own database. **Built:** the
 `newsletter_subscribers` table, the double opt-in funnel, the six site entry
 points repointed at `/newsletter/subscribe`, and the send path
 (`recipients-from-db.ts` → `build-newsletter-batch.ts` → a human runs
-`resend emails batch`). **Not built:** importing the ~1,560 Mailchimp
-subscribers, and retiring the Resend segment, topic and their env vars — which
-still exist and must not be mistaken for live config. Reasoning, costs and the
-AWS SES fallback: `docs/development/EMAIL_PLATFORM_STRATEGY.md`
+`resend emails batch`), and — since 2026-08-29 — the Mailchimp import itself;
+the consent section above says what the table holds and how to read the live
+figure. **Not built:** retiring the Resend segment, topic and their env vars —
+which still exist and must not be mistaken for live config. Reasoning, costs
+and the AWS SES fallback: `docs/development/EMAIL_PLATFORM_STRATEGY.md`
 
 **Monthly newsletter.** React Email rendered in this repo and sent through
 Resend's **batch** API — no broadcasts, no Resend-held contact list — run by the

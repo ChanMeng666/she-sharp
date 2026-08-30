@@ -85,7 +85,7 @@ decide to retire it.
 
 | Mailbox | Why it matters / 为什么要紧 |
 |---|---|
-| `newsletter@` | The visible sender on every newsletter. Nobody had its password on 2026-08-17. Replies no longer go here, but the address still represents She Sharp to 1,560 subscribers / 每期通讯的发信人。2026-08-17 全队没人知道它的密码 |
+| `newsletter@` | The visible sender on every newsletter. Nobody had its password on 2026-08-17. Replies no longer go here, but the address still represents She Sharp to every subscriber / 每期通讯的发信人。2026-08-17 全队没人知道它的密码 |
 | `marketing@` | Asked in August 2025 who had access; never answered / 2025 年 8 月问过谁有权限，无人回答 |
 | `governance@` | Published on the volunteer code of conduct page and it does receive mail, but no reader is known / 印在志愿者行为准则页上，确实能收信，但不知道谁在读 |
 | `events@` | Attendee questions, and the ticketing account login. Shared, so "everyone" can mean "nobody" / 参会者提问用，也是票务账号登录名。共享账号，"大家都能看"往往等于"没人看" |

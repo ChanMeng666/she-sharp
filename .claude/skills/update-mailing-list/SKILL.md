@@ -1,6 +1,6 @@
 ---
 name: update-mailing-list
-description: Inspect and safely change who is on She Sharp's newsletter mailing list — the `newsletter_subscribers` table, which is now the organisation's marketing-consent record — using `scripts/email/inspect-subscribers.ts`, `scripts/email/audience-report.ts`, `scripts/email/normalize-recipients.ts` and `scripts/email/suppression.ts`. Use whenever the user wants to see or change who is on the list — phrases like "add these attendees to the mailing list", "who's on our email list?", "import this sign-up sheet", "subscribe these people", "take her off the list", "how many subscribers do we have?", "why is this person getting our emails?" — or anything about unsubscribes, bounces, complaints or suppression. Covers roster reporting from the database, any-shape CSV normalisation, the four-way consent gate, and the do-not-contact registers; nothing is changed before an explicit plan approval. Read `references/consent-rules.md` first — registering for an event is not subscribing. The list holds 1,545 people carried over from Mailchimp, and `scripts/email/import-optin-subscribers.ts` now imports the people who ticked a registration form's opt-in box (consent route 2); a paper sign-in sheet and a written request (routes 3 and 4) still have no tool and stay one person at a time. It is the hard prerequisite for `email-the-community`.
+description: Inspect and safely change who is on She Sharp's newsletter mailing list — the `newsletter_subscribers` table, which is now the organisation's marketing-consent record — using `scripts/email/inspect-subscribers.ts`, `scripts/email/audience-report.ts`, `scripts/email/normalize-recipients.ts` and `scripts/email/suppression.ts`. Use whenever the user wants to see or change who is on the list — phrases like "add these attendees to the mailing list", "who's on our email list?", "import this sign-up sheet", "subscribe these people", "take her off the list", "how many subscribers do we have?", "why is this person getting our emails?" — or anything about unsubscribes, bounces, complaints or suppression. Covers roster reporting from the database, any-shape CSV normalisation, the four-way consent gate, and the do-not-contact registers; nothing is changed before an explicit plan approval. Read `references/consent-rules.md` first — registering for an event is not subscribing. The list holds the Mailchimp audience, carried over on 2026-08-29, and `scripts/email/import-optin-subscribers.ts` now imports the people who ticked a registration form's opt-in box (consent route 2); a paper sign-in sheet and a written request (routes 3 and 4) still have no tool and stay one person at a time. It is the hard prerequisite for `email-the-community`.
 ---
 
 # Look after the mailing list
@@ -20,10 +20,12 @@ mailing list, however it is written. `references/consent-rules.md` is the
 standing baseline; read it before your first import and whenever one feels
 borderline.
 
-**Say this plainly whenever the list comes up.** The table holds **1,545
-subscribers**, carried over from Mailchimp on 2026-08-29 — so the list is real
-now, and a question like "how many subscribers do we have?" has a database
-answer for the first time. What has **not** happened is a send: the monthly
+**Say this plainly whenever the list comes up.** The table holds the whole
+Mailchimp list, carried over on 2026-08-29 — so the list is real now, and a
+question like "how many subscribers do we have?" has a database answer for the
+first time. Go and read that answer rather than repeating one from this file:
+`npx tsx scripts/email/suppression.ts reconcile` prints it (**1,549 mailable as
+at 2026-08-30**, and it moves). What has **not** happened is a send: the monthly
 newsletter still goes out from Mailchimp, and nothing has ever been sent from
 this system. Two consequences to keep straight. Someone who unsubscribes from a
 real newsletter this month does so *in Mailchimp*, and only
@@ -95,13 +97,16 @@ npx tsx scripts/email/inspect-subscribers.ts --email someone@example.com
 
 **It lists rows, it does not total them by status.** With `--limit 50` you see
 at most 50 rows and the count printed at the bottom is the number of rows
-shown, not the size of the list. **This trap is live now that the table has
-1,545 rows in it** — the default `--limit 20` will confidently print 20. Raise
-the limit well past the row count before quoting a number, or say plainly that
-you are quoting a sample.
+shown, not the size of the list. **This trap is live now that the table holds
+the whole imported list** — the default `--limit 20` will confidently print 20.
+Raise the limit well past the row count before quoting a number, or say plainly
+that you are quoting a sample.
 
-Most rows look the same, and that is expected: 1,545 of them carry
-`source = 'mailchimp-import'` and a `confirmedAt` from the Mailchimp export.
+Most rows look the same, and that is expected: every carried-over row has
+`source = 'mailchimp-import'`, and all but the four added from the Marketing API
+on 2026-08-30 also carry a `confirmedAt` from the export's `CONFIRM_TIME`. Those
+four share the same `source`, so `source` does not separate them — a null
+`confirmedAt` does.
 `website-form` is somebody who subscribed and confirmed here.
 `registration-optin` is somebody who ticked an opt-in box on an event's
 registration form (Step 6) — those rows carry a **null `confirmedAt`** on
@@ -119,21 +124,21 @@ npx tsx scripts/email/audience-report.ts
 
 One caveat to state if you quote it: its Tier 0 figure still comes from Resend
 (via `--include-resend`), which is empty and is no longer the consent record —
-**so it will report 0 while the real list is 1,545.** Tiers 1–3 are read from the
-database and are current. The subscriber table is not yet one of its sections;
+**so it will report 0 while the real list is not empty.** Tiers 1–3 are read from
+the database and are current. The subscriber table is not yet one of its sections;
 `inspect-subscribers.ts` is.
 
 **Tell the user the real number, plainly and first:**
 
-> The mailing list has about 1,545 people on it — the Mailchimp list, moved into
+> The mailing list has about <N> people on it — the Mailchimp list, moved into
 > our own database in August. The monthly newsletter still goes out from
 > Mailchimp for now; nothing has been sent from the new system yet. The 3000+
 > members you may be thinking of are in the database too, but the database never
 > recorded who agreed to receive email, so they aren't a list and can't be used
 > as one.
 
-Re-read the table before saying a number — don't repeat 1,545 from this file, and
-don't do arithmetic on it.
+Re-read the table before saying a number — fill `<N>` in from the database,
+never from this file, and don't do arithmetic on it.
 
 ## Step 2 — Read the user's file (any shape)
 
@@ -291,7 +296,7 @@ Consent       : Humanitix checkout question "Can we email you about future
 Rows read     : 7
 Would add     : 2 subscribers (status 'subscribed', confirmedAt null —
                 imported provenance, not a confirmation click)
-Already there : 1 (no change — checked against the 1,545 on the list)
+Already there : 1 (no change — checked against the rows already on the list)
 Redactions    : 4 rows excluded —
                   1 no marketing opt-in
                   1 order refunded
@@ -546,8 +551,8 @@ own.
 3. **Never write to the subscriber table by hand.** *Why:* every write into the
    consent record must come from reviewed code that captures provenance
    identically every time. An ad-hoc `INSERT` produces a row nobody can defend —
-   and it would now sit indistinguishable among 1,545 rows that each carry a
-   `source`, a `consentSource` and a `confirmedAt`.
+   and it would now sit indistinguishable among the imported rows, which each
+   carry a `source`, a `consentSource` and a consent date.
 4. **Every addition needs one of the four consent sources, recorded with the
    row.** *Why:* if nobody can say where the opt-in came from, it did not
    happen — and "I don't know" cannot survive a complaint.
@@ -571,7 +576,7 @@ own.
    own `WOULD IMPORT` / written counts, and say when a route has no tool at all.
    The same rule governs the
    sending: the list exists, but **nothing has ever been sent from it** — never
-   let "we have 1,545 subscribers" drift into "we emailed 1,545 people".
+   let "we have N subscribers" drift into "we emailed N people".
 
 ## Audience tiers — decision table
 
@@ -595,14 +600,14 @@ only**, and the tick is what you record as consent. A `pending` row is not Tier
 do not substitute a query of another table, or Resend, for the roster.
 
 **`No subscribers yet.`** — this **used** to be the correct answer and is not any
-more: the table has held 1,545 rows since 2026-08-29. If you see it now, you are
+more: the table has been populated since 2026-08-29. If you see it now, you are
 pointed at the wrong database (a local or preview `POSTGRES_URL`). Check `.env`
 before reporting an empty list to anyone.
 
 **A count that looks too low** — almost always `inspect-subscribers.ts` printing
 the number of rows it *showed*, capped by `--limit` (default 20), against a list
-of roughly 1,545. Raise the limit past the row count, or say you are quoting a
-sample.
+of roughly fifteen hundred. Raise the limit past the row count, or say you are
+quoting a sample.
 
 **Someone reports getting mail after unsubscribing** — check the row and the
 registers (`inspect-subscribers.ts --email`, `suppression.ts check`), then run

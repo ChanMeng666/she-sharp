@@ -106,7 +106,7 @@ Buying Marketing Pro would make the total **$20 + $40 = $60/month**.
 
 ### The Free tier cannot hold the list, and no cohort trick fixes that
 
-The consented list is **~1,560** subscribers, above Free's 1,000 cap.
+The consented list is **over 1,500** subscribers, above Free's 1,000 cap.
 
 The idea of importing only an engaged subset was tested against real data — 180
 campaigns of Mailchimp email-activity from the archive vault, intersected with
@@ -287,8 +287,9 @@ For items 1–4, built means the code exists, is typechecked and has its own tes
    the production database**. It holds the address, its `hashEmail()` digest, a
    `subscriber_status` enum (`pending` / `subscribed` / `unsubscribed` /
    `bounced` / `complained`), and the consent evidence — `consent_source`,
-   `consent_date`, `consent_ip`, `consent_user_agent`. The table holds **1,545
-   rows** since the 2026-08-29 import (see item 6 below).
+   `consent_date`, `consent_ip`, `consent_user_agent`. The table holds **1,549
+   rows as at 2026-08-30** — the 2026-08-29 import plus a four-row API delta
+   (see item 6 below); `suppression.ts reconcile` prints the live figure.
    All reads and writes go through `lib/newsletter/subscribers.ts`, whose
    `listSubscribed()` is the single enumeration point and returns
    `status = 'subscribed'` and nothing else.

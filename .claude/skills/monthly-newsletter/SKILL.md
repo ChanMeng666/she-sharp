@@ -54,8 +54,9 @@ repo and nothing else. They are the prerequisites for the steps that follow.
 6. `POSTGRES_URL` — the recipient list is read from this project's own database
    (the `newsletter_subscribers` table), not from Resend.
 
-   **Read this before you plan a send.** That table now holds **1,545**
-   subscribers, imported from the 2026-08-17 Mailchimp export on 2026-08-29, so
+   **Read this before you plan a send.** That table holds the Mailchimp list,
+   imported on 2026-08-29 — **1,549 mailable as at 2026-08-30**, and it moves;
+   `npx tsx scripts/email/suppression.ts reconcile` prints the live figure. So
    a batch built today would reach real people. But **nothing has ever been sent
    from it**, and the live newsletter still goes out from **Mailchimp** — the
    cutover has not happened.
@@ -69,8 +70,8 @@ repo and nothing else. They are the prerequisites for the steps that follow.
      the organisation's cutover, not a technical step.
    - **A per-batch approval for each ramp slice.** The first send is ramped
      — `recipients-from-db.ts --restrict-to-hashes` for the warm cohort, or
-     `--limit` for a plain first-N slice — not fired at all 1,545 at once, and
-     each slice is approved on its own.
+     `--limit` for a plain first-N slice — not fired at the whole list at once,
+     and each slice is approved on its own.
 
    The reason is the account-wide complaint ceiling — **0.08%, about 1.25
    complaints on a full send** — and the consequence of breaching it, which is
@@ -597,8 +598,9 @@ Read its four outcomes as four different things:
 - **OK** — nothing contradicts the fact today. Note that the number match is a
   substring, so a pass is weaker evidence than it looks.
 
-**Never hand-write a new number into that file.** It goes to ~1,545 subscribers
-with a source attached, which is the strongest claim the newsletter makes.
+**Never hand-write a new number into that file.** It goes to the whole
+subscriber list with a source attached, which is the strongest claim the
+newsletter makes.
 
 ### Known limitations, so you do not chase them
 
@@ -788,6 +790,9 @@ loop is where the domain's health gets looked at. Six things, ~5 minutes:
    `last_changed` after the 2026-08-17 export (18, 19, 19, 20, 27, 28, 28 Aug).
    A send that night would have silently skipped seven people who had just asked
    to be on the list, and the gap widens every month Mailchimp keeps sending.
+   **That measurement is a record, not the current gap.** Four rows were added
+   from a Marketing API delta pull on 2026-08-30, which is why the table now
+   reads 1,549 rather than 1,545. Run the check; do not remember it.
 
    The check is a **comparison, not a command**: the live audience's subscribed
    count against the count `recipients-from-db.ts` will actually mail (Step 8c
@@ -881,14 +886,15 @@ to the user before going further:
 ```
 
 **If "WILL BE MAILED" is 0, stop.** Since the 2026-08-29 import that is NOT the
-expected result — the table holds 1,545 confirmed subscribers, so a zero means
+expected result — the table holds the whole imported list, so a zero means
 something is wrong (an empty query, a database pointing somewhere else, a
 suppression register that has swallowed the list) and not that the list is
 young. Find the cause; do not build a batch of nothing and describe it as a
 send.
 
-**If it is 1,545, that is also not a licence to send.** See Prerequisite 6: the
-founder approves the issue, and each ramp slice is approved on its own.
+**If it is the whole list, that is also not a licence to send.** See
+Prerequisite 6: the founder approves the issue, and each ramp slice is approved
+on its own.
 
 Three flags, all of which can only ever make the list **smaller** — none can
 add anyone who is not already a confirmed, unsuppressed subscriber:
