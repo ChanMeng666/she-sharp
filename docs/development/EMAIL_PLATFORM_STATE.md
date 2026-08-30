@@ -125,18 +125,25 @@ the subscriber table.
 ### The send path
 
 ```
-scripts/email/recipients-from-db.ts   → reads the table, applies both registers
-scripts/email/build-batch.ts          → renders, gates, chunks to 100
-a human runs `resend emails batch`    → the only step that puts mail in inboxes
+scripts/email/recipients-from-db.ts        → reads the table, applies both registers
+   ├─ scripts/newsletter/build-newsletter-batch.ts   the monthly newsletter
+   └─ scripts/email/build-batch.ts                   any other announcement
+a human runs `resend emails batch`         → the only step that puts mail in inboxes
 ```
+
+**There are two batch builders and picking the wrong one is a real mistake.**
+The newsletter is a React Email template driven by a validated issue file, not a
+`MessageSpec`, so `composeMessage` has nothing to compose;
+`build-newsletter-batch.ts` reuses `build-batch.ts`'s idempotency key, hash
+ledger, manifest shape and chunk-file naming and swaps only the renderer. A
+one-off announcement (`/email-the-community`, `/promote-event`) goes through
+`build-batch.ts` directly.
 
 Since 2026-08-30 the path can also be narrowed to an engagement cohort with
 `--restrict-to-hashes`, which only ever removes rows
-(`scripts/email/normalize-recipients.ts`). Nothing sends itself: approving an
-issue does not send it, and every batch command is run by a person.
-
-> The script is `build-batch.ts`. There is no `build-newsletter-batch.ts` —
-> if you find that name in a note, it is wrong.
+(`scripts/email/normalize-recipients.ts`). **Neither builder sends.** They write
+files and print the commands; approving an issue does not send it, and every
+batch command is run by a person.
 
 ---
 
