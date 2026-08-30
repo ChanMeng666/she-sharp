@@ -47,6 +47,37 @@ Two supporting registers sit beside the table and are not inverses of it:
 endpoint) and `lib/data/json/email-suppression-hashes.json` (hash-only,
 committed). Both are do-not-contact lists. Neither is a record of consent.
 
+### A third register, which is not a do-not-contact list
+
+**Humanitix keeps an unsubscriber list of its own, and almost nobody here knows
+it exists.** Console → Email campaigns → **Unsubscriber list**
+(<https://console.humanitix.com/console/comms/email-campaigns-unsubscriptions>).
+Its own description: attendees and buyers who unsubscribed "will no longer
+receive emails sent through email campaigns **for the event**". Observed live on
+2026-08-30: about 20 rows, 13 distinct addresses, columns Email / Event /
+Unsubscribed at, spanning 2021-08 → 2025-11 with nothing in 2026, one page, and
+**no export button**. One row is She Sharp's own mailbox unsubscribing from a
+She Sharp event.
+
+**It is event-scoped, so it is emphatically NOT a general do-not-contact list,
+and it is deliberately not folded into the two registers above.** Each row says
+"stop emailing me about *this event*" — not "stop emailing me". Hashing those
+addresses into `email-suppression-hashes.json` would permanently block someone
+from the newsletter because they once muted one event's reminders years ago:
+over-suppression on weak evidence, into a one-way hash file that cannot
+practically be undone.
+
+What it *is* good for is one narrow contradiction. If somebody unsubscribed from
+**event X's** communications and then appears in **event X's** opt-in import,
+those two facts are about the same event and they disagree; do not add them.
+`import-optin-subscribers.ts` enforces exactly that much and no more: `--apply`
+refuses without `--event-unsubscribers-checked`, and `--exclude <address>` drops
+a hit by hash without ever writing the address anywhere. **The flag is an
+acknowledgement, not a verification** — no API reaches this list (verified
+2026-08-30 against the live OpenAPI document: `campaign`, `unsubscri`, `notify`,
+`follower` and `send` appear nowhere in the spec) and the page has no export, so
+nothing in the repo can check it. A human looking is the only check there is.
+
 ### Where things actually stand
 
 Be precise about this whenever it comes up, because the table's existence
@@ -156,7 +187,9 @@ with no opt-in column**, independently of the gate in `--for-import`: a
 recipients file can reach it without ever having been through that flag — built
 for a fulfilment send, produced before the gate existed, or edited by hand — so
 it re-checks rather than trusting the file it is handed. Dry run is the
-default; `--apply` writes.
+default; `--apply` writes — and `--apply` additionally requires
+`--event-unsubscribers-checked`, the acknowledgement that a human has read that
+event's Humanitix unsubscriber list (the third register, above).
 
 For **Humanitix**, the opt-in is a built-in, uneditable checkout control
 (`organiserMailListOptIn` on the order) whose wording is fixed to the sentence

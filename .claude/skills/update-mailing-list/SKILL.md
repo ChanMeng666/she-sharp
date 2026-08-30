@@ -299,7 +299,9 @@ Redactions    : 4 rows excluded —
                   1 malformed address
                   0 previously unsubscribed or suppressed
 Import        : scripts/email/import-optin-subscribers.ts (route 2) — dry run
-                shown above; --apply writes
+                shown above; --apply writes, and needs
+                --event-unsubscribers-checked (the Humanitix unsubscriber
+                list, checked by hand — Step 6)
 ```
 
 The **`Redactions:` line is mandatory** — every row that will not be imported,
@@ -334,11 +336,53 @@ npx tsx scripts/email/import-optin-subscribers.ts tmp/emails/recipients-aut-jul-
 Dry run is the default. It prints which column it read the opt-in from, which
 column it read each person's consent date from, the sentence every row will
 carry, and — by count and truncated hash, never by address — everyone held back.
-Show that output to the user. Only then:
+Show that output to the user.
+
+#### Then check the event's unsubscriber list, by hand
+
+**Humanitix keeps a register this repo cannot read**, and `--apply` refuses to
+run until you say you have looked at it. Console → Email campaigns →
+**Unsubscriber list** holds the people who unsubscribed from an event's own
+communications — *"will no longer receive emails sent through email campaigns
+**for the event**"*, in Humanitix's words. Somebody who muted your emails about
+an event and then bought a ticket to it is not somebody to add to a marketing
+list. That is a contradiction inside one event, not an inference across events,
+which is the whole reason this check is narrow:
+
+1. Open
+   <https://console.humanitix.com/console/comms/email-campaigns-unsubscriptions>.
+2. Search it for the event you passed to `--event-name`. The register is a few
+   dozen rows spanning several years and it is scoped per event, so the
+   realistic overlap with one import is **zero or one**.
+3. If nobody from this import is on it, re-run with
+   `--event-unsubscribers-checked`.
+4. If somebody is, add `--exclude their@address` to the same run — repeatable,
+   one address per flag. The address is hashed immediately and **never written
+   to a file**; the run reports the row as held back by truncated hash, like
+   every other exclusion.
+5. **Do not put that person on the suppression register instead.** That
+   register is a general do-not-contact list, and this evidence is about one
+   event: folding it in would block them from everything She Sharp ever sends
+   because they once muted one event's reminders, and the file is one-way
+   hashes that cannot practically be undone.
+
+If `--exclude` names an address that is not in the file, the run says so rather
+than passing quietly — check the address, or check you are importing the file
+you meant to.
+
+**Be honest about what the flag is** if anyone asks: an acknowledgement, not a
+verification. Nothing checks that you looked, and a person can type it without
+opening the page. It is there because there is no alternative — Humanitix's API
+has no route to that list and the console page has no export button, so nothing
+in this repo can read it. If Humanitix ever exposes it, the flag goes and the
+importer drops the overlap itself.
+
+Only then:
 
 ```powershell
 npx tsx scripts/email/import-optin-subscribers.ts tmp/emails/recipients-aut-jul-2026.json `
-  --event-name "AUT July Workshop" --event-date 2026-07-15 --apply
+  --event-name "AUT July Workshop" --event-date 2026-07-15 `
+  --event-unsubscribers-checked --apply
 ```
 
 Four things it does that are worth being able to explain:
@@ -361,7 +405,9 @@ Four things it does that are worth being able to explain:
   refuses and asks you to name one with `--date-column "<header>"`.
 - **Both do-not-contact registers are consulted** — the committed hash file and
   the runtime `email_optouts` table — and anyone already in the table is
-  skipped. An import can never resurrect somebody who left.
+  skipped. An import can never resurrect somebody who left. The event's own
+  unsubscriber list is a third register and is *not* one of these: it is
+  event-scoped, it lives in Humanitix, and it is the numbered check above.
 
 **If the file has no opt-in column the script refuses and exits 1**, quoting the
 rule. Do not work around it, and do not re-run `normalize-recipients.ts` with a

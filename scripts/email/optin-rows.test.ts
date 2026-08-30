@@ -26,16 +26,20 @@ import { fileURLToPath } from "node:url";
 
 import {
   asRecipientsFile,
+  assertUnsubscriberCheck,
   composeConsentSource,
   countReasons,
   DEFAULT_FORM_NAME,
   HUMANITIX_OPTIN_QUESTION,
   isAffirmative,
+  EXCLUDED_REASON,
   OPTIN_SOURCE,
   OptinImportError,
+  parseExclusions,
   parseOrderDate,
   planOptinImport,
   resolveColumns,
+  unsubscriberCheckLines,
   type RecipientRow,
   type RecipientsFile,
 } from "./optin-rows";
@@ -527,6 +531,199 @@ check("a real CSV with an opt-in column keeps only the ticks, end to end", () =>
     assert.strictEqual(result.rows[0].email, "yes@example.com");
     assert.strictEqual(result.rows[0].confirmedAt, null);
     assert.strictEqual(result.rows[0].consentDate.toISOString(), "2026-08-27T00:00:00.000Z");
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+// ---------------------------------------------------------------------------
+// The register this importer cannot see
+// ---------------------------------------------------------------------------
+//
+// Humanitix keeps a per-event unsubscriber list in its console. No API reaches
+// it and the page has no export, so the importer cannot check it and instead
+// refuses to write until a human says they have. These checks cover the
+// refusal and the one action available on a hit.
+
+/** Runs a plan with hand exclusions and empty registers. */
+function planExcluding(file: RecipientsFile, exclude: string[]) {
+  return planOptinImport({
+    file,
+    consentSource: CONSENT,
+    excluded: parseExclusions(exclude, hashEmail),
+    suppressed: new Set(),
+    existing: new Set(),
+    hashEmail,
+  });
+}
+
+check("--apply is refused until the unsubscriber list is acknowledged", () => {
+  assert.throws(
+    () =>
+      assertUnsubscriberCheck({
+        apply: true,
+        acknowledged: false,
+        eventName: "Les Mills: Tech in Fitness",
+        count: 2,
+      }),
+    (error: unknown) => {
+      assert.ok(error instanceof OptinImportError);
+      const text = error.lines.join("\n");
+      assert.match(text, /--event-unsubscribers-checked/, "the flag names itself");
+      assert.match(text, /Unsubscriber list/, "the page to open");
+      assert.match(text, /humanitix/i, "the URL");
+      assert.match(text, /Les Mills: Tech in Fitness/, "which event to search");
+      assert.match(text, /up to 2 row\(s\)/, "how many rows the check covers");
+      assert.match(text, /--exclude/, "the way to act on a hit");
+      return true;
+    }
+  );
+});
+
+check("a dry run needs no acknowledgement, and the flag satisfies --apply", () => {
+  // The gate is on writing, not on looking. A dry run that demanded the flag
+  // would send people to the console before they knew whether there was
+  // anything to check.
+  assert.doesNotThrow(() =>
+    assertUnsubscriberCheck({ apply: false, acknowledged: false, eventName: "X", count: 9 })
+  );
+  assert.doesNotThrow(() =>
+    assertUnsubscriberCheck({ apply: true, acknowledged: true, eventName: "X", count: 9 })
+  );
+});
+
+check("the procedure says the list is event-scoped and must not be folded in", () => {
+  // The most valuable sentence in the feature: an event unsubscribe is not a
+  // general do-not-contact, and hashing it into the committed register would
+  // block someone from everything for ever on that evidence.
+  const text = unsubscriberCheckLines("Les Mills: Tech in Fitness", 2).join("\n");
+  assert.match(text, /suppression register/, "it names the register not to use");
+  assert.match(text, /never written to disk/, "the address stays off disk");
+});
+
+check("--exclude drops exactly the named row, with its own reason", () => {
+  const result = planExcluding(
+    fileOf([
+      person("muted@example.com", "Yes"),
+      person("keen@example.com", "Yes"),
+      person("also-keen@example.com", "Yes"),
+    ]),
+    ["muted@example.com"]
+  );
+  assert.strictEqual(result.rows.length, 2, "only the named row goes");
+  assert.deepStrictEqual(result.rows.map((row) => row.email).sort(), [
+    "also-keen@example.com",
+    "keen@example.com",
+  ]);
+  assert.strictEqual(result.dropped.length, 1);
+  assert.strictEqual(result.dropped[0].emailHash, hashEmail("muted@example.com"));
+  assert.strictEqual(result.dropped[0].reason, EXCLUDED_REASON);
+  assert.match(result.dropped[0].reason, /unsubscriber list/, "distinct from suppression");
+  assert.deepStrictEqual(result.unmatchedExclusions, []);
+});
+
+check("--exclude matches on the normalised hash, however it was typed", () => {
+  // hashEmail() trims and lowercases, so an address copied out of a console
+  // table with its surrounding whitespace still matches.
+  const result = planExcluding(fileOf([person("muted@example.com", "Yes")]), [
+    "  Muted@Example.COM  ",
+  ]);
+  assert.strictEqual(result.rows.length, 0);
+  assert.strictEqual(result.dropped[0].reason, EXCLUDED_REASON);
+  assert.deepStrictEqual(result.unmatchedExclusions, [], "it matched, so nothing is unmatched");
+});
+
+check("an --exclude address not in the file is reported, not silently ignored", () => {
+  // A wrong file and a mistyped address both look exactly like success
+  // otherwise, and the operator typed it believing that person was in here.
+  const result = planExcluding(fileOf([person("keen@example.com", "Yes")]), [
+    "elsewhere@example.com",
+  ]);
+  assert.strictEqual(result.rows.length, 1, "the import itself is unaffected");
+  assert.strictEqual(result.unmatchedExclusions.length, 1);
+  assert.strictEqual(result.unmatchedExclusions[0].hash, hashEmail("elsewhere@example.com"));
+  assert.strictEqual(result.unmatchedExclusions[0].masked, "e****@example.com");
+});
+
+check("an exclusion is unmatched only when the address is absent from the file", () => {
+  // Not "when no row was dropped for it": a row held back for another reason
+  // was still in the file, and saying otherwise sends someone hunting.
+  const result = planExcluding(
+    fileOf([person("muted@example.com", "No"), person("keen@example.com", "Yes")]),
+    ["muted@example.com"]
+  );
+  assert.deepStrictEqual(result.unmatchedExclusions, []);
+  assert.strictEqual(result.dropped[0].reason, EXCLUDED_REASON, "the hand reason outranks");
+});
+
+check("an --exclude value that is not an address is refused", () => {
+  for (const value of ["", "   ", "muted", "--apply"]) {
+    assert.throws(() => parseExclusions([value], hashEmail), OptinImportError);
+  }
+});
+
+check("a repeated --exclude address counts once", () => {
+  const parsedExclusions = parseExclusions(["muted@example.com", "MUTED@example.com "], hashEmail);
+  assert.strictEqual(parsedExclusions.length, 1);
+});
+
+check("nothing an exclusion produces carries the address", () => {
+  const result = planExcluding(fileOf([person("muted@example.com", "Yes")]), [
+    "muted@example.com",
+  ]);
+  const text = JSON.stringify({
+    dropped: result.dropped,
+    unmatched: result.unmatchedExclusions,
+    exclusions: parseExclusions(["gone@example.com"], hashEmail),
+  });
+  assert.ok(!text.includes("muted@example.com"), "no address may reach a report");
+  assert.ok(!text.includes("gone@example.com"), "not even one that matched nothing");
+});
+
+check("the CLI refuses --apply without the flag, before opening a database", () => {
+  // Run for real, with POSTGRES_URL emptied. The refusal has to fire before
+  // `lib/db/drizzle.ts` is imported — that module throws when the variable is
+  // unset — so a regression here fails with a connection error rather than
+  // passing quietly.
+  const dir = mkdtempSync(join(tmpdir(), "optin-rows-"));
+  try {
+    const csv = join(dir, "orders.local.csv");
+    writeFileSync(
+      csv,
+      [
+        "Email,Name,Order status,Marketing opt-in,Order date",
+        "yes@example.com,Ada Lovelace,Completed,Yes,2026-08-27",
+      ].join("\n"),
+      "utf8"
+    );
+    runNormalize(dir, csv, "email=Email,firstName=Name,status=Order status,optIn=Marketing opt-in");
+
+    let output = "";
+    let status: number | undefined;
+    try {
+      execFileSync(
+        process.execPath,
+        [
+          ...loaderArgs(),
+          sibling("import-optin-subscribers.ts"),
+          join(dir, "recipients-optin-test.json"),
+          "--event-name",
+          "Les Mills: Tech in Fitness",
+          "--event-date",
+          "2026-09-03",
+          "--apply",
+        ],
+        { stdio: "pipe", env: { ...process.env, POSTGRES_URL: "" } }
+      );
+    } catch (error) {
+      const failure = error as { status?: number; stdout?: Buffer; stderr?: Buffer };
+      status = failure.status;
+      output = `${failure.stdout ?? ""}${failure.stderr ?? ""}`;
+    }
+    assert.strictEqual(status, 1, "--apply without the flag must exit 1");
+    assert.match(output, /--event-unsubscribers-checked/);
+    assert.match(output, /Unsubscriber list/);
+    assert.ok(!/POSTGRES_URL/.test(output), "it must refuse before the database is loaded");
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }

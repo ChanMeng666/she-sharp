@@ -353,6 +353,16 @@ export interface OptinPlan {
   dateColumn: string;
   rows: PlannedRow[];
   dropped: DroppedRow[];
+  /**
+   * `--exclude` addresses that matched nobody in the file.
+   *
+   * Reported rather than ignored: an exclusion that silently matches nothing is
+   * indistinguishable from one that worked, and the operator typed it because
+   * they believed that person was in this import. A mistyped address, the wrong
+   * file, or a person who was never in it are three different situations and
+   * only the operator can tell which.
+   */
+  unmatchedExclusions: ExcludedAddress[];
 }
 
 export interface PlanInput {
@@ -360,6 +370,11 @@ export interface PlanInput {
   consentSource: string;
   /** Column named on the command line, when the file's detection was wrong. */
   dateColumn?: string | null;
+  /**
+   * Addresses named with `--exclude`, because a human found them on the event's
+   * own unsubscriber list. See `assertUnsubscriberCheck()`.
+   */
+  excluded?: ExcludedAddress[];
   /** Committed register plus the runtime `email_optouts` table, lowercased. */
   suppressed: Set<string>;
   /** Every `email_hash` already in `newsletter_subscribers`, lowercased. */
@@ -441,15 +456,30 @@ export function planOptinImport(input: PlanInput): OptinPlan {
   const rows: PlannedRow[] = [];
   const dropped: DroppedRow[] = [];
   const seen = new Set<string>();
+  const excluded = input.excluded ?? [];
+  const excludedHashes = new Set(excluded.map((entry) => entry.hash));
+  // Tracked against every hash in the file rather than against the rows that
+  // were dropped, so "that address is not in this file" stays true whatever
+  // else would also have held the row back.
+  const present = new Set<string>();
 
   for (const recipient of file.recipients) {
     const email = recipient.email.trim().toLowerCase();
     const emailHash = hashEmail(email).toLowerCase();
+    present.add(emailHash);
 
     // Order matters: the strongest reason a row was dropped is the one the
     // report should give. Somebody reading it is asking "why did this person
     // not get on the list?", and "they did not tick the box" outranks "their
     // address appears twice".
+    //
+    // A hand exclusion comes first because it is the one reason a human
+    // supplied for this run, and burying it under a data-shaped reason would
+    // read as "--exclude did nothing".
+    if (excludedHashes.has(emailHash)) {
+      dropped.push({ emailHash, reason: EXCLUDED_REASON });
+      continue;
+    }
     if (!isAffirmative(recipient.fields[optInColumn])) {
       dropped.push({ emailHash, reason: "no marketing opt-in" });
       continue;
@@ -489,7 +519,14 @@ export function planOptinImport(input: PlanInput): OptinPlan {
     });
   }
 
-  return { consentSource, optInColumn, dateColumn, rows, dropped };
+  return {
+    consentSource,
+    optInColumn,
+    dateColumn,
+    rows,
+    dropped,
+    unmatchedExclusions: excluded.filter((entry) => !present.has(entry.hash)),
+  };
 }
 
 /**
@@ -504,4 +541,160 @@ export function countReasons(dropped: DroppedRow[]): { reason: string; count: nu
   return [...counts.entries()]
     .map(([reason, count]) => ({ reason, count }))
     .sort((a, b) => b.count - a.count);
+}
+
+// ---------------------------------------------------------------------------
+// The register this importer cannot see
+// ---------------------------------------------------------------------------
+
+/**
+ * The flag that asserts a human has read the event's unsubscriber list.
+ *
+ * Named for what was checked rather than for what it unlocks. `--force` and
+ * `--yes` invite the reading "get past this"; this one can only be typed as a
+ * claim about an act, which is the claim it is actually making.
+ */
+export const UNSUBSCRIBER_ACK_FLAG = "--event-unsubscribers-checked";
+
+/** Where that list lives in the Humanitix console. */
+export const HUMANITIX_UNSUBSCRIBER_URL =
+  "https://console.humanitix.com/console/comms/email-campaigns-unsubscriptions";
+
+/**
+ * The reason recorded for a row dropped by `--exclude`.
+ *
+ * Deliberately distinct from "on the suppression register": that register is a
+ * general do-not-contact list, and this one is a person who muted **this
+ * event's** communications. Reading a report months later, the two facts are
+ * not interchangeable.
+ */
+export const EXCLUDED_REASON = "on this event's unsubscriber list (--exclude)";
+
+/** One address named on the command line, reduced to what may be printed. */
+export interface ExcludedAddress {
+  /** sha256 of the normalized address — the only form that reaches a report. */
+  hash: string;
+  /** `j****@gmail.com`, for a line the operator has to recognise. */
+  masked: string;
+}
+
+/** Masks an address the way every other script here masks one. */
+function mask(email: string): string {
+  const [local, domain] = email.trim().split("@");
+  if (!domain) return "****";
+  return `${local.slice(0, 1)}****@${domain}`;
+}
+
+/**
+ * Turns `--exclude` values into hashes, dropping the addresses immediately.
+ *
+ * The address is passed on the command line for the length of one run and is
+ * never written anywhere: this function is the last point at which it exists,
+ * and what comes out is a hash plus a masked label. That is why the exclusion
+ * list is a flag rather than a file — a file of addresses of people who
+ * unsubscribed would be a second, undeclared register of exactly the kind this
+ * design refuses to create.
+ *
+ * Matching is on `hashEmail()`, which trims and lowercases, so
+ * `" Ada@Example.COM "` and `ada@example.com` are the same person here.
+ *
+ * @param addresses Raw `--exclude` values, in the order given.
+ * @param hashEmail The shared hasher, injected as everywhere else in this file.
+ * @returns One entry per distinct address.
+ * @throws OptinImportError when a value is not an address — a typo would
+ *   otherwise hash to something that quietly matches nobody.
+ */
+export function parseExclusions(
+  addresses: string[],
+  hashEmail: (email: string) => string
+): ExcludedAddress[] {
+  const seen = new Map<string, ExcludedAddress>();
+  for (const raw of addresses) {
+    const value = raw.trim();
+    if (value.length === 0 || !value.includes("@")) {
+      throw new OptinImportError([
+        `--exclude "${raw}" is not an email address.`,
+        "It takes one address per flag, repeated:",
+        '  --exclude someone@example.com --exclude someone.else@example.com',
+      ]);
+    }
+    const hash = hashEmail(value).toLowerCase();
+    if (!seen.has(hash)) seen.set(hash, { hash, masked: mask(value) });
+  }
+  return [...seen.values()];
+}
+
+/**
+ * The procedure a human has to carry out before an import may be applied.
+ *
+ * @param eventName The event this import is for.
+ * @param count How many rows would be written.
+ * @returns Lines to print, as guidance on a dry run and as the refusal on
+ *   `--apply`.
+ */
+export function unsubscriberCheckLines(eventName: string, count: number): string[] {
+  return [
+    `Before writing up to ${count} row(s) for "${eventName}", check that event's unsubscriber list.`,
+    "",
+    "Humanitix keeps a register this repo cannot read: the people who unsubscribed",
+    "from an event's own communications. Somebody who muted your emails about an",
+    "event and then bought a ticket to it is not somebody to add to a marketing",
+    "list — that is a contradiction inside one event, not a guess across events.",
+    "",
+    "  1. Open the Humanitix console → Email campaigns → Unsubscriber list",
+    `     ${HUMANITIX_UNSUBSCRIBER_URL}`,
+    `  2. Search it for "${eventName}". The register is a few dozen rows and is`,
+    "     scoped per event, so the realistic overlap here is zero or one.",
+    "  3. If nobody from this import appears, re-run with:",
+    `       ${UNSUBSCRIBER_ACK_FLAG}`,
+    "     If somebody does, drop them in the same run:",
+    `       --exclude their@address --exclude another@address ${UNSUBSCRIBER_ACK_FLAG}`,
+    "",
+    "The excluded address is used for this run only. It is hashed immediately and",
+    "never written to disk — do not add it to the suppression register instead:",
+    "that register is a general do-not-contact list and this evidence is about one",
+    "event, so folding it in would block the person from everything She Sharp ever",
+    "sends because they once muted one event's reminders.",
+  ];
+}
+
+/**
+ * Refuses to apply an import until the unsubscriber list has been acknowledged.
+ *
+ * **This is an acknowledgement, not a verification, and the difference matters
+ * enough to write down.** Nothing here checks the register: a person can type
+ * the flag without opening the page, and the code cannot tell. What it buys is
+ * that the check has to be declined deliberately rather than never occurring to
+ * anyone — the same thing `--apply` itself buys.
+ *
+ * Nothing stronger is available. The Humanitix public API has no route to this
+ * list: verified 2026-08-30 against the live OpenAPI document (v1.21.0), where
+ * the strings `campaign`, `unsubscri`, `notify`, `follower` and `send` do not
+ * appear anywhere in the spec. The console page has no export button either. So
+ * the alternatives were an acknowledgement or nothing, and the third option —
+ * asking an operator to type a dozen real addresses into a file so a script
+ * could match them — would create a register of unsubscribers' addresses on
+ * disk to avoid mailing them, which is worse than the problem.
+ *
+ * **If Humanitix ever exposes the list** — an endpoint, or an export button
+ * whose CSV `normalize-recipients.ts` could read — replace this function with a
+ * real check: hash the register, drop the intersection automatically, and let
+ * the flag go. Until then it says what it is.
+ *
+ * @param input Whether this run writes, whether the flag was passed, and what
+ *   the operator would be asserting about.
+ * @throws OptinImportError when `--apply` is used without the acknowledgement.
+ */
+export function assertUnsubscriberCheck(input: {
+  apply: boolean;
+  acknowledged: boolean;
+  eventName: string;
+  count: number;
+}): void {
+  if (!input.apply || input.acknowledged) return;
+  throw new OptinImportError([
+    `--apply also needs ${UNSUBSCRIBER_ACK_FLAG}.`,
+    "",
+    ...unsubscriberCheckLines(input.eventName, input.count),
+  ]);
 }
