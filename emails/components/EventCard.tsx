@@ -59,6 +59,27 @@ const textLink: React.CSSProperties = {
   textDecoration: "none",
 };
 
+/**
+ * Splits a blurb into paragraphs on blank lines.
+ *
+ * A blurb used to be one sentence-pair rendered as a single `<Text>`, where a
+ * `\n\n` collapses to a space like any other whitespace in HTML. The August
+ * 2026 recap is two paragraphs, so that break has to become real markup. A
+ * one-paragraph blurb still renders exactly one `<Text>` with exactly the old
+ * style, which is what keeps earlier issues re-rendering unchanged in the
+ * on-site archive.
+ *
+ * @param blurb The blurb text, or null when the event has none.
+ * @returns One entry per paragraph; empty when there is no blurb.
+ */
+function splitParagraphs(blurb: string | null): string[] {
+  if (!blurb) return [];
+  return blurb
+    .split(/\n\s*\n/)
+    .map((part) => part.trim())
+    .filter((part) => part.length > 0);
+}
+
 /** Compact recap card: thumbnail + title + date + blurb + read-more. */
 export function RecapEventCard({
   event,
@@ -69,6 +90,8 @@ export function RecapEventCard({
   blurb: string | null;
   isLast: boolean;
 }): React.JSX.Element {
+  const blurbParagraphs = splitParagraphs(blurb);
+
   return (
     <Section
       style={{
@@ -109,19 +132,20 @@ export function RecapEventCard({
           <Heading as="h3" style={cardTitle}>
             {event.title}
           </Heading>
-          {blurb ? (
+          {blurbParagraphs.map((paragraph, index) => (
             <Text
+              key={index}
               style={{
-                margin: `${SPACE.xs}px 0 0`,
+                margin: `${index === 0 ? SPACE.xs : SPACE.md}px 0 0`,
                 fontFamily: FONT_STACK,
                 fontSize: "14px",
                 lineHeight: "21px",
                 color: COLORS.text,
               }}
             >
-              {blurb}
+              {paragraph}
             </Text>
-          ) : null}
+          ))}
           <Text style={{ margin: `${SPACE.sm}px 0 0` }}>
             <Link href={event.url} style={textLink}>
               Read more →

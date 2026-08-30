@@ -103,6 +103,30 @@ export const editorialSchema = z.object({
       eventSlug: z.string().optional(),
     })
     .nullable(),
+  /**
+   * Optional recap video for the "Looking back" section — the month's event
+   * film, linked rather than embedded.
+   *
+   * **No email client plays video.** A `<video>` tag or a YouTube iframe is
+   * stripped by Gmail and Outlook alike, so this is deliberately a URL and a
+   * title and nothing more: `emails/components/RecapVideo.tsx` renders a panel
+   * that links out to the watch page, which is a plain anchor and therefore
+   * survives every client. There is no poster-frame field because the obvious
+   * still — YouTube's own thumbnail — is usually the same frame as
+   * `photoOfTheMonth`, and the template already treats a repeated photo as a
+   * defect worth de-duplicating.
+   *
+   * Null omits the block.
+   */
+  recapVideo: z
+    .object({
+      /** Watch-page URL, e.g. a youtu.be link. */
+      url: z.string().url(),
+      /** Human title of the film, e.g. "Festival Recap — AUT City Campus". */
+      title: z.string().min(1),
+    })
+    .nullable()
+    .default(null),
   /** 1-2 sentences framing last month's recap section. */
   recapIntro: z.string().min(1),
   /** Optional per-event one-liners overriding auto shortDescription, keyed by slug. */

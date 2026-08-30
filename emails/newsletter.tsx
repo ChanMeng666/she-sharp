@@ -38,6 +38,7 @@ import { Cover } from "./components/Cover";
 import { FounderNote } from "./components/FounderNote";
 import { HeadlineEvent } from "./components/HeadlineEvent";
 import { PhotoStrip } from "./components/PhotoStrip";
+import { RecapVideo } from "./components/RecapVideo";
 import { RecapEventCard, UpcomingEventCard } from "./components/EventCard";
 import { Pulse } from "./components/Pulse";
 import { StatStrip } from "./components/StatStrip";
@@ -234,6 +235,10 @@ export function NewsletterEmail({
                   isLast={idx === auto.recapEvents.length - 1}
                 />
               ))}
+
+              {editorial.recapVideo ? (
+                <RecapVideo video={editorial.recapVideo} />
+              ) : null}
             </Section>
           ) : null}
 

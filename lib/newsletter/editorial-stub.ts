@@ -97,6 +97,9 @@ export function emptyEditorialStub(
     // Promoting an event to the headline block is a human curation call.
     headline: null,
     photoOfTheMonth: null,
+    // Like the photo of the month, the recap film is a human choice: it exists
+    // only when somebody filmed the month and cut it.
+    recapVideo: null,
     recapIntro: "Here is a look back at what our community got up to recently.",
     eventBlurbs,
     primaryCta,

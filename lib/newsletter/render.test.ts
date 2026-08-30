@@ -235,6 +235,31 @@ const sampleHeadline: NewsletterIssueData = newsletterIssueSchema.parse({
   },
 });
 
+/** The two halves of a two-paragraph recap blurb, asserted to stay apart. */
+const BLURB_P1 = "First paragraph of the recap blurb.";
+const BLURB_P2 = "Second paragraph of the recap blurb.";
+
+/** Unique to the recap video block, so it can be asserted present and absent. */
+const RECAP_VIDEO_URL = "https://youtu.be/render-test-recap";
+const RECAP_VIDEO_TITLE = "Festival Recap — the test venue";
+
+/**
+ * A copy of `sample` carrying a recap video and a two-paragraph event blurb,
+ * to prove the video panel renders as a link (email cannot play video) and
+ * that a blank line in a blurb becomes real markup rather than collapsing to a
+ * space, which is what an HTML renderer does to it by default.
+ */
+const sampleRecapVideo: NewsletterIssueData = newsletterIssueSchema.parse({
+  ...sample,
+  editorial: {
+    ...sample.editorial,
+    recapVideo: { url: RECAP_VIDEO_URL, title: RECAP_VIDEO_TITLE },
+    eventBlurbs: {
+      "june-networking": `${BLURB_P1}\n\n${BLURB_P2}`,
+    },
+  },
+});
+
 /** Counts non-overlapping occurrences of a literal string. */
 function countOccurrences(html: string, needle: string): number {
   return html.split(needle).length - 1;
@@ -494,6 +519,42 @@ async function main(): Promise<void> {
   assert.ok(
     preview.html.includes("See all upcoming events"),
     "primary CTA label must render when there is no headline block"
+  );
+
+  // Recap video: rendered as a plain anchor to the watch page — never an
+  // embed, which every major client strips — and absent when unset.
+  const video = await renderNewsletter(sampleRecapVideo, "preview");
+  assert.ok(
+    video.html.includes(`href="${RECAP_VIDEO_URL}"`),
+    "recap video must render as a link to the watch page"
+  );
+  assert.ok(
+    video.html.includes(RECAP_VIDEO_TITLE),
+    "recap video title must appear in the html"
+  );
+  for (const tag of ["<video", "<iframe"]) {
+    assert.ok(
+      !video.html.includes(tag),
+      `recap video must not render a ${tag}> — no email client plays it`
+    );
+  }
+  assert.ok(
+    !preview.html.includes("Watch the recap"),
+    "recap video block must NOT render when editorial.recapVideo is null"
+  );
+
+  // A blank line inside an event blurb must become a paragraph break. HTML
+  // collapses "\n\n" to a space, so a single <Text> would silently run the two
+  // paragraphs together — the failure this asserts against.
+  const [, afterFirst = ""] = video.html.split(BLURB_P1);
+  const [betweenParagraphs = ""] = afterFirst.split(BLURB_P2);
+  assert.ok(
+    video.html.includes(BLURB_P1) && video.html.includes(BLURB_P2),
+    "both blurb paragraphs must appear in the html"
+  );
+  assert.ok(
+    betweenParagraphs.includes("</p>"),
+    "a blank line in an event blurb must close the paragraph, not collapse to a space"
   );
 
   console.log("PASS render.test.ts");

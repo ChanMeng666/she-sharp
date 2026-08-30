@@ -27,13 +27,17 @@
       "ctaHref": "https://events.humanitix.com/she-sharp-and-lesmills"
     },
     "photoOfTheMonth": {
-      "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-08/photos/aotearoa-ai-hackathon-festival-2026-2-Du1rcfQlM0JiJ6NUPXZjsPSgMeyPdD.jpg",
-      "caption": "The winning team, kailine, on stage at AUT City Campus as the venue result went up behind them.",
+      "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-08/photos/aotearoa-ai-hackathon-festival-2026-1-m6wuPYP2vL9IxdStwJYmNOn4lfVBoc.jpg",
+      "caption": "The whole festival, gathered in the atrium at AUT City Campus.",
       "eventSlug": "aotearoa-ai-hackathon-festival-2026"
+    },
+    "recapVideo": {
+      "url": "https://youtu.be/D6tnrvlHYn8",
+      "title": "Festival Recap — AUT City Campus"
     },
     "recapIntro": "August was a single event that filled two whole days — here is how it went at AUT.",
     "eventBlurbs": {
-      "aotearoa-ai-hackathon-festival-2026": "Twelve teams took on the AI for Good brief across Friday evening and all of Saturday, then pitched for five minutes each to a local judging panel. kailine won the venue prize, ahead of kaitiakidata and kpi-kaitiaki-positive-impact."
+      "aotearoa-ai-hackathon-festival-2026": "Twelve teams spent Friday evening and all of Saturday in the Sir Paul Reeves Building at AUT City Campus, building AI solutions to real problems. Around a third of them had never been to a hackathon before, and mentors from AUT, She Sharp, Fisher & Paykel Healthcare and Southern Cross Health Society worked alongside the teams across both days.\n\nOn Saturday afternoon each team had five minutes in WG308 in front of a local judging panel. kailine took the venue prize, with kaitiakidata and kpi-kaitiaki-positive-impact as runners-up. The winning pitch goes on to national judging, and the national finalists pitch at the Aotearoa AI Summit in Wellington on 8–9 September."
     },
     "primaryCta": {
       "label": "Register for 3 September",
@@ -123,6 +127,18 @@
         "url": "https://www.shesharp.org.nz/events/event-lesmills-03-september-2026",
         "registrationUrl": "https://events.humanitix.com/she-sharp-and-lesmills",
         "shortDescription": "A Les Mills x She Sharp panel on diversity and AI for impact — cross-functional perspectives, table discussions, and networking."
+      },
+      {
+        "slug": "code-secure-2026",
+        "title": "Beyond the Code: Women Leading the Future of Cybersecurity and AI",
+        "dateLabel": "Thursday, October 8",
+        "startIso": "2026-10-08T17:00:00+13:00",
+        "timeLabel": "5:00pm – 8:00pm NZDT",
+        "locationLabel": "Xero Office (Level 2), Auckland",
+        "coverImageUrl": "https://www.shesharp.org.nz/img/events/code-secure-2026/cover-email.jpg",
+        "url": "https://www.shesharp.org.nz/events/code-secure-2026",
+        "registrationUrl": null,
+        "shortDescription": "An evening with Xero and Secure Code Warrior: a live secure-coding tournament with prizes, and four women on how they found their way into cybersecurity and AI."
       }
     ],
     "stats": {
@@ -184,6 +200,6 @@
         "alt": "Runner-up: kpi-kaitiaki-positive-impact"
       }
     ],
-    "photoAlbumUrl": null
+    "photoAlbumUrl": "https://photos.app.goo.gl/tnUB2LyiSvmh8Q1JA"
   }
 }
