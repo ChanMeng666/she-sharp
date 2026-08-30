@@ -178,10 +178,10 @@ not reorder these on the assumption that the pages will survive.
 
 ---
 
-## 4. About fifty links on the live website point into Mailchimp
-## 4. 网站上大约五十个链接指向 Mailchimp
+## 4. About fifty links on the live website pointed into Mailchimp — fixed
+## 4. 网站上曾有约五十个链接指向 Mailchimp——已修复
 
-Counted in the repository on 2026-08-30:
+Counted in the repository on 2026-08-30, before the fix below:
 
 | Where | Entries | Pointing at Mailchimp |
 |---|---|---|
@@ -189,29 +189,34 @@ Counted in the repository on 2026-08-30:
 | `lib/data/newsletters-manual.ts` | 4 | 2 `mailchi.mp` + 1 `us3.campaign-archive.com` |
 | rendered grid (`getAllNewsletters()`, one retracted entry removed) | 59 issues | **51**, spanning 2021-10 → 2026-07 |
 
-Seven further entries (the 2021 issues) point at a dead WordPress site and are
-broken today; they have nothing to do with the cancellation. One entry, the
-August 2026 issue, is served from this site (`/resources/newsletters/2026-08`)
-and is unaffected.
+Seven further entries (the 2021 issues) pointed at a dead WordPress site and
+were broken already; they had nothing to do with the cancellation. One entry,
+the August 2026 issue, was already served from this site.
 
-另有 7 条 2021 年的链接指向早已下线的 WordPress 站，现在就是坏的，与本次取消无关。
-2026 年 8 月那期由本站自己提供，不受影响。
+另有 7 条 2021 年的链接指向早已下线的 WordPress 站，本来就是坏的，与本次取消无关。
+2026 年 8 月那期本来就由本站自己提供。
 
-**The fix is an on-site archive, and it is planned but not built.** Everything
-before August 2026 exists only as a Mailchimp page, so the export in item 5 is
-what makes the on-site archive possible later — the `campaigns_content` HTML
-files *are* the issues. Without them there is nothing to re-host.
+**The fix is an on-site archive, and it is now built.** All 179 sent campaigns
+are committed to `lib/data/newsletter-archive/` with their images re-hosted on
+Vercel Blob, and `/resources/newsletters/<id>` serves them. Every one of the 59
+cards now opens this site; so does the footer's *Read past issues*. The seven
+dead WordPress links are recovered too — each of those months also went out as
+a campaign, so the card serves the emailed issue instead of a 403.
+`scripts/mailchimp/archive-guard.test.ts` fails CI if a card is pointed back at
+Mailchimp. **The cancellation no longer costs the website anything.**
 
-**解决办法是把存档搬到自己站上，但这件事只是计划，还没做。** 2026 年 8 月之前的
-每一期都只存在于 Mailchimp，所以第 5 项的导出是以后做站内存档的前提——
-`campaigns_content` 里的 HTML 文件**就是**那些通讯本身。没有它们就无从托管。
+**解决办法是把存档搬到自己站上，现在已经做完了。** 179 期已全部提交到
+`lib/data/newsletter-archive/`，图片转存到 Vercel Blob，由
+`/resources/newsletters/<id>` 提供；59 张封面卡和页脚的 *Read past issues*
+都指向本站。那 7 条 2021 年的死链也一并救回——每个月份都另有一封同名邮件。
+CI 里的守卫脚本会阻止任何人再把卡片指回 Mailchimp。**取消订阅不再影响网站。**
 
-### The "Open full archive" button is already wrong, today, on a paid plan
-### "Open full archive" 按钮现在就是错的——而且和取消订阅无关
+### The "Open full archive" button was wrong on a paid plan too — now deleted
+### "Open full archive" 按钮在付费套餐下也是错的——现已删除
 
-A separate, **present-tense** defect found on 2026-08-30, independent of any
-cancellation. `MAILCHIMP_CONFIG.archiveUrl` in `lib/data/newsletters.ts` is
-rendered in two places:
+A separate defect found on 2026-08-30, independent of any cancellation, and
+fixed in the same change as the archive. `MAILCHIMP_CONFIG.archiveUrl` in
+`lib/data/newsletters.ts` was rendered in two places:
 
 - `app/(site)/resources/newsletters/page.tsx:48` — a button labelled
   **"Open full archive"**
@@ -234,11 +239,15 @@ grid on the same page already renders.
 就不曾能通过这个链接访问——在任何套餐下都不能。真正的往期目录是那 51 个单期链接，
 就在同一个页面的封面网格里。
 
-**Nothing in this document changes that code.** It is written down here, and in
-`docs/development/MAILCHIMP_ARCHIVE.md`, so that whoever builds the on-site
-archive fixes the label or the destination at the same time. Two honest options:
-relabel it ("Recent issues on Mailchimp"), or point it at the on-site archive
-once that exists.
+**Both are gone.** `MAILCHIMP_CONFIG.archiveUrl` was the only field left in
+`lib/data/newsletters.ts`, so that file was deleted with it. The footer link
+now points at `/resources/newsletters`; the button was removed rather than
+repointed, because that page *is* the full archive and the button would have
+linked it to itself.
+
+**两处都已删除。** `MAILCHIMP_CONFIG.archiveUrl` 是 `lib/data/newsletters.ts`
+里最后一个字段，该文件已随之删除。页脚链接改指 `/resources/newsletters`；
+按钮直接去掉了——那个页面本身就是完整存档，按钮只会链到自己。
 
 - [ ] Understood that these links break, and the export is taken first / 已知这些链接会失效，并已先做导出
 

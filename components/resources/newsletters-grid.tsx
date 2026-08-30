@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NewsletterCover } from "./newsletter-cover";
@@ -13,9 +12,16 @@ interface NewslettersGridProps {
 
 /**
  * Responsive grid of newsletter issues with a year filter. Each card shows a
- * CSS-generated cover that opens the issue itself — a Mailchimp campaign for
- * everything up to July 2026, and the on-site render at
- * `/resources/newsletters/<id>` for issues built in this repo since.
+ * CSS-generated cover that opens the issue itself at
+ * `/resources/newsletters/<id>` — this site's own copy of the email, for every
+ * issue, since the Mailchimp pages 51 of these cards used to open die with the
+ * subscription.
+ *
+ * A plain `<a>`, not `next/link`: the target is a route handler returning a
+ * complete standalone HTML document, not a page in the app router, so there is
+ * no RSC payload for Link to prefetch and no layout to keep. It still opens in
+ * a new tab for the same reason it always did — the issue is a document with no
+ * site chrome and no way back to the grid.
  *
  * The cover theme is fixed by each issue's position in the full list, so a
  * given newsletter keeps its color even while the grid is filtered.
@@ -70,7 +76,7 @@ export function NewslettersGrid({ issues }: NewslettersGridProps) {
         {visible.map(({ issue, themeIndex }) => {
           const monthName = MONTH_FULL_NAMES[issue.month] ?? "";
           return (
-            <Link
+            <a
               key={issue.id}
               href={issue.url}
               target="_blank"
@@ -96,7 +102,7 @@ export function NewslettersGrid({ issues }: NewslettersGridProps) {
                   <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </span>
               </div>
-            </Link>
+            </a>
           );
         })}
       </div>

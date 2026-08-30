@@ -761,17 +761,16 @@ receiving the Resend send. Both are now done:
 2. ~~Repoint the 16 `MAILCHIMP_CONFIG.subscribeUrl` links at it.~~ **Done** — all
    six now point at `/newsletter/subscribe`, and `subscribeUrl` has been
    **deleted** from `MAILCHIMP_CONFIG` so a seventh cannot appear by copy-paste.
-   `archiveUrl` stays; see the next item.
-3. Decide what `archiveUrl` becomes. **Half-settled as of the August 2026
-   issue:** issues built in this repo now get a card in
-   `lib/data/newsletters-manual.ts` whose `url` is the on-site
-   `/resources/newsletters/<id>` render, so the public archive grid no longer
-   depends on Mailchimp for new months. What is still open is the
-   `MAILCHIMP_CONFIG.archiveUrl` button ("Open full archive") — it remains the
-   only way to reach the pre-2026-08 back catalogue, so it cannot be dropped
-   until those issues are re-hosted or the button is repointed at
-   `/resources/newsletters` itself. The per-issue route stays `noindex` and out
-   of `app/sitemap.ts` deliberately; that is not a blocker.
+   `archiveUrl` went the same way; see the next item.
+3. ~~Decide what `archiveUrl` becomes.~~ **Done.** The 179 sent campaigns are
+   committed to `lib/data/newsletter-archive/` and `/resources/newsletters/<id>`
+   serves all of them, so every card on the grid — not just the months built
+   here — opens this site. `MAILCHIMP_CONFIG` had nothing left in it and
+   `lib/data/newsletters.ts` was deleted; the footer's "Read past issues" points
+   at `/resources/newsletters` and the "Open full archive" button is gone,
+   because that page is the archive. The per-issue route stays `noindex` and out
+   of `app/sitemap.ts` deliberately, with each served body's `og:url` rewritten
+   to its own on-site path so the noindex cannot reach the parent.
 4. **Deal with the live Humanitix → Mailchimp integration. Still outstanding, and
    the 29 August import made it urgent.** Easier to miss than the funnel, because
    it is configured in *Humanitix* and nothing in this repo mentions it:

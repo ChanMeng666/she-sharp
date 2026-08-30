@@ -20,14 +20,6 @@ export interface MailchimpNewsletter {
 }
 
 /**
- * What is still hosted at Mailchimp. Subscribing is no longer: the list moved
- * into this project's database, so only the back-catalogue archive link is left.
- */
-export interface MailchimpConfig {
-  archiveUrl: string;
-}
-
-/**
  * A single monthly newsletter issue rendered as a CSS-generated cover card.
  * Covers are produced entirely from `month`/`year` — no image files needed.
  */
@@ -39,11 +31,33 @@ export interface NewsletterIssue {
   /** Four-digit year. */
   year: number;
   /**
-   * Where the cover opens: a Mailchimp campaign link for issues sent from
-   * Mailchimp, or a site-relative `/resources/newsletters/<id>` for issues
-   * built and rendered in this repo (August 2026 onwards).
+   * Where the cover opens — always `/resources/newsletters/<id>` now, served by
+   * this repo from the archived send or from the issue fixture. It used to be
+   * the Mailchimp campaign link, and 51 of these opened a `mailchi.mp` page
+   * that stops existing when the subscription is cancelled.
    */
   url: string;
+  /**
+   * The external URL this issue was originally published at, kept verbatim as
+   * provenance and as the join key the archive guard re-derives `campaign`
+   * from. Absent for issues that were never published anywhere but here.
+   *
+   * Not a link the site renders. The seven 2021 entries carry a
+   * `shesharp.org.nz/wp-content/…` PDF that has been dead since the WordPress
+   * site went away, which is a record of where the issue used to live, not a
+   * destination.
+   */
+  source?: string;
+  /**
+   * The archived Mailchimp campaign (`lib/data/newsletter-archive/<id>.html`)
+   * that `url` serves.
+   *
+   * Its presence means one thing only: **this issue also exists as a Mailchimp
+   * send.** Absent, there is no send to serve, so the route falls through to
+   * the issue fixture in `lib/newsletter/issues-registry.ts`. Absence says
+   * nothing about whether the issue was ever mailed, from here or anywhere.
+   */
+  campaign?: string;
   /** Optional explicit cover theme index; when omitted the grid rotates by position. */
   theme?: number;
 }

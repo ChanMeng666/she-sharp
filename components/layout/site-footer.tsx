@@ -93,18 +93,17 @@ export function SiteFooter() {
                     The back catalogue, as a plain secondary link. It was
                     previously reachable only as a Mailchimp brand icon sitting
                     in the social row above — a mail vendor's mascot on every
-                    page, next to "Follow us on Mailchimp". Same destination,
-                    named for what it is and subordinate to subscribing.
+                    page, next to "Follow us on Mailchimp". Same name, but the
+                    destination is this site now, so the new-tab target and the
+                    external-link glyph are gone: both were telling the reader
+                    they were about to leave, and they no longer are.
                   */}
                   <p className="mt-4">
                     <Link
                       href={footerConfig.newsletterArchive.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
                       className="inline-flex items-center gap-1.5 text-sm text-white/70 underline underline-offset-4 hover:text-white transition-colors"
                     >
                       {footerConfig.newsletterArchive.name}
-                      <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
                     </Link>
                   </p>
                 </div>
