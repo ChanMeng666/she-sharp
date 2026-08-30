@@ -1207,7 +1207,14 @@ async function main(): Promise<void> {
   );
   line("From", built.spec.from);
   line("Reply-To", built.spec.replyTo ?? "—");
-  line("Engine", "react / marketing — the only pair that emits the unsubscribe tag");
+  // These two lines used to read "react / marketing — the only pair that emits
+  // the unsubscribe tag". It was wrong, and a message the tool prints outranks a
+  // document in practice: `withUnsubscribeFooter` (lib/email/compose.tsx) keys on
+  // CATEGORY, not engine, so rendering this spec on `layout` emits the same
+  // placeholder and fails the same two gates. Measured on both engines before
+  // this was rewritten.
+  line("Engine", "react — the branded template, and the one that renders a cover");
+  line("Category", "marketing — this, not the engine, is what adds the opt-out link");
   line("CTA", `${button?.type === "button" ? button.text : "?"} → ${built.ctaUrl}`);
   line("Cover", built.cover ? built.cover.url : "— none (see below)");
   line("Blocks", built.spec.blocks.map((block) => block.type).join(", "));
@@ -1252,6 +1259,14 @@ async function main(): Promise<void> {
   console.error("");
   console.error("Next — render it and run the gates:");
   console.error(nextCommand);
+  console.error("");
+  // Said here because this is the last output an operator reads before that
+  // command, and two red gates with no warning read as a broken generator.
+  console.error("Expect `absolute-urls` and `unsubscribe` to FAIL there. Both name the same");
+  console.error("%%SHESHARP_UNSUBSCRIBE_URL%% placeholder, which cannot be a real URL until");
+  console.error("build-batch.ts signs one per recipient — and build-batch re-runs the same");
+  console.error("strict gates on the substituted message, so nothing is waved through.");
+  console.error("Any OTHER red gate is a real problem: say what failed, do not hand-edit.");
   console.error("");
 
   if (args.json) {
