@@ -54,13 +54,19 @@ it exists.** Console → Email campaigns → **Unsubscriber list**
 (<https://console.humanitix.com/console/comms/email-campaigns-unsubscriptions>).
 Its own description: attendees and buyers who unsubscribed "will no longer
 receive emails sent through email campaigns **for the event**". Observed live on
-2026-08-30, from two screenshots rather than an export, so **read every figure
-here as approximate and as at that date**: roughly 20 rows, 13 distinct
-addresses, columns Email / Event / Unsubscribed at, spanning 2021-08 → 2025-11
-with nothing in 2026, and **no export control visible**. Clicking the next-page
-arrow did not change the view — **evidence** that this is the whole list, not
-proof of it. One row is She Sharp's own mailbox unsubscribing from a She Sharp
+2026-08-30, paged to the end: **28 rows over 21 distinct addresses**, columns
+Email / Event / Unsubscribed at, spanning **2021-08 → 2026-06**, and **no export
+control**. One row is She Sharp's own mailbox unsubscribing from a She Sharp
 event.
+
+**It has more than one page, and this file said it did not.** The earlier
+reading — "roughly 20 rows, 13 addresses, nothing in 2026, one page" — rested on
+the next-page arrow appearing to do nothing. Requesting page 2 directly returns
+8 more rows, including the two most recent. So when you check a list before an
+import, **page to the end and confirm the last page is empty**; an arrow that
+does not respond is not an answer. The two 2026 rows belong to the academyEX IWD
+2026 and Metlifecare "Own Your Energy" events, which are precisely the recent
+events a route-2 import would concern.
 
 **It is event-scoped, so it is emphatically NOT a general do-not-contact list,
 and it is deliberately not folded into the two registers above.** Each row says

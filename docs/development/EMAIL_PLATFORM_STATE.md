@@ -257,7 +257,41 @@ members against `newsletter_subscribers`:
 
 Earlier the same day the gap was 7, of which 4 had `source: "Hosted Signup Form"`
 (they subscribed themselves on Mailchimp's hosted form) and were imported that
-afternoon. The remaining 3 are still outside the table, pending a route-2 import.
+afternoon.
+
+**"Pending a route-2 import" was wrong, and this paragraph used to say it.**
+Re-measured against the 2026-08-28 members dump the gap is **6**, and the six are
+two different problems that the word "gap" hides:
+
+| `source` | People | Humanitix orders | Ever ticked the checkout opt-in |
+|---|---|---|---|
+| `Mahsa McCauley NZD` | 3 | one each | **none — 0 on both the orders CSV and the API** |
+| `Hosted Signup Form` | 1 | none | — |
+| `Embed Form` | 1 | none | — |
+| `API - Generic` | 1 | none | — |
+
+The three Humanitix ones **cannot be imported**. That `source` is the ecommerce
+store the integration writes through, not evidence that anybody ticked anything,
+and the two order surfaces agree that none of them did. `consent-rules.md` § "If
+you cannot pick one" gives the only answer available: the subscribe link.
+Route 2 needs a tick; there is no tick.
+
+The other three are the **opposite** case and are the stronger evidence in this
+whole dataset: `Embed Form` and `Hosted Signup Form` are people who filled in a
+Mailchimp form themselves, which is consent route 1. They have no Humanitix
+orders at all and nothing to do with ticket buying. They belong to **crossing 3**
+— a fresh export through `import-mailchimp-subscribers.ts` — not to route 2, and
+they are the joiner gap below arriving in practice rather than in theory.
+
+**A related question, now closed.** **188** distinct people ever ticked the
+Humanitix checkout opt-in (CSV ∪ API). **89** of them are not in
+`newsletter_subscribers` — and **all 89 are on the committed suppression
+register**, with none outside it. So the apparently attractive backfill of
+"people whose consent evidence is stronger than the list we hold" yields
+**zero importable rows**, and `selectMailable()` refuses every one of them
+correctly: they ticked in 2020–2022 and later unsubscribed or bounced, so the
+later act wins. The remaining 99 are already in the table, which matches the
+tiering's independently-derived `ever-ticked 99`.
 
 **The asymmetry that produces this gap is structural, not an oversight.**
 `suppression.ts pull-mailchimp` pulls people who *leave*. **Nothing pulls in
@@ -506,12 +540,27 @@ columns Email / Event / Unsubscribed at. Its own description on the page:
 > communications will no longer receive emails sent through email campaigns
 > **for the event**.
 
-Counted from the same console session on 2026-08-30, from two screenshots rather
-than an export, so **read every figure here as approximate and as at that date**:
-roughly **20 rows** and **13 distinct addresses**, spanning **2021-08 → 2025-11**
-with nothing in 2026, and **no export control visible**. Clicking the next-page
-arrow did not change the view — evidence that this is the whole list, **not
-proof** of it.
+Read page by page from the console on **2026-08-30**, as at that date: **28
+rows** over **21 distinct addresses**, spanning **2021-08 → 2026-06**, and **no
+export control**. One row is She Sharp's own mailbox unsubscribing from a She
+Sharp event.
+
+> **This paragraph was wrong until 2026-08-30, and the way it was wrong is the
+> point.** It said "roughly 20 rows and 13 distinct addresses, spanning 2021-08 →
+> 2025-11 with nothing in 2026", on the strength of two screenshots and one
+> observation: *"Clicking the next-page arrow did not change the view — evidence
+> that this is the whole list."* There is a page 2. Requesting `?page=2`
+> directly returns **8 more rows**, including the **two most recent, from
+> 2026-04 and 2026-06**. A click that appears to do nothing is not evidence that
+> there is nothing to show; it is a click that did not work.
+
+That matters operationally rather than as a correction of counts.
+`--event-unsubscribers-checked` on `import-optin-subscribers.ts` means "a human
+has read that event's unsubscriber list", and a human who read only page 1 would
+have missed the two 2026 rows — which belong to the academyEX IWD 2026 and
+Metlifecare "Own Your Energy" events, exactly the recent events a route-2 import
+would be about. **Page the list to the end, and check that the last page is
+empty rather than that the arrow stopped responding.**
 
 It is **event-scoped** — each row says "stop emailing me about *this event*" —
 so it is deliberately **not** folded into our suppression register. What it is
@@ -721,10 +770,14 @@ nobody mistakes an open question for a settled one.
    first: it is the one step that does not depend on the answer. See
    `MAILCHIMP_CANCELLATION.md` §3.
 
-4. **How much Humanitix email has actually been sent.** The campaign list above
-   is **page 1 of more than one page**, so it is a floor and not a count. There
-   is no API, no export and no total in the UI, so the only way to a real figure
-   is somebody paging through the console and writing it down.
+4. ~~**How much Humanitix email has actually been sent.**~~ **Established
+   2026-08-30**: somebody paged through the console and wrote it down. **127
+   campaigns**, six full pages of 20 plus seven on page 7, page 8 empty,
+   spanning **2020-07-29 → 2026-08-06** with one September 2026 draft. Still no
+   API, no export and no total in the UI, so re-taking it means paging again.
+   The list is also the evidence that this mail is composed by hand: the
+   campaign names carry typos that propagate across years through the console's
+   Duplicate button, and two pairs were sent minutes apart.
 
 5. **How many of the 790 Mailchimp `transactional` contacts have a defensible
    consent story.** They are excluded from every send today, which is the safe

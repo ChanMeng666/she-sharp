@@ -30,6 +30,32 @@ permission, not of the person** — a Les Mills ticket buyer who is also a
 subscriber gets the joining instructions from Humanitix and the monthly
 newsletter from us, and neither send may borrow the other's list.
 
+### Who runs each of these
+
+Recorded because it is not derivable from the code, and because it decides
+whether a gap is worth building for.
+
+| Loop | Owned by | Tooling |
+|---|---|---|
+| The monthly newsletter | the **newsletter team** | `/monthly-newsletter`, in this repo |
+| Promoting an event to subscribers | the **marketing team** | `/promote-event` → `/email-the-community`, in this repo |
+| Fulfilment mail to one event's registrants | the **events team** | **the Humanitix console, by hand** |
+
+The developer's job is the skills, not the sending — every real send is run by
+the team that owns the loop, and **only the founder approves a broadcast**.
+
+**The events team's loop is hand-work, and that is a finished answer rather than
+a gap to close.** Verified 2026-08-30 by driving the signed-in console: the
+campaign editor is a form — campaign name, Reply-To `events@shesharp.org.nz`,
+an event picker, `Buyers only` / `All`, a recipient filter — over a
+what-you-see-is-what-you-get body with `@FirstName`-style merge codes. A sent
+campaign locks, and the console offers **Duplicate** instead. That is visible in
+the record: **127 campaigns** carry names like `Internatinoal womens day`,
+`eductaors`, `remider` and `intructions`, with the same misspellings reappearing
+a year apart because the duplicate carried them, and two pairs sent eleven
+minutes apart. No automation produces that. **This repository needs no change
+for it**, which is the same conclusion `/send-event-emails` was deleted on.
+
 ---
 
 ## What this repository sends
