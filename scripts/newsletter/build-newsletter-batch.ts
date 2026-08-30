@@ -86,7 +86,12 @@ import { idempotencyKey, collectRecipientHashes } from "../email/build-batch";
 /** Resend refuses more than 100 messages in one batch request. */
 const MAX_CHUNK = 100;
 
-/** Resend's free tier allows 2 requests/second; 600ms between chunks is safe. */
+/**
+ * 600ms between chunks — a deliberate margin, not the documented limit. Resend
+ * allows **10 requests/second per team** on every plan (raisable on request);
+ * the pacing stays because that limit is shared with the live site's
+ * transactional mail. See `scripts/email/build-batch.ts` for the full note.
+ */
 const CHUNK_DELAY_MS = 600;
 
 /** Where an unknown issue id has to be registered. */
@@ -669,8 +674,9 @@ async function main(): Promise<void> {
   });
   console.log("");
   console.log(
-    `Pace the chunks: Resend allows 2 requests/second, so leave at least\n` +
-      `${CHUNK_DELAY_MS}ms between commands rather than pasting them as one block.\n` +
+    `Pace the chunks: Resend allows 10 requests/second per team, shared with the\n` +
+      `live site's transactional mail, so leave at least ${CHUNK_DELAY_MS}ms between\n` +
+      `commands rather than pasting them as one block.\n` +
       `\`resend emails batch\` has no --dry-run (only \`resend emails send\` does).\n` +
       `The equivalent preflight is what just ran: the issue was rendered and put\n` +
       `through the strict broadcast gates. \`--batch-validation strict\` then makes\n` +

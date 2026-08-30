@@ -90,7 +90,13 @@ Facts that shape the skill's Step 8:
   no cancellation window on this path. It goes when you run it.
 - **`attachments` are unsupported too.** Link to a page instead.
 - Output is `[{"id":"…"},{"id":"…"}]`, one id per message, in order.
-- Keep ~600ms between chunks; Resend's free tier allows about 2 requests/second.
+- Keep ~600ms between chunks. **That is a margin, not the limit.** Resend allows
+  **10 requests/second per team**, raisable on request, and the figure is the
+  same on every plan — this line said "the free tier allows about 2/second"
+  until 2026-08-30, which was wrong twice over, because the account has been on
+  Transactional **Pro** since 2026-08-28. Keep the pacing anyway: the limit is
+  per *team*, so a full-list send shares it with the live site's transactional
+  mail, and 600ms costs about ten seconds across sixteen chunks.
 
 ## After the send — `resend logs`
 
@@ -114,7 +120,7 @@ halfway.
 | `invalid_json` / `invalid_format` | The chunk file was hand-edited | Rebuild it with `build-batch.ts`; do not repair it by hand |
 | `auth_error` | No or expired API key | `resend login`, or set `RESEND_API_KEY` |
 | `batch_error` | The API rejected the batch | Read the message; usually an unverified `from` domain or a message that failed strict validation |
-| `429` mid-loop | Faster than ~2 requests/second | Stop, wait ten seconds, re-run the failed chunk — never one that succeeded |
+| `429` mid-loop | The team's 10 requests/second was exceeded — at 600ms pacing that means something else was calling the API too | Stop, wait ten seconds, re-run the failed chunk — never one that succeeded |
 
 Global flags on every subcommand: `--api-key <key>`, `-p/--profile <name>`,
 `--json` (auto-enabled when stdout is piped), `-q/--quiet`.

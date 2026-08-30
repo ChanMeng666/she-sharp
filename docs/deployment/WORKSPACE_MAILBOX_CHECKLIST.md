@@ -108,8 +108,16 @@ never values. They are on this page because each one is a mailbox.
   票务账号密码 2026-08-17 由一位非委员会成员在私聊里明文发出。该账号是历年所有
   参会者信息的系统源头。
 - **`website@`** — the mailbox password is in plain text in a direct message,
-  and the same password reaches the mailbox, Webflow **and** Resend.
-  邮箱密码明文在私聊里，而同一个密码同时打通邮箱、Webflow 和 Resend。
+  and the same password reaches the mailbox, Webflow **and** Resend. Resend has
+  no password of its own: the team is entered with **Sign in with Google** as
+  `website@shesharp.org.nz` (established 2026-08-27, when the sign-in was first
+  attempted as a password login). So there is no separate Resend credential to
+  rotate — rotating the Google password is what closes this one, and it closes
+  the She Sharp–owned Resend account with it.
+  邮箱密码明文在私聊里，而同一个密码同时打通邮箱、Webflow 和 Resend。Resend 本身
+  没有独立密码：登录方式是用 `website@shesharp.org.nz` 走 **Sign in with
+  Google**（2026-08-27 确认）。所以没有单独的 Resend 凭据可换——换 Google 密码就
+  是换它，同时也就管住了 She Sharp 名下的 Resend 账号。
 - **`podcast@`** — the password was posted in a public channel in 2023.
   密码 2023 年发在公开频道里。
 

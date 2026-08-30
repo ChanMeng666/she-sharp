@@ -1203,9 +1203,11 @@ Rules for this step:
 
 - **A human runs these commands, not the assistant.** Paste them to the user,
   say how many there are, and let them run them.
-- **Keep the `Start-Sleep` lines.** Resend allows 2 requests a second; the
-  printed 600ms pause is what keeps the send inside that. Don't paste all the
-  commands as one block without them.
+- **Keep the `Start-Sleep` lines.** Resend allows **10 requests a second per
+  team** — the same on every plan, and this rule said 2 until 2026-08-30 — so
+  the printed 600ms pause is a margin rather than the limit. Keep it: the budget
+  is shared with the live site's transactional mail, and it costs ten seconds
+  across sixteen chunks. Don't paste all the commands as one block without them.
 - **There is no `--dry-run` for `resend emails batch`.** The only preflight that
   exists is the local build in 8d plus `--batch-validation strict`, which makes
   Resend reject the whole chunk if any message in it is malformed. Never drop

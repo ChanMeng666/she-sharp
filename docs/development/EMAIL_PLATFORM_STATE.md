@@ -70,6 +70,18 @@ team since 2026-08-28. Marketing stays on Free and is not used at all. Account
 ids, the webhook, and the domain-claim history are in
 [`EMAIL_OPERATIONS.md`](EMAIL_OPERATIONS.md) § "The Resend account".
 
+**The paid upgrade is done, and it was the organisation that did it.** Mahsa put
+the `shesharp` team on Pro; the maintainer confirmed on **2026-08-30** that the
+account is on the Pro plan. So "we are waiting on the upgrade" is no longer a
+true sentence anywhere, and neither is "Resend is on the free tier" — a claim
+that survived in four rate-limit comments until the same day, where it was wrong
+about the plan *and* about the number (Resend's documented limit is 10
+requests/second per team, on every plan). **What the upgrade removes is a quota
+blocker, and nothing else.** It does not make the cutover done: nothing has been
+sent from `newsletter_subscribers`, and the live newsletter still goes out from
+Mailchimp. Read any sentence that pairs "Pro" with "ready" as two separate
+facts.
+
 **The newsletter is now the entire case for Pro.** Until 2026-08-30 there was a
 second argument — event fulfilment mail, which could exceed Resend's Free
 100-per-day cap. That argument is gone: `/send-event-emails` was retired and that
