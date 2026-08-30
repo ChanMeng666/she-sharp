@@ -358,7 +358,49 @@ The verdict's own explanation still talks about drafts and `resend broadcasts
 delete`; the ledger predates the move. **Act on the table above, not on that
 prose.**
 
-**7.2 — build the recipient list, fresh.** Do this now rather than reusing Step
+**7.2 — the month's send count.** Ask how many marketing emails this list has
+already had this month, counted across **every** skill that mails it:
+
+```powershell
+npx tsx .claude/skills/email-the-community/scripts/marketing-frequency-check.ts `
+  check --key announce-mentoring-round-open
+```
+
+Unlike 7.1 this one **exits non-zero when it refuses**, so it can be written
+`check && build` and cannot be walked past. Three outcomes:
+
+| It prints | Meaning | Do |
+|---|---|---|
+| `within cap — this would be send N of 3` | Under the cap | Continue to 7.3 |
+| `REFUSED` (exit 2) | This would be the fourth marketing email to the same people this month | **Stop and take it to the user**, with the three options it prints |
+| `OVERRIDE ON RECORD` | Somebody already decided this one goes anyway | Continue, and read the recorded reason into the Step 6 plan block |
+
+**The cap is three marketing campaigns per NZ calendar month**, and it counts
+this skill's ledger and `/monthly-newsletter`'s together — an event promoted
+across three stages plus the monthly issue is four emails to the same ~1,549
+people. A ramped send counts once, not once per chunk.
+
+**Why it refuses rather than warns.** The Resend account complaint ceiling is
+**0.08%** — about 1.25 complaints on a full send — and the account is shared, so
+breaching it takes password resets and donation receipts down with the marketing
+mail (`docs/deployment/EMAIL_AUTHENTICATION.md`). Send frequency is the main
+driver of complaints. This is a deliverability control, not a style rule.
+
+If the user decides it genuinely cannot wait, the decision is recorded with its
+reason before anything is built:
+
+```powershell
+npx tsx .claude/skills/email-the-community/scripts/marketing-frequency-check.ts `
+  override --key announce-mentoring-round-open --by "<who decided>" `
+  --reason "<why this month's extra send is worth the complaint risk>"
+```
+
+It refuses a reason shorter than 20 characters — an override that records no
+reason is an off switch, not a control — and it covers **that key in that month
+only**. Next month, and the next campaign, are argued again. Say the sentence it
+prints in the Step 6 plan block before the user approves.
+
+**7.3 — build the recipient list, fresh.** Do this now rather than reusing Step
 1's file: someone may have unsubscribed in between, and this is the list that
 gets mailed.
 
@@ -375,7 +417,7 @@ confirmed subscriber, so it cannot smuggle anyone in. `--limit <n>` caps a first
 send the same way. Use a different `--key` for a rehearsal
 (`…-rehearsal`) so the real build is not overwritten.
 
-**7.3 — set the two variables and build.**
+**7.4 — set the two variables and build.**
 
 ```powershell
 $env:BASE_URL = "https://www.shesharp.org.nz"
@@ -410,13 +452,13 @@ Send (one command per chunk — check the first chunk's file before running):
 
 **Keep those commands.** Step 8 is running them, in order.
 
-**7.4 — read one message before you send it.** Open the first chunk file and
+**7.5 — read one message before you send it.** Open the first chunk file and
 read one entry's `"html"`. Check the footer's unsubscribe link is a real
 `https://www.shesharp.org.nz/api/email/unsubscribe?t=…` URL and not
 `%%SHESHARP_UNSUBSCRIBE_URL%%`, and that no `{{` braces survive anywhere. This
 is the last moment any of that is free.
 
-**7.5 — record the build:**
+**7.6 — record the build:**
 
 ```powershell
 npx tsx .claude/skills/email-the-community/scripts/broadcast-ledger.ts record `
@@ -537,6 +579,14 @@ the committed register.
 12. **No real addresses in chat, plan blocks or commits.** Counts, masked
     addresses and truncated hashes only. *Why:* the recipients file is personal
     data; it lives in `tmp/`, which is gitignored, and it stays there.
+13. **Three marketing sends per NZ calendar month, counted across every skill.**
+    Step 7.2 refuses the fourth and exits non-zero; going past it means recording
+    who decided and why, for that key and that month only. *Why:* the Resend
+    account complaint ceiling is 0.08% — about 1.25 complaints on a full send —
+    and the account is shared, so breaching it takes password resets and donation
+    receipts down with the marketing mail. Frequency is what drives complaints,
+    and a three-stage event promotion plus a monthly newsletter is four emails to
+    the same people. This is a deliverability control, not a style rule.
 
 ## Marketing vs transactional — decision table
 

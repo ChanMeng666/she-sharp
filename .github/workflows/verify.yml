@@ -131,6 +131,23 @@ jobs:
       - name: Verify the Mailchimp archive
         run: npx tsx lib/data/mailchimp.test.ts
 
+      # Also shares this checkout — pure functions over a stage table and a
+      # countdown, no database and no network. The two refusals it covers stand
+      # in front of a send that cannot be recalled: a campaign stage built at the
+      # wrong distance from the event date ("last call" three weeks out), and two
+      # stages colliding on one ledger key, which would make the ledger's
+      # duplicate check block the SECOND stage of a campaign as "already sent".
+      - name: Verify the event-announcement stages
+        run: npx tsx scripts/email/event-announcement-spec.test.ts
+
+      # Also shares this checkout — temp-file fixtures only, and it never reads
+      # the committed state files. It holds the cross-skill marketing frequency
+      # cap to its two load-bearing properties: it counts BOTH skills' ledgers
+      # (counting one is the one-directional hole this closes) and an override
+      # covers one key in one month, with a reason, or it is refused.
+      - name: Verify the marketing frequency cap
+        run: npx tsx .claude/skills/email-the-community/scripts/marketing-frequency-check.test.ts
+
   typecheck-scripts:
     # `scripts/` is excluded from the root tsconfig and `.claude/**` is missed by
     # its `**/*.ts` glob (dot-directories don't match), so neither tree was
