@@ -131,6 +131,19 @@ jobs:
       - name: Verify the Mailchimp archive
         run: npx tsx lib/data/mailchimp.test.ts
 
+      # Also shares this checkout, and it is the one Mailchimp check that has to
+      # work the other way round. `lib/data/newsletter-archive/` holds 179 sent
+      # emails, committed because the vault they came from is private and CI can
+      # never regenerate them — so the thing CI defends is the file, not the run
+      # that produced it. A sent email carries Mailchimp's unsubscribe footer,
+      # its referral badge, a per-recipient `e=` parameter and, in two
+      # campaigns, click tracking keyed to a real subscriber; none of that may
+      # be republished from shesharp.org.nz. It also holds the join every
+      # newsletter card on the site needs, which is what stops a card silently
+      # pointing at a Mailchimp page after the subscription is cancelled.
+      - name: Verify the on-site newsletter archive
+        run: npx tsx scripts/mailchimp/archive-guard.test.ts
+
   typecheck-scripts:
     # `scripts/` is excluded from the root tsconfig and `.claude/**` is missed by
     # its `**/*.ts` glob (dot-directories don't match), so neither tree was
