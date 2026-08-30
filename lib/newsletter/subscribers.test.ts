@@ -216,10 +216,10 @@ check("confirmExpiry does not mutate the date it is given", () => {
 // Enumeration order
 //
 // The file header says the rules worth testing are the decisions, not the SQL.
-// This is the one exception, and it earns it: on 2026-08-30 every one of the
-// 1,545 mailable rows was found to carry the SAME `created_at`, because they
-// all arrived in one import. `ORDER BY created_at` was therefore a single tie
-// group spanning the whole list, so `recipients-from-db.ts --limit 50` — the
+// This is the one exception, and it earns it: on 2026-08-30, 1,545 of the
+// mailable rows were found to carry the SAME `created_at`, because they all
+// arrived in one import. `ORDER BY created_at` was therefore one tie group
+// spanning almost the whole list, so `recipients-from-db.ts --limit 50` — the
 // documented way to ramp a first send — could name a different fifty people on
 // every run. The defect was invisible in every decision function above and
 // invisible in code review, because the ORDER BY was right there and looked

@@ -52,10 +52,14 @@ committed). Both are do-not-contact lists. Neither is a record of consent.
 Be precise about this whenever it comes up, because the table's existence
 invites the assumption that it is populated:
 
-- The subscriber table holds **1,545** rows, imported from the 2026-08-17
-  Mailchimp export on 2026-08-29 (1,560 read, 15 held back by the suppression
-  register). Every row carries the export's own `CONFIRM_TIME`, so each one
-  double-opted-in — in Mailchimp.
+- The subscriber table is populated — **1,549 mailable as at 2026-08-30**, and
+  it moves; `npx tsx scripts/email/suppression.ts reconcile` prints the live
+  figure. Most of it is the 2026-08-17 Mailchimp export, imported on 2026-08-29
+  (1,560 read, 15 held back by the suppression register, 1,545 written); every
+  one of those rows carries the export's own `CONFIRM_TIME`, so each one
+  double-opted-in — in Mailchimp. The four added from the Marketing API on
+  2026-08-30 carry a **null** `confirmedAt`, because the API exposes no
+  `CONFIRM_TIME` equivalent and writing one would fabricate a confirmation.
 - **Nothing has ever been sent** from it, and the live newsletter still goes out
   from Mailchimp. A populated list is not a cutover.
 - The Resend segment and topic were **deleted on 2026-08-29**, holding nobody at
