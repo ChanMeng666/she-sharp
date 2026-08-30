@@ -27,7 +27,7 @@ flowchart TD
   APPR -->|"yes"| TIX["Open the ticket page<br/><i>Events team</i>"]
   APPR -->|"yes"| CAMP["A graphic for each speaker,<br/>then post the campaign<br/><i>Marketing team</i>"]
 
-  TIX --> REG["Email the people<br/>who registered<br/><i>Events team</i>"]
+  TIX --> REG["Email the people who registered<br/><i>Events team · in Humanitix, not here</i>"]
   CAMP --> LIST["Tell the mailing list<br/><i>Marketing team · not possible yet</i>"]
   DECK --> TWEAK["Fix anything on the slides,<br/>right up to the doors opening<br/><i>anyone</i>"]
 
@@ -37,7 +37,7 @@ flowchart TD
 
   NIGHT --> QR["Put the feedback QR<br/>up on the screen<br/><i>whoever is hosting</i>"]
   NIGHT --> PHOTOS["Take the photographs,<br/>make the album<br/><i>Events team</i>"]
-  NIGHT --> THANKS["Send the thank-you, the album<br/>and the feedback form<br/><i>Events team</i>"]
+  NIGHT --> THANKS["Send the thank-you, the album<br/>and the feedback form<br/><i>Events team · in Humanitix, within 14 days</i>"]
 
   QR --> FEED["Answers arrive in Slack<br/>as people scan<br/><i>nobody does this</i>"]
   THANKS --> FEED
@@ -78,7 +78,7 @@ flowchart TD
 ## Events team
 
 Yours: the channel, the kickoff notes, chasing the details out of the partner,
-the ticket page, the room on the night, the photographs, and the two emails to
+the ticket page, the room on the night, the photographs, and the emails to
 the people who registered.
 
 ### Find out what is still outstanding
@@ -105,28 +105,27 @@ a DM is easily missed.
 
 ### Email the people who registered
 
-First export the attendee list from Humanitix and save the file into the
-project's `tmp` folder. Then:
+**This one is not here.** You do it in **Humanitix**: open the event, go to
+**Email campaigns**, and write it there. Humanitix already knows who bought a
+ticket, so there is nothing to export and nothing to save into the project.
+Nobody needs to type anything into a chat panel for this.
 
-```
-Send the WEEK-BEFORE email to everyone registered for the EVENT NAME event.
-The attendee list is in the tmp folder.
-The room is ROOM OR LEVEL, and the nearest parking is WHERE.
-Show me the email and how many people it is going to before you send anything,
-and send a test to MY EMAIL ADDRESS first.
-```
+**Two emails about a two-hour evening is usually plenty** — a welcome when they
+register, and one the day before with the room number.
 
-Swap `WEEK-BEFORE` for `WELCOME` or `DAY-BEFORE` as needed. **Two emails about a
-two-hour evening is usually plenty** — a welcome when they register, and one the
-day before.
+Two things about that tool nobody can change from this side:
+
+- **It comes from Humanitix's address, not `shesharp.org.nz`.** You can change
+  the *name* it appears to come from, not the address.
+- **After 14 days it stops.** Humanitix will not email an event that finished
+  more than two weeks ago. So send the thank-you **the day after**, not when the
+  photos are ready — a fortnight later there is no way to reach those people.
 
 ### The day after
 
-```
-The EVENT NAME event is finished. Send the thank-you email to everyone who
-registered. Include the photo album at ALBUM LINK and the feedback form.
-Show me the email first and send a test to MY EMAIL ADDRESS.
-```
+Send the thank-you from **Humanitix → Email campaigns**, the same way, with the
+album link and the feedback form in it. Do it the next day, because of the
+14-day limit above.
 
 Then post the album link in **#website-team** so it goes onto the event page:
 

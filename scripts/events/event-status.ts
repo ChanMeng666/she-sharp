@@ -1,13 +1,15 @@
 /**
  * Where every She Sharp event is in its lifecycle, as one offline report.
  *
- * Running an event touches seven separate systems — a Slack planning channel,
- * the event record, the artwork on disk, a slide deck, a feedback code, an
- * announcement broadcast and four stages of attendee email — and each of them
- * keeps its own state in its own place. Nothing has ever been able to answer
- * "what is left to do for Thursday?" in one place, so the answer has been
- * reconstructed by hand every time, from memory, and the thing that gets
- * forgotten is whichever system nobody thought to open.
+ * Running an event touches several separate systems — a Slack planning channel,
+ * the event record, the artwork on disk, a slide deck, a feedback code and an
+ * announcement broadcast — and each of them keeps its own state in its own
+ * place. Mail to the people who registered is the one step this report cannot
+ * see: it is sent from Humanitix's own Email campaigns tool, which keeps its
+ * history in Humanitix's console and writes nothing here. Nothing has ever been
+ * able to answer "what is left to do for Thursday?" in one place, so the answer
+ * has been reconstructed by hand every time, from memory, and the thing that
+ * gets forgotten is whichever system nobody thought to open.
  *
  * Three properties make this usable as the front door of an automated pipeline:
  *
@@ -64,9 +66,6 @@ const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(SCRIPT_DIR, "..", "..");
 const PUBLIC_ROOT = path.join(REPO_ROOT, "public");
 const EVENT_IMAGES_ROOT = path.join(PUBLIC_ROOT, "img", "events");
-const EMAIL_LEDGER_PATH = path.join(
-  REPO_ROOT, ".claude", "skills", "send-event-emails", "state", "event-emails.json",
-);
 const BROADCAST_LEDGER_PATH = path.join(
   REPO_ROOT, ".claude", "skills", "email-the-community", "state", "broadcasts.json",
 );
@@ -148,20 +147,6 @@ interface SyncManifest {
   channels: Record<string, ChannelState>;
 }
 
-interface EmailStage {
-  sentAt: string | null;
-  recipientCount: number;
-  recipientHashes: string[];
-  chunksSent: number;
-  chunksTotal: number;
-  status: "in-progress" | "complete";
-}
-
-interface EmailLedger {
-  version: number;
-  events: Record<string, { stages: Record<string, EmailStage>; digest: string }>;
-}
-
 interface BroadcastEntry {
   broadcastId: string;
   status: "draft" | "scheduled" | "sent";
@@ -176,19 +161,12 @@ interface BroadcastLedger {
 }
 
 let syncManifest: SyncManifest | null = null;
-let emailLedger: EmailLedger | null = null;
 let broadcastLedger: BroadcastLedger | null = null;
 
 function sync(): SyncManifest {
   syncManifest ??= readState<SyncManifest>(SYNC_STATE_PATH, { version: 1, channels: {} });
   if (!syncManifest.channels) syncManifest.channels = {};
   return syncManifest;
-}
-
-function emails(): EmailLedger {
-  emailLedger ??= readState<EmailLedger>(EMAIL_LEDGER_PATH, { version: 1, events: {} });
-  if (!emailLedger.events) emailLedger.events = {};
-  return emailLedger;
 }
 
 function broadcasts(): BroadcastLedger {
@@ -629,55 +607,29 @@ function announcementCheck(slug: string, upcoming: boolean): StatusCheck {
   );
 }
 
-const EMAIL_STAGES = ["welcome", "week-before", "day-before", "thank-you"] as const;
-
 /**
- * The four attendee-email stages.
+ * Mail to the people who registered — a step this report can only point at.
  *
- * A half-sent stage is reported ahead of an unsent one, because it is the only
- * state with a wrong way to recover: restarting a stage re-mails everyone who
- * already got it, and the ledger exists precisely so the run can resume instead.
+ * It is sent from Humanitix's own Email campaigns tool, against the ticket
+ * holders Humanitix already holds, and its history lives in that console. No
+ * file in this repository records it, so there is nothing here to read and
+ * `missing` would be a guess. Reporting `n/a` with the place to look is the
+ * honest answer, and it is deliberately still a row: the step did not stop
+ * happening when it stopped happening here, and a checklist that silently drops
+ * it is how the two emails before an event get forgotten.
+ *
+ * Two limits of that tool belong on the line, because both bite in this order:
+ * campaigns leave the Humanitix domain rather than `shesharp.org.nz`, and they
+ * can only be sent up to 14 days after an event ends — so a late thank-you or a
+ * gallery follow-up has no tool at all.
  */
-function emailCheck(slug: string, upcoming: boolean): StatusCheck {
-  const record = emails().events[slug];
-  const stages = record?.stages ?? {};
-  const complete: string[] = [];
-  const partial: string[] = [];
-  const unsent: string[] = [];
-
-  for (const stage of EMAIL_STAGES) {
-    const state = stages[stage];
-    if (!state) unsent.push(stage);
-    else if (state.status === "complete") complete.push(stage);
-    else partial.push(`${stage} (${state.chunksSent}/${state.chunksTotal} chunks)`);
-  }
-
-  if (partial.length > 0) {
-    return missing(
-      "emails",
-      "Emails",
-      `${partial.join(", ")} half-sent — resume, never restart`,
-      `/send-event-emails  (npx tsx .claude/skills/send-event-emails/scripts/event-ledger.ts show --slug ${slug})`,
-    );
-  }
-
-  if (unsent.length === 0) {
-    return done("emails", "Emails", `${complete.join(", ")} all sent`);
-  }
-
-  if (!upcoming && complete.length === 0) {
-    return notApplicable(
-      "emails",
-      "Emails",
-      "nothing recorded in the ledger, and the event has already run",
-    );
-  }
-
-  return missing(
+function emailCheck(upcoming: boolean): StatusCheck {
+  return notApplicable(
     "emails",
     "Emails",
-    `${unsent.join(", ")} unsent${complete.length > 0 ? ` (sent: ${complete.join(", ")})` : ""}`,
-    "/send-event-emails",
+    upcoming
+      ? "sent from Humanitix → Email campaigns; this repo keeps no record of it"
+      : "sent from Humanitix → Email campaigns, and only within 14 days of the event ending",
   );
 }
 
@@ -765,7 +717,7 @@ export function statusForEvent(event: EventV3, now: Date = new Date()): EventSta
     deckCheck(slug, upcoming),
     feedbackCheck(slug),
     announcementCheck(slug, upcoming),
-    emailCheck(slug, upcoming),
+    emailCheck(upcoming),
     photosCheck(event, upcoming),
   ];
 

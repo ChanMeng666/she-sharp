@@ -491,8 +491,8 @@ function isOptedIn(value: string): boolean {
  *
  * Refusing is not a breaking change: `--for-import` exists only for a route-2
  * mailing-list import, and a route-2 import with no opt-in column is precisely
- * what must not happen. Nothing in the repo passes the flag —
- * `send-event-emails` says never to, because its path is fulfilment mail.
+ * what must not happen. Nothing in the repo passes the flag, and nothing on a
+ * fulfilment path ever should: a ticket buyer's address is not a subscription.
  *
  * Returns lines rather than exiting so it can be asserted in `--self-test`;
  * a refusal that needs `process.exit` to observe is a refusal nobody checks.

@@ -286,4 +286,5 @@ reload the page, once.
   `docs/development/DECK_SYSTEM.md`.
 - **Put an event on the website** — `sync-event-from-slack`.
 - **Make artwork** — `make-event-poster`.
-- **Email anyone about the change** — `send-event-emails`.
+- **Email anyone about the change** — the people who registered are mailed from
+  Humanitix -> Email campaigns; the mailing list is `email-the-community`.

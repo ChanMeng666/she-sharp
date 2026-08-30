@@ -25,7 +25,7 @@ can say "stop" or "show me that again" at any point.
 
 ## 1. What you'll be able to do
 
-Eleven skills live inside this project. Each one is a written procedure the AI
+Ten skills live inside this project. Each one is a written procedure the AI
 follows, so it does the task the same careful way every time.
 
 **If you only remember one, remember `/run-event-playbook`.** It is the way in:
@@ -37,7 +37,6 @@ run next, so you never have to hold the order in your head.
 | `/run-event-playbook` | Works out where an event has got to and what comes next | *"what's left to do for Thursday's panel"* | anyone |
 | `/make-event-poster` | The artwork — ticketing banner, social posts, print poster, one graphic per speaker | *"make a poster for the AUT night"* | Marketing |
 | `/tweak-event-slides` | Changes one small thing on slides that already exist, and publishes it in about three minutes | *"fix the typo on the Les Mills deck"* | anyone |
-| `/send-event-emails` | Emails the people who registered — reminders, joining details, thank-yous | *"send the room number to everyone who registered"* | Events or Comms |
 | `/promote-event` | Tells the mailing list about an event that has not happened yet | *"tell the list about next month's event"* | Comms |
 | `/email-the-community` | Sends one announcement to the whole mailing list | *"email everyone about the new mentoring round"* | Comms |
 | `/update-mailing-list` | Shows who is on the mailing list, and adds people who agreed to join | *"who's on our email list?"* | Comms |
@@ -49,9 +48,13 @@ run next, so you never have to hold the order in your head.
 The table is ordered by who runs it: everything above `/build-event-slides` is
 yours once you have finished section 2.
 
+There is one job deliberately **not** in that table: emailing the people who
+registered for an event. That is done in Humanitix, not here — section 6.3
+explains why and how.
+
 The email skills are where most people start. The event skills are here too,
 because they are one toolkit and they depend on each other in a fixed order —
-`/send-event-emails`, `/make-event-poster` and `/build-event-slides` all read the
+`/promote-event`, `/make-event-poster` and `/build-event-slides` all read the
 date and venue from the website, so the event has to be on the website first.
 Putting it there is `/sync-event-from-slack`, and that one skill is the website
 team's job rather than yours — section 6.6 explains why, and what to do instead.
@@ -375,7 +378,7 @@ exception is on purpose and is named in the box at the end of this section.
 | `/make-event-poster` | **Yes** — the artwork files are new, and the website needs them |
 | `/build-event-slides` | **Yes**, but the developer working with you does it |
 | `/tweak-event-slides` | **No** — this one publishes itself, on purpose. See the box below |
-| `/send-event-emails`, `/promote-event`, `/email-the-community`, `/update-mailing-list` | **Yes, but only the record.** The email has already gone; the project keeps a small note of what was sent to whom, and that note is worth sharing so nobody sends it twice |
+| `/promote-event`, `/email-the-community`, `/update-mailing-list` | **Yes, but only the record.** The email has already gone; the project keeps a small note of what was sent to whom, and that note is worth sharing so nobody sends it twice |
 | `/reply-to-contact-messages` | **Yes** — same, just the record |
 | `/run-event-playbook` | **No** — it only reads |
 
@@ -650,62 +653,59 @@ the do-not-contact record can live safely in the project.
 
 ---
 
-### 6.3 `/send-event-emails` — email the people coming to an event
+### 6.3 Emailing the people coming to an event — **in Humanitix, not here**
 
-**What it does.** Sends one of four stage emails to everyone who registered for a
-specific event.
+**There is no skill for this, and that is deliberate.** Reminders, joining
+details and thank-yous for the people who registered are sent from **Humanitix**,
+in its own console, under **Email campaigns**. It is free on the charity rate the
+organisation is on, and it already knows who bought a ticket — so there is
+nothing to export, nothing to save into the project, and nothing to type here.
 
-| Stage | When | Typically contains |
-|---|---|---|
-| `welcome` | Right after they register | Confirmation, date, venue, add-to-calendar |
-| `week-before` | About a week out | Reminder, agenda, transport and parking |
-| `day-before` | The day before | Room number or joining link, who to contact |
-| `thank-you` | The day after | Thanks, feedback form, photos |
+There used to be a `/send-event-emails` skill. It was removed on 2026-08-30
+because it had never once been used to send anything, the team had been doing
+this in Humanitix for a year, and the only list it could ever read was an export
+from Humanitix — so it could not reach a single person Humanitix could not.
 
-**Before you start, two things:**
+**How to do it.** In Humanitix, open the event → **Email campaigns** → write and
+send. The audience is the ticket holders for that event; you choose nothing about
+who is on it, which is the point.
 
-1. **The event must already be on the website.** If it isn't, run
-   `/sync-event-from-slack` first (section 6.6). The skill takes the date, venue
-   and times from the website so the email cannot contradict it.
-2. **A registrant list exported from Humanitix.** In Humanitix, export the
-   attendees for that event and **make sure the export includes the attendee
-   email column** — without it there is nobody to send to. Save the file into the
-   `tmp` folder inside the project.
+| When | Typically contains |
+|---|---|
+| Right after they register | Confirmation, date, venue, add-to-calendar |
+| About a week out | Reminder, agenda, transport and parking |
+| The day before | Room number or joining link, who to contact |
+| The day after | Thanks, feedback form, photos |
 
-**Say this:**
+**Two emails about a two-hour evening is usually plenty** — one when they
+register, one the day before. An email nobody asked for is not sent.
 
-```
-/send-event-emails
-```
+**Three things to know before you write one:**
 
-or:
+1. **It will not come from `shesharp.org.nz`.** Humanitix always sends campaigns
+   from its own email domain. You can change the *name* the email appears to come
+   from, by applying a host profile to the event, but not the address. This is
+   not something anyone here can configure; it is how the tool works, and the
+   team has accepted it for a year.
+2. **You have 14 days after the event, and then the tool stops.** Humanitix will
+   only email an event that ended within the last two weeks. So send the
+   thank-you **the day after**, not when the photos are finally ready — a
+   fortnight later there is no way to reach those people at all.
+3. **Nothing promotional.** Telling registrants about the *next* event is
+   marketing, not event logistics, and needs their separate consent. Humanitix
+   says the same from its side: campaigns are for service information about the
+   ticket they bought, not for promotion. If you want to tell people about
+   something new, that is `/update-mailing-list` and `/email-the-community`, and
+   the list is only people who asked to be on it.
 
-- "Remind everyone coming to the workshop tomorrow."
-- "Send the room number to the people who registered for the AUT hackathon."
-- "The event's finished — send a thank-you and ask for feedback."
-- "给报名的人发个提醒"
+**The event still has to be right on the website first**, because the poster, the
+slides and the announcement all read the date and venue from there — and because
+you will be copying those details into Humanitix by hand. If it is wrong, fix it
+through `#website-team` (section 6.6) before you write the email.
 
-**What it will ask you:** which event (it reads the name back with the date and
-venue — **check that**), which stage, the practical detail only you know (the
-room number, the joining link, the feedback form address), and a test mailbox.
-
-**Why the sending is chunked.** Email services limit how fast you can send, so it
-goes out in batches of up to 100 with a pause between them. It records each batch
-as it completes. **If something fails halfway, run it again** — it picks up from
-where it stopped and will not email anyone twice. It will tell you it's resuming:
-
-```
-RESUMING — chunks 2..3 of 3, 81 recipients already emailed will be skipped
-```
-
-**It will automatically leave out:** refunded and cancelled orders, duplicate
-email addresses, anyone on the do-not-contact list, and anyone who already got
-this stage. It reports each exclusion with its reason.
-
-**What it will not do.** Anything promotional. Telling registrants about the
-*next* event is marketing, not event logistics, and needs their separate consent
-— so it will hand you over to `/update-mailing-list` and `/email-the-community`
-instead. Again: the refusal is the tool working.
+**None of this leaves a record in the project.** If someone asks whether the
+reminder went out, the answer is in Humanitix's console, not in the repository —
+`npx tsx scripts/events/event-status.ts` will say exactly that rather than guess.
 
 ---
 
@@ -837,7 +837,7 @@ the website” has none of those, so it scores zero and is invisible. It is not 
 a DM is rude; it is that a DM gets lost. `#website-team` is where it will not.
 
 **When it matters most.** Whenever event details change, and always before anyone
-runs `/send-event-emails`, `/make-event-poster` or `/build-event-slides` for that
+runs `/promote-event`, `/make-event-poster` or `/build-event-slides` for that
 event. All three read the date and venue from the website, so the website has to
 be right first.
 

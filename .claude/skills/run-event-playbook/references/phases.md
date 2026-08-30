@@ -184,27 +184,37 @@ Sharp again.
 
 ## T-2w — The registrants
 
-**Gate.** A Humanitix export with an **attendee email** column, saved in `tmp/`
-or named `*.local.csv` (both gitignored). No column, no send, and nothing in this
-repo can recover it — the export was made without "Include attendee email" and
-the only fix is a re-export.
+**Gate.** The event is ticketed on Humanitix, and whoever is sending has access
+to that account.
 
-**Hand to.** `/send-event-emails`, stage `welcome`.
+**Hand to.** **Nobody here.** This step leaves the repo entirely: it is done in
+Humanitix's console, under **Email campaigns**, against the ticket holders
+Humanitix already has. There is no export, no `tmp/` file and no skill — the
+skill that used to do it was retired on 2026-08-30 because its only input was a
+Humanitix export, so it could never reach anyone Humanitix's own tool could not.
 
-**Leaves behind.** Real email in real inboxes, and a ledger of sha256 hashes at
-`.claude/skills/send-event-emails/state/event-emails.json`. That ledger is the
-only thing committed. No database row, no Resend contact, no list import.
+**Leaves behind.** Real email in real inboxes, and a record in Humanitix's
+console. **Nothing in this repository**, which is the one thing to remember: the
+report below cannot see this step, and neither can anyone reading git.
 
-**Then check.** `Emails` names the stages sent and the stages outstanding.
+**Then check.** `Emails` reads `n/a` and names Humanitix. That is the correct
+answer, not a gap — ask the sender, or open the console.
 
-**What goes wrong.** **A half-sent stage is the one state with a wrong way to
-recover.** Restarting re-mails everyone who already got it; the ledger exists so
-the run resumes from the next unrecorded chunk instead. `event-status.ts` reports
-a partial stage ahead of an unsent one for exactly this reason.
+**What goes wrong.** **The mail does not come from `shesharp.org.nz`.**
+Humanitix campaigns "are always sent from the Humanitix email domain"; a host
+profile changes the sender *name* only, and none of She Sharp's SPF, DKIM or
+DMARC applies. Say so if someone expects otherwise.
 
 **The judgement call this phase needs.** Four emails about a two-hour evening is
-too many. For a single-session event, `welcome` + `day-before` is usually the
-whole programme. A stage nobody asked for is not sent.
+too many. For a single-session event, a welcome and a day-before note is usually
+the whole programme. An email nobody asked for is not sent.
+
+**The line that must not be crossed.** Humanitix draws it from its own side:
+campaigns "cannot be sent to external databases of email addresses, such as for
+event invitations, and should not be used for promotional or marketing
+material". That is the same line `lib/email/audience.ts` draws — registrants are
+fulfilment-only. Buying a ticket is not subscribing, wherever the mail is sent
+from.
 
 ---
 
@@ -241,11 +251,11 @@ never a warning.
 `day-before`: the room, the level or the join link, **and an on-the-day contact**.
 Ask for them. Never invent a room number.
 
-**Hand to.** `/send-event-emails`, stages `week-before` then `day-before`.
+**Hand to.** Humanitix -> Email campaigns again. Same account, same audience.
 
-**Leaves behind.** Two more ledger entries.
+**Leaves behind.** Two more sends in Humanitix's own history, and nothing here.
 
-**Then check.** `Emails` lists them as sent.
+**Then check.** Nothing in this repo changes. Confirm in the console.
 
 **What goes wrong.** A passcode-bearing meeting link is a code, and codes do not
 go in email — link the public page instead. And every stage email carries one
@@ -302,12 +312,17 @@ proxy's matcher covers `/f/*` and `/events/*/feedback`.
 `shesharp.org.nz/f/<code>` from the report's `Feedback` line — no form, no
 button.
 
-**Hand to.** `/send-event-emails`, stage `thank-you`. It also wants the album URL
-if there is one (`galleryUrl` from the event record) and carries one **link** to
-subscribe — a link, never a subscription.
+**Hand to.** Humanitix -> Email campaigns. Include the album URL if there is one
+(`galleryUrl` from the event record) and one **link** to subscribe — a link,
+never a subscription.
 
-**Then check.** `Emails` shows all four stages, or the ones that were actually
-wanted.
+**Do this within 14 days.** Humanitix will "send an email campaign to any event
+that has ended within the last 14 days" and no longer. After that there is no
+tool at all for reaching the people who came, so a late gallery or write-up
+follow-up simply does not go out. Send the thank-you the day after, not "when
+the photos are ready".
+
+**Then check.** Nothing in this repo changes; `Emails` stays `n/a`.
 
 **What goes wrong.** A ticked "interested in the newsletter" box on the feedback
 form **is not consent** and subscribes nobody. `npx tsx

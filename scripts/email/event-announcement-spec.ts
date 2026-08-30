@@ -1,16 +1,16 @@
 /**
  * Turns one event record into a ready-to-render marketing `MessageSpec`.
  *
- * She Sharp had no way to tell its mailing list about an upcoming event.
- * `send-event-emails` refuses on purpose — its audience is registrants, who are
- * fulfilment-only and were never asked to receive promotion — and
+ * She Sharp had no way to tell its mailing list about an upcoming event. Mail
+ * to registrants is a different thing and is sent from Humanitix — its audience
+ * is fulfilment-only and was never asked to receive promotion — and
  * `email-the-community` can send it, but knows nothing about events, so every
  * date, time, venue and link would be retyped by hand into a broadcast. Retyped
  * facts are exactly how an email comes to contradict the website.
  *
  * This script is the missing bridge and nothing more. It reads the repo's own
  * event record through `scripts/events/resolve-event.ts` — the same resolver the
- * stage emails and the posters use, so a date cannot drift between them — and
+ * posters use, so a date cannot drift between them — and
  * writes the JSON that `scripts/email/render-message.ts` renders and gates. It
  * sends nothing, talks to no network, and writes nothing outside `--out`.
  *
@@ -702,7 +702,8 @@ async function main(): Promise<void> {
     console.error("An announcement promotes an event people can still come to. Its button");
     console.error("points at a registration page that has closed, and a broadcast cannot be");
     console.error("recalled. For a past event you almost certainly want one of:");
-    console.error("  · /send-event-emails   — thank-you + feedback to the people who came");
+    console.error("  · Humanitix -> Email campaigns — thank-you + feedback to the people who");
+    console.error("    came. Not from this repo, and only within 14 days of the event ending");
     console.error("  · /email-the-community — a free-form announcement, written by hand");
     console.error("");
     console.error("Genuinely meant it (a recap, a re-run)? Re-run with --allow-past.");

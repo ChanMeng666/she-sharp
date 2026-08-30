@@ -71,13 +71,23 @@ Free's 3,000/month is roughly sixty times more headroom than needed.
 1. **The newsletter.** 1,563 recipients in one send is impossible under
    100/day, and spreading a monthly newsletter across sixteen days is not a
    newsletter.
-2. **Event fulfilment mail.** `/send-event-emails` mails a Humanitix
-   registrant list. The ticketing archive holds 5,156 tickets across 62 ticketed
-   instances — an **average of ~83 per event**. A typical event squeezes under
-   100; a large one (the hackathons) does not.
+2. **Event fulfilment mail.** ~~`/send-event-emails` mails a Humanitix
+   registrant list.~~ **No longer true since 2026-08-30.** That skill was
+   retired; mail to an event's registrants is now sent from Humanitix's own
+   Email campaigns tool, which is free on the NZ charity rate and does not touch
+   the Resend quota at all. The volume argument is recorded for the shape of it:
+   the ticketing archive holds 5,156 tickets across 62 ticketed instances — an
+   **average of ~83 per event**, so a typical event squeezed under 100 and a
+   hackathon did not.
 
-Point 2 matters even in a world with no newsletter, and it is the reason Pro is
-not obviously droppable today.
+**This changes the conclusion, so read it rather than the sentence it replaces.**
+Point 2 used to be the reason Pro was not obviously droppable, because it bit
+even in a world with no newsletter. It no longer bites: nothing outside the
+newsletter now needs more than 100 Resend emails in a day. **The newsletter is
+the whole case for Pro today** — and it has not been sent from Resend yet, so the
+plan is currently paying for a capability nothing is using. That is a decision to
+take deliberately, not a gap to fix; the switch-over is what makes it earn its
+keep.
 
 ---
 

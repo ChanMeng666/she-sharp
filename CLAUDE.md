@@ -424,11 +424,13 @@ history, do not hand-edit) and `events-custom.json` (the edit target); which
 file owns what is in `lib/data/json/README.md`.
 → `docs/development/ADD_EVENTS.md`
 
-**The event lifecycle.** One regular evening event is eleven skills in a fixed
+**The event lifecycle.** One regular evening event is ten steps in a fixed
 order — Slack channel → event record → poster → speaker campaign → announcement
-→ registrant email → deck → the night → feedback → gallery → newsletter. Each
-skill knows only its own job; the order, the gate in front of each step and the
-state file each one writes live in one place, and
+→ deck → the night → feedback → gallery → newsletter — plus one that is **not**
+a step in this repo at all: the mail to the people who registered, sent from
+Humanitix's own Email campaigns tool. Each skill knows only its own job; the
+order, the gate in front of each step and the state file each one writes live in
+one place, and
 `npx tsx scripts/events/event-status.ts --slug <slug>` answers "where has this
 event got to?" offline. `/run-event-playbook` is the same thing as a skill.
 → `docs/development/EVENT_LIFECYCLE_SOP.md`
@@ -525,10 +527,21 @@ it; a human runs the printed batch commands. **The live newsletter still goes
 out from Mailchimp** — this is the replacement, piloted but not switched over.
 → `docs/development/EMAIL_OPERATIONS.md`
 
-**Outbound email skills.** Four guided skills let teammates send mail without
+**Outbound email skills.** Three guided skills let teammates send mail without
 writing code: `/reply-to-contact-messages`, `/update-mailing-list`,
-`/send-event-emails`, `/email-the-community`. Repo scripts render, the Resend CLI
-sends. → `docs/development/AI_SKILLS_GUIDE.md`, `docs/development/EMAIL_OPERATIONS.md`
+`/email-the-community`. Repo scripts render, the Resend CLI sends.
+**Mail to one event's registrants is not among them** — it is sent from
+Humanitix's own Email campaigns tool, against the ticket holders Humanitix
+already has. `/send-event-emails` did it here until 2026-08-30 and was retired
+because its only input was a Humanitix export, so it could never reach anyone
+Humanitix could not. Two consequences to state rather than discover: that mail
+leaves the **Humanitix** domain, not `shesharp.org.nz`, so none of the SPF/DKIM/
+DMARC work applies to it; and Humanitix will not send to an event that ended
+more than **14 days** ago, so a late follow-up has no tool at all. The tier
+boundary is unchanged — registrants are Tier 2 fulfilment
+(`lib/email/audience.ts`), subscribers are Tier 0, and Humanitix draws the same
+line from its side.
+→ `docs/development/AI_SKILLS_GUIDE.md`, `docs/development/EMAIL_OPERATIONS.md`
 
 **Visitor chatbot.** AI SDK 6 `ToolLoopAgent` on OpenAI `gpt-4o-mini` (direct,
 not the AI Gateway), grounded in live data via tools over `lib/data/*`, with

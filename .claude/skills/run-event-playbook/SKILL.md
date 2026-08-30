@@ -52,7 +52,7 @@ Unsure? Run Step 0. It reads the repo and writes nothing.
 
 | The ask is | Use instead |
 |---|---|
-| One artefact, and they know which — a poster, a deck, an email | That skill directly: `/make-event-poster`, `/build-event-slides`, `/send-event-emails` |
+| One artefact, and they know which — a poster, a deck, a broadcast | That skill directly: `/make-event-poster`, `/build-event-slides`, `/promote-event` |
 | A word changed on a deck an hour before the doors open | `/tweak-event-slides` |
 | A **flagship or multi-day** event — a hackathon, a festival, a conference | The individual skills, in whatever order that event needs. See *When the shape does not fit* |
 | Something that is not an event at all — a mentoring round, a policy change, a call for volunteers | `/email-the-community` |
@@ -96,11 +96,10 @@ event-lesmills-03-september-2026 — No Pain, All Gain – Getting Fit for AI
   Feedback     done     www.shesharp.org.nz/f/l03s26
   Announcement missing  no announcement broadcast has ever been recorded
                         → /email-the-community  (needs a consented Resend segment first)
-  Emails       missing  welcome, week-before, day-before, thank-you unsent
-                        → /send-event-emails
+  Emails       n/a      sent from Humanitix -> Email campaigns; this repo keeps no record of it
   Photos       n/a      the event has not happened yet
 
-1 event · 2 checks missing
+1 event · 1 check missing
 ```
 
 Read that shape before you read the words. **Three states, and `n/a` is not a
@@ -173,12 +172,12 @@ this one is stuck.
 | **T-5w Artwork** | date, venue and title confirmed **in the event record** | `/make-event-poster`, steps 1–6 |
 | **T-4w Campaign** | every speaker has a headshot **in the event record** | `/make-event-poster` step 7 — `--speaker all --lineup` |
 | **T-3w Promotion** | the newsletter subscriber table has real people in it — **it does not today** | `/promote-event` → `/email-the-community` from its Step 3 |
-| **T-2w Registrants** | a Humanitix export with an attendee email column, in `tmp/` | `/send-event-emails`, stage `welcome` |
+| **T-2w Registrants** | the event is ticketed on Humanitix, and the sender has access | Humanitix -> Email campaigns — **not this repo** |
 | **T-1w Slides** | a run sheet in the event data | `/build-event-slides` |
-| **T-7d / T-1d Reminders** | the room, level or join link is known — never invented | `/send-event-emails`, `week-before` then `day-before` |
+| **T-7d / T-1d Reminders** | the room, level or join link is known — never invented | Humanitix -> Email campaigns |
 | **T-1h Late change** | the deck already exists at `/present/<slug>` | `/tweak-event-slides` |
 | **T+0 The night** | — | project the deck; the `/f/<code>` QR is already live |
-| **T+1d Thanks** | a feedback form URL | `/send-event-emails`, stage `thank-you` |
+| **T+1d Thanks** | a feedback form URL, and the event ended **under 14 days ago** | Humanitix -> Email campaigns |
 | **T+3d Digest** | — | **nothing to do** — the cron posts to Slack by itself |
 | **T+1w Close-out** | the album URL is known | flip `status`, set `galleryUrl`, `build-event-archive.mts`, then the attendance figures |
 | **T+2w Newsletter** | the month's issue is being written | `/monthly-newsletter` picks the event up |

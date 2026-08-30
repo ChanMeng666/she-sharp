@@ -22,19 +22,17 @@
  * This module is shared. It began life inside the send-event-emails skill, and
  * moved here when the event-announcement spec generator needed exactly the same
  * resolution: two resolvers is how a date drifts by a day between an email and
- * a poster. `.claude/skills/send-event-emails/scripts/resolve-event.ts` is now a
- * shim over this file, so the command organisers have in muscle memory — and
- * that SKILL.md quotes verbatim — keeps working unchanged. That is also why the
- * hints printed below still name the skill path: it is the documented entry
- * point, whichever file the code lives in.
+ * a poster. That skill was retired on 2026-08-30 — its job is now done in
+ * Humanitix — and its shim over this file went with it, so this path is the
+ * only entry point and the hints printed below name it directly.
  *
  * Importers get `resolveEventByQuery()`, which returns the same
  * `ResolveOutcome` the CLI serialises under `--json`. The CLI prints that value
  * rather than rebuilding it, so the two contracts cannot drift apart.
  *
  * Usage:
- *   npx tsx .claude/skills/send-event-emails/scripts/resolve-event.ts <slug-or-fuzzy-name> [--json]
- *   npx tsx .claude/skills/send-event-emails/scripts/resolve-event.ts --list [--limit 12] [--json]
+ *   npx tsx scripts/events/resolve-event.ts <slug-or-fuzzy-name> [--json]
+ *   npx tsx scripts/events/resolve-event.ts --list [--limit 12] [--json]
  *
  * Flags:
  *   <slug-or-fuzzy-name>  Exact slug, or any words from the title/venue/city.
@@ -591,7 +589,7 @@ function printCandidates(query: string, candidates: ResolveCandidate[]): void {
   });
   console.error("Re-run with the exact slug:");
   console.error(
-    `  npx tsx .claude/skills/send-event-emails/scripts/resolve-event.ts ${candidates[0].event.slug}`
+    `  npx tsx scripts/events/resolve-event.ts ${candidates[0].event.slug}`
   );
 }
 
@@ -605,7 +603,7 @@ function printNoMatch(query: string): void {
   console.error("     the venue, or the city.");
   console.error("");
   console.error("To browse instead:");
-  console.error("  npx tsx .claude/skills/send-event-emails/scripts/resolve-event.ts --list");
+  console.error("  npx tsx scripts/events/resolve-event.ts --list");
 }
 
 /**
@@ -747,8 +745,9 @@ export async function main(): Promise<void> {
 /**
  * Runs the CLI with the top-level error handler, and exits 1 on a throw.
  *
- * Exported because the send-event-emails shim is a second entry point to this
- * same command and must reproduce the exit codes exactly.
+ * Exported rather than inlined because it was a second entry point's contract:
+ * the retired send-event-emails shim called it to reproduce these exit codes
+ * exactly. It stays exported so any future wrapper has the same guarantee.
  */
 export function runCli(): void {
   void main().catch((error: unknown) => {

@@ -87,8 +87,8 @@ Two obligations that follow:
 1. **Read the `Redactions:` line into the plan block**, verbatim, including when
    it says `none`. It makes the omission visible and lets the user overrule it.
 2. **Do not put a stripped code back.** If some people genuinely need a code,
-   they need an individual email — that is fulfilment, and it is
-   `/send-event-emails`.
+   they need an individual email — that is fulfilment, and it is sent from
+   Humanitix -> Email campaigns, not from this repo.
 
 The same applies to anything else that is not public: a Slack archive link, an
 editable Google Doc, a preview deployment URL, a Zoom link carrying a passcode.

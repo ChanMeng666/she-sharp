@@ -20,8 +20,8 @@ If the user wants those people reached, there are exactly two legitimate paths:
    `https://www.shesharp.org.nz/newsletter/subscribe` inside mail they *did* ask
    for), and the campaign later goes to Tier 0. This is `update-mailing-list`.
 2. The mail is re-scoped as fulfilment of the thing they actually signed up for
-   — joining instructions for the event they registered for. This is
-   `send-event-emails`.
+   — joining instructions for the event they registered for. That is sent from
+   Humanitix -> Email campaigns, not from this repo.
 
 There is no third path, and "just this once" is not one.
 

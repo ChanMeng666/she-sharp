@@ -32,7 +32,9 @@ list as current. And the Resend segment and topic still exist in the account
 holding nobody; they are not the list and never will be.
 
 **This skill sends no email.** It reads and edits a list. Sending belongs to
-`email-the-community`, `send-event-emails` and `reply-to-contact-messages`.
+`email-the-community` and `reply-to-contact-messages` — and, for the people who
+registered for one event, to Humanitix -> Email campaigns rather than to this
+repo at all.
 Commands are PowerShell-first.
 
 ## When to apply
