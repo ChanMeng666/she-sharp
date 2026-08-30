@@ -9,6 +9,10 @@
  *  - "broadcast": `UNSUBSCRIBE_URL_PLACEHOLDER`, which the send path swaps for
  *    a signed per-recipient URL.
  *  - "preview": an inert "#" for local review.
+ *
+ * The re-permission ask (`editorial.askToReconfirm`) follows the same split, but
+ * is omitted outright in preview rather than made inert — see
+ * `./components/ReconfirmAsk`.
  */
 
 import * as React from "react";
@@ -26,6 +30,7 @@ import {
 } from "@react-email/components";
 import type { IssueAuto, NewsletterIssueData } from "@/lib/newsletter/schema";
 import { UNSUBSCRIBE_URL_PLACEHOLDER } from "@/lib/email/unsubscribe-headers";
+import { RECONFIRM_URL_PLACEHOLDER } from "@/lib/newsletter/reconfirm-link";
 import { SITE_URL } from "@/lib/seo/site";
 import { COLORS, styles, SPACE, RADIUS, FONT_STACK, CONTAINER_WIDTH } from "./brand";
 import { Header } from "./components/Header";
@@ -37,6 +42,7 @@ import { RecapEventCard, UpcomingEventCard } from "./components/EventCard";
 import { Pulse } from "./components/Pulse";
 import { StatStrip } from "./components/StatStrip";
 import { Opportunities } from "./components/Opportunities";
+import { ReconfirmAsk } from "./components/ReconfirmAsk";
 import { SponsorThanks } from "./components/SponsorThanks";
 import { Footer } from "./components/Footer";
 
@@ -112,6 +118,11 @@ export function NewsletterEmail({
     mode === "broadcast" ? UNSUBSCRIBE_URL_PLACEHOLDER : "#";
   const unsubscribeTitle =
     mode === "broadcast" ? undefined : "Unsubscribe (preview)";
+
+  // Only in a real send: the block carries a per-recipient placeholder that
+  // nothing substitutes in preview, and the preview render is what the public
+  // on-site archive serves.
+  const showReconfirmAsk = editorial.askToReconfirm && mode === "broadcast";
 
   const browserUrl = `${SITE_URL}/resources/newsletters/${issue.id}`;
 
@@ -260,6 +271,10 @@ export function NewsletterEmail({
 
           {editorial.sponsorThanks ? (
             <SponsorThanks text={editorial.sponsorThanks} />
+          ) : null}
+
+          {showReconfirmAsk ? (
+            <ReconfirmAsk href={RECONFIRM_URL_PLACEHOLDER} />
           ) : null}
 
           <Footer
