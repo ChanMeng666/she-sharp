@@ -206,13 +206,30 @@ Company/Organisation question.
 
 ### marketingOptIn
 
-224 orders / 187 unique addresses, **all between July 2020 and May 2022**. The
-checkout field stopped being used after that.
+224 orders / 187 unique addresses, **all between 14 July 2020 and 30 May 2022**
+— in *this export*. That last clause is load-bearing and used to be missing:
+this section previously said "the checkout field stopped being used after that",
+which the export cannot show.
 
-**This is a historical record, not a sending list.** Whether a four-to-six-year-
-old checkout tick is still a permission is decided by
+**What the archive shows is that the column stopped being populated. Whether
+the field stopped being used is a different claim, and it is now doubtful.** A
+2026-08-30 pass over the live Mailchimp audience found 903 arrivals after
+2022-05 whose `source` is `Mahsa McCauley NZD` — Humanitix's documented
+`Store = User account name + Currency` — 663 of them `subscribed`, in monthly
+spikes that land on event months, continuous through 2026-08. Humanitix says
+only opted-in buyers sync as `subscribed`. Either the opt-in has been collecting
+all along and only the export column lapsed, or some of those writes are not the
+integration. The Humanitix console's **reports → orders → Export CSV** carries a
+per-order `marketing opt-in` column and would settle it; nothing in this
+repository can. Full working: `docs/development/EVENT_LIFECYCLE_SOP.md`.
+
+**Either way this is a historical record, not a sending list.** Whether a
+four-to-six-year-old checkout tick is still a permission is decided by
 `.claude/skills/update-mailing-list/references/consent-rules.md`, not by this
-archive. Registering for an event is not subscribing.
+archive. Registering for an event is not subscribing. The route from a genuine
+opt-in to the subscriber table is
+`scripts/email/import-optin-subscribers.ts`, which reads that orders export —
+never this file.
 
 ---
 

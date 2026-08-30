@@ -21,9 +21,17 @@
  *      `<out-dir>/recipients-<key>.json`.
  *
  * `--for-import` is the stricter mode used when the addresses are destined for
- * the mailing list rather than a one-off fulfilment send: it refuses to run
- * without a recorded consent source and date, and drops every row that did not
- * tick the marketing opt-in.
+ * the mailing list rather than a one-off fulfilment send. It refuses to run
+ * without a recorded consent source and date, **refuses to run at all when the
+ * file has no marketing opt-in column**, and drops every row that did not tick
+ * that column.
+ *
+ * That middle refusal was added on 2026-08-30 and is the one worth knowing
+ * about. Until then the row filter was the only gate, and it reads
+ * `optInIndex !== -1 && !isOptedIn(...)` — so with no opt-in column it never
+ * fired, and a file that had never asked the question passed `--for-import`
+ * whole and reported `Excluded 0`. Clean-looking output for the single case
+ * `consent-rules.md` is most emphatic about. See `forImportOptInRefusal()`.
  *
  * `--restrict-to-hashes` is the opposite kind of flag, and the distinction
  * matters more than it looks. It is a SEND-ORDER FILTER, not a consent source.
@@ -61,7 +69,9 @@
  *                      Comma-separated `field=Column Name` pairs; may be
  *                      repeated. Column names containing commas are fine — the
  *                      split only happens before a known field name.
- *   --for-import       Mailing-list import mode (see above).
+ *   --for-import       Mailing-list import mode (see above). Requires an opt-in
+ *                      column; map it with --map optIn=<column> if the
+ *                      detector misses it.
  *   --consent-source   Where the opt-in came from, e.g. "Humanitix checkout
  *                      question, AUT July 2026". Required by --for-import.
  *   --consent-date     ISO date the opt-in was collected. Required by --for-import.
@@ -319,6 +329,23 @@ function selfTest(): void {
     got: restrictNarrowsOnly(),
     want: [3, 1, 1],
   });
+  checks.push({
+    name: "--for-import refuses a file with no opt-in column",
+    got: forImportOptInRefusal(["Email", "Name", "Ticket Type", "Order date"], null) !== null,
+    want: true,
+  });
+  checks.push({
+    name: "--for-import proceeds once the opt-in column is mapped",
+    got: forImportOptInRefusal(["Email", "Marketing opt-in"], "Marketing opt-in"),
+    want: null,
+  });
+  checks.push({
+    name: "the refusal names an opt-in column that was present but unmapped",
+    got: (forImportOptInRefusal(["Email", "Can we email you about future events?"], null) ?? []).some(
+      (line) => line.includes("Can we email you about future events?")
+    ),
+    want: true,
+  });
 
   let failed = 0;
   for (const check of checks) {
@@ -449,6 +476,62 @@ function isCancelledStatus(value: string): boolean {
 
 function isOptedIn(value: string): boolean {
   return OPT_IN_VALUES.has(normalizeValue(value));
+}
+
+/**
+ * The refusal `--for-import` owes a file that records no opt-in column.
+ *
+ * **This closes a hole the repo documented away.** The row filter below reads
+ * `optInIndex !== -1 && !isOptedIn(...)`, so with no opt-in column it never
+ * fires: the file passed `--for-import` whole and reported `Excluded 0` —
+ * clean-looking output for the one case `consent-rules.md` singles out as the
+ * one that must fail. Both `consent-rules.md` and `update-mailing-list`'s
+ * Step 3 promised "`--for-import` drops the rest automatically", and neither
+ * was true when the column was absent.
+ *
+ * Refusing is not a breaking change: `--for-import` exists only for a route-2
+ * mailing-list import, and a route-2 import with no opt-in column is precisely
+ * what must not happen. Nothing in the repo passes the flag —
+ * `send-event-emails` says never to, because its path is fulfilment mail.
+ *
+ * Returns lines rather than exiting so it can be asserted in `--self-test`;
+ * a refusal that needs `process.exit` to observe is a refusal nobody checks.
+ *
+ * @param headers Every column in the file.
+ * @param mappedOptIn The opt-in column that was mapped or detected, if any.
+ * @returns The refusal to print, or null when the import may proceed.
+ */
+export function forImportOptInRefusal(
+  headers: string[],
+  mappedOptIn: string | null
+): string[] | null {
+  if (mappedOptIn) return null;
+
+  // The likeliest mistake is a column that IS the question under a name the
+  // detector did not recognise. Naming it turns a dead end into one flag.
+  const looksLikeIt = headers.find(isOptInHeader);
+
+  return [
+    "--for-import needs a marketing opt-in column, and this file has none.",
+    "",
+    "  consent-rules.md, route 2:",
+    "",
+    '    "If there is no opt-in column, there was no opt-in — a form that only',
+    '     asked for a name and a ticket type cannot retroactively have asked',
+    '     for consent."',
+    "",
+    "  Columns present:",
+    ...headers.map((header) => `    - ${header}`),
+    "",
+    ...(looksLikeIt
+      ? [`  "${looksLikeIt}" looks like the question. Map it:`, `    --map "optIn=${looksLikeIt}"`, ""]
+      : ["  If one of those IS the question, map it: --map \"optIn=<that column>\"", ""]),
+    "  If the form genuinely did not ask, no import is possible from this file.",
+    "  Drop --for-import to build a fulfilment-only list for the event these",
+    "  people registered for, or send them",
+    "  https://www.shesharp.org.nz/newsletter/subscribe — it puts them on the",
+    "  list today, with better evidence than an import gives.",
+  ];
 }
 
 /**
@@ -829,6 +912,14 @@ function normalize(
     );
   }
 
+  // Checked before a single row is read, and before any file is written: an
+  // import with no opt-in column has no consent to carry, and discovering that
+  // after the recipients file exists invites somebody to use it anyway.
+  if (args.forImport) {
+    const refusal = forImportOptInRefusal(headers, resolved.optIn);
+    if (refusal) fail(refusal[0], ...refusal.slice(1));
+  }
+
   // A mapped first-name column that actually holds a whole name gets split, so
   // "Hi Ada Lovelace," never reaches an inbox.
   const nameSplitFrom =
@@ -1029,6 +1120,17 @@ async function main(): Promise<void> {
       process.exit(1);
     }
     reportDetection(args, sourcePath, headers, rows, detection);
+    // The detection block is printed FIRST, then the refusal: the columns it
+    // lists are exactly what somebody needs in order to answer "which one is
+    // the question?", and hiding them behind an error would make the refusal
+    // harder to act on than the mistake it catches.
+    if (args.forImport) {
+      const refusal = forImportOptInRefusal(headers, detection.columns.optIn);
+      if (refusal) {
+        console.error("");
+        fail(refusal[0], ...refusal.slice(1));
+      }
+    }
     return;
   }
 

@@ -1,6 +1,6 @@
 ---
 name: update-mailing-list
-description: Inspect and safely change who is on She Sharp's newsletter mailing list — the `newsletter_subscribers` table, which is now the organisation's marketing-consent record — using `scripts/email/inspect-subscribers.ts`, `scripts/email/audience-report.ts`, `scripts/email/normalize-recipients.ts` and `scripts/email/suppression.ts`. Use whenever the user wants to see or change who is on the list — phrases like "add these attendees to the mailing list", "who's on our email list?", "import this sign-up sheet", "subscribe these people", "take her off the list", "how many subscribers do we have?", "why is this person getting our emails?" — or anything about unsubscribes, bounces, complaints or suppression. Covers roster reporting from the database, any-shape CSV normalisation, the four-way consent gate, and the do-not-contact registers; nothing is changed before an explicit plan approval. Read `references/consent-rules.md` first — registering for an event is not subscribing. The list holds 1,545 people carried over from Mailchimp, but there is still no importer for a new CSV; this skill says so rather than improvising one. It is the hard prerequisite for `email-the-community`.
+description: Inspect and safely change who is on She Sharp's newsletter mailing list — the `newsletter_subscribers` table, which is now the organisation's marketing-consent record — using `scripts/email/inspect-subscribers.ts`, `scripts/email/audience-report.ts`, `scripts/email/normalize-recipients.ts` and `scripts/email/suppression.ts`. Use whenever the user wants to see or change who is on the list — phrases like "add these attendees to the mailing list", "who's on our email list?", "import this sign-up sheet", "subscribe these people", "take her off the list", "how many subscribers do we have?", "why is this person getting our emails?" — or anything about unsubscribes, bounces, complaints or suppression. Covers roster reporting from the database, any-shape CSV normalisation, the four-way consent gate, and the do-not-contact registers; nothing is changed before an explicit plan approval. Read `references/consent-rules.md` first — registering for an event is not subscribing. The list holds 1,545 people carried over from Mailchimp, and `scripts/email/import-optin-subscribers.ts` now imports the people who ticked a registration form's opt-in box (consent route 2); a paper sign-in sheet and a written request (routes 3 and 4) still have no tool and stay one person at a time. It is the hard prerequisite for `email-the-community`.
 ---
 
 # Look after the mailing list
@@ -99,8 +99,12 @@ the limit well past the row count before quoting a number, or say plainly that
 you are quoting a sample.
 
 Most rows look the same, and that is expected: 1,545 of them carry
-`source = 'mailchimp-import'` and a `confirmedAt` from the Mailchimp export. A
-row with a different `source` came in through the website form.
+`source = 'mailchimp-import'` and a `confirmedAt` from the Mailchimp export.
+`website-form` is somebody who subscribed and confirmed here.
+`registration-optin` is somebody who ticked an opt-in box on an event's
+registration form (Step 6) — those rows carry a **null `confirmedAt`** on
+purpose, and the sentence in `consentSource` names the question, the event and
+the date.
 
 Do **not** pass `--token`. It prints a live confirmation credential and refuses
 to run against a non-localhost `BASE_URL` for that reason.
@@ -193,14 +197,26 @@ npx tsx scripts/email/normalize-recipients.ts tmp/csv/attendees.local.csv `
   --consent-date 2026-07-15 --tier 0
 ```
 
-`--for-import` refuses to run without both consent flags (exit 1) and drops
-every row that did not tick the opt-in, plus refunded orders, duplicates,
-malformed addresses and anyone suppressed. Output:
-`tmp/emails/recipients-<key>.json`.
+`--for-import` refuses to run without both consent flags (exit 1), **refuses to
+run at all if the file has no opt-in column** (exit 1), and drops every row that
+did not tick the opt-in, plus refunded orders, duplicates, malformed addresses
+and anyone suppressed. Output: `tmp/emails/recipients-<key>.json`.
 
 Note what that file **is**: a cleaned, consent-checked recipients list. It is
 not a subscriber import, and writing it changes nothing about who is on the
-list. Step 6 is where that would happen, and Step 6 has no tool.
+list. Step 6 is where that happens, and it reads this file.
+
+**If it refuses for want of an opt-in column, that is the answer, not an
+obstacle.** It prints the columns the file has and names the one that looks like
+the question, if there is one — map it with `--map "optIn=<that column>"`. If
+none of them is the question, the form did not ask, and no import is possible
+from this file. Offer the subscribe link instead.
+
+Until 2026-08-30 that run *succeeded*: the row filter only dropped a "No" when
+an opt-in column had been mapped, so a file that had never asked the question
+came through whole, reporting `Excluded 0`, indistinguishable from a file where
+everybody said yes. Step 6 checks again for itself, because a recipients file
+can reach it without having been through `--for-import` at all.
 
 ## Step 4 — Check who is already known, and who must not be added
 
@@ -280,7 +296,8 @@ Redactions    : 4 rows excluded —
                   1 duplicate address
                   1 malformed address
                   0 previously unsubscribed or suppressed
-Blocker       : no importer exists for a CSV like this one — see Step 6
+Import        : scripts/email/import-optin-subscribers.ts (route 2) — dry run
+                shown above; --apply writes
 ```
 
 The **`Redactions:` line is mandatory** — every row that will not be imported,
@@ -293,15 +310,83 @@ never from the raw CSV row count.
 
 Wait for "yes", "go ahead", "import it". Anything ambiguous is a no.
 
-## Step 6 — Import — **STILL NO TOOL FOR THIS**
+## Step 6 — Import
 
-**There is no script that writes an arbitrary CSV into `newsletter_subscribers`,
-and you must not improvise one.** No `INSERT`, no ad-hoc `tsx` one-liner, no
-Drizzle snippet typed into the terminal. The table is the organisation's consent
-record, and every row in it has to have been written by reviewed code that
-records provenance the same way every time.
+**There is one importer, it covers one of the four consent routes, and you must
+not improvise past it.** No `INSERT`, no ad-hoc `tsx` one-liner, no Drizzle
+snippet typed into the terminal. The table is the organisation's consent record,
+and every row in it has to have been written by reviewed code that records
+provenance the same way every time.
 
-**Do not let one existing script mislead you.**
+### Route 2 — a tick-box on a registration form
+
+`scripts/email/import-optin-subscribers.ts` takes the recipients file Step 3
+wrote and turns the rows that ticked the box into subscribers.
+
+```powershell
+npx tsx scripts/email/import-optin-subscribers.ts tmp/emails/recipients-aut-jul-2026.json `
+  --event-name "AUT July Workshop" `
+  --event-date 2026-07-15
+```
+
+Dry run is the default. It prints which column it read the opt-in from, which
+column it read each person's consent date from, the sentence every row will
+carry, and — by count and truncated hash, never by address — everyone held back.
+Show that output to the user. Only then:
+
+```powershell
+npx tsx scripts/email/import-optin-subscribers.ts tmp/emails/recipients-aut-jul-2026.json `
+  --event-name "AUT July Workshop" --event-date 2026-07-15 --apply
+```
+
+Four things it does that are worth being able to explain:
+
+- **It composes the consent sentence itself** from the question text, the event
+  name and the event date — which is why the last two are flags rather than
+  optional. A free-text sentence can be typed as "Humanitix opt-in" and pass
+  every check in the system; nobody notices until somebody asks which event that
+  was. The question defaults to Humanitix's built-in checkout wording (*"Keep me
+  updated on the latest news, events, and exclusive offers from the event
+  host"*, which the host cannot edit). **For any other platform pass the real
+  wording with `--question "…"`** and, if it helps, `--form "Eventbrite
+  checkout"`.
+- **`confirmedAt` stays null.** These people ticked a box on somebody else's
+  checkout; they never clicked a confirmation link of ours. That is honest and
+  sufficient, and it is deliberately not the same grade of evidence as the
+  website form. Say so if anyone asks why the two look different.
+- **`consentDate` is each order's own completion date**, read per row from the
+  export — not the day you ran the import. If the file has no date column it
+  refuses and asks you to name one with `--date-column "<header>"`.
+- **Both do-not-contact registers are consulted** — the committed hash file and
+  the runtime `email_optouts` table — and anyone already in the table is
+  skipped. An import can never resurrect somebody who left.
+
+**If the file has no opt-in column the script refuses and exits 1**, quoting the
+rule. Do not work around it, and do not re-run `normalize-recipients.ts` with a
+different column mapped in the hope that one of them counts.
+
+That is the second of two gates, and it is not redundant. Step 3's
+`--for-import` refuses such a file too — since 2026-08-30, having silently
+passed it before — but a recipients file can arrive here without ever having
+been through that flag: built for a fulfilment send, produced before the gate
+existed, or edited by hand. The importer trusts none of that and re-checks the
+opt-in cell on every row.
+
+### Routes 3 and 4 — still no tool, still one person at a time
+
+**A paper sign-in sheet (route 3) and a written request (route 4) have no
+importer and are not getting one here.** Their evidence is a colleague's
+recollection and a message in somebody's inbox, not a column in a file, and a
+bulk tool over that is a bulk tool over a guess. If someone hands you either:
+add nobody, and offer the subscribe link.
+
+> That sheet is fine as consent for the people who ticked it, but there's no
+> tool for typing them in, and I can't write into the consent record by hand.
+> The subscribe link puts them on the list today with better evidence than an
+> import gives — shall I write you something to send them?
+
+### The Mailchimp importer is not a second route
+
 `scripts/email/import-mailchimp-subscribers.ts` exists and was run once, on
 2026-08-29, to carry the Mailchimp audience over — 1,560 rows read, 15 held back
 by the suppression register, **1,545 written**. It is not a general importer and
@@ -310,27 +395,10 @@ cannot be pointed at a sign-up sheet: it reads the Mailchimp export's own column
 whose names say they are the `unsubscribed`, `cleaned` or `nonsubscribed`
 exports. Its whole justification is that every one of those people carried a
 `CONFIRM_TIME` — a double opt-in that actually happened, elsewhere, with a date.
-An event attendee who ticked a box has no such record, which is precisely why
-routes 2, 3 and 4 of the consent rules still have no path into the table.
+Do not re-run it.
 
-So one thing is still pending: **a bulk importer for opt-in CSVs** (routes 2, 3
-and 4). The Mailchimp carry-over that used to sit beside it in this list is done.
-
-**What to do instead: stop, and tell the user.** Approval at Step 5 does not
-unblock this — there is nothing to approve into.
-
-> I've checked the file and the consent, and 2 of the 7 people could legitimately
-> be added — I've written that down. But there's no tool for adding people from a
-> spreadsheet; the only importer we have was built for the one-off Mailchimp
-> move. Two options: I can send you the subscribe link to pass on to them, which
-> puts them on the list today with better consent evidence than an import gives;
-> or I keep the checked file and we import it when the tool lands.
-
-Then keep the `tmp/emails/recipients-<key>.json` file if they want the second
-option, and say where it is.
-
-`scripts/email/recipients-from-db.ts` is not this tool and is not a way round
-it. It reads *out of* the table to build a send; it never writes into it.
+`scripts/email/recipients-from-db.ts` is not an importer either. It reads *out
+of* the table to build a send; it never writes into it.
 
 ## Step 7 — Take one person off the list
 
@@ -395,15 +463,27 @@ open ("3 people ticked no — if you want them, send them the subscribe link").
 Be explicit about anything that did not happen and why.
 
 Then delete the CSV from `tmp/`: the list lives in the database, the CSV was
-scaffolding. Keep the recipients file only if the user chose to wait for the
-importer, and say where it is.
+scaffolding. Delete the recipients file too once the import has run — it holds
+addresses. Keep it only if the user chose not to import today, and say where it
+is.
+
+After a route-2 import, re-read the list rather than adding up — and check the
+stores still agree:
+
+```powershell
+npx tsx scripts/email/inspect-subscribers.ts --limit 2000
+npx tsx scripts/email/suppression.ts reconcile
+```
+
+Do **not** quote `audience-report.ts` for this: its Tier 0 figure still comes
+from Resend and reads 0.
 
 `roster-state.ts record` is **not usable for a database import**: it requires
-`--import-id`, which was a Resend `contact_import` id and no longer exists. The
-Mailchimp carry-over did not use it either — it recorded its provenance on the
-rows themselves, which is the better place for it. Leave `state/roster.json`
-alone until a CSV importer lands with its own record format. Commit any
-suppression change on its own.
+`--import-id`, which was a Resend `contact_import` id and no longer exists.
+Neither the Mailchimp carry-over nor `import-optin-subscribers.ts` uses it —
+both record their provenance on the rows themselves, which is the better place
+for it. Leave `state/roster.json` alone. Commit any suppression change on its
+own.
 
 ---
 
@@ -438,8 +518,10 @@ suppression change on its own.
    locations are gitignored; anywhere else, one `git add .` publishes real
    addresses into permanent public history.
 9. **Report what actually happened, never what you expected.** *Why:* the most
-   damaging version of this skill is one that says "added 40 people" when no
-   importer took them. Say the tool is missing. The same rule governs the
+   damaging version of this skill is one that says "added 40 people" when the
+   import was a dry run, or when 30 of them were held back. Quote the importer's
+   own `WOULD IMPORT` / written counts, and say when a route has no tool at all.
+   The same rule governs the
    sending: the list exists, but **nothing has ever been sent from it** — never
    let "we have 1,545 subscribers" drift into "we emailed 1,545 people".
 
@@ -509,9 +591,10 @@ send from this system is a separate, approved, **ramped** step.
 
 - **Send any email** — not a test, not a campaign, not a confirmation. (The
   confirmation email is sent by the website itself when someone subscribes.)
-- **Import anyone into the subscriber table** — no tool takes a CSV of your
-  choosing, and improvising one is forbidden. The one-off Mailchimp importer is
-  not a general path (Step 6).
+- **Import anybody whose consent is not a column in a file** — routes 3 (a paper
+  sign-in sheet) and 4 (a written request) have no tool, and improvising one is
+  forbidden. Route 2 does: `import-optin-subscribers.ts` (Step 6). The one-off
+  Mailchimp importer is not a general path.
 - **Migrate the Mailchimp list** — already done, on 2026-08-29, by
   `scripts/email/import-mailchimp-subscribers.ts`. Do not re-run it.
 - **Send anything, or switch the newsletter off Mailchimp** — the list is here,
