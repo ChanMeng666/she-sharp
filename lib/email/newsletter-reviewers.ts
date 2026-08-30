@@ -404,6 +404,31 @@ export function resolveReviewRound(
     );
   }
 
+  // A round of just the founder is not a joint review — it is stage 3 with
+  // extra steps, and it would let her approve an issue nobody else had read.
+  // This fires today, because the committed roster still holds only her: the
+  // newsletter team's NAMES have not been supplied. Refusing keeps the
+  // maintainer's stated design ("the founder plus the newsletter team") from
+  // silently degrading into "the founder", which is the failure the first
+  // version of this file also guarded and which the split must not lose.
+  if (people.length === 1 && people[0].reviewer.role === "founder") {
+    throw new ReviewerAddressError(
+      [
+        `The only person on the review round is ${people[0].reviewer.name}, the founder.`,
+        "",
+        "That is not a joint review: it shows the issue to nobody but the person whose",
+        "approval is the next stage. The default round is the founder PLUS the newsletter",
+        "team, and the newsletter team is not on the committed roster yet.",
+        "",
+        "Either add their names to NEWSLETTER_REVIEWERS in",
+        "lib/email/newsletter-reviewers.ts (names are not addresses — they belong in the",
+        "commit) and their addresses to the local file, or name this round deliberately:",
+        "",
+        '  --reviewers "someone@example.com,another@example.com"',
+      ].join("\n")
+    );
+  }
+
   const seen = new Set<string>();
   const addresses: string[] = [];
   for (const person of people) {

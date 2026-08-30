@@ -292,12 +292,15 @@ check("addresses are deduplicated and lowercased on load", () => {
     path,
     JSON.stringify({
       version: 1,
-      addresses: { "founder-x": [" Founder@Example.COM ", "founder@example.com"] },
+      addresses: {
+        "founder-x": [" Founder@Example.COM ", "founder@example.com"],
+        "news-y": ["news@example.com"],
+      },
     })
   );
   const loaded = loadReviewerAddresses(path);
-  const round = resolveReviewRound(loaded, [ROSTER[0]]);
-  assert.deepStrictEqual(round.addresses, ["founder@example.com"]);
+  const round = resolveReviewRound(loaded, ROSTER);
+  assert.deepStrictEqual(round.addresses, ["founder@example.com", "news@example.com"]);
 });
 
 check("an explicit --reviewers list is still checked against OWN_MAILBOXES on-domain", () => {
@@ -310,6 +313,31 @@ check("an explicit --reviewers list is still checked against OWN_MAILBOXES on-do
 
 check("an empty --reviewers list is refused, not treated as absent", () => {
   assert.throws(() => resolveRequestedRound(["  ", ""], null, ROSTER), ReviewerAddressError);
+});
+
+check("BREAK: a round that resolves to the founder ALONE is refused", () => {
+  // Not a joint review — it shows the issue to nobody but the person whose
+  // approval is the next stage. This is the state the committed roster is in
+  // today, so it is also the state the August issue will hit first.
+  const onlyFounder: Reviewer[] = [
+    { id: "founder-x", name: "A Founder", role: "founder", newsletterReviewer: true, note: "" },
+  ];
+  assert.throws(
+    () => resolveReviewRound(book({ "founder-x": ["founder@example.com"] }), onlyFounder),
+    (error: unknown) => {
+      assert.ok(error instanceof ReviewerAddressError);
+      assert.match(error.message, /not a joint review/);
+      assert.match(error.message, /--reviewers/, "the refusal must say how to proceed");
+      return true;
+    }
+  );
+  // …and the real committed roster is in exactly that state right now.
+  assert.throws(
+    () => resolveReviewRound(book({ mahsa: ["mahsa@shesharp.org.nz"] })),
+    /not a joint review/,
+    "if this stops throwing, the newsletter team's names have been added — update this " +
+      "assertion and the 'names still needed' comment in newsletter-reviewers.ts"
+  );
 });
 
 check("a roster with nobody on the round refuses rather than sending to nobody", () => {

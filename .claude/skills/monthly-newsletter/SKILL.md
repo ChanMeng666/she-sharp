@@ -758,10 +758,16 @@ Never commit that file, and never paste its contents into a PR, a commit message
 or a Slack thread.
 
 **If the script refuses, read what it says — it will not send a partial round.**
-Three refusals, all of them deliberate:
+Four refusals, all of them deliberate:
 
 - *"No reviewer address file at …"* → the local file has not been created on
   this machine. Copy the example.
+- *"The only person on the review round is … the founder"* → the newsletter
+  team's **names** are not on the committed roster yet, so the round has
+  collapsed to one person. That is not a joint review: it shows the issue to
+  nobody but the person whose approval is the next stage. **This is the state
+  the roster is in today**, so expect it. Ask the maintainer for the names, or
+  name the round yourself with `--reviewers`.
 - *"These reviewers are on the committed roster but have no address"* → the
   local file has fallen behind the roster, and it **names the people**. Add
   them. This is the failure the whole split exists to catch: a round that
