@@ -295,29 +295,54 @@ unwritten client — there is nothing to call. `consent-rules.md` relies on this
 
 ### Email campaigns — free, in the console, and already in use
 
-Humanitix's Email campaigns tool has been in **active use for at least a year**,
-composed by hand in the console by the people who organise events. What it may be
-used for, quoted from Humanitix's own help centre, is in
+Humanitix's Email campaigns tool is in **habitual use**, composed by hand in the
+console by the people who organise events. What it may be used for, quoted from
+Humanitix's own help centre, is in
 [`EMAIL_RESPONSIBILITY_BOUNDARIES.md`](EMAIL_RESPONSIBILITY_BOUNDARIES.md)
 § "What Humanitix sends" — registrants only, always from a Humanitix address,
 and the tool stops 14 days after the event ends.
 
-Recorded from the console on **2026-08-30**: an HCLTech reminder and thank-you
-(Nov 2025), IWD × AcademyEX (Mar 2026), a Metlifecare "Own Your Energy" pair
-(Apr 2026), a MYOB thank-you (6 Aug 2026), and a Les Mills reminder in **draft**.
-The console's own banner warns that Email Campaigns "should never be used for
-Marketing and Promotional material… only to communicate service-level info
-related to a customer's purchase" — the same fulfilment-only line drawn from our
-side by `lib/email/audience.ts`.
+**Page 1 of the campaign list**, read from the console on 2026-08-30, spans
+**November 2025 to August 2026**:
 
-> **Provenance — weaker than everything else in this file.** The campaign list
-> and the banner wording come from a **console session on 2026-08-30**, recorded
-> second-hand; they are the only claims here that were **not** independently
-> re-derived when this file was written, because there is no API, no export and
-> no history view to re-derive them from. Treat them as evidence that the tool is
-> in habitual use — which is what they were collected to show — and not as a
-> register of every campaign ever sent. If a detail here matters to a decision,
-> open the console and look.
+| Read from the list view | When |
+|---|---|
+| three HCLTech rows — two reminders and a thank-you | 19, 20 and 24 Nov 2025 |
+| `2026 IWD x AcademyEX event` | 5 Mar 2026 |
+| a Metlifecare "Own Your Energy" pair, plus its thank-you | 15, 16 and 23 Apr 2026 |
+| `Thank You for Joining Us @ MYOB` | Thu 6 Aug 2026, 12:00pm NZST |
+| `Reminder I - September 2026 Les …`, subject "Join Us Tomorrow" | **Draft** |
+
+**That is page 1 alone, and the pagination control showed a next arrow** — so
+there are more campaigns than these, and **no total should be quoted from this
+table**. Several names are truncated by the UI (the Les Mills row above ends in
+an ellipsis because the console does); they are not full titles.
+
+The console also carries its own banner above the campaign list:
+
+> Please note, Email Campaigns should never be used for Marketing and
+> Promotional material. Email Campaigns should only be used to communicate
+> service-level info related to a customer's purchase.
+
+This is a **different string** from the help-centre wording quoted in
+`EMAIL_RESPONSIBILITY_BOUNDARIES.md`, not a variant of it — the help centre says
+campaigns "cannot be sent to external databases" and are "intended for
+service-level comms related to the event an attendee has registered for". Two
+sources saying the same thing in different words. The help-centre one is
+linkable; this one is only visible to someone signed in. Either way it is the
+same fulfilment-only line `lib/email/audience.ts` draws from our side.
+
+> **Provenance — weaker than everything else in this file, and the only part of
+> it you could not re-derive yourself.** Everything above in this document was
+> re-measured against a live API or the database when it was written. This
+> subsection and the next were **not**, and cannot be: there is no API, no export
+> and no history view behind them. They come from **the maintainer driving the
+> signed-in Humanitix console through browser automation on 2026-08-30**, and
+> the figures were read off screenshots by eye. The banner is transcribed rather
+> than captured byte-for-byte. Treat all of it as evidence that the tool is in
+> habitual use — which is what it was collected to show — and **not** as a
+> register of what has been sent. If a detail here matters to a decision, open
+> the console and look.
 
 **Decided 2026-08-30: this stays in Humanitix, by hand, and is not coming into
 this codebase.** `/send-event-emails` was deleted for exactly that reason
@@ -327,10 +352,19 @@ are in `EMAIL_RESPONSIBILITY_BOUNDARIES.md` § "Why the boundary is where it is"
 ### A third unsubscribe register, which is not a do-not-contact list
 
 Console → Email campaigns → **Unsubscriber list**
-(<https://console.humanitix.com/console/comms/email-campaigns-unsubscriptions>).
-Recorded from the console on 2026-08-30: about **20 rows**, **13 distinct addresses**, spanning
-**2021-08 → 2025-11** with nothing in 2026, on one page, with **no export
-button**.
+(<https://console.humanitix.com/console/comms/email-campaigns-unsubscriptions>),
+columns Email / Event / Unsubscribed at. Its own description on the page:
+
+> Attendees/buyers who have chosen to unsubscribe from receiving your event
+> communications will no longer receive emails sent through email campaigns
+> **for the event**.
+
+Counted from the same console session on 2026-08-30, from two screenshots rather
+than an export, so **read every figure here as approximate and as at that date**:
+roughly **20 rows** and **13 distinct addresses**, spanning **2021-08 → 2025-11**
+with nothing in 2026, and **no export control visible**. Clicking the next-page
+arrow did not change the view — evidence that this is the whole list, **not
+proof** of it.
 
 It is **event-scoped** — each row says "stop emailing me about *this event*" —
 so it is deliberately **not** folded into our suppression register. What it is
@@ -377,17 +411,35 @@ The orders CSV would settle it.
 
 ### A free channel nobody has looked at: notify-followers
 
-A **"She Sharp" host profile exists**, and **verified 2026-08-30** via
-`GET /v1/events`: all **59** events in the account carry the same non-null
-`organiserId` `5e3388f9a912950007fda1c7`, including the 3 September 2026 Les
-Mills event (`6a422a2d01e463796c170142`, published). So Humanitix's free,
-one-per-event **notify-followers** email was offered at publish time.
+Humanitix offers a free, one-per-event **notify-followers** email when a public
+event is published: a template mail with a "Get Tickets" link, to everybody
+following the host profile linked to that event, **toggled on by default**. The
+full description, sourced to Humanitix's help centre, is in
+`EMAIL_RESPONSIBILITY_BOUNDARIES.md` § "One free channel that belongs to
+neither". What is worth separating here is the measured from the inferred,
+because this is the shakiest ground in the file.
 
-**Whether it was ever used was deliberately not tested**, because the control
-that shows its state is the same control that fires the send. Follower counts are
-not exposed by the API. The full account of the feature, and the two things that
-`organiserId` check does *not* establish, are in
-`EMAIL_RESPONSIBILITY_BOUNDARIES.md` § "One free channel that belongs to neither".
+**Measured.** A host profile named **"She Sharp" exists** — one entry under
+Account → Hosts, read from the console on 2026-08-30. And via `GET /v1/events`,
+re-run for this file: all **59** events carry the same non-null `organiserId`
+`5e3388f9a912950007fda1c7`, including the 3 September 2026 Les Mills event
+(`6a422a2d01e463796c170142`, published).
+
+**Inferred, and not established.** That `organiserId` *is* the host-profile
+link. It is consistent with one, but the API exposes no host-profile object at
+all, so the field cannot be matched to the profile the feature requires. **The
+honest line is that the prerequisite appears met**, not that it is met — and if
+no profile is in fact linked, the whole question below is moot.
+
+**Not established, in two different ways.** Whether the mail has ever been sent
+was **deliberately** not tested: the judgement was that the control which would
+reveal the toggle's state is the same one that fires the send, so looking costs a
+send to real people. **That is a risk judgement, not something Humanitix
+documents.** And follower counts are **not exposed by the API** (`follower`
+returns zero hits in the OpenAPI document) — but nobody has checked whether the
+**console** shows one. There is a help article, "Manage your host profile
+followers", that nobody has read. So: *not exposed by the API, and not checked in
+the console* — **not** "not available".
 
 ### The PII boundary is unchanged
 
@@ -476,11 +528,15 @@ nobody mistakes an open question for a settled one.
    Humanitix console's reports → orders → Export CSV would settle it** — it
    carries a per-order marketing opt-in column. Nothing in this repository can.
 
-2. **Whether the notify-followers email has ever been sent.** Not tested, and
-   testing it would send it: the control that reveals the toggle's state is the
-   control that fires it. Follower counts are not exposed by the API. Somebody
-   publishing the next event can read the toggle in the console at publish time
-   — **nobody should press it to find out.**
+2. **Whether the notify-followers email has ever been sent** — and, before that,
+   **whether a host profile is linked to our events at all.** A "She Sharp" host
+   profile exists and every event carries an `organiserId`, but nothing ties that
+   field to the profile, so the prerequisite only *appears* met. The send itself
+   was deliberately not tested on the judgement that the control revealing the
+   toggle also fires it. Somebody publishing the next event can read the toggle
+   in the console at publish time — **nobody should press it to find out.**
+   Cheapest next step: read the "Manage your host profile followers" help
+   article and open the host profile, neither of which sends anything.
 
 3. **What happens to Mailchimp's hosted campaign pages after a downgrade.**
    About 50 live links on the public site point at `mailchi.mp` and
@@ -489,9 +545,10 @@ nobody mistakes an open question for a settled one.
    first: it is the one step that does not depend on the answer. See
    `MAILCHIMP_CANCELLATION.md` §3.
 
-4. **Whether the Humanitix campaign list above is complete.** It is what was
-   visible in the console on one day. There is no API and no export, so it cannot
-   be re-taken as a full history.
+4. **How much Humanitix email has actually been sent.** The campaign list above
+   is **page 1 of more than one page**, so it is a floor and not a count. There
+   is no API, no export and no total in the UI, so the only way to a real figure
+   is somebody paging through the console and writing it down.
 
 5. **How many of the 790 Mailchimp `transactional` contacts have a defensible
    consent story.** They are excluded from every send today, which is the safe
@@ -514,6 +571,7 @@ nobody mistakes an open question for a settled one.
 | `organiserMailListOptIn` placement | Search that OpenAPI document's `components.schemas` |
 | `organiserId` across events | `GET /v1/events` with `x-api-key` |
 | The archive page's 20 entries | `curl` `MAILCHIMP_CONFIG.archiveUrl`; count `<li class="campaign">` |
+| The Humanitix campaign list, its banner, the unsubscriber list, the host profile | **Not re-takeable from code.** Sign in to the Humanitix console and look; there is no API, no export and no history view |
 
 `MAILCHIMP_API_KEY` is **local tooling only** and nothing under `app/` may read
 it; it expires **2027-08-27**. Credentials, rate limits and what each pull costs
