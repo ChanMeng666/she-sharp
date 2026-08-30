@@ -1452,6 +1452,19 @@ by exactly one writer, so "who did this and when?" always has an answer.
 | `.claude/skills/reply-to-contact-messages/state/inbox-state.json` | `inbox-state.ts` | a run log, **not** a gate — `reviewed_at` in the database is the idempotency truth |
 | `lib/data/event-archive-photos.ts` | `scripts/build-event-archive.mts` | harvested gallery photos per slug |
 | `lib/docs/playbook.ts` | `scripts/docs/build-playbook.mts` — **generated, never hand-edited** | `/internal/event-playbook`, compiled from exactly one source, `docs/development/EVENT_PLAYBOOK.md` — **not this file**, so editing this document never needs the generator re-run |
+| `lib/docs/email-playbook.ts` | `scripts/docs/build-email-playbook.mts` — **generated, never hand-edited** | `/internal/email-playbook`, the same treatment for email, from `docs/development/INTERNAL_EMAIL_PLAYBOOK.md`. The generator imports the other one's renderer rather than copying it |
+
+**"Never hand-edited" is now enforced, and until 2026-08-30 it was not.** Both
+tests hashed the *markdown*, which proves a document has not moved on without a
+rebuild and proves nothing about the generated module — ordinary committed
+TypeScript that anyone can edit, and the file a reader's browser actually
+serves. A hash of the input cannot detect a forged output. Demonstrated on the
+day: changing "At most three marketing emails" to "nine" directly in
+`lib/docs/email-playbook.ts` left every other check green. Both tests now
+re-render their sources and compare the whole module, so a hand-edit fails with
+the line number. Nothing suggests either page was ever edited that way — this
+records an exposure, not an incident. **A new generated page copies that
+pattern, not the older one.**
 
 Ten skills live in `.claude/skills/`. Eight of them appear somewhere above;
 `/run-event-playbook` conducts the rest, and `/reply-to-contact-messages` sits
@@ -1475,8 +1488,9 @@ reason `/tweak-event-slides` runs its three checks locally before it pushes.
   `audit-read-state.ts` — the read-position rules, and no unread backlog
 - `lib/deck/deck.test.ts` — every deck registered, copy and rhythm limits, and
   **every feedback code unique and resolving back to its own event**
-- `lib/docs/playbook.test.ts` — neither document has drifted from the page that
-  renders it, and no anchor on that page is dead
+- `lib/docs/playbook.test.ts` and `lib/docs/email-playbook.test.ts` — neither
+  handbook has drifted from the page that renders it, neither generated module
+  has been hand-edited, and no anchor on either page is dead
 - `pnpm typecheck`, `pnpm typecheck:scripts`, `pnpm lint` (errors only)
 
 Not in CI, run locally: `npx tsx lib/email/hardening.test.ts` before touching
