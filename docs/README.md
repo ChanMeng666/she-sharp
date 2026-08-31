@@ -3,13 +3,20 @@
 Every file under `docs/`, with one line each. Nothing here is orphaned.
 
 `CLAUDE.md` in the repo root is where to **start** — the curated index, carrying
-the rules that bind you everywhere. It links about 28 of these files, the ones
-with rules in them; this file is the complete map, so the rest are findable too.
+the rules that bind before any file is opened. **It is no longer the whole
+index.** On 2026-09-01 it was split into layered memory: a smaller root file plus
+eight directory-level `CLAUDE.md` files that Claude Code loads only when it reads
+a file in that subtree (`app/`, `lib/`, `lib/db/`, `lib/email/`,
+`components/deck/`, `styles/`, `scripts/`, `docs/`). The root file's own table
+names all eight; `docs/CLAUDE.md` is the one governing this directory.
+
 **`ARCHITECTURE.md`** here is the entry point for how a request travels through
 the repo and where each `lib/` subsystem lives — route groups, auth gates,
-rendering strategy. Current. Status columns below are honest: **current**
-describes the code today, **historical record** documents a change that already
-happened, **dormant** is a runbook for a state the site is not in.
+rendering strategy. Its **§7** also absorbed the root file's old `# Subsystems`
+prose, so it is now the full subsystem → doc map. Current. Status columns below
+are honest: **current** describes the code today, **historical record** documents
+a change that already happened, **dormant** is a runbook for a state the site is
+not in.
 
 ## `database/`
 
@@ -49,7 +56,7 @@ happened, **dormant** is a runbook for a state the site is not in.
 | `EMAIL_RESPONSIBILITY_BOUNDARIES.md` | Which system sends which mail — subscribers from this repo through Resend, one event's registrants from Humanitix — and the single sanctioned crossing between the two lists | current, decision record |
 | `EVENT_FEEDBACK.md` | The `/f/<code>` QR form: codes, rate limiting, digest, anonymisation | current |
 | `EVENT_LIFECYCLE_SOP.md` | One regular event end to end for the whole team — the partner conversation, the phase order, who does what, the promotion beats, close-out, and the developer machinery underneath. The reference `EVENT_PLAYBOOK.md` is built from | current |
-| `FUNDER_REPORTS.md` | Why `report/` is a separate Typst project and what gates a final build | current |
+| `FUNDER_REPORTS.md` | A pointer: the two Typst projects left for `NZ-SheSharp/she-sharp-reports` on 2026-09-01, which data and generators stayed here and why, and the one part that is still this repo's business — the published impact-report PDFs on Vercel Blob that `/resources` links | current, rewritten 2026-09-01 |
 | `GEO_SEO_MONITORING.md` | What SEO/GEO surfaces exist, the Search Console properties, the baseline | current |
 | `GEO_SEO_IMPLEMENTATION_GUIDE.md` | Reusable playbook for adding SEO/GEO to a Next.js 15 site | current |
 | `GEO_SEO_BACKLOG.md` | Prioritised SEO/GEO follow-ups, ten done and six open | current, live worklist |
@@ -63,6 +70,7 @@ happened, **dormant** is a runbook for a state the site is not in.
 | `SLACK_INTEGRATION_GUIDE.md` | Setting up incoming webhooks and the notification code pattern | current |
 | `SLACK_EVENT_EXTRACTION.md` | The `/event` slash command workflow, with the Python scraper as fallback | current |
 | `SLACK_APP_DEVELOPMENT_GUIDE.md` | Building a Slack app on this codebase — decisions and traps | current |
+| `TESTING.md` | What CI runs and what it does not, the local pre-push list, why `check-facts.ts` and `verify-page-metadata.ts` are deliberately outside CI, and the two guards that read as correct while gating nothing. Split out of the root `CLAUDE.md` on 2026-09-01 — **the file to change when a check moves**; `ARCHITECTURE.md` §8 is the same five jobs in summary | current |
 | `QA_REPORT_FIXES.md` | Item-by-item response to the April 2026 external QA sweep | historical record |
 | `batch-import-mentors-2026.md` | The 2026-03-19 one-off import of 25 pre-approved mentors | historical record |
 
@@ -108,3 +116,9 @@ From `CLAUDE.md`: **no proactive documentation** — do not create `.md` files
 unless asked. When asked, they go under
 `docs/{deployment,development,database,features}/`, never the repo root.
 `ARCHITECTURE.md` is the one deliberate exception and stays at `docs/` root.
+
+`docs/CLAUDE.md` is the third file at this root and is not documentation: it is
+the directory-level instruction file Claude Code loads when it reads anything
+under `docs/`, and it says the same thing this section does, at the moment a
+model is about to write a file here. Adding a doc means adding its row above —
+"nothing here is orphaned" is a claim this file has to keep earning.

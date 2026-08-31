@@ -270,7 +270,42 @@ Deck behaviour that used to sit inside `components/deck/deck-viewport.tsx` now
 lives in `hooks/use-deck-keyboard.ts`, `use-deck-swipe.ts`, `use-deck-preload.ts`
 and `use-wake-lock.ts`.
 
+### Subsystem → the doc that owns it
+
+The table above answers "which directory". This one answers "which document",
+for the subsystems whose real complexity is not in the directory listing. It was
+absorbed from the root `CLAUDE.md` on 2026-09-01, when that file went back to
+being an index; the root now carries a one-line pointer per row.
+
+| Subsystem | In one breath | The doc that owns it |
+|---|---|---|
+| **Database** | Neon + Drizzle, `lib/db/schema.ts` a barrel over seven modules in dependency order; `relations.ts` is a leaf because `usersRelations` names a table from every other module | `docs/database/DATABASE_SCHEMA.md`, plus `lib/db/CLAUDE.md` |
+| **Auth and roles** | NextAuth 5 OAuth + custom JWT in httpOnly cookies; bcrypt, lock after 5 failures for 15 minutes, password strength and history; **multiple independent roles** per user with fine-grained admin permissions | §1–2 above, `lib/auth/` |
+| **Site content** | Events, team, sponsors, stats, press, podcasts, galleries in `lib/data/` — TS adapters over `lib/data/json/`, single-source and derived everywhere. The event list is **two files merged** in `lib/data/events.ts`: `shesharp_events_v3.json` (scraped history, do not hand-edit) and `events-custom.json` (the edit target) | `docs/development/ADD_EVENTS.md`, `lib/data/json/README.md` |
+| **The event lifecycle** | One regular evening event is ten steps in a fixed order — Slack channel → event record → poster → speaker campaign → announcement → deck → the night → feedback → gallery → newsletter — plus an optional social video, and one job that is **not a step in this repo at all**: the mail to registrants, sent from Humanitix's own Email campaigns tool. Each skill knows only its own job; `npx tsx scripts/events/event-status.ts --slug <slug>` answers "where has this event got to?" offline | `docs/development/EVENT_LIFECYCLE_SOP.md`, `docs/development/EVENT_PLAYBOOK.md` |
+| **Slack triage** | `.github/workflows/slack-triage.yml` runs `/sync-event-from-slack`'s triage every weekday morning as the Collector bot and keeps one standing GitHub issue labelled `slack-triage` current — so **check that issue before running the triage yourself**. It reports and never records (`--no-record` moves no read position), so a row stays until a human syncs it. A bot token cannot list **DMs or group DMs at all**, nor a private channel nobody invited it to; those need a `SLACK_USER_TOKEN`. Refreshing the private `she-sharp-slack-archive` (`SLACK_ARCHIVE_DIR`) is **not** a step of a sync — it belongs to whoever holds that checkout, and a sync is complete without it | `.claude/skills/sync-event-from-slack/SKILL.md` |
+| **Content and brand rules** | Twelve years of counting traps, naming traps, decisions not to roll back, and editorial rules — every one recorded because it was broken at least once. Read before publishing a number or naming a person | `docs/development/CONTENT_RULES.md`, `PUBLIC_CLAIMS_PROVENANCE.md`, `SITE_DATA_HISTORY.md` |
+| **Mentorship + AI matching** | GPT-4 compatibility over MBTI, skills, goals, industry and logistics, with a mentee waiting queue, confidence scoring and caching. Applications are currently **paused** | `docs/features/AI_MATCHING_SYSTEM.md`, `docs/development/MENTORSHIP_APPLICATIONS_PAUSED.md` |
+| **Event feedback** | She Sharp's own form behind a `/f/<code>` QR alias; per-device rate limiting, a 3-day Slack digest, 12-month anonymisation of the personal columns | `docs/development/EVENT_FEEDBACK.md` |
+| **Humanitix ticketing archive** | The account export (2020→, 62 ticketed instances, 5,156 tickets) reduced to aggregates in `lib/data/json/humanitix/`. Three traps before quoting anything: it starts in **2020**, it covers **57 of the 97 events**, and a `checkedIn` of 0 usually means nobody scanned — read `checkInDataPresent` | `docs/development/HUMANITIX_ARCHIVE.md`, `PLATFORM_APIS.md` |
+| **Mailchimp audience archive** | The `She#` audience export (2019→, 3,689 contacts) reduced to counts in `lib/data/json/mailchimp/`, plus `campaigns.json` — the send history the account export never delivered. Three traps: the list is **1,560**, not 3,689; Mailchimp's dashboard says **3,145** because it excludes hard bounces; and a `Ticket Type:`/`Event:` tag says a ticket was **bought**, which is not attendance | `docs/development/MAILCHIMP_ARCHIVE.md`, `PLATFORM_APIS.md` |
+| **Leaving Mailchimp** | The founder is cancelling the **paid subscription**, not closing the account. **Pause or downgrade, never delete**, and the last Mailchimp send must precede the downgrade. The account is untouched and still sends event campaigns by hand | `docs/deployment/MAILCHIMP_CANCELLATION.md` |
+| **Presentation decks** | `/present/<slug>` from typed slide data, a build-failing copy and rhythm linter, per-event skins over a fixed house sequence, a fluid 4:3–21:9 stage. Organisers use `/build-event-slides` and never touch TypeScript | `docs/development/DECK_SYSTEM.md`, `components/deck/CLAUDE.md`, `styles/CLAUDE.md` |
+| **Email** | Four streams decided in `lib/email/senders.ts`; **one** Resend call site in `service.ts`; RFC 8058 one-click unsubscribe and Svix-verified bounce/complaint capture. The newsletter has been **self-hosted** on Resend's batch API since 2026-08-31 | `docs/development/EMAIL_OPERATIONS.md`, `EMAIL_PLATFORM_STATE.md`, `EMAIL_PLATFORM_STRATEGY.md`, `docs/deployment/EMAIL_AUTHENTICATION.md`, `lib/email/CLAUDE.md` |
+| **Outbound email skills** | `/reply-to-contact-messages`, `/update-mailing-list`, `/email-the-community`, `/promote-event`. Repo scripts render, the Resend CLI sends. **Three marketing sends per calendar month across all of them**, the newsletter included. Registrant mail is Humanitix's job, not this repo's | `docs/development/EMAIL_RESPONSIBILITY_BOUNDARIES.md`, `AI_SKILLS_GUIDE.md`, `INTERNAL_EMAIL_PLAYBOOK.md` |
+| **Visitor chatbot** | AI SDK 6 `ToolLoopAgent` on OpenAI `gpt-4o-mini` (direct, not the AI Gateway), grounded in live data by tools over `lib/data/*`, Upstash Redis rate limiting, analytics that degrade gracefully | `docs/development/CHATBOT_AI_AGENT.md` |
+| **Payments** | Stripe checkout for membership and one-time donations; the webhook routes `metadata.type` to the right handler | `lib/stripe/` |
+| **Slack** | `lib/slack/` is webhook notifications for the contact, volunteer and event-feedback forms plus weekly digests; `lib/slack-bot/` is the event-sync bot that turns a planning channel into a GitHub draft branch | `docs/development/SLACK_INTEGRATION_GUIDE.md`, `SLACK_EVENT_EXTRACTION.md`, `SLACK_APP_DEVELOPMENT_GUIDE.md` |
+| **SEO / GEO** | Generated `robots.ts`, `sitemap.ts`, `manifest.ts`, `llms.txt` + `llms-full.txt`, JSON-LD builders in `lib/seo/schema.ts`, legacy 308s in `next.config.ts` | the three `docs/development/GEO_SEO_*.md`, `app/CLAUDE.md` |
+| **QR codes** | Two deliberately different paths: web/print (`lib/data/qr-codes.ts` + `/api/qr`, level H) and deck slides (`components/deck/deck-qr.tsx`, level M, generated in the browser) | `docs/features/QR_CODE_GENERATION.md` |
+| **Funder reports** | **Not in this repo.** The two Typst projects moved to `NZ-SheSharp/she-sharp-reports` on 2026-09-01; the data and generators stayed, because an internal record reconciles what the site *claims* against what the platforms *recorded* and so reads `lib/data/{events,sponsors,team,stats}` live. That repo reads this one through `SHESHARP_REPO_DIR`; `scripts/internal-report/build-record.ts` writes into it through `SHESHARP_REPORTS_DIR`. What is left here is the **published** PDFs on Vercel Blob | `docs/development/FUNDER_REPORTS.md` |
+| **Deployment** | Vercel, prebuilt by GitHub Actions on push to `main`; **no Vercel Git connection**, so a new env var needs a new commit | `docs/deployment/`, §8 below |
+
 ## 8. Testing reality
+
+The summary is here because testing is part of the architecture;
+**`docs/development/TESTING.md` is the file to change when a check moves**, and
+it carries the reasoning this section only names.
 
 **There is no test runner.** Tests are plain `node:assert` scripts run directly
 with `npx tsx <file>`; each prints `ok - …` lines and exits non-zero on failure.
@@ -279,7 +314,7 @@ Run by CI (`.github/workflows/verify.yml`, on PRs to `main`) — five jobs:
 
 | Job | Runs |
 |---|---|
-| `verify-image-paths` | `scripts/verify-image-paths.ts` **and every other offline check**, because they are pure data and ride its checkout for free: newsletter email-safe covers, event- and poster-asset ownership, event status, the two docs-page checks, the hackathon facts, the two Slack read-state checks, the Humanitix and Mailchimp archive checks, the event-announcement stages, the marketing frequency cap, and `scripts/mailchimp/archive-guard.test.ts`. A new check needing neither a database nor the network belongs here, not in a sixth job |
+| `verify-image-paths` | `scripts/verify-image-paths.ts` **and every other offline check**, because they are pure data and ride its checkout for free: newsletter email-safe covers, the poster fonts (`scripts/events/fonts.test.ts`), event- and poster-asset ownership, event status, the two docs-page checks, the hackathon facts, the two Slack read-state checks, the Humanitix and Mailchimp archive checks, the event-announcement stages, the marketing frequency cap, and `scripts/mailchimp/archive-guard.test.ts`. A new check needing neither a database nor the network belongs here, not in a sixth job |
 | `typecheck` | `pnpm typecheck` — `app/`, `components/`, `lib/`, `hooks/`, `types/`, `proxy.ts` |
 | `typecheck-scripts` | `pnpm typecheck:scripts` — `scripts/` and `.claude/`, both missed by the root tsconfig |
 | `lint` | `pnpm lint` — ESLint 9 flat config, **errors gate**; legacy violations are demoted to warnings in `eslint.config.mjs` and paid down separately |
