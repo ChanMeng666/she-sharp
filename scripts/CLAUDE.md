@@ -63,12 +63,22 @@ command prints four lines and the first, `Subscribed rows`, is the count
 **2,506** references across **54** files point into the site image tree, and they
 are not all where you would look for them: `scripts/`, `docs/`, `.claude/` skill
 instructions, and the generated `index.ts` manifests that sit *inside* the asset
-tree. That is reference **occurrences**; `verify-image-paths.ts` reports a
-smaller number on its forward pass — around 1,620 — because that one counts
-**distinct paths**, and a single image is typically named from several places.
-Neither figure is wrong and they are not interchangeable. Both were measured on
-2026-09-01 through `collectReferences()`; the "~1,400 across 37 files" this
-paragraph carried before that had gone stale. Use `scripts/assets/plan-move.ts` then `apply-move.ts`, and let
+tree.
+
+**Three different numbers describe this, and they are not interchangeable.**
+Measured 2026-09-01 through the repo's own `collectReferences()`:
+
+| | | what it is |
+|---:|---|---|
+| **2,506** | occurrences | every place a path is spelled — what a move has to rewrite |
+| **1,647** | distinct paths | the same images, deduplicated |
+| **1,621** | what the gate checks | 1,647 minus the paths whose only references are `isForwardExempt` (test fixtures asserting behaviour for paths that do not exist) |
+
+`verify-image-paths.ts` prints the last of these, so do not read its forward-pass
+figure as a reference count. The "~1,400 references across 37 files" this
+paragraph carried until 2026-09-01 was simply stale.
+
+Use `scripts/assets/plan-move.ts` then `apply-move.ts`, and let
 `scripts/verify-image-paths.ts` confirm it — it checks that every reference
 resolves, that every file is referenced, and that the events layout holds.
 
