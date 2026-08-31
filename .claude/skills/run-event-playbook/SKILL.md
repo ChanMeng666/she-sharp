@@ -1,6 +1,7 @@
 ---
 name: run-event-playbook
 description: Run one regular She Sharp evening event end to end — from the Slack planning channel six weeks out to the photographs and the attendance figures a fortnight after — by deciding which single-purpose skill runs next and whether its precondition actually holds. Use whenever someone asks about an event as a whole rather than about one artefact — phrases like "let's get the Les Mills event ready", "what's left to do for Thursday's panel", "where are we up to on next month's event", "is the September event on track", "we've got an event coming, walk me through it", "what should I be doing six weeks out", "run the event playbook", "what happens after the event", "下个月的活动要准备什么", "这场活动还差什么", "活动准备到哪一步了", "帮我把这场活动从头到尾安排好", "接下来该做什么", "活动结束之后还要做什么". It starts by running `npx tsx scripts/events/event-status.ts --slug <slug>`, which reports offline where the event has got to across ten checks — Slack, event data, cover, poster set, speaker set, deck, feedback code, announcement, emails, photos — reads that back in plain words, and then hands the first gap to the skill that owns it. It builds nothing itself: no poster, no deck, no email, no Slack read, no send. Not the right shape for a flagship or multi-day event, and not needed when someone already knows the one thing they want — a poster is `/make-event-poster`.
+disable-model-invocation: true
 ---
 
 # Run one event, from the planning channel to the photographs

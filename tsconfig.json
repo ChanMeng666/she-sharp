@@ -39,6 +39,9 @@
   "exclude": [
     "node_modules",
     "scripts/**/*",
-    "scripts"
+    "scripts",
+    "tmp",
+    "handoff",
+    ".claude/worktrees"
   ]
 }

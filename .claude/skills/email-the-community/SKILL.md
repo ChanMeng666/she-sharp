@@ -1,6 +1,7 @@
 ---
 name: email-the-community
 description: Send a one-off She Sharp announcement to the newsletter subscribers as a gated batch — drafting a MessageSpec, rendering and gating it via `scripts/email/render-message.ts --mode broadcast`, test-sending to a mailbox the user names, then building the batch from the subscriber table with `scripts/email/recipients-from-db.ts` + `scripts/email/build-batch.ts` and sending it chunk by chunk. Use whenever the user wants to tell the whole list something — phrases like "email everyone about the new mentoring round", "send an announcement to the mailing list", "let the subscribers know applications are open", "blast out the hackathon news", "给邮件名单发个通知", "群发一封活动宣传". Covers who counts as a subscriber, the signed per-recipient unsubscribe link, subject and preview limits, one-CTA discipline, dry-run rehearsals, and duplicate-send short-circuiting via `state/broadcasts.json`. Nothing leaves the building before an explicit plan approval; audience rules: references/audience-and-consent.md.
+disable-model-invocation: true
 ---
 
 # Send one announcement to everyone on the mailing list
