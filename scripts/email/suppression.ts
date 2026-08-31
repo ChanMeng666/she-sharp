@@ -46,10 +46,12 @@
  *            plain set union — no matching logic and no PII crossing over.
  *            Needs POSTGRES_URL. Run it monthly.
  *   pull-mailchimp
- *          — the same union, for the platform She Sharp actually sends from.
- *            Mailchimp is still the live list; Resend holds no contacts at all.
- *            So someone who unsubscribes today exists ONLY in Mailchimp's
- *            record, and `sync` cannot see them. Pulls the `unsubscribed` and
+ *          — the same union, for the platform She Sharp used to send from and
+ *            has NOT switched off. The newsletter moved to Resend on 2026-08-31,
+ *            but the Mailchimp account is still open: it sends event campaigns
+ *            and still carries its own sign-up and unsubscribe links. So someone
+ *            who unsubscribes there exists ONLY in Mailchimp's record, and
+ *            `sync` cannot see them. Pulls the `unsubscribed` and
  *            `cleaned` members changed since the last pull and folds them in.
  *            Needs MAILCHIMP_API_KEY (+ MAILCHIMP_LIST_ID). Run it monthly,
  *            beside `sync`.
@@ -731,9 +733,10 @@ interface MailchimpDecision {
 /**
  * Folds Mailchimp's own unsubscribe and cleaned records into the register.
  *
- * **The hole this closes.** Mailchimp is still She Sharp's live sending
- * platform — the migration to Resend has not happened (Resend holds one test
- * contact). So a person who unsubscribes today exists only in Mailchimp's
+ * **The hole this closes.** The newsletter left Mailchimp on 2026-08-31, but the
+ * Mailchimp account did not close with it — it still sends event campaigns and
+ * still serves its own unsubscribe links, and Resend holds no contact list at
+ * all. So a person who unsubscribes over there exists only in Mailchimp's
  * record. `normalize-recipients.ts` consults this register on every import, and
  * until that unsubscribe is in it, the next import of any list containing them
  * puts them straight back — the exact trap

@@ -184,11 +184,11 @@ repeating.
 
 ### Telling the mailing list
 
-**Not possible yet**, but the reason has changed. The list *has* been moved
-across — it is no longer empty. What is missing is everything that has to happen
-before the first send from it: nothing has ever been sent from the new system,
-and the approval steps are still being put in place. Ask in `#website-team`
-rather than assuming it is broken.
+**Possible since 2026-08-31**, when the first newsletter went out from the new
+system to all 1,549 subscribers. It is not a self-service button: a send needs an
+approval chain that ends with the founder, and there is a hard cap of **three
+marketing emails per calendar month** across every skill combined. Ask in
+`#website-team` before assuming a send can happen this week.
 
 The rules about who may be emailed, which system sends what, and how often, are
 on their own page: **the email playbook**, at `/internal/email-playbook`.

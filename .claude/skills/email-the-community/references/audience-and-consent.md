@@ -113,7 +113,7 @@ out of it.
 If the `unsubscribe` gate fires, the usual cause is `engine: "layout"` —
 the transactional layout has no opt-out footer. Switch to `engine: "react"`.
 
-## The list is real, and nothing has ever been sent from it
+## The list is real, and it has been sent to exactly once
 
 `newsletter_subscribers` holds the whole imported Mailchimp list — **1,549
 mailable as at 2026-08-30**, and that figure moves. Read the live number with
@@ -124,14 +124,20 @@ are applied, so it is the larger of the two whenever there is drift. The
 double opt-in flow is live, the Mailchimp list has been imported, and a send
 from this skill reaches real people.
 
-**No message has ever gone out from this list.** That is the fact to hold on to.
-Everything you send here is the first thing this list has ever received, and
-there is no scheduler and no cancellation window — so the test send,
-the plan block and the chunk-by-chunk send are the gates that matter, and none
-of them is a formality. **The monthly newsletter still goes out from
-Mailchimp**; this has not taken over. The Resend segment and topic that used to
-hold Tier 0 were deleted from the Resend account on 2026-08-29 and are not the
-record of anything.
+**Exactly one message has gone out from this list**: the August 2026 newsletter,
+on **2026-08-31**, to all 1,549 recipients in 16 batch chunks with 0 failures.
+That is the fact to hold on to — not because it makes a send routine, but
+because it does the opposite. One send is not a warmed relationship, there is
+still no scheduler and no cancellation window, and nobody yet knows how that
+first one landed (Resend *accepted* all 1,549; delivery, bounces and complaints
+arrive later through the webhook). So the test send, the plan block and the
+chunk-by-chunk send are the gates that matter, and none of them is a formality.
+**Check the three-per-calendar-month marketing cap before planning anything** —
+the August newsletter used one of 2026-08's three, and the cap counts across
+every skill. **The monthly newsletter no longer goes out from Mailchimp**; it
+moved onto this exact machinery, and Mailchimp's last newsletter was July 2026.
+The Resend segment and topic that used to hold Tier 0 were deleted from the
+Resend account on 2026-08-29 and are not the record of anything.
 
 None of that is a reason to send to a database query instead. The subscriber
 table is still the only audience.

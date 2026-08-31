@@ -1,22 +1,28 @@
 ---
 name: promote-event
-description: Promote ONE upcoming She Sharp event to the newsletter subscribers, across up to three campaign stages — a save-the-date, a line-up reveal and a last call — each a different email, built from the event's own record in `lib/data/json/events-custom.json` so the date, time, venue and registration link cannot disagree with the website. Use whenever someone wants the subscribers told about an event that has not happened yet — phrases like "email the list about the Les Mills panel", "tell everyone about next month's event", "promote Thursday's night to the mailing list", "send out the event announcement", "send the save the date", "do the last call for the hackathon", "can we let subscribers know about the hackathon", "宣传一下下个月的活动", "给邮件名单发个活动通知", "把这场活动群发给订阅者", "发个活动预告", "通知订阅者来参加". It generates one stage's MessageSpec with `scripts/email/event-announcement-spec.ts --stage <name>` and then HANDS OVER to `/email-the-community` from its Step 3 onward for rendering, gating, preview, test send, plan block, batch build and send — it duplicates none of that, and runs once per stage. Not for emailing people who registered (that is done in Humanitix -> Email campaigns, not from this repo), not for the monthly newsletter, and it sends to the newsletter subscriber table, which now holds the whole imported Mailchimp list — so a send here reaches real people, and nothing has ever been sent from that list before.
+description: Promote ONE upcoming She Sharp event to the newsletter subscribers, across up to three campaign stages — a save-the-date, a line-up reveal and a last call — each a different email, built from the event's own record in `lib/data/json/events-custom.json` so the date, time, venue and registration link cannot disagree with the website. Use whenever someone wants the subscribers told about an event that has not happened yet — phrases like "email the list about the Les Mills panel", "tell everyone about next month's event", "promote Thursday's night to the mailing list", "send out the event announcement", "send the save the date", "do the last call for the hackathon", "can we let subscribers know about the hackathon", "宣传一下下个月的活动", "给邮件名单发个活动通知", "把这场活动群发给订阅者", "发个活动预告", "通知订阅者来参加". It generates one stage's MessageSpec with `scripts/email/event-announcement-spec.ts --stage <name>` and then HANDS OVER to `/email-the-community` from its Step 3 onward for rendering, gating, preview, test send, plan block, batch build and send — it duplicates none of that, and runs once per stage. Not for emailing people who registered (that is done in Humanitix -> Email campaigns, not from this repo), not for the monthly newsletter, and it sends to the newsletter subscriber table, which now holds the whole imported Mailchimp list — so a send here reaches real people. The list's first broadcast went out on 2026-08-31 (the August newsletter, 1,549 recipients), so one send is on the record and the three-per-month marketing cap already counts it.
 ---
 
 # Promote one upcoming event to the mailing list
 
-**Read this first: the list is real now, and nothing has ever been sent from
-it.** The `newsletter_subscribers` table — the double opt-in list that is now
-the only record of who asked to hear from She Sharp — holds the whole imported
-Mailchimp list (**1,549 mailable as at 2026-08-30**, and it moves; Step 2 prints
-the live number). So a send here reaches real people, and it would be the
-**first** send this list has ever received: the newsletter people actually
-receive still goes out from **Mailchimp**. None of that is a reason not to
-proceed — it is the reason to read the gates before you finish.
-`/email-the-community`'s test send, its Step 6 plan block ("nothing is sent
-until the user says send") and its chunk-by-chunk Step 8 are not paperwork here;
-they are the only thing between a draft and a list that has never had a message
-from this system. Step 2 reads the live count out loud before anything is built.
+**Read this first: the list is real, and it has been sent to exactly once.**
+The `newsletter_subscribers` table — the double opt-in list that is now the only
+record of who asked to hear from She Sharp — holds the whole imported Mailchimp
+list (**1,549 mailable as at 2026-08-30**, and it moves; Step 2 prints the live
+number). On **2026-08-31** the August newsletter went from it to all 1,549, which
+is the only broadcast in its history; the July 2026 issue was the last newsletter
+Mailchimp ever sent. So a send here reaches real people, and it is the list's
+*second* contact rather than its first — which changes the arithmetic in two ways
+you must check before drafting. **One:** nobody yet knows how that first send
+landed (Resend accepted all 1,549; delivery, bounces and complaints arrive later
+through the webhook), so there is no evidence this list is warm.
+**Two: the monthly cap has already been drawn on** — the August newsletter used
+one of 2026-08's three marketing sends, and a three-stage campaign needs three.
+None of that is a reason not to proceed — it is the reason to read the gates
+before you finish. `/email-the-community`'s test send, its Step 6 plan block
+("nothing is sent until the user says send") and its chunk-by-chunk Step 8 are
+not paperwork here. Step 2 reads the live count out loud before anything is
+built.
 
 **One event, up to three emails.** A campaign is not a single send. The event
 lifecycle SOP's own beat is a save-the-date while the date is still worth

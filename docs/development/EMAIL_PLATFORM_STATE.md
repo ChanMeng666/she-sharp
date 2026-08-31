@@ -1,12 +1,28 @@
 # The three email platforms — what each holds, and where the migration stands
 
-**Written 2026-08-30.** She Sharp's email runs across three platforms that were
-never designed to work together: **Mailchimp**, which still sends the newsletter;
-**Resend**, which is meant to replace it and has not yet sent a single issue; and
-**Humanitix**, which is a ticketing product that also turns out to be a mail
+**Written 2026-08-30. The newsletter cutover happened on 2026-08-31 and this file
+was updated for it.** She Sharp's email runs across three platforms that were
+never designed to work together: **Mailchimp**, which sent the newsletter until
+July 2026 and still sends event campaigns by hand; **Resend**, which took the
+newsletter over on 2026-08-31 and has now sent exactly one issue from this repo;
+and **Humanitix**, which is a ticketing product that also turns out to be a mail
 system, complete with its own campaigns, its own opt-in and its own unsubscriber
 list. A person arriving cold reads about one, assumes it is the whole picture,
 and gets the state of the migration wrong.
+
+**The cutover, in one paragraph.** On **2026-08-31** the August 2026 issue went
+to **1,549 recipients** — every `status = 'subscribed'` row in
+`newsletter_subscribers` after both suppression registers, with no drift — in
+**16 chunks** (15×100 + 49) through Resend's transactional batch API, under
+`--batch-validation strict`, one idempotency key per chunk, **0 failures**. The
+approval chain (stage 1 test, stage 2 review round, stage 3 the founder's
+approval) is on the record in
+`.claude/skills/monthly-newsletter/state/issues.json`. **What is established is
+that Resend accepted all 1,549 messages** — not that they landed. Delivery,
+opens, bounces and complaints are not known yet and will surface through the
+Svix bounce/complaint webhook. **And the Mailchimp account is untouched**: it has
+not been paused, downgraded or closed. See
+[`../deployment/MAILCHIMP_CANCELLATION.md`](../deployment/MAILCHIMP_CANCELLATION.md).
 
 This file is the **state-and-history layer**: an inventory of what each platform
 holds, which parts are live, what has been decided and when, the handful of
@@ -50,16 +66,17 @@ last section lists every measurement in this file and how to repeat it.
 
 | | **Mailchimp** | **Resend** | **Humanitix** |
 |---|---|---|---|
-| Role today | **Sends the newsletter** | Sends transactional mail; newsletter built but never sent | Sells tickets; **also sends registrant mail** |
-| Role after cutover | data archive only | sends everything from this repo | unchanged — keeps sending registrant mail |
+| Role today | Sent the newsletter until **July 2026**; still sends event campaigns composed by hand in its console | **Sends the newsletter** — first issue 2026-08-31; also sends transactional mail | Sells tickets; **also sends registrant mail** |
+| Role when Mailchimp is finally stopped | data archive only | sends everything from this repo | unchanged — keeps sending registrant mail |
 | Cost | paid monthly, being cancelled | Transactional Pro, $20/month, **kept** | free on the NZ charity rate |
 | Consent record | its own audience | **`newsletter_subscribers` in our Neon database** | per-order opt-in flag |
 | Driven from code? | read-only pulls, local tooling only | yes, the send path | reads only; **its mail features have no API at all** |
 | Opt-out register | its own | `email_optouts` + the committed hash register | a third, **event-scoped**, console-only |
 
-The single most-misread fact: **all three are sending mail today**, and after the
-cutover **two** still will. Retiring Mailchimp is not a consolidation onto one
-platform — it is a consolidation onto two, deliberately.
+The single most-misread fact: **all three are still sending mail today** — the
+newsletter cutover of 2026-08-31 moved one stream, not the account — and once
+Mailchimp is finally stopped **two** still will. Retiring Mailchimp is not a
+consolidation onto one platform — it is a consolidation onto two, deliberately.
 
 ---
 
@@ -77,20 +94,19 @@ true sentence anywhere, and neither is "Resend is on the free tier" — a claim
 that survived in four rate-limit comments until the same day, where it was wrong
 about the plan *and* about the number (Resend's documented limit is 10
 requests/second per team, on every plan). **What the upgrade removes is a quota
-blocker, and nothing else.** It does not make the cutover done: nothing has been
-sent from `newsletter_subscribers`, and the live newsletter still goes out from
-Mailchimp. Read any sentence that pairs "Pro" with "ready" as two separate
-facts.
+blocker, and nothing else.** It did not by itself make the cutover done — that
+took a further day, and the send on **2026-08-31** is what made it done. Read any
+sentence that pairs "Pro" with "ready" as two separate facts.
 
 **The newsletter is now the entire case for Pro.** Until 2026-08-30 there was a
 second argument — event fulfilment mail, which could exceed Resend's Free
 100-per-day cap. That argument is gone: `/send-event-emails` was retired and that
 mail moved to Humanitix, which does not touch the Resend quota
 ([`EMAIL_PLATFORM_STRATEGY.md`](EMAIL_PLATFORM_STRATEGY.md) §1, updated for this).
-So the plan is currently paying for a capability nothing uses. **The maintainer
-has decided not to downgrade**: the cutover is going ahead, and Resend takes over
-the functions Mailchimp performs today. Treat "why are we paying for this?" as
-answered, not open.
+**The maintainer decided on 2026-08-30 not to downgrade**, and the send of
+2026-08-31 settled it in the other direction as well: the plan is no longer
+paying for a capability nothing uses — 1,549 messages went through it. Treat
+"why are we paying for this?" as answered, not open.
 
 ### `newsletter_subscribers` — the consent record
 
@@ -117,11 +133,17 @@ file's. What the table *contains* is:
   which names the API pull and its date in full. If you need "which rows came
   from the API?", query `confirmed_at IS NULL`, not `source`.
 
-**Nothing has been sent to this list.** A populated list is not a cutover, and
-the live newsletter still goes out from Mailchimp. Say it that way rather than
-"nothing has ever been sent", because the send pipeline itself has run:
-`email_events` holds **6 rows for 1 distinct person**, from test sends to the
-maintainer's own address. No row of this table has ever received anything.
+**This list has now been sent to, once.** On **2026-08-31** the August 2026
+newsletter went to all **1,549** mailable rows in 16 batch chunks with 0
+failures — the first broadcast in the table's history, and the moment a populated
+list became a cutover. Before that date the only traffic was test sends to the
+maintainer's own address (`email_events` held **6 rows for 1 distinct person** on
+2026-08-30), which is why every document in this repo said "nothing has been
+sent" up to 2026-08-30; those sentences are historical now, not current.
+**One send is not a routine.** Nothing beyond the August issue has gone out from
+this table, and **no delivery outcome is established** — Resend accepted all
+1,549 messages, and whether they landed will show up through the Svix
+bounce/complaint webhook and in `email_events`, not here.
 
 ### How the list was actually acquired
 
@@ -171,11 +193,15 @@ confirmation.
    answer the question `consent-rules.md` requires us to answer" — which, for a
    send, is the same operational answer.
 
-**What follows.** A ramped first send should be ordered by tier rather than by
-row order: T1 + T2 + T3 is **381** people with a nameable consent story, and
-`--restrict-to-hashes` on both recipient builders already takes a hash list.
-Nothing here justifies deleting rows — weak provenance is not proof that consent
-is absent, and the suppression file is one-way.
+**What follows.** The tiering existed so that a ramped first send could be
+ordered by tier rather than by row order: T1 + T2 + T3 is **381** people with a
+nameable consent story, and `--restrict-to-hashes` on both recipient builders
+already takes a hash list. **The first send did not use it.** On 2026-08-31 the
+August issue went to all **1,549** at once, which is a fact to record rather than
+a rule that was broken — no document ever required the ramp, and the founder
+approved the full list. The mechanism is still there for a future send that wants
+it. Nothing here justifies deleting rows — weak provenance is not proof that
+consent is absent, and the suppression file is one-way.
 
 **Re-take it with** the four sources named above and a set union in a scratch
 script; do not put addresses on disk. The reconstruction, not the database, is
@@ -187,7 +213,7 @@ Measured 2026-08-30:
 
 | | Rows | Note |
 |---|---|---|
-| `email_events` | **6**, for **1 distinct person** | Test sends only. This is the whole send history of the new pipeline |
+| `email_events` | **6**, for **1 distinct person** | Test sends only — **as at 2026-08-30, the day before the cutover**. The 2026-08-31 broadcast to 1,549 people has not been re-counted here; re-take it before quoting, and expect the webhook to have written delivery, bounce and complaint rows since |
 | `email_optouts` | **10** | Runtime opt-outs, written by the webhook and the one-click endpoint. **9 of the 10 are She Sharp's own mailboxes** — hard bounces from `probe-mailboxes.ts`, which `suppression.ts sync` deliberately refuses to fold into the committed register. Only **one** is a real contact, and `sync --dry-run` on 2026-08-30 reported it as **not yet in the register**: one entry of undrifted drift, waiting for somebody to run `sync` |
 | `lib/data/json/email-suppression-hashes.json` | **2,144** hashes | Committed, hash-only, and the reason 15 rows were held back at import |
 
@@ -222,7 +248,24 @@ batch command is run by a person.
 
 ## Mailchimp — the incumbent, being cancelled but not closed
 
-**It is still the live sender.** As at 2026-08-30 the account's own
+**It is no longer the newsletter's sender, and it is not switched off either.**
+Two separate facts, and conflating them is the trap this section now exists to
+prevent. **The July 2026 issue — `She Sharp Newsletter - July 2026`, sent
+2026-07-31 — was the last newsletter ever sent from Mailchimp** (stated by the
+maintainer on 2026-08-31, and consistent with `campaigns.json`). But Mailchimp
+has sent *event* campaigns since, composed by hand in its console: the archive's
+last two are the Les Mills EDMs of 2026-08-18 and 2026-08-22. So "Mailchimp still
+sends" is true of event mail and false of the newsletter, and a sentence that
+says only "Mailchimp is the live sender" is now wrong.
+
+**The account is still paid, still live and still holds the audience.** Nothing
+about the 2026-08-31 cutover paused, downgraded or closed it — that is a separate,
+founder-only job in
+[`../deployment/MAILCHIMP_CANCELLATION.md`](../deployment/MAILCHIMP_CANCELLATION.md),
+and its ordering precondition ("the last Mailchimp send must precede the
+downgrade") is the one thing the cutover *did* change.
+
+As at 2026-08-30 the account's own
 `campaign_last_sent` was **2026-08-27 20:37 UTC** — the 28th, New Zealand time.
 The same call reports `campaign_count: 217`, which is campaigns in **any**
 status referencing this audience, drafts included; it is **not** a send count.
@@ -307,8 +350,10 @@ tiering's independently-derived `ever-ticked 99`.
 
 **The asymmetry that produces this gap is structural, not an oversight.**
 `suppression.ts pull-mailchimp` pulls people who *leave*. **Nothing pulls in
-people who *join*.** While Mailchimp is still the live sender, new subscribers
-keep arriving there and a send from our table would silently skip them. That is
+people who *join*.** The 2026-08-31 cutover did not close this gap — the six site
+entry points have pointed at `/newsletter/subscribe` since 2026-08-29, but the
+Mailchimp forms are still live and still accepting sign-ups, so anyone who joins
+there is invisible to a send from our table. That is
 now a numbered step — item 6 of **Step 8a** in `.claude/skills/monthly-newsletter/SKILL.md`
 — and it is deliberately a *detection* step: it stops and reports, it does not
 import.
@@ -473,7 +518,13 @@ audience is an order of magnitude larger, so **downgrading ends Mailchimp sendin
 immediately while keeping the data.**
 
 That fixes the order of the whole migration: **the last Mailchimp send comes
-before the downgrade, and the exports come before both.** Everything else —
+before the downgrade, and the exports come before both.** **That precondition is
+now satisfied for the newsletter** — the July 2026 issue was the last one sent
+from Mailchimp, and the August issue went from Resend on 2026-08-31 — so the
+downgrade is **unblocked and is a live next action**, not a hypothetical. What
+still has to be decided before pressing it is whether any further *event*
+campaign will be composed in Mailchimp's console, because that mail would stop
+too. Everything else —
 which of pause or downgrade to pick, the one-per-lifetime downgrade, the **51**
 live site links into Mailchimp, what to export first — is in
 [`../deployment/MAILCHIMP_CANCELLATION.md`](../deployment/MAILCHIMP_CANCELLATION.md).
@@ -706,8 +757,8 @@ routinely assumed not to.**
 |---|---|---|---|
 | **1** | Humanitix checkout opt-in → **Mailchimp `She#`** | The live Humanitix→Mailchimp integration, writing `source: "Mahsa McCauley NZD"` | The integration is switched off |
 | **2** | Humanitix checkout opt-in → **`newsletter_subscribers`** | Orders CSV → `normalize-recipients.ts --for-import` → `import-optin-subscribers.ts` | **Never** — it does not use the integration |
-| **3** | Mailchimp → **`newsletter_subscribers`** | `import-mailchimp-subscribers.ts` over an export CSV, plus the 2026-08-30 API delta | The last import before the last Mailchimp send |
-| **4** | Mailchimp opt-outs → **the suppression register** | `suppression.ts pull-mailchimp` | The last Mailchimp send |
+| **3** | Mailchimp → **`newsletter_subscribers`** | `import-mailchimp-subscribers.ts` over an export CSV, plus the 2026-08-30 API delta | **Not yet.** The newsletter moved on 2026-08-31, but Mailchimp's sign-up forms are still live, so this crossing has to keep running until they are closed |
+| **4** | Mailchimp opt-outs → **the suppression register** | `suppression.ts pull-mailchimp` | **Not yet, and this one outlives the cutover.** Mailchimp still sends event campaigns, so an unsubscribe there is still real and still invisible to us until this is run |
 
 **Crossing 2 is the one that gets confused with crossing 1.** They start at the
 same tick-box on the same checkout page and end in different places by different
@@ -721,7 +772,9 @@ a registrant becomes a subscriber; `EMAIL_RESPONSIBILITY_BOUNDARIES.md`
 
 **Crossing 4 runs in one direction only.** It takes people *off* the send. There
 is no crossing that takes people *on* automatically — closing the joiner gap is
-a manual export, every month, until the cutover. See "The gap between Mailchimp
+a manual export, every month, until Mailchimp's sign-up forms are closed. The
+2026-08-31 newsletter cutover did **not** end either crossing 3 or crossing 4;
+both live on until the account itself is stopped. See "The gap between Mailchimp
 and our table" above.
 
 **What is deliberately not a crossing.** Humanitix's event-scoped unsubscriber
@@ -752,10 +805,15 @@ its diff.
 | **2026-08-30** | **Do not downgrade Resend Pro** even though the newsletter is now its only justification | The "we could save $20" thread — answered, not open |
 | **2026-08-30** | The 2022 checkout-opt-in question is **closed** from the orders CSV: the switch was off, and the integration wrote non-opted-in buyers in regardless | Two surviving readings, both wrong; and the belief that nothing in this repo could settle it |
 | **2026-08-30** | **Switch the Humanitix → Mailchimp integration off now**, not at cancellation | `MAILCHIMP_CANCELLATION.md`'s "keep it while Mailchimp is still billing" |
+| **2026-08-31** | **Cut over.** The August 2026 issue was broadcast from this repo through Resend's batch API to all **1,549** mailable rows — 16 chunks, `--batch-validation strict`, one idempotency key each, **0 failures** — after a three-stage approval chain ending in the founder's | Every sentence in this repo that said "nothing has ever been sent from `newsletter_subscribers`" or "the live newsletter still goes out from Mailchimp"; the July 2026 issue was the last newsletter Mailchimp ever sent |
 
-**Not yet decided, and blocking the cutover:** the date of the last Mailchimp
-send, and whether the Mailchimp exit is a pause or a downgrade. The runbook is
-written; nobody has picked a date.
+**Still open, and now unblocked rather than blocking:** whether the Mailchimp
+exit is a **pause** or a **downgrade**, and on what date. The precondition that
+used to gate it — the last Mailchimp send preceding the downgrade — is satisfied
+for the newsletter. What remains is a decision about *event* campaigns, which are
+still composed in Mailchimp's console and would stop with it. The runbook is
+written and is founder-only:
+[`../deployment/MAILCHIMP_CANCELLATION.md`](../deployment/MAILCHIMP_CANCELLATION.md).
 
 ---
 
@@ -818,6 +876,8 @@ nobody mistakes an open question for a settled one.
 | Claim | How |
 |---|---|
 | Subscriber count, opt-outs, register size | `npx tsx scripts/email/suppression.ts reconcile` |
+| The 2026-08-31 send itself — chunks, recipient counts, idempotency keys, the approval chain | `.claude/skills/monthly-newsletter/state/issues.json`, issue `2026-08`. It is the ledger, not a report; it records what was *submitted* |
+| What actually happened to those 1,549 messages | `npx tsx scripts/email/send-stats.ts` over `email_events`, which the Svix webhook writes. **Nothing in this file establishes a delivery, open or bounce outcome** |
 | Status / source / `confirmedAt` breakdown | `GROUP BY` over `newsletter_subscribers` |
 | Mailchimp audience counts, last send | `GET /lists/{id}` and `/lists/{id}/members?status=…`, dc `us3` |
 | Exactly one audience | `getLists()` in `lib/mailchimp/client.ts` |

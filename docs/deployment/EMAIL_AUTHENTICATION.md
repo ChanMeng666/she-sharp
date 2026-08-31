@@ -10,8 +10,9 @@ moved to the She Sharp–owned Resend team — see
 >    blocks each item. The actionable list.
 > 2. [Two traps](#two-traps) — the changes that break sending immediately.
 > 3. [Migrating the newsletter from Mailchimp to Resend](#migrating-the-newsletter-from-mailchimp-to-resend)
->    — the live newsletter is **still on Mailchimp**; this is the reason the rest
->    of this work exists.
+>    — **the newsletter moved to Resend on 2026-08-31**, one issue so far; the
+>    Mailchimp account is still live and still sends event campaigns. This is the
+>    reason the rest of this work exists.
 >
 > **Applied 2026-07-31:** Stage 1 (DMARC Management + `rua`), Stage 2a (Google
 > in root SPF), the sending-stream code, both Vercel env vars, and the Resend
@@ -600,12 +601,24 @@ the inbox — not Promotions, not Spam — through a change of sending platform.
 > `confirmedAt` from the export's `CONFIRM_TIME`. The register was topped up
 > first (2,138 → **2,144**), and `reconcile` reports no drift.
 >
-> **Not done: the send.** **Nothing has been sent.** The live newsletter **still
-> goes out from Mailchimp**, the Humanitix → Mailchimp integration still feeds
-> the Mailchimp audience, and the first real send is a separate, explicitly
-> approved step that must be **ramped**, not fired at the whole list at once. The ramp
-> and the retirement order below are still ahead of us; only the list-hygiene and
-> import half is behind.
+> **Done 2026-08-31: the send.** The August 2026 issue went from this repo to all
+> **1,549** mailable subscribers through Resend's batch API — 16 chunks,
+> `--batch-validation strict`, **0 failures** — after a three-stage approval chain
+> ending in the founder's. **The July 2026 issue was the last newsletter ever sent
+> from Mailchimp.**
+>
+> **It was not ramped.** This section had said the first send "must be ramped, not
+> fired at the whole list at once"; the send went to the full 1,549 in one sitting
+> instead, with the founder's approval. Recorded here as what happened rather than
+> quietly deleted, because the ramp was a deliverability tactic (see below) and
+> skipping it is exactly the condition under which the complaint-rate and
+> bounce-rate triggers below matter most. **Watch them on this send**:
+> `npx tsx scripts/email/send-stats.ts`.
+>
+> **Still not done:** the Humanitix → Mailchimp integration still feeds the
+> Mailchimp audience, Mailchimp's sign-up forms are still live, and the Mailchimp
+> account has **not** been paused, downgraded or closed. The retirement order
+> below is still ahead of us.
 
 ### Do these two things in separate months
 
@@ -864,15 +877,17 @@ opened a receipt, or an `unsubscribed` one who opened an old newsletter, is
 still out — `consent-rules.md` governs widening a list, and nothing here widens
 anything.
 
-**The list has moved. Nothing has been sent.** As at 2026-08-29 the
-**`newsletter_subscribers` table holds 1,545 rows** — 1,560 read from the
-2026-08-17 `subscribed` export, **15** held back by the suppression register, 0
-malformed. The Resend list still holds **0 contacts** and always did: the account
-moved to the She Sharp–owned team on 2026-08-28 and not even a test address was
-carried over, and the database superseded it the following day. The live
-newsletter still goes out from Mailchimp, so Mailchimp still holds the *sending*
-relationship even though it no longer holds the only copy of the list. Anyone who
-unsubscribes from a real newsletter does so there — which is why
+**The list moved on 2026-08-29, and on 2026-08-31 it was sent to.** As at
+2026-08-29 the **`newsletter_subscribers` table held 1,545 rows** — 1,560 read
+from the 2026-08-17 `subscribed` export, **15** held back by the suppression
+register, 0 malformed; two days later, at 1,549 after the API delta, all of them
+received the August newsletter from Resend. The Resend list still holds **0
+contacts** and always did: the account moved to the She Sharp–owned team on
+2026-08-28 and not even a test address was carried over, and the database
+superseded it the following day. **Mailchimp no longer holds the newsletter's
+sending relationship** — July 2026 was its last issue — but it is still a live,
+paid account that sends event campaigns and still runs sign-up and unsubscribe
+forms, so anyone who leaves *those* does so there. That is why
 `suppression.ts pull-mailchimp` is still a monthly job, not a migration step that
 has been ticked off.
 
@@ -937,8 +952,9 @@ writes to it on every bounce and complaint.
 `lib/data/json/mailchimp/campaigns.json` — **and it is a snapshot, already stale
 by at least one send**: its `totals.lastSend` is 2026-08-22, while a read-only
 `GET /lists/{id}` on 2026-08-30 returns `campaign_last_sent` 2026-08-27 and
-`campaign_count` 217. Mailchimp is still the live sender, so it will keep
-drifting; check `metadata.exportId` before quoting a total. It holds 180 sends
+`campaign_count` 217. Mailchimp is no longer the newsletter's sender — July 2026
+was its last issue — but the account still sends event campaigns, so this file
+will keep drifting; check `metadata.exportId` before quoting a total. It holds 180 sends
 and 188,796 emails from 2019-07 to 2026-08, **37.9% unique open** — or **33.1%** with Apple's proxy
 opens excluded — 881 hard bounces, 797 unsubscribes and 4 abuse reports across
 the whole history. Before this file the only campaign statistics anywhere were
@@ -994,10 +1010,11 @@ best-authenticated identity available.
 
 ### Decision 2026-08-29 — the recipient-count arm fires, and we are not splitting
 
-The first real newsletter send will be at most the size of the imported list —
+The first real newsletter send would be at most the size of the imported list —
 **1,549 as at 2026-08-30**, measured rather than estimated — which trips the middle
-trigger above on send one. (A *ramped* first send is smaller still; the trigger
-fires on the full-list send whenever it comes.) **The decision is not to split.** This is
+trigger above on send one. **It happened on 2026-08-31 and it was exactly 1,549**,
+un-ramped, so the trigger fired on the first send rather than on some later one.
+**The decision is not to split.** This is
 recorded as a decision so a future session reads it as settled rather than as an
 obligation somebody forgot.
 
@@ -1010,8 +1027,11 @@ would burn the one asset the migration is built to preserve: `newsletter@sheshar
 carries years of opens, replies and "not spam" signals, and a cold subdomain
 starts at "unknown sender". Doing it on the very first send from a new platform
 puts a cold identity where the risk is highest, to mitigate a risk that has not
-yet been measured. The trigger was written before the send existed; the send is
-the thing that will tell us whether the trigger was right.
+yet been measured. The trigger was written before the send existed; **the send
+has now happened (2026-08-31), and it is the thing that will tell us whether the
+trigger was right** — the answer is not in yet, because no delivery, bounce or
+complaint outcome is established. Read it with
+`npx tsx scripts/email/send-stats.ts` before re-opening this decision.
 
 **What this does and does not change.**
 
@@ -1058,7 +1078,11 @@ verified"* — and this account has none. Enabling tracking therefore means
 value back.** The same rule as the Vercel environment variables above, on a
 different surface.
 
-**Why it stays off for the first send.**
+**Why it stayed off for the first send — and still is.** The first send happened
+on **2026-08-31** with tracking off, exactly as decided here, so the August 2026
+issue has **no open or click data and is not supposed to**. The three reasons
+below are unchanged; the only thing that has moved is that "the first send" is
+now a past event rather than a plan.
 
 1. **What it buys is the least reliable number available.** Apple Mail Privacy
    Protection inflates opens so heavily that this organisation's own Mailchimp
@@ -1079,8 +1103,9 @@ different surface.
    wrong trade for a metric that changes no decision.
 
 This is the same reasoning as the section above, applied to a smaller change:
-one variable at a time, and the first send is not the moment to add one.
-**Revisit once the send is boring**, on the same evidence-not-calendar basis.
+one variable at a time, and the first send was not the moment to add one.
+**Revisit once the send is boring** — one issue is not boring yet — on the same
+evidence-not-calendar basis.
 Nothing is foreclosed — it remains one CNAME and one API call.
 
 ---
@@ -1150,20 +1175,20 @@ forgotten or deliberately skipped unless it says so.
 | 5 | **Stage 2b — Google DKIM** | ⚠️ **Workspace super-admin.** `website@` cannot open `admin.google.com`. Request text is in Stage 2, and it is folded into `docs/deployment/WORKSPACE_MAILBOX_CHECKLIST.md` so the admin does one sitting rather than two. | Whenever an admin is available |
 | 6 | **Stage 4 — `p=reject`** + root SPF `-all` | **hard-gated on #5** | Not before #5 |
 | 7 | **Decide the legacy SPF include** — drop `include:_spf.1stdomains.co.nz` if reports show nothing sends from those IPs (budget 4/10 → 1/10) | the reports from #1 | With #4 |
-| 8 | **Migrate the newsletter sending off Mailchimp** — see the section above. **The send path is built** (29 Aug 2026): `recipients-from-db.ts` → `build-newsletter-batch.ts` → a human runs the printed `resend emails batch` commands, off the transactional batch API rather than a Resend broadcast. **List hygiene is done** (18 Aug 2026): all four statuses exported and archived, and the non-subscribers are in the suppression register — **2,138 as at 2026-08-27**, not the 2,129 the export gave, so run `suppression.ts pull-mailchimp` immediately before the import rather than trusting the file. **The ramp cohort is no longer blocked** (27 Aug 2026): `scripts/mailchimp/recent-openers.ts` builds it from the API, and since 30 Aug 2026 `recipients-from-db.ts --restrict-to-hashes` applies it to a database-backed send (#8e). **The import is done** (29 Aug 2026): `newsletter_subscribers` holds **1,545** rows — 1,560 read, 15 held back by the register, which had been topped up to **2,144** first. What remains is **the send itself**, and it must be **ramped** — the whole list in one burst is the shape this document spends a section warning against. **Nothing has been sent.** | must NOT share a month with #2/#4 | A month with no DMARC change |
+| 8 | **Migrate the newsletter sending off Mailchimp** — see the section above. **The send path is built** (29 Aug 2026): `recipients-from-db.ts` → `build-newsletter-batch.ts` → a human runs the printed `resend emails batch` commands, off the transactional batch API rather than a Resend broadcast. **List hygiene is done** (18 Aug 2026): all four statuses exported and archived, and the non-subscribers are in the suppression register — **2,138 as at 2026-08-27**, not the 2,129 the export gave, so run `suppression.ts pull-mailchimp` immediately before the import rather than trusting the file. **The ramp cohort is no longer blocked** (27 Aug 2026): `scripts/mailchimp/recent-openers.ts` builds it from the API, and since 30 Aug 2026 `recipients-from-db.ts --restrict-to-hashes` applies it to a database-backed send (#8e). **The import is done** (29 Aug 2026): `newsletter_subscribers` holds **1,545** rows — 1,560 read, 15 held back by the register, which had been topped up to **2,144** first. ~~What remains is **the send itself**~~ — **done 31 Aug 2026.** The August 2026 issue went to all **1,549** mailable subscribers in **16 chunks**, `--batch-validation strict`, 0 failures, from `newsletter@shesharp.org.nz` with a per-recipient signed one-click unsubscribe on every message. **It was not ramped**: this row had asked for a ramp and the send went to the whole list at once, with the founder's approval — recorded rather than deleted, because it means the rate arms in #15 are carrying the risk the ramp was meant to carry. **The July 2026 issue was Mailchimp's last newsletter.** Not done: Mailchimp itself, which is still live and still sends event campaigns (#9, and `MAILCHIMP_CANCELLATION.md`). | must NOT share a month with #2/#4 | **Done 31 Aug 2026** — and note it landed in the same month as no DMARC change, which is what the constraint asked for |
 | 8b | ~~**Migrate the subscribe funnel**~~ — **Done 29 Aug 2026.** `/api/newsletter/subscribe` now writes a `pending` row to `newsletter_subscribers` and sends a confirmation email; the person becomes mailable only by pressing the button on `/newsletter/confirm` (POST, never GET — a link scanner must not be able to confirm). All **six** `MAILCHIMP_CONFIG.subscribeUrl` links now point at `/newsletter/subscribe`, and `subscribeUrl` has been deleted from the config. (This row previously said "16 links"; there were 6, plus 1 `archiveUrl`.) | — | **Done** |
 | 8c | ~~**Decide `MAILCHIMP_CONFIG.archiveUrl`'s replacement.**~~ **Done 30 Aug 2026.** All **179** sent campaigns are committed to `lib/data/newsletter-archive/` with their images re-hosted on Vercel Blob, and `/resources/newsletters/<id>` serves every one — so all 59 cards, not just the months built here, open this site. The footer's "Read past issues" points at `/resources/newsletters`; the "Open full archive" button was **removed rather than repointed**, because that page is the archive. `archiveUrl` was the last field in `lib/data/newsletters.ts`, so the file went too. Detail in item 3 above and `MAILCHIMP_CANCELLATION.md` §4. | — | **Done** |
 | 8d | **Repoint or switch off the Humanitix → Mailchimp contact integration — still outstanding, and now the most urgent of these.** Configured in Humanitix, invisible from this repo, and it pushes event contacts into the `She#` audience on its own. "Sync contacts who haven't opted-in" was switched **off** and the checkout opt-in question **on** (both 2026-08-27), which fixes the consent shape but **not** the destination — nothing has been repointed. The 29 Aug import is what sharpened this: the audience it feeds is no longer where the list lives, so every opt-in Humanitix collects from here lands in a copy that is already stale and that nobody will send from. **And a measurement on 2026-08-30 sharpened it again, in the other direction**: while "Sync contacts who haven't opted-in" was on, the integration wrote **752 non-opted-in ticket buyers** into the `She#` audience, and the 29 Aug import carried every one of them into `newsletter_subscribers` — **48.5% of the list**. It was not merely writing to the wrong place; it was writing the wrong people. The founder-facing runbook for switching it off is `HUMANITIX_INTEGRATION_SHUTDOWN.md`. Those sign-ups are lost rather than merely misplaced, and the loss is silent. | — | **Now** — ahead of the first send, not after it |
 | 8e | ~~**Teach `recipients-from-db.ts` to take a hash allow-list.**~~ — **Done, 30 Aug 2026.** `--restrict-to-hashes <path>` now exists on the database path too, so the warm cohort from `recent-openers.ts` can be applied to the send a newsletter is actually built from; `--limit` ramps by row order, this ramps by engagement. The loader is shared with the CSV path (`scripts/email/restrict-hashes.ts`) rather than copied, it is applied after `--only` and before `--limit`, and on this path it cannot widen anything **by construction** — its input is already `selectMailable()`'s output, so a hash that is not a mailable subscriber adds nobody. A cohort that matches nothing is a hard error, not a silent batch of nobody. | — | **Done** |
 | 8f | ~~**Build the bulk-import path into `newsletter_subscribers`.**~~ — **Done, and run, 29 Aug 2026.** `scripts/email/import-mailchimp-subscribers.ts` carried the Mailchimp list over: 1,560 read, **15** held back by the suppression register, 0 malformed, **1,545 rows written**, each with `source = 'mailchimp-import'`, a provenance sentence in `consent_source`, and a real `confirmedAt` from the export's `CONFIRM_TIME`. Dry-run by default; `--apply` must be spelled out. It is the **Mailchimp carry-over only**. **Route 2 has had its own importer since 30 Aug 2026** — `scripts/email/import-optin-subscribers.ts`, dry-run by default, and `--apply` also demands `--event-unsubscribers-checked`. **Routes 3 and 4 still have no importer, deliberately**, and `/update-mailing-list` still says so. | — | **Done** |
 | 8g | ~~**Decommission the Resend Marketing objects**~~ — **done, 29 Aug 2026.** In code: `lib/newsletter/resend-api.ts`, `scripts/newsletter/setup-resend.ts`, `scripts/newsletter/seed-pilot-contacts.ts` and its example CSV deleted; the two env vars out of `.env.example`. In the Resend account: segment `Newsletter` (`95d452f5-…`) and topic `Monthly Newsletter` (`08e59693-…`) **deleted** — both held 0 contacts, verified before and after in both the dashboard and `resend segments list`. The team-default segment `General` (`9d195cb7-…`) was deliberately left alone. On Vercel production: `RESEND_NEWSLETTER_SEGMENT_ID` and `RESEND_NEWSLETTER_TOPIC_ID` **removed** with `vercel env rm`; `RESEND_API_KEY`, `RESEND_WEBHOOK_SECRET` and `EMAIL_UNSUBSCRIBE_SECRET` were confirmed untouched afterwards. No redeploy was needed — nothing read them. | — | **Done** |
-| 9 | **Retire the Mailchimp DNS records** (`k2`/`k3._domainkey`) | 2–3 clean Resend sends **and** #8b | After #8 proves out |
+| 9 | **Retire the Mailchimp DNS records** (`k2`/`k3._domainkey`) — **one clean Resend send in the bank as at 31 Aug 2026**, and Mailchimp is still sending event campaigns, so these records are still load-bearing | 2–3 clean Resend sends **and** #8b, **and** Mailchimp no longer sending anything | Not yet — #8 has proved out once |
 | 10 | ~~**Confirm someone reads `newsletter@`**~~ — **answered 2026-08-23: no.** Nobody on the team had its password on 2026-08-17, and a direct question in Slack went unanswered. It is no longer the Reply-To (that is now `info@`); it remains the From, which is correct and must not change. Naming an owner is item 3 on `WORKSPACE_MAILBOX_CHECKLIST.md`. | — | **Done** |
 | 11 | **`EMAIL_UNSUBSCRIBE_MAILTO`** — **keep it empty.** The intended target, `unsub@`, was probed on 2026-08-23 and hard-bounced: it does not exist. The HTTPS one-click URL alone satisfies RFC 8058 and both bulk-sender rulebooks, and a mailto into a weekly-read inbox would leave opt-outs unactioned for days — a compliance problem, not a convenience one. | — | **Decided: no** |
 | 12 | **TLS-RPT** (`_smtp._tls`) | needs a real inbox to receive reports (super-admin to create) | Optional, low value |
 | 13 | **MTA-STS** | a second Vercel domain + route | Optional — the only item here whose misconfiguration breaks *inbound* mail |
 | 14 | **BIMI** | a VMC (~USD 1,000–1,500/yr + trademark) | **Deliberately skipped** — not a defensible non-profit spend |
-| 15 | **Split marketing onto `news.`** — **the recipient-count arm fires on send one (~1,550) and we decided on 2026-08-29 not to split**; see "Decision 2026-08-29" above for the reasoning. The complaint and bounce arms are untouched and still fire. | the two rate arms (complaints >0.10%, hard bounces >2%); the recipient-count arm is **deferred by decision**, to be revisited on evidence | Only if a rate arm fires — or when the send is boring and the count arm can be re-decided |
+| 15 | **Split marketing onto `news.`** — **the recipient-count arm fired on send one (1,549, 31 Aug 2026) and we decided on 2026-08-29 not to split**; see "Decision 2026-08-29" above for the reasoning. The complaint and bounce arms are untouched and still fire. | the two rate arms (complaints >0.10%, hard bounces >2%); the recipient-count arm is **deferred by decision**, to be revisited on evidence | Only if a rate arm fires — or when the send is boring and the count arm can be re-decided |
 
 **Sequencing rule that governs several of these:** never change the ESP and the
 DMARC policy in the same month. If deliverability dips you must be able to say
@@ -1179,8 +1204,9 @@ which one caused it, and the fix for each is different.
   with a human in the loop — check last month's digest for unrecognised sources,
   and the last newsletter send's complaint (<0.1%) and bounce (<2%) rates.
 - **Monthly:** `npx tsx scripts/email/suppression.ts sync` to fold runtime
-  bounces and complaints into the committed register, and — while Mailchimp is
-  still the live sender — `npx tsx scripts/email/suppression.ts pull-mailchimp`
+  bounces and complaints into the committed register, and — while the Mailchimp
+  account is still live, which it is even though the newsletter left it on
+  2026-08-31 — `npx tsx scripts/email/suppression.ts pull-mailchimp`
   to fold in the opt-outs and hard bounces that happen over there. Also before
   any import, whenever that falls.
 - **Annually:** rotate DKIM keys, recount the SPF lookup budget, confirm the

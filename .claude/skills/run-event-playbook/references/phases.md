@@ -168,9 +168,13 @@ tile first, then one speaker a week.
 
 ## T-3w — Promotion to the mailing list
 
-**Gate.** The Resend segment has real contacts. **It does not today.** The roster
-records no imports, the broadcast ledger records no broadcasts, and the
-newsletter people actually receive still goes out from **Mailchimp**.
+**Gate.** The `newsletter_subscribers` table has real people in it — **it does**,
+**1,549 mailable as at 2026-08-30** (`npx tsx scripts/email/suppression.ts
+reconcile`, the `Mailable after suppression` line), and the Resend segment this
+line used to name was retired on 2026-08-29. The list has been broadcast to once,
+the August 2026 newsletter on **2026-08-31**, so a send from here is real mail to
+real people. **The second gate is the cap**: three marketing emails per calendar
+month across every skill, and the monthly newsletter is one of them.
 
 **Hand to.** `/promote-event`, which resolves the event, builds the spec for one
 campaign stage, and hands over to `/email-the-community` **from its Step 3**. It
@@ -188,13 +192,16 @@ broadcast key is free-form, so a populated ledger with no matching key reports
 `n/a` rather than accusing anyone of forgetting. Only an **empty** ledger is
 unambiguous.
 
-**What goes wrong.** Say "blocked", not "not done yet". Then offer the real
-choice — run `/update-mailing-list` first, send as a labelled rehearsal, or stop
-— and let the organiser pick. Do not quietly broadcast to a list of one as though
-it were a campaign.
+**What goes wrong.** If the count comes back tiny, say "blocked", not "not done
+yet" — a handful of rows now means a wrong database far more often than a real
+list. Then offer the real choice — run `/update-mailing-list` first, send as a
+labelled rehearsal, or stop — and let the organiser pick. Do not quietly
+broadcast to a list of one as though it were a campaign. The other way this goes
+wrong is the cap: check what this month has already used before promising three
+stages.
 
-**The line that must not be crossed.** The audience here is a Resend segment and
-nothing else. Never a registrant list, never a Humanitix export, never a database
+**The line that must not be crossed.** The audience here is the
+`newsletter_subscribers` table and nothing else. Never a registrant list, never a Humanitix export, never a database
 query. Someone who bought a ticket asked about *that event*, not to hear from She
 Sharp again.
 
@@ -464,9 +471,12 @@ event data and the month's real photographs.
 **Then check.** Nothing in `event-status.ts` covers this — the newsletter is not
 per-event state.
 
-**What goes wrong.** The same standing caveat as T-3w: **the live newsletter
-still goes out from Mailchimp.** The Resend version is piloted, not switched
-over.
+**What goes wrong.** The standing caveat here has flipped, and the new one is
+the opposite shape: **the newsletter now goes out from this repo through Resend**
+(first issue 2026-08-31, 1,549 recipients), so a newsletter mention is a real
+send to real people rather than a pilot. It also consumes one of the **three**
+marketing emails allowed in the calendar month, which is the number to check
+against whatever `/promote-event` has already used on this event.
 
 ---
 

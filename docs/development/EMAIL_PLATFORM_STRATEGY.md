@@ -294,8 +294,11 @@ event-mail tooling needed the same machinery.
 
 Items 1–4 are **built as of 2026-08-29**; item 5 is not, and was never required.
 Item 6 was not in the original audit and is the one that has actually *run*.
-For items 1–4, built means the code exists, is typechecked and has its own tests
-— **not** that anything has been sent. Nothing has been sent.
+For items 1–4, built meant the code exists, is typechecked and has its own tests
+— **not** that anything had been sent. **That last clause expired on 2026-08-31**,
+when the August 2026 issue was broadcast down this path to all 1,549 subscribers
+in 16 chunks with 0 failures. One issue: enough to say the design works end to
+end, not enough to call it routine, and no delivery outcome is established.
 
 1. ~~**A subscribers table.**~~ **Done.** `newsletter_subscribers` in
    `lib/db/schema/system.ts`, migration `0032_sweet_maria_hill.sql`, **applied to

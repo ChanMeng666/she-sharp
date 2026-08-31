@@ -26,13 +26,13 @@ flowchart TD
   PERSON(["<b>One person</b><br/>about their own thing"])
   NOBODY(["<b>Anybody else</b><br/>a spreadsheet, a list of cards,<br/>people who 'would probably want it'"])
 
-  SUBS --> MC["<b>Mailchimp</b><br/>the monthly newsletter<br/><i>this is what sends it today</i>"]
-  SUBS --> RS["<b>Resend</b><br/>everything sent from<br/>our own website<br/><i>nothing has gone to the list yet</i>"]
+  SUBS --> RS["<b>Resend</b><br/>the monthly newsletter, and<br/>everything sent from our own website<br/><i>this is what sends it, since 31 Aug 2026</i>"]
+  MC["<b>Mailchimp</b><br/>event campaigns, written by hand<br/><i>sent the newsletter until July 2026</i>"]
   PERSON --> RS
   BUYERS --> HX["<b>Humanitix</b><br/>reminders, the room number,<br/>the thank-you<br/><i>written by hand, in Humanitix</i>"]
   NOBODY --> NO(["<b>Nothing. Ever.</b><br/>there is no tool,<br/>and that is deliberate"])
 
-  MC --> RETIRE["Being retired.<br/>The payment stops; the account stays<br/><i>only the founder can do this</i>"]
+  MC --> RETIRE["Being retired.<br/>The payment stops; the account stays<br/><i>not done yet — only the founder can do this</i>"]
   HX --> WINDOW["Stops 14 days after<br/>the event ends<br/><i>after that there is no tool at all</i>"]
 
   classDef list fill:#dbeafe,stroke:#2b5fd9,color:#12306e
@@ -112,20 +112,26 @@ rules.
 ## 2. Which system sends what
 
 Three platforms send email on She Sharp's behalf. Two of them survive the move
-we are in the middle of.
+we are in the middle of — the newsletter half of which is done.
 
 | The people | Where it is written | What sends it | The address it comes from |
 |---|---|---|---|
 | Newsletter subscribers | our own project | **Resend** | `newsletter@shesharp.org.nz` |
-| Newsletter subscribers, **today** | Mailchimp | **Mailchimp** | the Mailchimp account's address |
+| Newsletter subscribers, before 31 Aug 2026 | Mailchimp | **Mailchimp** — last issue July 2026 | the same `newsletter@` address |
 | One event's ticket buyers | the Humanitix console, by hand | **Humanitix** | a Humanitix address |
 | One person, about their own thing | our own project | **Resend** | `noreply@` or `info@shesharp.org.nz` |
 
-### Mailchimp — still the one that sends the newsletter
+### Mailchimp — no longer the newsletter, still switched on
 
-**Every newsletter that has actually reached anybody was sent from Mailchimp,
-including the next one unless you are told otherwise.** It is being retired, but
-retired is not the same as gone.
+**The newsletter left Mailchimp on 31 August 2026.** The July 2026 issue was the
+last one Mailchimp ever sent; August went out from our own project through
+Resend, from the same `newsletter@shesharp.org.nz` address, so nothing changed
+from a reader's side.
+
+**Mailchimp is still there.** Event campaigns are still written and sent from its
+console, and its sign-up and unsubscribe pages still work. It is being retired,
+but retired is not the same as gone — and nothing about the newsletter move has
+touched the account.
 
 Two things staff should know about the retirement:
 
@@ -133,9 +139,11 @@ Two things staff should know about the retirement:
   two different buttons on two different screens in Mailchimp, and only one of
   them is happening. The account, the audience and seven years of campaign
   history stay.
-- **The last Mailchimp newsletter has to go out before the payment stops**, not
-  after. Once the account drops to the free plan it cannot send to a list this
-  size at all.
+- **The last Mailchimp send has to go out before the payment stops**, not after.
+  Once the account drops to the free plan it cannot send to a list this size at
+  all. **For the newsletter this is already settled** — July 2026 was the last
+  one — so what is left to decide is whether any further *event* campaign will be
+  sent from there.
 
 Only the founder can do any of it — it needs the Mailchimp login, and nobody
 working on the website has that.
@@ -147,7 +155,7 @@ working on the website has that.
 ### Resend — everything that leaves our own website
 
 Password resets, verification links, donation receipts, mentorship application
-updates, replies to the contact form, and — when the move finishes — the
+updates, replies to the contact form, and — since 31 August 2026 — the monthly
 newsletter. All of it from `shesharp.org.nz`.
 
 ### Humanitix — mail to one event's ticket buyers
@@ -181,9 +189,11 @@ event, not when the photographs are ready.
 
 ## 3. Before the monthly newsletter goes out
 
-> **Not in place yet.** The steps below are agreed and built, but the change that
-> enforces them has not been merged. Until it is, the ordering is a habit rather
-> than a gate. Ask in `#website-team` before running a newsletter send.
+> **In place, and it has been used once.** The August 2026 issue went through all
+> three stages on 2026-08-31 and was then broadcast to 1,549 people — the first
+> newsletter ever sent from She Sharp's own list. The record of what cleared each
+> stage is kept automatically. Ask in `#website-team` before running a newsletter
+> send anyway: the gate stops the wrong *order*, not the wrong *decision*.
 
 Three stages, in this order. Each one has to be on the record before the next
 can happen.
@@ -203,14 +213,14 @@ missing, if the approval was recorded before the review round it is supposed to
 follow, or if there is no approval at all. It is designed so the send cannot be
 half-run.
 
-**One thing is waiting on a person, not on code.** The list of internal
-reviewers currently names only the founder, and the review round **refuses to
-run** with a round of one. Somebody has to supply the names and addresses of the
-newsletter, marketing and events people who should see an issue before it goes
-out. Until they are supplied, stage 2 cannot happen and therefore nor can a
-send.
+**The reviewer list is no longer waiting on anybody.** It names the founder plus
+the newsletter, marketing and events people; the default round is **4 people at
+5 addresses**, and the August 2026 round reached all of them. The round still
+**refuses to run** if anybody on the list has no address on your machine — that
+is the check working, not a fault, and the fix is to update your local address
+file rather than to send to whoever resolved.
 
-A useful thing to ask, once this is live:
+A useful thing to ask:
 
 ```
 Has the NEWSLETTER MONTH issue cleared all three approval stages? Show me what
@@ -227,8 +237,9 @@ announcement to the whole list is one of them. Promoting an event is one of
 them. Sending a big list in several batches over a few days is still **one**,
 not one per batch.
 
-> **Not in place yet** as an automatic check — same change as the section above.
-> The number is the agreed rule either way.
+> **In place as an automatic check**, counting across the newsletter and the
+> announcement ledgers together. **The August 2026 newsletter used 1 of the 3 for
+> 2026-08**, leaving two.
 
 ### The reason, in the terms that matter
 
@@ -397,22 +408,35 @@ happened and never updates it.
 
 ---
 
-## 8. What is not switched over yet
+## 8. What has switched over, and what has not
 
-Say this plainly whenever it comes up, because a list that exists invites the
-assumption that it is in use.
+Say this plainly whenever it comes up, because "the newsletter has moved" gets
+heard as "Mailchimp is gone", and it is not.
 
-- **Nothing has ever been sent from She Sharp's own subscriber list.** Not one
-  email. The pipeline has been tested to the maintainer's own address and
-  nowhere else.
-- **The live newsletter still goes out from Mailchimp.** A populated list is not
-  a cutover.
-- The subscribe form, the confirmation step and the one-click unsubscribe **are**
-  live on the website today.
-- The approval chain and the frequency cap in sections 3 and 4 are **built but
-  not merged**, and the reviewer names have not been supplied.
+**Switched over, on 2026-08-31:**
 
-If somebody describes the move off Mailchimp as done, it is not.
+- **The newsletter now goes out from She Sharp's own subscriber list**, through
+  Resend. The August 2026 issue reached **1,549** people. **The July 2026 issue
+  was the last newsletter ever sent from Mailchimp.**
+- The approval chain and the frequency cap in sections 3 and 4 are live, and the
+  reviewer list is filled in.
+- The subscribe form, the confirmation step and the one-click unsubscribe have
+  been live on the website since 2026-08-29.
+
+**Not switched over, and easy to overclaim:**
+
+- **The Mailchimp account is still open and still paid.** It has not been paused,
+  downgraded or closed — that is a separate job only the founder can do. Event
+  campaigns are still written and sent from its console, and its sign-up and
+  unsubscribe forms still work, so somebody can still join or leave over there
+  without our list knowing.
+- **One issue is not a routine.** Exactly one newsletter has gone out this way.
+- **We do not yet know how it landed.** Resend accepted all 1,549 messages;
+  whether they arrived, and how many bounced or complained, is measured
+  separately and has not been reported yet.
+
+If somebody describes leaving Mailchimp as done, it is not: the newsletter has
+moved, the account has not been stopped.
 
 ---
 

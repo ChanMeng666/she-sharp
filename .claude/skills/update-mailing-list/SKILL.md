@@ -1,6 +1,6 @@
 ---
 name: update-mailing-list
-description: Inspect and safely change who is on She Sharp's newsletter mailing list — the `newsletter_subscribers` table, which is now the organisation's marketing-consent record — using `scripts/email/inspect-subscribers.ts`, `scripts/email/audience-report.ts`, `scripts/email/normalize-recipients.ts` and `scripts/email/suppression.ts`. Use whenever the user wants to see or change who is on the list — phrases like "add these attendees to the mailing list", "who's on our email list?", "import this sign-up sheet", "subscribe these people", "take her off the list", "how many subscribers do we have?", "why is this person getting our emails?" — or anything about unsubscribes, bounces, complaints or suppression. Covers roster reporting from the database, any-shape CSV normalisation, the four-way consent gate, and the do-not-contact registers; nothing is changed before an explicit plan approval. Read `references/consent-rules.md` first — registering for an event is not subscribing. The list holds the Mailchimp audience, carried over on 2026-08-29, and `scripts/email/import-optin-subscribers.ts` now imports the people who ticked a registration form's opt-in box (consent route 2); a paper sign-in sheet and a written request (routes 3 and 4) still have no tool and stay one person at a time. It also **owns closing the joiner gap** — the people who sign themselves up on Mailchimp's own forms while Mailchimp is still the live sender; `/monthly-newsletter` only detects that gap and hands it here. It is the hard prerequisite for `email-the-community`.
+description: Inspect and safely change who is on She Sharp's newsletter mailing list — the `newsletter_subscribers` table, which is now the organisation's marketing-consent record — using `scripts/email/inspect-subscribers.ts`, `scripts/email/audience-report.ts`, `scripts/email/normalize-recipients.ts` and `scripts/email/suppression.ts`. Use whenever the user wants to see or change who is on the list — phrases like "add these attendees to the mailing list", "who's on our email list?", "import this sign-up sheet", "subscribe these people", "take her off the list", "how many subscribers do we have?", "why is this person getting our emails?" — or anything about unsubscribes, bounces, complaints or suppression. Covers roster reporting from the database, any-shape CSV normalisation, the four-way consent gate, and the do-not-contact registers; nothing is changed before an explicit plan approval. Read `references/consent-rules.md` first — registering for an event is not subscribing. The list holds the Mailchimp audience, carried over on 2026-08-29, and `scripts/email/import-optin-subscribers.ts` now imports the people who ticked a registration form's opt-in box (consent route 2); a paper sign-in sheet and a written request (routes 3 and 4) still have no tool and stay one person at a time. It also **owns closing the joiner gap** — the people who sign themselves up on Mailchimp's own forms, which are still live even though the newsletter left Mailchimp on 2026-08-31; `/monthly-newsletter` only detects that gap and hands it here. It is the hard prerequisite for `email-the-community`.
 ---
 
 # Look after the mailing list
@@ -28,11 +28,14 @@ first time. Go and read that answer rather than repeating one from this file:
 **`Mailable after suppression`** line — the one to quote, because the
 `Subscribed rows` line above it is the table's own count before the two
 suppression registers are applied (**1,549 mailable as at 2026-08-30**, and it
-moves). What has **not** happened is a send: the monthly newsletter still goes
-out from Mailchimp, and nothing has ever been sent from this system. Two consequences to keep straight. Someone who unsubscribes from a
-real newsletter this month does so *in Mailchimp*, and only
-`suppression.ts pull-mailchimp` brings that back — so run it before you quote the
-list as current. And the Resend segment and topic were **deleted on 2026-08-29**
+moves). **A send has now happened**: the August 2026 newsletter went from this
+table to all 1,549 on **2026-08-31**, the first and so far only broadcast in its
+history, and Mailchimp's last newsletter was July 2026. What has **not** happened
+is Mailchimp going away — the account is still live, still sends event campaigns
+and still runs its own sign-up and unsubscribe forms. Two consequences to keep
+straight. Someone who unsubscribes over there this month does so *in Mailchimp*,
+and only `suppression.ts pull-mailchimp` brings that back — so run it before you
+quote the list as current. And the Resend segment and topic were **deleted on 2026-08-29**
 holding nobody; nothing in Resend is the list, and nothing in this repo reads
 one.
 
@@ -135,11 +138,11 @@ the database and are current. The subscriber table is not yet one of its section
 **Tell the user the real number, plainly and first:**
 
 > The mailing list has about <N> people on it — the Mailchimp list, moved into
-> our own database in August. The monthly newsletter still goes out from
-> Mailchimp for now; nothing has been sent from the new system yet. The 3000+
-> members you may be thinking of are in the database too, but the database never
-> recorded who agreed to receive email, so they aren't a list and can't be used
-> as one.
+> our own database in August. The monthly newsletter now goes out from our own
+> system: the first one, the August issue, was sent on 31 August 2026.
+> The 3000+ members you may be thinking of are in the database too, but the
+> database never recorded who agreed to receive email, so they aren't a list and
+> can't be used as one.
 
 Re-read the table before saying a number — fill `<N>` in from the database,
 never from this file, and don't do arithmetic on it.
@@ -467,9 +470,12 @@ tells you nothing. It does **not** mean the script is retired.
 
 ### Closing the joiner gap — a fresh export, and this skill owns it
 
-Mailchimp is still the platform that actually sends, so it is still where new
-subscribers arrive: people who fill in Mailchimp's own hosted or embedded signup
-form join *there* and appear in this table only if somebody brings them across.
+Mailchimp no longer sends the newsletter — that moved here on 2026-08-31 — but
+its **sign-up forms are still live**, which is what keeps this gap open: people
+who fill in Mailchimp's own hosted or embedded signup form join *there* and
+appear in this table only if somebody brings them across. Closing the gap now
+matters more, not less: those people asked for a newsletter that is no longer
+sent from where they signed up.
 Nothing does that automatically. **Measured 2026-08-30: 3 people were subscribed
 in Mailchimp and absent here** — a strict subset, 0 the other way — every one of
 them having opted in on 27 or 28 August, after the export was taken. That is
@@ -655,8 +661,10 @@ own.
    import was a dry run, or when 30 of them were held back. Quote the importer's
    own `WOULD IMPORT` / written counts, and say when a route has no tool at all.
    The same rule governs the
-   sending: the list exists, but **nothing has ever been sent from it** — never
-   let "we have N subscribers" drift into "we emailed N people".
+   sending: **one** broadcast has gone out from this list (the August 2026
+   newsletter, 2026-08-31, 1,549 recipients) and Resend *accepted* all of it —
+   never let "we have N subscribers" drift into "we emailed N people", and never
+   let "Resend accepted 1,549" drift into "1,549 people read it".
 
 ## Audience tiers — decision table
 
@@ -715,9 +723,13 @@ harmless; still tell the user.
 out of Resend; the segment and topic were deleted on 2026-08-29 holding nobody,
 and nothing in this repo reads them any more. `references/resend-roster-cli.md` has the detail.
 
-**Someone says "so we've emailed them all now?"** — no. The list moved; no send
-has happened. The monthly newsletter still goes out from Mailchimp, and the first
-send from this system is a separate, approved, **ramped** step.
+**Someone says "so we've emailed them all now?"** — once, on 2026-08-31: the
+August newsletter went to all 1,549. Two corrections to have ready. That is the
+*only* send from this system, so it is not a routine; and it says nothing about
+whether the mail landed — Resend accepted 1,549 messages, and delivery, bounces
+and complaints are reported separately. Every further send needs its own approval
+and comes out of the three-per-calendar-month cap, which August's newsletter has
+already drawn on.
 
 ## What this skill does *not* do
 
