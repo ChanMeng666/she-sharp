@@ -421,7 +421,8 @@ across three stages plus the monthly issue is four emails to the same ~1,549
 people. A ramped send counts once, not once per chunk.
 
 **The count is what this repo can see, and it is not what the list received.**
-Mailchimp is still the live sender and nothing it sends reaches these ledgers,
+Mailchimp went on sending event campaigns after the newsletter left it on
+2026-08-31, and nothing it sends reaches these ledgers,
 so the check prints a `NOT COUNTED: Mailchimp` notice under every figure. In
 **August 2026** it would have said `0/3` for a month in which the subscriber
 list took **five** marketing emails — four Mailchimp event campaigns (18, 22 and

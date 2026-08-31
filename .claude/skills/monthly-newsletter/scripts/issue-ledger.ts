@@ -73,8 +73,8 @@
  *
  * THE FREQUENCY HALF OF THAT GATE IS PARTIALLY SIGHTED, and every command that
  * prints its figure prints why. `marketing-frequency.ts` reads two ledgers in
- * this repository and nothing else; Mailchimp is still the live sender and
- * leaves no trace in either. August 2026 is the worked example — this gate
+ * this repository and nothing else; Mailchimp went on sending event campaigns
+ * after the newsletter left it on 2026-08-31, and leaves no trace in either. August 2026 is the worked example — this gate
  * would have read 0/3 in a month the subscriber list took five marketing
  * emails. See `BLIND_SPOT_NOTICE`, which is a migration note and carries the
  * condition for deleting it.

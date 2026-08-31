@@ -3,7 +3,8 @@
  *
  * WHAT THE NUMBER IS. Marketing campaigns **this repository has recorded** for
  * the current NZ month — not the number the subscriber list received. Mailchimp
- * is still the live sender and leaves no trace in these ledgers, so every
+ * went on sending event campaigns after it stopped sending the newsletter on
+ * 2026-08-31, and leaves no trace in these ledgers, so every
  * command here prints `BLIND_SPOT_NOTICE` beside its figure. In August 2026
  * this check would have said 0/3 for a month in which the list took five
  * marketing emails. The notice is meant to be deleted; the condition is in it.

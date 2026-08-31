@@ -4,8 +4,9 @@
  *
  * READ THE FIRST SENTENCE AGAIN. The number this module produces is what the
  * repo can see, and it is NOT the number of marketing emails the subscriber
- * list actually received. Mailchimp is still the live sender and nothing it
- * sends touches these ledgers. In August 2026 this counter said **0** for a
+ * list actually received. Mailchimp stopped sending the newsletter on
+ * 2026-08-31 but went on sending event campaigns to the same people, and
+ * nothing it sends touches these ledgers. In August 2026 this counter said **0** for a
  * month in which the same people received **five** marketing emails. Every
  * caller therefore renders {@link BLIND_SPOT_NOTICE} beside the figure, and
  * `FrequencyVerdict` carries it so that dropping it takes an edit rather than
@@ -148,8 +149,10 @@ export function blindSpotProse(lines: readonly string[] = BLIND_SPOT_NOTICE): st
  * value for a send this repo did not make.
  */
 export const BLIND_SPOT_NOTICE: readonly string[] = [
-  "NOT COUNTED: Mailchimp. It is still the live sender, and nothing it sends",
-  "  reaches these ledgers. This figure is what THIS REPO has recorded — it is",
+  "NOT COUNTED: Mailchimp. It stopped being the NEWSLETTER's sender on",
+  "  2026-08-31, but it went on sending EVENT campaigns to the same list, and",
+  "  nothing it sends reaches these ledgers. This figure is what THIS REPO has",
+  "  recorded — it is",
   "  not what the subscriber list received, and a 0 does not mean a quiet month.",
   "  August 2026 is the worked example: this counter read 0/3 while the same",
   "  list took four Mailchimp event campaigns (18, 22 and twice on 27 August)",
