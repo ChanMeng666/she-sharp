@@ -2220,9 +2220,9 @@
         "time": "5:00pm – 7:30pm NZST",
         "location": {
           "format": "in_person",
-          "venueName": "Les Mills Auckland City",
+          "venueName": "Les Mills International",
           "address": "Level 2, 200 Victoria Street West, Auckland Central, Auckland 1010",
-          "city": "Auckland",
+          "city": "",
           "country": "New Zealand"
         },
         "fullDescription": [
