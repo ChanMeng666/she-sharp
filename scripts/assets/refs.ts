@@ -61,7 +61,6 @@ export const SCAN_ROOTS: ScanRoot[] = [
   { dir: "styles", exts: [".ts", ".tsx", ".js", ".jsx", ".css"] },
   { dir: "emails", exts: [".ts", ".tsx", ".js", ".jsx", ".css"] },
   { dir: "scripts", exts: [".ts", ".mts", ".mjs", ".js", ".py"] },
-  { dir: "report", exts: [".json", ".typ", ".mjs", ".js"] },
   { dir: ".claude", exts: [".md", ".ts", ".json"] },
   { dir: "docs", exts: [".md"] },
   { dir: "public", exts: [".ts"] },

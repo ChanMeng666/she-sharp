@@ -46,6 +46,19 @@ jobs:
       - name: Verify newsletter email-safe covers
         run: npx tsx scripts/newsletter/email-covers.ts --check
 
+      # The one check here whose failure NOTHING else can see. poster-type.ts
+      # hands resvg four absolute font paths with `loadSystemFonts: false`, and
+      # resvg does not raise on a path it cannot open — it renders in whatever
+      # is left, and a poster set entirely in the wrong face looks deliberate.
+      # `assertFamiliesDistinct()` does catch that, but only inside
+      # build-event-poster.ts, which CI never runs; the two poster jobs below
+      # import poster-type.ts and stay green because the files are read at
+      # RENDER time. The fonts lived in report/fonts/ until 2026-09-01, when the
+      # Typst projects left for NZ-SheSharp/she-sharp-reports — exactly the move
+      # that would have gone green here and broken every poster locally.
+      - name: Verify the poster fonts resolve
+        run: npx tsx scripts/events/fonts.test.ts
+
       # The ownership check inside `verify-image-paths.ts` is generated from
       # resolveOwner(), which decides the event each of the ~170 files belongs
       # to. A wrong answer there is silent — the

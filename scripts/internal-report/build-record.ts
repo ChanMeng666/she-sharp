@@ -2,7 +2,8 @@
  * build-record.ts — the data behind the internal record report.
  *
  * She Sharp's outward-facing numbers are chosen; this one is counted. The
- * report at `report-internal/` exists so the team can see what the systems
+ * report at `report-internal/` (now in NZ-SheSharp/she-sharp-reports) exists
+ * so the team can see what the systems
  * actually recorded between 2019 and now, including the parts nobody would put
  * in a funding application, and this script is the only thing that puts a
  * number into it.
@@ -29,7 +30,7 @@
  *   npx tsx scripts/internal-report/build-record.ts
  *   npx tsx scripts/internal-report/build-record.ts --out somewhere/else.json
  */
-import { mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
 import { readCsv as readHumanitixCsv, parseDmyToIso } from "../humanitix/csv";
@@ -217,13 +218,44 @@ function yearOfIso(value: string): string {
   return String(value ?? "").slice(0, 4);
 }
 
+/**
+ * Where `record.json` goes now that the report that reads it is a separate repo.
+ *
+ * `report-internal/` moved to NZ-SheSharp/she-sharp-reports on 2026-09-01, but
+ * this generator stayed: building the record means reconciling what the WEBSITE
+ * claims against what Humanitix and Mailchimp RECORDED, so it needs the live
+ * `lib/data/{events,sponsors,team,stats}` modules as well as the archives.
+ * Forking those four would let the internal record disagree with the website,
+ * which is worse than having no internal record.
+ *
+ * So the direction is: this repo produces the data, the other repo sets it. Same
+ * shape as HUMANITIX_VAULT_DIR / MAILCHIMP_VAULT_DIR — an explicit variable,
+ * then a sibling checkout, then a failure that names what to set.
+ */
+function defaultOutPath(): string {
+  const explicit = process.env.SHESHARP_REPORTS_DIR;
+  const candidate =
+    explicit ?? path.resolve(REPO_ROOT, "..", "she-sharp-reports");
+
+  if (!existsSync(path.join(candidate, "report-internal"))) {
+    throw new Error(
+      `Cannot find the she-sharp-reports checkout.
+` +
+        `Looked in: ${candidate}
+` +
+        `Set SHESHARP_REPORTS_DIR to it, or pass --out <file> to write the ` +
+        `record somewhere else. The report project that reads this file moved ` +
+        `to NZ-SheSharp/she-sharp-reports on 2026-09-01.`,
+    );
+  }
+  return path.join(candidate, "report-internal", "data", "record.json");
+}
+
 function main() {
   const argv = process.argv.slice(2);
   const humanitixExport = humanitixManifest.exports.at(-1)?.exportId ?? "";
   const mailchimpExport = mailchimpManifest.exports.at(-1)?.exportId ?? "";
-  const outPath =
-    argValue(argv, "--out") ??
-    path.join(REPO_ROOT, "report-internal", "data", "record.json");
+  const outPath = argValue(argv, "--out") ?? defaultOutPath();
 
   requireVaults(humanitixExport, mailchimpExport);
 

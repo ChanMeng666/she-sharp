@@ -36,11 +36,21 @@
 
 import { readFileSync } from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 import { Resvg, type ResvgRenderOptions } from "@resvg/resvg-js";
 import sharp from "sharp";
 
-const ROOT = process.cwd();
+/**
+ * The repository root, derived from this file rather than from `process.cwd()`.
+ *
+ * Every path below — the four font files, the logos, the poster plates — is
+ * spelled relative to the repo, so a `cwd` of anywhere but the root produced a
+ * confusing ENOENT. The fonts make that worse than confusing: resvg does not
+ * raise on a font file it cannot open, it falls back silently, and a poster set
+ * entirely in the wrong face looks deliberate.
+ */
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..");
 
 export const DISPLAY = "Bricolage Grotesque";
 export const BODY = "Instrument Sans";
@@ -60,7 +70,7 @@ const FONT_FILES = [
   "InstrumentSans-VF.ttf",
   "InstrumentSans-Italic-VF.ttf",
   "Carattere-Regular.ttf",
-].map((file) => path.join(ROOT, "report/fonts", file));
+].map((file) => path.join(ROOT, "scripts/events/fonts", file));
 
 export const RESVG_OPTIONS: ResvgRenderOptions = {
   font: {
@@ -358,7 +368,7 @@ export function inlineLogo(
  * A misspelled family does not raise — it renders in whatever fontdb hands back,
  * and a poster set entirely in the wrong face looks deliberate. Measuring one
  * probe string in each family and requiring three distinct widths costs three
- * milliseconds and catches a renamed font file, a moved `report/fonts`, and a
+ * milliseconds and catches a renamed font file, a moved `scripts/events/fonts`, and a
  * typo in a family constant.
  */
 export function assertFamiliesDistinct(): void {
@@ -375,7 +385,7 @@ export function assertFamiliesDistinct(): void {
       "Two font families measured identically, which means at least one did not load " +
         "and resvg fell back silently:\n" +
         [...widths].map(([f, w]) => `  ${f} → ${w}`).join("\n") +
-        `\nCheck the four TTFs in report/fonts/.`,
+        `\nCheck the four TTFs in scripts/events/fonts/.`,
     );
   }
 }

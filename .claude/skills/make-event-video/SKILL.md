@@ -1,6 +1,7 @@
 ---
 name: make-event-video
 description: Build a short social video for one She Sharp event, in every size the organisation actually posts — 1080×1920 vertical, 1080×1350 feed, 1080×1080 square, 1920×1080 landscape — as a Remotion composition cut to a Suno soundtrack. Use this whenever someone wants a promo before the night or a recap after it — phrases like "make a promo video for the Les Mills event", "we need a Reels for Thursday's panel", "can you do a recap of last week's night", "TikTok for the hackathon", "LinkedIn video", "event trailer", "aftermovie", "highlight video", "活动宣传视频", "给这场活动做个短视频", "活动回顾视频", "做个 Reels", "做个 TikTok", "领英视频", "宣传片", "回顾片" — and also when they ask to add music to a video already in progress, or to re-render after a date, venue or speaker changed. Facts come from the event record so the video cannot disagree with the website. Not for still posters (that is /make-event-poster), not for the projected deck (that is /build-event-slides), and not for emailing anyone.
+disable-model-invocation: true
 ---
 
 # Make a video for one event

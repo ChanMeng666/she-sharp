@@ -14,7 +14,6 @@ const eslintConfig = [
     ignores: [
       ".next/**",
       "node_modules/**",
-      "report/**",
       "public/**",
       "tmp/**",
       "lib/db/migrations/**",

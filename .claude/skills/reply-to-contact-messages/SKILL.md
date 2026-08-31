@@ -1,6 +1,7 @@
 ---
 name: reply-to-contact-messages
 description: Answer She Sharp's contact-form enquiries — reconciling `contact_form_submissions` against the #contact-form-notifications Slack channel (C0AGVRL0G5A), drafting and gating a MessageSpec with `scripts/email/render-message.ts`, sending via the Resend CLI, then closing the row with `scripts/email/mark-contact-replied.ts` and noting the Slack thread. Use whenever the user works the contact inbox — phrases like "who hasn't been replied to yet", "reply to the contact form messages", "clear the enquiry inbox", "answer the person asking about sponsorship", "draft a reply to the person who emailed us", "回一下联系表单", or anything about turning a contact-form submission into a sent reply. Covers QA/test rows never emailed, sponsor leads, vendor pitches, DB↔Slack drift, dry-run previews, one-reply-per-row idempotency via `reviewed_at`, and stopping when a minor or safeguarding concern appears. Tone/templates: references/reply-voice-and-templates.md.
+disable-model-invocation: true
 ---
 
 # Reply to the messages people sent through the contact form

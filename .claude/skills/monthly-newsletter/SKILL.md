@@ -1,6 +1,7 @@
 ---
 name: monthly-newsletter
 description: Guides a Claude Code session through She Sharp's monthly newsletter loop — creating the month's issue file locally, writing the human editorial content (founder note, cover, photo of the month, subject/preview), curating the month's REAL event photos onto Vercel Blob, sanity-checking the NZ Tech Pulse data section, previewing and test-sending, then approving the issue and building the per-recipient send batch from the subscriber database to the June 2026 showcase quality bar. Use whenever the user wants to work on the monthly newsletter — phrases like "review this month's newsletter", "let's do the newsletter draft", "edit the newsletter", "approve the newsletter", "send the newsletter", "the newsletter for August", or anything about turning the month's issue file into an email that goes out. Reference issue (THE approved template): lib/data/json/newsletter-issues/2026-06.json.
+disable-model-invocation: true
 ---
 
 # Run the monthly newsletter loop
