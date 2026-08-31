@@ -34,8 +34,14 @@ on:
     - cron: '0 19 * * 0-4'
   workflow_dispatch:
 
-# Editing the standing issue is the only write this workflow makes.
+# Editing the standing issue is the only WRITE this workflow makes — but a
+# `permissions:` block REPLACES the default set rather than adding to it, so
+# every scope left out is `none`, including `contents`. Omitting `contents: read`
+# revoked `actions/checkout`'s ability to clone and the first dispatched run died
+# on `repository 'NZ-SheSharp/she-sharp' not found` — which reads as a deleted
+# repository or a bad token, and is neither.
 permissions:
+  contents: read
   issues: write
 
 # A scheduled run and a manual one must never interleave — two processes editing
