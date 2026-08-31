@@ -1202,8 +1202,9 @@ is about how often a person's inbox is touched, and a ramp touches each inbox
 once.
 
 **And the count is a floor, not a measurement.** It is what this repo has
-recorded; Mailchimp is still the live sender and leaves no trace in the ledger,
-so `check` prints a `NOT COUNTED: Mailchimp` notice under every figure. **August
+recorded; Mailchimp stopped sending the newsletter on 2026-08-31 but went on
+sending event campaigns to the same list, and none of them leaves a trace in the
+ledger, so `check` prints a `NOT COUNTED: Mailchimp` notice under every figure. **August
 2026** is the worked example — the ledger read `0/3` for a month in which the
 subscriber list received **five** marketing emails: four Mailchimp event
 campaigns (18, 22 and twice on 27 August) plus this newsletter. Before you read
