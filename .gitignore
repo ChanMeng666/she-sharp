@@ -79,6 +79,11 @@ WARP.md
 # Email preview files
 tmp/
 
+# Host run-of-show scripts for in-person events. Local only — never publish.
+# Lives outside tmp/ so a local `CI=true npx next build` that clears tmp/
+# cannot wipe the night-of script.
+/host-scripts/
+
 # Newsletter photo pipeline scratch (harvested + transcoded event photos)
 
 # Local-only scripts (not for deployment)

@@ -2,9 +2,9 @@
  * Deck: No Pain, All Gain – Getting Fit for AI — Les Mills Auckland City,
  * Thursday 3 September 2026, 5:00–7:30pm.
  *
- * One evening, one host, one projector. The nine opening and five closing
+ * One evening, one host, one projector. The nine opening and six closing
  * slides come from `buildOpeningSlides()` / `buildClosingSlides()` so the team,
- * the impact figures and the sponsor wall stay live; the ten slides between
+ * the impact figures and the sponsor wall stay live; the eleven slides between
  * them are this evening.
  *
  * **Every fact on these slides is read from the event at build time** through
@@ -214,6 +214,26 @@ const EVENT_PAGE_QR: QrBlock = {
   caption: `shesharp.org.nz/events/${EVENT_SLUG}`,
 };
 
+/*
+ * Snapshotted, not live. `getUpcomingEvents()` is relative to today, so a live
+ * read would change the projector between rehearsal and the night. The next
+ * confirmed evening after this one is 8 October at Xero; if that date moves,
+ * edit this block and the public event page together.
+ */
+const UPCOMING_SNAPSHOT = [
+  {
+    title: "Beyond the Code",
+    date: "Thursday 8 October 2026",
+    time: "5:00–8:00pm",
+    venue: "Xero, Parnell",
+    blurb: "A live secure-coding tournament, and four women on pathways into cybersecurity",
+    image: {
+      src: "/img/events/code-secure-2026/cover.webp",
+      alt: "Poster for Beyond the Code, a She Sharp evening with Xero and Secure Code Warrior on 8 October 2026.",
+    },
+  },
+];
+
 // --- The evening -----------------------------------------------------------
 
 const EVENING: Slide[] = [
@@ -223,15 +243,11 @@ const EVENING: Slide[] = [
     section: "No Pain, All Gain",
     eyebrow: "Grab a plate, then sit",
     title: "The Shape of Tonight",
-    /* NO LEAD, and this is a layout constraint rather than a style choice. The
-       agenda layout sets the lead in a narrow column, so an eleven-word one
-       wrapped to two lines and pushed the fifth row — "Networking and event
-       close" — down into the archive band at the foot of the slide, where it
-       was unreadable. It did that at 1920×1080 as well as at 4:3, and neither
-       `lint-deck.ts` nor `deck.test.ts` can see it: overflow is only visible on
-       a rendered stage. Five rows is what this slide has room for. */
+    /* NO LEAD. Ten rows from the run sheet split into two columns (the layout
+       does that past seven), and a lead would steal the height the last row
+       needs. Overflow here is only visible on a rendered stage. */
     items: RUN_SHEET_ROWS,
-    note: "The most-looked-at slide of the night. Leave it up while people are still finding seats, and come back to it at the break. Read only the next two rows aloud — people photograph the slide for the rest.",
+    note: "The most-looked-at slide of the night. Leave it up while people are still finding seats. Read only the next two rows aloud — people photograph the slide for the rest. Amber takes the room at 5:40; the group photo is at 6:15, with no slide of its own.",
   },
 
   {
@@ -242,7 +258,7 @@ const EVENING: Slide[] = [
     title: "Thank You, Les Mills",
     lead: "The room, the food and four of tonight's voices",
     groups: [{ label: "Hosting with She Sharp", logos: PARTNERS, size: "lg" }],
-    note: "Name Les Mills and the person from Les Mills who is in the room. All four panellists work there, so say that now — it is the reason the panel spans four different jobs.",
+    note: "Name Les Mills, then hand the mic to Amber. She introduces Les Mills and the four panellists, and she facilitates the panel. All four voices work there, which is the reason the panel spans four different jobs.",
   },
 
   {
@@ -369,12 +385,12 @@ const EVENING: Slide[] = [
       "Everyone speaks before anyone speaks twice",
       "Agree one line to read out",
     ],
-    note: "PLACEHOLDER UNTIL THE NIGHT — the prompts come out of the panel, so say them aloud rather than expecting them on screen. Read these three mechanics slowly, then say how long they have and start the clock on the next slide.",
+    note: "PLACEHOLDER UNTIL THE NIGHT — the prompts come out of the panel, so say them aloud rather than expecting them on screen. Read these three mechanics slowly, then say they have twenty minutes and start the clock on the next slide.",
   },
 
   /*
-   * The clock is the run sheet's own allowance for this block — at the time of
-   * writing 15 minutes — and it is read from the event data on every build. To
+   * The clock is the run sheet's own allowance for this block — twenty minutes
+   * at 6:20–6:40 — and it is read from the event data on every build. To
    * change it, move the times in `events-custom.json`; do not edit a number
    * here, and do not regenerate just for this.
    */
@@ -425,7 +441,7 @@ const EVENING: Slide[] = [
     overlay: "scrim",
     title: "Stay a While",
     lead: "Networking and event close",
-    note: "Leave this up while people talk. It is the last thing they see before the thank-yous, and the food and drink are still out.",
+    note: "One beat, not a speech — closing remarks start at 6:50. Click through to Thank You, then the next event, then the codes. Leave the end slide up once networking begins.",
   },
 ];
 
@@ -545,11 +561,7 @@ export const eventLesmills03September2026Deck: Deck = {
       // were actually there — the 2024 Enviro Hackathon thank-you list was cut
       // back using unclaimed name badges for exactly this reason.
       thanksNames: [],
-      // Empty on purpose, and the slide disappears rather than projecting an
-      // empty promise. Nothing is confirmed in `events-custom.json` after
-      // 3 September 2026 — this evening is currently the last upcoming event in
-      // the repo. The events QR in the opening covers it until something is.
-      upcoming: [],
+      upcoming: UPCOMING_SNAPSHOT,
       // The feedback code is derived from the slug — nothing to paste.
       eventSlug: EVENT_SLUG,
       karakia: CLOSING_KARAKIA,

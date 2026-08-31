@@ -237,8 +237,8 @@ export function minutesOf(time: string): number | undefined {
  * How the table-discussion block is named in a run sheet, most specific first.
  *
  * Order carries the whole meaning. One loose pattern containing `discussion`
- * finds "Kickoff and panel discussion" at 5:30 before "Roundtable discussions"
- * at 6:15, which puts the panel's 45 minutes on a clock the room is watching
+ * finds "Panel discussion and Q&A" at 5:45 before "Roundtable discussions" at
+ * 6:20, which puts the panel's thirty minutes on a clock the room is watching
  * to know how long it has to talk.
  */
 export const DISCUSSION_ROW_PATTERNS: readonly RegExp[] = [

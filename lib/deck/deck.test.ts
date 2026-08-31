@@ -571,15 +571,16 @@ check(
 );
 check(
   "the Les Mills run sheet is found by its content, not its title",
-  runSheetFrom(loadEventForDeck("event-lesmills-03-september-2026")).items.length === 5,
+  runSheetFrom(loadEventForDeck("event-lesmills-03-september-2026")).items.length === 10,
 );
 
 /*
  * The countdown clock has to come from the table-discussion row, not from the
  * first row that happens to contain the word "discussion". A loose pattern
- * matched "Kickoff and panel discussion" at 5:30 and put a 45-minute clock on
- * the wall over a 15-minute exercise — and a wrong clock is obeyed, because
- * the clock is the thing a room actually watches.
+ * matched "Kickoff and panel discussion" at 5:30 before "Roundtable
+ * discussions" at 6:20, and put a forty-five-minute clock on the wall over a
+ * twenty-minute exercise — and a wrong clock is obeyed, because the clock is
+ * the thing a room actually watches.
  */
 const lesMillsSheet = runSheetFrom(loadEventForDeck("event-lesmills-03-september-2026"));
 const tableRow = findRowByPatterns(lesMillsSheet, [
@@ -589,11 +590,11 @@ const tableRow = findRowByPatterns(lesMillsSheet, [
 ]);
 check(
   "the table-discussion clock comes from the roundtable row, not the panel",
-  tableRow?.time === "6:15pm – 6:30pm" && minutesOf(tableRow.time) === 15,
+  tableRow?.time === "6:20pm – 6:40pm" && minutesOf(tableRow.time) === 20,
 );
 check(
   "the countdown length is derived, not a default",
-  discussionMinutesFrom(loadEventForDeck("event-lesmills-03-september-2026")) === 15,
+  discussionMinutesFrom(loadEventForDeck("event-lesmills-03-september-2026")) === 20,
 );
 
 /*
