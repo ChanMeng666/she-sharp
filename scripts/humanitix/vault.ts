@@ -32,7 +32,24 @@ export const REPO_ROOT = resolve(__dirname, "..", "..");
 export const ARCHIVE_DIR = join(REPO_ROOT, "lib", "data", "json", "humanitix");
 
 /** The default in-repo vault root. Gitignored — see `/private/` in .gitignore. */
-export const DEFAULT_VAULT_ROOT = join(REPO_ROOT, "private", "humanitix");
+/**
+ * Where the raw exports are looked for when HUMANITIX_VAULT_DIR is unset.
+ *
+ * This used to be `private/humanitix/` inside this repository. That directory was
+ * removed on 2026-09-01: of its 401 files, 400 were byte-identical to a file
+ * already in the private `she-sharp-slack-archive` repo, so it was a cache
+ * pretending to be a source — and a 37 MB one that `git clean -xdf` could
+ * silently destroy. The archive is now the only copy, and the default points
+ * straight at a sibling checkout of it.
+ *
+ * An in-repo `private/humanitix/` still wins if one exists, because someone
+ * mid-task with a fresh pull should not have it ignored.
+ */
+export const DEFAULT_VAULT_ROOT = (() => {
+  const inRepo = join(REPO_ROOT, "private", "humanitix");
+  if (existsSync(inRepo)) return inRepo;
+  return join(REPO_ROOT, "..", "she-sharp-slack-archive", "humanitix");
+})();
 
 export class VaultMissingError extends Error {
   constructor(public readonly path: string) {

@@ -1,6 +1,7 @@
 /**
  * Prints the largest organisations represented at each event, as paste-ready
- * Typst for the `companies:` lists in `report/data/events.typ`.
+ * Typst for the `companies:` lists in `report/data/events.typ`, which now lives
+ * in NZ-SheSharp/she-sharp-reports.
  *
  * Kept apart from `report-metrics.ts` because it answers a different question:
  * that one produces the metric tree, this one produces a display list whose

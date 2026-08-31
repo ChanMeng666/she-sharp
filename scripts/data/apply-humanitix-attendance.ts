@@ -107,7 +107,8 @@ function planChanges(): Change[] {
  * Humanitix scanned nobody at any of them, so the 0 does not mean "nobody came",
  * it means "we did not scan". The distinction is not academic: it is exactly how
  * the May 2026 HER WAKA cohort's 0 became a "suspect zero" that
- * `report/data/report-data.typ` had to flag by hand and label THE DANGEROUS ONE.
+ * `report/data/report-data.typ` had to flag by hand and label THE DANGEROUS ONE
+ * (that file now lives in NZ-SheSharp/she-sharp-reports).
  * Leaving nineteen more of them in place leaves nineteen more of that waiting to
  * happen.
  *
