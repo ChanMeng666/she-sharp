@@ -60,8 +60,12 @@ repo and nothing else. They are the prerequisites for the steps that follow.
    its **`Mailable after suppression`** line. Read that one, not the
    `Subscribed rows` line above it: the second is the table's own count and the
    first is what a send actually reaches. So a batch built today would reach
-   real people. But **nothing has ever been sent from it**, and the live
-   newsletter still goes out from **Mailchimp** — the cutover has not happened.
+   real people — and it has. **The cutover happened on 2026-08-31**: the August
+   2026 issue went from this table to all **1,549**, in 16 chunks with 0
+   failures, and the July 2026 issue was the last newsletter Mailchimp ever sent.
+   That is **one** issue. It does not make a send routine, and it establishes
+   nothing about delivery — Resend *accepted* 1,549 messages; bounces and
+   complaints arrive later through the webhook.
 
    So if someone asks you to "send this month's newsletter" through this skill,
    the answer is not "yes" and not "no" — it is the **three-stage approval
@@ -79,12 +83,22 @@ repo and nothing else. They are the prerequisites for the steps that follow.
       *before* her approval, not after it.
    3. **The founder's approval** (Step 8b), with the evidence for it — a Slack
       permalink, her email, or plainly "said so on the call". **Only this gates
-      the broadcast.** The first send from this list is the organisation's
-      cutover, not a technical step.
+      the broadcast.** The cutover was made this way on 2026-08-31 and the whole
+      chain is on the record in `state/issues.json`; read it if you want to see
+      what a complete one looks like.
 
    Then, and separately, **each ramp slice is approved on its own**:
    `recipients-from-db.ts --restrict-to-hashes` for the warm cohort, or
    `--limit` for a plain first-N slice — never the whole list at once.
+
+   > **What actually happened on 2026-08-31.** The August 2026 issue was **not**
+   > ramped: it went to the full 1,549 in one sitting, with the founder's
+   > approval. Recorded here rather than quietly dropped, because it means the
+   > ramp paragraph above describes an intention this skill has not yet followed.
+   > Do not read the August send as a precedent that ramping is optional — and do
+   > not read this note as permission. If a full-list send is wanted again, say so
+   > in the plan block and let the user decide, and read the complaint rate from
+   > the last one first (`npx tsx scripts/email/send-stats.ts`).
 
    The reason all of this exists is the account-wide complaint ceiling —
    **0.08%, about 1.25 complaints on a full send** — and the consequence of
@@ -935,10 +949,11 @@ loop is where the domain's health gets looked at. Six things, ~5 minutes:
    npx tsx scripts/email/suppression.ts sync
    ```
 4. **Pull Mailchimp's own unsubscribes.** `sync` above sees only the opt-outs
-   that reached *our* infrastructure. Mailchimp is still the platform that
-   actually sends the newsletter, so someone who unsubscribed from a real issue
-   since the 2026-08-17 export exists **only** in Mailchimp's record, and this
-   is the one command in the checklist that can see them. Dry run first:
+   that reached *our* infrastructure. Mailchimp no longer sends the newsletter,
+   but the account is still live — it sends event campaigns and runs its own
+   unsubscribe links — so someone who opted out over there exists **only** in
+   Mailchimp's record, and this is the one command in the checklist that can see
+   them. Dry run first:
    ```powershell
    npx tsx scripts/email/suppression.ts pull-mailchimp --dry-run
    npx tsx scripts/email/suppression.ts pull-mailchimp
@@ -947,8 +962,10 @@ loop is where the domain's health gets looked at. Six things, ~5 minutes:
    2026-08-29 import, it moved the committed register 2,138 → **2,144** — and
    six of the fifteen rows that import then held back were those six people, who
    had left in the two days since the export was taken. Every file is a snapshot
-   of an afternoon, and people leave after it. **Run it every month until the
-   cutover is done, and if it adds anyone, say the number.** Needs
+   of an afternoon, and people leave after it. **Run it every month for as long
+   as the Mailchimp account is open — the 2026-08-31 cutover did not end this,
+   because the account did not close — and if it adds anyone, say the number.**
+   Needs
    `MAILCHIMP_API_KEY`. Mailing someone who has already opted out is a
    complaint, and the ceiling is account-wide.
 5. **Reconcile the subscriber table against the registers.** This reports anyone
@@ -976,8 +993,9 @@ loop is where the domain's health gets looked at. Six things, ~5 minutes:
    is the same rule, not a second one.
 6. **Check for people who have JOINED since the last import.** Items 3-5 all run
    in one direction — they take people *off* the send. Nothing takes anyone on,
-   and while Mailchimp is still the live sender, that is where new subscribers
-   keep arriving. Measured on **2026-08-30**: Mailchimp's audience held **1,552**
+   and Mailchimp's own sign-up forms are still live — the newsletter left on
+   2026-08-31, the forms did not — so that is still where some new subscribers
+   arrive. Measured on **2026-08-30**: Mailchimp's audience held **1,552**
    subscribed members against our **1,545** mailable rows — a strict subset, 7
    in Mailchimp and not in our table, 0 the other way, and all seven with a
    `last_changed` after the 2026-08-17 export (18, 19, 19, 20, 27, 28, 28 Aug).

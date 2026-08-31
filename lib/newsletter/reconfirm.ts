@@ -55,8 +55,12 @@
  * is later than the suppression covering them. This route sets `confirmedAt` to
  * *now*, which is later than everything — so a careless version of it would be a
  * general-purpose resurrection machine for the do-not-contact registers. The
- * concrete sequence is not hypothetical: the September issue goes out on the
- * 1st, someone unsubscribes in Mailchimp (still the live sender) on the 3rd,
+ * concrete sequence is not hypothetical, and it survived the cutover: the
+ * newsletter has been sent from this repo since 2026-08-31, but Mailchimp is
+ * only no longer the *sender* — the account is still open and still collects
+ * unsubscribes from every issue it sent up to July 2026, which people go on
+ * reading and clicking for years. So: the September issue goes out on the 1st,
+ * someone unsubscribes from an old Mailchimp campaign on the 3rd,
  * `suppression.ts pull-mailchimp` stamps their hash on the 5th, and they press
  * the button in that same still-open email on the 6th. Nothing about the row's
  * *status* has changed — the pull writes the register, not the table — so a

@@ -1602,11 +1602,14 @@ writes nothing, so the working tree still holds every edit when you retry.
 Honest, current, and each one is somebody's decision to make rather than a bug to
 fix quietly.
 
-1. **The promotion path cannot complete today.** The Resend roster records no
-   imports and no broadcast has ever been sent; the live newsletter still goes
-   out through **Mailchimp**. `/promote-event` is built and gated behind
-   `/update-mailing-list` having actually populated the list. It says so up front
-   rather than failing obscurely.
+1. ~~**The promotion path cannot complete today.**~~ **It can, since
+   2026-08-31.** The list is populated (**1,549 mailable as at 2026-08-30**) and
+   has been broadcast to once — the August 2026 newsletter, from this repo through
+   Resend. **The July 2026 issue was the last newsletter sent from Mailchimp.**
+   The remaining limit is not plumbing but budget: **three marketing emails per
+   calendar month** across every skill, so a three-stage `/promote-event`
+   campaign and a monthly newsletter cannot both fit in one month. `/promote-event`
+   still says so up front rather than failing obscurely.
 2. **`event-ledger.ts` and `broadcast-ledger.ts` cannot be imported** — both call
    `main()` unguarded — so the lifecycle report reads their JSON directly and
    types it from the writers. If either shape changes,

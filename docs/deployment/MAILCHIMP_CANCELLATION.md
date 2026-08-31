@@ -18,6 +18,28 @@ only the founder has it. Nothing here can be done from this repository.
 **给创始人。** 下面每一项都需要登录 Mailchimp 账号本身，只有创始人有这个权限；
 这些事在代码仓库里做不了。
 
+> **Status, 2026-08-31: the blocking precondition is now satisfied.** The
+> newsletter has left Mailchimp. The **July 2026 issue was the last newsletter
+> ever sent from Mailchimp**, and the August 2026 issue went out from this repo
+> through Resend on 2026-08-31, to all 1,549 subscribers. Because §2 requires
+> that **the last Mailchimp send precede the downgrade**, the downgrade is now
+> **unblocked** — a live next action rather than a hypothetical.
+>
+> **Nothing else has changed.** The account has **not** been paused, downgraded
+> or closed; it is still paid, still holds the audience, and event campaigns are
+> still composed by hand in its console. Whether any further event campaign will
+> be sent from there is the one thing to settle before pressing anything, because
+> a downgrade stops that mail too.
+>
+> **状态（2026-08-31）：卡住流程的前提已经满足。** 月刊通讯已经离开 Mailchimp。
+> **2026 年 7 月号是 Mailchimp 发出的最后一期通讯**；8 月号于 2026-08-31 从本仓库经
+> Resend 发给了全部 1,549 位订阅者。第 2 节要求"降级必须在最后一次 Mailchimp
+> 发信之后"，这个条件现在已经满足，**降级可以做了**。
+>
+> **其余一切照旧。** 账号没有暂停、没有降级、没有删除；仍在付费，受众仍在，
+> 活动宣传邮件仍然在它的后台手工编写发送。按任何按钮之前要先确定的只有一件事：
+> 以后还会不会从 Mailchimp 发活动宣传邮件——降级后那些信也发不了。
+
 Background: `docs/development/MAILCHIMP_ARCHIVE.md` (what the archive holds),
 `docs/development/EMAIL_PLATFORM_STRATEGY.md` (why we are leaving),
 `docs/development/PLATFORM_APIS.md` (what the API can and cannot fetch).
@@ -117,6 +139,10 @@ can still "work on your emails and templates and collect and import new
 contacts". So the data is not at risk — **the ability to send is.** Since Resend
 is taking over sending, that is an acceptable outcome, but it fixes the order:
 **the downgrade must come after the last Mailchimp send, not before it.**
+**As at 2026-08-31 that condition is met for the newsletter** — July 2026 was
+Mailchimp's last issue and August went from Resend — so what is left to decide
+is only whether any further *event* campaign will be composed in Mailchimp's
+console, since the downgrade would stop that too.
 Source: <https://mailchimp.com/help/about-mailchimp-pricing-plans/>
 
 **免费版发不了这个受众的信，这没关系——但前提是顺序不能错。** 免费版上限是
@@ -124,7 +150,9 @@ Source: <https://mailchimp.com/help/about-mailchimp-pricing-plans/>
 Mailchimp 会"暂停发送正式邮件和测试邮件，直到升级套餐或减少联系人数量"，但仍然可以
 "编辑邮件和模板、收集和导入联系人"。所以有风险的不是数据，而是**发信能力**。既然
 发信已经交给 Resend，这个结果可以接受，但它决定了顺序：**降级必须发生在最后一次
-用 Mailchimp 发信之后。**
+用 Mailchimp 发信之后。** 截至 2026-08-31，就月刊通讯而言这个条件已经满足（
+7 月号是 Mailchimp 的最后一期，8 月号已从 Resend 发出），剩下要定的只是：
+以后还会不会在 Mailchimp 后台写活动宣传邮件——降级会一并停掉那些信。
 
 **Which to choose.** Pause if the on-site newsletter archive (item 4) is weeks
 away — it costs nothing and is fully reversible. Downgrade if it is months away
@@ -337,9 +365,12 @@ that.
 npx tsx scripts/email/suppression.ts pull-mailchimp --full
 ```
 
-**The trigger is the last Mailchimp send, not the plan change.** While Mailchimp
-is still the live sender, somebody who unsubscribes today exists **only** in
-Mailchimp's record. The script's own header says it: `pull-mailchimp` is "the
+**The trigger is the last Mailchimp send, not the plan change — and the
+newsletter leaving on 2026-08-31 did not end it.** The account is still live,
+still sends event campaigns and still runs its own unsubscribe links, so somebody
+who unsubscribes there today exists **only** in Mailchimp's record. Run this
+before the *account's* last send, whenever that is, and before every import in
+the meantime. The script's own header says it: `pull-mailchimp` is "the
 same union, for the platform She Sharp actually sends from… someone who
 unsubscribes today exists ONLY in Mailchimp's record, and `sync` cannot see
 them." It pulls the `unsubscribed` and `cleaned` members and folds them into the
@@ -347,8 +378,9 @@ committed hash file, so a future import can never re-add somebody who left. The
 other command, `suppression.ts sync`, folds in our own `email_optouts` table and
 cannot see Mailchimp's side at all.
 
-**触发条件是"最后一次用 Mailchimp 发信"，而不是"改套餐"。** Mailchimp 仍是实际
-发信方时，今天退订的人只存在于 Mailchimp 的记录里；`suppression.ts sync` 只同步
+**触发条件是"最后一次用 Mailchimp 发信"，而不是"改套餐"——月刊通讯于
+2026-08-31 离开并不代表这件事结束。** 账号仍在使用，仍在发活动宣传邮件，
+仍带着它自己的退订链接，所以今天在那边退订的人只存在于 Mailchimp 的记录里；`suppression.ts sync` 只同步
 我们自己数据库的退订表，看不到那一侧。`pull-mailchimp` 会把 `unsubscribed` 和
 `cleaned` 成员折进已提交的哈希文件，这样以后任何导入都不会把已经离开的人加回来。
 

@@ -231,10 +231,18 @@ sentence — the delta is the point, and it will move again. That command prints
 four lines and the first, `Subscribed rows`, is the count *before*
 `selectMailable()` strips the two registers; the two were equal on 2026-08-30,
 which is when reading the wrong one costs nothing and becomes a habit.
-**Nothing has been sent from it**: the live
-newsletter still goes out from Mailchimp, so do not describe the migration as
-done. Run `scripts/email/suppression.ts pull-mailchimp` before any further
-import — the register moves under a frozen export.
+**It has now been sent to, once.** On **2026-08-31** the August 2026 issue went
+from this repo to all 1,549 through Resend's batch API, 16 chunks, 0 failures —
+the first broadcast in the table's history, and the end of "nothing has ever been
+sent from it". **One send is not a routine.** The first delivery reading, twenty
+minutes in, was 1,536 delivered, 7 bounced, 0 complaints — 0.45% against a 2%
+arm — but it is **provisional**, because bounces and complaints keep arriving
+for days; the running figure is `email_events`, fed by the Svix webhook.
+**It was not ramped**, against three places in this repo that asked for a ramp,
+and one clean reading is a sample rather than a reason to drop the rule.
+Run `scripts/email/suppression.ts pull-mailchimp` before any further
+import — the register moves under a frozen export, and Mailchimp's sign-up and
+unsubscribe forms are still live even though the newsletter has left.
 
 ## Consent — before a photograph of a child is published
 
@@ -535,8 +543,10 @@ written by the live Humanitix→Mailchimp integration and says a ticket was
 the evidence that overturned it is in `MAILCHIMP_ARCHIVE.md`'s fifth trap.)
 The non-subscribers are hashed into `email-suppression-hashes.json` so no future
 import can re-add them — **2,144** as of 2026-08-29, and
-`suppression.ts pull-mailchimp` keeps it current while Mailchimp is still the
-live sender. `campaigns.json` now carries the send history the account export
+`suppression.ts pull-mailchimp` keeps it current. Keep running it: the newsletter
+left Mailchimp on 2026-08-31 but the account is still live, still sends event
+campaigns and still collects unsubscribes we cannot otherwise see.
+`campaigns.json` now carries the send history the account export
 never delivered: 180 sends, 188,796 emails, 37.9% unique open — **33.1% once
 Apple's mail proxies are excluded**. **A comparison must pick one of those two
 series and stay on it**, and the boundary has two honest answers rather than
@@ -555,8 +565,14 @@ closing the account — two different screens, and only one of them is reversibl
 Stopping the payment therefore means **pause or downgrade, never delete**; and
 because the Free plan holds sending above **250 contacts** against an audience
 an order of magnitude larger, **the last Mailchimp send must precede the
-downgrade**. None of it can be done from this repo — every step needs the
-Mailchimp account itself, which only the founder has.
+downgrade**. **That precondition is now met for the newsletter**: the July 2026
+issue was the last newsletter Mailchimp ever sent, and August went from Resend on
+2026-08-31 — so the downgrade is a live next action rather than a hypothetical.
+**The account itself is untouched** — not paused, not downgraded, not closed —
+and it still sends event campaigns composed by hand in its console, which is the
+one thing left to decide before pressing anything. None of it can be done from
+this repo — every step needs the Mailchimp account itself, which only the founder
+has.
 → `docs/deployment/MAILCHIMP_CANCELLATION.md`
 
 **Presentation decks.** `/present/<slug>`, built from typed slide data with a
@@ -570,16 +586,21 @@ never touch TypeScript. → `docs/development/DECK_SYSTEM.md`
 bounce/complaint capture. → `docs/development/EMAIL_OPERATIONS.md`; DNS, DMARC
 and the Mailchimp → Resend migration in `docs/deployment/EMAIL_AUTHENTICATION.md`
 
-**Decided 2026-08-28, built but not switched over:** the newsletter is
+**Decided 2026-08-28, switched over 2026-08-31:** the newsletter is
 **self-hosted** on Resend's transactional batch API rather than its Marketing
 product, which moves the marketing-consent record out of Resend and into our own
 database. The `newsletter_subscribers` table, the double opt-in funnel, the six
 site entry points repointed at `/newsletter/subscribe`, the send path
 (`recipients-from-db.ts` → `scripts/newsletter/build-newsletter-batch.ts` → a
 human runs `resend emails batch`), the Mailchimp import and the retirement of
-the Resend Marketing objects are **all done** — the last two on 2026-08-29, so
-nothing here is waiting on code. What is left is not code: nothing has ever been
-sent from the table and Mailchimp is still the live sender. The consent section
+the Resend Marketing objects were all built by 2026-08-29, and on **2026-08-31**
+the **August 2026 issue was broadcast down that path to all 1,549 subscribers**
+— 16 chunks, `--batch-validation strict`, 0 failures, after a three-stage
+approval chain ending in the founder's. **The July 2026 issue was the last
+newsletter ever sent from Mailchimp.** Two things not to overstate: **one issue
+is not a routine**, and the only established outcome is that Resend *accepted*
+all 1,549 — delivery, opens and bounces are not known and arrive through the
+Svix webhook. The consent section
 above says what the table holds and how to read the live figure. Reasoning,
 costs and the AWS SES fallback: `docs/development/EMAIL_PLATFORM_STRATEGY.md`;
 which of the three platforms does what today:
@@ -593,8 +614,10 @@ snapshot plus an empty editorial stub, no API key, no `CRON_SECRET`, no network
 call) and a human writes it; the AI draft and its Vercel cron were deleted
 because every month's output was rewritten by hand anyway. The one cron that
 still calls OpenAI is the weekly funding crawl. Approving an issue does not send
-it; a human runs the printed batch commands. **The live newsletter still goes
-out from Mailchimp** — this is the replacement, piloted but not switched over.
+it; a human runs the printed batch commands. **This is how the newsletter goes
+out now**, since the August 2026 issue on **2026-08-31**; Mailchimp's last
+newsletter was July 2026. One issue has been through it, so treat the loop as
+proven once rather than routine.
 → `docs/development/EMAIL_OPERATIONS.md`
 
 **The on-site newsletter archive.** `lib/data/newsletter-archive/` holds the

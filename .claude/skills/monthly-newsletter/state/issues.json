@@ -1,14 +1,22 @@
 {
   "version": 1,
-  "lastRunAt": "2026-08-30T21:33:23.761Z",
+  "lastRunAt": "2026-08-31T06:50:51.313Z",
   "frequencyCapPerMonth": 3,
   "issues": {
     "2026-08": {
       "issueId": "2026-08",
       "createdAt": "2026-08-30T13:07:36.723Z",
-      "test": null,
+      "test": {
+        "at": "2026-08-31T06:47:46.450Z",
+        "recipientCount": 1,
+        "people": null,
+        "recipientHashes": [
+          "1228cadeea9b2ab8"
+        ],
+        "note": "Proof copy of the exact render being broadcast, including the final subject line 'She Sharp - August Newsletter'. Four earlier proof copies went to the same mailbox on 2026-08-30/31 as the issue was corrected; this one supersedes them because it is the first to carry the final subject."
+      },
       "review": {
-        "at": "2026-08-30T21:33:23.761Z",
+        "at": "2026-08-31T06:48:12.948Z",
         "recipientCount": 5,
         "people": 4,
         "recipientHashes": [
@@ -18,10 +26,127 @@
           "356651591da3b72a",
           "1228cadeea9b2ab8"
         ],
-        "note": "second round: the founder's own replacement text for A note from our founder"
+        "note": "Third and final round, carrying the subject line 'She Sharp - August Newsletter'. The two earlier rounds (2026-08-30, 2026-08-31) went out under the old subject; the founder set the new one after the second and said no further round was needed. It was sent anyway so that the people whose names are on this issue have seen the exact bytes being broadcast."
       },
-      "approval": null,
-      "batches": [],
+      "approval": {
+        "at": "2026-08-31T06:48:14.439Z",
+        "by": "Mahsa McCauley",
+        "evidence": "Founder reviewed the 2026-08-31 round, supplied her own replacement text for 'A note from our founder' (applied verbatim), then asked for one final change - the subject line to become 'She Sharp - August Newsletter' - and authorised the broadcast with no further review round required. Relayed by the maintainer, who approved the send in the same message. The final round above was sent as a courtesy after that approval, not as a new request for one."
+      },
+      "batches": [
+        {
+          "at": "2026-08-31T06:50:29.575Z",
+          "chunk": 1,
+          "of": 16,
+          "recipientCount": 100,
+          "idempotencyKey": "074c3225621e5277446d6c66d0e9137d"
+        },
+        {
+          "at": "2026-08-31T06:50:31.043Z",
+          "chunk": 2,
+          "of": 16,
+          "recipientCount": 100,
+          "idempotencyKey": "48cac8c7ecc6debf2bca41c6cb2b99b9"
+        },
+        {
+          "at": "2026-08-31T06:50:32.489Z",
+          "chunk": 3,
+          "of": 16,
+          "recipientCount": 100,
+          "idempotencyKey": "f2042971cec08bbf6a22e2393781c165"
+        },
+        {
+          "at": "2026-08-31T06:50:33.904Z",
+          "chunk": 4,
+          "of": 16,
+          "recipientCount": 100,
+          "idempotencyKey": "12ffed2690ec0fca655e4c9c61967a94"
+        },
+        {
+          "at": "2026-08-31T06:50:35.377Z",
+          "chunk": 5,
+          "of": 16,
+          "recipientCount": 100,
+          "idempotencyKey": "5c1de6b99343a64464287c3f897d81f1"
+        },
+        {
+          "at": "2026-08-31T06:50:36.823Z",
+          "chunk": 6,
+          "of": 16,
+          "recipientCount": 100,
+          "idempotencyKey": "a825f362f4a618cefe52c606c808cd61"
+        },
+        {
+          "at": "2026-08-31T06:50:38.303Z",
+          "chunk": 7,
+          "of": 16,
+          "recipientCount": 100,
+          "idempotencyKey": "32ff7845f893a57fd1e2685591cf9009"
+        },
+        {
+          "at": "2026-08-31T06:50:39.740Z",
+          "chunk": 8,
+          "of": 16,
+          "recipientCount": 100,
+          "idempotencyKey": "2efd9adfa7dd16f5aff2e433d569ff1f"
+        },
+        {
+          "at": "2026-08-31T06:50:41.170Z",
+          "chunk": 9,
+          "of": 16,
+          "recipientCount": 100,
+          "idempotencyKey": "4750deed33753d88bc53990341e931ff"
+        },
+        {
+          "at": "2026-08-31T06:50:42.622Z",
+          "chunk": 10,
+          "of": 16,
+          "recipientCount": 100,
+          "idempotencyKey": "4278d8485da93bba1085d6205f843a98"
+        },
+        {
+          "at": "2026-08-31T06:50:44.050Z",
+          "chunk": 11,
+          "of": 16,
+          "recipientCount": 100,
+          "idempotencyKey": "df0dbf30d291b240c9ff2e82804a2809"
+        },
+        {
+          "at": "2026-08-31T06:50:45.484Z",
+          "chunk": 12,
+          "of": 16,
+          "recipientCount": 100,
+          "idempotencyKey": "7387a6c8747cf8ea0c3ed5c1226bf1c8"
+        },
+        {
+          "at": "2026-08-31T06:50:46.910Z",
+          "chunk": 13,
+          "of": 16,
+          "recipientCount": 100,
+          "idempotencyKey": "db9fd34fd4216857f057ee4affe65fe4"
+        },
+        {
+          "at": "2026-08-31T06:50:48.338Z",
+          "chunk": 14,
+          "of": 16,
+          "recipientCount": 100,
+          "idempotencyKey": "95de32385f6f27aff64677f047082caf"
+        },
+        {
+          "at": "2026-08-31T06:50:49.782Z",
+          "chunk": 15,
+          "of": 16,
+          "recipientCount": 100,
+          "idempotencyKey": "45252b105d5b870f268f479d34774c04"
+        },
+        {
+          "at": "2026-08-31T06:50:51.313Z",
+          "chunk": 16,
+          "of": 16,
+          "recipientCount": 49,
+          "idempotencyKey": "cb848786576dcfa88dd1d389340a4f46"
+        }
+      ],
       "frequencyOverride": null
     }
   }

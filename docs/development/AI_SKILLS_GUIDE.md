@@ -74,8 +74,10 @@ was.** `/promote-event` and `/email-the-community` send to the
 2026-08-30**, and `npx tsx scripts/email/suppression.ts reconcile` prints the
 live figure on its `Mailable after suppression` line. Resend's own segment and
 topic were retired on 2026-08-29 and hold nobody. So a send here reaches real
-people, and **nothing has ever been sent from that table**: the newsletter
-subscribers actually receive still goes out from Mailchimp. If a skill reports
+people — and **it has reached them**: the August 2026 newsletter went from this
+table to all 1,549 on **2026-08-31**, the first send in its history, and the July
+2026 issue was the last newsletter Mailchimp ever sent. One send is not a
+routine, and the marketing cap of three per calendar month counts it. If a skill reports
 almost nobody on the list, that is a database connection to check
 (`POSTGRES_URL` in `.env`), not a list to go and build.
 

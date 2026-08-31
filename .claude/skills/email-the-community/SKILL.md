@@ -19,9 +19,13 @@ Four things, in this order, every time:
 - **This skill only READS the list.** Adding, importing or suppressing people is
   `/update-mailing-list`. The table holds the whole imported Mailchimp list
   (**1,549 mailable as at 2026-08-30**, and it moves — Step 1 prints the live
-  number), so a send here reaches real people. **Nothing has ever been sent from
-  this list**, which makes the test send, the Step 6 plan block and the
-  chunk-by-chunk Step 8 the gates that matter, not paperwork.
+  number), so a send here reaches real people. **It has been sent to once**: the
+  August 2026 newsletter, on 2026-08-31, to all 1,549. That is one send, not a
+  habit, and it means a send from here is the list's *second* contact rather than
+  its first — so the test send, the Step 6 plan block and the chunk-by-chunk
+  Step 8 are the gates that matter, not paperwork. **Check the monthly cap
+  first**: three marketing emails per calendar month across every skill, and the
+  August newsletter used one of 2026-08's three.
 
 Input: a topic and a paragraph. Output: one sent batch, its record in
 `state/broadcasts.json`, and a report. Commands are PowerShell-first.
@@ -32,8 +36,10 @@ is a table in She Sharp's own database, and marketing mail goes out as a
 **batch** — one rendered message per person, each carrying its own signed
 unsubscribe link. Anything you find that says "segment", "topic" or
 `{{{RESEND_UNSUBSCRIBE_URL}}}` is describing the system this replaced. **The
-live newsletter still goes out from Mailchimp**; none of this has taken over
-from it yet.
+newsletter itself moved onto this machinery on 2026-08-31** — the August issue
+went out as a batch to 1,549 people — so this is the live path, not a
+replacement in waiting. Mailchimp is still a live account and still sends event
+campaigns from its own console; it just no longer sends the newsletter.
 
 ## When to apply
 

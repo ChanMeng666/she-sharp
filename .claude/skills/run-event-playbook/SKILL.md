@@ -118,9 +118,12 @@ said otherwise. It does not any more, and the table is not empty: **1,549
 mailable as at 2026-08-30**
 (`npx tsx scripts/email/suppression.ts reconcile`, the
 `Mailable after suppression` line). So `/email-the-community` from here reaches
-real people. **Nothing has ever been sent from that table**, which makes the
-first send a deliberate, approved step rather than a routine one — say that when
-you translate the report in Step 1.
+real people. **That table has been broadcast to once** — the August 2026
+newsletter, on 2026-08-31, to all 1,549 — which makes a send from here a
+deliberate, approved step rather than a routine one: it is the list's second
+contact, not its fiftieth, and it comes out of the **three marketing emails per
+calendar month** shared across every sending skill. Say that when you translate
+the report in Step 1.
 
 Other selections:
 

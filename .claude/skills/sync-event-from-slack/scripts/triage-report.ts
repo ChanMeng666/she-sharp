@@ -303,8 +303,18 @@ function buildBody(t: Triage): { body: string; hash: string; actionable: Row[] }
 // ---------------------------------------------------------------------------
 
 /**
- * Run `gh`. Kept without a shell so a channel name with a quote in it cannot
- * become syntax, and every long body travels through a file rather than argv.
+ * Run `gh`.
+ *
+ * EVERY BODY TRAVELS THROUGH `--body-file`, NEVER ARGV. That is the rule that
+ * matters here: a digest carries quotes, apostrophes and newlines, and a channel
+ * name is whatever somebody typed in Slack. So argv below only ever holds
+ * constants, a label, and an issue number.
+ *
+ * `shell` is true on Windows only, because `gh` there is a `.cmd` shim that
+ * cannot be spawned without one. `refresh-archive.ts` refuses a shell for the
+ * opposite reason and both are right: it passes filesystem paths as arguments,
+ * where a shell is what turns a space or a `>` into syntax. CI runs on Linux, so
+ * the production path never takes the shell branch at all.
  */
 function gh(args: string[], allowFailure = false): { status: number; stdout: string; stderr: string } {
   const r = spawnSync("gh", args, {

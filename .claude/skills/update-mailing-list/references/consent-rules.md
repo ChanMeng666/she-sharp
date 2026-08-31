@@ -113,10 +113,16 @@ invites the assumption that it is populated:
   that 1,545 people clicked a confirmation link. The four added from the
   Marketing API on 2026-08-30 carry a **null** `confirmedAt`; the API's
   `timestamp_signup` is the same column, and it is empty for exactly those four.
-- **Nothing has been sent to the list.** The live newsletter still goes out from
-  Mailchimp, and a populated list is not a cutover. The pipeline itself has run:
-  `email_events` holds 6 rows for 1 person, from test sends to the maintainer's
-  own address. No subscriber has received anything.
+- **The list has been sent to once.** On **2026-08-31** the August 2026
+  newsletter went to all 1,549 mailable rows through Resend's batch API — the
+  first broadcast in the table's history, and the cutover. Mailchimp's last
+  newsletter was the July 2026 issue. Two things that follow, and both matter
+  when weighing a consent question: **one send is not a track record**, so
+  nothing here has become routine; and **no delivery outcome is established** —
+  Resend accepted 1,549 messages, and the complaint rate that would tell us
+  whether this list tolerates being mailed has not been read yet
+  (`npx tsx scripts/email/send-stats.ts`). Read it before arguing that a weak
+  provenance tier is safe to mail.
 - **Three quarters of the list cannot answer "why is this person here?"**
   Measured 2026-08-30: **752 of the 1,549** are on it because they bought a
   Humanitix ticket and never ticked any opt-in, and a further **416** have
