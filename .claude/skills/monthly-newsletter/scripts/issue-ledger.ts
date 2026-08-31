@@ -67,8 +67,17 @@
  * Exit codes:
  *   show, record-*  0 on success, 1 on a bad argument or a refused record.
  *   check           0 only when all three stages are on the record, in order,
- *                   and the month's marketing frequency cap is not exceeded.
- *                   1 otherwise. This is the gate.
+ *                   and the month's marketing frequency cap is not exceeded
+ *                   *by what this repo has recorded*. 1 otherwise. This is the
+ *                   gate.
+ *
+ * THE FREQUENCY HALF OF THAT GATE IS PARTIALLY SIGHTED, and every command that
+ * prints its figure prints why. `marketing-frequency.ts` reads two ledgers in
+ * this repository and nothing else; Mailchimp is still the live sender and
+ * leaves no trace in either. August 2026 is the worked example — this gate
+ * would have read 0/3 in a month the subscriber list took five marketing
+ * emails. See `BLIND_SPOT_NOTICE`, which is a migration note and carries the
+ * condition for deleting it.
  */
 
 import { createHash } from "node:crypto";
@@ -78,6 +87,8 @@ import { fileURLToPath } from "node:url";
 
 import {
   assessFrequency,
+  BLIND_SPOT_NOTICE,
+  COUNT_LABEL,
   currentNzMonth,
   DEFAULT_MONTHLY_CAP,
   nzCalendarMonth,
@@ -336,7 +347,14 @@ export interface ChainVerdict {
   lines: string[];
   month: string;
   cap: number;
+  /**
+   * Marketing campaigns this month **as recorded in this repo**, excluding the
+   * issue in hand. Not the number the subscriber list received — read
+   * `blindSpots`.
+   */
   existingThisMonth: MarketingSend[];
+  /** What `existingThisMonth` cannot see, in the words to print beside it. */
+  blindSpots: readonly string[];
   overrideApplied: FrequencyOverride | null;
 }
 
@@ -450,7 +468,7 @@ export function assessChain(
   if (frequency.exceeded && !overrideApplies) {
     problems.push("frequency-cap");
     lines.push(
-      `FREQUENCY CAP: ${frequency.existing.length} marketing send(s) already on the record for ${month}, cap is ${cap}.`
+      `FREQUENCY CAP: ${frequency.existing.length} marketing send(s) for ${month} ${COUNT_LABEL}, cap is ${cap}.`
     );
     for (const s of frequency.existing) {
       lines.push(`    ${s.at}  ${s.source}  ${s.key} — ${s.what}`);
@@ -473,6 +491,7 @@ export function assessChain(
     month,
     cap,
     existingThisMonth: frequency.existing,
+    blindSpots: frequency.blindSpots,
     overrideApplied: overrideApplies ? override : null,
   };
 }
@@ -676,6 +695,8 @@ function runShow(args: Args): number {
           version: ledger.version,
           lastRunAt: ledger.lastRunAt,
           frequencyCapPerMonth: ledger.frequencyCapPerMonth,
+          frequencyCounts: COUNT_LABEL,
+          frequencyBlindSpots: BLIND_SPOT_NOTICE,
           issues: subset,
         },
         null,
@@ -690,7 +711,11 @@ function runShow(args: Args): number {
   console.log("===================================");
   console.log(`  file      : ${statePath()}`);
   console.log(`  lastRunAt : ${ledger.lastRunAt ?? "never"}`);
-  console.log(`  cap       : ${ledger.frequencyCapPerMonth} marketing send(s) / NZ month`);
+  console.log(
+    `  cap       : ${ledger.frequencyCapPerMonth} marketing send(s) / NZ month; the count is ${COUNT_LABEL}`
+  );
+  console.log("===================================");
+  for (const line of BLIND_SPOT_NOTICE) console.log(line);
   console.log("===================================");
 
   const present = keys.filter((k) => ledger.issues[k] !== undefined);
@@ -841,6 +866,25 @@ function runRecordBatch(args: Args): number {
   return 0;
 }
 
+/**
+ * Prints the month's frequency figure and, always, what it could not see.
+ *
+ * The two are printed together by one function rather than by each branch of
+ * `runCheck`, so the caveat cannot be dropped from one path and left on the
+ * other — and the notice reads as being about a number the reader can see.
+ * The lines are taken from the verdict, not imported here, for the same reason.
+ *
+ * @param verdict The verdict to report on.
+ */
+function printFrequency(verdict: ChainVerdict): void {
+  console.log(
+    `  frequency : ${verdict.existingThisMonth.length}/${verdict.cap} marketing send(s) for ${verdict.month} — ${COUNT_LABEL}` +
+      (verdict.overrideApplied ? "  (CAP OVERRIDDEN)" : "")
+  );
+  console.log("");
+  for (const line of verdict.blindSpots) console.log(line);
+}
+
 function runCheck(args: Args): number {
   const issueId = requireIssue(args);
   const ledger = loadLedger();
@@ -899,10 +943,7 @@ function runCheck(args: Args): number {
     );
     console.log(`  3 approval: ${entry.approval?.at} by ${entry.approval?.by}`);
     console.log(`              evidence: ${entry.approval?.evidence}`);
-    console.log(
-      `  frequency : ${verdict.existingThisMonth.length}/${verdict.cap} marketing send(s) recorded for ${verdict.month}` +
-        (verdict.overrideApplied ? "  (CAP OVERRIDDEN)" : "")
-    );
+    printFrequency(verdict);
     console.log("");
     return 0;
   }
@@ -910,6 +951,8 @@ function runCheck(args: Args): number {
   console.log(`FAIL — this issue must not be built into a batch.`);
   console.log("");
   for (const line of verdict.lines) console.log(line);
+  console.log("");
+  printFrequency(verdict);
   console.log("");
   console.log(`  problems: ${verdict.problems.join(", ")}`);
   console.log("");

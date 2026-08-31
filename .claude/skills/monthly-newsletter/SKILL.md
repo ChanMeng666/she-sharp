@@ -107,7 +107,10 @@ repo and nothing else. They are the prerequisites for the steps that follow.
    The same ceiling is why there is a **frequency cap**: three marketing sends
    per calendar month across `/monthly-newsletter`, `/email-the-community` and
    `/promote-event`, counted for you by the ledger, because until 2026-08-30
-   none of those three skills could see what the other two had sent.
+   none of those three skills could see what the other two had sent. **The
+   ledger still cannot see Mailchimp**, which is why every command that prints
+   the figure prints a `NOT COUNTED` notice beside it — see the frequency-cap
+   refusal below.
 7. `EMAIL_UNSUBSCRIBE_SECRET` — signs each recipient's personal unsubscribe
    link. The batch build in Step 8d **hard-fails without it**; there is no
    fallback and no way to skip it. It lives on Vercel production and is **not**
@@ -1172,11 +1175,11 @@ If `check` fails it prints exactly which stage is missing and the command that
 records it. Do not work around it — go back and do the stage. The two refusals
 worth naming in advance:
 
-- *"FREQUENCY CAP: N marketing send(s) already on the record"* → three marketing
-  emails have already gone to these inboxes this calendar month, counting
-  `/email-the-community` and `/promote-event` as well as this skill. If sending
-  anyway is genuinely the right call, it is a decision somebody makes on the
-  record:
+- *"FREQUENCY CAP: N marketing send(s) … recorded in this repo"* → three
+  marketing emails are already on this repo's record for the calendar month,
+  counting `/email-the-community` and `/promote-event` as well as this skill. If
+  sending anyway is genuinely the right call, it is a decision somebody makes on
+  the record:
   ```powershell
   npx tsx .claude/skills/monthly-newsletter/scripts/issue-ledger.ts check --issue 2026-08 `
     --override-frequency "why this fourth send is worth the complaint risk"
@@ -1197,6 +1200,16 @@ npx tsx .claude/skills/monthly-newsletter/scripts/issue-ledger.ts record-batch `
 A ramp counts as **one** marketing send for the cap, not one per chunk — the cap
 is about how often a person's inbox is touched, and a ramp touches each inbox
 once.
+
+**And the count is a floor, not a measurement.** It is what this repo has
+recorded; Mailchimp is still the live sender and leaves no trace in the ledger,
+so `check` prints a `NOT COUNTED: Mailchimp` notice under every figure. **August
+2026** is the worked example — the ledger read `0/3` for a month in which the
+subscriber list received **five** marketing emails: four Mailchimp event
+campaigns (18, 22 and twice on 27 August) plus this newsletter. Before you read
+a low number as room to send, ask the marketing team what has gone out from
+Mailchimp. The notice says when it may be deleted; the history is in
+[`docs/development/EMAIL_PLATFORM_STATE.md`](../../../docs/development/EMAIL_PLATFORM_STATE.md).
 
 The build itself is unchanged. It renders the issue once, then for each recipient substitutes their own
 signed unsubscribe link, runs the pre-send gates (the same size and image checks
@@ -1348,7 +1361,8 @@ Also non-negotiable:
 - **Three marketing sends per calendar month, across skills.** `/monthly-newsletter`,
   `/email-the-community` and `/promote-event` reach the same people; the ledger
   counts all three. A fourth needs `--override-frequency "<reason>"`, which is
-  recorded and stays recorded.
+  recorded and stays recorded. **It counts none of Mailchimp**, so the figure is
+  a floor — August 2026 read `0/3` in a five-email month.
 - **A real batch is only ever built from `recipients-from-db.ts` output.** Never
   hand-write a recipients file, never paste addresses into one, never add
   someone to a list the script produced. If a person needs to receive the

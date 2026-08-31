@@ -38,7 +38,7 @@ whether a gap is worth building for.
 | Loop | Owned by | Tooling |
 |---|---|---|
 | The monthly newsletter | the **newsletter team** | `/monthly-newsletter`, in this repo |
-| Promoting an event to subscribers | the **marketing team** | `/promote-event` → `/email-the-community`, in this repo |
+| Promoting an event to subscribers | the **marketing team** | `/promote-event` → `/email-the-community`, in this repo — **but the August 2026 campaigns went out from Mailchimp**; see "The frequency cap counts one pipeline" below |
 | Fulfilment mail to one event's registrants | the **events team** | **the Humanitix console, by hand** |
 
 The developer's job is the skills, not the sending — every real send is run by
@@ -166,6 +166,36 @@ them as bugs.
   purpose). Send the thank-you the day after, not when the photographs are
   ready. This is why the T+1d row in `docs/development/EVENT_LIFECYCLE_SOP.md`
   is a deadline rather than a preference.
+
+---
+
+## The frequency cap counts one pipeline, and the list has two
+
+**Recorded 2026-08-31.** Promoting an event to subscribers is the marketing
+team's loop, and until it moves to `/promote-event` it runs in **Mailchimp**,
+which this repo cannot see. The three-per-month marketing cap counts only the
+two ledgers in this repository, so in **August 2026 it reported `0/3` for a
+month in which the subscriber list received five marketing emails** — four
+Mailchimp event campaigns (18, 22 and twice on 27 August) plus the monthly
+newsletter on the 31st. **July 2026 has the same shape.**
+
+The cap was not breached by this repository; every send it made was within the
+limit. What was breached is the thing the cap stands for — how often one
+person's inbox is touched — and that is split across two pipelines nobody was
+counting together. **A subscriber does not experience a boundary between
+systems, and the frequency control is the one place that matters.**
+
+The fix is a printed notice rather than a reader: every command that shows the
+figure names Mailchimp as uncounted and calls the number *recorded in this
+repo*. It is meant to be deleted once event promotion runs through
+`/promote-event` and no further campaign is sent from Mailchimp. Full history,
+the table of the five sends, and the three alternatives that were refused:
+[`EMAIL_PLATFORM_STATE.md`](EMAIL_PLATFORM_STATE.md) § "August 2026 was a
+five-email month against a cap of three".
+
+The practical rule for anyone running a send today: **when the cap reports a low
+number, ask the marketing team what has gone out from Mailchimp before you use
+the headroom.**
 
 ---
 

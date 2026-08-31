@@ -398,8 +398,8 @@ The verdict's own explanation still talks about drafts and `resend broadcasts
 delete`; the ledger predates the move. **Act on the table above, not on that
 prose.**
 
-**7.2 — the month's send count.** Ask how many marketing emails this list has
-already had this month, counted across **every** skill that mails it:
+**7.2 — the month's send count.** Ask how many marketing emails **this repo has
+recorded** for this month, counted across every skill in it:
 
 ```powershell
 npx tsx .claude/skills/email-the-community/scripts/marketing-frequency-check.ts `
@@ -411,7 +411,7 @@ Unlike 7.1 this one **exits non-zero when it refuses**, so it can be written
 
 | It prints | Meaning | Do |
 |---|---|---|
-| `within cap — this would be send N of 3` | Under the cap | Continue to 7.3 |
+| `within cap — this would be send N of 3` | Under the cap **by what this repo recorded** | Continue to 7.3 — after reading the blind-spot notice it prints |
 | `REFUSED` (exit 2) | This would be the fourth marketing email to the same people this month | **Stop and take it to the user**, with the three options it prints |
 | `OVERRIDE ON RECORD` | Somebody already decided this one goes anyway | Continue, and read the recorded reason into the Step 6 plan block |
 
@@ -419,6 +419,17 @@ Unlike 7.1 this one **exits non-zero when it refuses**, so it can be written
 this skill's ledger and `/monthly-newsletter`'s together — an event promoted
 across three stages plus the monthly issue is four emails to the same ~1,549
 people. A ramped send counts once, not once per chunk.
+
+**The count is what this repo can see, and it is not what the list received.**
+Mailchimp is still the live sender and nothing it sends reaches these ledgers,
+so the check prints a `NOT COUNTED: Mailchimp` notice under every figure. In
+**August 2026** it would have said `0/3` for a month in which the subscriber
+list took **five** marketing emails — four Mailchimp event campaigns (18, 22 and
+twice on 27 August) plus the monthly newsletter. So a low number is a floor, not
+a measurement: **ask the marketing team what has gone out from Mailchimp before
+you rely on it.** The notice is a migration note and says when to delete it; the
+history is in
+[`docs/development/EMAIL_PLATFORM_STATE.md`](../../../docs/development/EMAIL_PLATFORM_STATE.md).
 
 **Why it refuses rather than warns.** The Resend account complaint ceiling is
 **0.08%** — about 1.25 complaints on a full send — and the account is shared, so

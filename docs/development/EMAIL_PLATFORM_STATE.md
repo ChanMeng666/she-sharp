@@ -284,6 +284,72 @@ The send history is the committed archive's **180 sends**
 ([`MAILCHIMP_ARCHIVE.md`](MAILCHIMP_ARCHIVE.md)), and the two must not be quoted
 against each other.
 
+### August 2026 was a five-email month against a cap of three
+
+**Recorded 2026-08-31.** The marketing frequency cap — three marketing emails to
+the subscriber list per NZ calendar month, `DEFAULT_MONTHLY_CAP` in
+`.claude/skills/monthly-newsletter/scripts/marketing-frequency.ts` — reported
+**0/3** for August 2026. The list had five.
+
+| Sent (UTC) | Emails | Subject | Counted by the cap? |
+|---|---|---|---|
+| 2026-08-18 21:59 | 1,561 | She Sharp x Les Mills: Are you AI-fit? Join us on Sep 3! | no — Mailchimp |
+| 2026-08-22 00:45 | 653 | *(re-send of the above, to a segment)* | no — Mailchimp |
+| 2026-08-27 20:00 | 1,555 | Who's leading our AI fitness session? Meet our Les Mills panel! | no — Mailchimp |
+| 2026-08-27 20:37 | 1,554 | Correction: Updated speaker profiles for She# x Les Mills | no — Mailchimp |
+| 2026-08-31 | 1,549 | the August newsletter | **yes** |
+
+The four Mailchimp campaigns were composed and sent by the marketing team in the
+Mailchimp console. Verified against the live Marketing API: `campaign_last_sent`
+on audience `She#` is `2026-08-27T20:37:33+00:00`, over 1,553 members. **July has
+the same shape** — event campaigns on 2026-07-04, 07-07 and 07-14, plus the
+07-31 newsletter.
+
+**Read the failure precisely, because two different readings are available and
+only one is true.** The cap counts two ledgers in this repository and nothing
+else, so **this repo did not breach it**; every send it made was inside the
+limit. What was breached is the thing the cap is a proxy for — the number of
+marketing emails one person's inbox actually took — and that is spread across
+two pipelines nobody was counting together. The cap was measuring the wrong
+denominator, not being ignored.
+
+**What was done about it, and what was deliberately not.** Since 2026-08-31
+every command that prints the figure prints a `NOT COUNTED: Mailchimp` notice
+beside it and describes the number as *recorded in this repo* rather than as
+what the list received (`marketing-frequency.ts`, `issue-ledger.ts`,
+`marketing-frequency-check.ts`; asserted by
+`.claude/skills/email-the-community/scripts/marketing-frequency-check.test.ts`,
+which runs each CLI and reads its real stdout). Three alternatives were
+considered and refused:
+
+- **A Mailchimp reader inside the gate.** It is a pre-send gate and offline by
+  design. The precedent is `check-facts.ts`, kept out of CI *because* a
+  network-dependent check is red on a good day and people stop running it. It
+  would also be code with a known death date.
+- **An opt-in `--include-mailchimp` flag.** A safety control that is off by
+  default is one nobody passes — `normalize-recipients.ts --for-import` had just
+  been caught doing exactly that, looking correct and gating nothing.
+- **Ledger entries for the four Mailchimp campaigns.** `broadcast-ledger.ts
+  record` requires `--html-sha256`, "sha256 of the exact broadcast-mode HTML
+  that was uploaded". The field exists to prove what was sent, and there is no
+  honest value for a send this repo did not make.
+
+The notice is a **migration note and is meant to be deleted**: it goes when
+event promotion runs through `/promote-event` and no further campaign has been
+sent from Mailchimp. It is not permanent furniture, and leaving it in place
+after Mailchimp stops sending would train readers to skip it.
+
+**It also sharpens the August newsletter's delivery reading.** That send — 1,549
+recipients on 2026-08-31, the first ever from `newsletter_subscribers` — took
+**0 complaints and a 0.45% bounce rate** on top of **four prior marketing emails
+to the same people that month**, not from a quiet baseline. That makes the
+figures better news than they looked, not worse. **It is not evidence that a
+list tolerates five emails a month.** One clean send at one moment says nothing
+about the fatigue the next one meets, the cap is a deliverability control rather
+than an observation, and the account-wide complaint ceiling is **0.08%** — about
+1.25 complaints on a full send — with password resets and donation receipts
+sharing the account.
+
 ### There is exactly one audience, and that constrains everything
 
 `getLists()` on 2026-08-30 returned **one** list: **`She#`**, id `31bd05e8eb`,
@@ -817,14 +883,26 @@ its diff.
 | **2026-08-30** | The 2022 checkout-opt-in question is **closed** from the orders CSV: the switch was off, and the integration wrote non-opted-in buyers in regardless | Two surviving readings, both wrong; and the belief that nothing in this repo could settle it |
 | **2026-08-30** | **Switch the Humanitix → Mailchimp integration off now**, not at cancellation | `MAILCHIMP_CANCELLATION.md`'s "keep it while Mailchimp is still billing" |
 | **2026-08-31** | **Cut over.** The August 2026 issue was broadcast from this repo through Resend's batch API to all **1,549** mailable rows — 16 chunks, `--batch-validation strict`, one idempotency key each, **0 failures** — after a three-stage approval chain ending in the founder's | Every sentence in this repo that said "nothing has ever been sent from `newsletter_subscribers`" or "the live newsletter still goes out from Mailchimp"; the July 2026 issue was the last newsletter Mailchimp ever sent |
+| **2026-08-31** | **Event promotion moves to `/promote-event`**, and **Mailchimp leaves every She Sharp process** | The reading — carried in earlier PR prose, including this file's — that Mailchimp stayed "open for event campaigns" after the newsletter moved. There is no remaining She Sharp process that is *meant* to send from it |
+| **2026-08-31** | The frequency cap **names its own blind spot** rather than closing it: no Mailchimp reader, no opt-in flag, no fabricated ledger rows | The reading of `0/3` as "the list has had nothing this month" — see "August 2026 was a five-email month" above |
 
-**Still open, and now unblocked rather than blocking:** whether the Mailchimp
-exit is a **pause** or a **downgrade**, and on what date. The precondition that
-used to gate it — the last Mailchimp send preceding the downgrade — is satisfied
-for the newsletter. What remains is a decision about *event* campaigns, which are
-still composed in Mailchimp's console and would stop with it. The runbook is
-written and is founder-only:
-[`../deployment/MAILCHIMP_CANCELLATION.md`](../deployment/MAILCHIMP_CANCELLATION.md).
+**The cutover is done, and it is not the same thing as the exit.** The
+newsletter left Mailchimp on 2026-08-31 and the ordering constraint that used to
+gate a downgrade — the last Mailchimp send preceding it, because Free holds
+sending above 250 contacts — is satisfied *for the newsletter*.
+
+**What is actually still open is a person, not a date.** Event promotion is
+decided but not yet moved: the marketing team sent four Les Mills campaigns from
+Mailchimp's console in August 2026, and until that work runs through
+`/promote-event` those sends stay invisible to the frequency cap and Mailchimp
+keeps being used. The decision is made; the habit has not changed yet.
+
+**Not open here at all, because it is not this repo's to decide:** whether and
+when the Mailchimp account stops being paid for, and whether the exit is a pause
+or a downgrade. Those need the Mailchimp account itself, which only the founder
+has, and **nothing in this repository waits on them or plans around a renewal
+date**. [`../deployment/MAILCHIMP_CANCELLATION.md`](../deployment/MAILCHIMP_CANCELLATION.md)
+is the runbook for when that call is made.
 
 ---
 
@@ -901,6 +979,8 @@ nobody mistakes an open question for a settled one.
 | `organiserId` across events | `GET /v1/events` with `x-api-key` |
 | The archive page's 20 entries | `curl 'https://us3.campaign-archive.com/home/?u=1bcf1c40837f51b409973326f&id=31bd05e8eb'`; count `<li class="campaign">`. The `MAILCHIMP_CONFIG.archiveUrl` constant this used to name was deleted with `lib/data/newsletters.ts` on 2026-08-30; the URL is the account's own and is kept here only so the measurement stays re-takeable |
 | The Humanitix campaign list, its banner, the unsubscriber list, the host profile | **Not re-takeable from code.** Sign in to the Humanitix console and look; there is no API, no export and no history view |
+| What the frequency cap has recorded for a month | `npx tsx .claude/skills/email-the-community/scripts/marketing-frequency-check.ts show` — and read its `NOT COUNTED` notice, because this is a floor, not the number of emails the list received |
+| The four August Mailchimp campaigns, with their recipient counts | `GET /campaigns?list_id=31bd05e8eb&since_send_time=2026-08-01T00:00:00%2B00:00`, dc `us3`; recipient counts are `recipients.recipient_count`. The **only** source — those sends leave no trace in this repo |
 
 `MAILCHIMP_API_KEY` is **local tooling only** and nothing under `app/` may read
 it; it expires **2027-08-27**. Credentials, rate limits and what each pull costs

@@ -1,6 +1,13 @@
 /**
  * The month's marketing-send cap, asked from THIS skill's side.
  *
+ * WHAT THE NUMBER IS. Marketing campaigns **this repository has recorded** for
+ * the current NZ month — not the number the subscriber list received. Mailchimp
+ * is still the live sender and leaves no trace in these ledgers, so every
+ * command here prints `BLIND_SPOT_NOTICE` beside its figure. In August 2026
+ * this check would have said 0/3 for a month in which the list took five
+ * marketing emails. The notice is meant to be deleted; the condition is in it.
+ *
  * WHY THIS EXISTS. `marketing-frequency.ts` (in `/monthly-newsletter`) already
  * counts every marketing campaign across every skill, and the newsletter's own
  * `issue-ledger.ts check` refuses on it. But the cap was one-directional: only
@@ -35,9 +42,13 @@
  *   marketing-frequency-check.ts show [--json]
  *
  * Exit codes:
- *   0 within the cap (or a recorded override for this month covers it)
+ *   0 within the cap as recorded here (or a recorded override covers it)
  *   1 bad arguments
  *   2 the cap would be exceeded and no override is on record
+ *
+ * Exit 0 is "nothing in these ledgers objects", not "the list has had a quiet
+ * month". No network call, no env var, no dependency: this is a pre-send gate
+ * and it must give the same answer offline as on.
  */
 
 import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
@@ -46,6 +57,8 @@ import { fileURLToPath } from "node:url";
 
 import {
   assessFrequency,
+  BLIND_SPOT_NOTICE,
+  COUNT_LABEL,
   currentNzMonth,
   DEFAULT_MONTHLY_CAP,
   nzCalendarMonth,
@@ -298,6 +311,18 @@ function formatSend(send: MarketingSend): string {
   return `    ${send.at}  ${send.source.padEnd(20)}${send.key} — ${send.what}`;
 }
 
+/**
+ * Prints what the count above could not see.
+ *
+ * Called by every command that shows a figure, and unconditionally: a caveat
+ * that only appears when somebody thought it was needed is one that is missing
+ * on the day it mattered.
+ */
+function printBlindSpots(): void {
+  console.log("");
+  for (const line of BLIND_SPOT_NOTICE) console.log(line);
+}
+
 /** `check` — the gate Step 7.2 runs. */
 function runCheck(args: Args): number {
   if (!args.key) throw new Error(`check needs --key.\n${USAGE}`);
@@ -320,8 +345,12 @@ function runCheck(args: Args): number {
           key,
           month,
           cap,
+          // Named so a consumer of the JSON cannot read `existing` as the
+          // number of marketing emails the list actually received.
+          counts: COUNT_LABEL,
           existing: verdict.existing,
           exceeded: verdict.exceeded,
+          blindSpots: verdict.blindSpots,
           override,
           verdict: !verdict.exceeded ? "within-cap" : covered ? "override" : "refused",
         },
@@ -333,19 +362,22 @@ function runCheck(args: Args): number {
   }
 
   console.log("");
-  console.log(`Marketing frequency — ${month} (NZ)`);
+  console.log(`Marketing frequency — ${month} (NZ), ${COUNT_LABEL}`);
   console.log("===================================");
   console.log(`  key    ${key}`);
-  console.log(`  cap    ${cap} marketing send(s) per calendar month, across every skill`);
-  console.log(`  so far ${verdict.existing.length}`);
+  console.log(`  cap    ${cap} marketing send(s) per calendar month, to the subscriber list`);
+  console.log(
+    `  so far ${verdict.existing.length} — ${COUNT_LABEL}, across every skill in it`
+  );
   for (const send of verdict.existing) console.log(formatSend(send));
   console.log("===================================");
 
   if (!verdict.exceeded) {
     console.log("");
     console.log(
-      `within cap — this would be send ${verdict.existing.length + 1} of ${cap}.`
+      `within cap — this would be send ${verdict.existing.length + 1} of ${cap}, by what is ${COUNT_LABEL}.`
     );
+    printBlindSpots();
     console.log("");
     return 0;
   }
@@ -358,13 +390,15 @@ function runCheck(args: Args): number {
     console.log("");
     console.log("Read that reason back to the user in the Step 6 plan block. They are");
     console.log("approving an extra email to people who did not ask for a fourth.");
+    printBlindSpots();
     console.log("");
     return 0;
   }
 
   console.log("");
   console.log(`REFUSED: this would be marketing send ${verdict.existing.length + 1} of a`);
-  console.log(`cap of ${cap} for ${month}, counted across every skill that mails the list.`);
+  console.log(`cap of ${cap} for ${month} — counting every skill in this repo, and`);
+  console.log(`nothing sent from outside it.`);
   console.log("");
   console.log("The cap is a deliverability control, not a style rule. The Resend account");
   console.log("complaint ceiling is 0.08% — about 1.25 complaints on a full send — and the");
@@ -381,6 +415,7 @@ function runCheck(args: Args): number {
   console.log(`       --reason "<why this month's extra send is worth the risk>"`);
   console.log("");
   console.log("     The override covers THIS key in THIS month and expires with it.");
+  printBlindSpots();
   console.log("");
   return 2;
 }
@@ -453,17 +488,28 @@ function runShow(args: Args): number {
 
   if (args.json) {
     console.log(
-      JSON.stringify({ month, cap: DEFAULT_MONTHLY_CAP, sends, overrides }, null, 2)
+      JSON.stringify(
+        {
+          month,
+          cap: DEFAULT_MONTHLY_CAP,
+          counts: COUNT_LABEL,
+          sends,
+          overrides,
+          blindSpots: BLIND_SPOT_NOTICE,
+        },
+        null,
+        2
+      )
     );
     return 0;
   }
 
   console.log("");
-  console.log(`Marketing sends — ${month} (NZ)`);
+  console.log(`Marketing sends — ${month} (NZ), ${COUNT_LABEL}`);
   console.log("===================================");
-  console.log(`  cap  ${DEFAULT_MONTHLY_CAP} per calendar month, across every skill`);
+  console.log(`  cap  ${DEFAULT_MONTHLY_CAP} per calendar month, to the subscriber list`);
   if (sends.length === 0) {
-    console.log("  (none recorded)");
+    console.log("  (none recorded here — which is not the same as none sent)");
   } else {
     for (const send of sends) console.log(formatSend(send));
   }
@@ -474,6 +520,7 @@ function runShow(args: Args): number {
       console.log(`    ${entry.key} — ${entry.by}: ${entry.reason}`);
     }
   }
+  printBlindSpots();
   console.log("");
   return 0;
 }
