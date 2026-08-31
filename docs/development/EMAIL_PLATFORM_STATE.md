@@ -17,10 +17,21 @@ to **1,549 recipients** — every `status = 'subscribed'` row in
 `--batch-validation strict`, one idempotency key per chunk, **0 failures**. The
 approval chain (stage 1 test, stage 2 review round, stage 3 the founder's
 approval) is on the record in
-`.claude/skills/monthly-newsletter/state/issues.json`. **What is established is
-that Resend accepted all 1,549 messages** — not that they landed. Delivery,
-opens, bounces and complaints are not known yet and will surface through the
-Svix bounce/complaint webhook. **And the Mailchimp account is untouched**: it has
+`.claude/skills/monthly-newsletter/state/issues.json`.
+
+**First delivery reading, ~20 minutes after the send** (Resend `GET /emails`,
+paged over all 1,549): **1,536 delivered, 7 bounced, 1 delayed, 5 still in
+flight, 0 complaints.** That is a **0.45% bounce rate against a 2% arm** and
+**0% complaints against a 0.10% arm** — both well inside the thresholds in
+[`../deployment/EMAIL_AUTHENTICATION.md`](../deployment/EMAIL_AUTHENTICATION.md)
+§15. **Read it as provisional, not final**: bounces and complaints arrive for
+hours and sometimes days afterwards, and a complaint in particular is a human
+pressing a button in their own time. The authoritative running figure is
+`email_events`, fed by the Svix webhook, not this paragraph.
+
+**A good first reading does not retire the ramp.** The send went to the whole
+list at once when three places in this repo asked for it to be ramped; that it
+came out fine is one sample, not evidence the rule was wrong. **And the Mailchimp account is untouched**: it has
 not been paused, downgraded or closed. See
 [`../deployment/MAILCHIMP_CANCELLATION.md`](../deployment/MAILCHIMP_CANCELLATION.md).
 
@@ -141,9 +152,9 @@ maintainer's own address (`email_events` held **6 rows for 1 distinct person** o
 2026-08-30), which is why every document in this repo said "nothing has been
 sent" up to 2026-08-30; those sentences are historical now, not current.
 **One send is not a routine.** Nothing beyond the August issue has gone out from
-this table, and **no delivery outcome is established** — Resend accepted all
-1,549 messages, and whether they landed will show up through the Svix
-bounce/complaint webhook and in `email_events`, not here.
+this table. The first delivery reading is in the header section above — 1,536
+delivered and 7 bounced about twenty minutes in — and it is **provisional**: the
+running figure lives in `email_events`, fed by the Svix webhook, not here.
 
 ### How the list was actually acquired
 

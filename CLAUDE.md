@@ -234,9 +234,12 @@ which is when reading the wrong one costs nothing and becomes a habit.
 **It has now been sent to, once.** On **2026-08-31** the August 2026 issue went
 from this repo to all 1,549 through Resend's batch API, 16 chunks, 0 failures —
 the first broadcast in the table's history, and the end of "nothing has ever been
-sent from it". **One send is not a routine**, and no delivery outcome is
-established: Resend *accepted* 1,549 messages; what landed will surface through
-the Svix bounce/complaint webhook.
+sent from it". **One send is not a routine.** The first delivery reading, twenty
+minutes in, was 1,536 delivered, 7 bounced, 0 complaints — 0.45% against a 2%
+arm — but it is **provisional**, because bounces and complaints keep arriving
+for days; the running figure is `email_events`, fed by the Svix webhook.
+**It was not ramped**, against three places in this repo that asked for a ramp,
+and one clean reading is a sample rather than a reason to drop the rule.
 Run `scripts/email/suppression.ts pull-mailchimp` before any further
 import — the register moves under a frozen export, and Mailchimp's sign-up and
 unsubscribe forms are still live even though the newsletter has left.

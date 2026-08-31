@@ -111,8 +111,12 @@ export type IssueResolution =
  * than in Mailchimp — so it carries no `campaign` and falls through to the
  * registry, which is the only artefact of that issue there is. A `campaign`
  * asserts exactly one thing, that the issue also exists as a Mailchimp send;
- * its absence means there is no send to prefer, NOT that the send happened
- * somewhere else. Nothing has ever been sent from `newsletter_subscribers`.
+ * its absence means there is no send to prefer, NOT that the issue never went
+ * out. `2026-08` went out on 2026-08-31 — the first newsletter sent from
+ * `newsletter_subscribers`, through Resend's batch API — and produced no
+ * campaign here precisely because Mailchimp had nothing to do with it. From
+ * this issue on, a missing `campaign` is the normal case rather than the
+ * exception.
  */
 export function resolveIssue(id: string): IssueResolution | null {
   const carded = CAMPAIGN_BY_ISSUE_ID.get(id);
