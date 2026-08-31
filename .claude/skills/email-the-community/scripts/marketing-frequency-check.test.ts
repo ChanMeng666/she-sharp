@@ -15,17 +15,31 @@
  *   - an override for another key or another month → must not cover this one
  *   - and the happy path, so a gate that refuses everything fails here too
  *
+ * Since 2026-08-31 it also guards the cap's OWN blind spot. The count is what
+ * this repo has recorded, never what the list received, and every command that
+ * prints a figure must print the Mailchimp notice beside it. The assertions
+ * that matter there are the CLI ones: a unit test on the constant would still
+ * pass if a renderer quietly stopped calling it, so each command is run as a
+ * subprocess and its real stdout is read. Delete those tests together with the
+ * notice, on the condition the notice itself states.
+ *
  * Fixtures go to the OS temp directory, never to the skill's committed state
  * files, so a run leaves nothing a colleague could mistake for a real send.
  */
 
 import assert from "node:assert";
+import { execFileSync } from "node:child_process";
 import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 
 import {
   assessFrequency,
+  BLIND_SPOT_DELETE_WHEN,
+  BLIND_SPOT_NOTICE,
+  blindSpotProse,
+  COUNT_LABEL,
   currentNzMonth,
   DEFAULT_MONTHLY_CAP,
   readCommunitySends,
@@ -292,6 +306,145 @@ test("a missing or corrupt override file reads as no overrides", () => {
 });
 
 // ---------------------------------------------------------------------------
+// The cap's own blind spot — Mailchimp
+//
+// These run the CLIs and read their real stdout. Asserting on the exported
+// constant alone would keep passing if a renderer stopped printing it, which is
+// the failure this whole section exists to catch.
+// ---------------------------------------------------------------------------
+
+/**
+ * The `--require`/`--import` loader flags this process was started with, so a
+ * child can run TypeScript the same way. Falls back to `tsx`, which is how the
+ * repo's other scripts are invoked.
+ */
+function loaderArgs(): string[] {
+  const args: string[] = [];
+  for (let index = 0; index < process.execArgv.length; index += 1) {
+    const arg = process.execArgv[index];
+    if (arg === "--require" || arg === "--import") {
+      args.push(arg, process.execArgv[index + 1]);
+      index += 1;
+    } else if (arg.startsWith("--require=") || arg.startsWith("--import=")) {
+      args.push(arg);
+    }
+  }
+  return args.length > 0 ? args : ["--import=tsx"];
+}
+
+/** Absolute path to a script, from this file. */
+function script(relative: string): string {
+  return fileURLToPath(new URL(relative, import.meta.url));
+}
+
+/**
+ * Runs one of the skills' CLIs and returns its stdout.
+ *
+ * Exit codes are deliberately ignored. `check` exits 2 when the cap is
+ * exceeded and 1 when an approval chain is incomplete, and both depend on the
+ * committed state files, which move. What must hold whatever they say is that
+ * the notice was printed.
+ */
+function stdoutOf(path: string, argv: string[], env: NodeJS.ProcessEnv = {}): string {
+  try {
+    return execFileSync(process.execPath, [...loaderArgs(), path, ...argv], {
+      stdio: "pipe",
+      encoding: "utf8",
+      env: { ...process.env, ...env },
+    });
+  } catch (error) {
+    const failure = error as { stdout?: string };
+    return failure.stdout ?? "";
+  }
+}
+
+/** stdout with the hand-wrapping flattened, so a wrapped sentence can match. */
+function prose(output: string): string {
+  return output.replace(/\s+/g, " ").trim();
+}
+
+test("the notice names Mailchimp, the month that proved it, and when to delete it", () => {
+  const text = blindSpotProse();
+  assert.match(text, /Mailchimp/, "the uncounted pipeline must be named");
+  assert.match(text, /August 2026/, "the worked example must be dated");
+  assert.match(text, /five marketing emails against a cap of three/);
+  assert.ok(
+    text.includes(BLIND_SPOT_DELETE_WHEN),
+    "a note meant to be deleted must carry the condition for deleting it"
+  );
+  assert.match(
+    text,
+    /not what the subscriber list received/,
+    "the figure must be disclaimed, not merely footnoted"
+  );
+});
+
+test("every community-skill command that prints a figure prints the notice", () => {
+  const path = script("marketing-frequency-check.ts");
+  for (const argv of [
+    ["show"],
+    ["check", "--key", "blind-spot-test"],
+  ]) {
+    const output = prose(stdoutOf(path, argv));
+    assert.ok(
+      output.includes(blindSpotProse()),
+      `\`${argv.join(" ")}\` printed no blind-spot notice:\n${output}`
+    );
+    assert.ok(
+      output.includes(COUNT_LABEL),
+      `\`${argv.join(" ")}\` did not say the figure is only "${COUNT_LABEL}"`
+    );
+  }
+});
+
+test("the community check's JSON carries the notice too", () => {
+  const output = stdoutOf(script("marketing-frequency-check.ts"), [
+    "check",
+    "--key",
+    "blind-spot-test",
+    "--json",
+  ]);
+  const parsed = JSON.parse(output) as { counts?: string; blindSpots?: string[] };
+  assert.strictEqual(parsed.counts, COUNT_LABEL);
+  assert.deepStrictEqual(parsed.blindSpots, [...BLIND_SPOT_NOTICE]);
+});
+
+test("the newsletter ledger prints the notice on a PASS and on a FAIL", () => {
+  const path = script("../../monthly-newsletter/scripts/issue-ledger.ts");
+
+  // A complete chain, so the PASS branch is exercised rather than assumed. The
+  // ledger is redirected to a fixture; the committed record is never touched.
+  const passing = fixture("issues-passing.json", {
+    version: 1,
+    lastRunAt: null,
+    frequencyCapPerMonth: 3,
+    issues: {
+      "2026-01": {
+        issueId: "2026-01",
+        createdAt: "2026-01-02T00:00:00.000Z",
+        test: { at: "2026-01-02T01:00:00.000Z", recipientCount: 1, recipientHashes: [], note: "" },
+        review: { at: "2026-01-02T02:00:00.000Z", recipientCount: 4, people: 4, recipientHashes: [], note: "" },
+        approval: { at: "2026-01-02T03:00:00.000Z", by: "Mahsa", evidence: "said so on the call" },
+        batches: [],
+        frequencyOverride: null,
+      },
+    },
+  });
+  const env = { NEWSLETTER_ISSUE_LEDGER_PATH_FOR_TESTS: passing };
+
+  const pass = prose(stdoutOf(path, ["check", "--issue", "2026-01"], env));
+  assert.match(pass, /^\s*Approval chain — 2026-01/);
+  assert.ok(pass.includes("PASS"), `expected a PASS, got:\n${pass}`);
+  assert.ok(pass.includes(blindSpotProse()), "a PASS must still print the notice");
+  assert.ok(pass.includes(COUNT_LABEL), "the PASS figure must be qualified");
+
+  // And the FAIL branch: an issue with no record at all.
+  const fail = prose(stdoutOf(path, ["check", "--issue", "2026-02"], env));
+  assert.ok(fail.includes("FAIL"), `expected a FAIL, got:\n${fail}`);
+  assert.ok(fail.includes(blindSpotProse()), "a FAIL must print the notice too");
+});
+
+// ---------------------------------------------------------------------------
 // The happy path, last — a gate that refuses everything must fail here
 // ---------------------------------------------------------------------------
 
@@ -299,6 +452,11 @@ test("an empty month is within the cap", () => {
   const verdict = assessFrequency([], currentNzMonth(), DEFAULT_MONTHLY_CAP);
   assert.strictEqual(verdict.exceeded, false);
   assert.strictEqual(verdict.existing.length, 0);
+  assert.deepStrictEqual(
+    verdict.blindSpots,
+    BLIND_SPOT_NOTICE,
+    "even a clean verdict must carry what it could not see"
+  );
 });
 
 rmSync(dir, { recursive: true, force: true });
