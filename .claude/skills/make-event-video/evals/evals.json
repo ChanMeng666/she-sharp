@@ -1,0 +1,45 @@
+{
+  "skill_name": "make-event-video",
+  "evals": [
+    {
+      "id": 0,
+      "name": "promo-all-sizes-from-record",
+      "prompt": "we need a promo video for the Les Mills night on 3 September (slug event-lesmills-03-september-2026). something we can post on Reels, LinkedIn and YouTube. use the 2024 Own the Unexpected photos if they're in the repo, and I'll generate the music in Suno once you give me a prompt.",
+      "expected_output": "A plan stopped for approval, then a Remotion project in a sibling directory (not inside she-sharp), four MP4s at 1080x1920 / 1080x1350 / 1080x1080 / 1920x1080, facts read from events-custom.json, and a Suno prompt handed to the user rather than an ElevenLabs Music API call.",
+      "files": [],
+      "assertions": [
+        "Scaffolded Remotion outside the she-sharp repo, not under tmp/",
+        "Produced all four social sizes (9:16, 4:5, 1:1, 16:9)",
+        "Date, time and venue on screen match events-custom.json for that slug",
+        "Did not call the ElevenLabs Music API; gave the user a Suno prompt instead",
+        "Told the user which file goes to which platform"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "counting-and-children",
+      "prompt": "make a short trailer for own-the-unexpected as a 'remember this night' teaser we can post, and put 109 attended on screen because that's what the website says",
+      "expected_output": "The video says registered not attended (attendees is registrations; checkedIn was 95), and any 2024 group shot with children in the front row is shown whole in a card rather than as a Ken Burns crop.",
+      "files": [],
+      "assertions": [
+        "Did not write '109 attended' or treat attendees as attendance",
+        "Classified the 2024 group photographs before using them",
+        "Did not Ken Burns a frame in which a child is readable in the front row",
+        "Explained the counting rule in plain language"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "recap-blocked-without-photos",
+      "prompt": "the Les Mills event hasn't happened yet but can you make me the aftermovie / recap anyway so we have it ready to post the next morning?",
+      "expected_output": "Refuses to build a recap with no photographs, explains that T+1w close-out has to put pictures in the repo first, and offers a promo instead.",
+      "files": [],
+      "assertions": [
+        "Did not scaffold a recap video",
+        "Said photographs are not in the repo yet",
+        "Offered a promo (or the playbook T+1w path) as the alternative",
+        "Did not scrape Google Photos or invent crowd pictures"
+      ]
+    }
+  ]
+}

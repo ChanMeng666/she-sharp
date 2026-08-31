@@ -187,6 +187,29 @@ Sharp again.
 
 ---
 
+## T-3w — Promo video
+
+**Gate.** Date, venue and title are confirmed **in the event record**, and there
+is something to put on screen: a prior edition's photographs, or this event's
+poster and speaker headshots. Optional. A night can ship without a video.
+
+**Hand to.** `/make-event-video` kind `promo`.
+
+**Leaves behind.** Four MP4s in a **sibling** Remotion project
+(`../she-sharp-event-videos/<slug>-promo/out/`), not in this repo. The person
+generates the soundtrack in Suno; the skill writes the prompt and cuts the bed.
+
+**Then check.** Nothing in `event-status.ts` reports on video — it lives outside
+the tree on purpose. Done means the four files exist and the facts on screen
+match the event record.
+
+**What goes wrong.** Scaffolding Remotion inside she-sharp (including `tmp/`)
+opts the Next build into a typecheck of the video tree. Ken Burns on a group
+shot that includes a child. Writing `attendees` as "attended". Calling ElevenLabs
+Music on a free key (402) instead of handing over a Suno prompt.
+
+---
+
 ## T-2w — The registrants
 
 **Gate.** The event is ticketed on Humanitix, and whoever is sending has access
@@ -395,6 +418,26 @@ read the whole card back — this is the last time anyone looks at this event.
 **What goes wrong.** A `checkedIn` of 0 usually means **nobody scanned**, not
 that nobody came; 26 of the 62 ticketed instances never ran a check-in at all.
 Never publish a 0 as attendance without reading `checkInDataPresent`.
+
+---
+
+## T+1w — Recap video
+
+**Gate.** Photographs exist in the repo for this slug — `photo-*.webp` beside
+the event folder, or a built `archive/`. An empty `photos[]` is not a recap, it
+is close-out still outstanding.
+
+**Hand to.** `/make-event-video` kind `recap`.
+
+**Leaves behind.** Four MP4s in `../she-sharp-event-videos/<slug>-recap/out/`.
+The CTA is the next event, the album, or the newsletter — not "RSVP today".
+
+**Then check.** Same as the promo: the files exist, and any number on screen is
+`checkedIn` (if scanning happened) or registrations labelled as registrations.
+
+**What goes wrong.** Building the recap the morning after from Google Photos
+because "we'll have it ready". The child-photograph rule still applies, and a
+named quote from event feedback is the same trap as naming a respondent in copy.
 
 ---
 

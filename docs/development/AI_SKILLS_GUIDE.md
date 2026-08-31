@@ -25,7 +25,7 @@ can say "stop" or "show me that again" at any point.
 
 ## 1. What you'll be able to do
 
-Ten skills live inside this project. Each one is a written procedure the AI
+Eleven skills live inside this project. Each one is a written procedure the AI
 follows, so it does the task the same careful way every time.
 
 **If you only remember one, remember `/run-event-playbook`.** It is the way in:
@@ -36,6 +36,7 @@ run next, so you never have to hold the order in your head.
 |---|---|---|---|
 | `/run-event-playbook` | Works out where an event has got to and what comes next | *"what's left to do for Thursday's panel"* | anyone |
 | `/make-event-poster` | The artwork — ticketing banner, social posts, print poster, one graphic per speaker | *"make a poster for the AUT night"* | Marketing |
+| `/make-event-video` | A short social video — promo before the night or recap after — in four sizes (Reels, feed, square, YouTube) | *"make a Reels for Thursday's panel"* | Marketing |
 | `/tweak-event-slides` | Changes one small thing on slides that already exist, and publishes it in about three minutes | *"fix the typo on the Les Mills deck"* | anyone |
 | `/promote-event` | Tells the mailing list about an event that has not happened yet | *"tell the list about next month's event"* | Comms |
 | `/email-the-community` | Sends one announcement to the whole mailing list | *"email everyone about the new mentoring round"* | Comms |
@@ -54,8 +55,9 @@ explains why and how.
 
 The email skills are where most people start. The event skills are here too,
 because they are one toolkit and they depend on each other in a fixed order —
-`/promote-event`, `/make-event-poster` and `/build-event-slides` all read the
-date and venue from the website, so the event has to be on the website first.
+`/promote-event`, `/make-event-poster`, `/make-event-video` and
+`/build-event-slides` all read the date and venue from the website, so the event
+has to be on the website first.
 Putting it there is `/sync-event-from-slack`, and that one skill is the website
 team's job rather than yours — section 6.6 explains why, and what to do instead.
 `/run-event-playbook` exists so you do not have to remember the order; the whole
@@ -382,6 +384,7 @@ exception is on purpose and is named in the box at the end of this section.
 | After you run… | Does anything need proposing? |
 |---|---|
 | `/make-event-poster` | **Yes** — the artwork files are new, and the website needs them |
+| `/make-event-video` | **No** — the MP4s live in a sibling Remotion project, not in this repo. Only propose a change here if you later add a file to `public/` |
 | `/build-event-slides` | **Yes**, but the developer working with you does it |
 | `/tweak-event-slides` | **No** — this one publishes itself, on purpose. See the box below |
 | `/promote-event`, `/email-the-community`, `/update-mailing-list` | **Yes, but only the record.** The email has already gone; the project keeps a small note of what was sent to whom, and that note is worth sharing so nobody sends it twice |
@@ -843,9 +846,9 @@ the website” has none of those, so it scores zero and is invisible. It is not 
 a DM is rude; it is that a DM gets lost. `#website-team` is where it will not.
 
 **When it matters most.** Whenever event details change, and always before anyone
-runs `/promote-event`, `/make-event-poster` or `/build-event-slides` for that
-event. All three read the date and venue from the website, so the website has to
-be right first.
+runs `/promote-event`, `/make-event-poster`, `/make-event-video` or
+`/build-event-slides` for that event. All four read the date and venue from the
+website, so the website has to be right first.
 
 The whole order, and who does which part, is on one page at
 `/internal/event-playbook`, and in full in
