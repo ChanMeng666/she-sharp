@@ -1376,7 +1376,7 @@ reaches a projector or a poster.
 |---|---|---|---|---|---|
 | T-8w | the partner said yes and it was announced as secured | open the `#event-…` channel; run the kickoff; post the minutes | Event Manager | human | the channel, with its first message |
 | T-6w | a Slack planning channel with the kickoff minutes in it | `/sync-event-from-slack` | developer | skill | the event in `events-custom.json`, assets in `public/img/events/<slug>/` |
-| T-6w | the fetch payload was recorded | its **Step 7.6** archive refresh | developer | skill | the private archive level with Slack — **committed there, never here** |
+| T-6w | you hold the `she-sharp-slack-archive` checkout — **otherwise skip; the sync is complete without it** | its "Not part of a sync" archive refresh | archive holder | skill | the private archive level with Slack — **committed there, never here** |
 | T-5w | date, venue, title confirmed **in the event record** | `/make-event-poster` | Marketing | skill | `poster`, `social`, `story`, `square`, `humanitix`, `email` |
 | T-5w | the poster set exists | send it to the partner and get an answer | Event Manager | human | approval, or one revision round |
 | T-4w | approved artwork, and a banner at 3200×1600 | build the Humanitix page and the access codes; **switch on the mailing-list opt-in** (per event, defaults off) | Event Manager | human | a live ticket page |
@@ -1467,13 +1467,17 @@ because it named no venue, date or ticket. Section 5 is the human-facing half of
 that fix; `#website-team` and its `alwaysRead` flag are the other half.
 
 The archive is a **third**, separate position. Every sync moves the repository's
-positions and not the archive's, so it drifts every time. Until Step 7.6 existed
-nothing in any step list moved it at all — and all three gates in the sync
+positions and not the archive's, so it drifts every time. Nothing in any step list
+moved it until the sync skill grew a step for it — and all three gates in that
 skill's Step 7.5 stayed green throughout, because none of them looks at it.
 
-`refresh-archive.ts --archive <path>` (dry run by default) is what reports and
-closes the gap; run it after a sync rather than trusting the three gates above,
-none of which can see the archive.
+`refresh-archive.ts` (dry run by default; reads `SLACK_ARCHIVE_DIR`, or takes
+`--archive <path>`) is what reports and closes the gap. **It belongs to whoever
+holds the archive checkout, not to whoever synced the event** — that was its
+mistake until 31 August 2026, when it was a numbered step of the sync with one
+person's Windows path written into the command, which made the whole skill
+unusable by anyone else. Run it on your own rhythm rather than trusting the three
+gates above, none of which can see the archive.
 
 **Nothing from the archive may be copied into this repo.** It holds verbatim DMs,
 attendee spreadsheets, a storeroom door code and a ticket-code series some of

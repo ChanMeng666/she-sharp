@@ -172,7 +172,7 @@ this one is stuck.
 | Phase | Gate — what must be true first | Hand to |
 |---|---|---|
 | **T-6w Intake** | a Slack planning channel exists for the event | `/sync-event-from-slack` |
-| **T-6w Archive** | the channel's payload was fetched this session | its **Step 7.6**, `refresh-archive.ts` |
+| **T-6w Archive** | you hold the `she-sharp-slack-archive` checkout (`SLACK_ARCHIVE_DIR` is set) — otherwise **skip this phase** | its "Not part of a sync" section, `refresh-archive.ts` |
 | **T-5w Artwork** | date, venue and title confirmed **in the event record** | `/make-event-poster`, steps 1–6 |
 | **T-4w Campaign** | every speaker has a headshot **in the event record** | `/make-event-poster` step 7 — `--speaker all --lineup` |
 | **T-3w Promotion** | the newsletter subscriber table has real people in it — **it does not today** | `/promote-event` → `/email-the-community` from its Step 3 |

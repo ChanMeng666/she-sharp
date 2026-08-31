@@ -57,23 +57,36 @@ history rewrite plus a rotation of every code.
 
 ---
 
-## T-6w — Refresh the archive
+## T-6w — Refresh the archive (only if you hold the archive)
 
-**Gate.** The channel's payload was fetched this session. This is the sync
-skill's own **Step 7.6** and it belongs to the same sitting as the intake — it is
-listed separately here only because it is the step everyone forgets.
+**Gate.** You have a `she-sharp-slack-archive` checkout — that is, `.env` sets
+`SLACK_ARCHIVE_DIR`. **If you do not, this phase is not yours: skip it and carry
+on to T-5w.** The event is not blocked and the intake at T-6w is complete
+without it.
 
-**Hand to.** `/sync-event-from-slack` Step 7.6:
+This was the sync skill's **Step 7.6** until 31 August 2026, with the archive
+path hardcoded to one person's machine. That made it look like a step of every
+sync, so the one person holding that directory was the only one who could finish
+one. It is now `/sync-event-from-slack`'s "Not part of a sync: refreshing the
+verbatim archive" section, and it belongs to whoever holds the archive, on their
+own rhythm.
+
+**Hand to.** `/sync-event-from-slack`, that section:
 
 ```powershell
-npx tsx .claude/skills/sync-event-from-slack/scripts/refresh-archive.ts --archive D:/github_repository/she-sharp-slack-archive
-npx tsx .claude/skills/sync-event-from-slack/scripts/refresh-archive.ts --archive D:/github_repository/she-sharp-slack-archive --apply
+npx tsx .claude/skills/sync-event-from-slack/scripts/refresh-archive.ts
+npx tsx .claude/skills/sync-event-from-slack/scripts/refresh-archive.ts --apply
 ```
 
-Dry run is the default and writes nothing.
+Dry run is the default and writes nothing. With no `SLACK_ARCHIVE_DIR` and no
+`--archive` the script exits saying the step is not yours, and touches nothing.
 
 **Leaves behind.** Nothing in this repo. The archive is a **separate, private
-repository**: commit it there, on its own, never as part of the event PR.
+repository**: commit it there, on its own, never as part of the event PR. Nothing
+records that a sync skipped this, on purpose — `refresh-archive.ts` computes what
+the archive owes by diffing it against Slack, so the answer always reaches the
+only person who can act on it, and a marker here would be a second position that
+can go stale.
 
 **Then check.** Nothing in `event-status.ts` reports on this — which is exactly
 why it needs saying. The manifest records what has been **read**; the archive's

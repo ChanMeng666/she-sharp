@@ -21,6 +21,11 @@
  *
  * Full machine-readable triage is always written to .cache/triage.json.
  *
+ * The header also reports what this run could NOT see — known conversations the
+ * current identity did not list at all. A row can say `readable: false`; a
+ * conversation that never appeared cannot say anything, and on a bot token that
+ * is every DM and every private channel the bot was not invited to.
+ *
  * Conversations that are READ and found quiet have their read position advanced
  * in the committed manifest, so the next run sees a true delta. Actionable rows
  * are never advanced — moving their watermark would mark unread content as read.
@@ -89,6 +94,30 @@ const GROWN_THREAD_PEEK_CAP = 8;
  * this workspace, so in practice it means "all of it" with a stop built in.
  */
 const THREAD_SCAN_MAX_PAGES = 25;
+
+/**
+ * A conversation the manifest knows about that this run did not enumerate.
+ *
+ * The table below is built from `conversations.list`, so a conversation the
+ * current identity cannot see does not become a row with `readable: false` — it
+ * is absent, and absence is the one thing a reader cannot notice. That matters
+ * now that a scheduled workflow runs the triage on the BOT token: `im`/`mpim`
+ * are not even listable there, so 28 conversations silently leave the
+ * workspace, and 9 of them are `alwaysRead` — the DMs of the people who send
+ * work. A private channel nobody invited the bot to disappears the same way,
+ * with no `/invite` prompt anywhere.
+ *
+ * `reason` separates the two cases because only one of them is a problem:
+ * `dms-out-of-scope` is this run doing what it was told, `not-visible` is a
+ * conversation somebody has to act on (invite the bot, or use a user token).
+ */
+interface Unenumerated {
+  id: string;
+  name: string;
+  type: ChannelType;
+  alwaysRead: boolean;
+  reason: "dms-out-of-scope" | "not-visible";
+}
 
 /** A thread carrying replies the manifest has no record of anyone reading. */
 interface GrownThread {
@@ -278,6 +307,21 @@ async function main() {
   const manifest = loadManifest();
   const published = loadPublishedEvents();
   const nowMs = Date.now();
+
+  // Which known conversations this identity did not even list. See `Unenumerated`.
+  const enumerated = new Set(channels.map((c) => c.id));
+  const unenumerated: Unenumerated[] = Object.entries(manifest.channels)
+    .filter(([id]) => !enumerated.has(id))
+    .map(([id, c]) => ({
+      id,
+      name: c.name,
+      type: c.type,
+      alwaysRead: c.mapping?.kind === "skip" && !!c.mapping.alwaysRead,
+      reason:
+        c.type === "dm" && (skipDms || !USING_USER_TOKEN)
+          ? ("dms-out-of-scope" as const)
+          : ("not-visible" as const),
+    }));
 
   if (doJoin) {
     // Always join as the BOT. `conversations.join` on a user token would make
@@ -489,7 +533,22 @@ async function main() {
   // Persist full machine triage.
   mkdirSync(CACHE_DIR, { recursive: true });
   const triagePath = resolve(CACHE_DIR, "triage.json");
-  writeFileSync(triagePath, JSON.stringify({ generatedAt: new Date().toISOString(), rows }, null, 2));
+  writeFileSync(
+    triagePath,
+    JSON.stringify(
+      {
+        generatedAt: new Date().toISOString(),
+        // Which identity produced this, so a reader of the file — or
+        // `triage-report.ts`, which turns it into a GitHub issue — can say how
+        // wide the scan was rather than implying it covered the workspace.
+        identity: USING_USER_TOKEN ? "user" : "bot",
+        unenumerated,
+        rows,
+      },
+      null,
+      2,
+    ),
+  );
 
   // Advance the read position for everything this run READ and found quiet.
   //
@@ -630,6 +689,36 @@ async function main() {
 
   const lines: string[] = [];
   lines.push(`Channels: ${rows.length} total — ${actionable.length} need attention, ${quiet.length} quiet`);
+  /*
+   * SAY WHAT THIS RUN COULD NOT SEE, DIRECTLY UNDER THE TOTAL.
+   *
+   * The count above is "conversations this identity listed", and a reader takes
+   * it for "conversations there are". Those are the same number only on a user
+   * token with DMs in scope; on the bot token the scheduled workflow uses, 28
+   * DMs and group DMs are not listable at all and simply vanish — along with any
+   * private channel nobody has invited the bot to. Nothing in the table can
+   * carry that, because the missing rows are missing.
+   */
+  const invisible = unenumerated.filter((u) => u.reason === "not-visible");
+  const outOfScope = unenumerated.filter((u) => u.reason === "dms-out-of-scope");
+  if (outOfScope.length) {
+    const always = outOfScope.filter((u) => u.alwaysRead).length;
+    lines.push(
+      `Not scanned: ${outOfScope.length} known DM(s)/group DM(s) out of scope for this run` +
+        (always ? `, ${always} of them always-read` : "") +
+        ` — ${skipDms ? "--no-dms" : "needs SLACK_USER_TOKEN"}`,
+    );
+  }
+  if (invisible.length) {
+    lines.push(
+      `NOT VISIBLE: ${invisible.length} conversation(s) in the manifest this identity could not list —`,
+    );
+    for (const u of invisible) {
+      lines.push(
+        `  ${u.name} (${u.id})${u.alwaysRead ? " [always-read]" : ""} — /invite the Collector bot, or run with SLACK_USER_TOKEN`,
+      );
+    }
+  }
   lines.push("");
   lines.push(pad("TYPE", 8) + pad("CHANNEL", 44) + pad("MBR", 5) + pad("NEW", 5) + pad("SIG", 5) + "ACTION / MAPPING");
   for (const r of shown) {

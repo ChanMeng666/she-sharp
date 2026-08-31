@@ -289,8 +289,17 @@ written, not adjusted. Match the tone and structure of the reference issue
   placeholder).
 - **`founderNote.photoUrl`** — always
   `https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/people/mahsa-mccauley.jpg`
-- **`subjectLine`** ≤50 chars (≤1 emoji, only if natural).
-- **`previewText`** ≤120 chars — complements the subject, does NOT repeat its words.
+- **`subjectLine`** — **`She Sharp - <Month> Newsletter`**, e.g.
+  `"She Sharp - August Newsletter"`. A plain hyphen, not an en dash, and no
+  emoji. The founder set this on 2026-08-31 and asked that every issue follow
+  it, replacing a clever line written for that month alone
+  (`"Twelve teams, two days, one AI hackathon"`). **Do not write a subject that
+  describes the contents** — a predictable sender-and-month subject is what a
+  subscriber scans for, and the schema's 50-char ceiling still applies.
+- **`previewText`** ≤120 chars — complements the subject, does NOT repeat its
+  words. **This now carries the whole hook**, because the subject no longer says
+  anything about the issue. Write it accordingly: it is the only line in the
+  inbox that can make someone open the mail.
 - **`recapIntro`** — 1–2 sentences framing last month.
 - **`primaryCta`** — the SINGLE most important action (usually the next event's
   registration link). Label ≤40 chars. Don't dilute it.

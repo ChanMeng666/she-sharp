@@ -86,6 +86,51 @@ what it already read, links each channel to its event(s) (slugs differ from
 channel names), reads only deltas, and short-circuits unchanged channels to a
 no-op. See `references/state-and-incremental.md` for the full model.
 
+## Anyone in this repo can run this — the runbook
+
+For a long time one person did, because knowing *when* to read Slack needed a
+token and a checkout, so the answer only ever reached whoever ran the triage.
+That half is now automatic.
+
+**`.github/workflows/slack-triage.yml` runs the triage every weekday morning** as
+the Collector bot, and `triage-report.ts` edits one standing GitHub issue labelled
+`slack-triage`. Nobody has to remember to look. It **reports and never records**:
+the workflow passes `--no-record`, so no read position moves and a row keeps
+appearing in that issue until a human actually syncs it. A comment — the thing
+that notifies people — is posted only when the actionable set changes, so a
+standing row does not become something everyone mutes.
+
+**To pick up a row** you need a bot token and a checkout, and nothing else. Ask
+the maintainer for the **She Sharp Event Collector** bot token (`xoxb-`, the
+app's own credential, not anyone's personal one) and put it in `.env` as
+`SLACK_BOT_TOKEN`. Then run the two commands the issue prints for that row —
+`fetch-channel.ts <id> --state --out tmp/<id>.json`, then `render-delta.ts` — and
+follow this skill from Step 2. Everything up to Step 6 is a dry run.
+
+**What a bot token cannot see, and why that is not a gap you can close by
+trying.** The table above is the whole of it, but two consequences are worth
+stating rather than discovering:
+
+- **DMs and group DMs are invisible.** Not "narrower" — `conversations.list`
+  returns `missing_scope` for `im`/`mpim` on a bot token, so those 28 known
+  conversations are not listed at all, and **9 of them are marked `alwaysRead`**
+  because they are where people send work. The triage reports them as unseen
+  rather than leaving them silently absent, and the issue body carries that
+  list, but only a user token reaches them. Moving a recurring work conversation
+  out of a group DM into a **private channel with the Collector bot invited** is
+  the only thing that puts it inside the automated scan.
+- **A private channel nobody invited the bot to disappears the same way.** It
+  does not appear as `readable: false`; it is absent. The triage's `NOT VISIBLE`
+  lines name those, and the fix is a human running
+  `/invite @She Sharp Event Collector` in the room.
+
+**Two people can sync in the same week; one rule makes that safe.** `git pull`
+before you start, and commit `state/sync-state.json` in the same commit as the
+event change. The manifest is one large file but it is pretty-printed per
+channel, so two people working on different channels merge cleanly. If you do
+collide, **never hand-edit it** — re-run `update-state.ts`, which is the only
+thing that keeps the ordering deterministic and recomputes the fingerprint.
+
 ## When to apply
 
 Trigger conditions (examples — don't wait for an exact match):
@@ -140,9 +185,11 @@ out and rotated at its source.
 
 1. Working directory is the repo root (contains `lib/data/json/events-custom.json`).
 2. `.env` contains `SLACK_BOT_TOKEN` (and optionally the wider
-   `SLACK_USER_TOKEN`). If neither, stop and tell the user. Every script
-   prints which identity it read as on stderr — check it before concluding
-   a channel or DM "has nothing", since a bot token silently sees less.
+   `SLACK_USER_TOKEN`). If neither, stop and tell the user where to get one —
+   the bot token is the app's own credential and the maintainer can hand it
+   over; see the runbook above. Every script prints which identity it read as
+   on stderr — check it before concluding a channel or DM "has nothing", since
+   a bot token silently sees less.
 3. `@slack/web-api` + `dotenv` are in `package.json`. These are pre-existing
    dependencies; absence means the user is in the wrong project.
 4. `mammoth` in `devDependencies` is optional — if absent, `.docx` extraction
@@ -170,7 +217,17 @@ npx tsx .claude/skills/sync-event-from-slack/scripts/discover-channels.ts
 ```
 
 It prints a compact table — one row per channel, never message bodies — and writes
-the full machine triage to `.cache/triage.json`. Read the `action` column and act:
+the full machine triage to `.cache/triage.json`. **The `slack-triage` issue is the
+same table, at most a day old** (see the runbook above), so if the user arrived
+from it you already have the answer and can go straight to Layer B — but the issue
+is bot-only, so re-run this locally with a user token when DMs matter.
+
+The header also says what the run could **not** see: known conversations this
+identity never listed. `NOT VISIBLE` rows need a human to `/invite` the bot; they
+cannot appear in the table at all, which is the whole reason they are counted
+separately.
+
+Read the `action` column and act:
 
 - `incremental` → mapped event with new content → Layer B with `--state`.
 - `create?` / `create? (general-signal)` → likely a new event (an event channel
@@ -549,37 +606,6 @@ itself.
 Run `verify-coverage.ts` after any bulk change, before trusting a quiet table,
 and whenever someone says a message was missed.
 
-### Step 7.6 — Refresh the archive
-
-```
-npx tsx .../refresh-archive.ts --archive D:/github_repository/she-sharp-slack-archive
-npx tsx .../refresh-archive.ts --archive D:/…/she-sharp-slack-archive --apply
-```
-
-- **Dry run is the default and writes nothing.** It runs `diff-archive.ts` and
-  prints what would be refetched; `--apply` then does the archive README's
-  three-step recipe — diff, refetch the stale and new conversations **in full**,
-  rebuild `conversations/`, `manifest.json` and `INDEX.md` from `raw/`. It never
-  passes `--state`/`--since` and never shell-redirects, because either one turns
-  a full transcript into a handful of messages that looks like a good refresh.
-  A conversation whose payload holds messages Slack no longer has is **refused,
-  not refetched**: on 9 August 2026 one channel had eight messages deleted and
-  nine added in the same window, so the count went *up* while eight records
-  stopped existing anywhere but in `raw/`. The script prints the `mv` into
-  `raw/superseded/` a human must do first and carries on with the rest.
-- **The manifest and the archive are two positions, on purpose.**
-  `state/sync-state.json` records what the model has READ; the archive's `raw/`
-  records what has been TRANSCRIBED. Every sync moves the first and not the
-  second, and until this step existed nothing in any step list moved the second
-  at all — so the archive aged silently while all three gates in Step 7.5 stayed
-  green, because none of them looks at it.
-- **Nothing from the archive may be copied into this repo.** It is private and
-  stays private: verbatim DMs, attendee spreadsheets, a storeroom door code, and
-  a `SHE#…` ticket-code series some of which is still live. Carry the *fact*,
-  never the text — the same rule as "Never copy internal codes" above. The
-  archive is a different repository: commit it there, separately, never as part
-  of the event PR.
-
 ### Step 8 — Commit
 
 Ask the user to pick one, with sensible defaults:
@@ -609,6 +635,60 @@ Summarize:
   `https://shesharp.org.nz/events/<slug>`
 - Any warnings (missing sponsor logo, ambiguous classification
   you resolved by asking the user, etc.)
+
+**A sync ends here.** The next section is not a step of it.
+
+## Not part of a sync: refreshing the verbatim archive
+
+**If you do not hold the `she-sharp-slack-archive` checkout, this section is not
+yours and your sync is already complete.** Stop at Step 9.
+
+This was numbered Step 7.6 until 31 August 2026, with a hardcoded
+`D:/github_repository/she-sharp-slack-archive` in the command. That made it read
+as a prerequisite of every sync — so the only person with that directory was the
+only person who could finish one, and the whole skill collapsed onto them. The
+step is real; it simply belongs to whoever holds the archive, on their own
+schedule, not to whoever happened to sync an event.
+
+```
+npx tsx .../refresh-archive.ts                 # reads SLACK_ARCHIVE_DIR from .env
+npx tsx .../refresh-archive.ts --apply
+npx tsx .../refresh-archive.ts --archive /path/to/she-sharp-slack-archive
+```
+
+There is still no default path — a wrong one writes Slack transcripts into the
+wrong repository — and with neither `SLACK_ARCHIVE_DIR` nor `--archive` the
+script exits saying so and touching nothing.
+
+- **Nothing needs recording when it is skipped.** `refresh-archive.ts` computes
+  what the archive owes by diffing it against Slack, so the answer is always
+  available to the only person who can act on it. A "this sync did not refresh
+  the archive" marker in this repo would be a second position that can go stale,
+  which is the exact class of bug the two-position split above exists to stop.
+- **Dry run is the default and writes nothing.** It runs `diff-archive.ts` and
+  prints what would be refetched; `--apply` then does the archive README's
+  three-step recipe — diff, refetch the stale and new conversations **in full**,
+  rebuild `conversations/`, `manifest.json` and `INDEX.md` from `raw/`. It never
+  passes `--state`/`--since` and never shell-redirects, because either one turns
+  a full transcript into a handful of messages that looks like a good refresh.
+  A conversation whose payload holds messages Slack no longer has is **refused,
+  not refetched**: on 9 August 2026 one channel had eight messages deleted and
+  nine added in the same window, so the count went *up* while eight records
+  stopped existing anywhere but in `raw/`. The script prints the `mv` into
+  `raw/superseded/` a human must do first and carries on with the rest.
+- **The manifest and the archive are two positions, on purpose.**
+  `state/sync-state.json` records what the model has READ; the archive's `raw/`
+  records what has been TRANSCRIBED. Every sync moves the first and not the
+  second, and nothing in this repo's gates looks at the second — so the archive
+  ages silently while all three checks in Step 7.5 stay green. That is why the
+  archive holder has to run this on a rhythm of their own; no sync will remind
+  them.
+- **Nothing from the archive may be copied into this repo.** It is private and
+  stays private: verbatim DMs, attendee spreadsheets, a storeroom door code, and
+  a `SHE#…` ticket-code series some of which is still live. Carry the *fact*,
+  never the text — the same rule as "Never copy internal codes" above. The
+  archive is a different repository: commit it there, separately, never as part
+  of the event PR.
 
 ## Common failure modes and how to recover
 

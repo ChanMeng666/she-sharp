@@ -1,0 +1,101 @@
+# Ask Slack "has anything happened?" on a schedule, and put the answer where the
+# whole team already looks.
+#
+# WHY THIS EXISTS. Reading the Slack workspace was one person's job because
+# knowing WHEN to read it was one person's job: `discover-channels.ts` answers
+# that in a couple of minutes, but it needs a token and a checkout, so the answer
+# only ever reached whoever ran it. This runs the triage as the Collector bot and
+# has `triage-report.ts` edit one standing GitHub issue, so any of the
+# collaborators can see a backlog and pick a channel up.
+#
+# WHAT IT DELIBERATELY DOES NOT DO. It does not write to this repository, and
+# `--no-record` is the reason: no read position moves, so a row keeps appearing
+# until a human actually syncs it. A machine that advanced a read position is the
+# failure mode behind every miss in this skill's history — see
+# `.claude/skills/sync-event-from-slack/references/state-and-incremental.md`.
+# Turning a delta into event data stays a human's job too, because image
+# classification and the redaction gate (access codes and private registration
+# links must never reach `events-custom.json`) are judgement, not script.
+#
+# WHAT IT CANNOT SEE. A bot token cannot list DMs or group DMs at all, and cannot
+# read a private channel nobody invited it to. That is 28 known conversations
+# today, 9 of them marked always-read. The triage reports them as unseen rather
+# than leaving them silently absent, and the issue body carries that list — but
+# reporting a blind spot does not close it. Those stay with whoever holds a user
+# token until the conversations move into channels the bot is in.
+
+name: Slack triage
+
+on:
+  # 19:00 UTC Sunday–Thursday, i.e. 07:00 NZST on weekday mornings (08:00 during
+  # daylight saving). Weekday mornings because a backlog found on Saturday sits
+  # untouched anyway, and a notification nobody can act on is noise.
+  schedule:
+    - cron: '0 19 * * 0-4'
+  workflow_dispatch:
+
+# Editing the standing issue is the only write this workflow makes.
+permissions:
+  issues: write
+
+# A scheduled run and a manual one must never interleave — two processes editing
+# the same issue body would each overwrite the other's hash and re-notify.
+concurrency:
+  group: slack-triage
+  cancel-in-progress: false
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    # The triage pages history for every conversation that has new content and
+    # opens grown threads, so it is minutes rather than seconds — and Slack rate
+    # limits make the tail unpredictable.
+    timeout-minutes: 30
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      # No `version:` here on purpose — `packageManager` in package.json is the
+      # single source, so a local machine and CI cannot drift apart.
+      - name: Install pnpm
+        uses: pnpm/action-setup@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # `--no-record` is load-bearing, not caution. `--no-dms` is honesty: a bot
+      # token returns `missing_scope` for `im`/`mpim` and would abort the whole
+      # listing, so they are out of scope whether or not we ask. `--all` prints
+      # the quiet rows too, which only affects this log — `triage.json` always
+      # carries every row.
+      - name: Triage the workspace
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        run: npx tsx .claude/skills/sync-event-from-slack/scripts/discover-channels.ts --no-record --no-dms --all
+
+      # The other question, and the manifest cannot answer it: does Slack hold a
+      # conversation nothing has ever heard of? Iterating the record can only
+      # confirm the record agrees with itself, which is how 97 archived channels
+      # stayed hidden for a year. Seconds, and `continue-on-error` because it
+      # exits with the number of conversations it found — a real finding that
+      # must not stop the report step from posting it.
+      - name: Check for conversations nothing knows about
+        continue-on-error: true
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        run: npx tsx .claude/skills/sync-event-from-slack/scripts/verify-coverage.ts --enumerate-only
+
+      # Edits the standing issue in place and comments only when the actionable
+      # set has changed. Exits 0 whether or not there is a backlog: a workflow
+      # that goes red because somebody posted in Slack is one people learn to
+      # ignore.
+      - name: Report into the standing issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx tsx .claude/skills/sync-event-from-slack/scripts/triage-report.ts --issue

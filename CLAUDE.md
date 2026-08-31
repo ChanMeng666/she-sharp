@@ -466,6 +466,21 @@ knows only its own job; the order, the gate in front of each step and the state
 file each one writes live in one place, and
 `npx tsx scripts/events/event-status.ts --slug <slug>` answers "where has this
 event got to?" offline. `/run-event-playbook` is the same thing as a skill.
+
+**Step one is no longer one person's job.**
+`.github/workflows/slack-triage.yml` runs `/sync-event-from-slack`'s triage every
+weekday morning as the Collector bot and keeps one standing GitHub issue labelled
+`slack-triage` up to date, so **the answer to "has anything happened in Slack?"
+is already written down** — check that issue before running the triage yourself.
+It reports and never records: `--no-record` means no read position moves, so a
+row stays until a human syncs it. Two limits to state rather than discover: a bot
+token cannot list **DMs or group DMs at all** (28 conversations, 9 of them
+`alwaysRead`), nor a private channel nobody `/invite`d it to, so those stay with
+whoever holds a `SLACK_USER_TOKEN`; and **refreshing the private
+`she-sharp-slack-archive` is not a step of a sync** — it belongs to whoever holds
+that checkout (`SLACK_ARCHIVE_DIR`), and a sync is complete without it. It was a
+numbered step with one person's Windows path in the command until 2026-08-31,
+which is what made the whole skill unusable by anybody else.
 → `docs/development/EVENT_LIFECYCLE_SOP.md`
 
 **Content and brand rules.** Twelve years of counting traps, naming traps,

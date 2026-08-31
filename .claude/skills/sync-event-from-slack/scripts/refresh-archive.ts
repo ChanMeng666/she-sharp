@@ -56,6 +56,9 @@
  * message that exists nowhere else.
  */
 
+// Loaded here and not only in `slack-client.ts`, because this script reads
+// `SLACK_ARCHIVE_DIR` before it spawns anything that would have loaded it.
+import "dotenv/config";
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
@@ -116,9 +119,10 @@ refresh-archive.ts — bring the verbatim Slack archive level with Slack.
   npx tsx .claude/skills/sync-event-from-slack/scripts/refresh-archive.ts \\
     --archive <path to she-sharp-slack-archive> [--apply] [--only <id,id>]
 
-  --archive <path>  REQUIRED, no default. The archive checkout to refresh.
-                    There is deliberately no default: a wrong one writes Slack
-                    transcripts into the wrong repository.
+  --archive <path>  REQUIRED unless SLACK_ARCHIVE_DIR is set. The archive
+                    checkout to refresh. There is deliberately no default: a
+                    wrong one writes Slack transcripts into the wrong repository.
+                    Set SLACK_ARCHIVE_DIR in .env to say it once per machine.
   --dry-run         The default. Runs the diff only and prints the plan.
   --apply           Actually refetch the stale/new conversations and rebuild.
   --only <id,id>    Restrict to these conversations (id or name).
@@ -141,7 +145,19 @@ if (has("--help") || has("-h")) {
 }
 
 const apply = has("--apply");
-const archiveArg = argValue("--archive");
+/*
+ * `SLACK_ARCHIVE_DIR` IS NOT A DEFAULT. IT IS THE SAME STATEMENT, MADE ONCE.
+ *
+ * The rule below — no default, because a wrong path writes Slack transcripts
+ * into the wrong repository — is about nobody GUESSING the path. An environment
+ * variable is not a guess; it is the archive holder saying once where their
+ * checkout is, instead of once per invocation. And it is what let the hardcoded
+ * `D:/github_repository/she-sharp-slack-archive` come out of SKILL.md and the
+ * event playbook, where it made a step of the sync look impossible to anyone who
+ * is not the one person with that directory.
+ */
+const archiveArg = argValue("--archive") ?? process.env.SLACK_ARCHIVE_DIR?.trim() ?? undefined;
+const archiveFrom = argValue("--archive") ? "--archive" : "SLACK_ARCHIVE_DIR";
 const reportPath = argValue("--report");
 const onlyArg = argValue("--only");
 const only = new Set(
@@ -158,10 +174,31 @@ function usage(message: string): never {
 }
 
 if (!archiveArg) {
-  usage(
-    "need --archive <path to she-sharp-slack-archive>. There is no default on " +
-      "purpose — a wrong one writes Slack transcripts into the wrong repository.",
+  /*
+   * WHOEVER READS THIS IS PROBABLY NOT THE PERSON WHO SHOULD RUN IT.
+   *
+   * This used to read as a broken prerequisite: a required flag, no default, and
+   * a hardcoded Windows path in SKILL.md's Step 7.6 and the event playbook's
+   * T-6w. So a contributor syncing an event hit it, concluded the sync was
+   * blocked on a directory they had never heard of, and either stopped or went
+   * looking for the repository. Neither is right: the archive is a separate
+   * private repository, refreshing it is not a step of a sync, and a sync is
+   * complete without it. Say that here, because here is where they are standing.
+   */
+  console.error(
+    "refresh-archive: no archive configured, and this is probably not your job.\n\n" +
+      "  Refreshing the verbatim Slack archive is NOT part of syncing an event. A sync is\n" +
+      "  complete without it: `state/sync-state.json` records what has been READ, the\n" +
+      "  archive's `raw/` records what has been TRANSCRIBED, and only the first one lives\n" +
+      "  in this repository. If you are here from `/sync-event-from-slack`, you are done —\n" +
+      "  commit your event change and stop.\n\n" +
+      "  If you DO hold the she-sharp-slack-archive checkout, point at it once:\n" +
+      "    SLACK_ARCHIVE_DIR=/path/to/she-sharp-slack-archive   (in .env)\n" +
+      "  or per run: --archive /path/to/she-sharp-slack-archive\n\n" +
+      "  There is no default on purpose — a wrong path writes Slack transcripts into the\n" +
+      "  wrong repository. Nothing was read and nothing was written.",
   );
+  process.exit(2);
 }
 if (has("--only") && !onlyArg) usage("--only needs a comma-separated list of ids or names");
 if (has("--report") && !reportPath) usage("--report needs a path");
@@ -174,12 +211,15 @@ if (reportPath && apply) {
 }
 
 const archiveRoot = resolve(archiveArg);
-if (!existsSync(archiveRoot)) usage(`no such directory: ${archiveRoot}`);
+// Every path complaint names where the path came from. A stale SLACK_ARCHIVE_DIR
+// left over from a machine that has been reimaged is otherwise indistinguishable
+// from a typed flag, and only one of the two is fixed in the command you just ran.
+if (!existsSync(archiveRoot)) usage(`no such directory: ${archiveRoot} (from ${archiveFrom})`);
 const rawDir = resolve(archiveRoot, "raw");
 if (!existsSync(rawDir)) {
   usage(
-    `${archiveRoot} has no raw/ directory, so it is not the Slack archive. ` +
-      `Point --archive at the she-sharp-slack-archive checkout.`,
+    `${archiveRoot} (from ${archiveFrom}) has no raw/ directory, so it is not the Slack ` +
+      `archive. Point it at the she-sharp-slack-archive checkout.`,
   );
 }
 const supersededDir = resolve(rawDir, "superseded");
