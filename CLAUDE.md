@@ -458,11 +458,12 @@ file owns what is in `lib/data/json/README.md`.
 
 **The event lifecycle.** One regular evening event is ten steps in a fixed
 order — Slack channel → event record → poster → speaker campaign → announcement
-→ deck → the night → feedback → gallery → newsletter — plus one that is **not**
-a step in this repo at all: the mail to the people who registered, sent from
-Humanitix's own Email campaigns tool. Each skill knows only its own job; the
-order, the gate in front of each step and the state file each one writes live in
-one place, and
+→ deck → the night → feedback → gallery → newsletter — plus an optional social
+video (`/make-event-video`: promo around T-3w, recap after photographs land)
+and one job that is **not** a step in this repo at all: the mail to the people
+who registered, sent from Humanitix's own Email campaigns tool. Each skill
+knows only its own job; the order, the gate in front of each step and the state
+file each one writes live in one place, and
 `npx tsx scripts/events/event-status.ts --slug <slug>` answers "where has this
 event got to?" offline. `/run-event-playbook` is the same thing as a skill.
 → `docs/development/EVENT_LIFECYCLE_SOP.md`

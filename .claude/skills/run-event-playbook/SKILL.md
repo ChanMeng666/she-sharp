@@ -52,7 +52,7 @@ Unsure? Run Step 0. It reads the repo and writes nothing.
 
 | The ask is | Use instead |
 |---|---|
-| One artefact, and they know which — a poster, a deck, a broadcast | That skill directly: `/make-event-poster`, `/build-event-slides`, `/promote-event` |
+| One artefact, and they know which — a poster, a deck, a broadcast, a video | That skill directly: `/make-event-poster`, `/build-event-slides`, `/promote-event`, `/make-event-video` |
 | A word changed on a deck an hour before the doors open | `/tweak-event-slides` |
 | A **flagship or multi-day** event — a hackathon, a festival, a conference | The individual skills, in whatever order that event needs. See *When the shape does not fit* |
 | Something that is not an event at all — a mentoring round, a policy change, a call for volunteers | `/email-the-community` |
@@ -176,6 +176,7 @@ this one is stuck.
 | **T-5w Artwork** | date, venue and title confirmed **in the event record** | `/make-event-poster`, steps 1–6 |
 | **T-4w Campaign** | every speaker has a headshot **in the event record** | `/make-event-poster` step 7 — `--speaker all --lineup` |
 | **T-3w Promotion** | the newsletter subscriber table has real people in it — **it does not today** | `/promote-event` → `/email-the-community` from its Step 3 |
+| **T-3w Video (promo)** | date, venue and title are in the event record, and there is something to show (a prior edition's photos, or this event's poster and headshots) | `/make-event-video` kind `promo` |
 | **T-2w Registrants** | the event is ticketed on Humanitix, and the sender has access | Humanitix -> Email campaigns — **not this repo** |
 | **T-1w Slides** | a run sheet in the event data | `/build-event-slides` |
 | **T-7d / T-1d Reminders** | the room, level or join link is known — never invented | Humanitix -> Email campaigns |
@@ -184,6 +185,7 @@ this one is stuck.
 | **T+1d Thanks** | a feedback form URL, and the event ended **under 14 days ago** | Humanitix -> Email campaigns |
 | **T+3d Digest** | — | **nothing to do** — the cron posts to Slack by itself |
 | **T+1w Close-out** | the album URL is known | flip `status`, set `galleryUrl`, `build-event-archive.mts`, then the attendance figures |
+| **T+1w Video (recap)** | `photo-*.webp` (or a built archive) exists for the slug | `/make-event-video` kind `recap` |
 | **T+2w Newsletter** | the month's issue is being written | `/monthly-newsletter` picks the event up |
 
 The gate, the artefact, what to check and what goes wrong for each phase are in
