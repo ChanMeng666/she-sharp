@@ -57,9 +57,13 @@ jobs:
           npm config set prefix "$HOME/.npm-global"
           echo "$HOME/.npm-global/bin" >> "$GITHUB_PATH"
           export PATH="$HOME/.npm-global/bin:$PATH"
-          if [ "$(vercel --version 2>/dev/null)" != "$VERCEL_CLI_VERSION" ]; then
+          # Test for the binary, not `vercel --version` output: the cache key
+          # already pins the version, and parsing the CLI's banner would silently
+          # reinstall on every run the day its format changes.
+          if [ ! -x "$HOME/.npm-global/bin/vercel" ]; then
             npm install -g "vercel@$VERCEL_CLI_VERSION"
           fi
+          vercel --version
 
       # There is deliberately NO `.next/cache` restore here any more.
       #
