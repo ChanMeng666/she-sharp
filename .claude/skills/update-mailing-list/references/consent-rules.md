@@ -237,10 +237,34 @@ event's Humanitix unsubscriber list (the third register, above).
 
 For **Humanitix**, the opt-in is a built-in, uneditable checkout control
 (`organiserMailListOptIn` on the order) whose wording is fixed to the sentence
-quoted above. It is not one of the host's own additional questions, and it
-reaches you as a "marketing opt-in" column in **reports → orders → Export
-CSV** — the orders report, not the attendees one. Any other platform's wording
-must be passed explicitly with `--question "…"`.
+quoted above. It is not one of the host's own additional questions.
+
+**Start with the script, not the console** (since 2026-09-01):
+
+```bash
+npx tsx scripts/humanitix/export-optins.ts --slug <site-event-slug>          # dry run
+npx tsx scripts/humanitix/export-optins.ts --slug <site-event-slug> --write
+```
+
+It reads that one event's orders through a field allowlist, keeps only the
+completed orders carrying a tick, and writes a CSV into `tmp/humanitix/` with
+the exact headers `normalize-recipients.ts` detects — then prints the two
+commands below with `--event-name` and `--event-date` already filled in from the
+listing, so nobody hand-types a date that is a day out. It also states **how
+many of the rows are already on the suppression register**, so the real yield is
+visible before the import runs rather than after. It prints no address, and it
+refuses to write anywhere outside `tmp/`.
+
+It refuses a historic event unless you pass `--allow-historic`, because of the
+account-wide shape of the backlog: of the 97 people who ever ticked the box and
+are not already on the list, **89 are on the suppression register and only 8 are
+importable, all 8 from 2026**. An import can never resurrect somebody who left.
+
+The console's **reports → orders → Export CSV** — the orders report, not the
+attendees one, with its "marketing opt-in" column — still works and is the
+documented fallback when the API is unavailable or the event predates the
+account the key belongs to. Any other platform's wording must be passed
+explicitly with `--question "…"`.
 
 **Routes 3 and 4 still have no tool and are not getting one**: a paper sheet and
 a written request are one person at a time, and the honest answer to a stack of

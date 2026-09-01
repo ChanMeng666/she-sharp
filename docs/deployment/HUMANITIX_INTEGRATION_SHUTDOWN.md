@@ -1,14 +1,29 @@
 # Switching off the Humanitix → Mailchimp integration / 关闭 Humanitix → Mailchimp 对接
 
-**For the founder.** This needs the **Humanitix** account, and only the founder
-has it. **Nobody working in this repository can press this button** — there is no
-API for it, no script, and no way to do it from the website's code. It is a
-setting inside Humanitix's own console, and somebody who is logged in has to
-change it by hand.
+**For the founder.** This needs **account-owner** access to Humanitix, and only
+the founder has that. **Nobody working in this repository can press this
+button** — there is no API for it, no script, and no way to do it from the
+website's code. It is a setting inside Humanitix's own console, and somebody who
+is logged in as the account holder has to change it by hand.
 
-**给创始人。** 这件事需要登录 **Humanitix** 账号，只有创始人有权限。**这个代码仓库
-里的任何人都做不了这一步**——没有 API，没有脚本，也没法从网站代码里操作。它是
-Humanitix 后台里的一个设置，必须由登录的人手动改。
+**Do not read that as "nobody else can get into Humanitix at all."** The
+*ticketing* console logs in with the shared `events@` mailbox and the events
+team is in it every week, building ticket pages, cutting access codes and
+exporting the orders report — see `../development/EVENT_LIFECYCLE_SOP.md` §"The
+ticket page" and `../development/EMAIL_ADDRESSES.md`. Everything the mailing-list
+work needs, including reading the per-event **unsubscriber list**, is reachable
+with that login. It is specifically the account-level *Integrations* screen that
+is yours alone.
+
+**给创始人。** 这件事需要 Humanitix 的**账号持有人**权限，只有创始人有。**这个代码
+仓库里的任何人都做不了这一步**——没有 API，没有脚本，也没法从网站代码里操作。它是
+Humanitix 后台里的一个设置，必须由以账号持有人身份登录的人手动改。
+
+**但不要把这句读成"别人根本进不了 Humanitix"。** *售票*后台用共享的 `events@` 邮箱
+登录，活动团队每周都在里面搭票务页、发放访问码、导出订单报表——见
+`../development/EVENT_LIFECYCLE_SOP.md` 的"The ticket page"一节和
+`../development/EMAIL_ADDRESSES.md`。邮件名单相关的所有操作，包括查看按活动的**退订
+名单**，用那个登录都能做到。只有账号级的 *Integrations* 页面是只有你能进的。
 
 Sister document: [`MAILCHIMP_CANCELLATION.md`](MAILCHIMP_CANCELLATION.md), which
 covers stopping the Mailchimp payment. **These are two separate jobs on two
@@ -222,18 +237,27 @@ omission unless somebody sets it every time. It was turned back on for the
 the first in four years. This is now the **only** way She Sharp collects a real,
 dated, per-person consent at an event.
 
-**2. After each event, bring those ticks across by hand.** Someone technical
-does this; it is in the repository's own runbook. Export the orders report from
-the Humanitix console (*reports → orders → Export CSV*), then run:
+**2. After each event, bring those ticks across.** Someone technical does this;
+it is in the repository's own runbook. Since 2026-09-01 the export half is a
+script rather than a console download:
 
 ```
-npx tsx scripts/email/normalize-recipients.ts <orders.csv> --for-import
-npx tsx scripts/email/import-optin-subscribers.ts <normalised.csv>   # dry run
+npx tsx scripts/humanitix/export-optins.ts --slug <event-slug>            # dry run
+npx tsx scripts/humanitix/export-optins.ts --slug <event-slug> --write
+# then the two commands it prints, ending in import-optin-subscribers.ts
 ```
 
-`--apply` writes them, and it also requires `--event-unsubscribers-checked`
-because Humanitix keeps a per-event unsubscriber list that no export and no API
-reaches — a human has to look at it first. The rules for this path are in
+It reads that one event's orders straight from the Humanitix API, keeps only
+the completed orders carrying a tick, and prints how many of them are already on
+the do-not-contact register — so you know the real yield before you import
+anything. It never prints an address. The console's *reports → orders → Export
+CSV* still works and is the documented fallback.
+
+**What is still done by hand is the part that matters.** `--apply` writes the
+rows, and it also requires `--event-unsubscribers-checked`, because Humanitix
+keeps a per-event unsubscriber list that no export and no API reaches — a human
+has to open the console and look. That is why this is not, and should not
+become, a scheduled job. The rules for this path are in
 `.claude/skills/update-mailing-list/references/consent-rules.md`, **consent
 route 2**.
 
@@ -248,12 +272,16 @@ Settings → Orders → "Enable host's mailing list opt in"*。它是**按活动
 打开，并在 2026-08-26 收到了四年来的第一个勾选。这现在是 She Sharp 在活动上收集
 真实、有时间戳、针对个人的同意的**唯一**途径。
 
-**2. 每场活动之后，把这些勾选手动导进来。** 这一步由技术人员做，仓库里有操作手册：
-从 Humanitix 后台导出订单报表（*reports → orders → Export CSV*），然后跑上面那两条
-命令（默认是试运行）。真正写入需要加 `--apply`，而且还必须加
+**2. 每场活动之后，把这些勾选导进来。** 这一步由技术人员做，仓库里有操作手册。
+从 2026-09-01 起，导出这一半已经是脚本而不是后台下载了（见上面的命令，默认试运行）。
+它直接从 Humanitix API 读这一场的订单，只保留勾选过的已完成订单，并在导入之前就告诉
+你其中有多少人已经在"不要联系"名册上——所以你在动手之前就知道真实产出。它从不打印
+任何邮箱地址。后台的 *reports → orders → Export CSV* 仍然可用，是文档化的兜底方案。
+
+**仍然由人来做的那一步，恰恰是要紧的那一步。** 真正写入需要加 `--apply`，而且还必须加
 `--event-unsubscribers-checked`——因为 Humanitix 有一份按活动的退订名单，导出和 API
-都读不到，必须有人先去看一眼。规则见
-`.claude/skills/update-mailing-list/references/consent-rules.md` 的**同意来源二**。
+都读不到，必须有人登录后台去看一眼。这就是为什么这件事不是、也不应该变成一个定时任务。
+规则见 `.claude/skills/update-mailing-list/references/consent-rules.md` 的**同意来源二**。
 
 **不要漏掉任何一场活动。** Humanitix 不保留可以事后补取的记录，漏一次那些勾选就没了。
 
@@ -284,7 +312,8 @@ a technical decision and the tooling for it already exists.
 - [ ] Screenshot the Humanitix → Mailchimp integration settings / 截图 Humanitix → Mailchimp 对接设置页
 - [ ] Disconnect the integration / 断开对接
 - [ ] Confirm ticketing and event pages still work / 确认售票和活动页面正常
-- [ ] Turn the checkout opt-in on for the next event / 为下一场活动打开结账勾选
+- [ ] Turn the checkout opt-in on for the next event, **before the page goes live** / 为下一场活动打开结账勾选，**赶在页面上线之前**
+- [ ] Verify it once the first orders land: `npx tsx scripts/humanitix/check-optin-switch.ts` / 首批订单进来后验证一次（同一条命令）
 - [ ] Run the route-2 import after that event / 活动后跑"同意来源二"导入
 
 ---

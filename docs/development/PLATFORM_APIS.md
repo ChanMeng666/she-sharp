@@ -100,11 +100,24 @@ caller an unrestricted path to *any* endpoint from `lib/`, including the four
 the file exists to keep out of reach.
 
 The capability still exists, in the one place a person has to run it by hand.
-`scripts/humanitix/fetch-api.ts` and `scripts/humanitix/api-counts.ts` each
-carry their own minimal copy of the transport — the same header, the same retry
-rule, the same rate budget. `scripts/` is imported by nothing in `app/`, `lib/`
-or `components/`, so the duplication buys a boundary that a shared module would
-dissolve. Copying sixty lines is the cheaper of the two options.
+`scripts/humanitix/fetch-api.ts`, `scripts/humanitix/api-counts.ts` and — since
+2026-09-01 — `scripts/humanitix/orders-api.ts` each carry their own minimal copy
+of the transport: the same header, the same retry rule, the same rate budget.
+`scripts/` is imported by nothing in `app/`, `lib/` or `components/`, so the
+duplication buys a boundary that a shared module would dissolve. Copying sixty
+lines is the cheaper of the two options.
+
+**Three copies is not two too many; they differ in the one way that matters.**
+`fetch-api.ts` writes rows **verbatim** into the vault and therefore must not
+have a field allowlist — a checksum over a mapped object proves only what the
+mapper kept. `api-counts.ts` keeps a pagination envelope's `total` and drops the
+rows entirely. `orders-api.ts` reads `/orders` through a **required** `keep`
+allowlist, implemented as a `JSON.parse` reviver, so `accessCode`, `mobile`,
+`additionalFields[]` and the postal address never enter the process at all. The
+allowlist is required rather than defaulted for the reason the client gives
+about `acquireSlot()`: a limiter you have to remember is a limiter somebody
+forgets. Its two callers are `export-optins.ts` (opt-in harvest, route 2) and
+`check-optin-switch.ts` (which keeps two fields and no address).
 
 The Mailchimp client draws the same line more softly, because the shape of the
 data differs. `listMembers()` applies a narrow `fields` projection **by
