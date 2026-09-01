@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { Mail, ChevronDown, ExternalLink } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { NewsletterSignup } from "@/components/newsletter/newsletter-signup";
 import { Separator } from "@/components/ui/separator";
 import {
   Collapsible,
@@ -77,17 +77,16 @@ export function SiteFooter() {
                     and inspiring stories.
                   </p>
 
-                  <Button
-                    asChild
-                    variant="ghost"
-                    size="lg"
-                    className="bg-white/10 backdrop-blur-sm text-white border border-white/60 hover:bg-purple-dark transition-all duration-150 h-12 px-8 rounded-full"
-                  >
-                    <Link href="/newsletter/subscribe">
-                      <Mail className="h-5 w-5" />
-                      Subscribe to Newsletter
-                    </Link>
-                  </Button>
+                  {/*
+                    The field itself, not a link to it. Every subscriber on the
+                    list came from the Mailchimp import — the site's own form
+                    had produced none, and a button that costs a page load
+                    before it asks for anything is the likeliest reason. The
+                    "What you get" link inside the component keeps the
+                    explainer page one tap away, so the field does not become
+                    the only route to it.
+                  */}
+                  <NewsletterSignup placement="footer" tone="dark" />
 
                   {/*
                     The back catalogue, as a plain secondary link. It was
@@ -98,12 +97,26 @@ export function SiteFooter() {
                     external-link glyph are gone: both were telling the reader
                     they were about to leave, and they no longer are.
                   */}
-                  <p className="mt-4">
+                  <p className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
                     <Link
                       href={footerConfig.newsletterArchive.href}
                       className="inline-flex items-center gap-1.5 text-sm text-white/70 underline underline-offset-4 hover:text-white transition-colors"
                     >
                       {footerConfig.newsletterArchive.name}
+                    </Link>
+                    {/*
+                      The explainer page, kept as a first-class link now that
+                      the footer asks for an address inline. Somebody who wants
+                      to know what a month's email actually contains before
+                      giving it should not have to read the fine print under
+                      the field to find out.
+                    */}
+                    <Link
+                      href="/newsletter/subscribe"
+                      className="inline-flex items-center gap-1.5 text-sm text-white/70 underline underline-offset-4 hover:text-white transition-colors"
+                    >
+                      <Mail className="h-4 w-4" aria-hidden="true" />
+                      About the newsletter
                     </Link>
                   </p>
                 </div>

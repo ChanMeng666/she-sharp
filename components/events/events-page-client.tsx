@@ -6,6 +6,7 @@ import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { EventInflectedCard } from "@/components/events/event-inflected-card";
 import { EventList } from "@/components/events/event-list";
+import { NewsletterSignup } from "@/components/newsletter/newsletter-signup";
 import { FeaturedEventHero } from "@/components/events/featured-event-hero";
 import { PhotoBand } from "@/components/ui/photo-band";
 import { EVENTS_BAND, toBandPhotos } from "@/lib/data/site-photos";
@@ -533,6 +534,28 @@ export function EventsPageClient({
               </Button>
             </div>
           )}
+
+          {/*
+            Below the list, never above it. Somebody who has scrolled ninety
+            events looking for an upcoming one has demonstrated more interest
+            than any banner could ask for, and at the bottom of an archive
+            there is no other next action — the alternative is that they leave
+            with nothing. Above the list it would be an interruption between a
+            search box and its results.
+          */}
+          <div className="mt-16 border-t border-border pt-10 sm:mt-20 md:mt-24 md:pt-12">
+            <div className="grid gap-6 md:grid-cols-2 md:items-center md:gap-12">
+              <div>
+                <h2 className="text-2xl font-bold text-foreground md:text-3xl">
+                  Hear about the next one first
+                </h2>
+                <p className="mt-3 text-base text-ink-600">
+                  Events go out in the monthly newsletter before they fill up.
+                </p>
+              </div>
+              <NewsletterSignup placement="events-index" />
+            </div>
+          </div>
         </Container>
       </Section>
     </div>
