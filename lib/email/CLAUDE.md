@@ -27,6 +27,37 @@ directory. The one deliberate exception is `feedbackUrlForSlug()`, which builds
 from the compile-time `SITE_URL` because a projected QR encoding `localhost`
 fails on every phone in the room.
 
+**`getBaseUrl()` defaults to production, not to localhost.** It falls back to
+`SITE_URL` from `lib/seo/site.ts`, so an environment that never set `BASE_URL`
+produces working links instead of links to the reader's own machine. The old
+`|| 'http://localhost:3000'` fallback is what put localhost into 25 mentor
+invitations (2026-03-19) and six newsletter confirmations (2026-09-01), and
+`.env` now carries the production origin locally for the same reason. Set
+`BASE_URL=http://localhost:3000` only while testing a link-bearing page —
+`sendEmail()` warns on every message while you do. Local development shares the
+production database, so a production link in a locally-triggered email usually
+resolves correctly anyway.
+
+## Who answers a reply
+
+**Decided by what the message is about, not by which stream carried it.**
+`lib/email/reply-to.ts` maps seven purposes — `account`, `newsletter`,
+`mentorship`, `recruitment`, `events`, `payments`, `internal` — onto the
+mailboxes `docs/development/EMAIL_ADDRESSES.md` says are real and read. Every
+sender passes a `purpose`; a source-scan in `reply-to.test.ts` fails CI if a
+`sendEmail()` call names neither a purpose nor an explicit `replyTo`.
+
+The stream is the wrong key for this and had already produced two defects. The
+marketing Reply-To was `newsletter@`, a mailbox nobody on the team had the
+password to. And until 2026-09-01 `transactional` and `notification` both
+replied to `mentoring@`, so a subscriber answering a newsletter confirmation
+with "please take me off this list", or a donor replying to a receipt, wrote
+into the mentorship lead's personal contact address.
+
+`info@` is the fallback because it is the one address anybody has confirmed on
+the record that a human opens. **A specialist mailbox is the dangerous default;
+the general desk is the safe one.**
+
 Audience tiers are in `lib/email/audience.ts`: subscribers are **Tier 0**, one
 event's registrants are **Tier 2 fulfilment**, and the two are not
 interchangeable.

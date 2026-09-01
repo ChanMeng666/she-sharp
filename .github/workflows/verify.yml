@@ -284,3 +284,14 @@ jobs:
       - name: Verify the on-site newsletter archive
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npx tsx scripts/mailchimp/archive-guard.test.ts
+
+      # Who answers a reply is decided by what the message is about, not by
+      # which stream carried it — `lib/email/reply-to.ts`. Getting that wrong
+      # has happened twice and looked fine in review both times: the marketing
+      # Reply-To was `newsletter@`, a mailbox nobody had the password to, and
+      # every transactional message replied to `mentoring@`, the mentorship
+      # lead's own contact address. Pure module plus a source scan over the
+      # sending files, so it can be a step here.
+      - name: Verify every email replies to the right mailbox
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npx tsx lib/email/reply-to.test.ts

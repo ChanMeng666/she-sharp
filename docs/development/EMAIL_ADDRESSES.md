@@ -47,7 +47,7 @@ matters — that is the point of it existing.
 | Address | Exists | Read by | For |
 |---|---|---|---|
 | `info@` | ✅ 2026-08-23 | a volunteer, once or twice a week | General enquiries. The address on the organisation's business cards, and the only one anybody has ever confirmed on the record that a human opens |
-| `mentoring@` | ✅ 2026-08-23 | the mentorship lead, who gives it out as his own contact address | Everything about the mentorship programme |
+| `mentoring@` | ✅ 2026-08-23 | the mentorship lead, who gives it out as his own contact address | Everything about the mentorship programme. **Only that** — until 2026-09-01 it was the Reply-To on the whole `transactional` and `notification` streams, so password resets, donation receipts, membership payments, volunteer interviews and newsletter confirmations all invited a reply into one person's contact address. `lib/email/reply-to.ts` now routes by what the message is about |
 | `industry@` | ✅ 2026-08-23 | no standing owner since 2025; confirmed still receiving 2026-08-07 | Sponsorship and industry partnership |
 | `events@` | ✅ 2026-08-23 | shared; also the ticketing account login | Attendee questions about a specific event. Printed in every event email the organisation has sent for years |
 | `people@` | ✅ 2026-08-23 | shared; applications arrive here | Volunteer and ambassador applications |

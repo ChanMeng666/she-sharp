@@ -49,6 +49,7 @@ Browse our events: ${getBaseUrl()}/events
   `;
 
   return sendEmail({
+    purpose: 'mentorship',
     to: email,
     subject: 'Application Received — She Sharp Mentor Programme',
     html,
@@ -126,6 +127,7 @@ Browse our events: ${getBaseUrl()}/events
   `;
 
   return sendEmail({
+    purpose: 'mentorship',
     to: email,
     subject: `Application Received — She Sharp Mentee Programme${subjectSuffix}`,
     html,

@@ -140,7 +140,14 @@ async function main(): Promise<void> {
 
     let ok = false;
     try {
-      ok = await sendEmail({ to: recipient, subject, html, text, stream: "internal" });
+      ok = await sendEmail({
+        to: recipient,
+        subject,
+        html,
+        text,
+        stream: "internal",
+        purpose: "internal",
+      });
     } catch (err) {
       console.error(`${label} error for ${recipient}:`, err);
       ok = false;
