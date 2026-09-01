@@ -27,6 +27,24 @@ directory. The one deliberate exception is `feedbackUrlForSlug()`, which builds
 from the compile-time `SITE_URL` because a projected QR encoding `localhost`
 fails on every phone in the room.
 
+**`sendEmail()` refuses a message carrying a loopback link when it is running on
+Vercel, and warns when it is not** (`lib/email/localhost-links.ts`). It reads the
+rendered body rather than `BASE_URL`, because the env var is a proxy for the harm
+and the link in the message *is* the harm — a URL can reach the body without
+going through `getBaseUrl()` at all. The batch builders have guarded this since
+the 2026-03-19 incident that put `localhost:3000` into 25 real mentor
+invitations; the per-message path had no guard until 2026-09-01, when six
+newsletter confirmations went out from `noreply@shesharp.org.nz` with
+`http://localhost:3000/newsletter/confirm` links because an end-to-end test ran
+against a local server holding the production Resend key. They reached only the
+tester's mailbox — nothing in the code knew the difference, and the sign-up form
+has since gone from one surface to eight.
+
+Deployed refuses and local warns because those are different harms: locally,
+somebody is testing the mail path on purpose and the localhost fallback exists
+for exactly that. The check keys on `VERCEL`, **not** `NODE_ENV` — a local
+`next start` sets `NODE_ENV=production` too, and that is the local case.
+
 Audience tiers are in `lib/email/audience.ts`: subscribers are **Tier 0**, one
 event's registrants are **Tier 2 fulfilment**, and the two are not
 interchangeable.

@@ -236,6 +236,19 @@ Two were caught on 2026-08-30, both reading as correct and gating nothing:
 Both were found by handing the guard the input it was supposed to refuse, and
 neither would have been found by reading.
 
+A third, on 2026-09-01, was found the other way round — by a **person opening
+their inbox**. Six newsletter confirmations left `noreply@shesharp.org.nz`
+carrying `http://localhost:3000/newsletter/confirm` links, from an end-to-end
+test against a local server holding the production Resend key. The batch path
+had guarded loopback URLs since the 2026-03-19 incident; `sendEmail()`, the
+single Resend call site and the one that sends the double opt-in confirmation,
+had no guard at all. `lib/email/localhost-links.ts` is that guard, and its test
+is built from the real message rather than a paraphrase of it — **a guard
+written from a paraphrase stops the paraphrase.** Writing it also caught a bug
+in the guard itself: the first regex refused `https://localhost.example/x`,
+a perfectly ordinary host, which would have made the guard cause the harm it
+exists to prevent.
+
 The same failure has a sibling worth naming: **a check keyed on an annotation
 inherits the annotating pass's blind spot** and exits 0. Key a check on the
 independent source of truth, not on a marker some earlier pass wrote.

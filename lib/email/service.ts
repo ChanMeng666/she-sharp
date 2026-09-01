@@ -3,6 +3,11 @@ import { brandedEmailLayout, brandButton, infoBox, linkBox, codeBox, warningBox,
 import { getSenderIdentity, type EmailStream } from './senders';
 import { buildUnsubscribeHeaders } from './unsubscribe-headers';
 import { isSuppressed } from './optouts';
+import {
+  decideLoopbackLink,
+  findLoopbackUrl,
+  isDeployedRuntime,
+} from './localhost-links';
 
 /**
  * Get the base URL for email links
@@ -134,6 +139,30 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
     }
 
     return true;
+  }
+
+  // A message about to leave the building must not carry a link to the sender's
+  // own machine. Read the rendered body rather than BASE_URL: the env var is a
+  // proxy for the harm, the link IS the harm, and a URL can reach the body
+  // without going through getBaseUrl() at all. See lib/email/localhost-links.ts
+  // for the two incidents this sits between.
+  const loopback = findLoopbackUrl(html, text);
+  const verdict = decideLoopbackLink(loopback, isDeployedRuntime());
+  if (verdict === 'refuse') {
+    console.error(
+      `[email] REFUSED to send a ${stream} email containing a loopback link (${loopback}). ` +
+        'A deployed send reaches a real person, for whom that link resolves to their own ' +
+        'machine. Almost certainly BASE_URL is unset or wrong on this deployment — it must ' +
+        'be the production origin. Nothing was sent.'
+    );
+    return false;
+  }
+  if (verdict === 'warn') {
+    console.warn(
+      `[email] This ${stream} email carries a loopback link (${loopback}). That is expected ` +
+        'when testing locally, and it is NOT expected in anything a real recipient will read. ' +
+        'If this send went anywhere but your own mailbox, check the provider log.'
+    );
   }
 
   // Production mode - use Resend

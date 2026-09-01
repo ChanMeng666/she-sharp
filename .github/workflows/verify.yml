@@ -352,3 +352,18 @@ jobs:
       - name: Verify the speaker poster layouts
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npx tsx scripts/events/poster-speaker.test.ts
+      # Pure module, no database and no network — deliberately so it can be a
+      # step here. `lib/email/hardening.test.ts` cannot be: reaching
+      # `service.ts` pulls in `lib/db/drizzle.ts`, which throws at module load
+      # without a connection string. That is the whole reason the loopback
+      # guard was split into its own file rather than added to `service.ts`.
+      #
+      # It refuses the exact message that went out on 2026-09-01 — six
+      # newsletter confirmations from noreply@shesharp.org.nz carrying
+      # `http://localhost:3000/newsletter/confirm` links, because an end-to-end
+      # test ran against a local server holding the production Resend key. The
+      # batch path had guarded this since 2026-03-19 (25 mentor invitations);
+      # the per-message path never had.
+      - name: Verify no sent email can carry a localhost link
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npx tsx lib/email/localhost-links.test.ts
