@@ -33,6 +33,7 @@ not in.
 | `WORKSPACE_MAILBOX_CHECKLIST.md` | The Google Workspace side of the 2026-08 mailbox audit — bilingual, for the super-admin | current |
 | `MAILCHIMP_CANCELLATION.md` | What cancelling the paid Mailchimp subscription does and does not put at risk — bilingual, for the founder. The account is **not** being deleted, and the file exists largely to keep those two apart | current — the cancellation has not happened |
 | `HUMANITIX_INTEGRATION_SHUTDOWN.md` | Switching off the Humanitix → Mailchimp contact integration — bilingual, for the founder. Why (it wrote 752 non-opted-in ticket buyers into the list), what breaks, and the per-event route-2 import that replaces it | current — nobody here can press the button |
+| `GITHUB_ACTIONS_AND_ACCOUNT.md` | The org is on GitHub Free with 2,000 private-repo Actions minutes; Actions bills each **job** rounded up to the minute, which is why `verify.yml` is one job. Measured per-workflow cost, why `deploy.yml` cannot reach three billed minutes, the `_gh-…` TXT record that must not be deleted, and the pending GitHub for Nonprofits application | current |
 | `MAINTENANCE_MODE.md` | `MAINTENANCE_MODE=true` → branded 503 for the whole site | current |
 | `VERCEL_ENV_VARIABLES_GUIDE.md` | Setting env vars without silently corrupting them | current |
 | `DOMAIN_MIGRATION_2026-06-19.md` | The cutover to `www.shesharp.org.nz`, layer by layer | historical record |
