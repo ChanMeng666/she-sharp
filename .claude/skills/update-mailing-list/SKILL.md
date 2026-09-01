@@ -337,6 +337,22 @@ provenance the same way every time.
 
 ### Route 2 — a tick-box on a registration form
 
+**If the event is on Humanitix, do not ask anyone for a CSV.** Get the file
+yourself, then carry on into Step 3 as normal:
+
+```powershell
+npx tsx scripts/humanitix/export-optins.ts --slug <site-event-slug>           # dry run
+npx tsx scripts/humanitix/export-optins.ts --slug <site-event-slug> --write
+```
+
+It writes `tmp/humanitix/optins-<slug>-<date>.csv` in the exact column shape
+Step 3 detects, and prints the `normalize-recipients.ts` and
+`import-optin-subscribers.ts` commands with `--event-name` and `--event-date`
+already filled in from the live listing. It also reports how many rows are
+already on the suppression register, so you can tell the user the real yield
+before anything is written. Show that output too. A console CSV export still
+works if the API is unavailable.
+
 `scripts/email/import-optin-subscribers.ts` takes the recipients file Step 3
 wrote and turns the rows that ticked the box into subscribers.
 

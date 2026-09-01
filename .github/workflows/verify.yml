@@ -241,6 +241,19 @@ jobs:
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npx tsx lib/data/humanitix.test.ts
 
+      # Also shares this checkout — pure functions over synthetic order rows, no
+      # key and no network, which is why it is a step here rather than a job.
+      # It guards two things that fail SILENTLY: the six CSV headers, which
+      # `normalize-recipients.ts` and `optin-rows.ts` each locate with a
+      # `headers.find(...)` over an alias list, so a seventh column matching
+      # either predicate would change which cell is read as the consent answer
+      # or the consent date without anything throwing; and the `/orders` field
+      # allowlist, whose reviver is the only reason a live access code, a mobile
+      # and a postal address never enter the exporter's memory.
+      - name: Verify the Humanitix opt-in exporter
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npx tsx scripts/humanitix/optin-orders.test.ts
+
       # Also shares this checkout, and the same argument applies harder. The
       # Humanitix export contains addresses; the Mailchimp audience export is
       # nothing but addresses — 3,689 of them, with names, phone numbers and the

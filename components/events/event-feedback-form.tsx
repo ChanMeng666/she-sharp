@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Spinner } from "@/components/ui/spinner";
+import { NewsletterSignup } from "@/components/newsletter/newsletter-signup";
 import { CONDUCT_EMAIL } from "@/lib/config/contact-addresses";
 import {
   DEVICE_HEADER,
@@ -296,6 +297,13 @@ export function EventFeedbackForm({
     "rounded-2xl bg-background border-border focus:border-brand resize-y text-base md:text-base";
 
   if (isSuccess) {
+    // Read off the answers still held in state — the form deliberately does not
+    // clear them on success. Neither value is sent anywhere by this branch: the
+    // address only prefills a field the attendee still has to submit, and the
+    // tick only chooses a heading.
+    const tickedNewsletter = answers.interests.includes("newsletter");
+    const submittedEmail = answers.email.trim();
+
     return (
       <div
         ref={successRef}
@@ -315,6 +323,49 @@ export function EventFeedbackForm({
         <p className="text-ink-700 mb-6">
           Your feedback goes straight to the people who ran today.
         </p>
+
+        {/*
+          The newsletter offer, and the one thing it must never do is imply the
+          checkbox above did anything.
+
+          Ticking "Monthly newsletter" writes
+          `event_feedback_submissions.interested_in_newsletter` and subscribes
+          nobody — see the comment on that column. Somebody who ticked it and
+          heard nothing again has, from their side, asked to be on the list and
+          been ignored; somebody who ticked it and was simply added would have
+          been subscribed without ever confirming from their own inbox. This
+          block is the only honest way out: say plainly what the tick was, and
+          then offer the real thing, which is the same double opt-in every other
+          sign-up on the site goes through.
+
+          It is offered whether or not they ticked, because the tick is not
+          consent either way — so it cannot gate the offer — and somebody who
+          scrolled past a checkbox should not be locked out of a newsletter they
+          want. Only the heading changes.
+        */}
+        <div className="mb-8 border-t border-border pt-6 text-left">
+          <h3 className="font-semibold text-foreground">
+            {tickedNewsletter ? (
+              <>
+                You ticked <em>Monthly newsletter</em>.
+              </>
+            ) : (
+              "One email a month?"
+            )}
+          </h3>
+          <p className="mt-2 text-sm text-ink-700">
+            {tickedNewsletter
+              ? "That tells us you’re interested — it hasn’t put you on the list. Nobody joins without confirming from their own inbox. Want the link?"
+              : "Events, the mentorship programme, and what the community is up to. Nobody joins without confirming from their own inbox. Want the link?"}
+          </p>
+          <NewsletterSignup
+            placement="event-feedback"
+            defaultEmail={submittedEmail}
+            labels={{ cta: "Send me the link" }}
+            className="mt-4"
+          />
+        </div>
+
         {/* No confetti. On an old phone in a hall it is pure jank, and there is
             nothing on the other side of it worth the frames. */}
         <div className="flex flex-col sm:flex-row gap-3 sm:justify-center">

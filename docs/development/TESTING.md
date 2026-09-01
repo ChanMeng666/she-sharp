@@ -66,8 +66,10 @@ the shared checkout for free, which is why they were all put there: the newslett
 email-safe covers, the poster fonts (`scripts/events/fonts.test.ts`), event- and
 poster-asset ownership, event status, the two docs-page checks, the hackathon
 facts, the two Slack read-state checks, the event-announcement stages, the
-marketing frequency cap, `scripts/mailchimp/archive-guard.test.ts`, and the
-Humanitix and Mailchimp archive checks.
+marketing frequency cap, `scripts/mailchimp/archive-guard.test.ts`, the
+Humanitix opt-in exporter's column contract and field allowlist
+(`scripts/humanitix/optin-orders.test.ts`), and the Humanitix and Mailchimp
+archive checks.
 
 Those last two are **leak guards** as much as data checks — they fail the build
 if an address, an IP or a code-shaped value reaches `lib/data/json/`.
@@ -86,7 +88,25 @@ npx tsx scripts/deck/lint-deck.ts [slug]  # organiser-readable deck report
 npx tsx scripts/verify-image-paths.ts
 npx tsx scripts/mailchimp/verify-export.ts --export 2026-08-17   # needs the vault
 npx tsx scripts/seo/verify-page-metadata.ts --base http://localhost:3100
+npx tsx scripts/humanitix/check-optin-switch.ts   # needs HUMANITIX_API_KEY
 ```
+
+### Why `check-optin-switch.ts` is not in CI, and not in a hook either
+
+It needs `HUMANITIX_API_KEY` and a live round-trip, and `verify.yml` is one
+offline job with no secrets. There is no pre-push hook in this repo to wire it
+into either — `.githooks/` holds only `install.sh` and a `pre-commit` secrets
+grep — so it is documented rather than automated. **Run it when an event goes on
+sale**, which is the only window in which the finding is still fixable.
+
+Its exit codes deliberately diverge from `verify-live-events.ts`, which uses 1
+for both "could not run" and "--strict found a problem". This one reserves **1
+for "could not run" and uses 2 for a finding**, because the thing it finds is
+silent: an unset opt-in switch collects nothing and reports nothing, so
+"somebody else's API is down" must never produce the same exit code as "the
+switch is off". Its offline half — the `/orders` field allowlist — is checked in
+CI by `scripts/humanitix/optin-orders.test.ts`, and by `--self-test` for anyone
+about to trust the live run.
 
 ### Why `check-facts.ts` is deliberately not in CI
 
