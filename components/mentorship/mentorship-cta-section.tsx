@@ -4,6 +4,7 @@ import { NewsletterSignup } from "@/components/newsletter/newsletter-signup";
 import { PhotoBackdrop } from "@/components/ui/photo-backdrop";
 import { MENTORSHIP_CTA_BACKDROP, photo } from "@/lib/data/site-photos";
 import { isMentorshipOpen } from "@/lib/config/mentorship";
+import { cn } from "@/lib/utils";
 
 export function MentorshipCTASection() {
   const applicationsOpen = isMentorshipOpen();
@@ -42,7 +43,15 @@ export function MentorshipCTASection() {
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 shrink-0 lg:w-[26rem]">
+          {/* The width is for the form only: an inline field has no natural
+              width to size to, while the two buttons did and their layout must
+              not change when applications reopen. */}
+          <div
+            className={cn(
+              "flex flex-col sm:flex-row gap-4 shrink-0",
+              !applicationsOpen && "lg:w-[26rem]",
+            )}
+          >
             {applicationsOpen ? (
               <>
                 <Button variant="brand" size="lg" asChild>
