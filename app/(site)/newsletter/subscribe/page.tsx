@@ -3,7 +3,7 @@ import { CalendarDays, Heart, Users } from "lucide-react";
 
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { SubscribeForm } from "./subscribe-form";
+import { NewsletterSignup } from "@/components/newsletter/newsletter-signup";
 
 /**
  * Indexable, so it needs its own canonical.
@@ -44,7 +44,7 @@ const WHAT_YOU_GET = [
  * Subscribing is deliberately two steps: this form asks the server to send a
  * confirmation email, and nobody joins the list until they click the link in
  * it. That is why the page never promises delivery — see the note on the
- * success copy in `subscribe-form.tsx`.
+ * success copy in `components/newsletter/newsletter-signup.tsx`.
  */
 export default function NewsletterSubscribePage() {
   return (
@@ -94,7 +94,12 @@ export default function NewsletterSubscribePage() {
                 Enter your email and we will send you a confirmation link to
                 click. The link is good for 7 days.
               </p>
-              <SubscribeForm />
+              <NewsletterSignup
+                placement="newsletter-page"
+                layout="stacked"
+                askFirstName
+                className="mt-6"
+              />
             </div>
           </div>
         </div>
