@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { Mail, ChevronDown, ExternalLink } from "lucide-react";
+import { ChevronDown, ExternalLink } from "lucide-react";
 import { NewsletterSignup } from "@/components/newsletter/newsletter-signup";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -105,19 +105,14 @@ export function SiteFooter() {
                       {footerConfig.newsletterArchive.name}
                     </Link>
                     {/*
-                      The explainer page, kept as a first-class link now that
-                      the footer asks for an address inline. Somebody who wants
-                      to know what a month's email actually contains before
-                      giving it should not have to read the fine print under
-                      the field to find out.
+                      There is deliberately NO second link to
+                      /newsletter/subscribe here. `NewsletterSignup` carries a
+                      "What you get" link in its own fine print, about 40px
+                      above this row, and that is what satisfies "the inline
+                      field must not be the only route to the explainer" on all
+                      six inline placements. Two links to one page, a thumb's
+                      width apart, read as two different destinations.
                     */}
-                    <Link
-                      href="/newsletter/subscribe"
-                      className="inline-flex items-center gap-1.5 text-sm text-white/70 underline underline-offset-4 hover:text-white transition-colors"
-                    >
-                      <Mail className="h-4 w-4" aria-hidden="true" />
-                      About the newsletter
-                    </Link>
                   </p>
                 </div>
 
