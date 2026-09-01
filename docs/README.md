@@ -64,6 +64,7 @@ not in.
 | `HUMANITIX_ARCHIVE.md` | The ticketing export: three tiers, and seven ways a number from it goes wrong | current |
 | `MAILCHIMP_ARCHIVE.md` | The `She#` audience export: 1,560 subscribed of 3,689, and the suppression register | current |
 | `MENTORSHIP_APPLICATIONS_PAUSED.md` | What was hidden on 2026-06-19 and the runbook to re-open | current — the pause is live |
+| `NEWSLETTER_SIGNUP_SURFACES.md` | The website's own route-1 sign-up: the eight placements and why each is there, the one shared component and the hedged copy that must not drift, `placement` → the consent sentence, the two-tier rate limit and the NAT'd venue it exists for, and the static-rendering break that exits 0 | current, from 2026-09-01 |
 | `PHOTOGRAPHING_MINORS.md` | When a photograph of a child may be published, and the ten already published without a rule | current — two items await She Sharp's decision |
 | `PLATFORM_APIS.md` | The Mailchimp and Humanitix API integrations: what each key reaches, what it cannot (so the manual exports continue), the PII boundary enforced by absence, and the runbook | current |
 | `PUBLIC_CLAIMS_PROVENANCE.md` | Which published figures have a record behind them and which do not | current |

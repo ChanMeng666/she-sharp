@@ -13,8 +13,10 @@
  * - A honeypot `website` field silently absorbs bots (200, no side effects, and
  *   no rate budget spent — a bot must not be able to exhaust a shared NAT's
  *   allowance for the humans behind it).
- * - Per-IP sliding-window rate limit (mirrors lib/chatbot/rate-limit.ts),
- *   degrading open when Redis is unconfigured.
+ * - Sliding-window rate limits (mirrors lib/chatbot/rate-limit.ts), degrading
+ *   open when Redis is unconfigured. Per-IP on its own, or per-device under a
+ *   per-IP ceiling when the client offers a device id — see the block comment
+ *   on the limiters.
  * - Never leaks configuration or backend state: any well-formed non-honeypot
  *   input gets `{ ok: true }`, whatever actually happened.
  */
@@ -25,6 +27,10 @@ import { Ratelimit } from "@upstash/ratelimit";
 import { getChatRedis } from "@/lib/chatbot/redis";
 import { invalidBody } from "@/lib/api/validation";
 import { sendNewsletterConfirmationEmail } from "@/lib/email/service";
+import {
+  NEWSLETTER_PLACEMENTS,
+  consentSourceForPlacement,
+} from "@/lib/newsletter/placements";
 import { subscribe } from "@/lib/newsletter/subscribers";
 
 // node:crypto (token minting) and the Drizzle/Neon client both need the Node
@@ -39,12 +45,45 @@ const subscribeSchema = z.object({
   firstName: z.string().max(80).optional(),
   /** Honeypot: legitimate clients leave this empty. */
   website: z.string().optional(),
+  /**
+   * Which form on the site this came from. A key, never prose: the consent
+   * sentence is composed server-side from a closed list, so a public endpoint
+   * cannot write arbitrary text into the audit record. Optional because a
+   * cached older bundle sends none, and that request is still a valid opt-in.
+   */
+  placement: z.enum(NEWSLETTER_PLACEMENTS).optional(),
 });
+
+// ---------------------------------------------------------------------------
+// Rate limiting
+//
+// One form on one page could be limited by IP alone: five sign-ups an hour from
+// an address is generous for real humans and tight on a script. The form is now
+// on seven surfaces, one of which is the post-event feedback confirmation — and
+// a hall of forty attendees sits behind ONE NAT'd venue IP, all finishing within
+// minutes of each other. Under a flat 5/hour the sixth person reads a 429 as
+// "the site is broken", which is exactly the failure
+// `app/api/event-feedback/route.ts` already had to design around.
+//
+// So: when the client sends the device id it already mints for the feedback
+// form, limit per device per IP, under a much higher per-IP ceiling. When it
+// does not, nothing changes.
+//
+// The device id is client-supplied and therefore NOT a trust boundary — anyone
+// can forge or clear it, and a limiter keyed on it alone would be a limiter
+// anyone can opt out of. It is a fairness key layered *under* a real ceiling,
+// never a replacement for one, which is why the IP limiter below must stay even
+// though the device limiter is the one that does the day-to-day work.
+//
+// Every limiter degrades OPEN when Redis is missing or throws. Locking a room
+// out of a sign-up form is worse than a few junk `pending` rows that never get
+// confirmed and expire on their own.
+// ---------------------------------------------------------------------------
 
 let ratelimit: Ratelimit | null = null;
 let initialised = false;
 
-/** Lazily build the subscribe limiter, or null when Redis is unconfigured. */
+/** Limiter A — the original per-IP limit, used when no device id is offered. */
 function getSubscribeRateLimit(): Ratelimit | null {
   if (initialised) return ratelimit;
   initialised = true;
@@ -60,6 +99,58 @@ function getSubscribeRateLimit(): Ratelimit | null {
     analytics: false,
   });
   return ratelimit;
+}
+
+let deviceRatelimit: Ratelimit | null = null;
+let deviceInitialised = false;
+
+/**
+ * Limiter B — per device per IP, the fairness key.
+ *
+ * Keyed on `${ip}:${device}` rather than the device alone so a forged id
+ * cannot be replayed from somewhere else to burn a stranger's allowance.
+ * Three an hour covers a mistyped address and a correction.
+ */
+function getDeviceRateLimit(): Ratelimit | null {
+  if (deviceInitialised) return deviceRatelimit;
+  deviceInitialised = true;
+
+  const redis = getChatRedis();
+  if (!redis) return null;
+
+  deviceRatelimit = new Ratelimit({
+    redis,
+    limiter: Ratelimit.slidingWindow(3, "1 h"),
+    prefix: "newsletter_subscribe_device_rl",
+    analytics: false,
+  });
+  return deviceRatelimit;
+}
+
+let ipCeilingRatelimit: Ratelimit | null = null;
+let ipCeilingInitialised = false;
+
+/**
+ * Limiter C — the ceiling that makes limiter B safe to trust.
+ *
+ * 30/hour is above any real venue's sign-up rate and still bounds a script that
+ * mints a fresh device id per request. Without this, the device header would be
+ * a way to ask for an unlimited allowance.
+ */
+function getIpCeilingRateLimit(): Ratelimit | null {
+  if (ipCeilingInitialised) return ipCeilingRatelimit;
+  ipCeilingInitialised = true;
+
+  const redis = getChatRedis();
+  if (!redis) return null;
+
+  ipCeilingRatelimit = new Ratelimit({
+    redis,
+    limiter: Ratelimit.slidingWindow(30, "1 h"),
+    prefix: "newsletter_subscribe_ip_ceiling_rl",
+    analytics: false,
+  });
+  return ipCeilingRatelimit;
 }
 
 /**
@@ -83,18 +174,67 @@ function getClientIp(req: Request): string | null {
   return real && real.trim() ? real.trim() : null;
 }
 
+/**
+ * Device id from `x-ss-device` — the UUID the feedback form keeps in
+ * `localStorage`.
+ *
+ * Sanitised to the character set an id can legitimately use, so a header can
+ * never be shaped into a Redis key of someone else's. A missing or malformed
+ * header is normal (older browsers, private mode, cleared storage) and must
+ * never reject the request — it just falls back to the per-IP limit.
+ */
+function getDeviceId(req: Request): string | null {
+  const raw = req.headers.get("x-ss-device");
+  if (!raw) return null;
+
+  const sanitised = raw.trim().replace(/[^A-Za-z0-9_-]/g, "").slice(0, 64);
+  return sanitised.length > 0 ? sanitised : null;
+}
+
 /** Rate-limit check that degrades open on any limiter failure. */
-async function checkRateLimit(identifier: string): Promise<{ success: boolean }> {
-  const rl = getSubscribeRateLimit();
-  if (!rl) return { success: true };
+async function checkLimit(
+  rl: Ratelimit | null,
+  identifier: string,
+): Promise<boolean> {
+  if (!rl) return true;
 
   try {
     const { success } = await rl.limit(identifier);
-    return { success };
+    return success;
   } catch (error) {
     console.error("[Newsletter] Rate limit check failed, allowing request:", error);
-    return { success: true };
+    return true;
   }
+}
+
+/**
+ * Applies the right pair of limiters for this request.
+ *
+ * With a device id: per device per IP, *and* the per-IP ceiling. Both, never
+ * either — see the block comment above for why the ceiling is not optional.
+ * Without one: the original per-IP limit, unchanged.
+ *
+ * @param ip The client address, or null when no proxy header was present.
+ * @param device The sanitised device id, or null.
+ * @returns Whether the request may proceed.
+ */
+async function checkRateLimit(
+  ip: string | null,
+  device: string | null,
+): Promise<{ success: boolean }> {
+  const ipKey = ip ?? "anonymous";
+
+  if (!device) {
+    return { success: await checkLimit(getSubscribeRateLimit(), ipKey) };
+  }
+
+  // Short-circuits deliberately: a device that has spent its own allowance must
+  // not also consume a slot of the shared ceiling on the way to being refused.
+  const allowed =
+    (await checkLimit(getDeviceRateLimit(), `${ipKey}:${device}`)) &&
+    (await checkLimit(getIpCeilingRateLimit(), ipKey));
+
+  return { success: allowed };
 }
 
 export async function POST(request: NextRequest) {
@@ -110,7 +250,7 @@ export async function POST(request: NextRequest) {
     return invalidBody(validation.error);
   }
 
-  const { email, firstName, website } = validation.data;
+  const { email, firstName, website, placement } = validation.data;
 
   // Honeypot tripped: pretend success, do nothing, and don't spend rate budget.
   if (website && website.trim().length > 0) {
@@ -118,7 +258,7 @@ export async function POST(request: NextRequest) {
   }
 
   const ip = getClientIp(request);
-  const { success } = await checkRateLimit(ip ?? "anonymous");
+  const { success } = await checkRateLimit(ip, getDeviceId(request));
   if (!success) {
     return NextResponse.json({ ok: false, error: "Too many requests" }, { status: 429 });
   }
@@ -139,8 +279,11 @@ export async function POST(request: NextRequest) {
       source: "website-form",
       // Route 1 of consent-rules.md. The exact wording is the audit record —
       // it is the sentence someone would have to stand behind if asked why this
-      // person was mailed, so it is a constant here and not assembled from parts.
-      consentSource: "Website newsletter subscribe form",
+      // person was mailed. The client names a placement KEY and the sentence is
+      // composed here from a closed list, so the record still cannot be written
+      // by the caller; `lib/newsletter/placements.ts` holds every sentence, and
+      // a request naming no placement gets the original string verbatim.
+      consentSource: consentSourceForPlacement(placement),
       consentIp: ip,
       consentUserAgent: userAgent ? userAgent.slice(0, USER_AGENT_MAX) : null,
     });

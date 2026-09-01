@@ -1,9 +1,7 @@
 import { Metadata } from "next";
-import Link from "next/link";
-import { Mail } from "lucide-react";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
-import { Button } from "@/components/ui/button";
+import { NewsletterSignup } from "@/components/newsletter/newsletter-signup";
 import { NewslettersGrid } from "@/components/resources";
 import { getAllNewsletters } from "@/lib/data/newsletters-manual";
 
@@ -42,24 +40,30 @@ export default function NewslettersPage() {
         </div>
 
         {/*
-          Subscribe, and nothing beside it. There used to be a second button,
-          "Open full archive", pointing at `MAILCHIMP_CONFIG.archiveUrl`. It was
-          wrong twice over: on a paid plan that URL returns the 20 most recent
-          campaigns rather than the back catalogue, and it dies with the
-          subscription the founder is cancelling. The full archive is the grid
-          below — every issue is served from this site now — so the button
-          would have linked this page to itself.
+          The field, not a button to it. This is the archive of the thing
+          itself: a reader here has just been shown every issue of exactly what
+          they would be subscribing to, which is the strongest evidence any
+          placement on this site can offer, and making them load another page to
+          type an address spends it. The form carries its own link to
+          `/newsletter/subscribe` for anyone who wants the explainer first.
+
+          There used to be a second button here, "Open full archive", pointing
+          at `MAILCHIMP_CONFIG.archiveUrl`. It was wrong twice over: on a paid
+          plan that URL returns the 20 most recent campaigns rather than the
+          back catalogue, and it dies with the subscription the founder is
+          cancelling. The full archive is the grid below — every issue is served
+          from this site now — so the button would have linked this page to
+          itself.
         */}
-        <div className="mb-10 md:mb-14 flex flex-col gap-3 sm:flex-row sm:items-center">
-          <Button asChild size="lg" variant="brand">
-            <Link
-              href="/newsletter/subscribe"
-              className="inline-flex items-center gap-2"
-            >
-              <Mail className="h-4 w-4" />
-              Subscribe
-            </Link>
-          </Button>
+        {/*
+          The field, not a button to it. This is the archive of the thing
+          itself: a reader here has just been shown fifty issues of exactly what
+          they would be subscribing to, which is the strongest evidence any
+          placement on this site can offer. Making them load another page to
+          type an address spends that.
+        */}
+        <div className="mb-10 md:mb-14 max-w-xl">
+          <NewsletterSignup placement="newsletter-archive" />
         </div>
 
         {/* Issue grid */}
