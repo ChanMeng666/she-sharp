@@ -18,7 +18,7 @@ export default function AmbassadorCodeOfConductPage() {
     >
       <div className="legal-content">
         <section className="legal-section">
-          <h2>She Sharp Charitable Trust</h2>
+          <h2>She Sharp</h2>
           <p>
             <strong>New Zealand Registered Charity No. CC57025</strong>
           </p>
