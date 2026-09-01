@@ -926,6 +926,32 @@ interrupted — resume without double-mailing (8f).
 **Nothing in 8a–8d sends any email.** The only step that puts mail in inboxes is
 8e, and a **human** runs it.
 
+**First, lint the copy. Nothing below runs until this exits 0:**
+
+```powershell
+npx tsx scripts/email/content-lint.ts --issue 2026-08
+```
+
+It reads the subject line and every string in the issue file and refuses on
+anything that reads as an unfinished draft: a version or draft label, a month
+that disagrees with the issue's own id, placeholder text, a Mailchimp merge tag
+(nothing in the Resend path substitutes those), a `{{ }}` or `${}` template
+variable, a dead or `localhost` link. Warnings print and do not block — read
+them, then decide.
+
+This exists because the two worst sends in the account's history were both
+subject lines and both were caught by a human only after they had gone.
+`Newsletter - April 2026 v0.2` reached 1,657 people and cost 32 unsubscribes
+(1.93%, 14.5x the non-profit benchmark); the June 2026 issue went out saying
+"May 2026" and the correction had to open with an apology. **Everything else in
+this step answers "may this go?" — the approval ledger, the idempotency key,
+the frequency cap. This is the only thing that reads the words.** It is not a
+substitute for the Stage 2 review round in Step 6b; it is the check that catches
+what a human proof-read keeps missing.
+
+If it reports an error, fix the issue file and run it again. Do not proceed and
+do not talk anybody past it.
+
 Before starting, see where the issue stands:
 
 ```powershell

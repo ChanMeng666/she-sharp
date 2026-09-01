@@ -46,6 +46,27 @@ jobs:
       - name: Verify newsletter email-safe covers
         run: npx tsx scripts/newsletter/email-covers.ts --check
 
+      # Also shares this checkout — pure regex over the committed issue files,
+      # no database and no network. Two subject lines have already reached the
+      # whole list wrong and nothing in this repo could see either: `Newsletter
+      # - April 2026 v0.2` went to 1,657 people on 2026-04-13 and cost 32
+      # unsubscribes (1.93%, 14.5x the non-profit benchmark), and the June issue
+      # went out on 2026-06-23 saying "May 2026". Every other protection around
+      # the newsletter answers "may this go?" — the approval ledger, the
+      # idempotency key, the frequency cap — and none of them reads the words.
+      # This one does: draft version labels, a month that disagrees with the
+      # issue's own id, Mailchimp merge tags the Resend path does not
+      # substitute, template variables, placeholder text and dead links.
+      - name: Verify newsletter copy carries no draft markers
+        run: npx tsx scripts/email/content-lint.ts --all
+
+      # The linter above is only worth its exit code if it still refuses the two
+      # subject lines it was written for, so its test feeds it both verbatim —
+      # and the three committed issues, which must come back clean. A linter
+      # that refuses everything gets switched off before the next send.
+      - name: Verify the newsletter content linter
+        run: npx tsx scripts/email/content-lint.test.ts
+
       # The one check here whose failure NOTHING else can see. poster-type.ts
       # hands resvg four absolute font paths with `loadSystemFonts: false`, and
       # resvg does not raise on a path it cannot open — it renders in whatever
