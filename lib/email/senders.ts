@@ -60,14 +60,27 @@ export const SENDING_DOMAIN = "shesharp.org.nz";
  *   traffic does not distort per-stream deliverability stats.
  */
 export const SENDERS: Record<EmailStream, SenderIdentity> = {
+  /**
+   * **These Reply-To values are a fallback, not the answer.** Who should read a
+   * reply depends on what the message says, not on which stream carried it, and
+   * `lib/email/reply-to.ts` is where that is decided — every sender passes a
+   * `purpose` and gets the right desk.
+   *
+   * Both of these said `mentoring@` until 2026-09-01, which meant a reply to a
+   * newsletter confirmation, a password reset or a donation receipt landed in
+   * the mentorship lead's personal contact address. They are now `info@` for
+   * the same reason the marketing Reply-To is: it is the one mailbox anybody
+   * has confirmed on the record that a human opens, so a message that reaches
+   * here without naming a purpose still reaches somebody.
+   */
   transactional: {
     from: `She Sharp <noreply@${SENDING_DOMAIN}>`,
-    replyTo: `mentoring@${SENDING_DOMAIN}`,
+    replyTo: `info@${SENDING_DOMAIN}`,
     stream: "transactional",
   },
   notification: {
     from: `She Sharp <noreply@${SENDING_DOMAIN}>`,
-    replyTo: `mentoring@${SENDING_DOMAIN}`,
+    replyTo: `info@${SENDING_DOMAIN}`,
     stream: "notification",
   },
   /**

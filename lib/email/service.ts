@@ -8,15 +8,40 @@ import {
   findLoopbackUrl,
   isDeployedRuntime,
 } from './localhost-links';
+import { replyToForPurpose, type EmailPurpose } from './reply-to';
+import { SITE_URL } from '@/lib/seo/site';
 
 /**
- * Get the base URL for email links
+ * The origin every user-facing URL in an email is built from.
+ *
+ * **The default is production, and that is the whole point.** This function
+ * used to fall back to `http://localhost:3000`, which made the unsafe answer
+ * the automatic one: any environment that had not set `BASE_URL` — a script run
+ * from a laptop, a deploy that lost the variable, a new preview — produced
+ * links that resolve to the reader's own machine. That fallback is what put
+ * `localhost:3000` into 25 real mentor invitations on 2026-03-19, and it is
+ * what put it into six newsletter confirmations on 2026-09-01.
+ *
+ * `SITE_URL` is the canonical origin from `lib/seo/site.ts`, already the single
+ * source of truth for the site's own metadata, so this cannot drift from what
+ * the site says it is.
+ *
+ * A developer who genuinely wants localhost links — testing the confirm page
+ * against a local server — sets `BASE_URL=http://localhost:3000` explicitly.
+ * That is deliberate, visible in their environment, and `sendEmail()` warns on
+ * every message it produces. Note that local development shares the production
+ * database, so a production link in a locally-triggered email usually resolves
+ * correctly anyway.
+ *
+ * The old `NODE_ENV === 'development' && BASE_URL includes vercel.app` branch
+ * is gone with the fallback. It existed to stop a pulled preview URL leaking
+ * into dev emails by rewriting it to localhost — swapping one wrong origin for
+ * a worse one. An explicitly pulled preview origin is now used as given.
+ *
+ * @returns An absolute origin with no trailing slash.
  */
 export function getBaseUrl(): string {
-  if (process.env.NODE_ENV === 'development' && process.env.BASE_URL?.includes('vercel.app')) {
-    return 'http://localhost:3000';
-  }
-  return process.env.BASE_URL || 'http://localhost:3000';
+  return process.env.BASE_URL || SITE_URL;
 }
 
 interface EmailOptions {
@@ -32,7 +57,16 @@ interface EmailOptions {
    * transactional mail is never withheld.
    */
   stream?: EmailStream;
-  /** Overrides the stream's default Reply-To. */
+  /**
+   * What this message is about, which decides who answers a reply.
+   *
+   * Prefer this over `replyTo`: it names a desk rather than an address, so the
+   * mapping stays in one place and cannot drift per call site. The stream's own
+   * Reply-To is only a fallback — see `lib/email/reply-to.ts` for why the
+   * stream is the wrong key for this question.
+   */
+  purpose?: EmailPurpose;
+  /** Overrides both `purpose` and the stream's default Reply-To. */
   replyTo?: string;
   /** Extra headers, merged over the stream's own (unsubscribe) headers. */
   headers?: Record<string, string>;
@@ -80,6 +114,12 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
   const { to, subject, html, text } = options;
   const stream = options.stream ?? 'transactional';
   const identity = getSenderIdentity(stream);
+  // An explicit address wins, then the message's purpose, then the stream's
+  // fallback. Resolved once here so the dev-mode preview below and the Resend
+  // payload cannot print different answers.
+  const replyTo =
+    options.replyTo ??
+    (options.purpose ? replyToForPurpose(options.purpose) : identity.replyTo);
 
   // Honour opt-outs before doing any work. Scoped inside isSuppressed() to the
   // notification and marketing streams: someone who unsubscribed from reminders,
@@ -97,7 +137,7 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
     console.log('To:', to);
     console.log('Subject:', subject);
     console.log('From:', identity.from);
-    console.log('Reply-To:', options.replyTo ?? identity.replyTo);
+    console.log('Reply-To:', replyTo);
     console.log('Stream:', stream);
     console.log('Time:', new Date().toISOString());
     console.log('-------------------------------------');
@@ -177,7 +217,7 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
         {
           from: identity.from,
           to,
-          replyTo: options.replyTo ?? identity.replyTo,
+          replyTo,
           subject,
           html,
           text,
@@ -261,6 +301,7 @@ If you didn't create an account, please ignore this email.
   `;
 
   return sendEmail({
+    purpose: 'account',
     to: email,
     subject: 'Verify Your Email - She Sharp',
     html,
@@ -305,6 +346,7 @@ If you didn't request this password reset, please ignore this email and your pas
   `;
 
   return sendEmail({
+    purpose: 'account',
     to: email,
     subject: 'Reset Your Password - She Sharp',
     html,
@@ -401,6 +443,7 @@ Questions? Contact us at mentoring@shesharp.org.nz
   `;
 
   return sendEmail({
+    purpose: 'payments',
     to: email,
     subject: 'Payment Confirmed - Your She Sharp Invitation Code',
     html,
@@ -471,6 +514,7 @@ ${details.expiresAt ? `This code expires on ${new Date(details.expiresAt).toLoca
   `;
 
   return sendEmail({
+    purpose: 'mentorship',
     to: email,
     subject: `${isApproval ? '' : ''}${title} - She Sharp`,
     html,
@@ -539,6 +583,7 @@ you won't hear from us again.
   `;
 
   return sendEmail({
+    purpose: 'newsletter',
     to: email,
     subject: 'Confirm your She Sharp newsletter subscription',
     html,
@@ -606,6 +651,7 @@ If you have any questions, feel free to reach out. We look forward to welcoming 
   `;
 
   return sendEmail({
+    purpose: 'mentorship',
     to: email,
     subject: 'Friendly Reminder: Complete Your She Sharp Mentor Registration',
     html,
@@ -670,6 +716,7 @@ If you have any questions or no longer wish to participate, please reply to this
   `;
 
   return sendEmail({
+    purpose: 'mentorship',
     to: email,
     subject: 'Friendly Reminder: Complete Your She Sharp Mentee Registration',
     html,
@@ -728,6 +775,7 @@ All your account data and mentor profile remain unchanged.
   `;
 
   return sendEmail({
+    purpose: 'account',
     to: email,
     subject: 'She Sharp Has a New Home — Update Your Bookmark',
     html,
@@ -810,6 +858,7 @@ Questions? Contact us at mentoring@shesharp.org.nz
   `;
 
   return sendEmail({
+    purpose: 'payments',
     to: email,
     subject: 'Your She Sharp Donation Receipt',
     html,
@@ -869,6 +918,7 @@ This is an automated notification. The full record is available in your Stripe D
   `;
 
   return sendEmail({
+    purpose: 'internal',
     to: adminEmail,
     subject: `New Donation: $${details.amount} ${details.currency} from ${details.donorName || details.donorEmail}`,
     html,

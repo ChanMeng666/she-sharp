@@ -64,6 +64,7 @@ Browse our events: ${getBaseUrl()}/events
   `;
 
   return sendEmail({
+    purpose: 'recruitment',
     to: email,
     subject: `Application Received - She Sharp ${typeLabel}`,
     html,
@@ -137,6 +138,7 @@ Contact: ${contactEmail}
   `;
 
   return sendEmail({
+    purpose: 'recruitment',
     to: email,
     subject: 'Interview Invitation - She Sharp',
     html,
@@ -215,6 +217,7 @@ ${nextSteps.length > 0 ? 'Next Steps:\n' + nextSteps.map(s => `- ${s}`).join('\n
   `;
 
   return sendEmail({
+    purpose: 'recruitment',
     to: email,
     subject: 'Welcome to She Sharp!',
     html,
@@ -269,6 +272,7 @@ Events: ${getBaseUrl()}/events
   `;
 
   return sendEmail({
+    purpose: 'recruitment',
     to: email,
     subject: 'Application Update - She Sharp',
     html,
@@ -340,6 +344,7 @@ Questions? Contact mentoring@shesharp.org.nz
   `;
 
   return sendEmail({
+    purpose: 'recruitment',
     to: email,
     subject: "Let's Get Started - She Sharp Onboarding",
     html,
@@ -386,6 +391,7 @@ Questions? Contact mentoring@shesharp.org.nz
   `;
 
   return sendEmail({
+    purpose: 'recruitment',
     to: email,
     subject: 'NDA - Action Required - She Sharp',
     html,

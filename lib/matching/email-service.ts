@@ -102,6 +102,7 @@ Thank you for being a mentor with She Sharp. Your guidance helps shape the futur
   `;
 
   return sendEmail({
+    purpose: 'mentorship',
     to: data.mentorEmail,
     subject: `New Mentee Match: ${data.menteeName} - She Sharp`,
     html,
@@ -183,6 +184,7 @@ We're excited to see you grow with the support of your mentor. Make the most of 
   `;
 
   return sendEmail({
+    purpose: 'mentorship',
     to: data.menteeEmail,
     subject: `You've Been Matched with a Mentor! - She Sharp`,
     html,
@@ -252,6 +254,7 @@ Check Your Status: ${dashboardUrl}
   `;
 
   return sendEmail({
+    purpose: 'mentorship',
     to: menteeEmail,
     subject: `Queue Update: Position #${queuePosition} - She Sharp`,
     html,
@@ -329,6 +332,7 @@ You'll receive an email notification as soon as we find a matching mentor for yo
   `;
 
   return sendEmail({
+    purpose: 'mentorship',
     to: menteeEmail,
     subject: `You're in the Mentorship Queue (#${queuePosition}) - She Sharp`,
     html,
@@ -381,6 +385,7 @@ If you have any questions or need assistance, please don't hesitate to contact u
   `;
 
   return sendEmail({
+    purpose: 'mentorship',
     to: menteeEmail,
     subject: 'Your Mentorship Queue Entry Has Expired - She Sharp',
     html,
@@ -472,6 +477,7 @@ Review Matches: ${adminUrl}
   `;
 
   return sendEmail({
+    purpose: 'internal',
     to: adminEmail,
     subject: `[Admin] Batch Matching Complete - ${summary.matchesGenerated} matches generated`,
     html,
