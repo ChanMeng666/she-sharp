@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useId, useState } from "react";
+import { useCallback, useId, useState, useSyncExternalStore } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -64,14 +64,45 @@ const SUBMITTED_KEY = "newsletter-signup";
 const SUBMITTED_VALUE = "submitted";
 
 /**
- * Fan-out to sibling instances mounted right now.
+ * The marker, as an external store every mounted instance reads.
  *
- * `sessionStorage` fires no event in the tab that wrote it, so the mount-time
+ * `sessionStorage` fires no event in the tab that wrote it, so a mount-time
  * read alone would only help on the *next* navigation — and the case that
  * matters most (footer plus in-page form, both already on screen) happens
- * without one. A module-level listener set is the whole coordination layer.
+ * without one. Hence the listener set: it is the change notification the
+ * storage API does not give us.
+ *
+ * Read through `useSyncExternalStore` rather than an effect. Storage is a
+ * mutable value living outside React, which is exactly what that hook is for,
+ * and its server snapshot is what makes the read safe here: these forms render
+ * inside statically prerendered pages, so the server must be told what to
+ * assume rather than left to read a `sessionStorage` that does not exist.
  */
-const submitListeners = new Set<(submitted: boolean) => void>();
+const SUBMITTED_LISTENERS = new Set<() => void>();
+
+function subscribeToSubmitted(onStoreChange: () => void): () => void {
+  SUBMITTED_LISTENERS.add(onStoreChange);
+  return () => {
+    SUBMITTED_LISTENERS.delete(onStoreChange);
+  };
+}
+
+/**
+ * Whether this tab has already sent a sign-up request.
+ *
+ * Returns a boolean, so React's snapshot comparison is by value and no caching
+ * is needed. `readStorage` swallows the exception a private window throws on
+ * access, which resolves to "not submitted" — the safe direction, since it
+ * leaves the form asking rather than hiding it.
+ */
+function getSubmittedSnapshot(): boolean {
+  return readStorage("session", SUBMITTED_KEY) === SUBMITTED_VALUE;
+}
+
+/** Nothing has been submitted during SSR, and no storage exists to ask. */
+function getSubmittedServerSnapshot(): boolean {
+  return false;
+}
 
 function broadcastSubmitted(submitted: boolean) {
   if (submitted) {
@@ -79,7 +110,7 @@ function broadcastSubmitted(submitted: boolean) {
   } else {
     removeStorage("session", SUBMITTED_KEY);
   }
-  for (const listener of submitListeners) listener(submitted);
+  for (const listener of SUBMITTED_LISTENERS) listener();
 }
 
 type Status = "idle" | "sending" | "done" | "error";
@@ -130,25 +161,15 @@ export function NewsletterSignup({
   const [website, setWebsite] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [errorMessage, setErrorMessage] = useState("");
-  /** Another instance in this tab has submitted. See `SUBMITTED_KEY`. */
-  const [submittedElsewhere, setSubmittedElsewhere] = useState(false);
+
+  /** This tab has already sent a sign-up request. See `SUBMITTED_KEY`. */
+  const submittedElsewhere = useSyncExternalStore(
+    subscribeToSubmitted,
+    getSubmittedSnapshot,
+    getSubmittedServerSnapshot,
+  );
 
   const isDark = tone === "dark";
-
-  // Storage is read after mount, never during render: reading it during render
-  // would desync the server HTML from the client's first paint, and this
-  // component renders inside statically prerendered pages.
-  useEffect(() => {
-    if (readStorage("session", SUBMITTED_KEY) === SUBMITTED_VALUE) {
-      setSubmittedElsewhere(true);
-    }
-
-    const listener = (submitted: boolean) => setSubmittedElsewhere(submitted);
-    submitListeners.add(listener);
-    return () => {
-      submitListeners.delete(listener);
-    };
-  }, []);
 
   /** Lets someone add a second address after the first went through. */
   const resetForAnotherAddress = useCallback(() => {
@@ -195,6 +216,10 @@ export function NewsletterSignup({
   const mutedText = isDark ? "text-white/75" : "text-ink-600";
   const headingText = isDark ? "text-white" : "text-foreground";
 
+  // Both halves are load-bearing. `submittedElsewhere` is what a sibling
+  // instance reacts to, but it comes from storage — and in a private window
+  // every write throws, so the store stays false even for the instance that
+  // just submitted. Its own `status` is what shows that person their result.
   if (status === "done" || submittedElsewhere) {
     return (
       <div
