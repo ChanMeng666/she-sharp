@@ -76,6 +76,7 @@ if an address, an IP or a code-shaped value reaches `lib/data/json/`.
 
 ```bash
 npx tsx lib/email/hardening.test.ts       # unsubscribe tokens, senders, gates, Svix
+npx tsx lib/email/events.test.ts          # delivery telemetry — needs POSTGRES_URL to LOAD, not to run
 npx tsx lib/deck/deck.test.ts             # slide schema, copy + rhythm, feedback codes
 npx tsx lib/data/sponsors.test.ts         # sponsor registry
 for f in lib/newsletter/*.test.ts; do npx tsx "$f"; done
@@ -132,17 +133,42 @@ private vault or the live web.
 | `scripts/email/optin-rows.test.ts` | which rows a route-2 import may write into the consent record |
 | `scripts/email/restrict-hashes.test.ts` | narrowing a recipients file by hash |
 | `scripts/email/published-addresses.test.ts` | every address the site prints resolves to a real mailbox |
-| `lib/email/events.test.ts` | delivery telemetry |
+| `lib/email/events.test.ts` | delivery telemetry — **needs a database-shaped env; now in the local list, not CI** |
 | `lib/email/newsletter-reviewers.test.ts` | the reviewer roster |
 | `.claude/skills/monthly-newsletter/scripts/issue-ledger.test.ts` | the approval chain |
 | `scripts/events/poster-speaker.test.ts` | poster layout — **and it was red** |
 
 The first two are the rules this repository is most careful about, and they were
-tested by files that gated nothing. **All eight are now steps in the `verify`
-job** — seven were already green, and the eighth is below. Each was re-run with
-every secret unset first, because that job has none, and they are steps rather
-than a job for the reason above: a step costs seconds, a job costs a whole
-billed minute.
+tested by files that gated nothing. **Seven are now steps in the `verify` job**;
+the eighth, `lib/email/events.test.ts`, joins the local list above. They are
+steps rather than a job for the reason given earlier: a step costs seconds, a
+job costs a whole billed minute.
+
+### Checking "does this run without secrets?" with `env -u` does not check it
+
+The seven were first cleared by re-running them with every secret unset:
+
+```bash
+env -u POSTGRES_URL -u DATABASE_URL -u RESEND_API_KEY … npx tsx <file>   # WRONG
+```
+
+All eight passed, and one then failed in CI on `POSTGRES_URL environment
+variable is not set`. **`lib/db/drizzle.ts` calls `dotenv.config()` itself**, so
+it re-read `.env` off disk and put the variable straight back. The check
+reported green for a condition it had never created — the same shape as the two
+gates below, and as the marker-keyed checks that inherit an earlier pass's blind
+spot.
+
+What actually reproduces CI is removing the file:
+
+```bash
+mv .env .env.off && npx tsx <file>; mv .env.off .env
+```
+
+Under that, exactly one of the eight failed — the honest answer, and the reason
+`events.test.ts` is a local check. Its assertions are pure, but importing
+`lib/email/events.ts` pulls in `lib/db/drizzle.ts`, which throws at module load
+without a connection string.
 
 ### The eighth: `poster-speaker.test.ts` was failing on `main`
 

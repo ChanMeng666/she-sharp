@@ -321,11 +321,14 @@ jobs:
           npx tsx scripts/email/optin-rows.test.ts
           npx tsx scripts/email/restrict-hashes.test.ts
 
-      - name: Verify the sender identities and the delivery telemetry
+      # `lib/email/events.test.ts` is NOT here, and the reason is worth the line.
+      # It imports `lib/email/events.ts`, which pulls in `lib/db/drizzle.ts`,
+      # which throws on a missing `POSTGRES_URL` at module load — so it needs a
+      # database-shaped environment even though its assertions are pure. It is
+      # in the local pre-push list in `docs/development/TESTING.md` instead.
+      - name: Verify the published sender addresses
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
-        run: |
-          npx tsx scripts/email/published-addresses.test.ts
-          npx tsx lib/email/events.test.ts
+        run: npx tsx scripts/email/published-addresses.test.ts
 
       - name: Verify the newsletter approval chain
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
