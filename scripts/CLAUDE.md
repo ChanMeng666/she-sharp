@@ -145,6 +145,7 @@ is deliberately excluded, is in `docs/development/TESTING.md`.
 
 ```bash
 npx tsx lib/email/hardening.test.ts       # unsubscribe tokens, senders, gates, Svix
+npx tsx lib/email/events.test.ts          # delivery telemetry — needs POSTGRES_URL to LOAD, not to run
 npx tsx lib/deck/deck.test.ts             # slide schema, copy + rhythm, feedback codes
 npx tsx lib/data/sponsors.test.ts         # sponsor registry
 for f in lib/newsletter/*.test.ts; do npx tsx "$f"; done
