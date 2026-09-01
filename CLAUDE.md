@@ -266,6 +266,8 @@ nothing.
 
 The local pre-push list, the two gates, and why `check-facts.ts` and
 `verify-page-metadata.ts` sit outside CI: **`docs/development/TESTING.md`**.
+What a job costs, and the DNS record a workflow depends on:
+**`docs/deployment/GITHUB_ACTIONS_AND_ACCOUNT.md`**.
 
 # Environment
 

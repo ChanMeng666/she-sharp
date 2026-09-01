@@ -42,10 +42,15 @@ steps run in this order behind a single checkout and a single install:
 It was five jobs until 2026-09-01, one per row above. Actions bills **each job
 rounded up to the next whole minute**, and each job re-paid the same ~21s of
 checkout, pnpm, Node and install: 105s of duplicated setup wrapped around 147s
-of actual work, billing 8 minutes where the same work now bills 3. `Verify` was
-66% of this private repo's entire Actions spend while the org sat about 30% over
-its 2,000-minute monthly allowance — and exhausting that allowance stops
-`Deploy to Vercel` too.
+of actual work, billing 8 minutes. As one job it measures 148–186s over five
+runs — mean 173s, **mean billed 3.4 minutes**, straddling the 180-second
+boundary, so do not quote a flat 3. `Verify` was 66% of this private repo's
+entire Actions spend while the org sat about 30% over its 2,000-minute monthly
+allowance — and exhausting that allowance stops `Deploy to Vercel` too.
+
+The money side of all this — the plan, the per-workflow measurements, why
+`deploy.yml` cannot get under four billed minutes, and the DNS record that must
+survive — is `docs/deployment/GITHUB_ACTIONS_AND_ACCOUNT.md`.
 
 **Do not split this back into a job per check.** Losing the five separate check
 names cost nothing: the repo cannot use required status checks anyway (branch
