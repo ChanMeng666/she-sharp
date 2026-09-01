@@ -70,7 +70,7 @@ not in.
 | `SLACK_INTEGRATION_GUIDE.md` | Setting up incoming webhooks and the notification code pattern | current |
 | `SLACK_EVENT_EXTRACTION.md` | The `/event` slash command workflow, with the Python scraper as fallback | current |
 | `SLACK_APP_DEVELOPMENT_GUIDE.md` | Building a Slack app on this codebase — decisions and traps | current |
-| `TESTING.md` | What CI runs and what it does not, the local pre-push list, why `check-facts.ts` and `verify-page-metadata.ts` are deliberately outside CI, and the two guards that read as correct while gating nothing. Split out of the root `CLAUDE.md` on 2026-09-01 — **the file to change when a check moves**; `ARCHITECTURE.md` §8 is the same five jobs in summary | current |
+| `TESTING.md` | What CI runs and what it does not, the local pre-push list, why `check-facts.ts` and `verify-page-metadata.ts` are deliberately outside CI, and the two guards that read as correct while gating nothing. Split out of the root `CLAUDE.md` on 2026-09-01 — **the file to change when a check moves**; `ARCHITECTURE.md` §8 is the same CI steps in summary | current |
 | `QA_REPORT_FIXES.md` | Item-by-item response to the April 2026 external QA sweep | historical record |
 | `batch-import-mentors-2026.md` | The 2026-03-19 one-off import of 25 pre-approved mentors | historical record |
 

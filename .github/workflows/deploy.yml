@@ -4,13 +4,30 @@ on:
   push:
     branches: [main]
 
+# Only the newest commit on `main` needs to reach production, and a superseded
+# build is pure cost: 20% of the deploys measured over 2026-08-13..09-01 (28 of
+# 137) were still running when a later push arrived, and one burst on 08-30 ran
+# eight full production builds inside sixty seconds. Cancelling is safe here
+# because the run that supersedes one deploys the newer commit anyway.
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   VERCEL_ORG_ID: team_B067BUpWFoVPBxfQ0TWllunK
   VERCEL_PROJECT_ID: prj_DVjZnBzzL4tFpc5VME7bY6Q6wtAm
+  # Pinned, not `latest`: `latest` re-resolved on every run, so the CLI could
+  # change under a deploy without a commit, and it defeats the cache below.
+  VERCEL_CLI_VERSION: '59.10.0'
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    # Was the GitHub default of 360 minutes. One hung build at that ceiling is
+    # 18% of the org's monthly Actions allowance. The worst legitimate case is
+    # the font retry below — three builds plus two 60s waits, about nine
+    # minutes — so 15 leaves headroom and still fails fast on a hang.
+    timeout-minutes: 15
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -26,30 +43,42 @@ jobs:
           node-version: '22'
           cache: 'pnpm'
 
-      - name: Install Vercel CLI
-        run: npm install -g vercel@latest
-
-      # `vercel build` runs `next build` in this working directory, so Next.js
-      # picks up `.next/cache` from here. Keyed on the lockfile plus every
-      # TS/TSX source so a source change still restores the previous cache via
-      # `restore-keys` instead of missing outright.
-      #
-      # What this actually restores, measured 2026-08-15: `.tsbuildinfo` (the
-      # incremental tsc state), the telemetry `config.json`, and the image
-      # optimiser folder — ~180 KB compressed, nothing else. There is no
-      # Turbopack compile cache in here because `turbopackPersistentCaching` is
-      # off, no webpack cache because the build is Turbopack, and **no font
-      # data**: `next/font/google` under Turbopack lives in Rust
-      # (`next_core::next_font::google`) and re-fetches from Google on every
-      # build with no on-disk cache. The 2026-08-13 font 404 was blamed on this
-      # step; it could not have been the cause, and the step is left alone.
-      - name: Restore Next.js build cache
+      # `npm install -g vercel@latest` spent 22s re-downloading the CLI on every
+      # one of ~216 monthly runs. Cached against the pinned version above, a hit
+      # costs about two seconds; bumping VERCEL_CLI_VERSION invalidates it.
+      - name: Cache Vercel CLI
         uses: actions/cache@v4
         with:
-          path: .next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('pnpm-lock.yaml') }}-${{ hashFiles('**/*.ts', '**/*.tsx') }}
-          restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('pnpm-lock.yaml') }}-
+          path: ~/.npm-global
+          key: vercel-cli-${{ env.VERCEL_CLI_VERSION }}
+
+      - name: Install Vercel CLI
+        run: |
+          npm config set prefix "$HOME/.npm-global"
+          echo "$HOME/.npm-global/bin" >> "$GITHUB_PATH"
+          export PATH="$HOME/.npm-global/bin:$PATH"
+          if [ "$(vercel --version 2>/dev/null)" != "$VERCEL_CLI_VERSION" ]; then
+            npm install -g "vercel@$VERCEL_CLI_VERSION"
+          fi
+
+      # There is deliberately NO `.next/cache` restore here any more.
+      #
+      # There was one until 2026-09-01, and the comment it carried had already
+      # measured why it could not work: `next/font/google` under Turbopack lives
+      # in Rust and re-fetches from Google on every build with no on-disk cache,
+      # `turbopackPersistentCaching` is off so there is no compile cache, and the
+      # build is Turbopack so there is no webpack cache either. What it actually
+      # restored was `.tsbuildinfo`, the telemetry config and the image optimiser
+      # folder — about 180 KB, none of which speeds up a build.
+      #
+      # That comment ended "the step is left alone", but it was defending the
+      # step against the wrong charge: it was blamed for the 2026-08-13 font 404
+      # and it was innocent of that. Innocent is not the same as useful. Measured
+      # over the same run, it cost 3s to restore and 15s to upload, every run —
+      # and 18s is what moved this job from 209s to under 180s, i.e. from four
+      # billed minutes to three, on a plan the org was already 30% over.
+      #
+      # If you are tempted to add it back, measure what comes out of it first.
 
       - name: Pull Vercel Environment
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
