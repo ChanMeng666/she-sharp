@@ -112,7 +112,7 @@ import { TZDate } from "@date-fns/tz";
 
 import { getAllEvents } from "../../lib/data/events";
 import { listEvents, type HumanitixEvent } from "../../lib/humanitix/client";
-import { hashEmail } from "../email/suppression";
+import { hashEmail, loadSuppressionHashes } from "../email/suppression";
 import { extractHumanitixSlug, HUMANITIX_HOST, indexListings } from "./listing-slug";
 import { fetchOrders, OPTIN_EXPORT_FIELDS } from "./orders-api";
 import { selectOptinOrders, toOptinCsv, type SelectResult } from "./optin-orders";
@@ -501,9 +501,16 @@ async function main(argv: string[]): Promise<number> {
   const earliestTick = selection.rows[0]?.["Order completed"] ?? null;
   const historic = latestTick !== null && latestTick < LIVE_OPTIN_ERA_START;
 
+  // The committed register is a plain file read — no database, no network — so
+  // the run can state the ACTUAL yield of this export rather than leaving the
+  // operator to discover it two commands later. An address on the register can
+  // never be imported: import-optin-subscribers.ts consults both registers.
+  const register = loadSuppressionHashes();
+  const suppressed = selection.hashes.filter((hash) => register.has(hash.toLowerCase())).length;
+
   const report = buildReport({
     options, listing, listingSlug, via, eventDateNz, pull, selection,
-    earliestTick, latestTick, historic,
+    earliestTick, latestTick, historic, suppressed,
   });
 
   if (!options.json) for (const line of report.lines) console.log(line);
@@ -577,7 +584,9 @@ async function main(argv: string[]): Promise<number> {
   const metaPath = `${csvPath.slice(0, -4)}.meta.json`;
 
   const nextCommand = buildNextCommand({
-    csvPath, listing, eventDateNz, listingSlug, partial: options.since !== null,
+    csvPath, listing, eventDateNz, listingSlug,
+    partial: options.since !== null,
+    historic, suppressed, rows: selection.rows.length,
   });
 
   const meta = {
@@ -589,6 +598,9 @@ async function main(argv: string[]): Promise<number> {
     since: options.since,
     requests: pull.requests,
     counts: selection.counts,
+    historic,
+    suppressed,
+    expectedNewSubscribers: selection.rows.length - suppressed,
     csvSha256,
     nextCommand,
   };
@@ -645,6 +657,8 @@ interface ReportInput {
   earliestTick: string | null;
   latestTick: string | null;
   historic: boolean;
+  /** Rows whose address is already on the committed suppression register. */
+  suppressed: number;
 }
 
 /**
@@ -700,6 +714,29 @@ function buildReport(input: ReportInput): { lines: string[]; data: Record<string
   if (input.latestTick) lines.push(`  Latest tick           ${input.latestTick}`);
   lines.push("");
 
+  // The expected yield, stated BEFORE the import is run rather than discovered
+  // after it. An address on the committed register can never be imported —
+  // import-optin-subscribers.ts consults it and the runtime email_optouts table
+  // — so a row count is not a yield, and the difference is the whole reason
+  // backfilling historic ticks is usually not worth doing.
+  const expected = selection.rows.length - input.suppressed;
+  lines.push(`  On the suppression register  ${input.suppressed} of ${selection.rows.length} row(s) — these can NEVER be imported`);
+  lines.push(`  EXPECTED NEW SUBSCRIBERS     at most ${expected}, before the runtime opt-out table`);
+  lines.push("    and Humanitix's per-event unsubscriber list narrow it further.");
+  lines.push("");
+
+  if (input.historic) {
+    lines.push(`  *** HISTORIC EXPORT — every tick predates ${LIVE_OPTIN_ERA_START} ***`);
+    lines.push("  These are 2020-2022 ticks. Across the whole account, of the 97 historical");
+    lines.push("  opt-ins not already on the list, 89 are on the committed suppression register");
+    lines.push("  and only 8 are importable — and all 8 are from 2026. The line above is this");
+    lines.push("  event's own share of that.");
+    lines.push("  It also raises \"they ticked in 2021 and did not tick in 2026 — which answer");
+    lines.push("  stands?\", which this tooling does not answer. You passed --allow-historic,");
+    lines.push("  so you are asserting you have decided.");
+    lines.push("");
+  }
+
   if (selection.hashes.length > 0) {
     lines.push("  Rows (truncated sha256 of each address — no address is ever printed):");
     for (const hash of selection.hashes.slice(0, 12)) lines.push(`    ${hash.slice(0, 12)}…`);
@@ -723,6 +760,8 @@ function buildReport(input: ReportInput): { lines: string[]; data: Record<string
       earliestTick: input.earliestTick,
       latestTick: input.latestTick,
       historic: input.historic,
+      suppressed: input.suppressed,
+      expectedNewSubscribers: expected,
       hashes: selection.hashes.map((hash) => hash.slice(0, 12)),
     },
   };
@@ -744,6 +783,9 @@ function buildNextCommand(input: {
   eventDateNz: string | null;
   listingSlug: string;
   partial: boolean;
+  historic: boolean;
+  suppressed: number;
+  rows: number;
 }): { lines: string[]; normalize: string; import: string } {
   const key = input.listingSlug.slice(0, 40);
   const date = input.eventDateNz ?? "YYYY-MM-DD";
@@ -771,6 +813,18 @@ function buildNextCommand(input: {
       "",
       "  WARNING: --since was used, so this CSV is a PARTIAL view of the event's",
       "  opt-ins. Do not run the import from it unless you meant to import a subset."
+    );
+  }
+  // Repeated here as well as in the report because THIS is the block somebody
+  // copies from. A yield stated forty lines up the scrollback is a yield nobody
+  // reads before pasting the command.
+  if (input.historic) {
+    lines.push(
+      "",
+      `  WARNING: historic export. ${input.suppressed} of ${input.rows} row(s) are already on`,
+      `  the suppression register and cannot be imported, so this yields at most`,
+      `  ${input.rows - input.suppressed} new subscriber(s) — likely fewer. Across the account the`,
+      "  equivalent figures are 89 of 97 suppressed, 8 importable."
     );
   }
   return { lines, normalize, import: importCmd };
