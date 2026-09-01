@@ -597,8 +597,30 @@ never asked, and Humanitix exposes no per-event record of the setting. For the
 purpose of this section the distinction does not matter — either way nobody
 consented — but do not quote the column as "3,921 people declined".
 
-**Set the switch on every new event.** It costs one click, and four years of
-events were run without it.
+**Set the switch on every new event, and set it before the page goes live.** It
+costs one click, and four years of events were run without it.
+
+**Turning it on late costs almost as much as leaving it off.** The September
+2026 Les Mills event opened for sale on **2026-08-04** and the switch went on
+**2026-08-26**: 34 orders were placed before anyone was asked, and those people
+cannot be added to the list and cannot be asked again. Everyone asked afterwards
+ticked at about 40%, so those 34 orders are roughly thirteen consented
+subscribers that no longer exist.
+
+**Verify it rather than remembering it**, once the first orders land and again a
+week out:
+
+```bash
+npx tsx scripts/humanitix/check-optin-switch.ts            # every upcoming event
+npx tsx scripts/humanitix/check-optin-switch.ts --slug <site-event-slug>
+```
+
+It enumerates from the live account rather than from this repo's event records,
+deliberately — the event whose switch nobody set is precisely the one nobody has
+added to the site yet. **One tick proves the switch is on; no number of zeros
+ever proves it is off**, so it reports `NO EVIDENCE YET` below ten orders rather
+than calling that clean, and it prints the first tick's date beside the first
+order's so a late switch shows up as the thing it is.
 
 It matters more than it looks, because it is the only place She Sharp collects a
 consent record that is **per person, timestamped, and made by the person
@@ -616,13 +638,35 @@ not evidence that this box was ticked. Only the orders CSV and
 `organiserMailListOptIn` are. See `docs/development/MAILCHIMP_ARCHIVE.md` and
 `../deployment/HUMANITIX_INTEGRATION_SHUTDOWN.md`.
 
-Getting those ticks into She Sharp's own consent record is a separate, manual
-step: export **reports → orders → Export CSV** from the Humanitix console, run
-it through `scripts/email/normalize-recipients.ts --for-import`, then
-`scripts/email/import-optin-subscribers.ts` (dry run by default). Nothing does
-this automatically, and nothing should — `lib/humanitix/client.ts` deliberately
+Getting those ticks into She Sharp's own consent record takes two steps, and
+only the first of them is scripted:
+
+```bash
+npx tsx scripts/humanitix/export-optins.ts --slug <site-event-slug>   # dry run
+npx tsx scripts/humanitix/export-optins.ts --slug <site-event-slug> --write
+# then the two commands it prints, the second of which needs --apply
+```
+
+`export-optins.ts` pulls that one event's orders, keeps only the completed
+orders carrying a tick, and writes `tmp/humanitix/optins-<slug>-<date>.csv` in
+the exact column shape `normalize-recipients.ts` already detects — so the rest
+of the chain is unchanged. It reports counts and truncated hashes only, states
+how many of the rows are already on the suppression register **before** you run
+the import, and refuses outright to write outside `tmp/`. The console's
+**reports → orders → Export CSV** still works and is the documented fallback.
+
+**The import is still not automatic, and still should not be.** `--apply`
+demands `--event-unsubscribers-checked` because Humanitix keeps a per-event
+unsubscriber list that no API and no export reaches — a person has to open the
+console and look. That gate is the reason this is two steps rather than one.
+
+**The PII boundary has not moved.** `lib/humanitix/client.ts` still deliberately
 implements no `/orders` call, because that endpoint carries names, addresses and
-live access codes.
+live access codes, and a function that does not exist cannot be imported from
+`app/` by mistake. The new capability lives in `scripts/humanitix/orders-api.ts`
+— under `scripts/`, which nothing in `app/`, `lib/` or `components/` imports —
+and it reads the endpoint through a **required** field allowlist, so the access
+code and the postal address never enter the process at all.
 
 ### The channel, and its first message
 
@@ -1379,7 +1423,8 @@ reaches a projector or a poster.
 | T-6w | you hold the `she-sharp-slack-archive` checkout — **otherwise skip; the sync is complete without it** | its "Not part of a sync" archive refresh | archive holder | skill | the private archive level with Slack — **committed there, never here** |
 | T-5w | date, venue, title confirmed **in the event record** | `/make-event-poster` | Marketing | skill | `poster`, `social`, `story`, `square`, `humanitix`, `email` |
 | T-5w | the poster set exists | send it to the partner and get an answer | Event Manager | human | approval, or one revision round |
-| T-4w | approved artwork, and a banner at 3200×1600 | build the Humanitix page and the access codes; **switch on the mailing-list opt-in** (per event, defaults off) | Event Manager | human | a live ticket page |
+| T-4w | approved artwork, and a banner at 3200×1600 | build the Humanitix page and the access codes; **switch on the mailing-list opt-in** (per event, defaults off) — before the page goes live, not after | Event Manager | human | a live ticket page |
+| T-4w, once the first orders land | the ticket page is live | `npx tsx scripts/humanitix/check-optin-switch.ts --slug <slug>` | developer | script | proof the switch is on, or a `LATE SWITCH` line naming what was already lost |
 | T-4w | every speaker has a headshot in the event record | `/make-event-poster --speaker all --lineup` | Marketing | skill | one graphic per person + the line-up tile |
 | T-4w → T-1w | the graphics exist | post the campaign, one speaker a week | marketing | human | the campaign |
 | T-6w+ / T-3w / T-1w | the mailing list has consented contacts | `/promote-event --stage save-the-date \| line-up \| last-call` → `/email-the-community`, **once per stage** | Comms | **blocked** | up to three batch sends, each separately approved — there is no scheduler, and three marketing sends a month is the cap across every skill |
@@ -1391,6 +1436,7 @@ reaches a projector or a poster.
 | **T+0** | — | project the deck; the `/f/<code>` QR is on the feedback slide | whoever is clicking | human | — |
 | T+1d | a feedback form URL, the album if it exists, and **under 14 days since the event ended** | the thank-you in **Humanitix -> Email campaigns** | Events or Comms | **human, outside this repo** | nothing here |
 | T+3d | — | **nothing — it happens by itself** | — | automatic | the feedback digest in Slack |
+| T+3d | the event has stopped selling | `scripts/humanitix/export-optins.ts --slug <slug> --write`, then the two commands it prints | developer, plus a person to read the console's unsubscriber list | script + **human gate** | the event's checkout ticks in `newsletter_subscribers` — **skip an event and those ticks are gone; Humanitix keeps no history to go back for** |
 | T+1w | the photo album URL is known | post it in `#website-team`; set `galleryUrl`; `build-event-archive.mts --slug <slug>` | Event Manager, then developer | human + skill | a past-event page with its photographs |
 | T+2w | — | `/monthly-newsletter` | developer | skill | the event in the month's issue |
 | — | a fresh ticketing export and a signed-off crosswalk | attendance figures | developer | skill | `attendees` and `checkedIn` on the page |

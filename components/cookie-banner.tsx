@@ -26,46 +26,82 @@ const defaultPreferences: CookiePreferences = {
   marketing: false,
 };
 
+/**
+ * Reads the stored consent, treating an unreadable store as "never answered".
+ *
+ * **Every `localStorage` access in this file has to be guarded, and the reason
+ * is worse than a lost preference.** Accessing `localStorage` does not merely
+ * return null when a browser has site data blocked — it *throws*, and Chrome
+ * throws `QuotaExceededError` rather than a `SecurityError`, so it does not
+ * look like a permissions problem at the call site. Until 2026-09-01 the read
+ * below was unguarded inside an effect, and `CookieBanner` is rendered from
+ * `app/layout.tsx` — the ROOT layout. A throw there unmounted the whole tree,
+ * so **every page on the site rendered blank**, `/sign-in` included. It was
+ * found while testing an unrelated component's storage paths.
+ *
+ * The people it broke the site for are exactly the people this banner exists to
+ * serve: anyone with site data blocked in Chrome, under an enterprise policy,
+ * or running a privacy extension.
+ *
+ * @returns The raw stored value, or null when absent OR unreadable.
+ */
+function readConsent(): string | null {
+  try {
+    return localStorage.getItem("cookie-consent");
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Records a consent choice, and does not care whether it was actually stored.
+ *
+ * A visitor whose browser refuses to store the answer still made a choice, and
+ * the banner still has to close — so the caller dismisses it either way. The
+ * cost is that the banner asks again on the next page load for that visitor,
+ * which is the honest outcome: we genuinely cannot remember what they said.
+ * Silently failing to close would be worse, and throwing would be worse again.
+ *
+ * @param preferences The choice the visitor made.
+ */
+function writeConsent(preferences: CookiePreferences): void {
+  try {
+    localStorage.setItem("cookie-consent", JSON.stringify(preferences));
+    localStorage.setItem("cookie-consent-date", new Date().toISOString());
+  } catch {
+    // Nothing to do and nothing to report: see the note above.
+  }
+}
+
 export function CookieBanner() {
   const [isVisible, setIsVisible] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [preferences, setPreferences] = useState<CookiePreferences>(defaultPreferences);
 
   useEffect(() => {
-    // Check if user has already accepted cookies
-    const cookieConsent = localStorage.getItem("cookie-consent");
+    // Check if user has already accepted cookies. An unreadable store reads as
+    // "not yet answered", so the banner asks rather than assuming consent.
+    const cookieConsent = readConsent();
     if (!cookieConsent) {
       // Show banner after a short delay
-      setTimeout(() => setIsVisible(true), 1000);
+      const timer = setTimeout(() => setIsVisible(true), 1000);
+      return () => clearTimeout(timer);
     }
   }, []);
 
   const acceptAll = () => {
-    const allAccepted = {
-      necessary: true,
-      analytics: true,
-      marketing: true,
-    };
-    localStorage.setItem("cookie-consent", JSON.stringify(allAccepted));
-    localStorage.setItem("cookie-consent-date", new Date().toISOString());
+    writeConsent({ necessary: true, analytics: true, marketing: true });
     setIsVisible(false);
   };
 
   const acceptSelected = () => {
-    localStorage.setItem("cookie-consent", JSON.stringify(preferences));
-    localStorage.setItem("cookie-consent-date", new Date().toISOString());
+    writeConsent(preferences);
     setIsVisible(false);
     setShowSettings(false);
   };
 
   const rejectAll = () => {
-    const onlyNecessary = {
-      necessary: true,
-      analytics: false,
-      marketing: false,
-    };
-    localStorage.setItem("cookie-consent", JSON.stringify(onlyNecessary));
-    localStorage.setItem("cookie-consent-date", new Date().toISOString());
+    writeConsent({ necessary: true, analytics: false, marketing: false });
     setIsVisible(false);
   };
 
