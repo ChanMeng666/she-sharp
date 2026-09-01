@@ -138,12 +138,13 @@ private vault or the live web.
 | `scripts/events/poster-speaker.test.ts` | poster layout — **and it was red** |
 
 The first two are the rules this repository is most careful about, and they were
-tested by files that gated nothing. Seven are now steps in the `verify` job.
-Each was re-run with every secret unset first, because that job has none, and
-they are steps rather than a job for the reason above: a step costs seconds, a
-job costs a whole billed minute.
+tested by files that gated nothing. **All eight are now steps in the `verify`
+job** — seven were already green, and the eighth is below. Each was re-run with
+every secret unset first, because that job has none, and they are steps rather
+than a job for the reason above: a step costs seconds, a job costs a whole
+billed minute.
 
-### The eighth: `poster-speaker.test.ts` fails on `main`
+### The eighth: `poster-speaker.test.ts` was failing on `main`
 
 ```
 not ok - the line-up carries a panel and refuses a crowd
@@ -158,13 +159,18 @@ grew from four speakers to five, the builder correctly laid out five, and the
 assertion's hardcoded `4` went stale.
 
 The property the check is *for* is "everyone on the roster gets a face, nobody
-is silently cropped", which is `copy.length` and never drifts. The test's own
+is silently cropped", which is `copy.length` and never drifts. It now asserts
+that, the two `assert.throws` beside it are untouched, and the fix was verified
+by breaking it — asserting `copy.length - 1` turns the step red. The test's own
 header predicted this exact shape of failure — *"every one of these failures
 arrives as a data change, not a code change"* — and it was right; it simply had
 nowhere to report it.
 
 **A committed test that nothing runs is worse than no test**: it reads as
-coverage, and it rots without saying so.
+coverage, and it rots without saying so. When adding one, add its step in the
+same commit — and if it genuinely needs a database, a running site, the vault or
+the network, add it to the local list above instead, with the reason. Those are
+the only two homes.
 
 ## A guard is not verified until you have broken the thing it guards
 

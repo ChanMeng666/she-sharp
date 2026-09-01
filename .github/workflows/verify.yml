@@ -301,11 +301,13 @@ jobs:
       # the consent record. They were tested and the tests gated nothing.
       #
       # That is not free to leave alone. The eighth orphan,
-      # `scripts/events/poster-speaker.test.ts`, is RED on main and has been for
-      # as long as nobody looked — which is the whole argument for this block.
-      # It is deliberately NOT added here: a red step would make this job red
-      # from the first run. Its diagnosis is in `docs/development/TESTING.md`.
-      # The seven below are the ones that were already green.
+      # `scripts/events/poster-speaker.test.ts`, was RED on main and had been for
+      # as long as nobody looked — which is the whole argument for this block. It
+      # was not a layout limit and not bad data: the Les Mills roster it builds
+      # from grew from four speakers to five, `buildLineup()` correctly laid out
+      # five, and the assertion's hardcoded `4` went stale. It now asserts one
+      # face per person on the roster, which is the property it was for, and it
+      # is green and included below.
       #
       # Each was run with every secret unset before being added, because this
       # job has none. They are steps in THIS job rather than a job of their own
@@ -330,3 +332,7 @@ jobs:
         run: |
           npx tsx lib/email/newsletter-reviewers.test.ts
           npx tsx .claude/skills/monthly-newsletter/scripts/issue-ledger.test.ts
+
+      - name: Verify the speaker poster layouts
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npx tsx scripts/events/poster-speaker.test.ts
