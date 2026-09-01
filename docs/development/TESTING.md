@@ -66,8 +66,10 @@ the shared checkout for free, which is why they were all put there: the newslett
 email-safe covers, the poster fonts (`scripts/events/fonts.test.ts`), event- and
 poster-asset ownership, event status, the two docs-page checks, the hackathon
 facts, the two Slack read-state checks, the event-announcement stages, the
-marketing frequency cap, `scripts/mailchimp/archive-guard.test.ts`, and the
-Humanitix and Mailchimp archive checks.
+marketing frequency cap, `scripts/mailchimp/archive-guard.test.ts`, the
+Humanitix opt-in exporter's column contract and field allowlist
+(`scripts/humanitix/optin-orders.test.ts`), and the Humanitix and Mailchimp
+archive checks.
 
 Those last two are **leak guards** as much as data checks — they fail the build
 if an address, an IP or a code-shaped value reaches `lib/data/json/`.
@@ -76,6 +78,7 @@ if an address, an IP or a code-shaped value reaches `lib/data/json/`.
 
 ```bash
 npx tsx lib/email/hardening.test.ts       # unsubscribe tokens, senders, gates, Svix
+npx tsx lib/email/events.test.ts          # delivery telemetry — needs POSTGRES_URL to LOAD, not to run
 npx tsx lib/deck/deck.test.ts             # slide schema, copy + rhythm, feedback codes
 npx tsx lib/data/sponsors.test.ts         # sponsor registry
 for f in lib/newsletter/*.test.ts; do npx tsx "$f"; done
@@ -85,7 +88,25 @@ npx tsx scripts/deck/lint-deck.ts [slug]  # organiser-readable deck report
 npx tsx scripts/verify-image-paths.ts
 npx tsx scripts/mailchimp/verify-export.ts --export 2026-08-17   # needs the vault
 npx tsx scripts/seo/verify-page-metadata.ts --base http://localhost:3100
+npx tsx scripts/humanitix/check-optin-switch.ts   # needs HUMANITIX_API_KEY
 ```
+
+### Why `check-optin-switch.ts` is not in CI, and not in a hook either
+
+It needs `HUMANITIX_API_KEY` and a live round-trip, and `verify.yml` is one
+offline job with no secrets. There is no pre-push hook in this repo to wire it
+into either — `.githooks/` holds only `install.sh` and a `pre-commit` secrets
+grep — so it is documented rather than automated. **Run it when an event goes on
+sale**, which is the only window in which the finding is still fixable.
+
+Its exit codes deliberately diverge from `verify-live-events.ts`, which uses 1
+for both "could not run" and "--strict found a problem". This one reserves **1
+for "could not run" and uses 2 for a finding**, because the thing it finds is
+silent: an unset opt-in switch collects nothing and reports nothing, so
+"somebody else's API is down" must never produce the same exit code as "the
+switch is off". Its offline half — the `/orders` field allowlist — is checked in
+CI by `scripts/humanitix/optin-orders.test.ts`, and by `--self-test` for anyone
+about to trust the live run.
 
 ### Why `check-facts.ts` is deliberately not in CI
 
@@ -115,6 +136,87 @@ them, so this one can only ever be a local check. Since 2026-09-01 the vault is
 not in this repo at all — `scripts/mailchimp/vault.ts` resolves
 `MAILCHIMP_VAULT_DIR` first, then an in-repo `private/mailchimp/` if one exists,
 then a sibling `she-sharp-slack-archive` checkout.
+
+## The tests nobody was running
+
+Audited 2026-09-01, because a teammate reached for a live database row to
+exercise a branch that a committed test already covered. Of the **34** committed
+`*.test.ts` files, **19** were not steps in `verify.yml`. Eleven of those are the
+local list above and belong there — they want a database, a running site, the
+private vault or the live web.
+
+**Eight were in neither list.** Nothing ran them, on any machine, ever:
+
+| File | What it decides |
+|---|---|
+| `scripts/email/mailable.test.ts` | `selectMailable()` — **who may be sent a marketing email** |
+| `scripts/email/optin-rows.test.ts` | which rows a route-2 import may write into the consent record |
+| `scripts/email/restrict-hashes.test.ts` | narrowing a recipients file by hash |
+| `scripts/email/published-addresses.test.ts` | every address the site prints resolves to a real mailbox |
+| `lib/email/events.test.ts` | delivery telemetry — **needs a database-shaped env; now in the local list, not CI** |
+| `lib/email/newsletter-reviewers.test.ts` | the reviewer roster |
+| `.claude/skills/monthly-newsletter/scripts/issue-ledger.test.ts` | the approval chain |
+| `scripts/events/poster-speaker.test.ts` | poster layout — **and it was red** |
+
+The first two are the rules this repository is most careful about, and they were
+tested by files that gated nothing. **Seven are now steps in the `verify` job**;
+the eighth, `lib/email/events.test.ts`, joins the local list above. They are
+steps rather than a job for the reason given earlier: a step costs seconds, a
+job costs a whole billed minute.
+
+### Checking "does this run without secrets?" with `env -u` does not check it
+
+The seven were first cleared by re-running them with every secret unset:
+
+```bash
+env -u POSTGRES_URL -u DATABASE_URL -u RESEND_API_KEY … npx tsx <file>   # WRONG
+```
+
+All eight passed, and one then failed in CI on `POSTGRES_URL environment
+variable is not set`. **`lib/db/drizzle.ts` calls `dotenv.config()` itself**, so
+it re-read `.env` off disk and put the variable straight back. The check
+reported green for a condition it had never created — the same shape as the two
+gates below, and as the marker-keyed checks that inherit an earlier pass's blind
+spot.
+
+What actually reproduces CI is removing the file:
+
+```bash
+mv .env .env.off && npx tsx <file>; mv .env.off .env
+```
+
+Under that, exactly one of the eight failed — the honest answer, and the reason
+`events.test.ts` is a local check. Its assertions are pure, but importing
+`lib/email/events.ts` pulls in `lib/db/drizzle.ts`, which throws at module load
+without a connection string.
+
+### The eighth: `poster-speaker.test.ts` was failing on `main`
+
+```
+not ok - the line-up carries a panel and refuses a crowd
+    5 !== 4
+```
+
+It is **not** a layout limit and **not** bad data. `buildLineup()` in
+`scripts/events/poster-speaker-formats.ts` places one portrait per person and
+throws only below two people or when the faces would be smaller than a
+thumbnail — there is no cap at four. The Les Mills roster the test builds from
+grew from four speakers to five, the builder correctly laid out five, and the
+assertion's hardcoded `4` went stale.
+
+The property the check is *for* is "everyone on the roster gets a face, nobody
+is silently cropped", which is `copy.length` and never drifts. It now asserts
+that, the two `assert.throws` beside it are untouched, and the fix was verified
+by breaking it — asserting `copy.length - 1` turns the step red. The test's own
+header predicted this exact shape of failure — *"every one of these failures
+arrives as a data change, not a code change"* — and it was right; it simply had
+nowhere to report it.
+
+**A committed test that nothing runs is worse than no test**: it reads as
+coverage, and it rots without saying so. When adding one, add its step in the
+same commit — and if it genuinely needs a database, a running site, the vault or
+the network, add it to the local list above instead, with the reason. Those are
+the only two homes.
 
 ## A guard is not verified until you have broken the thing it guards
 

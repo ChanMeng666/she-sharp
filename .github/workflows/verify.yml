@@ -241,6 +241,19 @@ jobs:
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npx tsx lib/data/humanitix.test.ts
 
+      # Also shares this checkout — pure functions over synthetic order rows, no
+      # key and no network, which is why it is a step here rather than a job.
+      # It guards two things that fail SILENTLY: the six CSV headers, which
+      # `normalize-recipients.ts` and `optin-rows.ts` each locate with a
+      # `headers.find(...)` over an alias list, so a seventh column matching
+      # either predicate would change which cell is read as the consent answer
+      # or the consent date without anything throwing; and the `/orders` field
+      # allowlist, whose reviver is the only reason a live access code, a mobile
+      # and a postal address never enter the exporter's memory.
+      - name: Verify the Humanitix opt-in exporter
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npx tsx scripts/humanitix/optin-orders.test.ts
+
       # Also shares this checkout, and the same argument applies harder. The
       # Humanitix export contains addresses; the Mailchimp audience export is
       # nothing but addresses — 3,689 of them, with names, phone numbers and the
@@ -285,6 +298,60 @@ jobs:
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npx tsx scripts/mailchimp/archive-guard.test.ts
 
+      # ---------------------------------------------------------------------
+      # The seven tests nothing was running.
+      #
+      # On 2026-09-01 an audit of the 34 committed `*.test.ts` files found 19
+      # that `verify.yml` never mentions. Eleven of those are the documented
+      # local pre-push list in `docs/development/TESTING.md` — they want a
+      # database, a running site, the private vault or the live web, so CI is
+      # the wrong place for them and they stay out.
+      #
+      # The eight below that: in NEITHER list. Nothing ran them, ever, on any
+      # machine, and two of them are the rules this repository is most careful
+      # about — `selectMailable()` decides who may be sent a marketing email,
+      # and `optin-rows.ts` decides which rows a route-2 import may write into
+      # the consent record. They were tested and the tests gated nothing.
+      #
+      # That is not free to leave alone. The eighth orphan,
+      # `scripts/events/poster-speaker.test.ts`, was RED on main and had been for
+      # as long as nobody looked — which is the whole argument for this block. It
+      # was not a layout limit and not bad data: the Les Mills roster it builds
+      # from grew from four speakers to five, `buildLineup()` correctly laid out
+      # five, and the assertion's hardcoded `4` went stale. It now asserts one
+      # face per person on the roster, which is the property it was for, and it
+      # is green and included below.
+      #
+      # Each was run with every secret unset before being added, because this
+      # job has none. They are steps in THIS job rather than a job of their own
+      # for the reason the file already gives: Actions bills each job rounded up
+      # to the whole minute, so a step costs seconds and a job costs a minute.
+      # ---------------------------------------------------------------------
+      - name: Verify who may be mailed, and which rows an opt-in import may write
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: |
+          npx tsx scripts/email/mailable.test.ts
+          npx tsx scripts/email/optin-rows.test.ts
+          npx tsx scripts/email/restrict-hashes.test.ts
+
+      # `lib/email/events.test.ts` is NOT here, and the reason is worth the line.
+      # It imports `lib/email/events.ts`, which pulls in `lib/db/drizzle.ts`,
+      # which throws on a missing `POSTGRES_URL` at module load — so it needs a
+      # database-shaped environment even though its assertions are pure. It is
+      # in the local pre-push list in `docs/development/TESTING.md` instead.
+      - name: Verify the published sender addresses
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npx tsx scripts/email/published-addresses.test.ts
+
+      - name: Verify the newsletter approval chain
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: |
+          npx tsx lib/email/newsletter-reviewers.test.ts
+          npx tsx .claude/skills/monthly-newsletter/scripts/issue-ledger.test.ts
+
+      - name: Verify the speaker poster layouts
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npx tsx scripts/events/poster-speaker.test.ts
       # Pure module, no database and no network — deliberately so it can be a
       # step here. `lib/email/hardening.test.ts` cannot be: reaching
       # `service.ts` pulls in `lib/db/drizzle.ts`, which throws at module load

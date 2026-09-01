@@ -8,6 +8,7 @@ import { PhotoDividerSection } from "@/components/home/photo-divider-section";
 import { ProgramsSection } from "@/components/home/programs-section";
 import { VideoShowcaseSection } from "@/components/home/video-showcase-section";
 import { HomeTestimonialsSection } from "@/components/home/testimonials-section";
+import { NewsletterCTASection } from "@/components/home/newsletter-cta-section";
 import { SponsorsSection } from "@/components/home/sponsors-section";
 import { CTASection } from "@/components/home/CTA-section";
 import { GeoHead, GEO_INSTRUCTIONS } from "@/components/seo/geo-head";
@@ -35,6 +36,7 @@ export default function HomePage() {
       <ProgramsSection />
       <VideoShowcaseSection />
       <HomeTestimonialsSection />
+      <NewsletterCTASection />
       <SponsorsSection />
       <CTASection />
     </div>

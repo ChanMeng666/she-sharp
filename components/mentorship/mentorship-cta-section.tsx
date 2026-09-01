@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { NewsletterSignup } from "@/components/newsletter/newsletter-signup";
 import { PhotoBackdrop } from "@/components/ui/photo-backdrop";
 import { MENTORSHIP_CTA_BACKDROP, photo } from "@/lib/data/site-photos";
 import { isMentorshipOpen } from "@/lib/config/mentorship";
+import { cn } from "@/lib/utils";
 
 export function MentorshipCTASection() {
   const applicationsOpen = isMentorshipOpen();
@@ -42,7 +43,15 @@ export function MentorshipCTASection() {
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 shrink-0">
+          {/* The width is for the form only: an inline field has no natural
+              width to size to, while the two buttons did and their layout must
+              not change when applications reopen. */}
+          <div
+            className={cn(
+              "flex flex-col sm:flex-row gap-4 shrink-0",
+              !applicationsOpen && "lg:w-[26rem]",
+            )}
+          >
             {applicationsOpen ? (
               <>
                 <Button variant="brand" size="lg" asChild>
@@ -57,12 +66,26 @@ export function MentorshipCTASection() {
                 </Button>
               </>
             ) : (
-              <Button variant="brand" size="lg" asChild>
-                <Link href="/newsletter/subscribe">
-                  <Mail className="h-5 w-5" />
-                  Subscribe to Newsletter
-                </Link>
-              </Button>
+              /*
+                While applications are closed the copy beside this already says
+                "subscribe to our newsletter for application announcements", so
+                the field belongs here rather than a link to it — this is the
+                moment somebody who came to apply and cannot has a reason to
+                leave an address.
+
+                This is the ONLY one of the four `!applicationsOpen` newsletter
+                CTAs in the mentorship section that becomes a form. The other
+                three (`mentorship/page.tsx`, `how-it-works-section.tsx`,
+                `become-cta-section.tsx`) sit behind the same condition and can
+                appear on the same page; four forms on one page is not four
+                times the distribution, it is spam.
+              */
+              <NewsletterSignup
+                placement="mentorship"
+                tone="dark"
+                className="w-full"
+                labels={{ cta: "Keep me posted" }}
+              />
             )}
           </div>
         </div>

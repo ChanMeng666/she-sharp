@@ -135,6 +135,19 @@ file's. What the table *contains* is:
   data.
 - **Every row has `source = 'mailchimp-import'`.** The table has grown by exactly
   one mechanism so far.
+
+  **This is the figure most likely to be out of date, and it was measured for a
+  reason.** On 2026-09-01 it meant the website's own sign-up form had produced
+  *no subscribers at all*, over a period in which the Humanitix checkout tick-box
+  converted at about 40% — which is what prompted putting the form on eight
+  surfaces instead of one (`NEWSLETTER_SIGNUP_SURFACES.md`). Rows arriving from
+  the site carry `source = 'website-form'` and a `consentSource` naming the
+  placement, so the check that matters now is not "are they all
+  `mailchimp-import`" but **how many are not**:
+
+  ```sql
+  SELECT source, count(*) FROM newsletter_subscribers GROUP BY source;
+  ```
 - **1,545 carry a real `confirmedAt`**, taken from the 2026-08-17 export's
   `CONFIRM_TIME` column. **4 carry `null`** — imported from the Mailchimp
   Marketing API on 2026-08-30, which does not supply a usable `CONFIRM_TIME`

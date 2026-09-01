@@ -331,7 +331,16 @@ check("the line-up carries a panel and refuses a crowd", () => {
 
   const panel: LineupCopy = { heading: "Meet the Panel", people: copy };
   const layout = lineup.build(poster, panel, theme);
-  assert.equal(layout.portraits?.length, 4);
+  // One face per person on the roster — the property, not the count. This read
+  // `4` until 2026-09-01, which was the Les Mills line-up's size on the day it
+  // was written; the roster grew to five, `buildLineup()` correctly laid out
+  // five (it caps nobody — it throws below two, and again when the faces would
+  // be smaller than a thumbnail), and the assertion went stale. Nothing ran
+  // this file, so it had been failing for as long as nobody looked. Asserting
+  // the roster's own length is what "nobody is silently cropped" actually
+  // means, and it cannot drift with the data the way a literal does.
+  assert.equal(layout.portraits?.length, copy.length);
+  assert.ok(copy.length >= 2, "the trial event should have a real line-up to lay out");
 
   // The 2026 hackathon lists seventeen mentors. Cropping the group to fit would
   // post four faces and drop thirteen names without saying so.

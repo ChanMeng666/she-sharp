@@ -9,6 +9,7 @@ import {
   hasAnySpeakers,
   hasPhotos,
   hasSpecialSections,
+  isPastEvent,
   parseDateString,
 } from "@/lib/data/events";
 import {
@@ -29,6 +30,7 @@ import {
   EventPosters,
 } from "@/components/events/event-detail";
 import { EventCard } from "@/components/events/event-card";
+import { EventNewsletterCta } from "@/components/events/event-newsletter-cta";
 import { eventArchivePhotos } from "@/lib/data/event-archive-photos";
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
@@ -215,6 +217,13 @@ export default async function EventPage({ params }: EventPageProps) {
 
       {/* Info sections (resources, getting there, venue, key contact) */}
       <EventInfoSections event={event} />
+
+      {/*
+        Newsletter — after the practical detail, before the photography notice.
+        A reader who has got this far has finished with the event itself; on a
+        past page this is the only forward action the page has.
+      */}
+      <EventNewsletterCta isPast={isPastEvent(event)} />
 
       {/*
         Photography notice — on EVERY event page, upcoming or past. Attendees had

@@ -153,8 +153,21 @@ export const eventFeedbackSubmissions = pgTable('event_feedback_submissions', {
   // Ticking these expresses interest to She Sharp. It is explicitly NOT consent
   // to marketing email — the four-way consent gate in
   // `.claude/skills/update-mailing-list/references/consent-rules.md` governs the
-  // mailing list, and nothing in this public path may write to Resend. Someone
-  // acts on these by hand, through that skill.
+  // mailing list, and nothing in this public path may write to it. Someone acts
+  // on these by hand, through that skill.
+  //
+  // `interested_in_newsletter` has one extra thing true of it since the sign-up
+  // form reached the feedback success panel: after the feedback POST lands, the
+  // panel offers a real double opt-in, prefilled with the address typed above.
+  // That offer is a separate act — the attendee submits a second form, gets a
+  // confirmation email, and presses a button in it — and it lands in
+  // `newsletter_subscribers` with its own consent record naming the placement.
+  //
+  // The two are never joined. There is no key from this row to that one, on
+  // purpose: if they were joinable, a tick here would eventually be read as
+  // evidence of a subscription by somebody assembling a send list, and it is
+  // not. This column still means exactly what it meant before — someone said
+  // they were interested — and that is all it may ever be used for.
   interestedInMentorship: boolean('interested_in_mentorship').notNull().default(false),
   interestedInVolunteering: boolean('interested_in_volunteering').notNull().default(false),
   interestedInNewsletter: boolean('interested_in_newsletter').notNull().default(false),
