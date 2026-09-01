@@ -1269,6 +1269,14 @@ async function main(argv: string[]): Promise<number> {
   // --strict fails, and only on a `problem`: a venue string two people typed
   // differently is not a build failure, and a gate that fires on one gets muted
   // along with everything it would have caught.
+  //
+  // NOTE — this file uses 1 for BOTH "could not run" and "--strict found a
+  // problem". `scripts/humanitix/check-optin-switch.ts` deliberately diverges,
+  // reserving 1 for "could not run" and using 2 for a finding, because its
+  // finding is a silent one: an unset opt-in switch collects nothing and says
+  // nothing, so "somebody else's API is down" must never read the same as "the
+  // switch is off". The divergence is intentional; do not unify the two without
+  // reading that file's note.
   if (options.strict && ordered.some((finding) => finding.severity === "problem")) return 1;
   return 0;
 }

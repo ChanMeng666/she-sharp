@@ -387,9 +387,12 @@ export function judgeOptinSwitch(input: SwitchInput): SwitchJudgement {
       `${completeOrders} complete order(s) and not one tick. With the switch on, that is a ` +
         `${(0.9 ** completeOrders * 100).toFixed(1)}% coincidence at a pessimistic 10% rate.`
     );
+    // States the finding, not the remedy: whether the remedy is "go and turn it
+    // on" or "too late, learn from it" depends on whether the event has
+    // happened, which this pure function is deliberately not told.
     lines.push(
-      "Open the event in the Humanitix console and turn the checkout opt-in on. It costs " +
-        "one click, and four years of She Sharp events were run without it."
+      "The checkout opt-in switch was almost certainly never turned on for this event. " +
+        "It costs one click, and four years of She Sharp events were run without it."
     );
   } else {
     verdict = "WARN";
