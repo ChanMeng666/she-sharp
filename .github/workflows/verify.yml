@@ -5,8 +5,28 @@ on:
     branches: [main]
 
 jobs:
-  verify-image-paths:
+  # One job, not five. Every check below is offline and pure data, so they can
+  # all share a single checkout and a single `pnpm install` — and on a private
+  # repo that matters, because Actions bills EACH JOB rounded up to the next
+  # whole minute. Measured 2026-09-01: the five jobs this replaced did 147s of
+  # actual work behind 105s of duplicated setup (21s x 5) and billed
+  # 2+1+2+2+1 = 8 minutes; as one job the same work bills 3. Verify was 66% of
+  # this org's entire Actions spend while the org sat 30% over its 2,000-minute
+  # monthly allowance — and running out takes `Deploy to Vercel` down with it.
+  # Do not split this back into per-check jobs to make the checks list prettier;
+  # add a step instead.
+  #
+  # Every check step carries `if: ${{ !cancelled() && steps.install.outcome ==
+  # 'success' }}`, which is what buys back the one thing five jobs gave for
+  # free: one red check no longer hides the next, so a single run still reports
+  # every failure at once. Guarding on the install as well means a failed
+  # install skips the checks instead of printing 22 identical errors.
+  verify:
     runs-on: ubuntu-latest
+    # Was the GitHub default of 360 minutes, on all five jobs. A single hung run
+    # at that ceiling is 18% of the monthly allowance; this job measures under
+    # three minutes.
+    timeout-minutes: 15
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -23,9 +43,51 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
+        id: install
         run: pnpm install --frozen-lockfile
 
+      # `pnpm typecheck` existed in package.json but nothing ever ran it, so the
+      # only thing compiling app code was the production deploy — i.e. after
+      # merge, when a type break is already on `main`. `typecheck-scripts` above
+      # covers the two trees the root tsconfig skips; this one covers everything
+      # it does not: `app/`, `components/`, `lib/`, `hooks/`, `types/`, `proxy.ts`.
+      # Deliberately a bare `tsc --noEmit` with no build in front of it — the
+      # generated `.next/types` route types are the build's job, and paying for a
+      # full Next build here would make the gate slower than the deploy it guards.
+      - name: Type-check the app
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: pnpm typecheck
+
+      # `scripts/` is excluded from the root tsconfig and `.claude/**` is missed by
+      # its `**/*.ts` glob (dot-directories don't match), so neither tree was
+      # type-checked by anything before this job. Both hold tooling teammates run
+      # by hand — a break there is invisible until someone hits it mid-task.
+      - name: Type-check scripts and skill tooling
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: pnpm typecheck:scripts
+
+      # The repo had no ESLint config at all until this job existed, so nothing
+      # caught the whole class of defect a linter sees: an unused disable
+      # directive, a stray `require` in app code, a hook called outside a
+      # component. The gate is errors-only — the presets' large legacy violation
+      # counts are demoted to warnings in `eslint.config.mjs` and paid down
+      # separately, so this job fails on new breakage rather than on history.
+      - name: Lint
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: pnpm lint
+
+      # A deck fails in front of a room, at the worst possible moment. Two of the
+      # things `deck.test.ts` asserts cannot be caught any other way: the feedback
+      # QR is derived rather than authored, so no code review can see that a code
+      # points at the wrong event or that two events collide onto one code. A
+      # linter nothing runs is a linter nobody obeys. Needs no database and no
+      # network — it is all pure data.
+      - name: Check every registered slide deck
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npx tsx lib/deck/deck.test.ts
+
       - name: Verify image path integrity
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npx tsx scripts/verify-image-paths.ts
 
       # The other half of the guarantee above, and the half that gate
@@ -44,6 +106,7 @@ jobs:
       # when the SOURCE image behind a twin has gone, which no reference corpus
       # can see. Pure filesystem — ffmpeg is only reached without --check.
       - name: Verify newsletter email-safe covers
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npx tsx scripts/newsletter/email-covers.ts --check
 
       # Also shares this checkout — pure regex over the committed issue files,
@@ -58,6 +121,7 @@ jobs:
       # issue's own id, Mailchimp merge tags the Resend path does not
       # substitute, template variables, placeholder text and dead links.
       - name: Verify newsletter copy carries no draft markers
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npx tsx scripts/email/content-lint.ts --all
 
       # The linter above is only worth its exit code if it still refuses the two
@@ -65,6 +129,7 @@ jobs:
       # and the three committed issues, which must come back clean. A linter
       # that refuses everything gets switched off before the next send.
       - name: Verify the newsletter content linter
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npx tsx scripts/email/content-lint.test.ts
 
       # The one check here whose failure NOTHING else can see. poster-type.ts
@@ -78,6 +143,7 @@ jobs:
       # Typst projects left for NZ-SheSharp/she-sharp-reports — exactly the move
       # that would have gone green here and broken every poster locally.
       - name: Verify the poster fonts resolve
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npx tsx scripts/events/fonts.test.ts
 
       # The ownership check inside `verify-image-paths.ts` is generated from
@@ -87,6 +153,7 @@ jobs:
       # ownership rules carry their own tests, built from the six real slug
       # prefix collisions rather than invented examples.
       - name: Verify event asset ownership rules
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npx tsx scripts/assets/event-assets.test.ts
 
       # Shares this job's checkout and install rather than paying for its own —
@@ -96,6 +163,7 @@ jobs:
       # against. The two repos had silently disagreed on the Summit date, the
       # room numbers and the team size before this existed.
       - name: Verify shared hackathon facts
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npx tsx scripts/check-hackathon-facts.ts
 
       # Also shares this checkout — it is pure data and offline. It guards the
@@ -105,12 +173,14 @@ jobs:
       # nothing left to find. That happened on 4 Aug 2026 and cost an event
       # owner's entire review of a deck due on a projector three days later.
       - name: Verify Slack read-position rules
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npx tsx .claude/skills/sync-event-from-slack/scripts/state-lib.test.ts
 
       # The committed manifest must not claim the triage scored past content
       # nobody read. This is the invariant four separate misses violated; it is
       # pure data, so CI can hold it even though nothing here talks to Slack.
       - name: Verify nothing is left unread
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npx tsx .claude/skills/sync-event-from-slack/scripts/audit-read-state.ts
 
       # Also shares this checkout — offline and pure data. The lifecycle report
@@ -124,6 +194,7 @@ jobs:
       # an event's registrants is sent from Humanitix and must read `n/a`, never
       # a `missing` nobody in this repo could ever clear.
       - name: Verify the event lifecycle report
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npx tsx scripts/events/event-status.test.ts
 
       # Also shares this checkout — offline and pure data. /internal/event-playbook
@@ -134,6 +205,7 @@ jobs:
       # hands a volunteer a procedure that changed. The snapshot therefore
       # carries the hash of every source and this test recomputes them all.
       - name: Verify the playbook page matches its source document
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npx tsx lib/docs/playbook.test.ts
 
       # Same snapshot arrangement, same failure, one page along:
@@ -145,6 +217,7 @@ jobs:
       # rather than having quietly become a second copy of them, and that no
       # section quotes a subscriber count without the date it was taken.
       - name: Verify the email playbook page matches its source document
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npx tsx lib/docs/email-playbook.test.ts
 
       # Also shares this checkout — pure regex against two hard-coded lists.
@@ -154,6 +227,7 @@ jobs:
       # but only once its event is next rebuilt, so the branch that widens a
       # pattern goes green and an unrelated branch weeks later goes red.
       - name: Verify poster asset ownership
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npx tsx scripts/events/poster-assets.test.ts
 
       # Also shares this checkout. The raw Humanitix exports carry 5,156 real
@@ -164,6 +238,7 @@ jobs:
       # code-shaped value reach lib/data/json/humanitix/. That last one is the
       # 2026-06-11 leak written down as a test rather than a habit.
       - name: Verify the Humanitix archive
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npx tsx lib/data/humanitix.test.ts
 
       # Also shares this checkout, and the same argument applies harder. The
@@ -174,6 +249,7 @@ jobs:
       # per-contact identifier, and no named bucket holding fewer than five
       # people, because a bucket of one is a person.
       - name: Verify the Mailchimp archive
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npx tsx lib/data/mailchimp.test.ts
 
       # Also shares this checkout — pure functions over a stage table and a
@@ -183,6 +259,7 @@ jobs:
       # stages colliding on one ledger key, which would make the ledger's
       # duplicate check block the SECOND stage of a campaign as "already sent".
       - name: Verify the event-announcement stages
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npx tsx scripts/email/event-announcement-spec.test.ts
 
       # Also shares this checkout — temp-file fixtures only, and it never reads
@@ -191,6 +268,7 @@ jobs:
       # (counting one is the one-directional hole this closes) and an override
       # covers one key in one month, with a reason, or it is refused.
       - name: Verify the marketing frequency cap
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npx tsx .claude/skills/email-the-community/scripts/marketing-frequency-check.test.ts
 
       # Also shares this checkout, and it is the one Mailchimp check that has to
@@ -204,120 +282,5 @@ jobs:
       # newsletter card on the site needs, which is what stops a card silently
       # pointing at a Mailchimp page after the subscription is cancelled.
       - name: Verify the on-site newsletter archive
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npx tsx scripts/mailchimp/archive-guard.test.ts
-
-  typecheck-scripts:
-    # `scripts/` is excluded from the root tsconfig and `.claude/**` is missed by
-    # its `**/*.ts` glob (dot-directories don't match), so neither tree was
-    # type-checked by anything before this job. Both hold tooling teammates run
-    # by hand — a break there is invisible until someone hits it mid-task.
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-
-      # No `version:` here on purpose — `packageManager` in package.json is the
-      # single source, so a local machine and CI cannot drift apart.
-      - name: Install pnpm
-        uses: pnpm/action-setup@v5
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: '22'
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Type-check scripts and skill tooling
-        run: pnpm typecheck:scripts
-
-  typecheck:
-    # `pnpm typecheck` existed in package.json but nothing ever ran it, so the
-    # only thing compiling app code was the production deploy — i.e. after
-    # merge, when a type break is already on `main`. `typecheck-scripts` above
-    # covers the two trees the root tsconfig skips; this one covers everything
-    # it does not: `app/`, `components/`, `lib/`, `hooks/`, `types/`, `proxy.ts`.
-    # Deliberately a bare `tsc --noEmit` with no build in front of it — the
-    # generated `.next/types` route types are the build's job, and paying for a
-    # full Next build here would make the gate slower than the deploy it guards.
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-
-      # No `version:` here on purpose — `packageManager` in package.json is the
-      # single source, so a local machine and CI cannot drift apart.
-      - name: Install pnpm
-        uses: pnpm/action-setup@v5
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: '22'
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Type-check the app
-        run: pnpm typecheck
-
-  lint:
-    # The repo had no ESLint config at all until this job existed, so nothing
-    # caught the whole class of defect a linter sees: an unused disable
-    # directive, a stray `require` in app code, a hook called outside a
-    # component. The gate is errors-only — the presets' large legacy violation
-    # counts are demoted to warnings in `eslint.config.mjs` and paid down
-    # separately, so this job fails on new breakage rather than on history.
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-
-      # No `version:` here on purpose — `packageManager` in package.json is the
-      # single source, so a local machine and CI cannot drift apart.
-      - name: Install pnpm
-        uses: pnpm/action-setup@v5
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: '22'
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Lint
-        run: pnpm lint
-
-  deck-checks:
-    # A deck fails in front of a room, at the worst possible moment. Two of the
-    # things `deck.test.ts` asserts cannot be caught any other way: the feedback
-    # QR is derived rather than authored, so no code review can see that a code
-    # points at the wrong event or that two events collide onto one code. A
-    # linter nothing runs is a linter nobody obeys. Needs no database and no
-    # network — it is all pure data.
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-
-      # No `version:` here on purpose — `packageManager` in package.json is the
-      # single source, so a local machine and CI cannot drift apart.
-      - name: Install pnpm
-        uses: pnpm/action-setup@v5
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: '22'
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Check every registered slide deck
-        run: npx tsx lib/deck/deck.test.ts

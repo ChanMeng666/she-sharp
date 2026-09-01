@@ -250,11 +250,14 @@ any file:
 `npx tsx <file>`; each prints `ok - …`, exits non-zero on failure, and lives
 beside the code it covers.
 
-CI (`.github/workflows/verify.yml`, PRs to `main`) runs five jobs: `typecheck`,
-`typecheck:scripts`, `lint`, the deck checks, and `verify-image-paths` — which
-also carries every other offline check, because they are pure data and ride its
-checkout for free. **A check needing neither a database nor the network belongs
-in that job**, not in a sixth one.
+CI (`.github/workflows/verify.yml`, PRs to `main`) runs **one job**, `verify`,
+whose steps are `typecheck`, `typecheck:scripts`, `lint`, the deck checks, and
+every other offline check — all sharing one checkout and one install, because
+they are pure data and none needs a database or the network. **A check needing
+neither belongs as a step in that job**, not in a second job: Actions bills each
+job rounded up to the whole minute, so a job per check cost this org more in
+setup than in checking (2026-09-01: five jobs, 105s of duplicated setup for 147s
+of work).
 
 **A guard is not verified until you have broken the thing it guards.** Reading
 one and agreeing with it is not a test — hand it the input it was supposed to

@@ -310,15 +310,20 @@ it carries the reasoning this section only names.
 **There is no test runner.** Tests are plain `node:assert` scripts run directly
 with `npx tsx <file>`; each prints `ok - …` lines and exits non-zero on failure.
 
-Run by CI (`.github/workflows/verify.yml`, on PRs to `main`) — five jobs:
+Run by CI (`.github/workflows/verify.yml`, on PRs to `main`) — **one job,
+`verify`**, sharing a single checkout and install across these steps:
 
-| Job | Runs |
+| Step | Runs |
 |---|---|
-| `verify-image-paths` | `scripts/verify-image-paths.ts` **and every other offline check**, because they are pure data and ride its checkout for free: newsletter email-safe covers, the poster fonts (`scripts/events/fonts.test.ts`), event- and poster-asset ownership, event status, the two docs-page checks, the hackathon facts, the two Slack read-state checks, the Humanitix and Mailchimp archive checks, the event-announcement stages, the marketing frequency cap, and `scripts/mailchimp/archive-guard.test.ts`. A new check needing neither a database nor the network belongs here, not in a sixth job |
 | `typecheck` | `pnpm typecheck` — `app/`, `components/`, `lib/`, `hooks/`, `types/`, `proxy.ts` |
 | `typecheck-scripts` | `pnpm typecheck:scripts` — `scripts/` and `.claude/`, both missed by the root tsconfig |
 | `lint` | `pnpm lint` — ESLint 9 flat config, **errors gate**; legacy violations are demoted to warnings in `eslint.config.mjs` and paid down separately |
 | `deck-checks` | `lib/deck/deck.test.ts` |
+| the offline checks | `scripts/verify-image-paths.ts` **and every other offline check**, because they are pure data: newsletter email-safe covers, the poster fonts (`scripts/events/fonts.test.ts`), event- and poster-asset ownership, event status, the two docs-page checks, the hackathon facts, the two Slack read-state checks, the Humanitix and Mailchimp archive checks, the event-announcement stages, the marketing frequency cap, and `scripts/mailchimp/archive-guard.test.ts`. A new check needing neither a database nor the network belongs here, as another step |
+
+Every check step carries `if: ${{ !cancelled() && steps.install.outcome ==
+'success' }}`, so one red check does not hide the next — the run still reports
+every failure at once, as it did when these were five jobs.
 
 Not in CI, run by hand:
 

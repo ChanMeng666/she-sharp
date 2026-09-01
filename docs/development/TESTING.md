@@ -4,8 +4,8 @@ What runs, what does not, and which checks only ever run because somebody
 remembers to. Split out of the root `CLAUDE.md` on 2026-09-01, which keeps only
 the four facts that bind before any file is opened; everything else is here.
 
-`docs/ARCHITECTURE.md` §8 gives the same five CI jobs as a table alongside the
-rest of the architecture. This file is the one to change when a check moves.
+`docs/ARCHITECTURE.md` §8 gives the same CI steps as a table alongside the rest
+of the architecture. This file is the one to change when a check moves.
 
 ---
 
@@ -26,19 +26,38 @@ the implementation.
 
 ## What CI runs
 
-`.github/workflows/verify.yml`, on PRs to `main`. Five jobs:
+`.github/workflows/verify.yml`, on PRs to `main`. **One job, `verify`**, whose
+steps run in this order behind a single checkout and a single install:
 
-| Job | Runs |
+| Step | Runs |
 |---|---|
 | `typecheck` | `pnpm typecheck` — `app/`, `components/`, `lib/`, `hooks/`, `types/`, `proxy.ts` |
 | `typecheck-scripts` | `pnpm typecheck:scripts` — `scripts/` and `.claude/`, both skipped by the root tsconfig |
 | `lint` | `pnpm lint` — ESLint 9 flat config. **Errors gate**; legacy violations are demoted to warnings in `eslint.config.mjs` and paid down separately |
 | `deck-checks` | `lib/deck/deck.test.ts` — slide schema, the copy and rhythm linter, feedback codes |
-| `verify-image-paths` | `scripts/verify-image-paths.ts` **and every other offline check** |
+| the offline checks | `scripts/verify-image-paths.ts` **and every other offline check** |
 
-**Adding a check that needs neither a database nor the network belongs in the
-`verify-image-paths` job**, not in a sixth one. Those checks are pure data and
-ride its checkout for free, which is why they were all put there: the newsletter
+### Why one job and not five
+
+It was five jobs until 2026-09-01, one per row above. Actions bills **each job
+rounded up to the next whole minute**, and each job re-paid the same ~21s of
+checkout, pnpm, Node and install: 105s of duplicated setup wrapped around 147s
+of actual work, billing 8 minutes where the same work now bills 3. `Verify` was
+66% of this private repo's entire Actions spend while the org sat about 30% over
+its 2,000-minute monthly allowance — and exhausting that allowance stops
+`Deploy to Vercel` too.
+
+**Do not split this back into a job per check.** Losing the five separate check
+names cost nothing: the repo cannot use required status checks anyway (branch
+protection needs a paid plan on a private repo), and the one thing five jobs did
+give for free is bought back by `if: ${{ !cancelled() && steps.install.outcome
+== 'success' }}` on every check step, so a failing typecheck no longer hides a
+failing lint. The install is in that condition too, so a failed install skips
+the checks rather than printing the same error 22 times.
+
+**Adding a check that needs neither a database nor the network belongs as a step
+in the `verify` job**, not in a second one. Those checks are pure data and ride
+the shared checkout for free, which is why they were all put there: the newsletter
 email-safe covers, the poster fonts (`scripts/events/fonts.test.ts`), event- and
 poster-asset ownership, event status, the two docs-page checks, the hackathon
 facts, the two Slack read-state checks, the event-announcement stages, the
