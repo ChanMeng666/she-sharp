@@ -85,6 +85,7 @@ nothing at all.
 | Script | Purpose | Status |
 | --- | --- | --- |
 | `verify-image-paths.ts` | Three checks over `public/img/`: `--forward` (every referenced path resolves), `--reverse` (every file is referenced, allow-list in `KNOWN_UNREFERENCED`), `--ownership` (every event image belongs to an event). No flag runs all three. | Ongoing — CI gate. |
+| `verify-storage-blocked.ts` | Loads each path twice in a real Chromium — once with `localStorage` and/or `sessionStorage` throwing `QuotaExceededError`, once normally — and fails when the two renders differ. `--base <url>` (default `http://localhost:3100`), `--mode local\|session\|both`, `--json`, extra `/paths` as positional arguments. Needs a running site and a **globally installed** Playwright, which is deliberately not a dependency here. **Exits 2 for a finding and 1 for a failure to run.** | Ongoing — local only, not in CI. Written after 2026-09-01, when an unguarded `localStorage` read in `components/cookie-banner.tsx` — rendered from the ROOT layout — blanked every page on the site for anyone with site data blocked. |
 | `check-hackathon-facts.ts` | Asserts this repo still contains every shared fact the Q&A assistant repo also asserts. | Ongoing — CI gate; added 2026-08-04, event-scoped. |
 | `build-event-archive.mts` | Harvests a past event's Google Photos album into `public/img/events/archive/<slug>/`, incremental and additive. | Ongoing. |
 | `optimize-images.mts` | Builds responsive WebP variants for the curated hero set. | Ongoing, but see gotchas. |

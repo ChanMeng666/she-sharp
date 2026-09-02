@@ -88,6 +88,7 @@ npx tsx scripts/deck/lint-deck.ts [slug]  # organiser-readable deck report
 npx tsx scripts/verify-image-paths.ts
 npx tsx scripts/mailchimp/verify-export.ts --export 2026-08-17   # needs the vault
 npx tsx scripts/seo/verify-page-metadata.ts --base http://localhost:3100
+npx tsx scripts/verify-storage-blocked.ts --base http://localhost:3100   # needs a running site AND a global Playwright
 npx tsx scripts/humanitix/check-optin-switch.ts   # needs HUMANITIX_API_KEY
 ```
 
@@ -107,6 +108,29 @@ silent: an unset opt-in switch collects nothing and reports nothing, so
 switch is off". Its offline half — the `/orders` field allowlist — is checked in
 CI by `scripts/humanitix/optin-orders.test.ts`, and by `--self-test` for anyone
 about to trust the live run.
+
+### Why `verify-storage-blocked.ts` is not in CI, and cannot be
+
+Two reasons, and either alone would be enough. It needs a **running site**, so
+like `verify-page-metadata.ts` it tests a deployment rather than a diff. And it
+needs a **real browser**, because the read it is about happens during hydration
+— before anything a server-rendered HTML fetch can see. Playwright is
+deliberately absent from `package.json`: adding it puts a ~500 MB browser
+download into every install and every CI run, to serve a check that still could
+not run there.
+
+It is resolved at runtime instead — `PLAYWRIGHT_MODULE_PATH`, then the bare
+specifier, then `npm root -g` — and says so in one sentence when it finds
+nothing, rather than throwing.
+
+Run it against a local `next start` on port 3100, and **kill any orphan server
+on the port first**, exactly as for `verify-page-metadata.ts`.
+
+Its exit codes follow `check-optin-switch.ts`: **1 for "could not run", 2 for a
+finding**. What it finds is invisible to everyone testing normally — the people
+a blocked store breaks the site for are the only people who see it broken, and
+they are not the people running this — so "no browser" and "the site is blank
+for anyone with site data blocked" must never share an exit code.
 
 ### Why `check-facts.ts` is deliberately not in CI
 
