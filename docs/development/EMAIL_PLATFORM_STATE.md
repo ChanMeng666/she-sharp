@@ -2,7 +2,7 @@
 
 **Written 2026-08-30, revised 2026-09-02.** The newsletter cutover happened on
 2026-08-31 and this file was updated for it; the 2026-09-02 revision carries the
-delivery outcome, the archive-only decision, and three measurements that changed
+delivery outcome, the archive-only decision, the integration disconnect, and three measurements that changed
 what earlier readings said. She Sharp's email runs across three platforms that were
 never designed to work together: **Mailchimp**, which sent the newsletter until
 July 2026 and still sends event campaigns by hand; **Resend**, which took the
@@ -94,7 +94,7 @@ last section lists every measurement in this file and how to repeat it.
 | | **Mailchimp** | **Resend** | **Humanitix** |
 |---|---|---|---|
 | Role today | Sent the newsletter until **July 2026**; still sends event campaigns composed by hand in its console | **Sends the newsletter** — first issue 2026-08-31; also sends transactional mail | Sells tickets; **also sends registrant mail** |
-| Role once archive-only takes effect | data archive only — **decided 2026-09-02, not yet done** | sends everything this organisation composes, event promotion included | unchanged — keeps sending registrant mail |
+| Role once archive-only takes effect | data archive only — **decided 2026-09-02; the Humanitix integration was disconnected the same day, the plan change is still pending** | sends everything this organisation composes, event promotion included | unchanged — keeps sending registrant mail |
 | Cost | **paid monthly plan, live**, as at 2026-09-02: not paused, not downgraded, not closed | Transactional Pro, $20/month, **kept** | free on the NZ charity rate |
 | Consent record | its own audience | **`newsletter_subscribers` in our Neon database** | per-order opt-in flag |
 | Driven from code? | read-only pulls, local tooling only | yes, the send path | reads only; **its mail features have no API at all** |
@@ -887,12 +887,32 @@ buyers, from the other side, and gets a clean split — every ticker in, no
 non-ticker in. A setting is verified when the behaviour it governs has been
 measured, not when the toggle has been photographed.
 
-**It does not make the integration harmless, and it is not a reason to leave it
-connected.** It is still writing — most recently **2026-09-01 10:40** — into an
+**It did not make the integration harmless, and it was not a reason to leave it
+connected.** It was still writing — most recently **2026-09-01 10:40** — into an
 audience that is a stale copy of a list we hold ourselves, and once Mailchimp is
-archive-only, one nobody sends from. Every opt-in it collects from here lands
+archive-only, one nobody sends from. Every opt-in it collected from there landed
 somewhere no send reads. Route 2 is what carries those ticks into our own consent
 record, and it never depended on the integration.
+
+> **Disconnected 2026-09-02.** Account → Advanced → Integrations → Mailchimp →
+> Actions → Disconnect, from the shared `events@` login — not, as
+> `HUMANITIX_INTEGRATION_SHUTDOWN.md` had claimed twice, a founder-only screen.
+> The audience has taken no new member since; `last_sub_date` still reads
+> `2026-09-01T10:40:48Z`, the last row the integration ever wrote. The settings
+> were captured first and transcribed into that document, because Humanitix
+> keeps no history of a connection once it is gone.
+>
+> **The checkout tick-box was verified before and after and is untouched** —
+> it is a per-event Humanitix setting that never mentioned Mailchimp, and
+> `export-optins.ts` reads it from the API. Confusing the two and switching the
+> tick-box off "to stop the sync" would destroy the only per-person consent
+> capture the organisation has.
+>
+> One inflow remains and cannot be closed: Mailchimp's own hosted signup form,
+> roughly seven self-service sign-ups a month, which has no off switch and whose
+> email field cannot be removed. Decision as at 2026-09-02 is to leave it —
+> `../deployment/MAILCHIMP_CANCELLATION.md` § "The one inflow that cannot be
+> closed".
 
 The state fact that belongs here is unchanged and still true: those writes did
 **not** stop in 2022. Re-measured on 2026-08-30 across all four member statuses

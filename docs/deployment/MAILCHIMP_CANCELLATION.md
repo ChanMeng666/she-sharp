@@ -623,9 +623,12 @@ Mailchimp。这正是目的——名单已经不在 Mailchimp 了——但这意
 
 ## Order of operations / 操作顺序
 
-1. **Disconnect the Humanitix integration** (item 7) — **first, and now.**
-   It is a live write into the Mailchimp audience and every day it runs adds
-   rows nobody can defend. It is a different account and it blocks nothing.
+1. ~~**Disconnect the Humanitix integration** (item 7) — **first, and now.**~~
+   **DONE 2026-09-02.** Account → Advanced → Integrations → Mailchimp → Actions
+   → Disconnect, from the shared `events@` login. The audience has taken no new
+   member since. Settings captured first, in
+   `HUMANITIX_INTEGRATION_SHUTDOWN.md`. **The last automatic inflow into this
+   audience is now closed** — with the one exception in the note below.
 2. **Export everything** (item 5), and screenshot what no export carries —
    landing pages, signup forms, automations.
 3. **Put the export and the screenshots in the private archive repo**, not this one.
@@ -634,6 +637,48 @@ Mailchimp。这正是目的——名单已经不在 Mailchimp 了——但这意
    **archive-only** decision of 2026-09-02 there should not be one: event
    promotion moves to Resend and Mailchimp sends nothing further.
 6. **Then stop the billing** — pause or downgrade to Free (item 2). **Never delete.**
+
+### The one inflow that cannot be closed / 唯一关不掉的入口
+
+**Mailchimp's own hosted signup form has no off switch, and this is the reason
+"stop the new data" is not fully achievable until the account itself is stopped.**
+Established by trying it on 2026-09-02:
+
+- There is **no disable or unpublish control** for the audience's hosted form
+  (`http://eepurl.com/g10uz9` → `shesharp.us3.list-manage.com/subscribe?...`).
+- The **email field is mandatory and cannot be removed** — it is greyed out in
+  the form editor's element list because the form requires it.
+- The only edit path **migrates the form permanently** to Mailchimp's newer
+  editor, warning that "some things may look different" and that translated text
+  may have changed.
+
+So the realistic options were to rewrite the form's copy into a "we have moved"
+redirect, or to leave it. **The maintainer's decision as at 2026-09-02 is to
+leave it entirely alone**: rewriting is a change to public-facing organisational
+copy and a one-way editor migration, for a form that stops mattering the moment
+the account does. It currently takes roughly **7 self-service sign-ups a month**
+(14 between 2026-07-01 and 2026-09-01, `source: Hosted Signup Form`).
+
+Those people are consent **route 1** and are perfectly importable — see the
+joiner-gap note. The gap measured **zero** on 2026-09-02, so nobody is currently
+stranded; it will reopen at about that rate until the account is stopped.
+
+**Our own site is not feeding it.** Checked 2026-09-02: the signup URL appears
+**nowhere** in this repository, and the `eepurl.com` links inside the 179
+archived campaigns are each campaign's own "view in browser" self-link, which
+`app/(site)/resources/newsletters/[issue]/route.ts` rewrites to the on-site
+canonical path. The remaining traffic comes from old emails in people's inboxes,
+social profiles and Mailchimp's own hosted campaign pages — none of which this
+repository can reach.
+
+**Mailchimp 自己的托管注册表单没有关闭开关**（2026-09-02 实测：无下线控件；邮箱字段
+必填且不可移除；唯一的编辑入口会把表单永久迁移到新编辑器）。所以「不再有新数据」这件
+事，在账号本身停用之前无法彻底做到。**维护者 2026-09-02 的决定是完全不动它**——改文案
+既是修改组织的公开页面，又要接受一次单向迁移，而这个表单在账号停用的那一刻就不再重要。
+目前约每月 7 个自助注册者。他们属于**同意来源一**，完全可以导入；缺口在 2026-09-02
+测得为零。**我们自己的站点没有在给它送人**（注册链接在仓库中出现 0 次）。
+
+---
 
 Steps 2–5 must precede step 6. Not because anything is destroyed at step 6 —
 nothing is — but because the Free plan holds sending above 250 contacts, and
