@@ -106,12 +106,33 @@ have received a bounce.
 Set by stream in `lib/email/senders.ts`; see
 `docs/deployment/EMAIL_AUTHENTICATION.md` for the DNS side.
 
-| Stream | From | Reply-To | One-click unsubscribe | Honours opt-outs |
+| Stream | From | Reply-To *(fallback)* | One-click unsubscribe | Honours opt-outs |
 |---|---|---|---|---|
-| `transactional` | `noreply@` (overridable by `EMAIL_FROM`) | `mentoring@` | No | Never — a suppressed address must still get a password reset |
-| `notification` | `noreply@` | `mentoring@` | Yes (RFC 8058) | Yes |
-| `marketing` | `newsletter@` | **`info@`** | Attached by Resend | Via Resend topics |
+| `transactional` | `noreply@` (overridable by `EMAIL_FROM`) | **`info@`** | No | Never — a suppressed address must still get a password reset |
+| `notification` | `noreply@` | **`info@`** | Yes (RFC 8058) — ours | Yes |
+| `marketing` | `newsletter@` | **`info@`** | Yes (RFC 8058) — ours | Yes |
 | `internal` | `noreply@` | `website@` | No | No |
+
+**The Reply-To column is a fallback, and the row above is not where the decision
+is made.** `lib/email/reply-to.ts` routes by purpose — `account` and `newsletter`
+to `info@`, `mentorship` to `mentoring@`, `recruitment` to `people@`, `events` to
+`events@`, `payments` to `info@`, `internal` to `website@` — and every sender
+passes one. The stream's value is what a message gets when it names no purpose.
+`transactional` and `notification` said `mentoring@` until **2026-09-01**; the
+row above said so until 2026-09-02, two lines under the `mentoring@` entry that
+already recorded the change. **A table and its own prose disagreeing is the
+cheapest kind of rot to create and the most expensive to notice.**
+
+**The unsubscribe machinery is ours, on both streams that carry it.** It reads
+"Attached by Resend" and "Via Resend topics" in this table until 2026-09-02, and
+that stopped being true on **2026-08-29**, when the Resend segment and topic were
+deleted — they held 0 contacts and the consent record moved to
+`newsletter_subscribers`. The `List-Unsubscribe` / `List-Unsubscribe-Post` pair
+is built by `lib/email/unsubscribe-headers.ts` over an HMAC-signed, stateless,
+PII-free token (`lib/email/unsubscribe-token.ts`), and honoured by
+`isSuppressed()` in `lib/email/optouts.ts` against `email_optouts`. Resend
+attaches nothing on the batch endpoint, which is the whole reason both had to be
+built here — `EMAIL_OPERATIONS.md` § "Sending streams".
 
 **The `marketing` From and Reply-To are deliberately different.** The From must
 stay `newsletter@`: it carries years of accumulated engagement history, and

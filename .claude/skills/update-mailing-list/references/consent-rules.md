@@ -200,9 +200,25 @@ scanner-confirmed subscription would be indistinguishable from a real one and
 would fabricate the very evidence this system exists to hold.
 
 Record: "Website newsletter subscribe form" + the date — but in practice the row
-records itself, which is the point. Six entry points across the site (the
-footer, the newsletter archive, and four places in the mentorship pages) send
-people here.
+records itself, which is the point.
+
+**Since 2026-09-01 the form itself is on eight surfaces**, not one — the
+newsletter page, the footer, the home page, the events index, an event detail
+page, the post-event feedback confirmation, the newsletter archive, and **one**
+of the mentorship CTAs. That is a change of shape, not just of count: before it,
+five of the six "entry points" were plain **links** to `/newsletter/subscribe`
+and four of those sat behind `!applicationsOpen`, so they were due to vanish the
+day mentorship applications reopen. Three mentorship links remain, because four
+forms on one page is spam rather than distribution.
+
+**It changes nothing in this file.** Every surface posts to the same
+`POST /api/newsletter/subscribe`, writes the same `pending` row and needs the
+same button press. What it changes is the *record*: the row now carries a
+`placement` key, and the consent sentence is composed server-side from a closed
+list (`lib/newsletter/placements.ts`) so a public endpoint cannot write arbitrary
+prose into an audit record. `source` stays `website-form` for all eight — which
+form somebody used is not a new mechanism. Where each one sits and why:
+`docs/development/NEWSLETTER_SIGNUP_SURFACES.md`.
 
 **2. A tick-box on a registration form.**
 Record: the exact question text, the event name, and the event date — e.g.
@@ -256,9 +272,20 @@ visible before the import runs rather than after. It prints no address, and it
 refuses to write anywhere outside `tmp/`.
 
 It refuses a historic event unless you pass `--allow-historic`, because of the
-account-wide shape of the backlog: of the 97 people who ever ticked the box and
-are not already on the list, **89 are on the suppression register and only 8 are
-importable, all 8 from 2026**. An import can never resurrect somebody who left.
+account-wide shape of the backlog. Measured **2026-09-01**: of the 97 people who
+ever ticked the box and are not already on the list, **89 are on the suppression
+register and only 8 are importable, all 8 from 2026**. **9 were imported on
+2026-09-02** — one more tick had arrived in the meantime, which is the whole
+reason this figure is dated and the switch being live is the reason it moves.
+An import can never resurrect somebody who left, and that part does not move.
+
+> **`EMAIL_PLATFORM_STATE.md` carried an older reading of this until 2026-09-02**
+> — 89 not on the list, all 89 suppressed, "zero importable rows", under a
+> heading calling the question closed. That was a true measurement of 2026-08-30
+> and it was superseded within two days, because the checkout opt-in went live
+> again on 2026-08-26 and every new tick enters the same population. Where the
+> two disagree, **this file and the script are right**: they are re-run, and a
+> state document is transcribed.
 
 The console's **reports → orders → Export CSV** — the orders report, not the
 attendees one, with its "marketing opt-in" column — still works and is the

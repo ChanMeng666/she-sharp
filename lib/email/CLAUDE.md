@@ -110,7 +110,10 @@ import and the retirement of the Resend Marketing objects were all built by
 2026-08-29. On **2026-08-31** the August 2026 issue was broadcast down it to all
 1,549 subscribers — 16 chunks, `--batch-validation strict`, 0 failures, after a
 three-stage approval chain ending in the founder's. **The July 2026 issue was
-the last newsletter ever sent from Mailchimp.**
+the last newsletter ever sent from Mailchimp.** Those six entry points became
+**eight inline forms** on 2026-09-01 — § "The four streams" above already counts
+them that way, and this paragraph did not until 2026-09-02. Six is the number
+that was repointed on 2026-08-29; eight is the number that exists.
 
 Two things not to overstate. **One issue is not a routine** — and it was not
 ramped, against three places in this repo that asked for a ramp, so one clean

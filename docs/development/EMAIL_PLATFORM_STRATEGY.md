@@ -1,15 +1,37 @@
 # Email Platform Strategy — what we pay for, what we build, and why
 
 **Decision date:** 2026-08-28
-**Status (2026-08-29):** decided, and **built**. The consent record and the
+**Status (2026-09-02):** decided, built, and **sent**. The consent record and the
 suppression seam, the subscribe funnel with double opt-in, the send path off the
-batch API, and now **the import**: `newsletter_subscribers` holds **1,545** rows
-carried over from the 2026-08-17 Mailchimp export. The code that read Resend's
-Marketing objects is deleted. **What has not happened is the send.** Nothing has
-gone out from this system and the live newsletter **still goes out from
-Mailchimp**. The two Resend Marketing objects and their two Vercel env vars were
-**deleted on 2026-08-29** — this header claimed they still existed while §5 below
-already recorded their removal. Section 5 marks each item.
+batch API, the import from the 2026-08-17 Mailchimp export, and — on
+**2026-08-31** — the **first real broadcast**: the August 2026 issue went from
+this repo through Resend's transactional batch API to every mailable row in
+`newsletter_subscribers`, in 16 chunks, with 0 failures. The code that read
+Resend's Marketing objects is deleted, and so are the two Marketing objects
+themselves and their two Vercel env vars (2026-08-29). Section 5 marks each item.
+**One issue is a proof, not a routine.**
+
+> **This header was frozen for two days and it cost more than a stale number.**
+> Until 2026-09-02 it read *"What has not happened is the send. Nothing has gone
+> out from this system and the live newsletter still goes out from Mailchimp"*,
+> and cited 1,545 rows — both true on 2026-08-29 and both false from 2026-08-31.
+> That mattered because `EMAIL_PLATFORM_STATE.md` names this file as one of four
+> authorities and says the authority wins a disagreement, so the repo's own
+> tie-break rule pointed readers at the frozen sentence. **A tie-break rule needs
+> a date qualifier**, and that one now has it. The lesson generalises: a document
+> that claims authority over a subject has to be revised on the day the subject
+> moves, not on the day somebody notices.
+
+**What this file is authoritative for, and what it is not.** It owns the
+**decision of 2026-08-28** — what Resend's plan buys, why the newsletter is
+self-hosted rather than bought, and AWS SES as a costed future option — together
+with the measurements that were taken to reach it. It is **not** the current
+state of the migration: that is
+[`EMAIL_PLATFORM_STATE.md`](EMAIL_PLATFORM_STATE.md), which is revised as things
+move. Where a figure here is dated, the date is the point; for a live subscriber
+count run `npx tsx scripts/email/suppression.ts reconcile` and read its
+**`Mailable after suppression`** line, never a number from any document,
+this one included.
 
 > **The decision, in one line.** She Sharp keeps **Resend Transactional Pro
 > ($20/month)**, does **not** buy Marketing Pro, and **builds its own newsletter

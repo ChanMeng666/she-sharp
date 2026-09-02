@@ -183,13 +183,24 @@ Reply-To. The stream decides the rest:
 |---|---|---|---|---|
 | `transactional` | Recipient-triggered, expected in minutes | `noreply@` (overridable by `EMAIL_FROM`) | No | **Never** |
 | `notification` | Recurring, unrequested | `noreply@` | Yes (RFC 8058) | Yes |
-| `marketing` | Newsletter + one-off broadcasts | `newsletter@` | Resend attaches it | via Resend topics |
+| `marketing` | Newsletter + one-off announcements | `newsletter@` | Yes (RFC 8058) — **ours** | Yes |
 | `internal` | To She Sharp's own mailboxes | `noreply@` | No | No |
 
-`sendEmail()` in `lib/email/service.ts` is the only call into Resend. It checks
-`email_optouts` for `notification` only — a suppressed address must still get a
-password reset. Details in `docs/development/EMAIL_OPERATIONS.md`; DNS and DMARC
-in `docs/deployment/EMAIL_AUTHENTICATION.md`.
+`sendEmail()` in `lib/email/service.ts` is the only per-message call into Resend.
+It checks `email_optouts` for `notification` **and `marketing`** — a suppressed
+address must still get a password reset, so `transactional` and `internal` are
+exempt from both the header and the check.
+
+**The marketing row said "Resend attaches it" and "via Resend topics" until
+2026-09-02, and it stopped being true on 2026-08-29** — the Resend segment and
+topic were deleted, the newsletter moved to the transactional batch endpoint,
+which attaches nothing, and both guarantees became this repo's to enforce.
+`lib/email/unsubscribe-headers.ts` builds the header pair over an HMAC-signed
+token; `isSuppressed()` in `lib/email/optouts.ts` honours it. Reply-To is not in
+this table on purpose: since 2026-09-01 it is chosen per message by purpose in
+`lib/email/reply-to.ts`, not per stream. Details in
+`docs/development/EMAIL_OPERATIONS.md`; DNS and DMARC in
+`docs/deployment/EMAIL_AUTHENTICATION.md`.
 
 ## 6. Asset strategy
 

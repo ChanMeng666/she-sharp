@@ -31,8 +31,8 @@ not in.
 |---|---|---|
 | `EMAIL_AUTHENTICATION.md` | SPF/DKIM/DMARC records, the staged move to enforcement, Mailchimp → Resend runbook | current |
 | `WORKSPACE_MAILBOX_CHECKLIST.md` | The Google Workspace side of the 2026-08 mailbox audit — bilingual, for the super-admin | current |
-| `MAILCHIMP_CANCELLATION.md` | What cancelling the paid Mailchimp subscription does and does not put at risk — bilingual, for the founder. The account is **not** being deleted, and the file exists largely to keep those two apart | current — the cancellation has not happened |
-| `HUMANITIX_INTEGRATION_SHUTDOWN.md` | Switching off the Humanitix → Mailchimp contact integration — bilingual, for the founder. Why (it wrote 752 non-opted-in ticket buyers into the list), what breaks, and the per-event route-2 import that replaces it | current — nobody here can press the button |
+| `MAILCHIMP_CANCELLATION.md` | What cancelling the paid Mailchimp subscription does and does not put at risk — bilingual, for the founder. The account is **not** being deleted, and the file exists largely to keep those two apart | current — carries the 2026-09-02 archive-only decision; the cancellation itself **has not happened** |
+| `HUMANITIX_INTEGRATION_SHUTDOWN.md` | Switching off the Humanitix → Mailchimp contact integration — bilingual, for the founder. Why (it wrote 752 non-opted-in ticket buyers into the list), what breaks, and the per-event route-2 import that replaces it | current — decided, **not done**: still connected and writing as at 2026-09-01, and nobody here can press the button |
 | `GITHUB_ACTIONS_AND_ACCOUNT.md` | The org is on GitHub Free with 2,000 private-repo Actions minutes; Actions bills each **job** rounded up to the minute, which is why `verify.yml` is one job. Measured per-workflow cost, why `deploy.yml` cannot reach three billed minutes, the `_gh-…` TXT record that must not be deleted, and the pending GitHub for Nonprofits application | current |
 | `MAINTENANCE_MODE.md` | `MAINTENANCE_MODE=true` → branded 503 for the whole site | current |
 | `VERCEL_ENV_VARIABLES_GUIDE.md` | Setting env vars without silently corrupting them | current |
@@ -52,8 +52,8 @@ not in.
 | `DECK_SYSTEM.md` | The `/present/*` deck system in full — data model, skins, linter, host controls | current |
 | `EMAIL_ADDRESSES.md` | Every `@shesharp.org.nz` address, and which are mailboxes vs sending identities | current |
 | `EMAIL_OPERATIONS.md` | The four sending streams, unsubscribe handling, newsletter loop | current |
-| `EMAIL_PLATFORM_STATE.md` | The three email platforms — Mailchimp, Resend, Humanitix — in one place: what each holds, which parts are live, the four crossings between them, a dated decision log, and what nobody could establish. **State and history only** — it cites the consent rules, the boundaries and the cancellation runbook rather than restating them | current, dated 2026-08-30 |
-| `EMAIL_PLATFORM_STRATEGY.md` | What the Resend plan buys, why the newsletter is being self-hosted rather than bought, and AWS SES as a costed future option | current, decision record |
+| `EMAIL_PLATFORM_STATE.md` | The three email platforms — Mailchimp, Resend, Humanitix — in one place: what each holds, which parts are live, the four crossings between them, a dated decision log, and what nobody could establish. **State and history only** — it cites the consent rules, the boundaries and the cancellation runbook rather than restating them | current, dated 2026-09-02 |
+| `EMAIL_PLATFORM_STRATEGY.md` | What the Resend plan buys, why the newsletter is self-hosted rather than bought, and AWS SES as a costed future option | decision record, dated 2026-08-28 — **not** a statement of current state; for that read `EMAIL_PLATFORM_STATE.md` |
 | `EMAIL_RESPONSIBILITY_BOUNDARIES.md` | Which system sends which mail — subscribers from this repo through Resend, one event's registrants from Humanitix — and the single sanctioned crossing between the two lists | current, decision record |
 | `EVENT_FEEDBACK.md` | The `/f/<code>` QR form: codes, rate limiting, digest, anonymisation | current |
 | `EVENT_LIFECYCLE_SOP.md` | One regular event end to end for the whole team — the partner conversation, the phase order, who does what, the promotion beats, close-out, and the developer machinery underneath. The reference `EVENT_PLAYBOOK.md` is built from | current |

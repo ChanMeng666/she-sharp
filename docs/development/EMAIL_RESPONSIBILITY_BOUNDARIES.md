@@ -79,12 +79,28 @@ one-click unsubscribe plus a row in `email_events`
 Read from `lib/email/senders.ts`, which is the source of truth; this table is a
 convenience, not a second copy to edit.
 
-| Stream | From | Reply-To |
+| Stream | From | Reply-To *(fallback)* |
 |---|---|---|
-| `transactional` | `She Sharp <noreply@shesharp.org.nz>` | `mentoring@shesharp.org.nz` |
-| `notification` | `She Sharp <noreply@shesharp.org.nz>` | `mentoring@shesharp.org.nz` |
+| `transactional` | `She Sharp <noreply@shesharp.org.nz>` | `info@shesharp.org.nz` |
+| `notification` | `She Sharp <noreply@shesharp.org.nz>` | `info@shesharp.org.nz` |
 | `marketing` | `She Sharp <newsletter@shesharp.org.nz>` | `info@shesharp.org.nz` |
 | `internal` | `She Sharp <noreply@shesharp.org.nz>` | `website@shesharp.org.nz` |
+
+**Those Reply-To values are the fallback, not the answer.** Since **2026-09-01**
+the desk is chosen by what the message is *about*, in
+`lib/email/reply-to.ts` — `account` and `newsletter` → `info@`, `mentorship` →
+`mentoring@`, `recruitment` → `people@`, `events` → `events@`, `payments` →
+`info@`, `internal` → `website@`. Every sender passes a purpose; the stream's
+value is what a message gets when it names none.
+
+The change was worth making because the stream is the wrong key. A stream decides
+the From, the unsubscribe header and whether suppression applies — properties of
+*how* a message is sent. Who should answer is a property of *what it says*, and
+`transactional` alone carries password resets, donation receipts, volunteer
+interview invitations and newsletter confirmations: one stream, four desks.
+`transactional` and `notification` both replied to `mentoring@` until 2026-09-01,
+so a subscriber writing "please take me off this list" and a donor replying to a
+receipt both landed in the mentorship lead's personal contact address.
 
 `info@shesharp.org.nz` is additionally an approved **From** for one-to-one mail
 sent by the skills, without being any stream's default. `EMAIL_FROM` overrides

@@ -30,7 +30,7 @@ import { cn } from "@/lib/utils";
  * people waiting on a message that is never coming. State the condition instead
  * of asserting the send.
  *
- * With the form now on seven surfaces, that hedge is the single thing most
+ * With the form now on eight surfaces, that hedge is the single thing most
  * likely to be "improved" locally into something confident and wrong. It lives
  * here, `labels` cannot reach it, and there is exactly one copy of it in the
  * codebase.
