@@ -8,6 +8,25 @@ interface EventDescriptionProps {
   className?: string;
 }
 
+const cybersecurityPanelTopic =
+  "**The Critical Role of Cybersecurity in AI**";
+
+function renderCybersecurityPanelTopic(text: string) {
+  const [before, after, ...rest] = text.split(cybersecurityPanelTopic);
+
+  if (after === undefined || rest.length > 0) {
+    return text;
+  }
+
+  return (
+    <>
+      {before}
+      <strong>The Critical Role of Cybersecurity in AI</strong>
+      {after}
+    </>
+  );
+}
+
 export function EventDescription({ event, className }: EventDescriptionProps) {
   const fullDescription = event.detailPageData.fullDescription;
 
@@ -23,7 +42,7 @@ export function EventDescription({ event, className }: EventDescriptionProps) {
       <div className="space-y-4 max-w-prose">
         {fullDescription.map((paragraph, index) => (
           <p key={index} className="text-ink-700 leading-relaxed text-pretty">
-            {paragraph}
+            {renderCybersecurityPanelTopic(paragraph)}
           </p>
         ))}
       </div>
