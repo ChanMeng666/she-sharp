@@ -531,6 +531,15 @@ posted into the event channel and pinned.
 in"*. It is a **per-event** switch and it defaults to **off**, so it is lost by
 omission on every new event unless somebody sets it.
 
+**"Before the page goes live" is the whole instruction, and the September 2026
+event is what it cost.** That page opened on **2026-08-04**; the switch was not
+turned on until **2026-08-26**. **34 orders were placed in between, and not one
+of those buyers was ever shown the question.** They are not non-consenters — they
+were never asked, which is a different and unfixable thing: Humanitix keeps no
+history to go back for and there is no honest way to ask retrospectively. Turning
+the switch on late does not recover them. This is the cheapest step in the entire
+lifecycle and it is worth thirty-four people.
+
 **The switch has been off since May 2022, and it was turned back on for the
 September 2026 event.** This paragraph twice said something weaker than the
 evidence supports — first that the switch had certainly been off (asserted from a
@@ -557,6 +566,15 @@ column `Marketing opt-in`:
 lapse: it is populated on every order through to the export date and it reads
 `No` for all 2,579 orders from 2023 onward. Reading 1 — "the opt-in has been
 collecting all along and only the export column lapsed" — is dead.
+
+**224 is this one export, and it is the right number for this argument and no
+other.** Two other totals circulate — **223** from the 2026-08-28 archived API
+pull, and **238** from the live API on 2026-09-01 — and they are different
+surfaces on different dates rather than a contradiction. The live figure is the
+one that moves, because the switch went back on for the September 2026 event, so
+**quote 238 (or a fresh reading) for "how many ticks are there", and 224 only for
+"did the column lapse between 2023 and 2026"**. `EMAIL_PLATFORM_STATE.md` § "The
+2022 question is closed" carries the three side by side.
 
 The API agrees, from a different surface and a different date.
 `she-sharp-slack-archive/humanitix/2026-08-28-api/orders/` (59 files, 4,169

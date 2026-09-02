@@ -20,9 +20,24 @@ visible only while mentorship applications are paused, and due to vanish the day
 they reopen.
 
 The result was measurable and it was zero. On 2026-09-01, of the **1,543**
-mailable people in `newsletter_subscribers`, **every single one carried
-`source = 'mailchimp-import'`**. The website's own form had never produced a
-subscriber. Over the same period the Humanitix checkout tick-box — one checkbox,
+mailable people in `newsletter_subscribers`, **not one carried
+`source = 'website-form'`**. The website's own form had never produced a
+subscriber, and that is still true as at 2026-09-02.
+
+**Say it that way round, because the stronger version has already stopped being
+true.** Until 2026-09-02 this paragraph said every row carried
+`source = 'mailchimp-import'`, which was a claim about the whole table rather
+than about the form. Nine `registration-optin` rows were imported that day — the
+Humanitix route-2 harvest — so the table now has two sources and the sentence
+would read as false while the point it was making is intact. The measurement that
+matters here is a count of `website-form` rows, not the absence of every other
+source:
+
+```sql
+SELECT source, count(*) FROM newsletter_subscribers GROUP BY source;
+```
+
+Over the same period the Humanitix checkout tick-box — one checkbox,
 asked at the moment somebody was already committing to something — converted at
 about **40%**.
 

@@ -340,8 +340,11 @@ never re-added, whatever they later say and whatever the dates are.
 This section exists because staff should not learn this from somebody outside
 the organisation.
 
-**The mailing list held 1,549 people on 30 August 2026.** It moves, so treat
-that as a reading rather than a fact about today. To re-take it:
+**The mailing list held 1,551 people on 2 September 2026** — and 1,549 on 30
+August. It moves, so treat any figure here as a reading rather than a fact about
+today. The three numbers in circulation are not a muddle: 1,549 was the imported
+list, seven people have since unsubscribed or bounced, and nine people who ticked
+the box at a Humanitix checkout were added on 2 September. To re-take it:
 
 ```
 Print the current number of mailable newsletter subscribers, and do not send
@@ -423,6 +426,11 @@ heard as "Mailchimp is gone", and it is not.
 - The subscribe form, the confirmation step and the one-click unsubscribe have
   been live on the website since 2026-08-29.
 
+- **We now know how it landed, and it landed well.** Read on 2 September 2026:
+  **1,572 delivered, 13 bounced, no spam complaints.** Only one of those bounces
+  was permanent, and that person came off the list automatically, which is what
+  is meant to happen.
+
 **Not switched over, and easy to overclaim:**
 
 - **The Mailchimp account is still open and still paid.** It has not been paused,
@@ -431,12 +439,23 @@ heard as "Mailchimp is gone", and it is not.
   unsubscribe forms still work, so somebody can still join or leave over there
   without our list knowing.
 - **One issue is not a routine.** Exactly one newsletter has gone out this way.
-- **We do not yet know how it landed.** Resend accepted all 1,549 messages;
-  whether they arrived, and how many bounced or complained, is measured
-  separately and has not been reported yet.
+- **Event promotion has not moved yet.** On **2 September 2026** it was decided
+  that Mailchimp becomes an **archive only** — event promotion moves to Resend
+  too, and nothing further is sent from the Mailchimp console. That is a
+  decision, not a description: the four August event emails still went from
+  Mailchimp, and nobody has changed how the next one gets written.
+
+**Why archive-only, in one paragraph**, because it will be asked. Every rule on
+this page — the three-a-month cap, the approval chain, who may be emailed, the
+unsubscribe record — applies to mail sent through Resend and to nothing else. An
+email written by hand in Mailchimp's console is covered by none of them. That is
+not theoretical: in August 2026 the counter said **0 of 3 used** while the list
+received **five** marketing emails. The counter was right about what it could
+see. Moving event promotion across means one set of rules covers everything the
+organisation sends.
 
 If somebody describes leaving Mailchimp as done, it is not: the newsletter has
-moved, the account has not been stopped.
+moved, the account has not been stopped, and event promotion has not moved.
 
 ---
 
