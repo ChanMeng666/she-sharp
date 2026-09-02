@@ -86,7 +86,7 @@ export default function NewsletterSubscribePage() {
 
           {/* Right: the form */}
           <div className="lg:pt-4">
-            <div className="rounded-[24px] border border-ink-300 bg-background p-6 sm:p-8">
+            <div className="rounded-[32px] border border-ink-300 bg-white p-6 sm:p-8">
               <h2 className="text-xl font-semibold text-foreground">
                 Sign up
               </h2>
@@ -98,6 +98,7 @@ export default function NewsletterSubscribePage() {
                 placement="newsletter-page"
                 layout="stacked"
                 askFirstName
+                tone="card"
                 className="mt-6"
               />
             </div>

@@ -108,7 +108,7 @@ export function ContactForm() {
 
   if (isSuccess) {
     return (
-      <div className="bg-background border border-border card-sm p-6 sm:p-8 md:p-10 text-center">
+      <div className="bg-white border border-ink-300 card-sm p-6 sm:p-8 md:p-10 text-center">
         <div className="flex justify-center mb-4">
           <div className="h-16 w-16 rounded-full bg-mint flex items-center justify-center">
             <CheckCircle2 className="h-8 w-8 text-foreground" />
@@ -135,7 +135,7 @@ export function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-background border border-border card-sm p-6 sm:p-8 md:p-10"
+      className="bg-white border border-ink-300 card-sm p-6 sm:p-8 md:p-10"
     >
       <div className="space-y-5 sm:space-y-6">
         {/* Full Name */}
@@ -150,7 +150,7 @@ export function ContactForm() {
             value={formData.fullName}
             onChange={handleChange}
             placeholder="Enter your name"
-            className={`h-12 rounded-2xl bg-background border-border focus:border-brand ${
+            className={`h-12 rounded-2xl bg-muted border-border focus:border-brand ${
               errors.fullName ? "border-destructive" : ""
             }`}
           />
@@ -171,7 +171,7 @@ export function ContactForm() {
             value={formData.email}
             onChange={handleChange}
             placeholder="Enter your email address"
-            className={`h-12 rounded-2xl bg-background border-border focus:border-brand ${
+            className={`h-12 rounded-2xl bg-muted border-border focus:border-brand ${
               errors.email ? "border-destructive" : ""
             }`}
           />
@@ -192,7 +192,7 @@ export function ContactForm() {
             value={formData.organisation}
             onChange={handleChange}
             placeholder="Enter your organisation"
-            className="h-12 rounded-2xl bg-background border-border focus:border-brand"
+            className="h-12 rounded-2xl bg-muted border-border focus:border-brand"
           />
         </div>
 
@@ -208,7 +208,7 @@ export function ContactForm() {
             onChange={handleChange}
             placeholder="Enter your message"
             rows={5}
-            className={`rounded-2xl bg-background border-border focus:border-brand resize-y ${
+            className={`rounded-2xl bg-muted border-border focus:border-brand resize-y ${
               errors.message ? "border-destructive" : ""
             }`}
           />

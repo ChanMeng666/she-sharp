@@ -120,8 +120,11 @@ export interface NewsletterSignupProps {
   placement: NewsletterPlacement;
   /** `inline`: field and button on one row. `stacked`: a labelled column. */
   layout?: "inline" | "stacked";
-  /** `dark` is the navy footer. */
-  tone?: "light" | "dark";
+  /**
+   * `dark` is the navy footer. `card` is a white card — the fields have to be
+   * tinted there, because the default white field would vanish into it.
+   */
+  tone?: "light" | "dark" | "card";
   /** Only the dedicated sign-up page asks for a name; everywhere else it costs conversions. */
   askFirstName?: boolean;
   /** Prefill, still editable — the feedback success panel already has the address. */
@@ -265,6 +268,7 @@ export function NewsletterSignup({
     "h-12 text-base md:text-base",
     isDark &&
       "border-white/40 bg-white/10 text-white placeholder:text-white/50 focus-visible:border-white",
+    tone === "card" && "bg-muted",
   );
 
   const emailField = (
