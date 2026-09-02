@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Input } from '@/components/ui/input';
 import { Progress } from '@/components/ui/progress';
 import { validatePasswordStrength, getPasswordStrengthLabel, getPasswordStrengthColor, type PasswordStrength } from '@/lib/auth/password-validation';
 import { cn } from '@/lib/utils';
@@ -113,15 +114,20 @@ export function PasswordInput({
   return (
     <div className="space-y-2">
       <div className="relative">
-        <input
+        {/*
+          `Input`, not a hand-rolled `<input>`. This used to carry its own copy
+          of an older `Input` class string, and the copy went stale: it kept
+          `h-9`, `rounded-md`, `bg-transparent` and a `shadow-xs` that
+          `components/ui/input.tsx` has since dropped for `h-10`,
+          `rounded-[16px]`, `bg-white` and no shadow. On the sign-in form that
+          put a shorter, squarer, shadowed password field between an email field
+          and an invitation-code field that both use `Input`. Rendering the
+          primitive is the only version that cannot drift again.
+        */}
+        <Input
           {...props}
           type={showPassword ? 'text' : 'password'}
-          className={cn(
-            'flex h-9 w-full min-w-0 rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
-            'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
-            showToggle && 'pr-10',
-            className
-          )}
+          className={cn(showToggle && 'pr-10', className)}
           onChange={handleChange}
         />
         {showToggle && (

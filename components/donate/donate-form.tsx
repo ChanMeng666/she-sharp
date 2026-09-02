@@ -58,7 +58,7 @@ export function DonateForm({ className }: { className?: string }) {
             onClick={() => setSelectedAmount(amount)}
             aria-pressed={selectedAmount === amount}
             className={cn(
-              "rounded-xl border-2 py-4 text-lg font-semibold transition-colors",
+              "rounded-2xl border-2 py-4 text-lg font-semibold transition-colors",
               selectedAmount === amount
                 ? "border-brand bg-brand text-white"
                 : "border-border bg-muted text-foreground hover:border-brand"
@@ -70,7 +70,7 @@ export function DonateForm({ className }: { className?: string }) {
       </div>
 
       {error && (
-        <p className="mt-4 rounded-md bg-red-50 p-3 text-sm text-red-700">
+        <p className="mt-4 rounded-2xl border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive">
           {error}
         </p>
       )}
