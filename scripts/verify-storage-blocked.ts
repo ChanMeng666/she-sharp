@@ -61,7 +61,7 @@
  * Playwright is deliberately **not** a dependency of this repo — it pulls a
  * ~500 MB browser download into every install and every CI run, for a check
  * that cannot run in CI anyway because it needs a built, running site. It is
- * resolved at runtime instead; see `loadChromium`.
+ * resolved at runtime instead, by `scripts/lib/playwright.ts`.
  *
  * Usage:
  *   npx tsx scripts/verify-storage-blocked.ts
@@ -91,8 +91,7 @@
  * own infrastructure failed must never read as a pass *or* as a finding.
  */
 
-import { execSync } from "node:child_process";
-import { pathToFileURL } from "node:url";
+import { loadChromium } from "./lib/playwright";
 
 const USAGE = `Usage: npx tsx scripts/verify-storage-blocked.ts [--base <url>] [--mode local|session|both] [--json] [extra /paths...]`;
 
@@ -316,88 +315,6 @@ async function verifyInjection(browser: Browser, url: string): Promise<string | 
   }
 }
 
-/**
- * Finds Playwright without making it a dependency of this repo.
- *
- * Four candidates, in order, and the order is the point:
- *
- *   1. `PLAYWRIGHT_MODULE_PATH`, if set — and if it is set, **nothing else is
- *      tried**. Somebody who names a copy explicitly and names it wrongly is
- *      better served by an error than by a different copy found silently. It is
- *      also how the "no Playwright" path gets exercised without renaming a
- *      global directory.
- *   2. The bare specifier, which is what a repo that does depend on Playwright,
- *      or a `pnpm dlx` invocation, would resolve. **ESM ignores `NODE_PATH`**,
- *      so on this machine it finds nothing — the reason the other candidates
- *      exist at all.
- *   3. `npm root -g`, the portable spelling of "the global install".
- *   4. `D:/npm-global/node_modules`, this machine's global root, for the case
- *      where npm itself is not on PATH.
- *
- * @returns Playwright's `chromium` launcher, or null if no copy was found.
- */
-async function loadChromium(): Promise<BrowserLauncher | null> {
-  const override = process.env.PLAYWRIGHT_MODULE_PATH;
-  const specifiers = override
-    ? [toSpecifier(override)]
-    : ["playwright", ...globalSpecifiers()];
-
-  for (const specifier of specifiers) {
-    try {
-      const loaded = (await import(specifier)) as PlaywrightModule;
-      // Playwright is CommonJS, so under an ESM import the named exports may
-      // arrive on `.default` instead of on the namespace object.
-      const chromium = loaded.chromium ?? loaded.default?.chromium;
-      if (chromium) return chromium;
-    } catch {
-      // Try the next candidate; the caller reports the one honest failure.
-    }
-  }
-
-  return null;
-}
-
-/**
- * Turns a filesystem path into the `file://` URL that `import()` requires.
- *
- * The scheme test needs **two or more** leading characters, and that is the
- * whole point of it: `D:/npm-global/...` matches a one-letter scheme pattern,
- * so a naive `/^[a-z]+:/i` reads this machine's drive letter as a URL scheme,
- * hands the raw path to `import()`, and gets back "Only URLs with a scheme in:
- * file, data, and node are supported ... Received protocol 'd:'". Which this
- * function then swallowed as "Playwright is not installed".
- */
-function toSpecifier(path: string): string {
-  return /^[a-z][a-z0-9+.-]+:/i.test(path) ? path : pathToFileURL(path).href;
-}
-
-/** Global-install candidates, most portable first. */
-function globalSpecifiers(): string[] {
-  const roots: string[] = [];
-
-  try {
-    // `execSync`, not `execFileSync`, and both halves of that matter on
-    // Windows: npm is `npm.cmd`, which `execFileSync` has refused outright
-    // with EINVAL since the Node 20.12 fix for CVE-2024-27980, and passing an
-    // args array with `shell: true` instead earns a DEP0190 deprecation
-    // warning on every run. One constant command string avoids both.
-    roots.push(
-      execSync("npm root -g", {
-        encoding: "utf8",
-        stdio: ["ignore", "pipe", "ignore"],
-      }).trim(),
-    );
-  } catch {
-    // npm is not on PATH, or is not installed. The hardcoded root may still hit.
-  }
-
-  roots.push("D:/npm-global/node_modules");
-
-  return roots
-    .filter(Boolean)
-    .map((root) => toSpecifier(`${root.replace(/\\/g, "/")}/playwright/index.js`));
-}
-
 /** Confirms something is answering on `base` before a browser is launched. */
 async function preflight(base: string): Promise<string | null> {
   try {
@@ -549,7 +466,7 @@ async function main() {
     process.exit(1);
   }
 
-  const chromium = await loadChromium();
+  const chromium = await loadChromium<Browser>();
   if (!chromium) {
     console.error(
       "Playwright is not installed. It is deliberately not a dependency of this repo " +
@@ -711,15 +628,6 @@ interface Page {
   ): Promise<{ status(): number } | null>;
   waitForTimeout(ms: number): Promise<void>;
   evaluate<T>(fn: () => T): Promise<T>;
-}
-
-interface BrowserLauncher {
-  launch(): Promise<Browser>;
-}
-
-interface PlaywrightModule {
-  chromium?: BrowserLauncher;
-  default?: { chromium?: BrowserLauncher };
 }
 
 main().catch((error) => {

@@ -156,6 +156,7 @@ npx tsx scripts/verify-image-paths.ts
 npx tsx scripts/mailchimp/verify-export.ts --export 2026-08-17   # needs the vault
 npx tsx scripts/seo/verify-page-metadata.ts --base http://localhost:3100
 npx tsx scripts/verify-storage-blocked.ts --base http://localhost:3100  # needs a browser too
+npx tsx scripts/verify-panel-contrast.ts --base http://localhost:3100   # same, and exits 2 on a flat card
 ```
 
 **A guard is not verified until you have broken the thing it guards.** Reading
