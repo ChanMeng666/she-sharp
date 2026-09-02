@@ -33,7 +33,7 @@ export function DeckArchiveCard({
   eventHref,
 }: DeckArchiveCardProps) {
   return (
-    <article className="group flex flex-col overflow-hidden rounded-[32px] border border-border bg-background transition-colors hover:border-brand/40">
+    <article className="group flex flex-col overflow-hidden rounded-[32px] border border-border bg-white transition-colors hover:border-brand/40">
       <Link
         href={`/present/${slug}`}
         className="relative block aspect-[16/10] overflow-hidden bg-muted"

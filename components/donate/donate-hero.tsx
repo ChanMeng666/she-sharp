@@ -90,7 +90,7 @@ export function DonateHero() {
             transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
             className="lg:justify-self-end"
           >
-            <div className="mx-auto w-full max-w-md rounded-[32px] border border-border bg-background p-8 shadow-sm sm:p-10">
+            <div className="mx-auto w-full max-w-md rounded-[32px] border border-border bg-white p-8 sm:p-10">
               <p className="text-label mb-6 text-center text-ink-500">
                 Choose your contribution
               </p>

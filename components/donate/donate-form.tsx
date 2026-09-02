@@ -61,7 +61,7 @@ export function DonateForm({ className }: { className?: string }) {
               "rounded-xl border-2 py-4 text-lg font-semibold transition-colors",
               selectedAmount === amount
                 ? "border-brand bg-brand text-white"
-                : "border-border bg-background text-foreground hover:border-brand"
+                : "border-border bg-muted text-foreground hover:border-brand"
             )}
           >
             ${amount}

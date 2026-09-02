@@ -54,7 +54,7 @@ export default function PodcastsPage() {
             {FEATURED_EPISODES.map((episode) => (
               <div
                 key={episode.id}
-                className="overflow-hidden rounded-[32px] border border-border bg-background"
+                className="overflow-hidden rounded-[32px] border border-border bg-white"
               >
                 <iframe
                   src={getSpotifyEpisodeEmbedUrl(episode.id)}

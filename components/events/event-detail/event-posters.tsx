@@ -49,7 +49,7 @@ export function EventPosters({ event, className }: EventPostersProps) {
                 type="button"
                 onClick={() => lightbox.openAt(index)}
                 aria-label={`View poster ${index + 1} of ${tiles.length} full size`}
-                className="group block w-full cursor-pointer overflow-hidden rounded-[16px] border border-border bg-background focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+                className="group block w-full cursor-pointer overflow-hidden rounded-[16px] border border-border bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
               >
                 {/*
                   Posters carry no dimensions in the event data, so

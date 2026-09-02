@@ -24,7 +24,7 @@ export function EventInfoSections({ event }: EventInfoSectionsProps) {
       <Container size="content">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
           {sections.map((section, i) => (
-            <div key={i} className="rounded-[16px] border border-border bg-background p-6 md:p-8">
+            <div key={i} className="rounded-[16px] border border-border bg-white p-6 md:p-8">
               <h3 className="text-xl font-semibold text-foreground">
                 {section.title}
               </h3>

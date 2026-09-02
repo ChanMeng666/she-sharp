@@ -14,7 +14,7 @@ interface ImpactReportsCardProps {
  */
 export function ImpactReportsCard({ reports }: ImpactReportsCardProps) {
   return (
-    <article className="flex h-full flex-col overflow-hidden rounded-[32px] border border-border bg-background">
+    <article className="flex h-full flex-col overflow-hidden rounded-[32px] border border-border bg-white">
       <div className="relative aspect-[16/10] overflow-hidden">
         <Image
           src="/img/impact.jpg"

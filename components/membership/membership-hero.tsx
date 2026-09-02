@@ -34,7 +34,7 @@ export function MembershipHero() {
           <div className="order-1 lg:order-2">
             <div className="relative grid h-[420px] grid-cols-2 grid-rows-2 gap-3 sm:h-[500px]">
               {/* Large left image spanning 2 rows */}
-              <CurtainReveal className="relative row-span-2 border border-border p-1.5 bg-background">
+              <CurtainReveal className="relative row-span-2 border border-border p-1.5 bg-white">
                 <div className="relative h-full w-full overflow-hidden">
                   <Image
                     src="/img/gallery/IMG_2418.jpg"
@@ -48,7 +48,7 @@ export function MembershipHero() {
               </CurtainReveal>
 
               {/* Top-right image */}
-              <CurtainReveal delay={90} className="relative border border-border p-1.5 bg-background">
+              <CurtainReveal delay={90} className="relative border border-border p-1.5 bg-white">
                 <div className="relative h-full w-full overflow-hidden">
                   <Image
                     src="/img/gallery/IMG_2475.jpg"
@@ -61,7 +61,7 @@ export function MembershipHero() {
               </CurtainReveal>
 
               {/* Bottom-right image */}
-              <CurtainReveal delay={180} className="relative border border-border p-1.5 bg-background">
+              <CurtainReveal delay={180} className="relative border border-border p-1.5 bg-white">
                 <div className="relative h-full w-full overflow-hidden">
                   <Image
                     src="/img/gallery/Image_202606.jpg"

@@ -70,7 +70,7 @@ export function JoinTeamTestimonialsSection() {
                         {visibleTestimonials.map((testimonial, index) => (
                             <Card
                                 key={`${currentIndex + index}-${testimonial.name}`}
-                                className="card-sm p-4 sm:p-5 md:p-6 bg-background border border-border shadow-none hover:border-foreground/30 transition-colors duration-300 flex flex-col"
+                                className="card-sm p-4 sm:p-5 md:p-6 bg-white border border-border shadow-none hover:border-foreground/30 transition-colors duration-300 flex flex-col"
                             >
                                 <MessageSquareQuote className="w-8 h-8 text-brand shrink-0 mb-4" />
                                 <p className="text-base text-foreground mb-6 leading-relaxed flex-1">

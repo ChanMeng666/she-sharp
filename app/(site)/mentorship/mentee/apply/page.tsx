@@ -746,7 +746,7 @@ function MenteeApplyForm() {
                 <Label>Industries for Mentorship (Optional)</Label>
                 <HintIcon hint="Industries you'd like to transition into or learn more about." />
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3 max-h-48 overflow-y-auto p-3 bg-background border rounded-lg">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3 max-h-48 overflow-y-auto p-3 bg-white border rounded-lg">
                 {industryOptions.map((opt) => (
                   <div key={opt.value} className="flex items-center space-x-2">
                     <Checkbox
