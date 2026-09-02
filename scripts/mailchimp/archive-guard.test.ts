@@ -516,6 +516,138 @@ check(
     "\n      A Blob URL is immutable for a year. See scripts/mailchimp/withheld-images.ts."
 );
 
+// ---------------------------------------------------------------------------
+// Completeness — the direction every check above this line faces away from.
+//
+// Everything so far asks "is what we published correct?". Nothing asked "did we
+// publish everything?", and on 2026-09-02 that was measured: the back catalogue
+// was complete, but only by luck of nobody having re-run the extractor with a
+// send it did not card. The card files are the annotating pass; a check keyed on
+// them inherits their blind spot and exits 0 — the lesson `withheld-images`
+// learned the expensive way. So these two ask `index.json`, which is derived
+// from what Mailchimp actually sent and knows nothing about what we chose to
+// show.
+//
+// KNOWN LIMIT, stated rather than papered over: `index.json` carries the
+// SUBJECT line, not Mailchimp's internal campaign title, so an issue whose
+// subject omits the word "newsletter" is invisible to the coverage check. All
+// 60 to date contain it — including "She Sharp Newsletter — We are back for
+// 2025 💜", the one whose subject names no month. Matching the archive-URL slug
+// instead was tried and is worse: Mailchimp carries the slug over when a
+// campaign is duplicated, so the July 2025 *event* EDM sits on a
+// `she-sharp-newsletter-march2025` URL.
+// ---------------------------------------------------------------------------
+
+/**
+ * Sent newsletters that deliberately have no card, each keyed to the send that
+ * supersedes it. Both are same-day corrections: Mailchimp cannot edit a
+ * campaign once it is away, so a botched send is followed by a second one, and
+ * the archive holds both. Carding both would put the same issue on the page
+ * twice under one month.
+ */
+const DUPLICATE_SENDS: Record<string, string> = {
+  "29d7d47e2e":
+    "April 2026, first attempt. Went out subject-lined 'Newsletter - April " +
+    "2026 v0.2' from a stale ambassador address that displayed the sender as " +
+    "'A'. Superseded the same day by b94b03986b, which is the 2026-04 card.",
+  d39f030ee6:
+    "June 2026, first attempt. Correct body, but the subject line still read " +
+    "'She Sharp Newsletter - May 2026' — a month old on arrival. Superseded " +
+    "the same day by e9835f97b7, which is the 2026-06 card.",
+};
+
+const cardedCampaigns = new Set(
+  rendered.map((issue) => issue.campaign).filter(Boolean) as string[]
+);
+const looksLikeNewsletter = (subject: string) => /newsletter/i.test(subject);
+
+const unclaimed = index.entries.filter(
+  (entry) =>
+    looksLikeNewsletter(entry.subject) &&
+    !cardedCampaigns.has(entry.id) &&
+    !(entry.id in DUPLICATE_SENDS)
+);
+check(
+  "every archived newsletter send is either carded or a declared duplicate",
+  unclaimed.length === 0,
+  first(unclaimed.map((e) => `${e.sendTime.slice(0, 10)} ${e.id} — ${e.subject}`)) +
+    "\n      An issue She Sharp sent that the archive page does not list. Add a" +
+    "\n      card in newsletters-manual.ts, or — if it is a corrected re-send —" +
+    "\n      add it to DUPLICATE_SENDS above naming the send that supersedes it."
+);
+
+const staleDuplicates = Object.keys(DUPLICATE_SENDS).filter(
+  (id) => !index.entries.some((e) => e.id === id) || cardedCampaigns.has(id)
+);
+check(
+  "no DUPLICATE_SENDS entry is stale",
+  staleDuplicates.length === 0,
+  first(staleDuplicates) +
+    "\n      An allow-list entry that no longer names an uncarded archived send" +
+    "\n      excuses nothing and hides the next one. Delete it."
+);
+
+// A card's id is the month a reader sees, and nothing before 2026-09-02 checked
+// it against the send. `2025-01` sat on a campaign sent 2025-02-28 for as long
+// as the card existed, so the page showed a January issue that was never
+// written and no February issue at all — which is what "the archive looks
+// incomplete" turned out to mean.
+//
+// Two cadences are legitimate and both are in the data: an issue sent inside
+// its own month (51 cards), and one that slipped and went out in the opening
+// days of the next (5 cards — 1, 2, 3, 4 and 6 days in).
+//
+// THE DAY-OF-MONTH BOUND IS LOAD-BEARING, and it is here because the first
+// version of this check passed the defect it was written for. "The month it was
+// sent, or the one before" admits 2025-01 serving a send of 2025-02-28: drift is
+// +1 either way, and a rule that only counts months cannot tell a late January
+// issue from an on-time February one. What separates them is the day — a slipped
+// issue goes out on the 1st, not the 28th, by which point the next issue is due.
+// Cutting at 10 keeps every real late send with four days to spare.
+//
+// A genuine slip past the 10th would fail this, which is the intended cost: it
+// is a fortnight late, somebody should look at it, and MONTH_EXCEPTIONS is where
+// the answer gets written down rather than assumed.
+const LATE_SEND_GRACE_DAYS = 10;
+
+const MONTH_EXCEPTIONS: Record<string, string> = {
+  "2023-04":
+    "The deliberate 2023-04/2023-05 swap documented in newsletters-archive.ts. " +
+    "This card serves the campaign subject-lined 'May 2023', sent 2023-05-22 — " +
+    "22 days into the following month, so it is outside the slip window rather " +
+    "than a late send.",
+  "2023-05":
+    "The other half of the same swap: this card serves the campaign " +
+    "subject-lined 'April 2023', sent 2023-04-20, a month BEFORE its own. Both " +
+    "halves are listed because the legacy site linked them that way and " +
+    "re-dating a card is a content decision, not a guard's.",
+};
+
+const misdated = rendered.filter((issue) => {
+  if (!issue.campaign || issue.id in MONTH_EXCEPTIONS) return false;
+  const entry = index.entries.find((e) => e.id === issue.campaign);
+  if (!entry) return false;
+  const [sentYear, sentMonth] = entry.sendTime.slice(0, 7).split("-").map(Number);
+  const sentDay = Number(entry.sendTime.slice(8, 10));
+  const drift = sentYear * 12 + sentMonth - (issue.year * 12 + issue.month);
+  if (drift === 0) return false;
+  return !(drift === 1 && sentDay <= LATE_SEND_GRACE_DAYS);
+});
+check(
+  "each card's month matches when its campaign was sent, allowing a slip into " +
+    `the first ${LATE_SEND_GRACE_DAYS} days of the next month`,
+  misdated.length === 0,
+  first(
+    misdated.map((issue) => {
+      const entry = index.entries.find((e) => e.id === issue.campaign);
+      return `${issue.id} serves ${issue.campaign} sent ${entry?.sendTime.slice(0, 10)}`;
+    })
+  ) +
+    "\n      Either the card is on the wrong month — check Mailchimp's internal" +
+    "\n      campaign title, which names a month even when the subject line does" +
+    "\n      not — or the drift is deliberate and belongs in MONTH_EXCEPTIONS."
+);
+
 console.log("");
 if (failures > 0) {
   console.error(`${failures} check(s) failed.`);

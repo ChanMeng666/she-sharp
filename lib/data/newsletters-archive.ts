@@ -44,12 +44,20 @@
  *   June 2022" and still resolves. It is restored in `newsletters-manual.ts`.
  *   The legacy site was missing four issues in this stretch, and this was the
  *   last of them not to be recovered.
- * - February 2025 is unresolved. The February issue was written, laid out,
- *   reviewed and confirmed sent, but the most likely explanation is that it
- *   went out at the end of February under the name
- *   `she-sharp-newsletter-march2025` — i.e. it is the `2025-03` entry below,
- *   not a missing issue. Needs a human to check the send date in Mailchimp.
+ * - February 2025 is resolved, and the answer was neither of the two this
+ *   comment used to weigh. It is not the `2025-03` entry, and it is not
+ *   missing: it is the card below labelled `2025-01`, which carries a campaign
+ *   sent on 28 February 2025 under Mailchimp's own internal title "February
+ *   2025". The subject line names no month ("We are back for 2025"), so the
+ *   legacy site guessed, and guessed January — a month in which Mailchimp sent
+ *   nothing at all. Corrected 2026-09-02 by retracting `2025-01` and serving
+ *   the same campaign as `2025-02` from `newsletters-manual.ts`, where the
+ *   five readings behind that are written out. The `2025-01` entry stays here
+ *   because this crawl is a record of what the legacy site said, not of what
+ *   was true.
  * - November 2025 genuinely did not go out; the founder noticed in December.
+ *   Confirmed 2026-09-02: the draft survives in Mailchimp titled "Newsletter -
+ *   NOV DEC 2025" and was never sent — November was folded into December.
  *
  * RECOVERED: the seven March–September 2021 cards used to point at
  * `shesharp.org.nz/wp-content/uploads/2021/...`, all dead — the WordPress site

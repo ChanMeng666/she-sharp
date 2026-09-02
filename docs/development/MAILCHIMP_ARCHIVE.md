@@ -1,8 +1,14 @@
 # The Mailchimp audience archive
 
-She Sharp's newsletter went out from Mailchimp from July 2019 until the move to
+She Sharp's mail went out from Mailchimp from July 2019 until the move to
 Resend. On 17 August 2026 the audience `She#` was exported by hand, in the five
 files Mailchimp produces: one per subscription status, plus archived contacts.
+
+**July 2019 is when the account started sending, not when the newsletter
+started.** Everything until 2021-03-01 is event mail; the monthly series begins
+there. That sentence said "newsletter" until 2026-09-02 and was read as a claim
+about the monthly series, which made the archive page look eighteen months
+short. See "The back catalogue is complete" below.
 
 **3,689 contacts. 1,560 of them are the mailing list. The other 2,129 left,
 hard-bounced, or never subscribed at all.** Keeping those two numbers apart is
@@ -491,6 +497,151 @@ npx tsx scripts/mailchimp/manifest.ts --export 2026-08-28-api --verify-assets
 and would overwrite the whole API entry with `files: []`. Verify skips the
 binaries unless asked, because re-hashing 548 MB on every run is how a check
 stops being run.
+
+## The back catalogue is complete — the 2026-09-02 audit
+
+**Why this section exists.** `/resources/newsletters` reads as though issues are
+missing: it shows **59** cards and its months are visibly gappy — nothing before
+March 2021, nothing in January or February of 2021, 2022 or 2023, nothing for
+February 2025, November 2025, January 2026 or February 2026. The obvious reading
+is that the Mailchimp export dropped them. On **2026-09-02** that reading was
+tested against three independent records and it is **wrong**: the export lost
+nothing. Every gap but one is a month in which no newsletter was sent, and the
+one exception was a **mislabelled card**, not a missing issue.
+
+This is written down because the question will be asked again — a gappy archive
+invites it — and because re-deriving the answer costs a day.
+
+### What the export actually contains
+
+| | |
+|---|---|
+| Campaigns in the Mailchimp account, all statuses | **213** (180 sent, 32 drafts, 1 scheduled) |
+| Sent campaigns pulled by `extract-archive.ts` (`status=sent`) | **180** |
+| Committed to `lib/data/newsletter-archive/` | **179** |
+| Sent campaigns with no body | **1** — `a487b3025c` |
+| Of the 180, subject-lined as a newsletter | **60** |
+| Of those 60, carded on `/resources/newsletters` | **58** |
+| Deliberately uncarded | **2**, both same-day corrected re-sends |
+
+**The one campaign with no body is not a newsletter.** `a487b3025c` is the
+Vector EDM of 2025-11-01 and the account's only `variate` (A/B) campaign, which
+is why the content endpoint returned nothing for it. It has never been on the
+archive page and does not belong there.
+
+**The two uncarded newsletters are duplicates, not omissions.** Mailchimp cannot
+edit a campaign once it is away, so a botched send is followed by a second one
+and the archive keeps both. `29d7d47e2e` (2026-04-13) went out displaying the
+sender as "A" from a stale ambassador address and was superseded the same day by
+`b94b03986b`; `d39f030ee6` (2026-06-23) carried the correct June body under the
+subject line "She Sharp Newsletter - May 2026" and was superseded the same day by
+`e9835f97b7`. Both are declared in `DUPLICATE_SENDS` in
+`scripts/mailchimp/archive-guard.test.ts`, each naming the send that replaces it.
+
+The remaining **119** uncarded sends were read one by one: event EDMs, speaker
+reveals, reminders, an erratum, three surveys. Not one is a monthly issue.
+
+### The monthly newsletter began in March 2021
+
+The first sentence of this document — "She Sharp's newsletter went out from
+Mailchimp from July 2019" — is about the **account**, not the monthly series, and
+has been misread as the latter. All ~30 sends between 2019-07-16 and 2021-02-24
+are event mail: Blockchain 101, Beyond Digital, the Storytellers Series, the Xero
+quiz night, Girl's Night Out. The first campaign whose subject or title contains
+"Newsletter" is `839196b7be`, **"She Sharp Newsletter - March 2021", sent
+2021-03-01**, and `#monthly-newsletter` opened on 2021-01-19 with two design
+concepts and no issues. The 2021 cards link `shesharp.org.nz/wp-content/uploads/`
+PDFs because each issue was laid out as a PDF, emailed, and *then* posted to the
+site — the same issue in two formats, not two series. **There is no pre-2021 back
+catalogue to recover, in email, PDF or web.**
+
+### Every gap, and what closes it
+
+| Month | Why the page skips it |
+|---|---|
+| before 2021-03 | The series had not started |
+| 2021-01, 2021-02 | Design phase — the March issue is called "the first newsletter" in-channel |
+| 2022-01, 2022-02 | Skipped. When the site was rebuilt in 2023 somebody went looking for "issues 11-14 … **4** newsletters between Dec 2021 and July 2022" — March to June. Six would mean January and February existed |
+| 2023-01 | Skipped, and announced: the December 2022 sign-off says "looking forward to seeing you all again **from February 2023**" |
+| **2025-02** | **Not a gap — the card was on the wrong month.** See below |
+| 2025-11 | Not sent. The founder asked in December, "Did we send newsletter in November? I can't find it in my email." The draft survives in Mailchimp titled "Newsletter - **NOV DEC** 2025" and was never sent; November was folded into the December issue |
+| 2026-01 | Skipped — no draft, no test, no send |
+| 2026-02 | Slipped into March. Already recorded in `NEWSLETTER_RETRACTED`; the 2026-03-02 send is a duplicate of the December 2025 campaign, caught in review still titled "december 2025" |
+
+**Do not read a skipped January or February as data loss.** She Sharp's year
+restarts in late February or March, and five of the eight gaps are that.
+
+**A late send is not a gap either.** Six issues went out in the month after the
+one they cover — the June 2023 issue on 3 July, July 2023 on 1 August, August
+2024 on 4 September, November 2024 on 2 December, April 2025 on 6 May. All are
+carded under the month they cover, which is why the page looks emptier than the
+send log in some months and fuller in others.
+
+### The one real defect: January 2025 was February 2025
+
+The card `2025-01` served campaign `dcc451d2d3`, and five independent readings
+put that campaign in February:
+
+1. `index.json` records the send at **2025-02-28**.
+2. Mailchimp's own **internal campaign title is "February 2025"**. The subject
+   line — "She Sharp Newsletter — We are back for 2025" — names no month, which
+   is how the legacy Webflow site came to guess one, and guess wrong.
+3. The preheader reads "Check out what we got lined up in **March**".
+4. The body cites news dated 2025-02-18 and 2025-02-20.
+5. `#monthly-newsletter` opens the cycle on 2025-02-24, worries on 02-27 that
+   "we need to send it today/tomorrow", and sends on 02-28. The strings
+   "January 2025" and "Jan 2025" appear nowhere in the channel.
+
+And **Mailchimp sent nothing at all in January 2025**, so there is no January
+issue for this one to displace. Corrected on 2026-09-02 by adding a `2025-02`
+entry to `NEWSLETTER_MANUAL` and retracting `2025-01` — the frozen crawl in
+`newsletters-archive.ts` keeps saying January, because it is a record of what the
+legacy site said rather than of what was true.
+
+### Why nobody noticed for eighteen months
+
+`archive-guard.test.ts` was thorough in one direction only. It checked that every
+card resolved, that no card pointed back at Mailchimp, that no two cards claimed
+one campaign, that retracted ids 404 — all questions of the form *"is what we
+published correct?"*. **Nothing asked whether we had published everything**, and
+nothing compared a card's month against the date its campaign was actually sent.
+A check keyed on the cards inherits the cards' blind spot and exits 0; the
+withheld-images guard learned the same lesson on 2026-08-30. Two checks added
+2026-09-02 key on `index.json` instead, which is derived from what Mailchimp sent
+and knows nothing about what the site chose to show:
+
+- **every archived newsletter send is carded or a declared duplicate** — a
+  future extraction that pulls in an issue nobody cards fails CI;
+- **a card's month matches its send**, allowing a slip into the first 10 days of
+  the following month.
+
+**The day-of-month bound on that second check is load-bearing, and the first
+version did not have it.** "The month it was sent, or the one before" admits
+`2025-01` serving a send of 2025-02-28 — the drift is +1 either way — so the
+check passed the very defect it was written for until it was run against it. A
+slipped issue goes out on the 1st, not the 28th, by which point the next one is
+due. Both checks were verified by breaking what they guard, not by reading them.
+
+**Known limit, stated rather than papered over:** `index.json` carries the
+subject line, not Mailchimp's internal title, so an issue whose subject omits the
+word "newsletter" would be invisible to the coverage check. All 60 to date
+contain it. Matching the archive-URL slug instead was tried and is worse —
+Mailchimp carries the slug across when a campaign is duplicated, so the July 2025
+*event* EDM sits on a `she-sharp-newsletter-march2025` URL.
+
+### Re-taking this
+
+```bash
+npx tsx scripts/mailchimp/archive-guard.test.ts
+```
+
+The send-side figures come from the vault's `campaigns-all.json` (all statuses —
+`sent-campaigns.json` is the 180 subset and cannot tell you about a draft), and
+the human record is `#monthly-newsletter` in the private archive repo, one file
+per year from 2021. **Silence in that channel is not evidence of a skip**: the
+2024 file stops at 2024-09-30 and the October, November and December issues all
+went out. Every skip above is carried by a positive statement plus the send log,
+never by absence alone.
 
 ## Known gaps and open items
 

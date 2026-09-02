@@ -79,6 +79,32 @@ export const NEWSLETTER_MANUAL: NewsletterIssue[] = [
     source: "https://mailchi.mp/d19ba8c843ff/xe8t2dvmn3-5867920",
     campaign: "e9835f97b7",
   },
+  // Also a correction rather than a new issue, and the one the archive file's
+  // header left open ("February 2025 is unresolved ... Needs a human to check
+  // the send date in Mailchimp"). Checked on 2026-09-02, and it is the February
+  // issue on five independent readings:
+  //
+  //   1. `newsletter-archive/index.json` puts the send at 2025-02-28.
+  //   2. Mailchimp's own internal campaign title is "February 2025" — the
+  //      subject line, "We are back for 2025", names no month, which is how the
+  //      legacy site came to guess one.
+  //   3. The preheader reads "Check out what we got lined up in March".
+  //   4. The body cites news dated 2025-02-18 and 2025-02-20.
+  //   5. #monthly-newsletter opens this cycle on 2025-02-24, worries on 02-27
+  //      that "we need to send it today/tomorrow", and sends on 02-28. The
+  //      strings "January 2025" and "Jan 2025" appear nowhere in the channel.
+  //
+  // And there is no January issue to displace: Mailchimp sent nothing at all in
+  // January 2025. So this is the same card under its right month, not a second
+  // one — `2025-01` is retracted below, which is what moves the URL with it.
+  {
+    id: "2025-02",
+    month: 2,
+    year: 2025,
+    url: "/resources/newsletters/2025-02",
+    source: "https://mailchi.mp/shesharp/she-sharp-newsletter-december2024-5854405",
+    campaign: "dcc451d2d3",
+  },
   // Restoring a back issue rather than adding a new one. The legacy Webflow
   // site had no card for June 2022, and `newsletters-archive.ts` used to read
   // that absence as "no newsletter that month". It went out: the draft was
@@ -96,7 +122,11 @@ export const NEWSLETTER_MANUAL: NewsletterIssue[] = [
 ];
 
 /**
- * Archive entries that were never real issues.
+ * Archive entries that must not render — either because they were never real
+ * issues (`2026-02`), or because the issue is real but the crawl filed it under
+ * the wrong month and it renders correctly from `NEWSLETTER_MANUAL` above
+ * (`2025-01`, served as `2025-02`). Both need the same thing: the card gone and
+ * the URL with it. Do not read a retraction as "this issue does not exist".
  *
  * `newsletters-archive.ts` is a frozen crawl of the legacy site and is not
  * hand-edited, so a card that should never have existed is suppressed here
@@ -118,6 +148,17 @@ export const NEWSLETTER_RETRACTED: { id: string; reason: string }[] = [
       "2026 campaign, and Mailchimp's own archive has no newsletter between " +
       "24 December 2025 and 3 March 2026 — the February issue slipped and went " +
       "out as March. Verified against the campaign archive 2026-08.",
+  },
+  {
+    id: "2025-01",
+    reason:
+      "Mislabelled, not missing. Mailchimp sent nothing whatsoever in January " +
+      "2025; the campaign this card carried went out on 28 February 2025 under " +
+      "the internal title 'February 2025', and is served as `2025-02` above. " +
+      "The legacy site guessed a month because the subject line — 'We are back " +
+      "for 2025' — names none. Retracting the id rather than editing the frozen " +
+      "crawl keeps the crawl faithful and moves the URL with the card. " +
+      "Verified 2026-09-02 against the campaign archive and #monthly-newsletter.",
   },
 ];
 
