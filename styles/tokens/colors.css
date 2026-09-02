@@ -13,8 +13,23 @@
      语义化颜色（shadcn/ui 标准）
      ======================================== */
 
-  /* 背景与前景 — Editorial: white canvas, navy ink */
-  --background: 0 0% 100%;           /* #ffffff 白色背景 */
+  /* Background and foreground — Editorial: warm canvas, navy ink.
+     The canvas is #f9f5f8, not white, and always has been: until 2026-09-02
+     this said `0 0% 100%` while an unlayered `--color-background: #f9f5f8` at
+     the bottom of this file overrode it, and unlayered CSS beats the `@theme`
+     layer that `app/globals.css` puts the mapping in. Two consequences, both
+     measured: `bg-background` painted #f9f5f8 in light mode while every
+     comment here claimed white, and in DARK mode it painted #f9f5f8 too —
+     the override had no `.dark` counterpart, so every `bg-background` surface
+     stayed pink under white text. One definition now, and it is the one the
+     site actually renders.
+
+     The lightness is 96.8627%, not a tidy 97%: that is the exact HSL of
+     #f9f5f8, and rounding it moves the alpha variants. `border-background/40`
+     on the About carousel arrows shifted by 0.0011 oklab L at a tidy 97% —
+     invisible, but a diff that is provably zero is worth more than a round
+     number. */
+  --background: 315 25% 96.8627%;    /* #f9f5f8 canvas, exactly */
   --foreground: 241 39% 19%;         /* #1f1e44 Navy Dark 文字 */
 
   /* 卡片 */
@@ -186,7 +201,12 @@
   --color-error: #d72f40;            /* 错误红色 */
   --color-ghost-white: #f3f3f1;      /* 幽灵白（背景色） */
   --color-light-pink: #F5D7E3;       /* 浅粉色 */
-  --color-background: #f9f5f8;       /* 背景色 */
+  /* `--color-background` used to sit here. It is a Tailwind theme name, not a
+     brand colour, and declaring one outside `@theme` silently outranks the
+     mapping in `app/globals.css` — including in dark mode, which had no
+     counterpart here. `--background` at the top of this file is the single
+     definition now; do not reintroduce a `--color-*` twin for any semantic
+     token. */
 }
 
 /* ==========================================
