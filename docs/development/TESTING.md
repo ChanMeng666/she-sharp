@@ -123,6 +123,10 @@ It is resolved at runtime instead — `PLAYWRIGHT_MODULE_PATH`, then the bare
 specifier, then `npm root -g` — and says so in one sentence when it finds
 nothing, rather than throwing.
 
+Like `verify-page-metadata.ts`, it is only as honest as the build underneath it:
+see "Clearing a stale build, on Windows, for real" above before believing a run
+of it, and especially before believing that reverting something made it pass.
+
 Run it against a local `next start` on port 3100, and **kill any orphan server
 on the port first**, exactly as for `verify-page-metadata.ts`.
 
@@ -148,9 +152,52 @@ It needs a running site and makes ~121 live requests, so it tests a deployment
 rather than a diff. Run it after a deploy, or before a PR that touches metadata,
 against a local `next start` on port 3100.
 
-**Kill any orphan `next start` on the port first.** A stale server serves an
-OLD build, which makes a correct fix look broken and has cost more than one
-afternoon.
+**Kill any orphan `next start` first — and on Windows, not by port.** A stale
+server serves an OLD build, which makes a correct fix look broken and has cost
+more than one afternoon. See the next section for what actually clears it: this
+paragraph used to say "on the port", and that turned out not to be enough.
+
+### Clearing a stale build, on Windows, for real
+
+Both checks above run against a local `next start`, so both have this exposure.
+On 2026-09-02 it caught **two people independently, on the same step**, and the
+remedy this file had been prescribing was part of the reason.
+
+Two failures the obvious commands hide:
+
+- **Killing by port reports success while the server is still alive.** The port
+  lookup finds no listener and you conclude it is gone.
+- **`rm -rf .next` in Git Bash silently leaves files behind** that a running
+  process holds. What you get is not a clean tree and not an error — it is a
+  **half-replaced build**, where one function carries your change and another
+  does not, and it will happily serve both.
+
+What actually works, from PowerShell:
+
+```powershell
+Get-CimInstance Win32_Process -Filter "Name='node.exe'" |
+  Where-Object { $_.CommandLine -like '*next start*' } | Stop-Process -Force
+Remove-Item "<repo>\.next" -Recurse -Force
+Test-Path "<repo>\.next"          # must print False before you rebuild
+```
+
+Then rebuild, and **grep the built output for the change you are expecting**
+before you trust the run:
+
+```bash
+grep -rho 'try{return localStorage.getItem' .next/static/chunks/*.js
+```
+
+That last step is the only self-verifying one. Every other step asks the machine
+to confirm it did what you told it; the grep asks the artefact what it contains.
+It is the same principle as `verify-storage-blocked.ts` asking the page whether
+`localStorage.getItem` really throws before it judges anything.
+
+**And it is always the same step that gets you: "I reverted the bug, and now it
+passes."** That is the only move in the cycle where a stale artefact produces
+the answer you were hoping for. A run that *fails* in the specific way you
+predicted cannot be a leftover — so break-it evidence is safe, and restore-it
+evidence is not. Re-verify the restore, or do not claim it.
 
 ### `verify-export.ts` needs the vault
 
