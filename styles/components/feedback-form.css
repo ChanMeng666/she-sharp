@@ -88,15 +88,20 @@
 
 /* --- unanswered -------------------------------------------------------- */
 
+/* The thumb is 28px on a 10px track, so most of it overhangs onto the card
+   behind. That card is white, and a white thumb on it is only as visible as
+   its ring — so the ring is `--ink-300`, the card's own hairline, and not the
+   fainter `--border` it used to borrow. A thumb nobody can see is a question
+   that answers itself, which is the whole point of the unset state. */
 .feedback-range--unset::-webkit-slider-thumb {
   background: #fff;
-  border-color: hsl(var(--border));
+  border-color: var(--ink-300);
   box-shadow: none;
 }
 
 .feedback-range--unset::-moz-range-thumb {
   background: #fff;
-  border-color: hsl(var(--border));
+  border-color: var(--ink-300);
   box-shadow: none;
 }
 

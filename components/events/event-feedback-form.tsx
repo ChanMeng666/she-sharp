@@ -287,14 +287,14 @@ export function EventFeedbackForm({
   };
 
   const cardClass =
-    "bg-background border border-border card-sm p-6 sm:p-8 md:p-10";
+    "bg-white border border-ink-300 card-sm p-6 sm:p-8 md:p-10";
   // `md:text-base` overrides the shared `md:text-sm` in `input.tsx` /
   // `textarea.tsx`: below 16px, iOS Safari zooms the page on focus and the
   // attendee is left scrolled sideways mid-form.
   const fieldClass =
-    "h-12 rounded-2xl bg-background border-border focus:border-brand text-base md:text-base";
+    "h-12 rounded-2xl bg-muted border-border focus:border-brand text-base md:text-base";
   const textareaClass =
-    "rounded-2xl bg-background border-border focus:border-brand resize-y text-base md:text-base";
+    "rounded-2xl bg-muted border-border focus:border-brand resize-y text-base md:text-base";
 
   if (isSuccess) {
     // Read off the answers still held in state — the form deliberately does not
@@ -362,6 +362,7 @@ export function EventFeedbackForm({
             placement="event-feedback"
             defaultEmail={submittedEmail}
             labels={{ cta: "Send me the link" }}
+            tone="card"
             className="mt-4"
           />
         </div>
@@ -455,7 +456,7 @@ export function EventFeedbackForm({
                   className={`h-16 rounded-2xl border text-lg font-semibold transition-colors ${
                     selected
                       ? "bg-brand text-white border-brand"
-                      : "bg-background border-border text-foreground hover:border-brand"
+                      : "bg-muted border-border text-foreground hover:border-brand"
                   }`}
                 >
                   {value}
@@ -499,7 +500,7 @@ export function EventFeedbackForm({
                   className={`h-14 rounded-full border font-medium transition-colors ${
                     selected
                       ? "bg-brand text-white border-brand"
-                      : "bg-background border-border text-foreground hover:border-brand"
+                      : "bg-muted border-border text-foreground hover:border-brand"
                   }`}
                 >
                   {option.label}
@@ -651,7 +652,7 @@ export function EventFeedbackForm({
                   className={`card-sm flex items-center gap-3 p-4 min-h-14 border cursor-pointer transition-colors ${
                     checked
                       ? "border-brand bg-brand/5"
-                      : "border-border bg-background hover:border-brand"
+                      : "border-border bg-muted hover:border-brand"
                   }`}
                 >
                   <Checkbox
