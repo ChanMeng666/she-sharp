@@ -27,9 +27,7 @@ only the founder has it. Nothing here can be done from this repository.
 >
 > **Nothing else has changed.** The account has **not** been paused, downgraded
 > or closed; it is still paid, still holds the audience, and event campaigns are
-> still composed by hand in its console. Whether any further event campaign will
-> be sent from there is the one thing to settle before pressing anything, because
-> a downgrade stops that mail too.
+> still composed by hand in its console.
 >
 > **状态（2026-08-31）：卡住流程的前提已经满足。** 月刊通讯已经离开 Mailchimp。
 > **2026 年 7 月号是 Mailchimp 发出的最后一期通讯**；8 月号于 2026-08-31 从本仓库经
@@ -37,8 +35,69 @@ only the founder has it. Nothing here can be done from this repository.
 > 发信之后"，这个条件现在已经满足，**降级可以做了**。
 >
 > **其余一切照旧。** 账号没有暂停、没有降级、没有删除；仍在付费，受众仍在，
-> 活动宣传邮件仍然在它的后台手工编写发送。按任何按钮之前要先确定的只有一件事：
-> 以后还会不会从 Mailchimp 发活动宣传邮件——降级后那些信也发不了。
+> 活动宣传邮件仍然在它的后台手工编写发送。
+
+## Archive-only — the decision of 2026-09-02 / 仅存档——2026-09-02 的决定
+
+**Mailchimp becomes an archive. Event promotion moves to Resend as well, and
+nothing further is sent from the Mailchimp console.** That is the maintainer's
+decision as at **2026-09-02**, and it settles the one question §2 said had to be
+settled before the billing could be stopped.
+
+**Why, and it is not tidiness.** Mailchimp was never "an account we keep but do
+not use" — it was a live sending channel with **no governance over it at all**.
+Everything this repository built to keep a mailing list honest covers only what
+leaves through Resend: the three-marketing-emails-per-calendar-month cap, the
+consent tiering in `consent-rules.md`, both suppression registers, the one-click
+unsubscribe record, and `email_events`. A campaign composed by hand in
+Mailchimp's console is bound by none of them. That is not a theory — it is what
+**August 2026** looked like: the frequency cap reported **0/3** for the month
+while subscribers received **five** marketing emails, four of them from
+Mailchimp. The cap was not ignored; it was measuring one of two pipelines.
+
+Archive-only collapses **three sending channels to two** — Resend for everything
+this organisation composes, Humanitix for one event's own registrants — and puts
+**one governance regime over all of it**. It also retires the
+`NOT COUNTED: Mailchimp` notice the cap now prints, which was always meant to be
+deleted rather than to become furniture.
+
+**Two things are decided and not done, and nobody in this repository can do
+either.** Both are founder-console actions:
+
+- [ ] **Disconnect the Humanitix → Mailchimp integration** — still connected and
+      still writing as at 2026-09-01 10:40 (§7 and
+      [`HUMANITIX_INTEGRATION_SHUTDOWN.md`](HUMANITIX_INTEGRATION_SHUTDOWN.md))
+- [ ] **Stop the billing** — pause or downgrade to Free (§2). The account is on a
+      **paid monthly plan** as at 2026-09-02; it is not paused, downgraded or
+      closed
+
+**Do not read this section as a description of the present.** The decision is
+made; the buttons are unpressed. Until they are, Mailchimp is still a live
+sender, the frequency cap is still a floor rather than a count, and the one-way
+suppression sync (§6) is still leaving people subscribed there after they have
+left here.
+
+**Mailchimp 变成一个纯存档。活动宣传也搬到 Resend，Mailchimp 后台不再发出任何邮件。**
+这是 **2026-09-02** 的决定，也回答了第 2 节说"停止计费前必须先确定"的那个问题。
+
+**理由不是"整理干净"。** Mailchimp 从来不是"留着但不用的账号"，而是一条**完全不受
+任何规则约束**的发信通道。这个仓库为了让名单保持诚实所建的一切——每月三封营销邮件的
+上限、`consent-rules.md` 的同意分级、两份退订名册、一键退订记录、`email_events`——
+只覆盖经由 Resend 发出的邮件。在 Mailchimp 后台手写的一封campaign 不受其中任何一条
+约束。这不是假设：**2026 年 8 月**，频率上限报告本月 **0/3**，而订阅者实际收到了
+**五封**营销邮件，其中四封来自 Mailchimp。上限没有被无视，它只是在数两条管道中的
+一条。
+
+"仅存档"把**三条发信通道收敛成两条**——本组织自己撰写的一切走 Resend，单场活动的
+购票者通知走 Humanitix——并让**一套规则覆盖全部**。
+
+**两件事已决定但尚未执行，而且仓库里的任何人都做不了**，都必须由创始人在后台操作：
+
+- [ ] **断开 Humanitix → Mailchimp 对接**（截至 2026-09-01 10:40 仍连着、仍在写入）
+- [ ] **停止计费**——暂停或降级到免费版（截至 2026-09-02 仍是付费月度套餐）
+
+**不要把这一节读成"现状"。** 决定做了，按钮还没按。在按下之前，Mailchimp 仍是一个
+活跃的发信平台。
 
 Background: `docs/development/MAILCHIMP_ARCHIVE.md` (what the archive holds),
 `docs/development/EMAIL_PLATFORM_STRATEGY.md` (why we are leaving),
@@ -370,13 +429,49 @@ newsletter leaving on 2026-08-31 did not end it.** The account is still live,
 still sends event campaigns and still runs its own unsubscribe links, so somebody
 who unsubscribes there today exists **only** in Mailchimp's record. Run this
 before the *account's* last send, whenever that is, and before every import in
-the meantime. The script's own header says it: `pull-mailchimp` is "the
-same union, for the platform She Sharp actually sends from… someone who
-unsubscribes today exists ONLY in Mailchimp's record, and `sync` cannot see
-them." It pulls the `unsubscribed` and `cleaned` members and folds them into the
-committed hash file, so a future import can never re-add somebody who left. The
-other command, `suppression.ts sync`, folds in our own `email_optouts` table and
-cannot see Mailchimp's side at all.
+the meantime. The script's own header says it: `pull-mailchimp` is "the same
+union, for the platform She Sharp **used to send from and has NOT switched
+off**… someone who unsubscribes there exists ONLY in Mailchimp's record, and
+`sync` cannot see them." It pulls the `unsubscribed` and `cleaned` members and
+folds them into the committed hash file, so a future import can never re-add
+somebody who left. The other command, `suppression.ts sync`, folds in our own
+`email_optouts` table and cannot see Mailchimp's side at all.
+
+> **That quotation was wrong here until 2026-09-02** — it read "the platform She
+> Sharp actually sends from", which was the header's wording before the cutover.
+> The script was updated and the quotation was not. **A quotation is the one
+> thing a reader assumes is exact**, so a stale one is worse than a stale
+> paraphrase: it invites nobody to check. Re-read
+> `scripts/email/suppression.ts` before quoting it again.
+
+### The sync runs one way only, and seven people are currently on the wrong side
+
+**`pull-mailchimp` brings Mailchimp's departures in. Nothing pushes ours out.**
+There is no `push-mailchimp`, and there is no plan for one. Measured
+**2026-09-02**: all **7** people who have left our list — 6 one-click
+unsubscribes on 2026-08-31 and 09-01, and 1 hard bounce — are still
+`subscribed` in Mailchimp's `She#` audience.
+
+**That is a live risk for exactly as long as Mailchimp keeps sending.** The
+account still composes event campaigns by hand, so the next one goes to seven
+people who pressed unsubscribe on a She Sharp email two days earlier. From their
+side there is one organisation and one list, and an unsubscribe that visibly does
+nothing is how a sender earns spam complaints rather than opt-outs.
+
+**It stops mattering when Mailchimp stops sending, which is what the archive-only
+decision of 2026-09-02 does** (§ "Archive-only — the decision of 2026-09-02"
+above, and `../development/EMAIL_PLATFORM_STATE.md`'s decision log). Until that is actually
+done, it is a reason to hurry the disconnect and the downgrade, not a reason to
+build a reverse sync — a second write path into a platform being retired is more
+code with a known death date.
+
+> **这个同步是单向的，目前有 7 个人卡在错误的一侧。** `pull-mailchimp` 只把
+> Mailchimp 的退订拉进来，没有任何东西把我们这边的退订推过去。2026-09-02 实测：
+> 已经离开我们名单的 7 个人（6 次一键退订 + 1 次硬退信）在 Mailchimp 的 `She#`
+> 受众里仍然是 `subscribed`。只要 Mailchimp 还在发信，这就是真实风险——在对方看来
+> 只有一个 She Sharp、一个名单，退订了却还收到信，换来的是投诉而不是退订。
+> **2026-09-02 的"仅存档"决定让 Mailchimp 停止发信，这个问题就随之消失**；在那之前，
+> 这是加快断开与降级的理由，而不是去建一条反向同步的理由。
 
 **触发条件是"最后一次用 Mailchimp 发信"，而不是"改套餐"——月刊通讯于
 2026-08-31 离开并不代表这件事结束。** 账号仍在使用，仍在发活动宣传邮件，
@@ -477,8 +572,9 @@ integration off ends the automatic growth of the Mailchimp audience; it does
 手动路径——先导出订单 CSV，再跑 `scripts/email/import-optin-subscribers.ts`。所以
 关掉对接只是停止 Mailchimp 受众的自动增长，**并不会**断掉"同意来源二"。
 
-**The maintainer's decision as at 2026-08-30 is to switch it off now**, ahead of
-the first send and without waiting for the cancellation. **This reverses what
+**The maintainer's decision as at 2026-08-30 is to switch it off now**, without
+waiting for the cancellation — it was taken ahead of the first send, which then
+happened on 2026-08-31 with the integration still running. **This reverses what
 this section said earlier the same day** — "keep it while Mailchimp is still
 billing" — and it is worth recording why, because the old reading was not silly.
 It weighed one cost: a disconnected integration stops feeding the Mailchimp
@@ -487,7 +583,8 @@ a source of consented contacts that would be lost; **for four years it has been
 a source of non-consented ones**, and every day it keeps running is more rows
 whose provenance nobody can defend. Keeping it costs more than losing it.
 
-**截至 2026-08-30 的决定是：现在就关掉它**，在第一次群发之前，不必等到取消订阅。
+**截至 2026-08-30 的决定是：现在就关掉它**，不必等到取消订阅。这个决定是在第一次
+群发之前做的，而 2026-08-31 那次群发时对接仍然在跑。
 **这推翻了本节当天早些时候的说法**（"只要 Mailchimp 还在计费就保留它"）。记录原因是
 因为原来的判断并不荒唐：它权衡的是"断开对接会让 Mailchimp 受众不再增长"这一项成本，
 但当时还不知道上面那组数据。这个对接并不是一个会因断开而失去的"已同意联系人"来源；
@@ -526,23 +623,52 @@ Mailchimp。这正是目的——名单已经不在 Mailchimp 了——但这意
 
 ## Order of operations / 操作顺序
 
-1. **Export everything** (item 5), and screenshot what no export carries —
+1. **Disconnect the Humanitix integration** (item 7) — **first, and now.**
+   It is a live write into the Mailchimp audience and every day it runs adds
+   rows nobody can defend. It is a different account and it blocks nothing.
+2. **Export everything** (item 5), and screenshot what no export carries —
    landing pages, signup forms, automations.
-2. **Put the export and the screenshots in the private archive repo**, not this one.
-3. **Run `pull-mailchimp --full`** (item 6) and commit the hash file.
-4. **Send the last Mailchimp newsletter**, if one is still due.
-5. **Then stop the billing** — pause or downgrade to Free (item 2). **Never delete.**
-6. **Disconnect the Humanitix integration** (item 7) once billing stops.
+3. **Put the export and the screenshots in the private archive repo**, not this one.
+4. **Run `pull-mailchimp --full`** (item 6) and commit the hash file.
+5. **Send the last Mailchimp campaign**, if one is still due. Under the
+   **archive-only** decision of 2026-09-02 there should not be one: event
+   promotion moves to Resend and Mailchimp sends nothing further.
+6. **Then stop the billing** — pause or downgrade to Free (item 2). **Never delete.**
 
-Steps 1–4 must precede step 5. Not because anything is destroyed at step 5 —
+Steps 2–5 must precede step 6. Not because anything is destroyed at step 6 —
 nothing is — but because the Free plan holds sending above 250 contacts, and
 because what a plan change does to the API and to the hosted campaign pages is
 undocumented (item 3). Every one of those uncertainties costs nothing to route
 around by ordering, and cannot be undone by hurrying.
 
-第 1–4 步必须在第 5 步之前。不是因为第 5 步会销毁什么——它不会——而是因为免费版在
+第 2–5 步必须在第 6 步之前。不是因为第 6 步会销毁什么——它不会——而是因为免费版在
 250 个联系人以上会暂停发信，也因为改套餐对 API 和托管页面的影响没有官方说明
 （第 3 项）。按这个顺序做，这些不确定性的代价是零；反过来赶时间，则无法挽回。
+
+> **This list said the opposite until 2026-09-02, and it had a live cost.** Item
+> 6 used to read *"Disconnect the Humanitix integration once billing stops"*,
+> while §7 of this same file recorded the 2026-08-30 decision to switch it off
+> **now** and `HUMANITIX_INTEGRATION_SHUTDOWN.md` said it should happen **first**.
+> The decision landed in the prose and missed the numbered list — and the
+> numbered list is the part somebody actually works through. Measured
+> 2026-09-01: the integration was still connected and still writing, most
+> recently at 10:40 that morning.
+>
+> **The lesson is about where a decision has to land, not about this decision.**
+> A runbook has a body and a checklist, and a reader in a hurry reads only one of
+> them. **Revising the reasoning without revising the steps leaves the steps
+> authoritative and wrong.** When a decision changes an order of operations, edit
+> the order of operations in the same pass, or do not record the decision at all.
+
+> **本清单在 2026-09-02 之前的写法正好相反，而且是有实际代价的。** 原第 6 条写的是
+> "等停止计费后再断开 Humanitix 对接"，但同一份文件的第 7 节已经记录了 2026-08-30
+> 的决定——**现在就关**——而 `HUMANITIX_INTEGRATION_SHUTDOWN.md` 也说这件事应该
+> **最先做**。决定只写进了正文，没有改到编号清单里，而真正被人照着执行的恰恰是编号
+> 清单。2026-09-01 实测：对接仍然连着，仍在写入，最近一次是当天上午 10:40。
+>
+> **要记住的是"决定该落在哪里"，而不是这一条决定本身。** 一份操作手册有正文也有清单，
+> 赶时间的人只会看其中一个。**只改正文不改步骤，等于让错误的步骤继续当权威。**
+> 当一个决定改变了操作顺序，就在同一次修改里改掉操作顺序，否则不如不记。
 
 ---
 

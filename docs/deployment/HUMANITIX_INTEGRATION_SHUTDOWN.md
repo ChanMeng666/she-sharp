@@ -36,14 +36,28 @@ separate accounts**, and this one should happen first.
 
 ## The one-sentence version / 一句话版本
 
-**A connection between Humanitix and Mailchimp has been quietly adding every
-ticket buyer to the mailing list for years — including the ones who did not ask
-to be on it — and it should be switched off now, before the first email goes out
-from She Sharp's own system.**
+**A connection between Humanitix and Mailchimp spent years quietly adding every
+ticket buyer to the mailing list — including the ones who did not ask to be on
+it — and it is still connected and still writing today. It should be switched
+off now.**
+
+**It no longer adds non-consenters**: the "Sync contacts who haven't opted-in"
+setting was turned off on 2026-08-27, and that was verified from the audience
+side on 2026-09-02 — of the September 2026 event's 68 buyers, the 8 who ticked
+were added and the ones who did not were not. **That fixes the consent shape and
+not the destination.** It is still writing into a Mailchimp audience that is now a
+stale copy of the list She Sharp holds itself, and that Mailchimp is due to stop
+sending from altogether. Every opt-in it collects lands somewhere no send reads.
 
 **Humanitix 和 Mailchimp 之间有一个长期存在的对接，多年来把每一位购票者都悄悄加进了
-邮件名单——包括那些从没要求加入的人。应该现在就关掉它，赶在 She Sharp 自己的系统
-第一次群发之前。**
+邮件名单——包括那些从没要求加入的人。它至今仍连着、仍在写入。应该现在就关掉它。**
+
+**它已经不再添加未同意的人了**："Sync contacts who haven't opted-in" 这个开关已于
+2026-08-27 关闭，并于 2026-09-02 从受众那一侧得到验证：2026 年 9 月活动的 68 位
+购票者中，勾选过的 8 位被写入，没勾选的一位都没有。**但这修好的是"同意的形状"，
+不是"写去哪里"。** 它写入的那个 Mailchimp 受众如今只是我们自己名单的一份过期副本，
+而 Mailchimp 本身也即将完全停止发信。它收集到的每一个勾选，都落在没有任何发信会去读
+的地方。
 
 ---
 
@@ -293,17 +307,39 @@ Settings → Orders → "Enable host's mailing list opt in"*。它是**按活动
 somebody does not want our emails, and the suppression file that would hold them
 out is one-way and cannot practically be undone. The 752 stay where they are.
 
-What the measurement changes is the **order of the first send**: a first email
-from the new system should go to the people whose consent can be named —
-198 + 128 + 55 = **381 people** — rather than to the whole list at once. That is
-a technical decision and the tooling for it already exists.
+**The first send has already happened, and it was not ramped.** This section
+recommended, until 2026-09-02, that the first email from the new system go to the
+381 people whose consent can be named (198 + 128 + 55) rather than to the whole
+list. That was overtaken on **2026-08-31**, when the August 2026 issue went to
+**all 1,549** mailable subscribers at once, with the founder's approval. Every
+other document in this repository was corrected for that; this one was not — and
+this is the document the founder opens, so it was the last place the old
+recommendation could still be read as current.
+
+The reading it came back with was good: 1,572 delivered, 13 bounced, 0
+complaints. **That is one sample, not a retirement of the idea.** The tooling
+still exists (`--restrict-to-hashes` on both recipient builders) and a future
+send that wants a ramp can still have one.
+
+**None of that changes what this document asks for.** The integration should be
+switched off, and the reason has nothing to do with send order: it writes into a
+Mailchimp audience that is now a stale copy of a list She Sharp holds itself.
 
 **没有人要从名单里删除任何人。** 来源薄弱并不等于这个人不想收我们的邮件，而用来
 屏蔽他们的那个文件是单向的、事实上无法撤销。那 752 人原样保留。
 
-这组数据改变的是**第一次群发的顺序**：新系统的第一封邮件应该先发给那些能说清同意
-来源的人——198 + 128 + 55 = **381 人**——而不是一次发给整个名单。这是技术决定，
-工具已经就绪。
+**第一次群发已经发生了，而且没有分批。** 本节在 2026-09-02 之前一直建议：新系统的
+第一封邮件先发给那些能说清同意来源的人——198 + 128 + 55 = **381 人**——而不是一次
+发给整个名单。这个建议在 **2026-08-31** 就被现实越过了：2026 年 8 月号经创始人批准，
+一次性发给了**全部 1,549 位**可发送订阅者。仓库里其他文档当时都改了，只有这一份没改
+——而这恰恰是创始人会打开的那一份，所以旧建议在这里最容易被当成现状。
+
+结果是好的：1,572 封送达，13 封退信，0 投诉。**但这只是一个样本，不代表分批发送这个
+做法作废。** 工具仍在（两个收件人生成脚本都支持 `--restrict-to-hashes`），以后想分批
+随时可以。
+
+**这些都不改变本文档要求的事。** 对接应该关掉，理由和发送顺序无关：它写入的那个
+Mailchimp 受众，如今只是 She Sharp 自己名单的一份过期副本。
 
 ---
 
