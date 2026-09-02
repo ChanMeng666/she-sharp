@@ -9,22 +9,6 @@
     filter: brightness(0) saturate(100%) invert(28%) sepia(50%) saturate(1500%) hue-rotate(290deg) brightness(95%) contrast(95%);
   }
 
-  /* Navigation Glass Effect - Frosted glass */
-  .nav-glass {
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-  }
-
-  /* Dropdown Glass Effect - Frosted glass */
-  .dropdown-glass {
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-  }
-
   /* Navigation hover/active states with brand purple */
   .nav-item-hover:hover,
   .nav-item-hover:focus {

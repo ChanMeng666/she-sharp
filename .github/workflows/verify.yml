@@ -197,6 +197,17 @@ jobs:
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npx tsx scripts/events/event-status.test.ts
 
+      # Offline and pure: the browser half of `verify-panel-contrast.ts` needs a
+      # running site and a Playwright this repo deliberately does not depend on,
+      # but the half that decides whether a surface is a card that vanished into
+      # its own page is a function over measurements. That is the half that goes
+      # wrong. Loosen one of its exclusions and the check goes quietly green on
+      # the defect it exists for, which is how three form cards shipped
+      # invisible in #271 and twelve more were found in #272.
+      - name: Verify the panel-contrast classifier
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npx tsx scripts/verify-panel-contrast.test.ts
+
       # Also shares this checkout — offline and pure data. /internal/event-playbook
       # serves a build-time snapshot of docs/development/EVENT_PLAYBOOK.md, which
       # is what keeps the markdown renderer out of the deployed bundle. The cost

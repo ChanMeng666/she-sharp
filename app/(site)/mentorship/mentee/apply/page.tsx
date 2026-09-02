@@ -1580,7 +1580,7 @@ function MenteeApplyForm() {
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-12 mt-8">
               {formData.programmeSlug === 'her-waka' ? 'Apply as HER WAKA Mentee' : 'Apply as Mentee'}
             </h2>
-            <Card className="shadow-lg">
+            <Card>
               <CardHeader className="pb-6">
                 <div className="mb-4">
                   <div className="flex justify-between mb-2">

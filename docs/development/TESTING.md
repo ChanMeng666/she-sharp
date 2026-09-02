@@ -89,6 +89,7 @@ npx tsx scripts/verify-image-paths.ts
 npx tsx scripts/mailchimp/verify-export.ts --export 2026-08-17   # needs the vault
 npx tsx scripts/seo/verify-page-metadata.ts --base http://localhost:3100
 npx tsx scripts/verify-storage-blocked.ts --base http://localhost:3100   # needs a running site AND a global Playwright
+npx tsx scripts/verify-panel-contrast.ts --base http://localhost:3100   # same two requirements
 npx tsx scripts/humanitix/check-optin-switch.ts   # needs HUMANITIX_API_KEY
 ```
 
@@ -108,6 +109,35 @@ silent: an unset opt-in switch collects nothing and reports nothing, so
 switch is off". Its offline half — the `/orders` field allowlist — is checked in
 CI by `scripts/humanitix/optin-orders.test.ts`, and by `--self-test` for anyone
 about to trust the live run.
+
+### `verify-panel-contrast.ts`, and the half of it that IS in CI
+
+A card and the page behind it can both be spelled with correct tokens and still
+be the same pixel. That is not a type error, not a lint error, and not visible
+in a diff. It shipped three invisible form cards in #271, and when the token
+collision underneath was fixed in #272 this check found **twelve** more
+signatures on pages nobody had complained about.
+
+It keys on `getComputedStyle`, never on a class name. A grep for `bg-background`
+would have inherited the exact blind spot of the change it was verifying — it
+sees only the names the author already thought of, and goes green the moment one
+is edited whether or not the pixels moved. For the same reason there is no
+allow-list: an allow-list is a name by another spelling, and it would eventually
+silence a real finding. Knockouts and image wells are excluded by *shape*
+instead — an even four-corner radius, and whether media covers the fill.
+
+The browser half cannot go in CI, for the same two reasons as its sibling below.
+The **classifier** can, and does: `scripts/lib/panel-contrast.ts` is a pure
+function over measurements, and `scripts/verify-panel-contrast.test.ts` hands it
+every case it is supposed to refuse. That split matters — the browser half fails
+loudly when it cannot run, but a quietly loosened exclusion in the classifier
+would make the whole check pass on the defect it exists for.
+
+The pure half lives in its own module rather than behind an
+`import.meta.url === argv[1]` guard in the script, because that comparison
+resolves past a junction on this machine and the CLI then never runs: exit 0, no
+output, no report. A verification tool that fails green is worse than one that
+fails loudly.
 
 ### Why `verify-storage-blocked.ts` is not in CI, and cannot be
 
