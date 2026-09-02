@@ -120,7 +120,7 @@ export function JoinTeamHeroSection({
               <CurtainReveal
                 key={image.src}
                 delay={i * 90}
-                className={`${image.place} border border-border p-1.5 bg-background`}
+                className={`${image.place} border border-border p-1.5 bg-white`}
               >
                 <div className={`relative w-full ${image.aspect}`}>
                   <Image

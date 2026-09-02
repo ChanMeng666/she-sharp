@@ -157,7 +157,7 @@ export function EventSidebarPanel({
 
   const mapUrl = getMapUrl();
 
-  const cardClass = "rounded-[16px] bg-background border border-border p-5 sm:p-6 md:p-8";
+  const cardClass = "rounded-[16px] bg-white border border-border p-5 sm:p-6 md:p-8";
 
   const IconBox = ({ children }: { children: React.ReactNode }) => (
     <div className="flex items-center justify-center w-8 h-8 rounded-lg  shrink-0">

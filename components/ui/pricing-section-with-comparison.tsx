@@ -43,7 +43,11 @@ export function PricingComparison({
   const paths = [...volunteerPaths].reverse();
 
   return (
-    <section className="w-full py-16 md:py-20 lg:py-24 bg-white text-foreground">
+    // `bg-muted`, not white: the cards inside are `bg-white`, so a white band
+    // would hide them. Muted also gives /join-our-team the alternation the
+    // rest of the site gets from `<Section bgColor="accent">` — hero on the
+    // canvas, this band muted, testimonials back on the canvas.
+    <section className="w-full py-16 md:py-20 lg:py-24 bg-muted text-foreground">
       <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12 md:mb-16">
@@ -70,7 +74,7 @@ export function PricingComparison({
               <div
                 key={path.id}
                 className={cn(
-                  "relative card-lg border border-border bg-background p-6 lg:p-8 flex flex-col gap-5 transition-colors duration-300 hover:border-foreground/30"
+                  "relative card-lg border border-border bg-white p-6 lg:p-8 flex flex-col gap-5 transition-colors duration-300 hover:border-foreground/30"
                 )}
               >
                 {/* Thin top-accent hairline */}

@@ -82,7 +82,7 @@ export default function DonatePage() {
       <DonateHero />
 
       {/* ── Marquee band — hairline strip, solid/outline alternation ── */}
-      <div className="overflow-hidden border-y border-border bg-background py-5">
+      <div className="overflow-hidden border-y border-border bg-white py-5">
         <div className="animate-marquee flex items-center gap-10 whitespace-nowrap">
           {doubled.map((word, i) => (
             <span key={i} className="flex flex-shrink-0 items-center gap-10">
@@ -120,7 +120,7 @@ export default function DonatePage() {
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {impactCards.map((card, i) => (
               <Reveal key={card.title} variant="fade-up" delay={i * 80}>
-                <article className="flex h-full flex-col overflow-hidden rounded-[16px] border border-border bg-background">
+                <article className="flex h-full flex-col overflow-hidden rounded-[16px] border border-border bg-white">
                   <CurtainReveal delay={i * 80}>
                     <div className="relative aspect-[4/3] w-full">
                       <Image
@@ -177,7 +177,7 @@ export default function DonatePage() {
             </p>
           </Reveal>
           <Reveal variant="fade-up" delay={80}>
-            <div className="mx-auto mt-10 max-w-md rounded-[32px] border border-border bg-background p-8 shadow-sm sm:p-10">
+            <div className="mx-auto mt-10 max-w-md rounded-[32px] border border-border bg-white p-8 sm:p-10">
               <DonateForm />
             </div>
           </Reveal>

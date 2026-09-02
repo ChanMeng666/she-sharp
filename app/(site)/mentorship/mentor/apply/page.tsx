@@ -1001,7 +1001,7 @@ export default function MentorApplyPage() {
                   <Label>What industries would you like to mentor in? *</Label>
                   <HintIcon hint="Select industries where your experience is most relevant for mentoring." />
                 </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3 max-h-48 overflow-y-auto p-3 bg-background border rounded-lg">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3 max-h-48 overflow-y-auto p-3 bg-white border rounded-lg">
                   {industryOptions.map((opt) => (
                     <div
                       key={opt.value}

@@ -60,7 +60,7 @@ export default function ContactPage() {
                                             href={social.href}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="p-2.5 sm:p-3 border border-border rounded-full bg-background text-foreground hover:bg-brand hover:border-brand hover:text-brand-foreground transition-colors duration-200"
+                                            className="p-2.5 sm:p-3 border border-border rounded-full bg-white text-foreground hover:bg-brand hover:border-brand hover:text-brand-foreground transition-colors duration-200"
                                             aria-label={`Follow us on ${social.name}`}
                                         >
                                             <Icon className="h-5 w-5" />

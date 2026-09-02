@@ -36,7 +36,7 @@ export function EventDonationCta() {
           {CARDS.map((card) => (
             <div
               key={card.title}
-              className="rounded-[16px] border border-border bg-background p-5 sm:p-6 md:p-8 flex flex-col h-full"
+              className="rounded-[16px] border border-border bg-white p-5 sm:p-6 md:p-8 flex flex-col h-full"
             >
               <div className="flex items-center gap-3 lg:flex-col lg:items-start lg:gap-0">
                 <div className="shrink-0 w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-full flex items-center justify-center lg:mb-4">

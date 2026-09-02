@@ -100,7 +100,7 @@ function SessionCard({ session }: { session: EventSession }) {
     !!session.description;
 
   return (
-    <details className="rounded-[16px] border border-border bg-background p-6 md:p-8 group [&_summary::-webkit-details-marker]:hidden">
+    <details className="rounded-[16px] border border-border bg-white p-6 md:p-8 group [&_summary::-webkit-details-marker]:hidden">
       <summary className="flex items-start justify-between gap-3 cursor-pointer list-none">
         <h3 className="text-base md:text-lg font-semibold text-foreground">
           {session.title}

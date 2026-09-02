@@ -28,7 +28,7 @@ export function PressGrid() {
             });
 
             const body = (
-              <article className="flex h-full flex-col overflow-hidden rounded-[32px] border border-border bg-background transition-colors duration-300 group-hover:border-foreground/30">
+              <article className="flex h-full flex-col overflow-hidden rounded-[32px] border border-border bg-white transition-colors duration-300 group-hover:border-foreground/30">
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <img
                     src={item.coverImage}

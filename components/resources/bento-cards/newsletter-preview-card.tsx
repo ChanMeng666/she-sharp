@@ -14,7 +14,7 @@ const COVER_IMAGE = "/img/newsletter.jpg";
 export function NewsletterPreviewCard() {
   return (
     <Link href="/resources/newsletters" className="group block">
-      <article className="grid grid-cols-1 overflow-hidden rounded-[32px] border border-border bg-background transition-colors duration-300 group-hover:border-foreground/30 sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
+      <article className="grid grid-cols-1 overflow-hidden rounded-[32px] border border-border bg-white transition-colors duration-300 group-hover:border-foreground/30 sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
         <div className="relative aspect-[16/9] overflow-hidden sm:aspect-auto">
           <Image
             src={COVER_IMAGE}

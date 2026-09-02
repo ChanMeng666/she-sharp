@@ -27,10 +27,10 @@ export function AlbumCard({ album, compact = false }: AlbumCardProps) {
       className="group block h-full"
       aria-label={`View ${album.title} album in Google Photos`}
     >
-      <article className="flex h-full flex-col overflow-hidden rounded-[32px] border border-border bg-background transition-colors duration-300 group-hover:border-foreground/30">
+      <article className="flex h-full flex-col overflow-hidden rounded-[32px] border border-border bg-white transition-colors duration-300 group-hover:border-foreground/30">
         <CurtainReveal className="relative aspect-[4/3] overflow-hidden">
           {hasMosaic ? (
-            <div className="grid h-full w-full grid-cols-3 grid-rows-2 gap-1 bg-background">
+            <div className="grid h-full w-full grid-cols-3 grid-rows-2 gap-1 bg-muted">
               <div className="relative col-span-2 row-span-2 overflow-hidden bg-muted">
                 <Image
                   src={album.coverImage}

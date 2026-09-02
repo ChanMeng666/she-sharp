@@ -95,7 +95,7 @@ export function SponsorshipPricing() {
 
           {/* Main Card */}
           <div className="mt-10 sm:mt-12 md:mt-16">
-            <div className="relative overflow-hidden rounded-[32px] border border-border bg-background">
+            <div className="relative overflow-hidden rounded-[32px] border border-border bg-white">
               <div className="grid items-stretch divide-y divide-border md:grid-cols-2 md:divide-x md:divide-y-0">
 
                 {/* Left Side */}
@@ -220,7 +220,7 @@ export function SponsorshipPricing() {
           <div className="mb-16 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-3 md:mb-20">
             {EVENT_STATS.map((stat, i) => (
               <Reveal key={stat.label} variant="fade-up" delay={i * 80} className="h-full">
-                <div className="flex h-full flex-col gap-2 bg-background px-8 py-10">
+                <div className="flex h-full flex-col gap-2 bg-white px-8 py-10">
                   <p className="font-heading text-5xl font-extrabold tracking-tight text-foreground">
                     {stat.value}
                   </p>
