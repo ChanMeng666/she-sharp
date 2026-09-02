@@ -94,7 +94,7 @@ three different things get confused here:
 | | Needs a mailbox login? |
 |---|---|
 | **Sending as** `info@` via Resend | **No.** Resend signs with the domain's DKIM key. The address never has to be opened to send from it — which is exactly how this site spent a year sending as `hello@`, a mailbox that had never been created. Sending works; the reply is what bounces. |
-| **Reply-To** `info@` / `mentoring@` | **No.** The point is that replies reach *the team*, not the maintainer. Both were confirmed to be real Google Workspace inboxes with a named reader on 2026-08-23 — see `docs/development/EMAIL_ADDRESSES.md`. Never set a Reply-To that has not been. |
+| **Reply-To** — `info@`, `mentoring@`, `people@`, `events@`, `website@` | **No.** The point is that replies reach *the team*, not the maintainer. All five were confirmed to be real Google Workspace inboxes with a named reader on 2026-08-23 — see `docs/development/EMAIL_ADDRESSES.md`. Never set a Reply-To that has not been. Since **2026-09-01** the desk is chosen per message by `lib/email/reply-to.ts`, not per stream, which is why this row lists five addresses rather than the two it used to: `transactional` and `notification` both replied to `mentoring@` until that date, so a password reset invited a reply into the mentorship lead's contact address. |
 | **Enabling Google DKIM** | **No mailbox — but yes, Google Workspace super-admin** on `admin.google.com`. See below. |
 | **Collecting DMARC reports** | **No.** Cloudflare receives them on its own domain. |
 
