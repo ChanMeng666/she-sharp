@@ -1,23 +1,61 @@
 # Switching off the Humanitix → Mailchimp integration / 关闭 Humanitix → Mailchimp 对接
 
-**For the founder.** This needs **account-owner** access to Humanitix, and only
-the founder has that. **Nobody working in this repository can press this
-button** — there is no API for it, no script, and no way to do it from the
-website's code. It is a setting inside Humanitix's own console, and somebody who
-is logged in as the account holder has to change it by hand.
+> ## ✅ DONE — 2026-09-02 / 已完成
+>
+> **The integration is disconnected.** Account → Advanced → Integrations →
+> Mailchimp → Actions → **Disconnect**, confirmed. Verified afterwards from the
+> Mailchimp side: the audience has taken **no new member since**, and it still
+> shows `last_sub_date 2026-09-01T10:40:48Z` — the last contact the integration
+> ever wrote. A **Reconnect** action exists on the same screen, so this is
+> reversible by re-authorising; nothing was deleted.
+>
+> **对接已断开**（2026-09-02）。事后从 Mailchimp 侧验证：**此后零新增成员**，
+> `last_sub_date` 仍停在对接写入的最后一个联系人。同一页面有 **Reconnect**，
+> 所以这一步可逆，也没有删除任何数据。
 
-**Do not read that as "nobody else can get into Humanitix at all."** The
-*ticketing* console logs in with the shared `events@` mailbox and the events
-team is in it every week, building ticket pages, cutting access codes and
-exporting the orders report — see `../development/EVENT_LIFECYCLE_SOP.md` §"The
-ticket page" and `../development/EMAIL_ADDRESSES.md`. Everything the mailing-list
-work needs, including reading the per-event **unsubscriber list**, is reachable
-with that login. It is specifically the account-level *Integrations* screen that
-is yours alone.
+**This document was wrong about who could do it, twice.** It said account-owner
+access was the founder's alone and that nobody working in this repository could
+press the button. **The whole thing was done from the shared `events@` login**,
+which reaches Account → Advanced → Integrations perfectly well. The first
+correction on 2026-09-02 narrowed the claim to "only the account-level
+*Integrations* screen is yours alone"; that was still wrong, and this is the
+second correction. **Before writing that a screen is out of reach, open it.**
 
-**给创始人。** 这件事需要 Humanitix 的**账号持有人**权限，只有创始人有。**这个代码
-仓库里的任何人都做不了这一步**——没有 API，没有脚本，也没法从网站代码里操作。它是
-Humanitix 后台里的一个设置，必须由以账号持有人身份登录的人手动改。
+**这份文档在「谁能做」这件事上错过两次。** 它先说只有创始人有权限、仓库里没人能按
+这个按钮；今天第一次收窄成「只有账号级 Integrations 页面是创始人专属」——**仍然是
+错的**。整件事是用共享的 `events@` 登录完成的。**在写下「某个页面别人进不去」之前，
+先去打开它。**
+
+The rest of this document is kept as the record of why it was done and what the
+settings were, because Humanitix keeps no history of a disconnected integration.
+以下内容保留为「为什么这么做、当时的设置是什么」的记录——Humanitix 不保留已断开
+对接的任何历史。
+
+---
+
+## ⚠️ Never switch off the checkout tick-box to stop the sync / 绝不要用关勾选框来停止同步
+
+The two are **not** the same control, and confusing them destroys the one thing
+worth keeping.
+
+| | What it is | What to do with it |
+|---|---|---|
+| The checkout tick-box `organiserMailListOptIn` | A **per-event** Humanitix setting at *event → Settings → Orders*, "Enable host's mailing list opt in" | **Keep it ON, on every event** |
+| The Humanitix → Mailchimp integration | An **account-level** connection | Disconnected, above |
+
+**Verified before and after the disconnect on 2026-09-02**: the tick-box setting
+is still present and still ON, and its own description says only *"Customers
+will have the option to join **the host's mailing list**"* — it never mentions
+Mailchimp. `scripts/humanitix/export-optins.ts` reads it from the Humanitix
+**API**, so it has nothing to do with Mailchimp and never did. Turning it off to
+stop the sync would remove the only per-person, timestamped, self-made consent
+the organisation collects, and would not be noticed until the next event's
+tickets had already been sold.
+
+**这两者不是同一个开关，混淆它们会毁掉唯一值得保留的东西。** 勾选框是 Humanitix
+**按活动**的设置（*活动 → Settings → Orders*），与 Mailchimp 无关；采收脚本是从
+Humanitix **API** 读它的。断开对接前后都验证过：勾选框仍在、仍开着。**为了停止同步
+而关掉它，等于砍掉组织唯一的逐人同意采集，而且要到下一场票卖完才会有人发现。**
 
 **但不要把这句读成"别人根本进不了 Humanitix"。** *售票*后台用共享的 `events@` 邮箱
 登录，活动团队每周都在里面搭票务页、发放访问码、导出订单报表——见
@@ -175,9 +213,34 @@ Three reasons, in order of weight.
 
 ## Exactly which screen turns it off / 具体在哪个页面关
 
-**The exact menu path is not written down anywhere here, and this document is not
-going to guess one.** No API exposes it, no screenshot of it exists in either
-repository, and nobody in this codebase can open the console. What *is* known:
+**Now written down, because it has been walked.** The path is:
+
+```
+https://console.humanitix.com/console/account/advanced/integrations
+  → Mailchimp → Actions ▾ → Disconnect → "Yes, disconnect"
+```
+
+**Note the `advanced` segment.** `/console/account/integrations` — the obvious
+guess, without it — renders the correct page *title* over an empty pane rather
+than a 404, which is the trap `update-mailing-list`'s SKILL already records about
+this console. The nav item only appears once the **Advanced** group in the
+account sidebar is expanded.
+
+**What the settings were, captured before disconnecting**, because Humanitix
+keeps no history of a connection once it is gone:
+
+| Setting | Value on 2026-09-02 |
+|---|---|
+| Status | Connected to **She Sharp** |
+| Last sync | Successful, Wed 2 Sep 2026, 5:30 pm NZST |
+| Choose events to sync | **All** |
+| Sync contacts who haven't opted-in | **unchecked** |
+| Audience | **She#** |
+
+That fourth row is the one worth keeping: it is the console-side confirmation of
+what the audience data already showed — of 68 buyers on the September 2026 event,
+the 8 the integration added had **all** ticked the box, and **no** non-ticker was
+added. The setting really was off, not merely believed to be.
 
 - The connection is **account-level, not per-event** — it applies to every event,
   so it is under the account settings and not inside any one event's editor.
@@ -345,9 +408,10 @@ Mailchimp 受众，如今只是 She Sharp 自己名单的一份过期副本。
 
 ## Checklist / 清单
 
-- [ ] Screenshot the Humanitix → Mailchimp integration settings / 截图 Humanitix → Mailchimp 对接设置页
-- [ ] Disconnect the integration / 断开对接
-- [ ] Confirm ticketing and event pages still work / 确认售票和活动页面正常
+- [x] Screenshot the Humanitix → Mailchimp integration settings — **done 2026-09-02**, and transcribed into the table above so the record survives the screenshot / 截图对接设置页 — **已完成**，并已誊写成上方表格，免得记录只活在一张截图里
+- [x] Disconnect the integration — **done 2026-09-02** / 断开对接 — **已完成**
+- [x] Confirm the checkout tick-box survived — **verified before and after; still present, still ON** / 确认结账勾选框存活 — **前后都验证过：仍在、仍开着**
+- [x] Confirm Mailchimp has taken no new member since / 确认 Mailchimp 此后零新增成员
 - [ ] Turn the checkout opt-in on for the next event, **before the page goes live** / 为下一场活动打开结账勾选，**赶在页面上线之前**
 - [ ] Verify it once the first orders land: `npx tsx scripts/humanitix/check-optin-switch.ts` / 首批订单进来后验证一次（同一条命令）
 - [ ] Run the route-2 import after that event / 活动后跑"同意来源二"导入
