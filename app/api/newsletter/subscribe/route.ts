@@ -59,7 +59,7 @@ const subscribeSchema = z.object({
 //
 // One form on one page could be limited by IP alone: five sign-ups an hour from
 // an address is generous for real humans and tight on a script. The form is now
-// on seven surfaces, one of which is the post-event feedback confirmation — and
+// on eight surfaces, one of which is the post-event feedback confirmation — and
 // a hall of forty attendees sits behind ONE NAT'd venue IP, all finishing within
 // minutes of each other. Under a flat 5/hour the sixth person reads a 429 as
 // "the site is broken", which is exactly the failure

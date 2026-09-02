@@ -51,7 +51,7 @@
  * `localStorage` is the cookie banner and the feedback form's device id;
  * `sessionStorage` is `components/newsletter/newsletter-signup.tsx`, which
  * reads a "this tab already signed up" marker through a `useSyncExternalStore`
- * snapshot on seven surfaces. Both is what a real blocked browser does. Running
+ * snapshot on eight surfaces. Both is what a real blocked browser does. Running
  * them separately is what turns "something broke" into "this store broke it".
  *
  * The default paths are the three the incident was proven on. `/sign-in` earns
