@@ -23,6 +23,7 @@
  */
 
 import { PITCH_DECK_TEMPLATE_2026_URL } from "@/lib/config/assets";
+import { parseDateString } from "@/lib/data/event-utils";
 import { getEventBySlug } from "@/lib/data/events";
 import type { TimedItem } from "@/lib/deck/types";
 import { curatedImages, toSrcSet } from "@/public/img/curated";
@@ -841,6 +842,10 @@ const OPENING_SLIDES: Slide[] = insertAfter(
         eventMeta: ["7–8 August 2026", "AUT City Campus"],
         partnerLogos: PARTNER_LOGOS,
         karakia: OPENING_KARAKIA,
+        // Counts THIS event, and does not move when the site is redeployed. Without
+        // it "Our Impact" reports events held before the build, which excludes the
+        // evening the deck is being presented at.
+        eventsHeldThrough: parseDateString(event.date),
         // TODO(venue-safety): AUT's own lines — assembly point, lift rules,
         // after-hours access — go here once the venue briefing is confirmed.
         // Left empty rather than guessed: a wrong safety instruction is worse

@@ -32,7 +32,7 @@ Tagged inline in `lib/data/stats.ts`; summarised here.
 
 | Where it renders | Figure | Status |
 |---|---|---|
-| Homepage, About | `events.total` "95+ Events Since 2014" | **SOURCED** — derived by `getEventsHeldCount()` from the event register, not hand-typed |
+| Homepage, About, every deck | `events.total` "Events Since 2014" | **SOURCED** — derived by `getEventsHeldCount()` from the event register, not hand-typed. No figure is quoted in this row on purpose: it moves with every event, and a literal here would be the copy that goes stale. Decks pass `eventsHeldThrough` so the count is as-of the event rather than as-of the build |
 | Homepage, About | `members.current` 3,500+ | UNSOURCED as an exact figure. The archive has 3,673+ and 3,767+ from the same fortnight (the second covering a *shorter* period), and the founder separately put it "over 3,000" |
 | Homepage, About | `sponsors.current` 50+ | UNSOURCED. The archive's own counts are 33+ and 23 industry partners; the cumulative logo wall holds 39 organisations |
 | Homepage | `impact.careerTransitions` 500+ "Career Success Stories" | UNSOURCED. Nothing tracks career outcomes |

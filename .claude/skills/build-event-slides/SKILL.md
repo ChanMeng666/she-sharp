@@ -787,7 +787,7 @@ content; the frame comes free from `lib/deck/boilerplate.ts`.
 | 3 | Health & safety | `bullets` | Fixed, venue detail authored |
 | 4 | We are She Sharp | `photo` | Fixed; `missionLead` overridable |
 | 5 | The team | `people` | Fixed roster, trimmed per event |
-| 6 | Our impact | `stats` | Fixed (3000+ members, 50+ sponsors, 94+ events) |
+| 6 | Our impact | `stats` | Derived. Pass `eventsHeldThrough` — see below |
 | 7 | Sponsors | `logos` | Event data |
 | 8 | Contact & QR codes | `contact` | Fixed; `omitSocials` drops accounts |
 | 9 | The event title | `section` | Event data |
@@ -967,6 +967,32 @@ checked references into one unresolvable one, and a photograph that never reache
 **Retype a name only from a list its owner confirms.** The team channels are
 lowercase and hyphenated because Discord forces that; tidying `super-6` to
 `super-six` corrects a numeral its members chose.
+
+### A derived figure must be as-of the event, not as-of the build
+
+"Our Impact" carries the event count, and `getEventsHeldCount()` reads the
+register rather than a literal — `CONTENT_RULES.md` forbids writing that number
+anywhere, because a page once showed 95+ and 96 at the same time.
+
+Reading the register is necessary and was not sufficient. `globalStats` calls it
+at module scope with no argument, so it counts events held before *the moment
+the module loads*, which on a statically generated page is **the moment of the
+build**. That is right for the homepage and wrong for a deck twice over: the
+event being presented has not happened yet by that reckoning, so the host says a
+number that excludes the room — and the same deck reports different figures
+depending on when the site was last deployed, with nothing in its own diff to
+explain the change. The hackathon deck was displaying 97 for an evening on which
+the true figure was 96.
+
+**Every deck passes `eventsHeldThrough: parseDateString(event.date)`.** The count
+then includes tonight and is identical whenever the page is built, including
+years later when the deck is a record rather than something to present.
+`new-deck.ts` scaffolds it; a deck that omits it silently falls back to the
+build-time figure.
+
+**The general shape: a figure derived at module scope is as-of the build.** Any
+number a deck shows that is not pinned to the event's own date will quietly
+disagree with itself across deploys.
 
 ### A snapshot does not follow the thing it describes
 

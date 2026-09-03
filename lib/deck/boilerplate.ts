@@ -17,9 +17,14 @@
  */
 
 import { footerConfig } from "@/lib/config/footer";
+import { getEventsHeldCount } from "@/lib/data/events";
 import { feedbackUrlForSlug } from "@/lib/data/feedback-codes";
 import { scrollingSponsorLogos, tieredSponsors } from "@/lib/data/sponsors";
-import { homeImpactData } from "@/lib/data/stats";
+import {
+  buildHomeImpactData,
+  homeImpactData,
+  type ImpactItem,
+} from "@/lib/data/stats";
 import { teamMembers } from "@/lib/data/team";
 import { SITE_DESCRIPTION } from "@/lib/seo/site";
 import { curatedImages, toSrcSet } from "@/public/img/curated";
@@ -109,6 +114,38 @@ export function missionLead(): string {
   return truncateWords(clause, COPY_LIMITS.leadWords);
 }
 
+/**
+ * The impact figures as they stood on the evening of `through`, inclusive.
+ *
+ * `globalStats.events.total` calls `getEventsHeldCount()` with no argument at
+ * module scope, so it counts events held before *the moment the module loaded*
+ * — which on a statically generated page is the moment of the BUILD. That is
+ * right for the website, where the homepage is rebuilt as events pass, and
+ * wrong for a deck in two directions at once:
+ *
+ *   - The event being presented has not happened yet by that reckoning, so the
+ *     host stands in the room saying a number that excludes the room.
+ *   - The same deck shows different numbers depending on when it was last
+ *     deployed. Build it on the Monday and it says 96; a push on the Friday for
+ *     an unrelated typo makes it say 97, with nothing in the deck's own diff to
+ *     explain why.
+ *
+ * Counting through the event's own date fixes both: the figure includes tonight,
+ * and it is the same figure whenever the page is built — including years later,
+ * when the deck is a record of what was said rather than something to present.
+ *
+ * The cutoff is the start of the following day because `getEventsHeldCount()`
+ * compares `eventDate < cutoff`, and we want the event itself inside the count.
+ * Local calendar fields only, never `toISOString()` — see the event-schema date
+ * rule in `docs/development/CONTENT_RULES.md`.
+ */
+function impactAsOf(through: Date): ImpactItem[] {
+  const cutoff = new Date(through);
+  cutoff.setHours(0, 0, 0, 0);
+  cutoff.setDate(cutoff.getDate() + 1);
+  return buildHomeImpactData(getEventsHeldCount(cutoff));
+}
+
 /** Team members as slide people: last role wins, because it is the specific one. */
 function teamAsPeople(): PersonItem[] {
   return teamMembers.map((member) => ({
@@ -166,6 +203,20 @@ export interface OpeningOptions {
    * Still capped at `COPY_LIMITS.bulletCount`, and `safetyExtras` still appends.
    */
   safetyLines?: string[];
+  /**
+   * The event's own date, so "Our Impact" counts the evening it is presented at.
+   *
+   * Pass `parseDateString(event.date)`. Without it the slide falls back to
+   * `homeImpactData`, which counts events held before the BUILD — so the deck
+   * excludes its own event and drifts every time the site is redeployed. Every
+   * deck should pass this; it is optional only so that adding it did not change
+   * what an existing deck rendered until that deck was updated.
+   *
+   * Never compute the number and type it in. `getEventsHeldCount()` is the
+   * register, and `CONTENT_RULES.md` records what happened last time a literal
+   * was kept beside it: a page showed 95+ and 96 at the same time.
+   */
+  eventsHeldThrough?: Date;
   /**
    * Replaces the derived mission line on "We are She Sharp".
    *
@@ -240,6 +291,10 @@ export function buildOpeningSlides(options: OpeningOptions): Slide[] {
     (link) => !omit.includes(link.name),
   );
 
+  const impact = options.eventsHeldThrough
+    ? impactAsOf(options.eventsHeldThrough)
+    : homeImpactData;
+
   const slides: Slide[] = [
     {
       id: "title",
@@ -311,7 +366,7 @@ export function buildOpeningSlides(options: OpeningOptions): Slide[] {
       tone: "light",
       eyebrow: "Every number here is people",
       title: "Our Impact",
-      stats: homeImpactData.slice(0, COPY_LIMITS.statCount).map((item) => ({
+      stats: impact.slice(0, COPY_LIMITS.statCount).map((item) => ({
         value: item.value,
         label: item.title,
       })),

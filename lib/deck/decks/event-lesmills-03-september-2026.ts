@@ -57,6 +57,8 @@ import {
   runSheetFrom,
   speakerGroupsFrom,
 } from "../event-source";
+import { parseDateString } from "@/lib/data/event-utils";
+
 import { DEFAULT_CLOSING_KARAKIA, DEFAULT_OPENING_KARAKIA } from "../karakia";
 import { EDITORIAL_SKIN } from "../skins";
 import type { Deck, DeckImage, QrBlock, Slide } from "../types";
@@ -510,6 +512,10 @@ export const eventLesmills03September2026Deck: Deck = {
       eventMeta: deckMetaFrom(event),
       partnerLogos: PARTNERS,
       karakia: OPENING_KARAKIA,
+      // Counts THIS event, and does not move when the site is redeployed. Without
+      // it "Our Impact" reports events held before the build, which excludes the
+      // evening the deck is being presented at.
+      eventsHeldThrough: parseDateString(event.date),
       // TODO(venue-safety): Les Mills' own lines — which stairwell, where the
       // assembly point is on Victoria Street, who the warden is on a Thursday
       // evening. Left empty rather than guessed: the organisational defaults

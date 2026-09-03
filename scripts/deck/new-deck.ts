@@ -296,6 +296,8 @@ import {
 import {
   ${imports},
 } from "../event-source";
+import { parseDateString } from "@/lib/data/event-utils";
+
 import { DEFAULT_CLOSING_KARAKIA, DEFAULT_OPENING_KARAKIA } from "../karakia";
 import { EDITORIAL_SKIN } from "../skins";
 import type { Deck, DeckImage, QrBlock } from "../types";
@@ -344,6 +346,11 @@ ${EDITORIAL_SKIN_BLOCK}
       eventMeta: deckMetaFrom(event),
       partnerLogos: PARTNERS,
       karakia: OPENING_KARAKIA,
+      // "Our Impact" counts events held through THIS event, inclusive, instead
+      // of events held before the build. Without this the slide leaves out the
+      // evening it is being presented at, and changes every time the site is
+      // redeployed. Do not replace it with a number.
+      eventsHeldThrough: parseDateString(event.date),
       // TODO: venue-specific safety lines — where the assembly point is, which
       // stairwell, who the warden is. The organisational defaults are already
       // there; these are added to them.

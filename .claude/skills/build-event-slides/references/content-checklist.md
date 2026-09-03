@@ -310,7 +310,7 @@ The organisational frame comes free. This is what you still have to collect.
 | Health & safety | `bullets` | Fire exits, the toilets, the assembly point for **this venue** — or nothing, if the venue briefs it themselves; see below |
 | We are She Sharp | `photo` | Nothing — but read its derived line aloud once |
 | The team | `people` | Who is actually in the room, if it differs from the standard roster |
-| Our impact | `stats` | Nothing — 3000+ members, 50+ sponsors, 94+ events since 2014 |
+| Our impact | `stats` | Nothing. The event count is read from the register as of this event's own date — never typed |
 | Sponsors | `logos` | The confirmed list (Round 5) |
 | Contact & QR codes | `contact` | Nothing, unless a code changed |
 | The event title | `section` | Nothing — from the event data |
