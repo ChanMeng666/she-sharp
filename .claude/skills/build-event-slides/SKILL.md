@@ -785,18 +785,26 @@ content; the frame comes free from `lib/deck/boilerplate.ts`.
 | 1 | Title & partners | `title` | Event data + partner logos |
 | 2 | Opening karakia | `karakia` (`timatanga`) | Fixed |
 | 3 | Health & safety | `bullets` | Fixed, venue detail authored |
-| 4 | We are She Sharp | `bullets` | Fixed |
+| 4 | We are She Sharp | `photo` | Fixed; `missionLead` overridable |
 | 5 | The team | `people` | Fixed roster, trimmed per event |
 | 6 | Our impact | `stats` | Fixed (3000+ members, 50+ sponsors, 94+ events) |
 | 7 | Sponsors | `logos` | Event data |
-| 8 | Contact & QR codes | `contact` | Fixed |
+| 8 | Contact & QR codes | `contact` | Fixed; `omitSocials` drops accounts |
 | 9 | The event title | `section` | Event data |
 | — | **The evening** | various | **Generated from the event data — you trim it** |
-| 11 | Thank you | `thanks` | Event data + named people |
-| 12 | Upcoming events | `upcoming` | Authored, snapshotted. Dropped when empty |
-| 13 | Feedback QR | `qr-cta` | Nothing — derived from the event slug |
-| 14 | Ambassador QR | `qr-cta` | Fixed destination |
-| 15 | Closing karakia | `karakia` (`whakamutunga`) | Fixed |
+| 10 | Thank you | `thanks` | Event data + named people |
+| 11 | Upcoming events | `upcoming` | Authored, snapshotted. Dropped when empty |
+| 12 | Feedback QR | `qr-cta` | Nothing — derived from the event slug |
+| 13 | Ambassador QR | `qr-cta` | Fixed destination |
+| 14 | Closing karakia | `karakia` (`whakamutunga`) | Fixed |
+| 15 | Ngā mihi nui | `title` (`end`) | Fixed. The host leaves it up while the room empties |
+
+**Nine open and six close**, which is what `boilerplate.ts` says in its own
+header. This table said fifteen and listed fourteen for months, skipping from 9
+to 11 and losing the terminal slide entirely, and it called slide 4 `bullets`
+when it has always been a `photo`. Neither error is visible from the generated
+deck, which is why they survived two real events — count the table against
+`grep -c 'id: "' lib/deck/boilerplate.ts` rather than trusting it.
 
 The upcoming-events slide is **snapshotted at authoring time on purpose** — a
 live lookup would quietly change what is on the projector between the rehearsal
@@ -837,6 +845,172 @@ full-frame. Change the photograph by all means; do not remove the slide.
 You will not normally hit the shape rules at all — the template keeps the middle
 running at two information slides between breaths, against a limit of four, and
 every combination of present and absent blocks is asserted in `deck.test.ts`.
+
+## What two projectors taught this skill
+
+Two decks have now been presented to real rooms — the Aotearoa AI Hackathon
+Festival (7–8 August 2026, two days, twelve teams) and Les Mills (3 September
+2026, one evening, four panellists). Everything below is a defect that reached a
+final version, or a rule the final version had to be argued into. None of it is
+theory.
+
+### The deck reads the event data; the deck's own prose does not
+
+`runSheetFrom(event)` keeps the agenda slide honest, and that is the part
+everybody remembers. What broke on 3 September was everything *around* it: a
+host note reading "the group photo is at 6:15", a code comment reading
+"6:20–6:40", and two assertions in `deck.test.ts` pinning the run sheet to ten
+rows and the roundtable to `"6:20pm – 6:40pm"`. The run sheet had gained a row,
+the derived slide followed it for free, and four hand-typed copies of the old
+clock did not.
+
+**Whenever a time moves, grep the deck file and `deck.test.ts` for the literal.**
+The test failing is the system working — re-point the expectation at the new run
+sheet rather than reverting the data.
+
+**A run sheet changes without telling anybody.** No Slack message, no unread
+marker, no fingerprint. Nothing surfaces it but re-reading the sheet, so re-read
+it on the day even when last week's digest says it matched.
+
+### Some run-sheet rows are slides, and the generator cannot know which
+
+The Les Mills run sheet allowed five minutes at 6:20 for a group photograph. The
+deck mentioned it in one speaker note, so the single moment of the evening that
+needed the entire room to act in unison was the moment with nothing on the
+screen. A photo call runs long when nobody can see how long it is meant to be.
+
+**A row that asks the whole room to do something wants a slide with a
+countdown.** Group photo, karakia, a mass exercise. A row that is one person
+talking does not.
+
+**Take the countdown from the run sheet row, never a literal.** `deck.test.ts`
+forbids `minutes: 5` outright in any deck that uses `discussionMinutesFrom`, so
+derive it the way the table-discussion clock does.
+
+### The house voice is written for search engines, not for a projector
+
+`missionLead()` derives its line from `SITE_DESCRIPTION`, which calls She Sharp
+"a New Zealand non-profit" — the adjective standing in for the noun. Ordinary in
+a meta description, audibly missing a word when a host reads it to a room. It
+survived years on the website and was caught in ninety minutes by a marketing
+volunteer reading the projector.
+
+**Read every derived line out loud before it is projected.** Copy inherited from
+site data has never been performed; the slide is the first time anyone hears it.
+
+**Then count the words before you override it.** `truncateWords` clamps a lead to
+eighteen and drops the tail *silently* — the corrected line was nineteen words,
+so "one woman at a time" would have vanished mid-phrase and the slide would have
+looked deliberate. Cut a phrase yourself rather than letting the clamp choose.
+
+### Boilerplate is overridden per deck, never edited for one deck
+
+Three of Len's six review items were the organisational defaults being wrong *for
+this venue*: the safety bullets, the mission line, two social accounts. The fix
+is never to change what every deck says. Add an option to `OpeningOptions` and
+pass it from the one deck.
+
+`safetyLines`, `missionLead` and `omitSocials` all exist for this, and the
+pattern generalises: **a venue-specific correction is an argument, not an edit.**
+
+**An option that REMOVES something by name must throw on a name it cannot
+match.** `omitSocials: ["Spotify"]` silently stops working the day somebody
+renames that entry in `footerConfig`, and the link returns to the projector with
+nobody informed. Failing the build is the point. `safetyLines` avoids the same
+trap by replacing the list outright rather than subtracting from it.
+
+**Emptying the safety slide is a real decision, not a formatting one.** Les Mills
+briefed health and safety themselves, from their own building, so the generic
+lines were a second and quieter brief on the wall that nobody was reading from.
+Two briefings that can disagree is worse than one that is spoken — but the moment
+the venue is not briefing, the lines go back.
+
+### Deleting a slide is a rhythm change
+
+Cutting "How This Works" from the Les Mills deck left the group photo, the
+chapter card and the countdown as three consecutive full-frame slides, against a
+limit of two. The bullets slide nobody thought about had been the only thing
+breaking that run, and no reordering could fix it — the photograph is pinned at
+6:20 between the panel and the tables. The chapter card had to go as well.
+
+**Before removing a content slide, look at what sits either side of it.** If both
+neighbours are `title`, `section`, `karakia`, `break`, `photo` or `prizes`, that
+slide is load-bearing and removing it costs a second slide somewhere.
+
+**When a cut slide carried something the host still has to say, move it into the
+previous slide's note.** Notes are not projected, and the roundtable mechanics
+were always going to be spoken — the run sheet's prompts do not exist until the
+panel has finished. The Les Mills photo slide's note now runs the whole handover
+in order: photo call, turn the chairs, three mechanics, twenty minutes, start the
+clock.
+
+**Regenerate after any slide-count change** — `npx tsx scripts/deck/sync-registry.ts`,
+then commit `index-meta.ts` with the deck.
+
+### One list, one source; two lists that look alike stay apart
+
+The hackathon's twelve teams feed both the roster slide and the per-team
+photograph slides from a single array, because when they were separate a team got
+renamed on the roster and stayed wrong on their own slide — visible to precisely
+the people it was about.
+
+`TEAMS` and `PITCH_ORDER` hold the same twelve teams in the same sequence today
+and are still kept apart, because driving the pitch block from `TEAMS` and
+indexing into `PITCH_ORDER` by position looks identical right up until the two
+diverge, and then mislabels every team on stage.
+
+**Write image paths out in full.** `scripts/verify-image-paths.ts` scans source
+for string literals, so `/img/events/${SLUG}-team-${slug}.webp` turns twelve
+checked references into one unresolvable one, and a photograph that never reached
+`public/` sails through CI onto the projector as a fallback panel.
+
+**Retype a name only from a list its owner confirms.** The team channels are
+lowercase and hyphenated because Discord forces that; tidying `super-6` to
+`super-six` corrects a numeral its members chose.
+
+### A snapshot does not follow the thing it describes
+
+`UPCOMING_SNAPSHOT` is frozen at authoring time on purpose, so a live lookup
+cannot change the projector between rehearsal and event. The cost is that it goes
+stale in a direction nobody watches: on 3 September the Les Mills deck still
+promised "four women on pathways into cybersecurity" for the October Xero
+evening, whose format had been rewritten to a panel that same morning.
+
+**Re-read the snapshot against the event it points at, on the day.** Same for a
+poster it borrows — a title, date or artwork change on the other event has to be
+hand-copied across.
+
+### The QR code the author cannot test
+
+Every destination is opened in a signed-out browser before doors, and
+`references/assets.md` has carried that since the 5 August audit found a
+Circle.so login wall. Two more failures came out of the same audit and are less
+obvious:
+
+- **URL length is load-bearing when a slide carries more than one code.** At
+  level M, 61 bytes draws a 33×33 code and 89 bytes draws 41×41 — a quarter
+  smaller in the same physical square. Keep the short `shesharp.org.nz` URL and
+  let `redirects()` in `next.config.ts` do the hop.
+- **An embed URL is not a participant URL.** Slido's `/embed/polls/<id>` is built
+  to be iframed; a phone opening it directly gets a bare widget with none of the
+  chrome around it. Open it on a phone, signed out, before the room does.
+
+### Reviewer feedback arrives in three shapes and only one is an instruction
+
+Len's six items, an hour before doors: four instructions, one question ("for
+slide 14 are these questions from Les Mills?"), and one mangled by speech-to-text
+("there's like 22 can we just say alive secure clothing tournament"). The
+question was answered, not actioned. The mangled item was resolved against the
+slide it was obviously about and would have been guesswork on anything less
+clear.
+
+**Sort the list before you touch the deck.** Do the instructions, answer the
+questions in your reply, confirm anything garbled rather than reconstructing it,
+and say which item you did which with.
+
+**Slide numbers in a review describe the deck as the reviewer saw it.** Check
+what has been added or removed since. A net-zero change keeps them valid; a
+single deletion shifts every number after it.
 
 ## Common failure modes and how to recover
 
@@ -879,6 +1053,19 @@ the day to make it go away.
 a chapter divider is three consecutive requests for the room's silence, and the
 third one gets impatience instead. Move one, or put the slide it was introducing
 in between.
+
+**`3 full-frame slides in a row` that appeared the moment you DELETED a slide** —
+different cause, different fix. The slide you removed was the only content beat
+between two full-frame ones, and reordering will not help if any of them is
+pinned to a clock. Something else has to go: on 3 September the chapter card
+went, because the group photo it introduced had already become the
+turn-your-chairs beat. Move what the host still needs into the surviving slide's
+note before you cut.
+
+**The deck says one thing about another event and that event says another** —
+`UPCOMING_SNAPSHOT` is deliberately frozen and does not follow the event it
+describes. Re-read it against that event's current data on the day, along with
+any poster it borrows.
 
 **`Only 20% of slides are dark (need 25%)`** — the deck is all working and no
 breathing. Dividers, photographs and breaks are dark by default, so the fix for

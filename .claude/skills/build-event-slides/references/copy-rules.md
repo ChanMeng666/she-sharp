@@ -278,6 +278,41 @@ read properly, by the people who want it, on their own phone, later.
 
 ---
 
+## Copy you did not write — derived lines and other people's names
+
+Some of the words on a She Sharp slide were never written for a slide. They are
+inherited, and they carry two failure modes the limits above cannot catch.
+
+**A derived line has never been performed. Read it aloud before it is
+projected.** `missionLead()` takes its sentence from `SITE_DESCRIPTION`, which is
+written for search engines, and the result calls She Sharp "a New Zealand
+non-profit" — the adjective doing the noun's job. That is unremarkable in a meta
+description and audibly missing a word when a host says it to a room. It sat on
+the website for years and was caught in ninety minutes by a marketing volunteer
+watching the projector. Anything reaching a slide from `lib/data/*`,
+`lib/seo/site.ts` or `lib/config/footer.ts` deserves the same read-aloud pass.
+
+**Count the words before overriding a derived line, because the clamp is
+silent.** `truncateWords` cuts a lead to eighteen words and drops the tail with
+no warning and no linter message — the slide looks deliberate. The corrected
+mission line came to nineteen words, so "one woman at a time" would simply have
+disappeared. Decide yourself which phrase goes.
+
+**A person's or a team's own spelling of their name is not a style question.**
+The hackathon's team names are lowercase and hyphenated because Discord forces
+that, and they are the exact string each team spent the weekend looking at, so
+they are what people scan the roster for. `super-6` stayed `super-6` rather than
+being tidied to `super-six`, because the numeral is theirs. Retype a name only
+from a list its owner has confirmed — house style has no standing over how
+somebody writes their own name.
+
+**A job title is theirs too.** Take it from the run sheet's Speakers tab, not
+from LinkedIn and not from what fits. Where it genuinely overruns, shorten it in
+a named lookup beside the slide so the original stays visible in the diff, rather
+than letting a truncation cut it mid-title.
+
+---
+
 ## Why the specific rules exist
 
 **Nothing smaller than 28px.** The deck's type scale bottoms out there and there

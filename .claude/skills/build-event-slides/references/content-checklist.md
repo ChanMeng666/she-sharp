@@ -135,6 +135,18 @@ generator reports.
 **No break at all** (a one-hour panel, a lunchtime talk): drop the slide rather
 than inventing one. Say that you dropped it.
 
+**A group photo is a slide, not a note.** If the run sheet gives it a row, it
+gets a `break` slide with the countdown taken from that row — the same as any
+other break. Les Mills allowed five minutes at 6:20 and the deck carried it only
+in a speaker note, so the one moment of the evening that needed the whole room
+moving at once was the one moment with nothing on the screen. A photo call runs
+long when nobody can see how long it is meant to be.
+
+**The general rule this is an instance of:** walk the run sheet row by row and
+ask *does this row require the whole room to do something?* Photo call, karakia,
+a mass exercise, anything where a hundred people move — those want a slide and a
+clock. A row where one person talks does not.
+
 ## Round 4a — The table discussion — **ASK**
 
 The one part of the middle the repo cannot supply. If the run sheet has a
@@ -143,6 +155,20 @@ is a **placeholder**:
 
 > "During the roundtables, what do you actually want people talking about? Two
 > or three questions is plenty — they go on the screen while people talk."
+
+**If the answer is that the questions come out of the session itself, do not
+build the slide.** Les Mills' run sheet said "Roundtable discussions based on
+panel topics", which means the prompts genuinely do not exist until the panel has
+finished. The deck carried three generic mechanics instead, they stayed a
+placeholder through every revision, and the slide was cut an hour before doors —
+taking the chapter card with it, because it had been the only content beat
+between two full-frame slides.
+
+Ask the question once. If the prompts cannot exist before the night, say so and
+put the mechanics in the **host note** of the slide before the countdown, where
+they are read aloud. A slide that will still say PLACEHOLDER on the day is worse
+than no slide: it survives every review because it looks like work in progress,
+and then it is on a projector.
 
 **Why it matters.** It is the slide the room stares at longest, because it is up
 for the entire discussion. The placeholder text is deliberately generic and
@@ -253,6 +279,14 @@ date they can write down, usually beats three.
 Upcoming events are **snapshotted into the deck**, not looked up live — a live
 list would quietly change between the rehearsal and the event.
 
+**Which means it goes stale in the one direction nobody watches: the other
+event.** On the day of the Les Mills evening its closing slide still promised
+"four women on pathways into cybersecurity" for the October Xero night, whose
+format had been rewritten to a panel that same morning by a work order in
+`#website-team`. Nothing links the two — the snapshot is a copy. **Re-read it
+against that event's current data on the day**, and the same for any poster it
+borrows: a title, date or artwork change over there has to be hand-carried here.
+
 **Don't know:** take the next events from `events-custom.json` by date, read the
 titles and dates back, and let the author cut the ones that don't fit.
 
@@ -273,8 +307,8 @@ The organisational frame comes free. This is what you still have to collect.
 |---|---|---|
 | Title & partners | `title` | Confirmation of the title, and which partner logos sit on it |
 | Opening karakia | `karakia` | Nothing — fixed te reo and English |
-| Health & safety | `bullets` | Fire exits, the toilets, the assembly point for **this venue** |
-| We are She Sharp | `bullets` | Nothing |
+| Health & safety | `bullets` | Fire exits, the toilets, the assembly point for **this venue** — or nothing, if the venue briefs it themselves; see below |
+| We are She Sharp | `photo` | Nothing — but read its derived line aloud once |
 | The team | `people` | Who is actually in the room, if it differs from the standard roster |
 | Our impact | `stats` | Nothing — 3000+ members, 50+ sponsors, 94+ events since 2014 |
 | Sponsors | `logos` | The confirmed list (Round 5) |
@@ -293,6 +327,23 @@ The organisational frame comes free. This is what you still have to collect.
 | Feedback QR | `qr-cta` | Nothing — derived from the event slug. Only the prize draw, if there is one (Round 7) |
 | Ambassador QR | `qr-cta` | Nothing — `/join-our-team` |
 | Closing karakia | `karakia` | Nothing — fixed |
+| Ngā mihi nui | `title` (`end`) | Nothing — the host leaves it up while the room empties |
+
+### When the venue briefs health and safety themselves
+
+Ask it in Round 6, when you are already talking about the room: **"is the venue
+doing the safety briefing, or are we?"**
+
+If they are — as Les Mills did, from their own building, with their own person
+named on the run sheet — the generic organisational bullets become a second and
+quieter brief on the wall that nobody is reading from, and two briefings that can
+disagree is worse than one that is spoken. Pass `safetyLines: []` and the slide
+keeps its title and nothing else.
+
+This is a decision with a way back, and it must be recorded as one: put a comment
+beside it saying that the lines return the moment the venue is not briefing. Do
+not delete the slide, and never reword `ORG_SAFETY_LINES` to suit one venue —
+every other deck reads it.
 
 ## The fixed sequence, in order
 
@@ -305,7 +356,7 @@ The organisational frame comes free. This is what you still have to collect.
 6   Our impact
 7   Sponsors
 8   Contact & QR codes
-9   The event title
+9   The event title (chapter card)
     ── the evening, generated from the event data ──
     How tonight runs
     Tonight's hosts
@@ -320,6 +371,7 @@ The organisational frame comes free. This is what you still have to collect.
 12  Feedback QR
 13  Ambassador QR
 14  Closing karakia (whakamutunga)
+15  Nga mihi nui             <- terminal slide, left up while the room empties
 ```
 
 Do not reorder it. The frame is the same at every She Sharp event so that a

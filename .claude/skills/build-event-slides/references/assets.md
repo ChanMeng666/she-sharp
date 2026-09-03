@@ -260,6 +260,23 @@ Practical consequences:
   a hall. What should happen in that moment is *"I am interested and I know
   where to go"*, which a public page does and a login wall does not.
 
+- **How many codes share the slide decides how long the URL may be.** The
+  feedback-path note above is the single-code case, where the code is drawn
+  large and a long path still scans. Three to a slide and each is drawn small, so
+  the same byte count costs far more: measured with the deck's own `qrcode` at
+  level `M`, a 61-byte `shesharp.org.nz` URL draws 33×33 and the 89-byte Vercel
+  Blob URL behind it draws 41×41 — a quarter smaller in the same physical
+  square. Keep the short URL on the slide and let `redirects()` in
+  `next.config.ts` do the hop; redirects are evaluated before the filesystem, so
+  the hop works whether or not a `public/` copy still exists.
+
+- **An embed URL is not a participant URL.** Slido's `/embed/polls/<id>` is built
+  to be iframed inside somebody else's page, so a phone opening it directly gets
+  the bare widget with none of the chrome around it — no room, no question list,
+  no way back. The participant URL is a different path on the same event. This
+  is the same class of failure as the login wall: it looks correct from the
+  machine building the deck, because that machine is not a phone.
+
 ## The archive wall
 
 When photographs are being used as mass, they do not come from a list you write.

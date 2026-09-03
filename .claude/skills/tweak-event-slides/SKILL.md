@@ -64,12 +64,42 @@ longer but it gets a preview and a review"* — and stop.
 **Stop and hand over if the change needs:**
 
 - any other file in `lib/deck/` — `boilerplate.ts`, `skins.ts`, `types.ts`,
-  `lint.ts`, `wall-tiles.ts`, `templates/`
+  `lint.ts`, `wall-tiles.ts`, `templates/` — with ONE exception, below
 - anything in `components/`, `styles/`, `app/` or `hooks/`
 - a new slide *type*, or a slide type this deck does not already use
 - a change to the deck's `skin`, `archive` weave or `theme`
 - more than about three new slides, or removing a chapter
 - a new deck
+
+### The one exception: adding an override to `boilerplate.ts`
+
+An organisational default can be wrong *for one venue*. Les Mills briefed health
+and safety themselves, so the generic safety bullets were a second and quieter
+brief on the wall; the derived mission line called She Sharp "a New Zealand
+non-profit", which is audibly missing a word read aloud; and two of the social
+accounts had nothing for that room to go to.
+
+None of those is a reason to change what every deck says. Adding a new **optional
+argument** to `OpeningOptions` and passing it from the one deck is in scope here,
+because the blast radius is still one deck: every other deck omits the option and
+renders exactly as before.
+
+Three exist already — `safetyLines`, `missionLead`, `omitSocials` — so check
+whether the one you need is there before adding a fourth.
+
+Two conditions, both hard:
+
+1. **The option is additive and optional.** You are not changing a default, a
+   type, or an existing slide's shape. If the change would alter another deck's
+   output, it is out of scope and goes to `build-event-slides`.
+2. **An option that REMOVES something by name throws on a name it cannot match.**
+   `omitSocials: ["Spotify"]` quietly stops working the day that entry is
+   renamed in `footerConfig`, and the link returns to the projector with nobody
+   told. Fail the build instead — and prove it by passing a bogus name once.
+
+Run `npx tsx lib/deck/deck.test.ts` **and** the other deck's page after this, not
+just the deck you are editing: it is the one edit in this skill that can reach
+past its own slug.
 
 ## Step 1 — Find the deck
 
@@ -123,6 +153,21 @@ rather than letting the stage shrink the type to fit.
 must not restate the `section`; the `note` is what the host reads in `?print=1`.
 *Why:* the linter rejects an eyebrow that echoes its section, and a slide with
 no host note is a slide nobody knows how to present.
+
+**Removing a slide is a rhythm change, and what the host still needs moves into
+the previous note.** Look at the two neighbours first: if both are full-frame
+(`title`, `section`, `karakia`, `break`, `photo`, `prizes`), the slide you are
+cutting is the only thing breaking that run and something else has to go with it.
+Cutting "How This Works" from the Les Mills deck took the chapter card with it,
+and the three roundtable mechanics moved into the group photo's note — the last
+note before the clock starts. *Why:* notes are not projected, and the deck can
+pass every copy rule and still strand the host with nothing to say.
+
+**A time that moves is never in one place.** Change it in `events-custom.json`,
+then grep the deck file AND `deck.test.ts` for the old literal: host notes,
+comments and pinned assertions all hold hand-typed copies that the derived slide
+does not. *Why:* on 3 September the run sheet gained a row, the agenda slide
+followed it for free, and four copies of the old clock did not.
 
 ## Step 3 — The three checks
 
