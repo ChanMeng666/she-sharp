@@ -289,11 +289,15 @@ const EVENING: Slide[] = [
    * THE FOUR ANGLES, as cards rather than as a list.
    *
    * The event page's "What You'll Explore" is six bullets, and it was set here
-   * as six bullets, which is what a template does with a list. But the argument
-   * of this evening is not a list of topics — it is that one question looks
-   * completely different from four tables in the same company, and the four tables
-   * are exactly who is on the panel. `themes` says that and `bullets` cannot:
-   * cards sit side by side as peers, where bullets rank.
+   * as six bullets, which is what a template does with a list. `themes` beats
+   * `bullets` for these four because cards sit side by side as peers, where
+   * bullets rank — and these four are peers: they are the four jobs on the
+   * panel, looking at the same question.
+   *
+   * NO LEAD, and the title names the slot rather than making an argument. It
+   * read "One Question, Four Tables" over "The same decision, seen from four
+   * jobs" until 3 Sep, which is a nice line and one more thing to read while
+   * the host is trying to say it out loud.
    *
    * Kept deliberately abstract — a domain, not a name. Tagging each card with a
    * panellist would couple this slide to `SPEAKERS`, and a replacement panellist
@@ -305,8 +309,7 @@ const EVENING: Slide[] = [
     type: "themes",
     section: "Meet the Panel",
     eyebrow: "Bring one of these",
-    title: "One Question, Four Tables",
-    lead: "The same decision, seen from four jobs",
+    title: "4 Topics and Discussion",
     themes: [
       {
         title: "Data & AI",
