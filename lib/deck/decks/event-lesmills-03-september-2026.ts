@@ -353,44 +353,14 @@ const EVENING: Slide[] = [
     lead: "Panel at the front, the rest of the room behind them",
     minutes: PHOTO_MINUTES,
     resumeLabel: "Back to your tables",
-    note: "Say it twice: everybody, not just the panel. Ask the back row to stand and the front row to crouch, take three frames rather than one, and tell the room the photographs go up on the event page afterwards. Then send them to the tables.",
-  },
-
-  {
-    id: "section-the-tables",
-    type: "section",
-    section: "Over To The Room",
-    eyebrow: "Turn your chairs around",
-    index: "03",
-    title: "Over To The Room",
-    background: archiveFrame(9),
-    note: "Get people turned towards each other before you explain the task. This is the moment the evening changes gear — do not rush it.",
-  },
-
-  /*
-   * The mechanics of the tables, not the questions.
-   *
-   * The run sheet calls this block "Roundtable discussions based on panel
-   * topics", which means the questions genuinely do not exist until the panel
-   * has finished — they come out of what was said. So this slide is the three
-   * things that are true whatever the questions turn out to be, and the host
-   * reads the prompts out loud rather than projecting them.
-   *
-   * If the facilitator does settle on prompts beforehand, they replace these
-   * three items and this comment goes with them.
-   */
-  {
-    id: "how-the-tables-work",
-    type: "bullets",
-    section: "Over To The Room",
-    eyebrow: "Nobody presents, everybody talks",
-    title: "How This Works",
-    items: [
-      "Pick the answer you disagreed with",
-      "Everyone speaks before anyone speaks twice",
-      "Agree one line to read out",
-    ],
-    note: "PLACEHOLDER UNTIL THE NIGHT — the prompts come out of the panel, so say them aloud rather than expecting them on screen. Read these three mechanics slowly, then say they have twenty minutes and start the clock on the next slide.",
+    /* THIS NOTE NOW CARRIES THE WHOLE HANDOVER TO THE TABLES. Two slides were
+       cut on 3 Sep — "How This Works", which projected the three mechanics, and
+       the "Over To The Room" chapter card, which was the turn-your-chairs beat.
+       Neither was replaced on the wall, deliberately: the run sheet's prompts
+       come out of the panel and do not exist until it has finished, so they were
+       always going to be spoken. This is the last note before the clock starts,
+       so everything the host has to say is here, in running order. */
+    note: "Say it twice: everybody, not just the panel. Ask the back row to stand and the front row to crouch, take three frames rather than one, and tell the room the photographs go up on the event page afterwards. Then turn them towards each other — this is where the evening changes gear, do not rush it — and say the three mechanics: pick the answer you disagreed with, everyone speaks before anyone speaks twice, agree one line to read out. Say they have twenty minutes, and start the clock on the next slide.",
   },
 
   /*

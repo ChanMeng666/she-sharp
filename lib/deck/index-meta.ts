@@ -41,7 +41,7 @@ export const DECK_INDEX: readonly DeckIndexEntry[] = [
     eventSlug: "event-lesmills-03-september-2026",
     title: "No Pain, All Gain",
     subtitle: "Diversity and AI for Impact",
-    slideCount: 26,
+    slideCount: 24,
   },
 ];
 
