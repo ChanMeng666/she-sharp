@@ -50,8 +50,10 @@ import {
   deckSubtitleFrom,
   deckTitleFrom,
   discussionMinutesFrom,
+  findRowByPatterns,
   loadEventForDeck,
   partnerLogosFrom,
+  minutesOf,
   runSheetFrom,
   speakerGroupsFrom,
 } from "../event-source";
@@ -176,6 +178,11 @@ const PANEL = PANEL_GROUP.people.map((person) => ({
    schedule loses its end time. */
 const TABLE_MINUTES = discussionMinutesFrom(event) ?? 15;
 
+/* The group photo's own allowance, read from the run sheet rather than typed.
+   Falls back to five minutes only if the row is ever removed. */
+const PHOTO_MINUTES =
+  minutesOf(findRowByPatterns(RUN_SHEET, [/group photo/i, /photo/i])?.time ?? "") ?? 5;
+
 /* The closing frame. One photograph from She Sharp's own archive — this evening
    has none of its own yet, and will not until it has happened. Swap in a real
    one afterwards if the deck is ever reshown. */
@@ -202,16 +209,6 @@ const LINKEDIN_QR: QrBlock = {
   url: "https://www.linkedin.com/company/shesharpnz/",
   label: "She Sharp on LinkedIn",
   caption: "linkedin.com/company/shesharpnz",
-};
-
-/* This evening's own page, where the four bios and their LinkedIn links live.
-   Built from the compile-time site URL for the reason `feedbackUrlForSlug()`
-   exists: a projected code that encoded `localhost` would scan perfectly on the
-   laptop that made it and fail on every phone in the room. */
-const EVENT_PAGE_QR: QrBlock = {
-  url: `https://www.shesharp.org.nz/events/${EVENT_SLUG}`,
-  label: "Tonight's panel",
-  caption: `shesharp.org.nz/events/${EVENT_SLUG}`,
 };
 
 /*
@@ -247,7 +244,7 @@ const EVENING: Slide[] = [
        does that past seven), and a lead would steal the height the last row
        needs. Overflow here is only visible on a rendered stage. */
     items: RUN_SHEET_ROWS,
-    note: "The most-looked-at slide of the night. Leave it up while people are still finding seats. Read only the next two rows aloud — people photograph the slide for the rest. Amber takes the room at 5:40; the group photo is at 6:20, with no slide of its own.",
+    note: "The most-looked-at slide of the night. Leave it up while people are still finding seats. Read only the next two rows aloud — people photograph the slide for the rest. Amber takes the room at 5:40; the group photo is at 6:20 and now has a slide and a countdown of its own.",
   },
 
   {
@@ -294,7 +291,7 @@ const EVENING: Slide[] = [
    * The event page's "What You'll Explore" is six bullets, and it was set here
    * as six bullets, which is what a template does with a list. But the argument
    * of this evening is not a list of topics — it is that one question looks
-   * completely different from four desks in the same company, and the four desks
+   * completely different from four tables in the same company, and the four tables
    * are exactly who is on the panel. `themes` says that and `bullets` cannot:
    * cards sit side by side as peers, where bullets rank.
    *
@@ -308,7 +305,7 @@ const EVENING: Slide[] = [
     type: "themes",
     section: "Meet the Panel",
     eyebrow: "Bring one of these",
-    title: "One Question, Four Desks",
+    title: "One Question, Four Tables",
     lead: "The same decision, seen from four jobs",
     themes: [
       {
@@ -332,23 +329,28 @@ const EVENING: Slide[] = [
   },
 
   /*
-   * The bios, at the moment the room wants them.
+   * The group photo, which used to have no slide of its own.
    *
-   * The panel slide's own note says the full bios are on the event page behind
-   * the closing QR code — which is forty minutes and eleven slides too late.
-   * Someone deciding whether to go and talk to Ben at the break wants his
-   * background now, while he is speaking. Same destination, offered when it is
-   * useful rather than when the deck happens to end.
+   * The run sheet has allowed five minutes for it at 6:20 since the clock was
+   * written, but the deck only mentioned it in the agenda slide's speaker note
+   * — so the one moment that needs the whole room to do something in unison was
+   * the one moment with nothing on the screen. A photo call runs long when
+   * nobody can see how long it is meant to be; the countdown is the point.
+   *
+   * The length is read from the run sheet's own Group photo row, not typed, for
+   * the same reason the table-discussion clock is: move the time in
+   * `events-custom.json` and this follows.
    */
   {
-    id: "panel-bios",
-    type: "qr-cta",
+    id: "group-photo",
+    type: "break",
     section: "Meet the Panel",
-    eyebrow: "Look them up now",
-    title: "Their Full Backgrounds",
-    lead: "Every panellist's bio and LinkedIn, on the event page",
-    qr: EVENT_PAGE_QR,
-    note: "Leave this up for a few seconds before you hand over to the facilitator, and say it once: the bios are on the page, so nobody has to write a name down.",
+    eyebrow: "Everyone in — yes, everyone",
+    title: "Group Photo",
+    lead: "Panel at the front, the rest of the room behind them",
+    minutes: PHOTO_MINUTES,
+    resumeLabel: "Back to your tables",
+    note: "Say it twice: everybody, not just the panel. Ask the back row to stand and the front row to crouch, take three frames rather than one, and tell the room the photographs go up on the event page afterwards. Then send them to the tables.",
   },
 
   {
