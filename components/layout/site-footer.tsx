@@ -131,7 +131,7 @@ export function SiteFooter() {
                           className="social-icon p-2.5 lg:p-3 border-white/60 border rounded-full bg-white/10 hover:bg-purple-dark transition-all"
                           aria-label={`Follow us on ${social.name}`}
                         >
-                          <Icon className="h-5 w-5" />
+                          <Icon className="h-5 w-5" aria-hidden="true" />
                         </Link>
                       );
                     })}
@@ -174,7 +174,7 @@ export function SiteFooter() {
                             >
                               {link.name}
                               {isExternal && (
-                                <ExternalLink className="inline-block ml-1 h-3 w-3" />
+                                <ExternalLink className="inline-block ml-1 h-3 w-3" aria-hidden="true" />
                               )}
                             </Link>
                           </li>
@@ -228,7 +228,7 @@ export function SiteFooter() {
                                 >
                                   {link.name}
                                   {isExternal && (
-                                    <ExternalLink className="inline-block ml-1 h-3 w-3" />
+                                    <ExternalLink className="inline-block ml-1 h-3 w-3" aria-hidden="true" />
                                   )}
                                 </Link>
                               </li>
@@ -252,11 +252,11 @@ export function SiteFooter() {
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-6 lg:gap-8">
           {/* Left side - Logo & Charity Info */}
           <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3">
-            <Link href="/" className="group">
+            <Link href="/" className="group" aria-label="She Sharp Home">
               <div className="relative w-20 sm:w-24 h-6 sm:h-8">
                 <Image
                   src="/logos/she-sharp-logo.svg"
-                  alt="She Sharp"
+                  alt=""
                   fill
                   sizes="96px"
                   className="object-contain brightness-0 invert opacity-80 group-hover:opacity-100 transition-opacity duration-150"
@@ -272,7 +272,7 @@ export function SiteFooter() {
             >
               Registered NZ Charity #
               {footerConfig.charityInfo.registrationNumber}
-              <ExternalLink className="h-3 w-3" />
+              <ExternalLink className="h-3 w-3" aria-hidden="true" />
             </Link>
           </div>
 

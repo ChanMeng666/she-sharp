@@ -192,13 +192,14 @@ export function Chatbot() {
                       <Button
                         size="icon"
                         variant="ghost"
+                        aria-label="Back to questions"
                         onClick={() => setSelectedQuestion(null)}
                         className="text-white bg-transparent hover:bg-transparent hover:text-white border-none w-12 h-12 p-0 flex items-center justify-center "
                       >
-                        <ArrowLeft size={24} />
+                        <ArrowLeft size={24} aria-hidden="true" />
                       </Button>
                     ) : (
-                      <MessageSquare size={24} />
+                      <MessageSquare size={24} aria-hidden="true" />
                     )}
 
                     <h3 className="font-semibold text-lg">
@@ -210,10 +211,11 @@ export function Chatbot() {
                       <DropdownMenuTrigger asChild>
                         <Button
                           variant="ghost"
+                          aria-label="More options"
                           title="More options"
                           className="text-white bg-transparent hover:bg-transparent hover:text-white border-none w-12 h-12 p-0 flex items-center justify-center [&_svg]:w-[24px]! [&_svg]:h-[24px]!"
                         >
-                          <EllipsisVertical size={20} />
+                          <EllipsisVertical size={20} aria-hidden="true" />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
@@ -228,10 +230,11 @@ export function Chatbot() {
                     </DropdownMenu>
                     <Button
                       variant="ghost"
+                      aria-label="Close assistant"
                       onClick={() => setIsOpen(false)}
                       className="text-white bg-transparent hover:bg-transparent hover:text-white border-none w-12 h-12 p-0 flex items-center justify-center [&_svg]:w-[24px]! [&_svg]:h-[24px]!"
                     >
-                      <X size={20} />
+                      <X size={20} aria-hidden="true" />
                     </Button>
                   </div>
                 </div>
@@ -346,20 +349,23 @@ export function Chatbot() {
                       <div className="relative">
                         <Textarea
                           ref={textareaRef}
+                          id="chatbot-message"
                           value={input}
                           onChange={(e) => setInput(e.target.value)}
                           onKeyDown={handleKeyDown}
                           placeholder="Type your message..."
-                          className="min-h-[60px] max-h-[120px] resize-none border-none focus:border-none focus:ring-0 focus-visible:ring-0 pr-12"
+                          aria-label="Message"
+                          className="min-h-[60px] max-h-[120px] resize-none border-none pr-12"
                           disabled={isLoading}
                         />
                         <Button
                           type="submit"
                           variant="brand"
+                          aria-label="Send message"
                           disabled={isLoading || !input.trim()}
                           className="absolute top-1/2 -translate-y-1/2 right-2 h-10 w-10 shrink-0"
                         >
-                          <Send size={20} />
+                          <Send size={20} aria-hidden="true" />
                         </Button>
                       </div>
                     </form>
@@ -407,9 +413,7 @@ export function Chatbot() {
         )}
       </AnimatePresence>
 
-      <motion.div
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+      <div
         className={cn(
           "fixed bottom-4 right-4 sm:bottom-4 sm:right-4 z-50",
           isOpen && "hidden"
@@ -417,12 +421,14 @@ export function Chatbot() {
       >
         <Button
           variant="brand"
+          aria-label="Open She Sharp assistant"
+          aria-expanded={isOpen}
           onClick={() => setIsOpen(!isOpen)}
           className="h-16 w-16 shadow-xl hover:shadow-2xl"
         >
-          <MessageSquare size={24} />
+          <MessageSquare size={24} aria-hidden="true" />
         </Button>
-      </motion.div>
+      </div>
     </>
   );
 }

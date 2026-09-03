@@ -142,7 +142,7 @@ export function SiteHeader() {
         {/* Logo */}
         <Link
           href="/"
-          className="flex items-center space-x-2 group"
+          className="flex items-center space-x-2 group rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           aria-label="She Sharp Home"
         >
           <span
@@ -185,7 +185,7 @@ export function SiteHeader() {
                             if (e.pointerType === "mouse") closeMenuSoon();
                           }}
                           className={cn(
-                            "group inline-flex items-center gap-1 bg-transparent transition-colors duration-150 rounded-full px-3 py-2 text-sm font-medium outline-none focus-visible:ring-2 focus-visible:ring-ring/50",
+                            "group inline-flex items-center gap-1 bg-transparent transition-colors duration-150 rounded-full px-3 py-2 text-sm font-medium outline-none focus-visible:ring-2 focus-visible:ring-ring",
                             isItemActive(item)
                               ? "text-brand bg-surface-purple/70 hover:bg-surface-purple data-[state=open]:bg-surface-purple"
                               : "text-foreground hover:bg-muted data-[state=open]:bg-muted"
@@ -311,7 +311,7 @@ export function SiteHeader() {
             <SheetTrigger asChild className="ml-auto lg:hidden">
               <button
                 type="button"
-                aria-label="Toggle menu"
+                aria-label={isOpen ? "Close menu" : "Open menu"}
                 className="relative flex h-10 w-10 items-center justify-center rounded-full bg-muted text-foreground transition-colors duration-200 hover:bg-ink-200"
               >
                 <span
@@ -320,7 +320,7 @@ export function SiteHeader() {
                     isOpen ? "opacity-100 rotate-0" : "opacity-0 rotate-90"
                   )}
                 >
-                  <X className="h-5 w-5" />
+                  <X className="h-5 w-5" aria-hidden="true" />
                 </span>
                 <span
                   className={cn(
@@ -328,7 +328,7 @@ export function SiteHeader() {
                     isOpen ? "opacity-0 -rotate-90" : "opacity-100 rotate-0"
                   )}
                 >
-                  <Menu className="h-5 w-5" />
+                  <Menu className="h-5 w-5" aria-hidden="true" />
                 </span>
               </button>
             </SheetTrigger>
@@ -372,7 +372,7 @@ export function SiteHeader() {
               <div className="relative flex-shrink-0 border-b border-border bg-white px-6 pt-6 pb-6">
                 {/* Close button */}
                 <SheetClose className="absolute right-4 top-4 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-muted text-foreground transition-colors duration-200 hover:bg-ink-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-                  <X className="h-4 w-4" />
+                  <X className="h-4 w-4" aria-hidden="true" />
                   <span className="sr-only">Close menu</span>
                 </SheetClose>
 
@@ -531,10 +531,10 @@ export function SiteHeader() {
           /* Static placeholder for mobile menu during SSR */
           <button
             type="button"
-            aria-label="Toggle menu"
+            aria-label="Open menu"
             className="ml-auto flex h-10 w-10 items-center justify-center rounded-full bg-muted text-foreground lg:hidden"
           >
-            <Menu className="h-5 w-5" />
+            <Menu className="h-5 w-5" aria-hidden="true" />
           </button>
 
 )}

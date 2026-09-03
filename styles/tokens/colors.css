@@ -160,7 +160,10 @@
   --ink-900: #1f1e44;
   --ink-700: #4a4970;
   --ink-600: #5a5880;
-  --ink-500: #8281a0;
+  /* #8281a0 was 3.75:1 on white and 3.47:1 on the accent page fill
+     (#f9f5f8). SC 1.4.3 needs 4.5:1 for this 13px label weight; #706e8d
+     is the darker same-hue candidate that clears both backgrounds. */
+  --ink-500: #706e8d;
   --ink-300: #c5c4d9;
   --ink-200: #e7e6f2;
   --ink-100: #f4f4fa;

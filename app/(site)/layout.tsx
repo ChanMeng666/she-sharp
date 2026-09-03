@@ -12,7 +12,9 @@ export default function SiteLayout({
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <SiteHeader />
-      <main className="flex-1">{children}</main>
+      <main id="main-content" tabIndex={-1} className="flex-1 outline-none">
+        {children}
+      </main>
       <SiteFooter />
       <ChatbotProvider />
       <Suspense fallback={null}>

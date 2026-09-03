@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 import { motion, useReducedMotion, type Variants } from "motion/react";
 
 import { Button } from "@/components/ui/button";
@@ -31,16 +32,27 @@ const COMMITMENTS = ["Connect", "Inspire", "Empower"] as const;
 
 export function HeroSection() {
   const reduceMotion = useReducedMotion();
+  const videoRef = useRef<HTMLVideoElement>(null);
   const poster = curatedImages["hero-community-cheer"].src;
+
+  // `useReducedMotion` is null until hydration. The attribute alone would
+  // still autoplay in that window, so pause once we know the preference.
+  useEffect(() => {
+    if (reduceMotion) {
+      videoRef.current?.pause();
+    }
+  }, [reduceMotion]);
 
   return (
     <section className="relative isolate flex min-h-[80vh] sm:min-h-[88vh] lg:min-h-[92vh] items-center overflow-hidden">
       {/* Full-bleed muted event footage with a curated poster frame. */}
       <video
-        autoPlay
-        loop
+        ref={videoRef}
+        autoPlay={!reduceMotion}
+        loop={!reduceMotion}
         muted
         playsInline
+        aria-hidden="true"
         poster={poster}
         className="absolute inset-0 -z-20 h-full w-full object-cover"
       >

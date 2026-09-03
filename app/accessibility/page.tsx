@@ -21,8 +21,9 @@ export default function AccessibilityPage() {
             accessibility standards.
           </p>
           <p>
-            <strong>Our Goal:</strong> Conform to WCAG 2.1 Level AA standards to ensure our content
-            is accessible to a wide range of people with disabilities.
+            <strong>Our Goal:</strong> Conform to WCAG 2.2 Level AA (New Zealand
+            Web Accessibility Standard 1.2). That is the target we work to, not a
+            claim that every page currently meets it.
           </p>
         </section>
 
@@ -34,7 +35,7 @@ export default function AccessibilityPage() {
             <li><strong>Visual Design</strong> — High contrast ratios and clear typography</li>
             <li><strong>Keyboard Navigation</strong> — Full keyboard support throughout the site</li>
             <li><strong>Responsive Design</strong> — Works across all devices and screen sizes</li>
-            <li><strong>Alternative Content</strong> — Alt text for images and video captions</li>
+            <li><strong>Alternative Content</strong> — Alt text for images</li>
             <li><strong>Clear Structure</strong> — Consistent navigation and page layout</li>
           </ul>
 
@@ -122,7 +123,7 @@ export default function AccessibilityPage() {
           <p>Learn more about web accessibility and assistive technologies:</p>
           <ul>
             <li><a href="https://www.w3.org/WAI/" target="_blank" rel="noopener noreferrer">W3C Web Accessibility Initiative</a> — International standards</li>
-            <li><a href="https://www.govt.nz/standards/web-accessibility-standard-1-1/" target="_blank" rel="noopener noreferrer">NZ Government Web Standards</a> — Local guidelines</li>
+            <li><a href="https://www.digital.govt.nz/standards-and-guidance/nz-government-web-standards" target="_blank" rel="noopener noreferrer">NZ Government Web Standards</a> — Local guidelines (Web Accessibility Standard 1.2)</li>
             <li><a href="https://webaim.org/" target="_blank" rel="noopener noreferrer">WebAIM</a> — Resources and tools</li>
           </ul>
         </section>

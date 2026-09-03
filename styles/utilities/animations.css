@@ -130,7 +130,8 @@
   @media (prefers-reduced-motion: reduce) {
     .animate-marquee,
     .animate-drip,
-    .animate-hero-fade-up {
+    .animate-hero-fade-up,
+    .animate-pulse {
       animation: none;
     }
 

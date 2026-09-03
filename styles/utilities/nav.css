@@ -38,4 +38,35 @@
   .featured-bg-mint {
     background: linear-gradient(135deg, #effefb 0%, #f7fffd 100%);
   }
+
+  /*
+   * Visually hidden until focused. `top` is 1rem so the control clears the
+   * fixed header once it appears; colour is navy on white-enough type for
+   * 4.5:1. Transition is gated so reduced-motion users are not slid at.
+   */
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    z-index: 100;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    background: #1f1e44;
+    color: #ffffff;
+    font-weight: 600;
+    text-decoration: none;
+    transform: translateY(-200%);
+  }
+
+  .skip-link:focus-visible {
+    transform: translateY(0);
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .skip-link {
+      transition: transform 0.15s ease-out;
+    }
+  }
 }

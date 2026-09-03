@@ -1,7 +1,8 @@
 import './globals.css';
-import type { Metadata, Viewport } from 'next';
+import type { Metadata } from 'next';
 import { heading, sans, brandScript } from '@/lib/fonts';
 import { CookieBanner } from '@/components/cookie-banner';
+import { SkipLink } from '@/components/layout/skip-link';
 import { Toaster } from '@/components/ui/sonner';
 import { Providers } from './providers';
 import { JsonLd } from '@/components/seo/json-ld';
@@ -53,10 +54,6 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport: Viewport = {
-  maximumScale: 1
-};
-
 export default function RootLayout({
   children
 }: {
@@ -68,10 +65,15 @@ export default function RootLayout({
       className={`bg-background text-foreground ${heading.variable} ${sans.variable} ${brandScript.variable}`}
     >
       <body className="min-h-[100dvh]">
+        <SkipLink />
         <JsonLd data={[organizationSchema(), websiteSchema()]} />
         <Providers>
-          {children}
+          {/* Consent first in the tab order: it is visually a bottom bar, but
+              leaving it last in the DOM meant keyboard users walked the whole
+              page before they could answer it, while the bar already covered
+              the chat launcher. */}
           <CookieBanner />
+          {children}
           <Toaster />
         </Providers>
         {/*

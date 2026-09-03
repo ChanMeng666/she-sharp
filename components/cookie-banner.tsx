@@ -115,6 +115,8 @@ export function CookieBanner() {
           `styles/components/deck.css` hides them by attribute rather than
           trying to out-rank an inline z-index. */}
       <div
+        role="region"
+        aria-label="Cookie consent"
         data-cookie-banner
         className={cn(
           "fixed bottom-0 left-0 right-0 z-50 p-4 sm:p-6 bg-background border-t border-border shadow-2xl transform transition-transform duration-500",
@@ -140,7 +142,7 @@ export function CookieBanner() {
                 onClick={() => setShowSettings(true)}
                 className="text-muted-foreground"
               >
-                <Settings className="h-3.5 w-3.5 mr-1" />
+                <Settings className="h-3.5 w-3.5 mr-1" aria-hidden="true" />
                 Customise
               </Button>
               <Button
