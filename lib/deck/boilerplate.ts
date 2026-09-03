@@ -166,6 +166,28 @@ export interface OpeningOptions {
    * Still capped at `COPY_LIMITS.bulletCount`, and `safetyExtras` still appends.
    */
   safetyLines?: string[];
+  /**
+   * Replaces the derived mission line on "We are She Sharp".
+   *
+   * `missionLead()` reads the first clause of `SITE_DESCRIPTION`, which is
+   * written for search engines rather than for a projector — it calls She Sharp
+   * "a New Zealand non-profit", using the adjective as a noun. That reads fine
+   * in a meta description and lands as a missing word when it is read aloud.
+   * Overriding here rather than rewriting `SITE_DESCRIPTION` keeps the SEO copy
+   * under the SEO tests' control.
+   */
+  missionLead?: string;
+  /**
+   * Social accounts to leave off "Stay Connected", by name.
+   *
+   * Every name given must match an entry in `footerConfig.socialLinks` or this
+   * throws. Matching by string to REMOVE something is normally the silent-no-op
+   * trap described on `safetyLines` — a rename turns the omission off and
+   * nobody finds out. Here the omission is a presenter's editorial choice
+   * rather than a safety instruction, so it is allowed, and the throw is what
+   * stops it going quiet.
+   */
+  omitSocials?: string[];
   /** Quiet plate behind the opening karakia; the layout scrims it to atmosphere. */
   heroImage?: DeckImage;
   /**
@@ -203,6 +225,20 @@ export function buildOpeningSlides(options: OpeningOptions): Slide[] {
     ...(options.safetyLines ?? ORG_SAFETY_LINES),
     ...(options.safetyExtras ?? []),
   ].slice(-COPY_LIMITS.bulletCount);
+
+  const omit = options.omitSocials ?? [];
+  const unknown = omit.filter(
+    (name) => !footerConfig.socialLinks.some((link) => link.name === name),
+  );
+  if (unknown.length > 0) {
+    throw new Error(
+      `omitSocials names no such social account: ${unknown.join(", ")}. ` +
+        `Known accounts: ${footerConfig.socialLinks.map((l) => l.name).join(", ")}.`,
+    );
+  }
+  const socials = footerConfig.socialLinks.filter(
+    (link) => !omit.includes(link.name),
+  );
 
   const slides: Slide[] = [
     {
@@ -251,7 +287,7 @@ export function buildOpeningSlides(options: OpeningOptions): Slide[] {
       eyebrow: "Running since 2014",
       overlay: "gradient",
       title: "We are She Sharp",
-      lead: missionLead(),
+      lead: options.missionLead ?? missionLead(),
       image: communityPhoto(),
       note: "One sentence on who She Sharp is. Mention that we have run events since 2014.",
     },
@@ -328,7 +364,7 @@ export function buildOpeningSlides(options: OpeningOptions): Slide[] {
       // read off a projector, so the list maps straight through. It used to be
       // filtered by the literal name "Mailchimp": the newsletter archive sat in
       // this array and has no handle. It now lives in `newsletterArchive`.
-      socials: footerConfig.socialLinks.map((link) => ({
+      socials: socials.map((link) => ({
         name: link.name,
         handle: deriveSocialHandle(link.href),
         href: link.href,

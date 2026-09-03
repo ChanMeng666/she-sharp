@@ -223,7 +223,7 @@ const UPCOMING_SNAPSHOT = [
     date: "Thursday 8 October 2026",
     time: "5:00–8:00pm",
     venue: "Xero, Parnell",
-    blurb: "A live secure-coding tournament, and four women on pathways into cybersecurity",
+    blurb: "A live secure-coding tournament, leading the way to secure Aotearoa",
     image: {
       src: "/img/events/code-secure-2026/cover.webp",
       alt: "Poster for Beyond the Code, a She Sharp evening with Xero and Secure Code Warrior on 8 October 2026.",
@@ -544,6 +544,27 @@ export const eventLesmills03September2026Deck: Deck = {
       // than a generic one. The venue is on Level 2, so a lift-versus-stairs
       // line is the one most likely to be needed.
       safetyExtras: [],
+      // LEN, 3 SEP, SLIDE 3: the bullets come off and the slide keeps its title.
+      // Amber briefs health and safety herself off the run sheet — it is her
+      // building — so the generic organisational lines were a second, quieter
+      // safety brief on the wall that nobody was reading from. Two briefings
+      // that can disagree is worse than one that is spoken. This is the
+      // `safetyLines` escape hatch working as its comment describes: a venue
+      // that briefs differently. IF AMBER IS NOT IN THE ROOM, PUT THEM BACK.
+      safetyLines: [],
+      // LEN, 3 SEP, SLIDE 4: "the organisation word is missing". It was.
+      // `missionLead()` derives "a New Zealand non-profit" from SITE_DESCRIPTION,
+      // where the adjective stands in for the noun. Fine in a meta description,
+      // audibly wrong read aloud. Adding the word costs a word, and the derived
+      // line was already at the 18-word limit, so "one woman at a time" gives
+      // up its place rather than being silently truncated mid-phrase.
+      missionLead:
+        "She Sharp is a New Zealand non-profit organisation bridging the gender gap in STEM",
+      // LEN, 3 SEP, SLIDE 8: neither account has anything for this room to go
+      // to — the podcast has not shipped an episode and the channel is a back
+      // catalogue. Five live accounts read better than seven with two dead
+      // ends. Names must match footerConfig.socialLinks or the build throws.
+      omitSocials: ["Spotify", "YouTube"],
       heroImage: whenuaPlate("whenua-pounamu-sea"),
       // NO CHAPTER PLATE. The handover card falls back to the archive wall with
       // its numeral drawn in outline over it, which under this skin IS the
