@@ -247,7 +247,7 @@ const EVENING: Slide[] = [
        does that past seven), and a lead would steal the height the last row
        needs. Overflow here is only visible on a rendered stage. */
     items: RUN_SHEET_ROWS,
-    note: "The most-looked-at slide of the night. Leave it up while people are still finding seats. Read only the next two rows aloud — people photograph the slide for the rest. Amber takes the room at 5:40; the group photo is at 6:15, with no slide of its own.",
+    note: "The most-looked-at slide of the night. Leave it up while people are still finding seats. Read only the next two rows aloud — people photograph the slide for the rest. Amber takes the room at 5:40; the group photo is at 6:20, with no slide of its own.",
   },
 
   {
@@ -390,7 +390,7 @@ const EVENING: Slide[] = [
 
   /*
    * The clock is the run sheet's own allowance for this block — twenty minutes
-   * at 6:20–6:40 — and it is read from the event data on every build. To
+   * at 6:25–6:45 — and it is read from the event data on every build. To
    * change it, move the times in `events-custom.json`; do not edit a number
    * here, and do not regenerate just for this.
    */

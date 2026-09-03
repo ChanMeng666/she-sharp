@@ -208,7 +208,7 @@
       "mapping": {
         "kind": "none"
       },
-      "watermarkTs": "1788159195.110289",
+      "watermarkTs": "1788238880.387669",
       "threads": {
         "1611043608.000300": {
           "replyCount": 1,
@@ -692,12 +692,12 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-31T10:50:06.512Z",
+      "lastSyncedAt": "2026-09-03T04:30:18.745Z",
       "lastSyncedCommit": "",
-      "scannedTs": "1788159195.110289",
-      "readAt": "2026-08-31T10:50:06.512Z",
-      "digest": "The newsletter channel. Carries the Mailchimp credentials and a pinned 2FA QR - item 1 in the archive's SECURITY/credentials-to-rotate.md, and the worst item on it. Never quote anything credential-shaped from here.\r\n\r\n31 AUG 2026 READ - THREE THINGS THE PRIOR DIGEST GOT WRONG BY BEING A DAY OLD, ALL NOW SETTLED. (1) THE AUGUST ISSUE WAS SENT. It went to all subscribers through Resend, announced in-channel at 06:53 UTC on 31 Aug. The prior digest's \"the self-hosted path has never sent anything\" and \"newsletter_subscribers has no send history\" are both superseded - that table now has exactly one broadcast in its history, which is one, not a routine. (2) MAHSA SUPPLIED THE FOUNDER COPY as a brief on 30 Aug 21:18, after being told the section would otherwise be replaced by an unsigned AI-generated overview. (3) THE PAID RESEND UPGRADE IS DONE, at the very end of the month - reported in the Lesley Gao DM. So the free-tier limits and the \"empty Resend roster\" caveat that /promote-event and /email-the-community gated on are both retired.\r\n\r\nTHE FOUNDER'S BRIEF PUBLISHED 129, WHILE THE SITE SAYS 125. RECORD IT, DO NOT ACT ON IT. Mahsa's copy reads \"129 people registered, more than 30 mentors gave their time\"; events-custom.json carries attendees 125 for aotearoa-ai-hackathon-festival-2026 and the page names 17 mentors. That discrepancy was already open (see the hackathon digest: Sara's 13 Aug social caption said the same 129/30+) and was deliberately left at 125 because Humanitix is authoritative for attendance and this event's checkedIn is 0. What is new is only that the organisation has now published 129 to the whole subscriber list, so the two numbers are both out in public. Still ask Nikita before changing the site; a newsletter is not a source.\r\n\r\nTHE REVISION LOOP IS THE PROCESS PROBLEM HERE, AND IT WAS NAMED IN-CHANNEL. Requests arrived one at a time across the test-send cycle - brief, then a subject-line change, then \"have you sent it yet\". Chan asked explicitly for all revisions in one batch before any resend, and got confirmation the list was final. Keep that expectation: each partial request costs a full render-and-test cycle.\r\n\r\nROUTING IS UNCHANGED: an event sync must not action a newsletter work order. Route to /monthly-newsletter. Where a request touches event data rather than the newsletter template - as the 30 Aug brief's \"Read more\" landing paragraph and the Xero inclusion did - read the code-secure-2026 digest first: that page still has no registrationUrl and no Humanitix page, so promoting it has nothing to link to yet.",
-      "digestAt": "2026-08-31T10:50:06.512Z"
+      "scannedTs": "1788238880.387669",
+      "readAt": "2026-09-03T04:30:18.745Z",
+      "digest": "Newsletter planning channel. Feeds no event page; belongs to /monthly-newsletter. Read only so the read position stays honest.\n\n1 SEP 2026 - THE FIRST SELF-HOSTED NEWSLETTER HAS BEEN SENT. Chan told the founder that the newsletter that went out on 30 Aug was the first sent via RESEND, to 1,549 active subscribers, against the 1,560 Mailchimp showed on 17 Aug. The gap is unsubscribes between those dates, attributed to the promotional volume in that window. THIS RETIRES THE OLD LINE THAT \"the send still goes out from Mailchimp and newsletter_subscribers has never sent anything\" - it has now. Any digest still carrying that sentence is stale.\n\nTHE THREE-A-MONTH CAP HAS A MEASURED JUSTIFICATION NOW, not just a policy: two promotional emails plus one newsletter, and the observed cost of exceeding it is unsubscribes. The cap is in .claude/skills/update-mailing-list/references/consent-rules.md and counts across all skills.\n\nNEVER QUOTE A SUBSCRIBER COUNT FROM THIS CHANNEL. 1,549 was true on 31 Aug and is already stale; the live figure is the \"Mailable after suppression\" line of npx tsx scripts/email/suppression.ts reconcile. Recorded here as an event in the migration, not as a number to reuse.",
+      "digestAt": "2026-09-03T04:30:18.743Z"
     },
     "C01K9PJ3ZQC": {
       "name": "team-meeting-minutes",
@@ -6057,7 +6057,7 @@
         "reason": "#website-team is the declared intake for website work orders as of 6 Aug 2026 — Chan asked the team in-channel to post update requests here instead of by DM. It is mapped skip because it plans no event of its own, and always-read because that is exactly the traffic the event-signal heuristic cannot see: \"please update Carolina Lobos' profile on the website\" names no venue, no date and no ticket, so it scores zero.",
         "alwaysRead": true
       },
-      "watermarkTs": "1788169869.043049",
+      "watermarkTs": "1788343122.975919",
       "threads": {
         "1693110156.197929": {
           "replyCount": 2,
@@ -7054,15 +7054,23 @@
         "1788169869.043049": {
           "replyCount": 2,
           "latestReplyTs": "1788169987.058329"
+        },
+        "1788179812.223669": {
+          "replyCount": 1,
+          "latestReplyTs": "1788254517.032719"
+        },
+        "1788218836.033689": {
+          "replyCount": 1,
+          "latestReplyTs": "1788254671.497369"
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-31T10:47:31.132Z",
+      "lastSyncedAt": "2026-09-03T04:28:13.707Z",
       "lastSyncedCommit": "",
-      "scannedTs": "1788169869.043049",
-      "readAt": "2026-08-31T10:47:31.132Z",
-      "digest": "THE WORK-ORDER INTAKE. Since 6 Aug 2026 the team posts website update requests here instead of by DM. Always-read, because a work order names no venue, date or ticket and so scores zero on the event-signal heuristic.\r\n\r\n31 AUG 2026 READ - A WORK ORDER ARRIVED AND SOMEBODY ELSE FILLED IT. Nikita asked for the Les Mills venue's first line to read \"Les Mills International\" instead of \"Les Mills Auckland City, Auckland\". Tharaneetharan Thavarasan made the edit, committed it as 76e71598 \"Update Les Mills event location\", answered in-thread and got \"Thank you, checked!\" back. Nothing was owed to this sync.\r\n\r\nTHIS IS THE FIRST WORK ORDER CLOSED BY SOMEBODY OTHER THAN THE MAINTAINER, and it produced the expected side effect rather than a problem: he changed events-custom.json without touching the sync manifest, so the Les Mills row surfaced as \"incremental + fingerprint-stale\". Read that composed label as \"the repo moved AND Slack holds unread content\"; the fingerprint half needs no judgement and re-baselines when update-state.ts runs after the JSON patch. Expect this shape from now on - the standing slack-triage GitHub issue hands rows to whoever is free, and only a maintainer's local run moves the manifest.\r\n\r\nTHE 27 AUG LESSON STANDS AND IS STILL THE MOST VALUABLE THING IN THIS RECORD: the Xero brief arrived HERE, not in #event-security-xero-october-2026, which carried only Marriane's Canva options. Event copy and artwork come through this intake, so a sync that reads only the event channels will miss a brief entirely. The signal gate scored that message 2 (\"register\"), so always-read on this channel is load-bearing rather than cautious.\r\n\r\n25 AUG 2026, KEPT BECAUSE BOTH HALVES ARE STILL LIVE RULES. Marriane asked for the event detail page header to be a solid colour carrying the event details rather than the poster as a background, since the poster already appears on the page. Implemented in components/events/event-detail/event-header.tsx.\r\n1. KEEP: the old markup used bg-foreground, and --foreground INVERTS to white under .dark while --navy stays dark in both themes. The photograph was hiding that; removing it would have produced white text on a white panel in dark mode. The new panel uses bg-navy deliberately.\r\n2. A WRONG TURN, RECORDED SO IT IS NOT REPEATED: EventPosters returns null when posters[] is empty and only 3 of 98 events have one, so it looked as though 20 events would lose their artwork, and a coverImage fallback was added to EventFeaturedPhoto. That was WRONG. app/(site)/events/[slug]/page.tsx already renders the cover whole and uncropped in an editorial frame at the top of the main column, unconditionally, for every event. The fallback duplicated it (the MYOB page rendered cover.webp twice) and was reverted. Check the page composition before adding a fallback for a component that looks conditional. This paid off on 27 Aug: it is why code-secure-2026's posters[] was emptied rather than pointed at the new cover.webp.\r\n\r\nREDACTIONS: Nikita's 27 Aug work order links a Canva /edit design (internal, editable) - it did not and does not go in the repo. The channel's pinned messages carry a Trello invite link and a Google Drive folder; neither belongs on a page.",
-      "digestAt": "2026-08-31T10:47:31.132Z"
+      "scannedTs": "1788343122.975919",
+      "readAt": "2026-09-03T04:28:13.707Z",
+      "digest": "THE WORK-ORDER INTAKE. Since 6 Aug 2026 the team posts website update requests here instead of by DM. Always-read, because a work order names no venue, date or ticket and so scores zero on the event-signal heuristic.\n\n3 SEP 2026 READ - A SECOND WORK ORDER, A SECOND FILL BY SOMEBODY ELSE, AND THE FIRST TIME THAT PRODUCED A DEFECT. Nikita asked Tharaneetharan on 1 Sep for two Xero page changes: reword the hands-on secure-coding sentence, and replace \"Four women leaders will give lightning talks\" with a panel discussion on \"The Critical Role of Cybersecurity in AI\". He did both in fullDescription over four commits and reported done on 2 Sep, asking her to check. He did not touch specialSections, where the \"What You'll Do\" bullet still advertised lightning talks - so for two days the page described the same block of the evening two ways. Fixed in this sync. Nikita had not confirmed either way as of 3 Sep.\n\nTHE GENERALISABLE RULE: WHEN A WORK ORDER CHANGES A FORMAT WORD, GREP THE WHOLE EVENT FOR IT, not just the field the requester quoted. A requester quotes the sentence they happened to be reading. Copy about an event's shape is repeated across fullDescription, specialSections, shortDescription, the poster alt text and the deck, and none of the gates can tell two valid sentences apart. This is the predictable failure mode of a distributed intake and it will recur - it is not a criticism of the person who filled it.\n\nTHE 27 AUG LESSON IS NOW A PATTERN, NOT AN INCIDENT: event copy arrives HERE, not in the event channel. #event-security-xero-october-2026 had ZERO new messages across the entire week its page copy was being rewritten. A sync that reads only event channels sees a clean no-op on the event that is actually changing. always-read on this channel is load-bearing.\n\nALSO 3 SEP, NO ACTION: five messages of congratulations to Tharaneetharan on his first independent page update (76e71598, the Les Mills venue line), from Chan, Mahsa and himself, two of them posted twice because he answered in-thread and again at top level. A September workshop for She Sharp members was floated by Chan with Tharanee invited - not an event page and not yet a dated event; if it becomes one it will need its own channel or a brief here.\n\n25 AUG 2026, KEPT BECAUSE BOTH HALVES ARE STILL LIVE RULES. Marriane asked for the event detail page header to be a solid colour carrying the event details rather than the poster as a background. Implemented in components/events/event-detail/event-header.tsx.\n1. KEEP: the old markup used bg-foreground, and --foreground INVERTS to white under .dark while --navy stays dark in both themes. The photograph was hiding that; removing it would have produced white text on a white panel in dark mode. The new panel uses bg-navy deliberately.\n2. A WRONG TURN, RECORDED SO IT IS NOT REPEATED: EventPosters returns null when posters[] is empty and only 3 of 98 events have one, so it looked as though 20 events would lose their artwork, and a coverImage fallback was added to EventFeaturedPhoto. That was WRONG. app/(site)/events/[slug]/page.tsx already renders the cover whole and uncropped in an editorial frame at the top of the main column, unconditionally, for every event. The fallback duplicated it (the MYOB page rendered cover.webp twice) and was reverted. Check the page composition before adding a fallback for a component that looks conditional.\n\nREDACTIONS: Nikita's 27 Aug work order links a Canva /edit design (internal, editable) - it did not and does not go in the repo. The channel's pinned messages carry a Trello invite link and a Google Drive folder; neither belongs on a page.",
+      "digestAt": "2026-09-03T04:28:13.705Z"
     },
     "C05KXPSSXJP": {
       "name": "events_2023_august_hackthon",
@@ -14487,12 +14495,16 @@
         "1787441275.279679": {
           "replyCount": 2,
           "latestReplyTs": "1787565056.376309"
+        },
+        "1788343016.736249": {
+          "replyCount": 1,
+          "latestReplyTs": "1788343588.391859"
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-31T10:30:59.502Z",
+      "lastSyncedAt": "2026-09-03T04:10:21.869Z",
       "lastSyncedCommit": "",
-      "scannedTs": "1788158743.349229",
+      "scannedTs": "1788343016.736249",
       "readAt": "2026-08-30T11:39:59.489Z",
       "digest": "#team-meetings - scheduling and agendas for the fortnightly committee meeting. It feeds no page.\n\n30 AUG 2026 READ: 9 messages, ALL LOGISTICS. Tharaneetharan circulated the 27 Aug meeting link and agenda (Mike presenting the 2025 financial report); four people sent apologies or said they would be late; Amani joined; Slackbot asked for Monday agenda items. Nothing for the site.\n\nREDACTION LANDMINE: the meeting posts carry a Microsoft Teams join link WITH ITS PASSCODE in plain text, every time. Never copy one into the repo, a page, a commit message or a digest.\n\nWHY IT IS WORTH A CHEAP READ: decisions get made in the meeting this channel schedules, and the agenda doc occasionally names a website item before it reaches #website-team. It is not always-read - the traffic is almost entirely apologies - but it was found four days behind on 30 Aug while every gate reported clean, so it should be read whenever a sweep touches it rather than trusted to surface itself.",
       "digestAt": "2026-08-30T11:39:59.487Z"
@@ -17814,7 +17826,7 @@
       "mapping": {
         "kind": "none"
       },
-      "watermarkTs": "1788123737.104679",
+      "watermarkTs": "1788253244.531089",
       "threads": {
         "1751929031.755199": {
           "replyCount": 1,
@@ -17858,12 +17870,12 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-31T10:50:06.511Z",
+      "lastSyncedAt": "2026-09-03T04:30:16.105Z",
       "lastSyncedCommit": "",
-      "scannedTs": "1788123737.104679",
-      "readAt": "2026-08-31T10:50:06.511Z",
-      "digest": "Funding-opportunity feed. A bot posts a weekly \"NZ Funding Opportunities\" digest here (Beehive, Treasury, GETS tenders) with relevance scores. Never a page change - this feeds grant work, not the website.\r\n\r\n31 AUG 2026 READ: one message, the week-of-31-Aug digest, 9 high-relevance items out of 145 feed items scanned. Nothing for any page, as every week.\r\n\r\nIT IS MAPPED \"none\" RATHER THAN \"skip\" ON PURPOSE, which is why audit-read-state.ts counts its scan gap and this row comes back every time a digest lands. That is a deliberate trade: the channel is machine-generated and predictable, so the nagging is cheap, and a human funding decision arriving in the same room would otherwise be swept past. Map it skip only if somebody decides the grant work has moved elsewhere entirely.",
-      "digestAt": "2026-08-31T10:50:06.510Z"
+      "scannedTs": "1788253244.531089",
+      "readAt": "2026-09-03T04:30:16.105Z",
+      "digest": "Funding and grant applications channel. Feeds no event page - read only so the read position stays honest.\n\n1 SEP 2026, ONE MESSAGE, NO PAGE CHANGE: Chan posted the Slack for Nonprofits brief to the founder - registered charities under 250 members get a free Pro upgrade (not a discount), She Sharp has 18 active members, worth roughly US$1,566/yr at list price. IT CANNOT BE ACTIONED BY THIS SKILL OR BY THE MAINTAINER: my.slack.com/nonprofit is workspace-owner-only and the sole owner is the founder. The brief is written and posted; do not re-derive it and do not drive a browser at it. The only open step is a human with owner rights clicking through.\n\nSurfaced here by audit-read-state.ts, not by the triage - the signal gate scored it zero, correctly, since it names no venue, date or ticket. That is the audit doing its job: the triage decides PRIORITY, the audit decides whether anything went unread.",
+      "digestAt": "2026-09-03T04:30:16.103Z"
     },
     "C096M3GC3BL": {
       "name": "event-vector-nov12-2025",
@@ -18903,13 +18915,13 @@
           "latestReplyTs": "1787986560.040679"
         }
       },
-      "fingerprint": "sha256:5918198af5024034d4b635928b21004299e4e0291aee91069800a8acb123432e",
-      "lastSyncedAt": "2026-08-30T11:02:07.604Z",
+      "fingerprint": "sha256:ecd4fc57454355e72e3a91fe122e5132f111c0309a75243bcaa21940e4363761",
+      "lastSyncedAt": "2026-09-03T04:27:46.990Z",
       "lastSyncedCommit": "",
       "scannedTs": "1787651367.361809",
-      "readAt": "2026-08-30T11:02:07.604Z",
-      "digest": "She Sharp x Xero x Secure Code Warrior, \"Beyond the Code: Women Leading the Future of Cybersecurity and AI\", Thu 8 Oct 2026 5:00-8:00pm NZDT, Xero Office (Level 2), 96 Saint Georges Bay Road, Parnell. Published at /events/code-secure-2026, id 98, feedback code cs26.\n\n30 AUG 2026 READ - NO PAGE CHANGE. One new top-level message (21 Aug) carrying four thread replies, and the thread is the whole of it: Marriane posted poster options, then the Humanitix banner, then - at Nikita's request - a 342x342 square, which is the image size Secure Code Warrior's portal needs to create the Tournament. Nikita thanked her. This is the delta the triage labelled \"incremental (thread replies)\": the parent is nine days old and never moved, so only per-thread state surfaced it.\n\nTHAT CLOSES \"PROMO SIZES OWED BY MARRIANE\" AS A CHANNEL ITEM, AND CHANGES NOTHING IN THIS REPO. All three deliverables are Canva share links, so the artwork exists but not as files anyone here can commit. If the site ever needs one, it must be exported and resized to the house sizes first - do not link Canva from the repo.\n\nTHE 27 AUG BRIEF IS STILL THE LAST THING THAT CHANGED THE PAGE, and it arrived in #website-team, not here. That remains the standing lesson for this event: a mapped event channel is not necessarily where its content arrives.\n\nSTILL OPEN, unchanged from the 27 Aug read: no Humanitix page, so registrationUrl is still empty and no ticket link exists anywhere on the page - and now that the Humanitix banner exists, that page is the next blocker rather than the artwork. Fatemah Beydoun is still the only named speaker and still has no title, bio or photograph, so her speaker poster cannot be built; the brief promises FOUR leaders giving lightning talks, so three more are owed with names. No deck.\n\n\"Poster set: missing\" in event-status.ts remains correct and honest. The official set is one portrait poster (cover.webp, 1400x1980, the approved artwork resized) and posters[] is deliberately empty because the page already renders coverImage whole at the top of the main column. Do not rebuild the in-house plate set to make the check go green.\n\nREDACTIONS: every Canva URL in this delta - canva.link/... share links for the poster options, the Humanitix banner and the 342x342 - is internal and none went in the repo, same as the /edit design link from the earlier brief. The channel carries no access codes.",
-      "digestAt": "2026-08-30T11:02:07.603Z"
+      "readAt": "2026-09-03T04:27:46.990Z",
+      "digest": "She Sharp x Xero x Secure Code Warrior, \"Beyond the Code: Women Leading the Future of Cybersecurity and AI\", Thu 8 Oct 2026 5:00-8:00pm NZDT, Xero Office Auckland. Published as slug code-secure-2026, id 98.\n\n3 SEP 2026: ZERO new messages in this channel, and the page still changed. THAT IS THE POINT. Nikita's work order for this event arrived in #website-team on 1 Sep, not here, and Tharaneetharan filled it on 2 Sep. The event channel carried nothing. A sync that reads only event channels would have seen a clean no-op on the one event whose copy was being rewritten that week. The 27 Aug lesson (the whole Xero brief arrived in #website-team) is now a pattern, not an incident.\n\nTHE WORK ORDER WAS HALF-FILLED, AND THE HALF THAT WAS MISSED IS THE KIND NOTHING CATCHES. Nikita asked for two changes: the hands-on sentence reworded, and \"Four women leaders will give lightning talks\" replaced by a panel discussion on \"The Critical Role of Cybersecurity in AI\". Both were applied to fullDescription (commits 694f470b, 2589bc7a, a1e120f1, 2f0c87ab). Neither touched specialSections, where the \"What You'll Do\" bullet still said \"Hear lightning talks from four women leaders\". The page described the same block of the evening two ways for two days. No gate can see this: both strings are valid prose, the JSON parses, the image gate passes, and the event fingerprint changed exactly as a legitimate edit would.\n\nWHEN A WORK ORDER CHANGES A FORMAT WORD, GREP THE WHOLE EVENT FOR IT. Not the field the requester quoted - the event. \"lightning\" appeared three times in events-custom.json; two were a different event (HER WAKA) and correct. Fixed here on 3 Sep: the bullet now reads \"Hear a panel of women leaders on the critical role of cybersecurity in AI, their own journeys, and the pathways they would point you at\". Tharaneetharan's own sentence also had a doubled \"on\" (\"...panel discussion with women leaders on **The Critical Role...** on their own journeys\") and was tightened to \"women leaders will join a panel discussion on **The Critical Role of Cybersecurity in AI**, sharing their own journeys and...\".\n\nSTATUS OF THE HANDOVER: Tharaneetharan asked Nikita to confirm on 2 Sep and she had not replied by 3 Sep. The bullet fix and the grammar fix were made without her confirmation because they close a contradiction she herself created; if she comes back wanting different wording, hers wins.\n\nThe event format is now a PANEL, not lightning talks. Anything downstream that still says lightning talks for 8 October is stale - check the poster, the deck when it is built, and any emailer copy.\n\nfullDescription supports **bold** (commit 2f0c87ab added the rendering); the panel topic is bold on purpose.\n\nREDACTIONS: this channel carries Marriane's Canva /edit design links - internal and editable, never in the repo. posters[] is deliberately EMPTY for this event and must stay that way: the page composition already renders coverImage whole and uncropped at the top of the main column, and adding a fallback duplicated it on another event before being reverted.",
+      "digestAt": "2026-09-03T04:27:46.988Z"
     },
     "C0AG1BM4UMU": {
       "name": "event-msd-april7--2026",
@@ -19096,9 +19108,9 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-25T07:40:27.749Z",
+      "lastSyncedAt": "2026-09-03T04:10:21.872Z",
       "lastSyncedCommit": "",
-      "scannedTs": "1787103129.368299",
+      "scannedTs": "1788385386.959029",
       "readAt": "2026-08-25T07:40:27.749Z",
       "digest": "Bot channel for contact-form submissions, plus reply-tracking notes from /reply-to-contact-messages. It scores over the event-signal threshold because submissions quote event names and ticket words; it has never carried a page change. 25 AUG 2026 READ: three submissions, none a page change. (1) Emma Timewell, AWIS national convenor, asking She Sharp to pass a speaking request to Yesha and to share the AWIS2026 conference with members - she also reported an email BOUNCEBACK when writing to She Sharp, which is worth someone checking against the Resend/Mailchimp setup. Yesha picked it up. (2) Helena Chan asking whether a concession ticket exists for the Les Mills evening while she is between roles; Mahsa asked Nikita to register her free. (3) Samantha Faulkner asking when the next mentoring intake opens - applications are PAUSED (docs/development/MENTORSHIP_APPLICATIONS_PAUSED.md), so the answer is a reply, not a page edit. All three are /reply-to-contact-messages work. Also explains the Les Mills MC withdrawal: AWIS2026 is the clash.",
       "digestAt": "2026-08-25T07:40:27.749Z"
@@ -19856,7 +19868,7 @@
           }
         ]
       },
-      "watermarkTs": "1788167820.319239",
+      "watermarkTs": "1788385400.196909",
       "threads": {
         "1785233075.925019": {
           "replyCount": 1,
@@ -19881,15 +19893,19 @@
         "1787448574.845929": {
           "replyCount": 2,
           "latestReplyTs": "1787459520.518339"
+        },
+        "1788328231.695959": {
+          "replyCount": 2,
+          "latestReplyTs": "1788330961.506419"
         }
       },
-      "fingerprint": "sha256:73883503c010a9139d089618c461304731ddbf573a27c01ef1ec5d52ba67b703",
-      "lastSyncedAt": "2026-08-31T10:47:31.125Z",
+      "fingerprint": "sha256:29371fe1844fcba2992fee671b6c9645862600a0421d172886ca6b4fcf8285af",
+      "lastSyncedAt": "2026-09-03T04:27:20.034Z",
       "lastSyncedCommit": "",
-      "scannedTs": "1788167820.319239",
-      "readAt": "2026-08-31T10:47:31.125Z",
-      "digest": "Les Mills x She Sharp panel \"No Pain, All Gain - Getting Fit for AI\", Thu 3 Sep 2026 5:00-7:30pm NZST, Level 2, 200 Victoria Street West, Auckland Central 1010. Published, id 97. IN 3 DAYS.\r\n\r\n31 AUG 2026 READ - ONE PAGE CHANGE: attendees 34 -> 68. Four new messages. Nikita told the channel \"Total registrations so far - 65. We need 35 registrations more\"; Chan posted the deck link and shesharp.org.nz/slides for the team to bookmark; Len attached the printable survey form, which is a print asset and not a page asset.\r\n\r\nTHE REGISTRAR'S NUMBER IS THE SIGNAL; HUMANITIX IS THE SOURCE. The prior digest said \"only move attendees on a number the registrar states\", which is right about WHEN and wrong about WHAT to write. Commit 8c3a9a68 (27 Aug) pointed this field at GET /v1/events/{id}/tickets via scripts/humanitix/verify-live-events.ts --with-counts, so hand-typing a Slack figure re-creates the exact drift that commit fixed. Nikita's 65 was five hours old when it was read; the endpoint reported 68 complete non-cancelled tickets, and 68 is what went in. attendees holds REGISTRATIONS; checkedIn stays null until somebody scans on the night.\r\n\r\nANOTHER PERSON'S WORK ORDER LANDED FIRST, AND THAT IS THE NEW NORMAL. Nikita asked in #website-team for the venue's first line to read \"Les Mills International\"; Tharaneetharan Thavarasan made the edit, committed it as 76e71598, and got her confirmation - without touching the sync manifest. That is why this row read \"incremental + fingerprint-stale\": the repo moved out of band AND Slack held unread content, and only the unread half needed judgement. Expect this shape whenever a collaborator picks a row off the slack-triage issue; the fingerprint re-baselines itself when update-state.ts runs after the JSON patch.\r\n\r\nDO NOT INFER A PAGE FAULT FROM AN EMAIL FAULT. Mahsa's 27 Aug \"the bio of Gemma is wrong\" was about Len's emailer, not this site, and that was verified rather than assumed by re-fetching all seven run-sheet tabs on 30 Aug and diffing. The same Speakers tab feeds the emailer, the poster and the page, so a complaint about one reads like a defect in all three. Re-fetch and diff before touching a speaker record; it costs one command.\r\n\r\nRUN SHEET RE-READ IN FULL 31 AUG AND IT STILL MATCHES THE PAGE: title, subtitle \"Diversity and AI for Impact\", the 5:00-7:30pm clock, the venue address, four panellists with their roles and bios, and the five Agenda rows against the five agenda bullets in specialSections. The Speakers tab exports publicly at gid 1792873316 and needs no Drive login. \"Expected # of Attendees 70 - 75\" in the Run Sheet tab is a TARGET and is not the attendees field. The Marketing tab carries MYOB template residue - a countdown poster dated 30 July at MYOB HQ - which is copy-paste leftover and never site copy.\r\n\r\nREDACTION LANDMINES, UNCHANGED AND STILL LIVE IN THE PINNED MESSAGE: roughly a dozen private Humanitix registration links, one per sponsor organisation plus ambassador and ambassador-guest allocations, each keyed to its own access code. NEVER write them here, not even as a pattern plus a suffix list. Publish only the plain public URL. The Event Checklist tab also carries a personal mobile number for carpark access and a roller-door entry procedure - keep both out. Keep the internal Runsheet bookmark out too.\r\n\r\nSTILL OPEN: galleryUrl, and it is now the next thing this skill owes this event - the Website & Humanitix tab still has \"Google album created\" (Mike) and \"Google album linked to event page\" (Chan) both FALSE, and the album cannot exist before the night. Deck safetyExtras pending Les Mills' own Level-2 evacuation lines; how-the-tables-work until the panel prompts exist; thanksNames until someone confirms who attended. The MC is the maintainer, published as the hosts group; the deck still does not name an MC, which is a deck design change rather than a sync. The hackathon deck's UPCOMING_SNAPSHOT points at this event's poster and is a snapshot, not a live read, so a title/date/poster change here must be hand-copied into lib/deck/decks/aotearoa-ai-hackathon-festival-2026.ts. The registration push is still running per the Event Checklist: Nirmala to register Techbababes attendees, Mike to send sponsor tickets except HCLTech and Xero, Nikita to send Les Mills tickets to those two.",
-      "digestAt": "2026-08-31T10:47:31.124Z"
+      "scannedTs": "1788385400.196909",
+      "readAt": "2026-09-03T04:27:20.034Z",
+      "digest": "Les Mills x She Sharp panel \"No Pain, All Gain - Getting Fit for AI\", Thu 3 Sep 2026 5:00-7:30pm NZST, Level 2, 200 Victoria Street West, Auckland Central 1010. Published, id 97. THE EVENT IS TONIGHT - this sync ran at 4:15pm, 45 minutes before doors.\n\n3 SEP 2026 READ - TWO PAGE CHANGES, AND THE SECOND ONE IS THE LESSON.\n\n1. attendees 68 -> 85. Registration CLOSED on 2 Sep (Tharaneetharan asked about a spot registration and said so in-channel). The figure is the Humanitix count from scripts/humanitix/verify-live-events.ts --with-counts, never a number typed in Slack. Note that at least one of the 85 is a known duplicate - Nikita told Chan by DM on 2 Sep he had registered twice - and it was still written as 85, because the field mirrors the endpoint and the endpoint is what the account holds. checkedIn stays null until somebody scans tonight.\n\n2. THE RUN SHEET GAINED A ROW AND NOBODY MENTIONED IT IN SLACK. The Run Sheet tab now carries 17:45-17:50 \"Intro to Rachael Newsham who will bring some energy into the room\" (Amber and Rachael), which did not exist when commit ff8100ff transcribed the clock on 31 Aug. Everything from the panel onward was five minutes early on the live page. Fixed: panel 5:50-6:20, group photo 6:20-6:25, roundtables 6:25-6:45, readouts 6:45-6:55, closing 6:55-7:00, networking 7:00-7:30. Rachael is not in the Speakers tab and is not published as a speaker - she is an agenda row only.\n\nTHIS IS WHY THE RUN SHEET IS RE-READ EVERY RUN EVEN WHEN THE DIGEST SAYS IT MATCHES. The 31 Aug digest said the sheet still matched the page, and it did, on 31 Aug. A sheet edit leaves no trace in Slack, no fingerprint, no unread marker - the only thing that finds it is fetching all seven tabs again and diffing. Cost of the check: one command. Cost of missing it: a projected clock five minutes out from the room's.\n\nTHE DECK FOLLOWS THE JSON, BUT NOT ENTIRELY. lib/deck/decks/event-lesmills-03-september-2026.ts reads RUN_SHEET_ROWS live via runSheetFrom(event), so the agenda slide picked the new row up for free. TWO HARDCODED STRINGS DID NOT and were hand-edited: the agenda slide's note (\"the group photo is at 6:15\" -> 6:20) and the table-discussion comment (\"6:20-6:40\" -> 6:25-6:45). deck.test.ts also pinned the old shape and FAILED, which is the guard working: items.length 10 -> 11 and the roundtable row \"6:20pm - 6:40pm\" -> \"6:25pm - 6:45pm\". Grep the deck file and deck.test.ts for literal times whenever this clock moves.\n\nTHE 11-ROW SLIDE WAS MEASURED, NOT ASSUMED. The agenda slide's own comment warns that overflow is only visible on a rendered stage. Playwright against the dev server: 6 rows left / 5 right, max bottom 1043 of 1080 at 16:9 and 1001 of 1080 at 4:3, zero wrapped rows. 37px of headroom at 16:9 - a twelfth row is NOT safe without re-measuring.\n\nRUN SHEET, RE-READ IN FULL 3 SEP, OTHERWISE UNCHANGED: title, subtitle \"Diversity and AI for Impact\", the 5:00-7:30pm clock, the venue, four panellists (Keryn McKenzie, Carolina Lobos, Ben Sullivan, Gemma Lynskey) with roles and bios matching the page. \"Expected # of Attendees 70 - 75\" in the Run Sheet tab is a TARGET, not the attendees field. The Marketing tab still carries MYOB template residue - never site copy.\n\nREDACTION LANDMINES, UNCHANGED AND STILL LIVE: roughly a dozen private Humanitix registration links in the pinned message, one per sponsor organisation plus ambassador allocations, each keyed to its own access code. NEVER write them here, not even as a pattern plus a suffix list. Publish only the plain public URL. The Event Checklist tab carries a personal mobile number for carpark access and a roller-door entry procedure - keep both out. On 2 Sep Nirmala posted the attendee-export CSV (names, emails) for name-tag printing; it is a print asset and never a repo asset. Keep the internal Runsheet bookmark out too.\n\nSTILL OPEN, AND galleryUrl IS NOW THE ONLY ONE THIS SKILL OWES: the Website & Humanitix tab still has \"Google album created\" (Mike) and \"Google album linked to event page\" (Chan) both FALSE. status stays \"upcoming\" until after tonight - the triage's stale-status fires on day granularity and was premature by hours. The next run on this channel is the post-event gallery pass: flip status to past, add galleryUrl, set checkedIn from the scan. Deck safetyExtras still pending Les Mills' Level-2 evacuation lines; thanksNames until someone confirms who attended. Len sent six deck tweaks by DM on 3 Sep - that is /tweak-event-slides, not this skill. The hackathon deck's UPCOMING_SNAPSHOT points at this event's poster and is a snapshot, not a live read.",
+      "digestAt": "2026-09-03T04:27:20.033Z"
     },
     "C0BL35V8DFB": {
       "name": "mpdm-prasanth.pavithran--chanmeng6666--lesleygao.it--nikitakumari0318--nirmalac0503--esaraghafoor-1",
@@ -22472,7 +22488,7 @@
         "reason": "1:1 DM with Mahsa (founder). Strategy and platform decisions, not event-page copy.",
         "alwaysRead": true
       },
-      "watermarkTs": "1788067202.414159",
+      "watermarkTs": "1788306576.414279",
       "threads": {
         "1773970799.066189": {
           "replyCount": 1,
@@ -22508,12 +22524,12 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-30T11:02:14.408Z",
+      "lastSyncedAt": "2026-09-03T04:30:50.459Z",
       "lastSyncedCommit": "",
-      "scannedTs": "1788067202.414159",
-      "readAt": "2026-08-30T11:02:14.408Z",
-      "digest": "Founder DM. Content is platform strategy - Resend vs Mailchimp, website visual design sign-off, tooling demos. No event-page edits come through here, though she approves them elsewhere.\n\n30 AUG 2026 READ: 15 messages, and TWO THINGS THAT MATTER, NEITHER OF THEM AN EVENT PAGE.\n\n1. THE RESEND LOGIN IS RESOLVED (27 Aug). She reported the credential \"doesnt work\", was told the account has only ever been hers - the maintainer was forwarding back the password she herself sent months ago and cannot change it - and the actual answer was that Resend is not a password login at all: it is \"Sign in with Google\" using website@shesharp.org.nz. She confirmed \"All done\". So the sign-in half of the email migration blocker is gone. THE PAID UPGRADE IS STILL NOT DONE, and that is what Lesley and Len are both still waiting on.\n\n2. AN OPEN REQUEST WITH A DEADLINE, RAISED 30 AUG 05:19 AND NOT YET ANSWERED: \"we need to send the newsletter tomorrow, can you send the latest one to me for review.\" That is 31 Aug. THIS IS NOT THIS SKILL'S JOB - it belongs to /monthly-newsletter, and the send itself still goes out from Mailchimp, not from the newsletter_subscribers table, which has never sent anything. Recorded here only so the request is not lost between conversations; do not action it from an event sync.\n\nSTANDING SECURITY NOTE: this DM contains a PLAINTEXT PASSWORD for website@shesharp.org.nz, sent 4 May in answer to a direct request, and the 27 Aug exchange is about that same credential. It is recorded as item 7c in the archive's SECURITY/credentials-to-rotate.md - location only, never the value - and it must never be repeated into this repo, a page, a commit message or a digest. That account also gates Webflow and the Resend login, so it is not one inbox.\n\nNOTHING TO ACTION on any event page.",
-      "digestAt": "2026-08-30T11:02:14.407Z"
+      "scannedTs": "1788306576.414279",
+      "readAt": "2026-09-03T04:30:50.459Z",
+      "digest": "Founder DM. Content is platform strategy - Resend vs Mailchimp, website visual design sign-off, tooling demos. No event-page edits come through here, though she approves them elsewhere.\n\n3 SEP 2026 READ - TWO MESSAGES, NOTHING TO ACTION ON ANY PAGE, ONE BLOCKER CLOSED. On 1 Sep she reported \"we are already on pro version and free\" - Resend is on a paid Pro plan at no cost, presumably the non-profit allowance. THE EMAIL MIGRATION BLOCKER IS NOW FULLY CLEARED: the sign-in half was resolved 27 Aug (it is Sign in with Google as website@shesharp.org.nz, never a password) and the paid-plan half is done. Len and Lesley were both waiting on this and can be told.\n\nHER 30 AUG NEWSLETTER REQUEST IS STALE AND SHOULD NOT BE RE-RAISED FROM HERE: \"we need to send the newsletter tomorrow, can you send the latest one to me for review\" referred to 31 Aug, now past. It belongs to /monthly-newsletter. CORRECTION TO EVERY EARLIER DIGEST: the send NO LONGER goes out from Mailchimp. #monthly-newsletter records that the 30 Aug issue was the first sent via Resend off the newsletter_subscribers table, to 1,549 active subscribers. Do not action a newsletter request from an event sync, and do not repeat the old \"has never sent anything\" line.\n\nSTANDING SECURITY NOTE: this DM contains a PLAINTEXT PASSWORD for website@shesharp.org.nz, sent 4 May in answer to a direct request, and the 27 Aug exchange is about that same credential. It is recorded as item 7c in the archive's SECURITY/credentials-to-rotate.md - location only, never the value - and it must never be repeated into this repo, a page, a commit message or a digest. That account also gates Webflow and the Resend login, so it is not one inbox.",
+      "digestAt": "2026-09-03T04:30:50.457Z"
     },
     "D09C8T1124E": {
       "name": "dm:Prasanth Pavithran",
@@ -22659,7 +22675,7 @@
         "reason": "1:1 DM with Len Estioko (marketing). Not an event channel, but DOES carry ad-hoc page-change instructions - read the delta in full every run.",
         "alwaysRead": true
       },
-      "watermarkTs": "1788159941.009239",
+      "watermarkTs": "1788404511.853679",
       "threads": {
         "1773291671.639489": {
           "replyCount": 1,
@@ -22671,12 +22687,12 @@
         }
       },
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-31T10:47:31.133Z",
+      "lastSyncedAt": "2026-09-03T04:28:54.582Z",
       "lastSyncedCommit": "",
-      "scannedTs": "1788159941.009239",
-      "readAt": "2026-08-31T10:47:31.133Z",
-      "digest": "1:1 DM with Len Estioko (marketing). Not an event channel, but it DOES carry ad-hoc page-change instructions - read the delta in full every run, never from the discovery snippet. On 2026-08-05 this DM was the only place carrying \"Please take out Christine Yip as a mentor\".\r\n\r\n31 AUG 2026 READ: three messages, NO PAGE CHANGE. Len asked for the Les Mills presentation deck link, weighing up whether to build a Canva version as well. He was pointed at shesharp.org.nz/present/event-lesmills-03-september-2026 and told the online slides carry current data, so no Canva duplicate is needed. Worth keeping because it is the first time in this conversation that the projected deck displaced a hand-made one.\r\n\r\nSTANDING RULE FOR THIS CONVERSATION, UNCHANGED: personal content here is never quoted, summarised into an event page, or committed anywhere. Keep always-read anyway - the value of this DM is not its average content, it is that one line in August that existed nowhere else.\r\n\r\nRESEND IS NO LONGER BLOCKED. The email half of Len's automation training needed a paid Resend plan. Mahsa signed in with the website@shesharp.org.nz Google account on 27 Aug and completed the paid upgrade at the very end of August, reported in the Lesley Gao DM on 30-31 Aug. This closes the blocker tracked here and in the Mahsa digest, where three people had been waiting on one account decision.\r\n\r\n30 AUG 2026, KEPT AS BACKGROUND: the in-person automation training ran at Len's office, 110 Symonds Street, Auckland CBD, at 11:00am on Sat 29 Aug, with Amani joining. AUT was floated as a fallback and dropped because of their Open Day. What was actually built that day is in the group DM with Amani and Marriane - see that conversation's digest.",
-      "digestAt": "2026-08-31T10:47:31.133Z"
+      "scannedTs": "1788404511.853679",
+      "readAt": "2026-09-03T04:28:54.582Z",
+      "digest": "1:1 DM with Len Estioko (marketing). Not an event channel, but it DOES carry ad-hoc page-change instructions - read the delta in full every run, never from the discovery snippet. On 2026-08-05 this DM was the only place carrying \"Please take out Christine Yip as a mentor\".\n\n3 SEP 2026 READ - NO PAGE CHANGE, BUT A DECK WORK ORDER ARRIVED HOURS BEFORE THE PROJECTOR. At 2:22pm on the day of the Les Mills event Len sent six tweaks to the deck: (1) slide 3, drop the bullet points and keep only \"Health & Safety\"; (2) a slide missing the word \"organisation\" in the She Sharp non-profit line; (3) slide 8, remove Spotify and YouTube; (4) slide 14, a QUESTION not an instruction - are these questions from Les Mills?; (5) delete slide 15; (6) slide 22, shorten to one line about leading the way to secure Aotearoa. Item 6 arrived through speech-to-text and is garbled (\"there's like 22 can we just say alive secure clothing tournament\") - it is about the Xero/Secure Code Warrior closing slide and MUST be confirmed with him before anything is rewritten from it.\n\nTHIS BELONGS TO /tweak-event-slides, NOT TO THIS SKILL, AND IT WAS NOT ACTIONED HERE. Recorded so it is not lost between conversations. Slide numbers are Len's own count from the rendered deck and may not match slide ids - resolve them against /present/event-lesmills-03-september-2026 before editing, and item 4 needs an answer, not a change.\n\nTHE PROJECTED DECK HAS DISPLACED THE HAND-MADE ONE. Len asked on 31 Aug whether to build a Canva version as well and was pointed at shesharp.org.nz/present/event-lesmills-03-september-2026; he is now reviewing the online deck instead of rebuilding it. That is why deck feedback now arrives in this DM at all.\n\nRESEND IS NO LONGER BLOCKED and is now on the paid Pro plan (Mahsa confirmed 1 Sep). This closes the blocker tracked here and in the Mahsa digest.\n\nSTANDING RULE FOR THIS CONVERSATION, UNCHANGED: personal content here is never quoted, summarised into an event page, or committed anywhere. Keep always-read anyway.",
+      "digestAt": "2026-09-03T04:28:54.580Z"
     },
     "D0AHBGJ57CK": {
       "name": "dm:Tharaneetharan Thavarasan",
@@ -22752,16 +22768,15 @@
         "reason": "1:1 DM with Nikita Kumari (events lead). Carries direct event-page edit requests - read the delta in full every run.",
         "alwaysRead": true
       },
-      "watermarkTs": "1785374818.222099",
+      "watermarkTs": "1788317166.156659",
       "threads": {},
       "fingerprint": "",
-      "lastSyncedAt": "2026-08-21T12:39:34.445Z",
+      "lastSyncedAt": "2026-09-03T04:28:51.938Z",
       "lastSyncedCommit": "",
-      "scannedTs": "1785374818.222099",
-      "readAt": "2026-08-07T12:49:55.008Z",
-      "readAtSource": "backfill-read-receipts.ts — receipt lost to the saveManifest key-list bug (fixed in 2f061338); no unread content, verified against Slack on 2026-08-07",
-      "digest": "READ IN FULL. Nikita sends page edits straight here rather than to the event channel. 2026-08-05 sync applied her 29 Jul request: keynote row merged to '5:50-6:10pm Keynote speaker session' (no name, no separate Q&A) - a previous pass removed the name but kept a Q&A row, which was not what she asked for. Her 19 Jun request (Peyvand 20 June About us / What to Expect rewrite) is already live. She also confirms registration counts and closures here.",
-      "digestAt": "2026-08-05T04:30:42.263Z"
+      "scannedTs": "1788317166.156659",
+      "readAt": "2026-09-03T04:28:51.938Z",
+      "digest": "READ IN FULL. Nikita sends page edits straight here rather than to the event channel. 2026-08-05 sync applied her 29 Jul request: keynote row merged to '5:50-6:10pm Keynote speaker session' (no name, no separate Q&A). Her 19 Jun request (Peyvand 20 June About us / What to Expect rewrite) is already live. She also confirms registration counts and closures here.\n\n3 SEP 2026 READ - NO PAGE CHANGE, BUT ONE THING WORTH CARRYING. On 2 Sep she noticed Chan had registered twice for Les Mills and offered to rename one ticket as a guest; he confirmed it was an accident and there was no guest. THE TICKET WAS NOT CANCELLED IN THAT EXCHANGE, so the Humanitix count of 85 written into the Les Mills page on 3 Sep contains at least one known duplicate. It was still written as 85: the attendees field mirrors what the account holds, and second-guessing the endpoint by hand is exactly the drift commit 8c3a9a68 removed. Worth knowing when checkedIn is set after the night - a gap of one between 85 registered and the scan is already explained.\n\nHER WORK ORDERS HAVE MOVED. Her 1 Sep Xero request went to #website-team addressed to Tharaneetharan, not here and not to the event channel. This DM is now mostly logistics; the intake is #website-team. Keep always-read anyway - the value of this conversation is not its average content, it is the 29 Jul agenda edit that existed nowhere else.\n\nSTANDING: she is the events lead and confirms registration counts and closures. When she states a number, that is the signal to go and ask Humanitix, never the number to type.",
+      "digestAt": "2026-09-03T04:28:51.936Z"
     },
     "D0BBRULBB9A": {
       "name": "dm:Nirmala Chinnappan",

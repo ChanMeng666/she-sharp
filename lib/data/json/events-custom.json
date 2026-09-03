@@ -2210,7 +2210,7 @@
       },
       "detailPageUrl": "https://shesharp.org.nz/events/event-lesmills-03-september-2026",
       "shortDescription": "A Les Mills x She Sharp panel on diversity and AI for impact — cross-functional perspectives, table discussions, and networking.",
-      "attendees": 68,
+      "attendees": 85,
       "checkedIn": null,
       "detailPageData": {
         "url": "https://shesharp.org.nz/events/event-lesmills-03-september-2026",
@@ -2300,12 +2300,13 @@
               "5:30pm – 5:35pm — Welcome, health and safety, karakia",
               "5:35pm – 5:40pm — She Sharp introduction",
               "5:40pm – 5:45pm — Les Mills and speaker intros",
-              "5:45pm – 6:15pm — Panel discussion and Q&A",
-              "6:15pm – 6:20pm — Group photo",
-              "6:20pm – 6:40pm — Roundtable discussions based on panel topics",
-              "6:40pm – 6:50pm — Table discussion readouts",
-              "6:50pm – 6:55pm — Closing remarks and karakia",
-              "6:55pm – 7:30pm — Networking and event close"
+              "5:45pm – 5:50pm — Introducing Rachael Newsham",
+              "5:50pm – 6:20pm — Panel discussion and Q&A",
+              "6:20pm – 6:25pm — Group photo",
+              "6:25pm – 6:45pm — Roundtable discussions based on panel topics",
+              "6:45pm – 6:55pm — Table discussion readouts",
+              "6:55pm – 7:00pm — Closing remarks and karakia",
+              "7:00pm – 7:30pm — Networking and event close"
             ]
           },
           {
@@ -2365,7 +2366,7 @@
           "Join Xero, Secure Code Warrior and She Sharp for an interactive evening built to bring women and female-identifying people together around the future of cybersecurity and AI — a community to connect with, skills to build, leaders to hear from, and a good many ways to help shape a safer Aotearoa.",
           "Whether you already work in cybersecurity or are looking to break into it, whether you are curious about where AI and security meet or simply ready for your next step in tech, there is a place for you here.",
           "You’ll get hands-on experience with secure coding using Secure Code Warrior’s interactive, gamified approach. Take on real vulnerable code, find the flaw, understand what went wrong, and fix it, against a leaderboard and a clock. Code your way in Java Spring, Python, JavaScript or Ruby, or take the pseudocode option and work on the concepts without committing to a language at all.",
-          "Around the tournament, there will be a panel discussion with women leaders on **The Critical Role of Cybersecurity in AI** on their own journeys, and the pathways that took them into cybersecurity and AI. There are prizes for whoever finishes on top. Bring a laptop and a charger."
+          "Around the tournament, women leaders will join a panel discussion on **The Critical Role of Cybersecurity in AI**, sharing their own journeys and the pathways that took them into cybersecurity and AI. There are prizes for whoever finishes on top. Bring a laptop and a charger."
         ],
         "speakers": {
           "guest_speakers": {
@@ -2403,7 +2404,7 @@
             "content": [
               "Take on real vulnerable code in a 45-minute gamified tournament — find the flaw, understand what went wrong, fix it",
               "Code your way in Java Spring, Python, JavaScript or Ruby — or take the pseudocode option and skip the language question entirely",
-              "Hear lightning talks from four women leaders on their journeys into cybersecurity and AI, and the pathways they would point you at",
+              "Hear a panel of women leaders on the critical role of cybersecurity in AI, their own journeys, and the pathways they would point you at",
               "Meet the Xero and Secure Code Warrior teams, and the rest of the room",
               "Climb the leaderboard: there are prizes for whoever is crowned the ultimate Secure Code Warrior"
             ]
