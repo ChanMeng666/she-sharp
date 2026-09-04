@@ -43,17 +43,31 @@ export const NEWSLETTER_MANUAL: NewsletterIssue[] = [
   //   year: 2026,
   //   url: "/resources/newsletters/2026-09",
   // },
-  // The one issue with no Mailchimp campaign behind it: August 2026 was
-  // composed in this repo rather than in Mailchimp, so the registry render is
-  // the only artefact of it that exists. It has not been sent — nothing has
-  // ever been sent from `newsletter_subscribers`, and this comment is not
-  // evidence to the contrary.
+  // The issues with no Mailchimp campaign behind them: August and September
+  // 2026 were composed in this repo rather than in Mailchimp, so the registry
+  // render is the only artefact of each that exists.
+  //
+  // **Whether an issue has been sent is not recorded here.** This comment used
+  // to assert that August "has not been sent — nothing has ever been sent from
+  // `newsletter_subscribers`", which stopped being true on 2026-08-31, when
+  // that issue went to 1,549 people in 16 chunks. Nobody updated the sentence,
+  // because nothing makes a prose claim in a data file go red when it expires.
+  // The send record lives in the skill's ledger
+  // (`.claude/skills/monthly-newsletter/state/issues.json`, read it with
+  // `issue-ledger.ts show --issue <id>`), which is written by the send itself.
+  // Ask it, not this file, and do not re-add a send-status claim here.
   //
   // The missing `campaign` says only that there is no Mailchimp send to serve.
   // See `resolveIssue()` in `lib/newsletter/archive.ts`, which prefers the send
   // wherever there is one, because the other two registry fixtures are drafts
   // of issues that did go out from Mailchimp. The route stays `noindex` and out
   // of `app/sitemap.ts` — it is linked from here, not published to search.
+  {
+    id: "2026-09",
+    month: 9,
+    year: 2026,
+    url: "/resources/newsletters/2026-09",
+  },
   {
     id: "2026-08",
     month: 8,
