@@ -118,7 +118,7 @@ automatically affect:
 | `detailPageData.time` | Include timezone | `5:30pm - 7:00pm NZDT` |
 | `detailPageData.location` | Venue details | See example above |
 | `detailPageData.fullDescription` | Array of paragraph strings | |
-| `detailPageData.status` | `"upcoming"` or `"past"` | |
+| `detailPageData.status` | `"upcoming"` or `"completed"` — **not `"past"`**, which is not one of the four values in `types/event.ts` | `upcoming \| ongoing \| completed \| cancelled` |
 
 #### Optional fields (auto-propagating)
 

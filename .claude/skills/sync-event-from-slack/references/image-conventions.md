@@ -135,6 +135,19 @@ only handles Slack files, so for these:
   none, and was about to ask the photographer for a Drive folder that did not
   need to exist. One command returned all 54 photographs. **Before recording that
   something cannot be done, grep `scripts/` for it.***
+- **Read a big album as contact sheets, not as N images.** Compositing the
+  candidates into numbered grids with `sharp` (6×3 at ~320px, an SVG label strip
+  per cell) turns a 54-photo album into three images to look at, then re-review
+  the finalists at ~620px before committing. Judging a publish decision from a
+  320px thumbnail is not review — crop and zoom the frames the decision actually
+  turns on.
+- **Check the shortlist for near-duplicates with `scripts/lib/phash.ts`**, which
+  is the shared difference-hash both the archive builder and the wall-tile
+  builder use. `dHash(file)` then `hammingDistance(a, b)`: **≥ 7** means two
+  frames are genuinely distinct, **≤ 10** means one burst from one position — a
+  pair under 10 is a "pick the better one", not a publish. The Les Mills eight
+  came out at 16 for the closest pair. The threshold is deliberately not baked
+  into the library; pick it for what produced the files.
 - **Screen for children before anything else.** No frame in which a child is
   the identifiable subject, and never a child's name in `alt` text. A youth
   event runs under the host school's media consent — see
@@ -182,7 +195,19 @@ album exists, run a gallery pass — mirror a sibling event already in this shap
    `EventFeaturedPhoto` renders `photos[0]` above it, with a fallback alt of
    `` `${event.title} group photo` ``. Put the group shot there and let the rest
    run in run-sheet order; a scene-setter in that slot wastes it.
-3. Run the CI gate; commit. No speakers/agenda change — this is purely the
+3. Set `attendees` and `checkedIn` from Humanitix, never from a number typed in
+   Slack. Registrations come from
+   `npx tsx scripts/humanitix/verify-live-events.ts --with-counts`. Attendance
+   comes from **`getCheckInCount(eventId, eventDateId)`** in
+   `lib/humanitix/client.ts` — it *is* implemented; the PII boundary excludes
+   `/orders` and `/tickets`, not this. `eventDateId` is required, so it is one
+   call per date: `listEvents()`, match the listing, loop `dates[]`. **A `0` is
+   almost always "nobody scanned", not "nobody came"** — publish it only when
+   the number is spread across ticket types the way a real door scan is (Les
+   Mills: 66 across ten types). `attendees` stays REGISTRATIONS and is what the
+   page renders as "N attended"; that wording was settled in April 2026 and is
+   not a bug to fix here — `docs/development/CONTENT_RULES.md`.
+4. Run the CI gate; commit. No speakers/agenda change — this is purely the
    post-event addition.
 
 ## Forbidden image sources

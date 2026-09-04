@@ -98,7 +98,7 @@ Each entry in `events` looks like:
 | `sponsors.main[]` | Partner orgs with own logo file under `/img/sponsors/`. If the logo doesn't exist, use an empty string for `logo` and flag it in the summary. |
 | `specialSections` | Always include both `agenda` (= "What You'll Learn") and `why-attend` if the source content has them. Never build a "Registration" section that lists access/promo codes — keep concessions generic and point to the official channel. |
 | `registrationUrl` | Public registration base URL only. Strip `?accesscode=...` (internal distribution) and never substitute a private invite/checkout link. See "No internal codes" below. |
-| `status` | `"upcoming"` before the event, `"past"` after. |
+| `status` | `"upcoming"` before the event, **`"completed"`** after. The four legal values live in `types/event.ts` — `upcoming \| ongoing \| completed \| cancelled` — and **`"past"` is not one of them**, which is what this row said until 4 Sep 2026. **Nothing renders this field**: `isPastEvent()` (`lib/data/event-utils.ts`) decides "this event has ended" from the *date*, so an event goes past by itself at midnight and flipping `status` changes no pixel. Keep it accurate anyway — it is the record, and the triage's `stale-status` row reads it — but never report the flip as the thing that updated the page. |
 | `detailPageData.photos[]` | **Curated by hand after the event, not harvested from the channel.** Each entry is `{ url, alt }`, ordered so the page reads as the day in sequence. `photos[0]` is the featured hero above the grid AND the album-card cover on `/resources/photo-gallery`, so it is the one frame whose position matters most. A shoot large enough to be worth curating is triaged outside this skill — see UPDATE rule 6. |
 | `detailPageData.photoCredit` | Optional. One line under the gallery grid, e.g. `"Photography by VISIONWORKS"` — a studio, never per-photo and never a She Sharp volunteer’s name. Set it when a paid photographer shot the event; omit it otherwise. |
 | `isFeatured` | `false` by default. Set `true` only if the user explicitly asks. |
@@ -167,7 +167,10 @@ Rules, applied in order:
 5. `subtitle` is usually editor-curated; keep existing unless empty
    or clearly referring to the wrong event.
 6. `photos[]` and `photoCredit` are curated outside this skill and are
-   **never** rebuilt from the channel. A post-event planning channel is full
+   **never** rebuilt from the channel. (Populating an **empty** `photos[]` for
+   the first time is the post-event gallery pass, not a rebuild — that is
+   `references/image-conventions.md`. This rule guards a set that already
+   exists.) A post-event planning channel is full
    of photographs, which makes this the easiest field on the record to
    destroy by accident: the hackathon's set is 24 frames chosen from 377,
    ordered as a narrative, each one perceptual-hashed against the others so

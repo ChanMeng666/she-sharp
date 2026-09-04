@@ -194,10 +194,14 @@ out and rotated at its source.
    dependencies; absence means the user is in the wrong project.
 4. `mammoth` in `devDependencies` is optional — if absent, `.docx` extraction
    falls back to a built-in extractor. Note this in your plan summary.
-5. For **post-event galleries only**: `gdown` (Google Drive folder download) and
-   Python `Pillow` (webp conversion). Both are external tools, not repo deps —
-   verify they're on PATH when a gallery pass is needed (see
-   `references/image-conventions.md`). Not required for normal CREATE/UPDATE.
+5. For **post-event galleries**: nothing to install. A Google Photos album is
+   downloaded by **`scripts/newsletter/harvest-gphotos.ts`** and conversion is
+   **`sharp`**, both already in this repo. `gdown` is an external tool and is
+   needed *only* when the photos live in a Google Drive folder instead.
+   (This item used to require `gdown` **and** Python `Pillow` for every gallery
+   pass, describing both as unavoidable external tools. `sharp` has been a
+   dependency for a long time, and `harvest-gphotos.ts` means a Photos album
+   needs no Drive folder at all — see `references/image-conventions.md`.)
 
 ## Workflow
 
@@ -244,8 +248,9 @@ Read the `action` column and act:
   decide whether to un-skip.
 - `fingerprint-stale` → the event was edited in the repo since last sync; reconcile.
 - `stale-status (slug: <status>)` → a mapped event whose date has passed but whose
-  status is still future → run the **post-event gallery** pass (flip status to
-  `past`, add the gallery; see `references/image-conventions.md`).
+  status is still future → run the **post-event gallery** pass: set status to
+  `completed` (**not `past`** — see the schema reference), set `galleryUrl`, set
+  `checkedIn`, add the photographs. See `references/image-conventions.md`.
 - **A composed label — `incremental + fingerprint-stale (event edited)` — means
   BOTH, and the unread half is the one that matters.** Slack is holding content
   nobody has read *and* the repo changed out of band. These were four separate
