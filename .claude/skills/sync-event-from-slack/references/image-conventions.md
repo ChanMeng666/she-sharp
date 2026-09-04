@@ -111,10 +111,30 @@ only handles Slack files, so for these:
   (match the count of a sibling event's gallery), preferring wide/contextual
   shots over close-ups of individual faces.
 - **Google Photos album** (`photos.app.goo.gl/…` / `photos.google.com/share/…`):
-  resists bulk download — use it as the visual reference for curating, and pull
-  the actual files from the matching Drive folder (or ask the user for one). But
-  it **is the preferred `galleryUrl`** (see below): a curated album is far more
-  visitor-friendly than a raw Drive folder of mixed photos + videos.
+  download it with **`scripts/newsletter/harvest-gphotos.ts`**, which follows the
+  short link, scrapes the per-photo `lh3.googleusercontent.com/pw/` baseUrls out
+  of the share page's inline `AF_initDataCallback` JSON, and fetches each at
+  `=w1600`. No auth, no Drive folder, no asking anyone:
+
+  ```
+  npx tsx scripts/newsletter/harvest-gphotos.ts '<albumUrl>' <scratch-dir> --max 60
+  ```
+
+  Set `--max` **above** the album's expected size and read the reported count —
+  that is how you tell a whole album from a truncated one. Then curate as for a
+  Drive folder. It is also the preferred `galleryUrl` (see below): a curated
+  album is far more visitor-friendly than a raw Drive folder of mixed photos and
+  videos.
+
+  *This bullet used to say a Photos album "resists bulk download — use it as the
+  visual reference for curating, and pull the actual files from the matching
+  Drive folder (or ask the user for one)". That stopped being true when
+  `harvest-gphotos.ts` was written for the newsletter and nobody updated it here.
+  On 4 Sep 2026 it talked the Les Mills gallery pass out of even trying: the pass
+  shipped with `photos: []`, reasoning from the sibling events that also have
+  none, and was about to ask the photographer for a Drive folder that did not
+  need to exist. One command returned all 54 photographs. **Before recording that
+  something cannot be done, grep `scripts/` for it.***
 - **Screen for children before anything else.** No frame in which a child is
   the identifiable subject, and never a child's name in `alt` text. A youth
   event runs under the host school's media consent — see
@@ -126,11 +146,15 @@ only handles Slack files, so for these:
   `scripts/optimize-images.mts` and `scripts/build-event-archive.mts`. (This
   said "the project ships no `sharp`/`cwebp` binary — use Python `Pillow`",
   which stopped being true and sent people to a second image toolchain.)
-  Resize to ≤1600px wide at quality ≈82 and call `.rotate()` first, which
-  applies the EXIF orientation so phone photos are not sideways. Target
-  ~100–250 kB each; step the quality down (82 → 78 → 74 → 70) until a frame
-  fits rather than shrinking it further. The 24-photo hackathon set averages
-  137 kB this way.
+  Cap the **longest side** at 1600 (`fit: "inside"`, `width: 1600, height: 1600`)
+  at quality ≈82, and call `.rotate()` first, which applies the EXIF orientation
+  so phone photos are not sideways. **A width-only cap is not the same rule**: a
+  portrait frame constrained only by width comes out 1600×2400 and blows the
+  budget — that is what happened to the Les Mills MC shot (383 kB), which the
+  longest-side cap brought to 1067×1600 and 209 kB. Target ~100–250 kB each;
+  step the quality down (82 → 78 → 74 → 70 → 66 → 62) until a frame fits rather
+  than shrinking it further. The 24-photo hackathon set averages 137 kB this
+  way; the 8-photo Les Mills set, 220 kB.
 
 `galleryUrl` is the target of the page's **"View Gallery"** button
 (`event-photos.tsx` → `window.open`), so it must be the link you actually want
@@ -147,9 +171,17 @@ album exists, run a gallery pass — mirror a sibling event already in this shap
 
 1. Download + curate + convert as above → `public/img/events/<slug>/photo-<n>.webp`
    (create the event's folder if this is its first asset).
-2. In the event's `detailPageData`: set `status` to `"past"`, set `galleryUrl`
+2. In the event's `detailPageData`: set `status` to `"completed"` — **not
+   `"past"`**, which this line said until 4 Sep 2026 and which is not one of the
+   four values in `types/event.ts` (`upcoming | ongoing | completed |
+   cancelled`); every finished event uses `completed`. Set `galleryUrl`
    to the public album link, and populate `photos[]` with one
    `{ url, alt }` per webp (descriptive alt text).
+   **`photos[0]` is the full-width hero, not the first tile** —
+   `event-photos.tsx` puts `photos.slice(1)` in the mosaic and
+   `EventFeaturedPhoto` renders `photos[0]` above it, with a fallback alt of
+   `` `${event.title} group photo` ``. Put the group shot there and let the rest
+   run in run-sheet order; a scene-setter in that slot wastes it.
 3. Run the CI gate; commit. No speakers/agenda change — this is purely the
    post-event addition.
 
