@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "lastRunAt": "2026-08-31T06:50:51.313Z",
+  "lastRunAt": "2026-09-04T03:55:36.739Z",
   "frequencyCapPerMonth": 3,
   "issues": {
     "2026-08": {
@@ -147,6 +147,35 @@
           "idempotencyKey": "cb848786576dcfa88dd1d389340a4f46"
         }
       ],
+      "frequencyOverride": null
+    },
+    "2026-09": {
+      "issueId": "2026-09",
+      "createdAt": "2026-09-04T03:51:59.950Z",
+      "test": {
+        "at": "2026-09-04T03:51:59.950Z",
+        "recipientCount": 1,
+        "people": null,
+        "recipientHashes": [
+          "1228cadeea9b2ab8"
+        ],
+        "note": ""
+      },
+      "review": {
+        "at": "2026-09-04T03:55:36.739Z",
+        "recipientCount": 5,
+        "people": 4,
+        "recipientHashes": [
+          "1d2447f9bc133142",
+          "7df4193513b05b3e",
+          "22e73cd34e394d46",
+          "356651591da3b72a",
+          "1228cadeea9b2ab8"
+        ],
+        "note": ""
+      },
+      "approval": null,
+      "batches": [],
       "frequencyOverride": null
     }
   }
