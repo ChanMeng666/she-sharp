@@ -1,0 +1,205 @@
+{
+  "id": "2026-09",
+  "meta": {
+    "status": "draft",
+    "generatedAt": "2026-09-04T03:25:15.860Z",
+    "broadcastId": null,
+    "scheduledAt": null
+  },
+  "editorial": {
+    "subjectLine": "She Sharp - September Newsletter",
+    "previewText": "Four jobs at one company, one question about AI - and an instructor who got the room on its feet first.",
+    "founderNote": {
+      "heading": "A note from our founder",
+      "bodyMd": "September gave us one evening, and it was the right one. We were at Les Mills on Victoria Street West — their building, their food, and a room that filled up well before we started.\n\nBefore a single slide about AI went up, one of Les Mills' own instructors had the whole room out of their seats. There is something wonderful about watching a roomful of people in work clothes throw their arms in the air on a Thursday evening, and then sit straight back down to talk about automation and legal risk.\n\nThat contrast was rather the point. [The panel](https://www.shesharp.org.nz/events/event-lesmills-03-september-2026) was four people from one company doing four completely different jobs — data and AI, finance, legal, communications — sitting with the same question the rest of us are sitting with: what does this actually change about my work? They answered it with what they had tried and what had not worked, which is far more useful than a demonstration. Then we put the room to work at the tables, which is where the real conversation usually happens.\n\nThank you to Les Mills for opening their doors, and to everyone who came and stayed to talk.",
+      "signature": "Dr. Mahsa McCauley, Founder & Chair, She Sharp",
+      "photoUrl": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/people/mahsa-mccauley.jpg"
+    },
+    "headline": {
+      "eventSlug": "code-secure-2026",
+      "eyebrow": "Next up · 8 October",
+      "dateBadge": {
+        "day": "8",
+        "month": "OCT"
+      },
+      "blurb": "An evening at Xero with Secure Code Warrior: a live secure-coding tournament with prizes, and four women on how they found their way into cybersecurity and AI. Registration is not open yet — the event page has the line-up and will carry the link first.",
+      "ctaLabel": "See the line-up",
+      "ctaHref": null
+    },
+    "photoOfTheMonth": {
+      "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-09/photos/event-lesmills-03-september-2026-11-yvInLMFqOlMb0mu3v7JXOjab4mdZcP.jpg",
+      "alt": "No Pain, All Gain – Getting Fit for AI",
+      "eventSlug": "event-lesmills-03-september-2026"
+    },
+    "recapVideo": null,
+    "recapIntro": "One evening in September, in a gym company's offices on Victoria Street West. Here is how it went.",
+    "eventBlurbs": {
+      "event-lesmills-03-september-2026": "Four Les Mills leaders — data and AI, finance, legal and communications — on what AI has actually changed about their jobs, followed by roundtable discussions and networking to close."
+    },
+    "primaryCta": {
+      "label": "See the line-up",
+      "href": "https://www.shesharp.org.nz/events/code-secure-2026"
+    },
+    "opportunities": [
+      {
+        "title": "Become a mentor",
+        "body": "The most useful thing at the tables in September was not an answer, it was a better question. That is most of what mentoring is. Applications are paused just now; the page explains what is involved and is where to start when they reopen.",
+        "href": "https://www.shesharp.org.nz/mentorship/mentor"
+      },
+      {
+        "title": "Volunteer with us",
+        "body": "Someone set out the food, someone ran the microphone, someone counted people in at the door. None of it takes a tech background, and all of it is why the evening worked.",
+        "href": "https://www.shesharp.org.nz/join-our-team"
+      },
+      {
+        "title": "Support She Sharp",
+        "body": "We are a registered charity and our events are free to attend. Donations are what keeps them that way.",
+        "href": "https://www.shesharp.org.nz/donate"
+      }
+    ],
+    "sponsorThanks": "Thank you to Les Mills for hosting us in their own building on Victoria Street West — the room, the food, and four of their people on the panel.",
+    "askToReconfirm": true,
+    "heroImageUrl": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-09/photos/event-lesmills-03-september-2026-1-XoU7lIyQllaLrzFaPYY3B4B7SsHQeb.jpg",
+    "pulse": {
+      "heroStat": {
+        "value": "13.7%",
+        "label": "growth in job ads least exposed to automation",
+        "context": "Job ads with low automation exposure rose 13.7% y/y, while those with high exposure rose 2.3%.",
+        "sourceLabel": "SEEK NZ Employment Report",
+        "sourceUrl": "https://www.seek.co.nz/about/news/article/seek-nz-employment-report-july26"
+      },
+      "newsBite": null,
+      "newsBites": [
+        {
+          "title": "The gap between men's and women's median pay barely moved",
+          "summary": "Stats NZ put the gender pay gap at 5.3% for the June 2026 quarter, up 0.1 percentage points on the year before. If you have a pay review coming, that is where the conversation starts.",
+          "sourceLabel": "HRD New Zealand",
+          "url": "https://www.hcamag.com/nz/specialisation/diversity-inclusion/new-zealands-gender-pay-gap-sitting-at-53/587457",
+          "dateLabel": "25 Aug"
+        },
+        {
+          "title": "Your next first interview may not be with a person",
+          "summary": "A BambooHR survey of over 500 HR professionals found 67% would trust AI to conduct an interview on its own. If you are job-hunting this spring, expect a first round that does not nod back.",
+          "sourceLabel": "HRD New Zealand",
+          "url": "https://www.hcamag.com/nz/news/general/ai-gets-promoted-to-interviewer-status-in-hiring-report-finds/588276",
+          "dateLabel": "2 Sept"
+        },
+        {
+          "title": "Cancelling the pay equity claims has a price tag now",
+          "summary": "The Public Service Association puts the May 2025 cancellation at 13,000 jobs and $13.5 billion in lost growth, using Treasury's own model. Over 150,000 women were covered by those claims.",
+          "sourceLabel": "HRD New Zealand",
+          "url": "https://www.hcamag.com/nz/specialisation/diversity-inclusion/psa-scrapping-pay-equity-cost-new-zealand-135-billion-in-growth/587144",
+          "dateLabel": "25 Aug"
+        }
+      ],
+      "didYouKnow": {
+        "text": "Women hold around 29% of professional IT roles in New Zealand — She Sharp exists to change that.",
+        "sourceLabel": "TechWomen NZ / NZTech",
+        "sourceUrl": "https://techwomen.nz/get-informed/"
+      }
+    }
+  },
+  "auto": {
+    "recapEvents": [
+      {
+        "slug": "event-lesmills-03-september-2026",
+        "title": "No Pain, All Gain – Getting Fit for AI",
+        "dateLabel": "Thursday, September 3",
+        "startIso": "2026-09-03T17:00:00+12:00",
+        "timeLabel": "5:00pm – 7:30pm NZST",
+        "locationLabel": "Les Mills International",
+        "coverImageUrl": "https://www.shesharp.org.nz/img/events/event-lesmills-03-september-2026/cover-email.jpg",
+        "url": "https://www.shesharp.org.nz/events/event-lesmills-03-september-2026",
+        "registrationUrl": "https://events.humanitix.com/she-sharp-and-lesmills",
+        "shortDescription": "A Les Mills x She Sharp panel on diversity and AI for impact — cross-functional perspectives, table discussions, and networking."
+      }
+    ],
+    "upcomingEvents": [
+      {
+        "slug": "code-secure-2026",
+        "title": "Beyond the Code: Women Leading the Future of Cybersecurity and AI",
+        "dateLabel": "Thursday, October 8",
+        "startIso": "2026-10-08T17:00:00+13:00",
+        "timeLabel": "5:00pm – 8:00pm NZDT",
+        "locationLabel": "Xero Office (Level 2), Auckland",
+        "coverImageUrl": "https://www.shesharp.org.nz/img/events/code-secure-2026/cover-email.jpg",
+        "url": "https://www.shesharp.org.nz/events/code-secure-2026",
+        "registrationUrl": null,
+        "shortDescription": "An evening with Xero and Secure Code Warrior: a live secure-coding tournament with prizes, and four women on how they found their way into cybersecurity and AI."
+      }
+    ],
+    "stats": {
+      "members": "3500+",
+      "sponsors": "50+",
+      "events": "97+"
+    },
+    "photoStrip": [
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-09/photos/event-lesmills-03-september-2026-3-oDc3Bu9gLWs8gI6R2BarNxzAkNjJ9z.jpg",
+        "alt": "No Pain, All Gain – Getting Fit for AI",
+        "eventSlug": "event-lesmills-03-september-2026"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-09/photos/event-lesmills-03-september-2026-4-hoJtsh9pIvNuxeAVk1CTtdmNQ77PBf.jpg",
+        "alt": "No Pain, All Gain – Getting Fit for AI",
+        "eventSlug": "event-lesmills-03-september-2026"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-09/photos/event-lesmills-03-september-2026-5-DYNV35jrXnji1oXApgscjJfRSUZKa4.jpg",
+        "alt": "No Pain, All Gain – Getting Fit for AI",
+        "eventSlug": "event-lesmills-03-september-2026"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-09/photos/event-lesmills-03-september-2026-6-p4EuOiKVLO4K5JRIcqH4LkLQ4lZdZ7.jpg",
+        "alt": "No Pain, All Gain – Getting Fit for AI",
+        "eventSlug": "event-lesmills-03-september-2026"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-09/photos/event-lesmills-03-september-2026-7-feM0KVrM4MMJyRLQ6raZZSE7F7m028.jpg",
+        "alt": "No Pain, All Gain – Getting Fit for AI",
+        "eventSlug": "event-lesmills-03-september-2026"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-09/photos/event-lesmills-03-september-2026-8-SOryqdKLXOyBqw9DqRXlBzVeE7xyI6.jpg",
+        "alt": "No Pain, All Gain – Getting Fit for AI",
+        "eventSlug": "event-lesmills-03-september-2026"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-09/photos/event-lesmills-03-september-2026-2-SIMLsGhZavB8MpJKeyRkRIdTqdzZ5b.jpg",
+        "alt": "No Pain, All Gain – Getting Fit for AI",
+        "eventSlug": "event-lesmills-03-september-2026"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-09/photos/event-lesmills-03-september-2026-10-L20YaAJMlMoSSUj5Sv8NbtHkih7y7H.jpg",
+        "alt": "No Pain, All Gain – Getting Fit for AI",
+        "eventSlug": "event-lesmills-03-september-2026"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-09/photos/event-lesmills-03-september-2026-9-Clbkl88wwnngCcQ60GuQycqdtRLjdi.jpg",
+        "alt": "No Pain, All Gain – Getting Fit for AI",
+        "eventSlug": "event-lesmills-03-september-2026"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-09/photos/event-lesmills-03-september-2026-12-PFSfq4FS9bX6LoiOJdxBPujEpgx9gl.jpg",
+        "alt": "No Pain, All Gain – Getting Fit for AI",
+        "eventSlug": "event-lesmills-03-september-2026"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-09/photos/event-lesmills-03-september-2026-13-nTseGc865rgVmXF5t01WzpHTTr3enr.jpg",
+        "alt": "No Pain, All Gain – Getting Fit for AI",
+        "eventSlug": "event-lesmills-03-september-2026"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-09/photos/event-lesmills-03-september-2026-14-s42cifPUe5ZjWWQop9Gql7tplf8luE.jpg",
+        "alt": "No Pain, All Gain – Getting Fit for AI",
+        "eventSlug": "event-lesmills-03-september-2026"
+      },
+      {
+        "src": "https://vqfhbpoqrf3jfw3s.public.blob.vercel-storage.com/newsletter/2026-09/photos/event-lesmills-03-september-2026-15-nhBne0K96m1MzpBiD0NQfYIxuPXc44.jpg",
+        "alt": "No Pain, All Gain – Getting Fit for AI",
+        "eventSlug": "event-lesmills-03-september-2026"
+      }
+    ],
+    "photoAlbumUrl": "https://photos.app.goo.gl/3EHC6ukmRvcxdohF8"
+  }
+}

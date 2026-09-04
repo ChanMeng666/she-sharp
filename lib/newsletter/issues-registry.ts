@@ -12,11 +12,13 @@ import { newsletterIssueSchema, type NewsletterIssueData } from "./schema";
 import issue2026_06 from "@/lib/data/json/newsletter-issues/2026-06.json";
 import issue2026_07 from "@/lib/data/json/newsletter-issues/2026-07.json";
 import issue2026_08 from "@/lib/data/json/newsletter-issues/2026-08.json";
+import issue2026_09 from "@/lib/data/json/newsletter-issues/2026-09.json";
 
 const ISSUES: Record<string, unknown> = {
   "2026-06": issue2026_06,
   "2026-07": issue2026_07,
   "2026-08": issue2026_08,
+  "2026-09": issue2026_09,
 };
 
 /** Returns the validated issue for `id`, or null when unknown/invalid-id. */
