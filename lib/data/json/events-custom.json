@@ -2210,8 +2210,8 @@
       },
       "detailPageUrl": "https://shesharp.org.nz/events/event-lesmills-03-september-2026",
       "shortDescription": "A Les Mills x She Sharp panel on diversity and AI for impact — cross-functional perspectives, table discussions, and networking.",
-      "attendees": 85,
-      "checkedIn": null,
+      "attendees": 87,
+      "checkedIn": 66,
       "detailPageData": {
         "url": "https://shesharp.org.nz/events/event-lesmills-03-september-2026",
         "title": "No Pain, All Gain – Getting Fit for AI",
@@ -2328,11 +2328,11 @@
             "alt": "No Pain, All Gain – Getting Fit for AI poster: She Sharp and Les Mills invite you to a cross-functional conversation about AI on Thursday 3 September 2026, 5:00pm–7:30pm, Level 2, 200 Victoria Street West, Auckland Central."
           }
         ],
-        "galleryUrl": "",
+        "galleryUrl": "https://photos.app.goo.gl/3EHC6ukmRvcxdohF8",
         "registrationUrl": "https://events.humanitix.com/she-sharp-and-lesmills",
         "images": [],
         "category": "panel",
-        "status": "upcoming",
+        "status": "completed",
         "isFeatured": false
       }
     },
