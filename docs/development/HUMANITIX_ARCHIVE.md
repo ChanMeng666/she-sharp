@@ -57,7 +57,7 @@ export HUMANITIX_VAULT_DIR=".../she-sharp-slack-archive/humanitix/2026-08-17"
 Either copy works, because every file's sha256 is in the committed manifest and
 the two can be proved identical without either trusting the other.
 
-Do **not** put the raw CSVs in Vercel Blob, Cloudinary, or any store the
+Do **not** put the raw CSVs in Vercel Blob or any other store the
 application can read. The whole design rests on the running application having
 no path to a real address.
 

@@ -198,7 +198,7 @@ The cleanup script removes all test users and their associated data in the corre
 
 The cleanup script only handles database records. The following require manual cleanup:
 
-- **Cloudinary**: Profile photos uploaded by test users remain in Cloudinary storage
+- **Vercel Blob**: Profile photos and CVs uploaded by test users remain in the Blob store. They are under `profile-photos/` and `cvs/`; delete them from the Vercel dashboard or with `del()` from `@vercel/blob`. (Before 2026-09-06 these went to Cloudinary, which is no longer used.)
 - **Stripe**: Payment records in Stripe (use Stripe test mode to avoid this)
 - **Resend**: Emails already sent to test users cannot be recalled
 

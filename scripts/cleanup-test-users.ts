@@ -275,7 +275,7 @@ async function cleanupTestUsers() {
   if (isDryRun) {
     console.log('💡 Run without --dry-run to execute the cleanup.\n');
   } else {
-    console.log('📝 Note: Cloudinary photos uploaded by test users need manual cleanup.\n');
+    console.log('📝 Note: Vercel Blob objects uploaded by test users need manual cleanup (profile-photos/, cvs/).\n');
   }
 }
 

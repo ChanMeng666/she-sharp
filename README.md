@@ -259,7 +259,7 @@ We are committed to creating an inclusive environment where women in STEM can:
 
 **DevOps & Monitoring:**
 - **Deployment**: Vercel Edge Network
-- **Storage**: Cloudinary (image hosting)
+- **Storage**: Vercel Blob (site assets and user uploads)
 - **Notifications**: Slack (webhook-based alerts)
 - **Analytics**: Vercel Analytics
 - **CI/CD**: GitHub Actions
@@ -352,10 +352,10 @@ RESEND_API_KEY="re_..."
 BASE_URL="http://localhost:3000"
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
 
-# Cloudinary Image Storage
-CLOUDINARY_CLOUD_NAME="your_cloud_name"
-CLOUDINARY_API_KEY="your_api_key"
-CLOUDINARY_API_SECRET="your_api_secret"
+# Vercel Blob (user uploads: profile photos and CVs)
+# Injected automatically on Vercel once the store is linked; set by hand
+# locally with: vercel env pull .env.local
+BLOB_READ_WRITE_TOKEN="vercel_blob_rw_your_store_id_your_secret"
 
 # Slack Notifications (Optional)
 SLACK_VOLUNTEER_WEBHOOK_URL="https://hooks.slack.com/services/..."
@@ -558,7 +558,7 @@ graph TB
         I[JWT Auth]
         J[Stripe API]
         K[OpenAI GPT]
-        L[Cloudinary]
+        L[Vercel Blob]
         P[Slack Webhooks]
     end
     
