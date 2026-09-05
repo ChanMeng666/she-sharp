@@ -38,7 +38,9 @@ const includedFeatures = [
 function PaymentContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const submissionId = searchParams.get('id');
+  // The signed handle from the apply page or the Stripe cancel URL. The raw
+  // submission id never appears in this URL — see lib/forms/submission-token.ts.
+  const paymentToken = searchParams.get('t');
 
   const [loading, setLoading] = useState(true);
   const [checkoutLoading, setCheckoutLoading] = useState(false);
@@ -47,14 +49,16 @@ function PaymentContent() {
 
   useEffect(() => {
     async function fetchFormData() {
-      if (!submissionId) {
+      if (!paymentToken) {
         setError('No application found. Please complete the application form first.');
         setLoading(false);
         return;
       }
 
       try {
-        const response = await fetch(`/api/forms/mentee/public?id=${submissionId}`);
+        const response = await fetch(
+          `/api/forms/mentee/public?t=${encodeURIComponent(paymentToken)}`
+        );
         const data = await response.json();
 
         if (!data.exists || !data.form) {
@@ -78,7 +82,7 @@ function PaymentContent() {
     }
 
     fetchFormData();
-  }, [submissionId, router]);
+  }, [paymentToken, router]);
 
   const handleCheckout = async () => {
     if (!formData) return;

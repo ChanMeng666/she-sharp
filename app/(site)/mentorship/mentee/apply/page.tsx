@@ -344,8 +344,11 @@ function MenteeApplyForm() {
         }
         router.push(`/mentorship/mentee/success?${params.toString()}`);
       } else {
-        // Requires payment — go to payment
-        router.push(`/mentorship/mentee/payment?id=${data.submissionId}`);
+        // Requires payment — go to payment, carrying the signed handle the API
+        // issued. The raw submission id is never put in a URL: it is a small
+        // sequential integer, and the page it addresses shows a name and an
+        // email address without asking for a session.
+        router.push(`/mentorship/mentee/payment?t=${encodeURIComponent(data.paymentToken)}`);
       }
     } catch (error) {
       setErrors({ email: "Failed to submit application. Please try again." });

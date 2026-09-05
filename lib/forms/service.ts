@@ -608,18 +608,6 @@ export async function submitPublicMentorForm(
   }
 }
 
-/**
- * Gets a public mentor form submission by email.
- */
-export async function getPublicMentorFormByEmail(
-  email: string
-): Promise<MentorFormSubmission | null> {
-  return findForm<MentorFormSubmission>(
-    mentorFormSubmissions,
-    eq(mentorFormSubmissions.email, email)
-  );
-}
-
 // =======================
 // PUBLIC MENTEE FORM (Pre-registration)
 // =======================
@@ -831,18 +819,6 @@ export async function submitPublicMenteeForm(
     console.error('Error submitting public mentee form:', error);
     return { success: false, error: 'Failed to submit application' };
   }
-}
-
-/**
- * Gets a public mentee form submission by email.
- */
-export async function getPublicMenteeFormByEmail(
-  email: string
-): Promise<MenteeFormSubmission | null> {
-  return findForm<MenteeFormSubmission>(
-    menteeFormSubmissions,
-    eq(menteeFormSubmissions.email, email)
-  );
 }
 
 /**

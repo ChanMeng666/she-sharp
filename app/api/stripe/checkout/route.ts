@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createCheckoutSession } from '@/lib/stripe/service';
 import { getUser } from '@/lib/db/queries';
 import { getBaseUrl } from '@/lib/email/service';
+import { buildMenteeSubmissionToken } from '@/lib/forms/submission-token';
 import { z } from 'zod';
 import { invalidBody } from '@/lib/api/validation';
 
@@ -26,13 +27,20 @@ export async function POST(request: NextRequest) {
     const user = await getUser();
 
     const baseUrl = getBaseUrl();
+
+    // Cancelling drops the applicant back on the payment page, which reads a
+    // signed handle rather than the raw submission id — that id is a small
+    // sequential integer and the page behind it shows a name and an email
+    // address with no session. If the token cannot be signed, send them to the
+    // programme page instead of a URL the endpoint will refuse.
+    const cancelToken = formSubmissionId ? buildMenteeSubmissionToken(formSubmissionId) : null;
     const session = await createCheckoutSession({
       email,
       userId: user?.id,
       formSubmissionId: formSubmissionId ?? undefined,
       successUrl: `${baseUrl}/mentorship/mentee/success`,
-      cancelUrl: formSubmissionId
-        ? `${baseUrl}/mentorship/mentee/payment?id=${formSubmissionId}`
+      cancelUrl: cancelToken
+        ? `${baseUrl}/mentorship/mentee/payment?t=${encodeURIComponent(cancelToken)}`
         : `${baseUrl}/mentorship/mentee`,
     });
 

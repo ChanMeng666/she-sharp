@@ -241,6 +241,20 @@ jobs:
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npx tsx scripts/events/poster-assets.test.ts
 
+      # Also shares this checkout - pure HMAC over synthetic ids, no key beyond
+      # the one the test sets itself and no network, which is why it is a step
+      # here rather than a job. The mentee payment page cannot ask for a session
+      # (the applicant has no account yet), so this token is the ONLY thing
+      # between an anonymous caller and eleven applicants' names and addresses.
+      # Until 2026-09-06 that page took the raw primary key and `?id=3`
+      # answered. Most of the assertions hand the verifier something it must
+      # refuse - a replayed signature on a neighbouring id, a flipped bit, a
+      # truncated digest - because a signature check that accepts anything looks
+      # exactly like one that works.
+      - name: Verify mentee submission tokens
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npx tsx lib/forms/submission-token.test.ts
+
       # Also shares this checkout. The raw Humanitix exports carry 5,156 real
       # names and 124 live access codes, so they can never be on CI — which is
       # exactly why the committed archive needs a check that survives without
