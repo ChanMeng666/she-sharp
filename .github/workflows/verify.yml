@@ -388,3 +388,14 @@ jobs:
       - name: Verify every email replies to the right mailbox
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npx tsx lib/email/reply-to.test.ts
+
+      # Two Stripe payload properties moved between API versions and were being
+      # read at their old locations through `as unknown as` casts, so `tsc` saw
+      # nothing: subscription renewals became dead code and every membership
+      # billing period was fabricated, both while the webhook answered 200. The
+      # test feeds in payloads shaped the OLD way and asserts they read as null,
+      # so a revert to the previous property path fails here. Pure functions, no
+      # database and no network, so it belongs as a step in this job.
+      - name: Verify Stripe payloads are read at their current locations
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npx tsx lib/stripe/api-shape.test.ts
