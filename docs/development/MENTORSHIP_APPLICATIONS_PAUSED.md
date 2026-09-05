@@ -55,6 +55,31 @@ Verified at pause time (2026-06-19) via local dev server:
 
 ---
 
+## ⚠️ Correction — the mechanism described above no longer exists
+
+Everything from here up describes the **June 2026** implementation, and two of its
+four rows are now wrong. Verified 2026-09-05:
+
+| Claimed above | Reality |
+|---|---|
+| Row 1 — a `/mentorship/coming-soon` placeholder page | **Does not exist.** `curl https://www.shesharp.org.nz/mentorship/coming-soon` → **404**. |
+| Row 3 — a `redirects()` block in `next.config.ts` | **Not there.** The only `coming-soon` hits in `next.config.ts` (`:139`, `:143`) are an unrelated legacy **Webflow** redirect, `/coming-soon` → `/`. |
+
+**What actually gates the apply forms today** is `isMentorshipOpen()` plus
+`redirect()` in the two apply layouts — `app/(site)/mentorship/mentee/apply/layout.tsx:23`
+and the mentor equivalent — driven by `registrationDeadline` in
+`lib/config/mentorship.ts:8`. Confirmed live: `/mentorship/mentee/apply` → **307**
+→ `/mentorship/mentee`.
+
+So **the "How to RE-OPEN" steps above would not work as written**: there is no
+placeholder page to delete and no redirect block to remove. To re-open, move
+`registrationDeadline` in `lib/config/mentorship.ts` — that one constant drives
+the apply-layout redirects, the CTA sections, and the chatbot's APPLICATION
+STATUS line. Rows 2 and 4 (button hrefs, the commented-out nav entry) were not
+re-verified; treat them as historical too.
+
+---
+
 ## 2026-09-05 — wind-down for the rest of 2026
 
 The June pause closed the **application forms**. It left two things still
