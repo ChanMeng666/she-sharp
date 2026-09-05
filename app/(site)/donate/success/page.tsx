@@ -1,11 +1,7 @@
-"use client";
-
-import { Suspense } from "react";
-import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, Home } from "lucide-react";
-import { Spinner } from "@/components/ui/spinner";
+import { getStripeClient } from "@/lib/stripe/config";
 
 const impactMessages: Record<number, string> = {
   10: "Your $10 donation helps provide workshop materials for students and subsidize event tickets.",
@@ -14,11 +10,41 @@ const impactMessages: Record<number, string> = {
   100: "Your $100 donation funds complete workshop sessions and supports multiple accessibility initiatives.",
 };
 
-function SuccessContent() {
-  const searchParams = useSearchParams();
-  const amountParam = searchParams.get("amount");
-  const amount = amountParam ? parseInt(amountParam, 10) : 25;
-  const impactMessage = impactMessages[amount] || impactMessages[25];
+/**
+ * Resolves the amount actually paid, from Stripe rather than from the URL.
+ *
+ * This page used to render `?amount` straight out of the query string, so
+ * /donate/success?amount=1000000 produced a screenshot of She Sharp thanking
+ * someone for a million dollars, with no payment involved at all. The money, the
+ * database row and the receipt were never affected — but a forged thank-you on a
+ * registered charity's domain is worth closing.
+ *
+ * `session_id` was already being passed by `success_url`; nothing read it.
+ * Returns null when the session cannot be confirmed as paid, so the page falls
+ * back to thanking the donor without naming a figure — never to trusting the URL.
+ */
+async function resolvePaidAmount(sessionId: string | undefined): Promise<number | null> {
+  if (!sessionId) return null;
+  try {
+    const session = await getStripeClient().checkout.sessions.retrieve(sessionId);
+    if (session.payment_status !== "paid" || !session.amount_total) return null;
+    return Math.round(session.amount_total / 100);
+  } catch {
+    // An expired, unknown or wrong-mode session id is not an error worth showing
+    // the donor — they have paid, and Stripe has emailed them a receipt.
+    return null;
+  }
+}
+
+export default async function DonateSuccessPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ session_id?: string }>;
+}) {
+  const { session_id: sessionId } = await searchParams;
+  const amount = await resolvePaidAmount(sessionId);
+  const impactMessage =
+    amount !== null ? impactMessages[amount] ?? impactMessages[25] : impactMessages[25];
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4 pt-24 pb-12">
@@ -31,9 +57,15 @@ function SuccessContent() {
           Thank You!
         </h1>
         <p className="mt-4 text-lg text-muted-foreground">
-          Your generous donation of{" "}
-          <span className="font-semibold text-brand">${amount} NZD</span> has
-          been received.
+          {amount !== null ? (
+            <>
+              Your generous donation of{" "}
+              <span className="font-semibold text-brand">${amount} NZD</span> has
+              been received.
+            </>
+          ) : (
+            <>Your generous donation has been received.</>
+          )}
         </p>
 
         <div className="mt-8 rounded-xl border border-border bg-muted/40 p-6 text-left">
@@ -54,19 +86,5 @@ function SuccessContent() {
         </p>
       </div>
     </div>
-  );
-}
-
-export default function DonateSuccessPage() {
-  return (
-    <Suspense
-      fallback={
-        <div className="flex min-h-screen items-center justify-center bg-background">
-          <Spinner size="lg" className="text-brand" />
-        </div>
-      }
-    >
-      <SuccessContent />
-    </Suspense>
   );
 }

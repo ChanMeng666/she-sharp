@@ -20,6 +20,7 @@ import {
 } from '@/lib/email/service';
 import { sendDonationSlackNotification } from '@/lib/slack/service';
 import Stripe from 'stripe';
+import { readSubscriptionPeriod, readInvoiceSubscriptionId } from './api-shape';
 
 /**
  * Creates a Stripe checkout session for membership purchase.
@@ -90,7 +91,7 @@ export async function getCheckoutSession(sessionId: string) {
  */
 export async function handleSuccessfulPayment(
   session: Stripe.Checkout.Session
-): Promise<{ purchaseId: number; invitationCode: string }> {
+): Promise<{ purchaseId: number; invitationCode: string | null; alreadyProcessed: boolean }> {
   const { customer, subscription, metadata, customer_details } = session;
   const email = metadata?.email || customer_details?.email || '';
   const userId = metadata?.userId ? parseInt(metadata.userId) : null;
@@ -110,19 +111,34 @@ export async function handleSuccessfulPayment(
     throw new Error('Subscription not found');
   }
 
-  // Access subscription data with proper type handling
-  const sub = subResponse as unknown as {
-    id: string;
-    current_period_start?: number;
-    current_period_end?: number;
-  };
+  const sub = subResponse;
 
-  // Safely extract period timestamps with fallbacks
-  const currentPeriodStart = sub.current_period_start || Math.floor(Date.now() / 1000);
-  const currentPeriodEnd = sub.current_period_end || Math.floor(Date.now() / 1000) + (365 * 24 * 60 * 60);
+  // Idempotency: Stripe retries checkout.session.completed for up to three days,
+  // and this handler creates an invitation code and sends mail after the insert.
+  // Without this guard a retry produced a second purchase row, a second
+  // invitation code and a second confirmation email. `stripeSubscriptionId` is
+  // already .unique() on the table, so this needs no migration — it mirrors the
+  // guard handleSuccessfulDonation has always had.
+  const [existingPurchase] = await db
+    .select({ id: membershipPurchases.id })
+    .from(membershipPurchases)
+    .where(eq(membershipPurchases.stripeSubscriptionId, sub.id))
+    .limit(1);
 
-  const periodStart = new Date(currentPeriodStart * 1000);
-  const periodEnd = new Date(currentPeriodEnd * 1000);
+  if (existingPurchase) {
+    console.log('Membership purchase already processed for subscription:', sub.id);
+    return { purchaseId: existingPurchase.id, invitationCode: null, alreadyProcessed: true };
+  }
+
+  const period = readSubscriptionPeriod(sub);
+  if (!period) {
+    // Do not invent a period. Throwing returns 500, Stripe retries, and the
+    // idempotency guard above makes that retry safe.
+    throw new Error(
+      `Subscription ${sub.id} has no billing period on its first item; refusing to record a fabricated one`
+    );
+  }
+  const { start: periodStart, end: periodEnd } = period;
   const amountPaid = session.amount_total ? (session.amount_total / 100).toFixed(2) : '100.00';
 
   // Create purchase record
@@ -225,6 +241,7 @@ export async function handleSuccessfulPayment(
   return {
     purchaseId: purchase.id,
     invitationCode: invitationCode.code,
+    alreadyProcessed: false,
   };
 }
 
@@ -376,17 +393,21 @@ export async function handleSubscriptionCancelled(subscription: Stripe.Subscript
  * Handles subscription renewal.
  */
 export async function handleSubscriptionRenewed(invoice: Stripe.Invoice) {
-  const invoiceData = invoice as unknown as { subscription: string | null; customer: string };
-  const subscriptionId = invoiceData.subscription;
+  const subscriptionId = readInvoiceSubscriptionId(invoice);
 
-  if (!subscriptionId) return;
+  if (!subscriptionId) {
+    console.warn('invoice.payment_succeeded carried no subscription id; nothing to renew', invoice.id);
+    return;
+  }
 
-  const subResponse = await stripe.subscriptions.retrieve(subscriptionId);
-  const sub = subResponse as unknown as {
-    id: string;
-    current_period_end: number;
-  };
-  const periodEnd = new Date(sub.current_period_end * 1000);
+  const sub = await stripe.subscriptions.retrieve(subscriptionId);
+  const period = readSubscriptionPeriod(sub);
+  if (!period) {
+    throw new Error(
+      `Subscription ${subscriptionId} renewed but carries no billing period; refusing to write a fabricated periodEnd`
+    );
+  }
+  const periodEnd = period.end;
 
   // Update purchase record
   await db

@@ -47,7 +47,10 @@ export async function POST(request: NextRequest) {
           quantity: 1,
         },
       ],
-      success_url: `${baseUrl}/donate/success?session_id={CHECKOUT_SESSION_ID}&amount=${amount}`,
+      // No `amount` param: the success page resolves the figure from Stripe using
+      // session_id. It used to render this query value directly, which let anyone
+      // forge a thank-you for any sum on the charity's own domain.
+      success_url: `${baseUrl}/donate/success?session_id={CHECKOUT_SESSION_ID}`,
       // Back to the page the donor came from. `/donate/checkout` was deleted in
       // 05bf4aeb when the multi-step flow collapsed into one page, and this URL
       // was left pointing at it — every cancelled checkout landed on a 404. No
