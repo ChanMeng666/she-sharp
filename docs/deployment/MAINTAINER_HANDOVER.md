@@ -131,6 +131,14 @@ GitHub Actions: `verify.yml` (one job, deliberately — read
 private-repo Actions minutes per month, billed **per job rounded up to the
 minute**.
 
+**`main` has no branch protection, and `verify.yml` runs only on pull requests.**
+A commit pushed straight to `main` therefore skips every check and deploys itself
+to production. This is not hypothetical: `647ae0b6` ("Add registration link for
+Xero event") went in that way at 23:04 on 2026-09-05, by a second contributor. It
+happened to be one safe line of JSON. Whoever takes this over should decide
+whether to require a passing `verify` before merge — the workflow already exists,
+it is simply not enforced.
+
 ---
 
 ## 5. The obligations that are human, not technical
@@ -270,6 +278,13 @@ Everything else can be rebuilt from the repository. That cannot.
 
 ## 10. Moving the database off a personal account
 
+> **Done, 2026-09-06.** Production now runs on `she-sharp-production`
+> (`lively-night-18220962`) in the **native** Neon organisation "She Sharp",
+> owned by `website@shesharp.org.nz`. Downtime was 5 minutes 40 seconds at
+> 01:11 NZ on a Sunday. What follows is kept as the record of why it had to be a
+> copy rather than a transfer, and as the runbook if it is ever done again.
+> The outcome, and what was left behind, is in §10.1.
+
 Investigated in the Neon and Vercel consoles on **2026-09-05**. Recorded in full
 because the obvious approach does not work, and the next person will otherwise
 spend the same hour discovering that.
@@ -357,6 +372,47 @@ picks up the new connection strings. Do it outside an event.
    it on the day. If anything was missed, it is still there; after two weeks it is
    the personal account's to remove.
 
+### 10.1 What actually happened, and what is still owed
+
+Kept because the differences between the plan above and the event are the parts
+worth knowing.
+
+- **The destination was rebuilt to match the source.** A `she-sharp` project
+  already existed in the She Sharp org on **Postgres 18**, against a source on
+  **17.11**. A migration whose purpose is ownership should not also be a major
+  version upgrade — if anything then misbehaves, there is no way to tell which
+  change caused it. `she-sharp-production` was created instead on **PG 17, AWS
+  Asia Pacific 2 (Sydney)**, matching the source region and version exactly. The
+  empty PG 18 project `young-field-21803911` is still there and can be deleted.
+  Upgrading to 18 remains available as a separate, deliberate change.
+- **Only `POSTGRES_URL` ever mattered.** `lib/db/drizzle.ts` connects with it;
+  `DATABASE_URL` is read only by `drizzle.config.ts` for migrations. The other
+  **fourteen** `PG*` / `POSTGRES_*` / `NEON_PROJECT_ID` variables were injected by
+  the old Vercel–Neon integration and **no code reads any of them** — verified by
+  grep over `app/`, `lib/`, `components/`, `hooks/`, `types/`, `scripts/` and
+  `.claude/`, hidden directories included. They were deleted after the cutover
+  was verified, together with three dead `STACK_*` variables (nothing imports
+  Stack Auth). Production went from **66 environment variables to 48**, and every
+  survivor has a reader. Two of the deleted ones — `DATABASE_URL_UNPOOLED` and
+  `POSTGRES_URL_NON_POOLING` — still pointed at the decommissioned database,
+  which is worse than useless: a script picking one up would have talked to a
+  dead copy and reported success.
+- **The verification that counts was a row-count census, not a glance.** Exact
+  `count(*)` per table and `last_value` per sequence, taken on the frozen source
+  and again on the restored destination: **41 tables, 37 sequences, identical**,
+  plus 33 enums / 152 indexes / 120 constraints and a real three-table join
+  returning the same 26 rows. The pre-freeze and post-freeze censuses were also
+  identical, which is how we know nothing was written and lost while the baseline
+  was being taken.
+- **Which database production is actually using was proved, not assumed.** Both
+  copies hold identical data, so a working page proves nothing. After the
+  cutover, `GET /api/mentors` was called and `pg_stat_activity` checked on both:
+  a live `postgres.js` session on the new project, **none** on the old.
+- **Still owed:** the old project `she-sharp-database` (`red-silence-55665683`)
+  is untouched and is the rollback path until **2026-09-20**. After that it is
+  the personal account's to delete. Until it is gone, the personal Vercel account
+  still carries the organisation's data.
+
 ---
 
 ## 11. Cloudinary is still live
@@ -381,6 +437,17 @@ again.
   `mentor_form_submissions.photo_url` 9, `mentee_form_submissions.photo_url` 11,
   `volunteer_form_submissions.cv_url` 2. If that account is closed, those images
   and CVs 404 in the dashboard.
+
+> **In progress, 2026-09-06.** Option 1 below is written and verified on the
+> branch `refactor/uploads-cloudinary-to-blob`, not yet merged: both routes now
+> write to Vercel Blob, `lib/cloudinary/` is deleted, and
+> `scripts/assets/migrate-cloudinary-to-blob.ts` will move the 41 stored files and
+> rewrite the rows. **The script has not been run.** `res.cloudinary.com` stays in
+> `next.config.ts` until it has, or the unmigrated photos become 400s from the
+> image optimiser. One correction to the reasoning below: **Vercel Blob does now
+> have a private tier** (`access: 'private'` with `presignUrl()`), so keeping these
+> objects public is a choice rather than the only option — worth revisiting
+> deliberately, because CVs are among them.
 
 Two ways to close this, in preference order:
 
