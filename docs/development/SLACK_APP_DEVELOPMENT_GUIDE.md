@@ -626,7 +626,7 @@ Deferred from the initial build for scope reasons:
 
 - **Orphaned draft branch sweeper** (weekly GitHub Action for `slack-bot-drafts/*` older than 24h).
 - **Slack markdown rendering** of the JSON diff — currently shown in a code block; could be colourised.
-- **Image upload via Slack file attachments** — user currently places images manually after PR checkout. A future version could accept images in the `/event` message, upload to Cloudinary, and reference those URLs.
+- **Image upload via Slack file attachments** — user currently places images manually after PR checkout. A future version could accept images in the `/event` message, upload to Vercel Blob, and reference those URLs.
 - **Multi-step `clarify` flow** — current `clarify` op just returns a question; a follow-up `/event` starts fresh context. A threaded follow-up would carry context forward.
 - **Vercel PR previews** — would let M0-style risky changes be visually verified before merge, rather than after.
 

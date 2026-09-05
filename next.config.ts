@@ -22,6 +22,19 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
       {
+        // User uploads — profile photos, on the organisation's Blob store.
+        protocol: 'https',
+        hostname: '*.public.blob.vercel-storage.com',
+        pathname: '/**',
+      },
+      {
+        // TRANSITIONAL, and the only Cloudinary reference left in the repo.
+        // Uploads moved to Vercel Blob on 2026-09-06, but ~38 profile-photo
+        // rows still hold `res.cloudinary.com` URLs until
+        // `scripts/assets/migrate-cloudinary-to-blob.ts --apply` has run.
+        // Removing this pattern before then turns every one of those photos
+        // into a 400 from the image optimiser. Delete this entry once that
+        // script reports zero Cloudinary URLs remaining.
         protocol: 'https',
         hostname: 'res.cloudinary.com',
         pathname: '/**',

@@ -77,7 +77,7 @@ All references to `she-sharp.vercel.app` updated to `she-sharp-zeta.vercel.app` 
 ### 6. What Did NOT Change
 
 - **Neon Database**: Same PostgreSQL instance, same connection string, same data
-- **Cloudinary**: Same image storage account and credentials
+- **Cloudinary**: Same image storage account and credentials *(true on 2026-03-24; retired 2026-09-06 — see the Service Accounts table below)*
 - **OpenAI / Google AI**: Same API keys
 - **Resend Email**: Updated to new key (`re_iS4Fjk8a_...`)
 - **Slack Webhooks**: Same webhook URLs for notifications
@@ -264,14 +264,14 @@ BASE_URL=https://she-sharp-zeta.vercel.app npx tsx scripts/preview-all-emails.ts
 | **Google Cloud** (OAuth) | She Sharp | website@shesharp.org.nz |
 | **Stripe** (payments) | shesharp.org.nz | Stripe Dashboard |
 | **Neon** (database) | Created via personal Vercel | Accessed via DATABASE_URL env var |
-| **Cloudinary** (images) | Shared credentials | Via CLOUDINARY_* env vars |
+| ~~**Cloudinary** (images)~~ | — | **Retired 2026-09-06.** The account was personal, not the charity's, and was handed back; user uploads moved to the org's Vercel Blob store. See `ARCHITECTURE.md` §6. |
 | **Resend** (email) | Team "shesharp" (Pro) | website@shesharp.org.nz — moved off the personal team 2026-08-28 via Domain Claim; also via RESEND_API_KEY env var |
 
 ## Pending Cleanup Tasks
 
 These tasks are non-urgent and can be done after confirming the new deployment is stable:
 
-- [ ] **Create Vercel Blob** under She Sharp account and add `BLOB_READ_WRITE_TOKEN` env var
+- [x] **Create Vercel Blob** under She Sharp account and add `BLOB_READ_WRITE_TOKEN` env var — done; it now holds the PDFs, the videos, the newsletter-archive images and, since 2026-09-06, the user uploads
 - [ ] **Delete old Stripe webhook** (`we_1TA1sCFH4SQKCLLpTujj6QWV` pointing to `she-sharp.vercel.app`) once old deployment is removed
 - [ ] **Remove old Vercel project** from personal chanmeng account
 - [ ] **Remove old OAuth callback URLs** from personal Google/GitHub OAuth apps (if they were updated, not replaced)

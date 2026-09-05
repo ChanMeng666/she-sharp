@@ -204,13 +204,33 @@ this table on purpose: since 2026-09-01 it is chosen per message by purpose in
 
 ## 6. Asset strategy
 
-Three stores, chosen by who writes the file and how big it is:
+Two stores, chosen by who writes the file and how big it is:
 
 | Store | Holds | Referenced by |
 |---|---|---|
 | `public/` (in the repo, ~154 MB) | Site imagery, logos, brand marks, icons, `llms.txt` | Literal `/img/...` paths |
-| **Vercel Blob** | The impact-report/pitch PDFs and the five MP4s (~63 MB), plus the 428 re-hosted newsletter-archive images (342.2 MB of vault originals → 38.3 MB of WebP) | Constants in `lib/config/assets.ts` |
-| **Cloudinary** | User uploads — profile photos, CVs | `lib/cloudinary/config.ts` |
+| **Vercel Blob** | The impact-report/pitch PDFs and the five MP4s (~63 MB); the 428 re-hosted newsletter-archive images (342.2 MB of vault originals → 38.3 MB of WebP); and, since 2026-09-06, the user uploads — profile photos under `profile-photos/`, CVs under `cvs/` | Constants in `lib/config/assets.ts`; uploads through `lib/blob/uploads.ts` |
+
+**There was a third store until 2026-09-06.** User uploads went to Cloudinary,
+through a `lib/cloudinary/config.ts` that no longer exists. That account was
+personal rather than the charity's and is being handed back, so the two upload
+routes now write to the Blob store the organisation already owns and pays for —
+one storage account to administer instead of two, and no asset held on a
+credential that leaves with an individual. `scripts/assets/migrate-cloudinary-to-blob.ts`
+rehosts the 41 rows written before the switch. Until that script has run with
+`--apply`, `next.config.ts` keeps a `res.cloudinary.com` image pattern so the
+not-yet-migrated photographs still render; that entry is the last Cloudinary
+reference in the repo and goes when the script reports zero remaining.
+
+Uploads are `access: 'public'` with **`addRandomSuffix: true`**. Blob has no
+private tier that these routes could use without minting a signed URL at every
+render, and a public Blob URL is readable by anyone holding it — exactly as the
+Cloudinary URL it replaces was, so this is parity, not a regression. The random
+suffix is what keeps it parity: without it a CV's URL would be derivable from
+the applicant's email address alone. `DELETE /api/upload/{photo,cv}` is
+unauthenticated, so `isOwnUploadUrl()` checks both the store host (derived from
+the R/W token, so another store is refused too) and the upload prefix before
+`del()` is called; `lib/blob/uploads.test.ts` is the refusal suite.
 
 `public/docs/` and `public/video/` no longer exist. Those files never change, are
 requested by a small fraction of visitors, and were riding along in every build
@@ -262,7 +282,7 @@ path that does not exist.
 | Stripe | `lib/stripe/` | Checkout, donations, webhook handling |
 | Invitation codes | `lib/invitations/` | |
 | Account deletion | `lib/user/` | |
-| Cloudinary uploads | `lib/cloudinary/` | |
+| User uploads (profile photos, CVs) | `lib/blob/uploads.ts` | Vercel Blob; the DELETE guard and its refusal suite live here |
 | Browser → own API | `lib/api/client.ts` | `apiFetch()` / `ApiError` |
 | Route-handler body validation | `lib/api/validation.ts` | `invalidBody()`, `readOptionalJson()` |
 | CSV export | `lib/export/csv.ts` | |

@@ -1,27 +1,33 @@
 import { NextRequest, NextResponse } from 'next/server';
-import cloudinary from '@/lib/cloudinary/config';
+import {
+  PHOTO_PREFIX,
+  deleteUserUpload,
+  emailStem,
+  isOwnUploadUrl,
+  putUserUpload,
+} from '@/lib/blob/uploads';
 
 // Max file size: 2MB (to conserve storage)
 const MAX_FILE_SIZE = 2 * 1024 * 1024;
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 
 /**
- * Extracts the public_id from a Cloudinary URL.
- * Example: https://res.cloudinary.com/cloud/image/upload/v123/she-sharp/mentor/email_123.jpg
- * Returns: she-sharp/mentor/email_123
+ * File extension for each accepted image type.
+ *
+ * Blob infers `Content-Type` from the pathname when none is given, so the
+ * extension has to match the bytes; and the browser gets no other hint of what
+ * the object is, because a Blob pathname carries no metadata of its own.
  */
-function extractPublicId(url: string): string | null {
-  try {
-    const match = url.match(/\/upload\/(?:v\d+\/)?(.+)\.\w+$/);
-    return match ? match[1] : null;
-  } catch {
-    return null;
-  }
-}
+const EXTENSION_BY_TYPE: Record<string, string> = {
+  'image/jpeg': 'jpg',
+  'image/png': 'png',
+  'image/webp': 'webp',
+  'image/gif': 'gif',
+};
 
 /**
  * POST /api/upload/photo
- * Uploads a photo to Cloudinary storage.
+ * Uploads a photo to Vercel Blob storage.
  * Returns the public URL of the uploaded image.
  */
 export async function POST(request: NextRequest) {
@@ -51,32 +57,26 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Generate unique public_id for Cloudinary
-    const timestamp = Date.now();
-    const prefix = type || 'profile';
-    const sanitizedEmail = email?.replace(/[^a-zA-Z0-9]/g, '_') || 'unknown';
-    const publicId = `she-sharp/${prefix}/${sanitizedEmail}_${timestamp}`;
+    // Same identifying information the Cloudinary public_id carried — the
+    // applicant kind and a sanitised email — minus the millisecond timestamp,
+    // whose only job was uniqueness and which `addRandomSuffix` now does
+    // better. `type` is caller-supplied, so it is whitelisted rather than
+    // interpolated: an unchecked value could otherwise walk the path out of
+    // the `profile-photos/` prefix the DELETE guard relies on.
+    const kind = type === 'mentor' || type === 'mentee' ? type : 'profile';
+    const extension = EXTENSION_BY_TYPE[file.type];
+    const pathname = `${PHOTO_PREFIX}/${kind}/${emailStem(email)}.${extension}`;
 
-    // Convert file to base64 data URI for Cloudinary upload
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-    const base64 = buffer.toString('base64');
-    const dataUri = `data:${file.type};base64,${base64}`;
-
-    // Upload to Cloudinary
-    const result = await cloudinary.uploader.upload(dataUri, {
-      public_id: publicId,
-      resource_type: 'image',
-      overwrite: true,
-      // Apply automatic format and quality optimization
-      transformation: [
-        { quality: 'auto', fetch_format: 'auto' }
-      ]
-    });
+    // addRandomSuffix: true — a profile photo is a personal document, and a
+    // public Blob URL is readable by anyone holding it, exactly as the
+    // Cloudinary URL it replaces was. That is parity, not a regression, and the
+    // unguessable suffix is what keeps it parity: without it the URL would be
+    // derivable from the applicant's email address alone.
+    const result = await putUserUpload(pathname, file, file.type);
 
     return NextResponse.json({
       success: true,
-      url: result.secure_url,
+      url: result.url,
       size: file.size,
       contentType: file.type,
     });
@@ -91,7 +91,7 @@ export async function POST(request: NextRequest) {
 
 /**
  * DELETE /api/upload/photo
- * Deletes a photo from Cloudinary storage.
+ * Deletes a photo from Vercel Blob storage.
  */
 export async function DELETE(request: NextRequest) {
   try {
@@ -102,13 +102,14 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: 'No URL provided' }, { status: 400 });
     }
 
-    // Extract public_id from Cloudinary URL
-    const publicId = extractPublicId(url);
-    if (!publicId) {
-      return NextResponse.json({ error: 'Invalid Cloudinary URL' }, { status: 400 });
+    // The route is unauthenticated (the public application forms use it), so
+    // without this check `?url=` would be an instruction to delete any object
+    // in the store. Replaces the old "Invalid Cloudinary URL" guard.
+    if (!isOwnUploadUrl(url)) {
+      return NextResponse.json({ error: 'Invalid upload URL' }, { status: 400 });
     }
 
-    await cloudinary.uploader.destroy(publicId);
+    await deleteUserUpload(url);
 
     return NextResponse.json({ success: true });
   } catch (error) {

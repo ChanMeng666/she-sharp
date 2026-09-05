@@ -8,8 +8,8 @@ the code once you are in the right directory.
 |---|---|
 | `api/` | `apiFetch()` + `ApiError` (`client.ts`), `invalidBody()` + `readOptionalJson()` (`validation.ts`) |
 | `auth/` | NextAuth 5 OAuth + custom JWT sessions; `withRoles()` and `getUserRoles()` in `role-middleware.ts` |
+| `blob/` | user uploads — profile photos, CVs — on Vercel Blob (`uploads.ts`) |
 | `chatbot/` | the visitor agent |
-| `cloudinary/` | user uploads — profile photos, CVs |
 | `config/` | nav, footer, sidebar, contact addresses, Blob URLs (`assets.ts`) |
 | `data/` | site content: events, team, sponsors, stats, press, podcasts, galleries, the Humanitix and Mailchimp aggregates, the newsletter archive |
 | `db/` | schema barrel, client, migrations, seed — has its own `CLAUDE.md` |

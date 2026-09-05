@@ -399,3 +399,17 @@ jobs:
       - name: Verify Stripe payloads are read at their current locations
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: npx tsx lib/stripe/api-shape.test.ts
+
+      # `DELETE /api/upload/{photo,cv}?url=...` is UNAUTHENTICATED - the public
+      # mentorship and volunteer application forms call it - so the only thing
+      # between a stranger and the organisation's Blob store is
+      # `isOwnUploadUrl()`. Cloudinary's equivalent guard was a regex that only
+      # had to fail open once. This test is the refusal suite: another host,
+      # another Blob store, this store's other prefixes (the impact reports and
+      # the newsletter photos live there too), a host that merely ends with the
+      # store host, percent-encoded traversal, and a missing token, which must
+      # fail CLOSED. Pure functions over a fictional token - no store, no
+      # network, no secret - so it belongs as a step in this job.
+      - name: Verify the upload-delete guard refuses foreign URLs
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: npx tsx lib/blob/uploads.test.ts

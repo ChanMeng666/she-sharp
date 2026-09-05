@@ -168,7 +168,12 @@ and the ten photographs published before any of it existed:
 `public/` holds site imagery only — **the PDFs and MP4s live on Vercel Blob**,
 via constants in `lib/config/assets.ts`. Replacing a Blob asset means a **new
 filename and a new constant**, never an overwrite: the cache is immutable for a
-year. Uploads go to Cloudinary (`docs/ARCHITECTURE.md` §6).
+year. **User uploads go to the same Blob store** through `lib/blob/uploads.ts`
+— profile photos under `profile-photos/`, CVs under `cvs/`, always with
+`addRandomSuffix: true`, because a public Blob URL is readable by anyone holding
+it and an unguessable path is what keeps that parity with the Cloudinary URLs it
+replaced. Cloudinary is gone (2026-09-06): the account was personal, not the
+charity's. `docs/ARCHITECTURE.md` §6.
 
 **Moving any image is a tooling job, not a `git mv`** — ~1,400 references across
 37 files, a third where the old gate never looked. Use
