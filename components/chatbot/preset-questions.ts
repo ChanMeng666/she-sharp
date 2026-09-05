@@ -28,9 +28,9 @@ export const presetQuestions: PresetQuestion[] = [
   },
   {
     id: '7',
-    question: 'What does membership cost?',
+    question: 'Does it cost anything to take part?',
     answer:
-      "Mentee membership is **$100 NZD per year**, which includes:\n- 1-on-1 mentor sessions\n- AI-powered mentor matching\n- Access to all events\n- Premium learning resources\n- Networking opportunities\n\nMentor applications are **FREE** - experienced professionals can apply to give back to the community.\n\n**Join now:** [Become a Mentee](/mentorship/mentee) | [Become a Mentor](/mentorship/mentor)",
+      "There is no membership fee to be part of the She Sharp community. Our events are listed on the events page — most are free, and where a venue or catering has to be paid for, the ticket price is shown on the event listing before you book.\n\nThe mentorship programme is **not running for the rest of 2026** and is not taking new applications, so there is nothing to pay for it. To hear when it re-opens, subscribe to our newsletter (see the footer) or follow She Sharp on social media.\n\n**Explore:** [Events](/events) | [Mentorship Overview](/mentorship)",
     category: 'general',
   },
 
@@ -39,7 +39,7 @@ export const presetQuestions: PresetQuestion[] = [
     id: '2',
     question: 'How can I join the mentorship programme?',
     answer:
-      "**Please note:** new mentorship applications are currently paused. The best way to be notified when they re-open is to subscribe to our newsletter (see the footer) or follow She Sharp on social media.\n\nHow the programme works when applications are open:\n1. Complete the application form\n2. Pay the $100 NZD annual membership fee\n3. Receive your invitation code via email\n4. Use the code to register and create your account\n\nOnce registered, you'll be matched with a mentor based on your goals and preferences.\n\n**Learn more:** [Mentorship Overview](/mentorship) | [View Our Mentors](/mentorship#mentors-list)",
+      "**Please note:** the mentorship programme is not running for the rest of 2026 and new applications are paused. The best way to be notified when it re-opens is to subscribe to our newsletter (see the footer) or follow She Sharp on social media.\n\nHow the programme works when applications are open:\n1. Complete the application form\n2. Receive your invitation code via email\n3. Use the code to register and create your account\n\nOnce registered, you'll be matched with a mentor based on your goals and preferences.\n\n**Learn more:** [Mentorship Overview](/mentorship) | [View Our Mentors](/mentorship#mentors-list)",
     category: 'mentorship',
   },
   {

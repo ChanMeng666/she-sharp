@@ -52,3 +52,72 @@ Run `pnpm dev` and check:
 
 Verified at pause time (2026-06-19) via local dev server:
 `coming-soon` → 200, both `*/apply` routes → 307 → `/mentorship/coming-soon`, `Join Mentorship` absent from rendered home page.
+
+---
+
+## 2026-09-05 — wind-down for the rest of 2026
+
+The June pause closed the **application forms**. It left two things still
+advertising the programme, and on 2026-09-05 the founder hit both on her phone
+and asked for them closed.
+
+| # | Change | File(s) |
+|---|--------|---------|
+| 5 | Public "Sign In" entry point hidden site-wide for logged-out visitors | `lib/config/auth-entry.ts` (new), `components/layout/user-nav.tsx` |
+| 6 | Chatbot no longer quotes a membership price, in any surface | `components/chatbot/preset-questions.ts`, `lib/chatbot/knowledge.ts` |
+
+### Why each
+
+**5 — the Sign In button.** Verbatim: *"For now, I want you to disable Sign up /
+sign in button on the landing page. Keep everything else untouched!"* The button
+lives in the global site header (`components/layout/user-nav.tsx`, rendered from
+`site-header.tsx:304` desktop and `:525` mobile drawer), so there is no
+landing-page-only variant that would not leave it showing on every other public
+page. It is therefore hidden **site-wide when logged out**, which is the closest
+faithful reading. Flip `PUBLIC_SIGN_IN_ENTRY_ENABLED` to `true` to restore —
+that is the entire revert.
+
+This is **not** access control. `/sign-in` still renders, `proxy.ts` is
+unchanged, and every existing member, mentor and mentee keeps their account and
+can sign in via the URL directly. The founder separately approved silently
+disabling the mentorship login portal (no notification emails); **that was not
+done** — it was not part of the instruction she finally gave.
+
+**6 — the chatbot price.** Verbatim: *"I don't know why you add price to
+mentoring without checking with me."* The `$100 NZD/year` figure appeared in
+three chatbot surfaces, none gated by `isMentorshipOpen()`:
+`preset-questions.ts` id `7` (the card she screenshotted, which also still said
+*"Join now"* with live apply links), id `2`, and `knowledge.ts` line 75 in the
+LLM's own knowledge base. The price is **removed rather than gated**, because
+her objection is that no price was ever approved — so re-opening applications
+must not silently restore it. `knowledge.ts` now instructs the model never to
+quote a price or call it free, and to refer anyone who needs a definite answer
+to the general enquiries address.
+
+### Deliberately left alone
+
+- `app/(site)/mentorship/mentee/payment/page.tsx` still contains `$100 NZD/year`.
+  It is client-rendered and needs a submission `id`, so the figure is **not in
+  the public HTML** — verified with `curl` on 2026-09-05. Behind the pause.
+- `lib/email/service.ts:398,430` lists membership benefits but quotes **no
+  price**.
+- `lib/config/mentorship.ts` (`registrationDeadline`) is untouched — applications
+  were already closed by it.
+
+### Verification performed (2026-09-05, local dev server)
+
+- Sign In absent from the header at 1440px and from the mobile drawer at 430px.
+- **The guard was broken to prove it guards**: flipping
+  `PUBLIC_SIGN_IN_ENTRY_ENABLED` to `true` made both elements reappear, so the
+  flag — not some unrelated change — is what hides them.
+- Chatbot → Quick Questions → *"Does it cost anything to take part?"* renders the
+  new copy with no `$100` anywhere in the DOM.
+- `pnpm typecheck` clean; `pnpm lint` 0 errors.
+
+### Still open — for the Thursday 2026-09-10 meeting
+
+She deferred the wider question: whether to close the mentorship entry point and
+landing page outright, with the knock-on edits to the newsletter, other page
+copy and the AI assistant's knowledge base. Until that is decided,
+`/mentorship`, `/mentorship/mentee` and `/mentorship/mentor` remain public, and
+the footer still links "Become a Mentee" / "Become a Mentor" to those info pages.
