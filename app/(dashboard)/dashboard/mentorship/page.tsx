@@ -94,7 +94,9 @@ interface MentorDetails {
   id: number;
   userId: number;
   name: string;
-  email: string;
+  // Null unless the viewer is the member themselves, an admin, or their
+  // counterpart in a mentorship relationship - see lib/mentorship/access.ts.
+  email: string | null;
   image: string | null;
   expertiseAreas: string[];
   yearsExperience: number;
@@ -140,7 +142,9 @@ interface MenteeDetails {
   id: number;
   userId: number;
   name: string;
-  email: string;
+  // Null unless the viewer is the member themselves, an admin, or their
+  // counterpart in a mentorship relationship - see lib/mentorship/access.ts.
+  email: string | null;
   image: string | null;
   learningGoals: string[];
   careerStage: string | null;

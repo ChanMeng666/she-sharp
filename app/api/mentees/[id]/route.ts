@@ -2,13 +2,23 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db/drizzle';
 import { menteeProfiles, users, userRoles, mentorshipRelationships, menteeFormSubmissions } from '@/lib/db/schema';
 import { eq, and } from 'drizzle-orm';
-import { getUser } from '@/lib/db/queries';
+import { withRoles, type AuthedRouteContext } from '@/lib/auth/role-middleware';
+import { canViewMentorshipPrivateDetails } from '@/lib/mentorship/access';
 import { resolvePhoto } from '@/lib/mentorship/resolve';
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+/**
+ * A single mentee's profile.
+ *
+ * Signed-in only: until 2026-09-06 this handler had no session check at all, so
+ * `/api/mentees/1` returned a named beneficiary — a student or career changer —
+ * with their email address to anyone, and the integer id enumerated the whole
+ * cohort. The email address and the `includeFormData=true` application record
+ * (phone, gender, age, city, goals) are narrower still — see
+ * `canViewMentorshipPrivateDetails()`.
+ */
+export const GET = withRoles(
+  {},
+  async (request: NextRequest, { params, user: viewer }: AuthedRouteContext<{ id: string }>) => {
   try {
     const { id } = await params;
     const { searchParams } = new URL(request.url);
@@ -83,12 +93,26 @@ export async function GET(
       .where(eq(menteeFormSubmissions.userId, menteeProfile.userId))
       .limit(1);
 
+    // The email address and the form record are the private half of the
+    // profile; the rest is directory data any signed-in member may read.
+    const canViewPrivateDetails = await canViewMentorshipPrivateDetails(
+      viewer.id,
+      menteeProfile.userId
+    );
+
+    if (includeFormData && !canViewPrivateDetails) {
+      return NextResponse.json(
+        { error: 'Not authorised to view this application' },
+        { status: 403 }
+      );
+    }
+
     // Build the mentee object with form → profile → user fallback
     const mentee = {
       id: menteeProfile.id,
       userId: menteeProfile.userId,
       name: user.name,
-      email: user.email,
+      email: canViewPrivateDetails ? user.email : null,
       image: resolvePhoto({
         formPhotoUrl: menteeForm?.photoUrl,
         profilePhotoUrl: menteeProfile.photoUrl,
@@ -105,23 +129,19 @@ export async function GET(
 
     // Check if current user has a relationship with this mentee
     let relationshipStatus = null;
-    const currentUser = await getUser();
-
-    if (currentUser) {
-      const relationships = await db
-        .select()
-        .from(mentorshipRelationships)
-        .where(
-          and(
-            eq(mentorshipRelationships.menteeUserId, mentee.userId),
-            eq(mentorshipRelationships.mentorUserId, currentUser.id)
-          )
+    const relationships = await db
+      .select()
+      .from(mentorshipRelationships)
+      .where(
+        and(
+          eq(mentorshipRelationships.menteeUserId, mentee.userId),
+          eq(mentorshipRelationships.mentorUserId, viewer.id)
         )
-        .limit(1);
+      )
+      .limit(1);
 
-      if (relationships.length > 0) {
-        relationshipStatus = relationships[0].status;
-      }
+    if (relationships.length > 0) {
+      relationshipStatus = relationships[0].status;
     }
 
     // Get form submission data if requested
@@ -176,4 +196,4 @@ export async function GET(
       { status: 500 }
     );
   }
-}
+});

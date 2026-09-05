@@ -2,9 +2,19 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db/drizzle';
 import { mentorProfiles, mentorFormSubmissions, users, userRoles } from '@/lib/db/schema';
 import { eq, and, ilike, or, sql, gte, lte } from 'drizzle-orm';
+import { withRoles } from '@/lib/auth/role-middleware';
 import { resolvePhoto } from '@/lib/mentorship/resolve';
 
-export async function GET(request: NextRequest) {
+/**
+ * Mentor directory listing.
+ *
+ * Signed-in only: until 2026-09-06 this handler was unauthenticated and one
+ * anonymous `?limit=100` returned every mentor's name, email address, employer,
+ * job title, LinkedIn URL and bio. `email` is gone from the payload entirely —
+ * a directory listing has no reason to hand out addresses, and nothing in the
+ * app consumed this endpoint, so there was no response shape to preserve.
+ */
+export const GET = withRoles({}, async (request: NextRequest) => {
   try {
     const searchParams = request.nextUrl.searchParams;
     const search = searchParams.get('search');
@@ -62,7 +72,6 @@ export async function GET(request: NextRequest) {
         id: mentorProfiles.id,
         userId: mentorProfiles.userId,
         name: users.name,
-        email: users.email,
         userImage: users.image,
         profilePhotoUrl: mentorProfiles.photoUrl,
         formPhotoUrl: mentorFormSubmissions.photoUrl,
@@ -98,7 +107,6 @@ export async function GET(request: NextRequest) {
       id: m.id,
       userId: m.userId,
       name: m.name,
-      email: m.email,
       image: resolvePhoto({
         formPhotoUrl: m.formPhotoUrl,
         profilePhotoUrl: m.profilePhotoUrl,
@@ -147,4 +155,4 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
