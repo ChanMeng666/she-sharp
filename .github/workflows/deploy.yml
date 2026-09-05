@@ -3,6 +3,16 @@ name: Deploy to Vercel
 on:
   push:
     branches: [main]
+  # Redeploying the current `main` without a commit. Needed because an
+  # environment-variable change does not reach production on its own: Vercel
+  # binds the environment at build time, "Redeploy" reuses the old one, and this
+  # account cannot use Vercel's remote build (`vercel deploy --prod` from a
+  # workstation returns "Not authorized" — every deploy this project has ever
+  # made went through the `vercel build` + `--prebuilt` path below). Before this
+  # existed, flipping MAINTENANCE_MODE or rotating a database URL meant inventing
+  # a commit to push. Added 2026-09-06, during the Neon project migration, which
+  # needed exactly that twice.
+  workflow_dispatch:
 
 # Only the newest commit on `main` needs to reach production, and a superseded
 # build is pure cost: 20% of the deploys measured over 2026-08-13..09-01 (28 of
