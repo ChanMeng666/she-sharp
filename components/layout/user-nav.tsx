@@ -31,6 +31,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { apiGet, apiPost } from '@/lib/api/client';
+import { PUBLIC_SIGN_IN_ENTRY_ENABLED } from '@/lib/config/auth-entry';
 
 interface UserData {
   id: number;
@@ -123,8 +124,15 @@ export function UserNav({ variant = 'desktop' }: UserNavProps) {
     );
   }
 
-  // Not logged in - show Sign In button (sign-in page has tabs to switch to sign-up)
+  // Not logged in - show Sign In button (sign-in page has tabs to switch to sign-up).
+  // Hidden site-wide while PUBLIC_SIGN_IN_ENTRY_ENABLED is false: the header is
+  // global, so there is no "landing page only" variant of this button that would
+  // not leave it showing on every other public page. /sign-in itself still works
+  // for existing members. See lib/config/auth-entry.ts.
   if (!user) {
+    if (!PUBLIC_SIGN_IN_ENTRY_ENABLED) {
+      return null;
+    }
     if (variant === 'mobile') {
       return (
         <div className="flex flex-col gap-2 pt-4 border-t border-[#f7e5f3]">
