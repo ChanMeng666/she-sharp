@@ -726,7 +726,7 @@ async function resolveProgramme(slug: string): Promise<{
  */
 export async function submitPublicMenteeForm(
   data: PublicMenteeFormData
-): Promise<{ success: boolean; submissionId?: number; requiresPayment?: boolean; programmeName?: string; error?: string }> {
+): Promise<{ success: boolean; submissionId?: number; requiresPayment?: boolean; programmeName?: string; error?: string; alreadyPaid?: boolean }> {
   try {
     // Resolve programme if specified
     let programmeId: number | null = null;
@@ -753,7 +753,15 @@ export async function submitPublicMenteeForm(
     if (existing) {
       // If payment already completed and same programme, don't allow resubmission
       if (existing.paymentCompleted && existing.programmeId === programmeId) {
-        return { success: false, error: 'An application with this email has already been paid for' };
+        // `alreadyPaid` lets the apply page send the applicant to the success
+        // page rather than show an error, which is what it used to do off the
+        // back of a `GET ?email=` pre-flight check. That check was an anonymous
+        // membership oracle and was removed on 2026-09-06.
+        return {
+          success: false,
+          alreadyPaid: true,
+          error: 'An application with this email has already been paid for',
+        };
       }
       if (existing.status === 'approved') {
         return { success: false, error: 'An application with this email has already been approved' };

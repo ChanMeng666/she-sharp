@@ -308,23 +308,11 @@ function MenteeApplyForm() {
 
     setLoading(true);
     try {
-      const checkResponse = await fetch(
-        `/api/forms/mentee/public?email=${encodeURIComponent(formData.email)}`
-      );
-      const checkData = await checkResponse.json();
-
-      if (checkData.exists && checkData.paymentCompleted) {
-        // Already paid — go to success
-        router.push(`/mentorship/mentee/success?submitted=true`);
-        return;
-      }
-
-      if (checkData.exists && !checkData.paymentCompleted && !formData.programmeSlug) {
-        // Existing submission without payment and no programme — go to payment
-        router.push(`/mentorship/mentee/payment?id=${checkData.submissionId}`);
-        return;
-      }
-
+      // No pre-flight `GET ?email=` check any more: it answered "has this person
+      // applied?" to any anonymous caller, and the POST below already resolves a
+      // repeat application — it updates the existing row and hands back its id,
+      // so an applicant returning to finish payment still lands on the payment
+      // page, now with the answers they just re-entered saved.
       const response = await fetch("/api/forms/mentee/public", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -338,6 +326,11 @@ function MenteeApplyForm() {
       const data = await response.json();
 
       if (data.error) {
+        if (data.alreadyPaid) {
+          // Paid for already: the same place the old pre-flight check sent them.
+          router.push(`/mentorship/mentee/success?submitted=true`);
+          return;
+        }
         setErrors({ email: data.error });
         setLoading(false);
         return;
