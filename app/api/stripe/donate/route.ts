@@ -48,7 +48,12 @@ export async function POST(request: NextRequest) {
         },
       ],
       success_url: `${baseUrl}/donate/success?session_id={CHECKOUT_SESSION_ID}&amount=${amount}`,
-      cancel_url: `${baseUrl}/donate/checkout?amount=${amount}`,
+      // Back to the page the donor came from. `/donate/checkout` was deleted in
+      // 05bf4aeb when the multi-step flow collapsed into one page, and this URL
+      // was left pointing at it — every cancelled checkout landed on a 404. No
+      // `amount` param: `/donate` is a server component that reads none, and
+      // `DonateForm` owns the selection in its own state.
+      cancel_url: `${baseUrl}/donate`,
       metadata: {
         type: "donation",
         amount: amount.toString(),
