@@ -32,19 +32,23 @@ maintained site and a site that merely keeps running until something changes.
 2. **Rotate the shared account passwords**, because a leaving maintainer had them.
    The list is §3, "Rotate on departure". This is routine offboarding hygiene and
    implies nothing about anybody; do it for every departure, not just this one.
-3. **Move the production database off a personal account.** This was checked on
-   2026-09-05 and is no longer an open question — it is confirmed, and it cannot
-   be fixed by clicking "transfer". §10 is the runbook. The production database
-   holds every mentor and mentee application, the donations table and the
-   mailing-list consent record, and it is the one thing here that cannot be
-   rebuilt from this repository.
-4. **Deal with Cloudinary** — §11. It was assumed dead and is not: it still takes
-   every profile photo and CV upload, and 41 live records point at a personal
-   account.
-5. Read §7. Three decisions are recorded as *made and not done*, and each one
+3. **Read §12 before anything else if you are reading this in the first week
+   after 2026-09-06.** Two live credentials were found in this repository's git
+   history and rotated on that date. The section says what is still owed.
+4. Read §7. Three decisions are recorded as *made and not done*, and each one
    needs a founder-console action nobody else can take.
-6. Work through §6 before touching anything. Each rule there is attached to a
+5. Work through §6 before touching anything. Each rule there is attached to a
    dated incident that cost real money, real inboxes, or a history rewrite.
+
+Two items that were the top of this list on 2026-09-05 are **done**, and are kept
+in §10 and §11 as the record of how, because both turned out to be traps rather
+than chores:
+
+- **The production database has been moved off a personal account** into the
+  organisation's own Neon organisation (§10). Neon refuses to *transfer* a project
+  out of a Vercel-managed org, so it had to be a copy.
+- **Cloudinary is gone** (§11) — code, data, configuration and credentials. It had
+  been assumed dead and was in fact taking every profile photo and CV upload.
 
 ---
 
@@ -70,18 +74,18 @@ actually operate it.
 
 `.env.example` is the authoritative explanation of every environment variable —
 what it does, and the incident that produced the comment above it. The
-authoritative *list* is `npx vercel env ls production` (66 variables as at
-2026-09-05), not this table and not `.env.example`, which documents local
+authoritative *list* is `npx vercel env ls production` (**46** variables as at
+2026-09-06, down from 66 that morning — see §10.1 and §11), not this table and not `.env.example`, which documents local
 tooling variables that production does not have.
 
 | Service | What breaks without it | Held under | Handover action |
 |---|---|---|---|
 | **Vercel** | Everything | `shesharpnz`, team `she-sharp1`, Pro | Rotate on departure |
 | **GitHub org** `NZ-SheSharp` | Deploys, the `/event` Slack bot's PRs | Org | Remove the departing member; the bot's PAT (`GITHUB_BOT_TOKEN`) is issued against a person and must be reissued |
-| **Neon (PostgreSQL)** | The whole dashboard, applications, donations, the subscriber list | **A personal account** — project `she-sharp-database` (`red-silence-55665683`), in the Vercel-managed Neon org "Vercel: Chan Meng's projects" | Data migration, not a transfer. **§10** |
+| **Neon (PostgreSQL)** | The whole dashboard, applications, donations, the subscriber list | **The organisation.** Project `she-sharp-production` (`lively-night-18220962`) in the native Neon org "She Sharp", under `website@shesharp.org.nz`. Moved 2026-09-06 | The superseded personal project is kept read-only until **2026-09-20**, then deleted by its owner. **§10** |
 | **Stripe** | Donations and membership payments | She Sharp | Rotate keys on departure; re-point the webhook only if the domain changes |
 | **Resend** | All outbound mail — transactional *and* the newsletter | Signed in via `website@shesharp.org.nz` | Rotate that Google password, then the API key |
-| **Cloudinary** | Profile photos and CVs uploaded through the forms and the dashboard — **still live, not replaced by Blob** | **A personal account** | Migrate the 41 stored files, or accept broken images. **§11** |
+| ~~Cloudinary~~ | Nothing — **removed 2026-09-06**. Uploads now go to the organisation's Vercel Blob store | — | None. Kept as a row so nobody re-adds it without reading **§11** |
 | **OpenAI** | The visitor chatbot and mentor matching | `website@shesharp.org.nz` — organisation-owned, verified 2026-09-05 | Nothing. Rotate the API key on departure like any other |
 | **Vercel Blob** | The impact-report PDFs and the event videos `/resources` links | Same Vercel team | Nothing, but read the immutability rule in §6 |
 | **Vercel KV / Redis** | Chatbot rate limiting | Same Vercel team | Nothing |
@@ -93,7 +97,9 @@ tooling variables that production does not have.
 **Rotate on departure:** Vercel, the `website@` Google account, Stripe API keys,
 Resend API key, `GITHUB_BOT_TOKEN`, `CRON_SECRET`, and the Slack bot tokens.
 `AUTH_SECRET` / `NEXTAUTH_SECRET` rotation signs every existing user out — do it
-deliberately, not as part of a sweep.
+deliberately, not as part of a sweep. **Both were rotated on 2026-09-06** because
+the previous value was found in this repository's git history (§12); rotating
+them now also invalidates outstanding mentee payment links, not just sessions.
 
 **One warning that is bigger than a password.** The `website@shesharp.org.nz`
 account reaches the mailbox, the legacy Webflow back end, *and* Resend, which
@@ -438,18 +444,50 @@ again.
   `volunteer_form_submissions.cv_url` 2. If that account is closed, those images
   and CVs 404 in the dashboard.
 
-> **In progress, 2026-09-06.** Option 1 below is written and verified on the
-> branch `refactor/uploads-cloudinary-to-blob`, not yet merged: both routes now
-> write to Vercel Blob, `lib/cloudinary/` is deleted, and
-> `scripts/assets/migrate-cloudinary-to-blob.ts` will move the 41 stored files and
-> rewrite the rows. **The script has not been run.** `res.cloudinary.com` stays in
-> `next.config.ts` until it has, or the unmigrated photos become 400s from the
-> image optimiser. One correction to the reasoning below: **Vercel Blob does now
-> have a private tier** (`access: 'private'` with `presignUrl()`), so keeping these
-> objects public is a choice rather than the only option — worth revisiting
-> deliberately, because CVs are among them.
+> **Done, 2026-09-06** (#279, #280). Option 1 below was taken. Both routes write
+> to Vercel Blob, `lib/cloudinary/` is gone, the three `CLOUDINARY_*` variables
+> are off Vercel, and `res.cloudinary.com` is out of `next.config.ts`. The data
+> moved too: `scripts/assets/migrate-cloudinary-to-blob.ts --apply` rehosted
+> **39 of 41** rows. The two failures were one image referenced twice, which
+> Cloudinary already 404s while a control URL from the same account returns 200 —
+> the asset was gone and those rows had been rendering broken for some time; both
+> columns were cleared so `resolvePhoto()` takes its own no-photo path. All five
+> columns now read zero Cloudinary. **Cloudinary is no longer part of this
+> project.**
 
-Two ways to close this, in preference order:
+### 11.1 Uploads are public, and that was decided rather than inherited
+
+`@vercel/blob` takes `access` **per upload, not per store** — `'public'` or
+`'private'`, with `presignUrl()` and `issueSignedToken()` for reading a private
+object. So profile photos and CVs could have been made private in the same store
+that serves the newsletter's public imagery. **A second store was never needed**,
+which is worth stating because that was the assumption the question was first
+raised under.
+
+**They were deliberately left public on 2026-09-06.** The founder was given the
+choice and declined it. The reasoning, recorded so nobody spends another round
+re-deriving it:
+
+- The exposure is **unchanged from Cloudinary**, which served these same objects
+  from public URLs for as long as they have existed. This was parity, not a new
+  decision to expose anything.
+- Private objects mean the database column stops holding a usable URL. Every
+  place a CV or photo is displayed would have to call an admin-only route that
+  mints a short-lived signed URL first. That is one route and a few dozen lines —
+  but it is also **one more indirection for whoever inherits this project**, and
+  the person deciding was in the middle of handing it over.
+- Object paths carry `addRandomSuffix: true`, so a URL is unguessable. That is
+  **not access control** and must not be mistaken for it.
+
+**If this is revisited, revisit it for the CVs first.** Profile photos are
+already shown on a mentor directory meant to be seen; a CV is a job application
+with no audience beyond the people reviewing it. The change is `access: 'private'`
+at the `put()` in `lib/blob/uploads.ts` plus a signed-URL route for the
+recruitment dashboard, and it does not touch the newsletter's public assets.
+
+---
+
+Two ways this could have been closed, in preference order:
 
 1. **Move the uploads to Vercel Blob**, which the organisation already owns and
    already pays for, and drop the Cloudinary dependency and its three environment
@@ -463,3 +501,68 @@ Two ways to close this, in preference order:
 Whichever is chosen, **rewrite the stored URLs in the same change**. A migration
 that moves the files and leaves the rows pointing at the old host is the failure
 mode, and nothing in CI can see it.
+
+---
+
+## 12. The 2026-09-06 credential exposure
+
+Found while auditing whether this repository could safely be made public. It
+turned out not to be a question about publishing at all: **two live credentials
+were already sitting in `origin/main`'s history, and the repository was public
+from 2026-03-24 until at least 2026-08-13.** Both have been rotated. This section
+exists so the next person knows it happened, why it was not caught sooner, and
+what is still owed.
+
+### What was exposed, and what was done
+
+| What | Where | Status |
+|---|---|---|
+| **`AUTH_SECRET` / `NEXTAUTH_SECRET`** — signs every session cookie, so holding it forges a session for **any account, admin included** | a script added 2025-08-03, removed 2025-11-29, still reachable from `origin/main` | **Rotated 2026-09-06.** New value set on Vercel, read back and compared byte-for-byte, deployed, site verified |
+| **The Neon `neondb_owner` password** for the old project (`red-silence-55665683`) — a full, current copy of every mentor, mentee, donation and subscriber record | a git hook added 2025-08-03, replaced 2025-10-31, still reachable from `origin/main` | **Reset 2026-09-06** in the Neon console. Verified by connecting with the leaked password and getting `password authentication failed` |
+| A Stripe `sk_live_` key on three stale remote branches | — | **Not She Sharp's.** Production's key fingerprints differently; the two share only `sk_live_51`, and everything after that is the merchant account id. It belongs to another Stripe account in the outgoing maintainer's orbit and is theirs to roll |
+| Humanitix codes the 2026-06-11 history rewrite was supposed to remove | still fetchable through GitHub's API | Judged low impact by the founder and deliberately not actioned. `AUT60` was public anyway — it was printed on AUT's own poster |
+
+### The parts worth learning from
+
+- **The repository's tip was clean the whole time.** All 2,880 text blobs at
+  `origin/main` were scanned and every credential-shaped hit is a placeholder.
+  `.env` and `.env.local` were never committed under any name, and `private/`
+  never entered the repository at all. **Every finding was a history finding.**
+  Deleting a file does not remove it, and a tip-only scan would have reported all
+  clear.
+- **The 2026-06-11 history rewrite did not work.** It was recorded as done. One of
+  the codes it was supposed to purge was fetched back out of GitHub's API during
+  this audit. A rewrite that is not verified against the API afterwards has not
+  been verified at all.
+- **Nothing had ever scanned this repository.** GitHub secret scanning, code
+  scanning and Dependabot are all disabled on it — private repositories on the
+  Free plan do not get them. "No alerts" was never evidence of anything. All three
+  turn on automatically if the repository is made public.
+- **Deleting the stale branches is not remediation.** It unlinks the commits; the
+  blobs stay fetchable by SHA through the API until GitHub garbage-collects or
+  Support purges them. The credential has to be rolled regardless.
+
+### Rotating `AUTH_SECRET` has a second effect now
+
+Since 2026-09-06 it also signs the mentee payment-link tokens
+(`lib/forms/submission-token.ts`). Rotating it invalidates outstanding payment
+links as well as sessions. Harmless while applications are paused; once they
+reopen, rotate when nobody is mid-application, or expect to re-issue the few
+links in flight. The module says so at the call site too.
+
+### Still owed
+
+1. **Roll the leaked Stripe key** — the other account's owner, in the Stripe
+   dashboard. There is no CLI or API path: `stripe keys` has no subcommands and
+   Stripe exposes no key-management endpoint (`/v1/api_keys`, `/v1/apikeys` and
+   `/v1/account/api_keys` all return "Unrecognized request URL"). Dashboard only.
+2. **Delete the three stale remote branches**, understanding that this is tidying
+   rather than remediation.
+3. **Decide about making the repository public.** The audit's verdict was *safe
+   after remediation*, and the remediation above is the substance of it. Public
+   would bring free branch protection on `main` — impossible today, because
+   rulesets on a private repository need a paid plan, and the org is on Free —
+   plus unlimited Actions minutes, on an account already running over its 2,000.
+   Weigh that against publishing a history that will still contain the rotated
+   credentials and the Humanitix codes. They will be dead, but they will be
+   readable.
