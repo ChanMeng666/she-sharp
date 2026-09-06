@@ -133,17 +133,25 @@ nothing anywhere says so.
 
 GitHub Actions: `verify.yml` (one job, deliberately — read
 `docs/deployment/GITHUB_ACTIONS_AND_ACCOUNT.md` before adding a second),
-`deploy.yml`, `slack-triage.yml`. The org is on GitHub Free with 2,000
-private-repo Actions minutes per month, billed **per job rounded up to the
-minute**.
+`deploy.yml`, `slack-triage.yml`. Since the repository went public on 2026-09-06
+**Actions minutes are free and unmetered here**; the single-job shape is now kept
+for speed and consistency rather than cost.
 
-**`main` has no branch protection, and `verify.yml` runs only on pull requests.**
-A commit pushed straight to `main` therefore skips every check and deploys itself
-to production. This is not hypothetical: `647ae0b6` ("Add registration link for
-Xero event") went in that way at 23:04 on 2026-09-05, by a second contributor. It
-happened to be one safe line of JSON. Whoever takes this over should decide
-whether to require a passing `verify` before merge — the workflow already exists,
-it is simply not enforced.
+**`main` is protected as of 2026-09-06.** A ruleset requires a pull request and a
+passing `verify` check, and forbids force-push and deletion. Verified by
+attempting a direct push, which was rejected with `GH013` citing both rules.
+
+Two things follow that are easy to trip over:
+
+- **The job name `verify` is load-bearing.** The ruleset matches the status check
+  by name. Renaming or splitting that job silently removes the gate — CI would
+  still run and nothing would be enforced.
+- **Everyone must now use pull requests, including people who did not before.**
+  `647ae0b6` ("Add registration link for Xero event") was pushed straight to
+  `main` at 23:04 on 2026-09-05 by a second contributor, skipping every check and
+  deploying itself. That is what the ruleset now prevents — but **that
+  contributor has not been told**, and their next direct push will simply fail.
+  Telling them is an outstanding handover task, not a technical one.
 
 ---
 
@@ -421,11 +429,12 @@ worth knowing.
 
 ---
 
-## 11. Cloudinary is still live
+## 11. Cloudinary (removed 2026-09-06)
 
 Checked on 2026-09-05, because it had been assumed that everything had moved to
-Vercel Blob. **It has not.** Recording the check so the assumption is not made
-again.
+Vercel Blob. **It had not.** Removed the following day. The finding is kept in
+the past tense below, because the reason it was missed is the reusable part:
+"we moved off that" was believed without anyone grepping for the routes.
 
 - **Vercel Blob is used only by scripts** — `scripts/newsletter/photos.ts` and
   `scripts/mailchimp/rehost-archive-images.ts`. It has never handled user uploads.
@@ -566,3 +575,64 @@ links in flight. The module says so at the call site too.
    Weigh that against publishing a history that will still contain the rotated
    credentials and the Humanitix codes. They will be dead, but they will be
    readable.
+
+---
+
+## 13. The repository is public
+
+Made public **2026-09-06**, deliberately and after the audit in §12 had closed
+every live credential in its history.
+
+### Why
+
+Two things were unavailable on a private repository on the GitHub Free plan, and
+both were wanted:
+
+- **Branch protection.** `main` had none, and `verify.yml` only ever ran on pull
+  requests — so a direct push skipped every check and deployed itself. That was
+  not hypothetical (§4).
+- **Secret scanning.** Nothing had *ever* scanned this repository. "No alerts"
+  had never been evidence of anything.
+
+Free, unmetered Actions minutes came with it, on an account that had been running
+about 30% over its 2,000-minute allowance.
+
+### What is on now, and what each one does to you
+
+| | Effect |
+|---|---|
+| **Ruleset on `main`** | Pull request required, `verify` must pass, no force-push, no deletion. A direct push fails with `GH013`. Verified by attempting one |
+| **Secret-scanning push protection** | A push containing something credential-shaped is **rejected**, not flagged |
+| **Dependabot alerts + security updates** | On |
+
+**The status check is matched by name.** Renaming or splitting the `verify` job
+removes the gate silently — CI keeps running and nothing is enforced.
+
+### What GitHub found the moment it could look
+
+Six historical alerts within seconds of the repository going public — an
+independent confirmation of §12, and one finding §12 had missed. Resolved on
+evidence, not to tidy the list:
+
+| Alert | Resolution | Evidence |
+|---|---|---|
+| Slack incoming webhook | false positive | Workspace id `T00000000`; a live webhook answers `invalid_payload` to an empty POST, this answered `no_team` |
+| Google OAuth **client ID** | false positive | A public identifier that ships in the browser on every sign-in |
+| Google API key | revoked | The only project in the She Sharp Google Cloud account holds no API keys |
+| Stripe live key | revoked | Not She Sharp's, and absent from all three of the maintainer's Stripe accounts |
+| Google OAuth **client secret** ×2 | **left open** | See below |
+
+**The two open alerts are open on purpose.** The leaked Google client secrets are
+demonstrably not production's, and no OAuth client matching them exists in either
+Google account anyone here can reach — but *"no account I can see holds it"* is
+not *"no account holds it"*. That is the one thing from this work that could not
+be closed honestly, so it is visible rather than tidied away. If a third Google
+account turns up, that is where to look.
+
+### The habit worth keeping
+
+Every "already dead" verdict above was **measured**, not inferred: a fingerprint
+compared against production, a key list read back from the provider, a password
+tried and refused. The one time a probe was trusted without a control it gave the
+wrong answer — `no_team` reads exactly like "revoked" until you discover it also
+answers that for a placeholder that was never real. **Run the positive control.**

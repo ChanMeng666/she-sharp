@@ -10,18 +10,18 @@ the code once you are in the right directory.
 | `auth/` | NextAuth 5 OAuth + custom JWT sessions; `withRoles()` and `getUserRoles()` in `role-middleware.ts` |
 | `blob/` | user uploads — profile photos, CVs — on Vercel Blob (`uploads.ts`) |
 | `chatbot/` | the visitor agent |
-| `config/` | nav, footer, sidebar, contact addresses, Blob URLs (`assets.ts`) |
+| `config/` | nav, footer, sidebar, contact addresses, Blob URLs (`assets.ts`), the public sign-in kill switch (`auth-entry.ts`) |
 | `data/` | site content: events, team, sponsors, stats, press, podcasts, galleries, the Humanitix and Mailchimp aggregates, the newsletter archive |
 | `db/` | schema barrel, client, migrations, seed — has its own `CLAUDE.md` |
 | `deck/` | slide types, boilerplate, skins, motion, lint, registry |
 | `email/` | streams, senders, the single Resend call site, suppression — has its own `CLAUDE.md` |
 | `export/` | `csv.ts` → `toCsv()` |
-| `forms/` | contact, volunteer, event feedback services (`'use server'`) |
+| `forms/` | contact, volunteer, event feedback services (`'use server'`); `submission-token.ts` signs the mentee payment link |
 | `funding/` | funding-opportunity crawler: sources, scoring, dedup, weekly cron |
 | `humanitix/` `mailchimp/` | typed API clients — see the PII boundary below |
 | `invitations/` | invitation codes |
 | `matching/` | GPT-4 mentor↔mentee compatibility, queue, cache, prompts, match emails |
-| `mentorship/` | `vocab.ts`, `resolve.ts`, `stats-service.ts` |
+| `mentorship/` | `vocab.ts`, `resolve.ts`, `stats-service.ts`, `access.ts` — **who may read another person's application** |
 | `newsletter/` | assemble / render / generate / schedule / approve, plus `archive.ts` |
 | `programmes/` | HER WAKA and the other named programmes |
 | `recruitment/` | volunteer pipeline; `stages.ts` is the stage vocabulary, `ai-screening.ts` |
@@ -128,3 +128,36 @@ Read `docs/development/HUMANITIX_ARCHIVE.md` and
   "Failed to acquire permit". Serial awaits are safer. A cron with multi-step IO
   needs `maxDuration = 300` and per-client timeouts; the OpenAI SDK's default is
   ten minutes.
+
+## Reading someone else's personal data
+
+Three endpoints returned mentors' and mentees' names, email addresses, employers
+and application forms to **unauthenticated** callers until 2026-09-06, and the
+list endpoint had no consumer at all — it simply handed out 23 addresses to
+anyone who asked. Fixed in #281; the shape of the fix is the rule.
+
+**`canViewMentorshipPrivateDetails()` in `mentorship/access.ts` decides it.**
+Admin, or the person themselves, or the counterpart in a
+`mentorship_relationships` row in either direction, **at any status**. The
+any-status part is load-bearing: a mentor reviewing a *pending* application is a
+real call site, and requiring `status = 'active'` breaks the review flow.
+
+Its admin arm reads `user_roles` and deliberately **not**
+`requiredAdminPermissions`, which is default-GRANT (root `CLAUDE.md`) and
+therefore cannot be asked who may read someone's PII.
+
+Two habits that follow:
+
+- **An email address is not a display field.** It sits in the narrow tier
+  alongside `formData`. If a payload needs a person's name, give it the name.
+- **A lookup keyed on an email address is an oracle**, even when it answers only
+  `{exists}` — "did this person apply to She Sharp" *is* the disclosure. Two such
+  helpers were deleted rather than gated. Do not reintroduce that shape.
+
+`forms/submission-token.ts` is the same lesson in a different form: the mentee
+payment page used to be addressed by a sequential integer, so `?id=3` returned a
+real applicant's name and email. It is now an HMAC over
+`mentee-submission:v1:<id>`, signed with `AUTH_SECRET` — chosen because it is the
+one secret that cannot be missing, so a payment link cannot silently dead-end in
+an environment where a more optional secret was never provisioned. **Rotating
+`AUTH_SECRET` invalidates outstanding payment links as well as sessions.**

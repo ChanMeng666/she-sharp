@@ -63,6 +63,31 @@ proxy.ts   the middleware — there is no middleware.ts
 
 Every one exists because it was broken at least once.
 
+## This repository is PUBLIC, and `main` is protected
+
+Both since **2026-09-06**. Three consequences, and each will stop you rather than
+warn you.
+
+- **Anything committed here is world-readable, immediately and permanently.**
+  Deleting a file, rewriting history or making the repo private again does not
+  take it back: GitHub still serves orphaned commits by SHA, in cached views and
+  through pull requests, and only GitHub Support can purge them. This is not
+  theory — an audit fetched a commit orphaned three months earlier straight out
+  of the API. Never commit a credential, a real email address, an attendee row,
+  or anything from the private archive repo.
+- **Secret-scanning push protection is on.** A push containing something that
+  looks like a credential is *rejected*, not flagged. If that happens, do not
+  look for a way around it; the block is right far more often than it is wrong.
+- **You cannot push to `main`.** A ruleset requires a pull request and a passing
+  `verify` check, and forbids force-push and deletion. `git push origin main`
+  fails with `GH013`. Branch, open a PR, let CI pass, then merge — even for a
+  one-line documentation fix. This was verified by attempting it.
+
+Why public: branch protection and secret scanning are unavailable on a private
+repository on the Free plan, and Actions minutes are free and unmetered for
+public ones. The history was audited and every credential in it was rotated or
+confirmed dead first — `docs/deployment/MAINTAINER_HANDOVER.md` §12.
+
 ## `proxy.ts` is the middleware
 
 Not `middleware.ts` (Next.js 15 naming). `proxy()` matches the whole site minus
@@ -259,15 +284,29 @@ CI (`.github/workflows/verify.yml`, PRs to `main`) runs **one job**, `verify`,
 whose steps are `typecheck`, `typecheck:scripts`, `lint`, the deck checks, and
 every other offline check — all sharing one checkout and one install, because
 they are pure data and none needs a database or the network. **A check needing
-neither belongs as a step in that job**, not in a second job: Actions bills each
-job rounded up to the whole minute, so a job per check cost this org more in
-setup than in checking (2026-09-01: five jobs, 105s of duplicated setup for 147s
-of work).
+neither belongs as a step in that job**, not in a second job. That was originally
+a cost rule — Actions bills each job rounded up to the whole minute, and on
+2026-09-01 five jobs spent 105s of duplicated setup on 147s of work. **Since
+2026-09-06 the repository is public, so Actions minutes are free and unmetered
+and the cost argument no longer applies.** Keep the single job anyway: it is
+still faster, and one install cannot drift from another.
 
 **A guard is not verified until you have broken the thing it guards.** Reading
 one and agreeing with it is not a test — hand it the input it was supposed to
 refuse. Two gates were caught on 2026-08-30 reading as correct and gating
 nothing.
+
+**And a check is only as good as the surface it queries.** A confident negative
+from the wrong surface is worse than no check, because it ends the search. On
+2026-09-06 this happened four times in one session: `vercel env pull` returned a
+Sensitive variable as `""` and it was read as "not configured"; a Slack webhook
+answered `no_team` and was read as "revoked" when it was a `T00000000`
+placeholder that had never been real; a GitHub OAuth probe returned the same
+redirect for a live app and a deliberately bogus one; and a repository-tip scan
+would have reported all clear on a history holding two live credentials.
+**Before trusting a zero result, prove the check can produce a non-zero one** —
+feed it something you know it should catch. Three of those four were only caught
+because a positive control was run.
 
 The local pre-push list, the two gates, and why `check-facts.ts` and
 `verify-page-metadata.ts` sit outside CI: **`docs/development/TESTING.md`**.

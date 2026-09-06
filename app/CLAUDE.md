@@ -74,6 +74,22 @@ zod + `invalidBody()`, the work in a service under `lib/`, `apiFetch()` from the
 browser — because creating a new file does not load this one. The conventions
 you need once you are *editing* a route:
 
+**If the route returns a person, read `lib/CLAUDE.md` § "Reading someone else's
+personal data" first.** On 2026-09-06 three routes here were found returning
+mentors' and mentees' names, email addresses, employers and application forms to
+callers with **no session at all** — `GET /api/mentors` handed over all 23
+mentors with addresses to an anonymous request, and had no consumer anywhere in
+the codebase. Gating is `withRoles()`; deciding *which* signed-in person may see
+another person's details is `canViewMentorshipPrivateDetails()` in
+`lib/mentorship/access.ts`. Never gate that on `requiredAdminPermissions` — it is
+default-GRANT, see below.
+
+**Never address a person's record by its row id in a public route.** The mentee
+payment summary took `?id=<int>`, so counting upwards returned real applicants'
+names and email addresses. It now takes a signed token
+(`lib/forms/submission-token.ts`). A sequential integer is not an access control,
+and neither is an unguessable-looking URL.
+
 **There is no universal response envelope.** Success payloads keep their domain
 shape (`{ mentors, pagination }`, the report object itself); errors are
 `{ error }`, plus `details` when they come from `invalidBody()`.

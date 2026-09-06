@@ -7,26 +7,50 @@ Measured 2026-09-01 across 300 runs from 2026-08-13.
 
 ---
 
-## Every Actions minute here is billed
+> ## ⚠️ Superseded on 2026-09-06 — the repository is now PUBLIC
+>
+> Everything below was written while `she-sharp` was a **private** repository on
+> the **GitHub Free** plan, and that premise is what has changed. As at
+> 2026-09-06:
+>
+> - **Actions minutes are free and unmetered.** The 2,000-minute allowance, the
+>   meter, and the risk of running out no longer apply to this repository. Public
+>   repositories on standard runners are not billed at all.
+> - **Branch protection is available and is now on.** A ruleset on `main`
+>   requires a pull request and a passing **`verify`** check, and forbids
+>   force-push and deletion. **The job name `verify` is therefore load-bearing** —
+>   renaming it silently removes the gate, because the ruleset matches by name.
+>   That is the exact opposite of what this document said, and it is the one line
+>   here most likely to hurt someone.
+> - **Secret scanning, push protection and Dependabot are enabled.** They were
+>   impossible before; a push containing a credential is now rejected outright.
+>
+> The per-job billing rule below is **kept as the reason `verify.yml` is a single
+> job**, not as a live constraint. Keep the single job: it is still faster and one
+> install cannot drift from another. Why the repository was made public, and the
+> credential audit that had to happen first, are in
+> `MAINTAINER_HANDOVER.md` §12.
 
-`NZ-SheSharp` is on the **GitHub Free** plan and `she-sharp` is a **private**
-repository. Those two together are the whole story: Actions on a *public* repo
+## Every Actions minute here was billed (until 2026-09-06)
+
+`NZ-SheSharp` is on the **GitHub Free** plan and `she-sharp` **was** a private
+repository. Those two together were the whole story: Actions on a *public* repo
 with standard runners is free and unmetered, so most advice you will read
-online does not apply. Here, the org gets **2,000 minutes a month** and the
-meter is real.
+online did not apply. The org gets **2,000 minutes a month** and, while this
+repository was private, the meter was real.
 
 **Running out disables every workflow, `Deploy to Vercel` included.** There is
 no partial degradation and no queue — the site simply stops being deployable
-until the allowance resets.
+until the allowance resets. This still applies to any *other* private repository
+in the org.
 
-The plan also explains two things that look like bugs:
+The plan also explained two things that looked like bugs at the time:
 
-- **Branch protection is unavailable.** `repos/…/branches/main/protection`
-  returns `403 Upgrade to GitHub Pro or make this repository public`. So there
-  are **no required status checks**, and no CI job name is load-bearing. Renaming
-  or merging jobs breaks nothing.
-- The billing page's Actions meter exists at all. A public repo would not have
-  one.
+- **Branch protection was unavailable.** `repos/…/branches/main/protection`
+  returned `403 Upgrade to GitHub Pro or make this repository public`. **No
+  longer true** — see the banner above.
+- The billing page's Actions meter existed at all. A public repo would not have
+  one, and this repository no longer contributes to it.
 
 ## Actions bills each JOB, rounded up to the whole minute
 
