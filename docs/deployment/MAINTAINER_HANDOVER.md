@@ -436,22 +436,22 @@ Vercel Blob. **It had not.** Removed the following day. The finding is kept in
 the past tense below, because the reason it was missed is the reusable part:
 "we moved off that" was believed without anyone grepping for the routes.
 
-- **Vercel Blob is used only by scripts** — `scripts/newsletter/photos.ts` and
-  `scripts/mailchimp/rehost-archive-images.ts`. It has never handled user uploads.
-- **Cloudinary handles every user upload**, through `/api/upload/photo` and
-  `/api/upload/cv` (`lib/cloudinary/config.ts`). Those routes are called by
-  `components/forms/photo-upload.tsx` and `cv-upload.tsx`, which are rendered by
+- **Vercel Blob was used only by scripts** — `scripts/newsletter/photos.ts` and
+  `scripts/mailchimp/rehost-archive-images.ts`. It had never handled user uploads.
+- **Cloudinary handled every user upload**, through `/api/upload/photo` and
+  `/api/upload/cv` (`lib/cloudinary/config.ts`, since deleted). Those routes were called by
+  `components/forms/photo-upload.tsx` and `cv-upload.tsx`, which were rendered by
   six pages — three public application forms *and* three dashboard pages
   (`account`, `mentor-profile`, `mentee-profile`).
-- The dashboard pages are **still reachable**. Hiding the public Sign In entry on
-  2026-09-05 hid a link, not a route; existing members sign in by URL. An existing
-  mentor who changes their profile photo today uploads to a personal Cloudinary
-  account.
-- **41 rows in the production database hold `res.cloudinary.com` URLs**:
+- The dashboard pages were **still reachable**. Hiding the public Sign In entry on
+  2026-09-05 hid a link, not a route; existing members sign in by URL. So an
+  existing mentor changing their profile photo was, right up to the fix, uploading
+  to a personal Cloudinary account.
+- **41 rows in the production database held `res.cloudinary.com` URLs**:
   `mentor_profiles.photo_url` 9, `mentee_profiles.photo_url` 10,
   `mentor_form_submissions.photo_url` 9, `mentee_form_submissions.photo_url` 11,
-  `volunteer_form_submissions.cv_url` 2. If that account is closed, those images
-  and CVs 404 in the dashboard.
+  `volunteer_form_submissions.cv_url` 2. Had that account been closed, every one
+  of those images and CVs would have 404ed in the dashboard.
 
 > **Done, 2026-09-06** (#279, #280). Option 1 below was taken. Both routes write
 > to Vercel Blob, `lib/cloudinary/` is gone, the three `CLOUDINARY_*` variables
