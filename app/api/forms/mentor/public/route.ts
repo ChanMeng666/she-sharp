@@ -83,37 +83,9 @@ export async function POST(request: NextRequest) {
   }
 }
 
-/**
- * GET /api/forms/mentor/public
- * Checks if an email already has a pending application.
- */
-export async function GET(request: NextRequest) {
-  try {
-    const { searchParams } = new URL(request.url);
-    const email = searchParams.get('email');
-
-    if (!email) {
-      return NextResponse.json({ error: 'Email is required' }, { status: 400 });
-    }
-
-    // Import inline to avoid circular dependencies
-    const { getPublicMentorFormByEmail } = await import('@/lib/forms/service');
-    const form = await getPublicMentorFormByEmail(email);
-
-    if (!form) {
-      return NextResponse.json({ exists: false });
-    }
-
-    return NextResponse.json({
-      exists: true,
-      status: form.status,
-      submittedAt: form.submittedAt,
-    });
-  } catch (error) {
-    console.error('Error checking mentor form status:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
-  }
-}
+// There is deliberately no GET handler. Until 2026-09-06 this route answered
+// `GET ?email=<address>` for anyone, with no session and no rate limit, telling
+// the caller whether that person had applied to be a She Sharp mentor and what
+// their application status was. Nothing in the app ever called it. The apply
+// page only POSTs, and `submitPublicMentorForm()` already handles a repeat
+// application server-side, so the check was not needed to serve the flow.

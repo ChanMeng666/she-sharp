@@ -308,23 +308,11 @@ function MenteeApplyForm() {
 
     setLoading(true);
     try {
-      const checkResponse = await fetch(
-        `/api/forms/mentee/public?email=${encodeURIComponent(formData.email)}`
-      );
-      const checkData = await checkResponse.json();
-
-      if (checkData.exists && checkData.paymentCompleted) {
-        // Already paid — go to success
-        router.push(`/mentorship/mentee/success?submitted=true`);
-        return;
-      }
-
-      if (checkData.exists && !checkData.paymentCompleted && !formData.programmeSlug) {
-        // Existing submission without payment and no programme — go to payment
-        router.push(`/mentorship/mentee/payment?id=${checkData.submissionId}`);
-        return;
-      }
-
+      // No pre-flight `GET ?email=` check any more: it answered "has this person
+      // applied?" to any anonymous caller, and the POST below already resolves a
+      // repeat application — it updates the existing row and hands back its id,
+      // so an applicant returning to finish payment still lands on the payment
+      // page, now with the answers they just re-entered saved.
       const response = await fetch("/api/forms/mentee/public", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -338,6 +326,11 @@ function MenteeApplyForm() {
       const data = await response.json();
 
       if (data.error) {
+        if (data.alreadyPaid) {
+          // Paid for already: the same place the old pre-flight check sent them.
+          router.push(`/mentorship/mentee/success?submitted=true`);
+          return;
+        }
         setErrors({ email: data.error });
         setLoading(false);
         return;
@@ -351,8 +344,11 @@ function MenteeApplyForm() {
         }
         router.push(`/mentorship/mentee/success?${params.toString()}`);
       } else {
-        // Requires payment — go to payment
-        router.push(`/mentorship/mentee/payment?id=${data.submissionId}`);
+        // Requires payment — go to payment, carrying the signed handle the API
+        // issued. The raw submission id is never put in a URL: it is a small
+        // sequential integer, and the page it addresses shows a name and an
+        // email address without asking for a session.
+        router.push(`/mentorship/mentee/payment?t=${encodeURIComponent(data.paymentToken)}`);
       }
     } catch (error) {
       setErrors({ email: "Failed to submit application. Please try again." });

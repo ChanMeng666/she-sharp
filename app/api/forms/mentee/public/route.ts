@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { submitPublicMenteeForm, getPublicMenteeFormByEmail, type PublicMenteeFormData } from '@/lib/forms/service';
+import { submitPublicMenteeForm, type PublicMenteeFormData } from '@/lib/forms/service';
+import { buildMenteeSubmissionToken, verifyMenteeSubmissionToken } from '@/lib/forms/submission-token';
 import { sendMenteeApplicationConfirmationEmail } from '@/lib/email/mentorship-emails';
 import { z } from 'zod';
 
@@ -58,7 +59,10 @@ export async function POST(request: NextRequest) {
     const result = await submitPublicMenteeForm(data);
 
     if (!result.success) {
-      return NextResponse.json({ error: result.error }, { status: 400 });
+      return NextResponse.json(
+        { error: result.error, alreadyPaid: result.alreadyPaid ?? false },
+        { status: 400 }
+      );
     }
 
     // Fire-and-forget confirmation email
@@ -68,9 +72,21 @@ export async function POST(request: NextRequest) {
       requiresPayment: result.requiresPayment ?? true,
     }).catch(err => console.error('Failed to send mentee confirmation email:', err));
 
+    // The client gets a signed handle, never the primary key: the payment page
+    // has to be reachable without a session, so the id in that URL is the only
+    // thing standing between an anonymous caller and this applicant's name and
+    // address. A null here means AUTH_SECRET is unset, which is a deployment
+    // fault, not something to paper over by falling back to the raw id.
+    const paymentToken = buildMenteeSubmissionToken(result.submissionId ?? 0);
+    if (!paymentToken) {
+      console.error(
+        'Could not sign a mentee payment token - AUTH_SECRET is unset. The applicant cannot reach the payment page.'
+      );
+    }
+
     return NextResponse.json({
       success: true,
-      submissionId: result.submissionId,
+      paymentToken,
       requiresPayment: result.requiresPayment ?? true,
       message: result.requiresPayment === false
         ? 'Your application has been submitted successfully.'
@@ -86,65 +102,51 @@ export async function POST(request: NextRequest) {
 }
 
 /**
- * GET /api/forms/mentee/public
- * Checks if an email already has a pending application or gets form data by ID.
+ * GET /api/forms/mentee/public?t=<signed token>
+ *
+ * The order summary the payment page shows the applicant before checkout. It is
+ * unauthenticated because the applicant has no account yet, so the token is the
+ * whole access check — see `lib/forms/submission-token.ts`.
+ *
+ * Two lookups this handler answered until 2026-09-06 are gone. `?id=<integer>`
+ * returned an applicant's real email address and full name for a small
+ * sequential primary key, so the entire cohort of beneficiaries enumerated;
+ * ids 1 and 2 were 404 in production while 3, 5 and 8 were 200. And
+ * `?email=<address>` told any anonymous caller whether a named person had
+ * applied and with what status — a membership oracle, whose only caller was a
+ * pre-flight check on the apply page that `submitPublicMenteeForm()` already
+ * made redundant.
  */
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const email = searchParams.get('email');
-    const id = searchParams.get('id');
+    const submissionId = verifyMenteeSubmissionToken(searchParams.get('t'));
 
-    if (id) {
-      // Get form by ID (for payment page summary)
-      const { getMenteeFormById } = await import('@/lib/forms/service');
-      const form = await getMenteeFormById(parseInt(id));
-
-      if (!form) {
-        return NextResponse.json({ error: 'Form not found' }, { status: 404 });
-      }
-
-      return NextResponse.json({
-        exists: true,
-        form: {
-          id: form.id,
-          email: form.email,
-          fullName: form.fullName,
-          status: form.status,
-          paymentCompleted: form.paymentCompleted,
-        },
-      });
+    // One response for "no token", "malformed token" and "bad signature": a
+    // caller must not be able to tell a forged token from a well-formed one.
+    if (!submissionId) {
+      return NextResponse.json({ error: 'Invalid or missing token' }, { status: 400 });
     }
 
-    if (!email) {
-      return NextResponse.json({ error: 'Email or ID is required' }, { status: 400 });
-    }
-
-    const form = await getPublicMenteeFormByEmail(email);
+    const { getMenteeFormById } = await import('@/lib/forms/service');
+    const form = await getMenteeFormById(submissionId);
 
     if (!form) {
-      return NextResponse.json({ exists: false });
-    }
-
-    // Resolve programme name if applicable
-    let programmeName: string | null = null;
-    if (form.programmeId) {
-      const { getProgrammeById } = await import('@/lib/programmes/service');
-      const programme = await getProgrammeById(form.programmeId);
-      programmeName = programme?.name ?? null;
+      return NextResponse.json({ error: 'Form not found' }, { status: 404 });
     }
 
     return NextResponse.json({
       exists: true,
-      status: form.status,
-      submissionId: form.id,
-      paymentCompleted: form.paymentCompleted,
-      submittedAt: form.submittedAt,
-      programmeId: form.programmeId,
-      programmeName,
+      form: {
+        id: form.id,
+        email: form.email,
+        fullName: form.fullName,
+        status: form.status,
+        paymentCompleted: form.paymentCompleted,
+      },
     });
   } catch (error) {
-    console.error('Error checking mentee form status:', error);
+    console.error('Error loading mentee form:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

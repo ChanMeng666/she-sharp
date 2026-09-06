@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { submitVolunteerForm, submitExAmbassadorForm, getVolunteerFormByEmail } from '@/lib/forms/volunteer-service';
+import { submitVolunteerForm, submitExAmbassadorForm } from '@/lib/forms/volunteer-service';
 import { z } from 'zod';
 
 const volunteerCurrentStatuses = [
@@ -126,40 +126,10 @@ export async function POST(request: NextRequest) {
   }
 }
 
-/**
- * GET /api/forms/volunteer/public
- * Checks if an email already has a pending application.
- */
-export async function GET(request: NextRequest) {
-  try {
-    const { searchParams } = new URL(request.url);
-    const email = searchParams.get('email');
-    const type = searchParams.get('type') as 'ambassador' | 'volunteer' | 'ex_ambassador' | null;
-
-    if (!email || !type) {
-      return NextResponse.json({ error: 'Email and type are required' }, { status: 400 });
-    }
-
-    if (type !== 'ambassador' && type !== 'volunteer' && type !== 'ex_ambassador') {
-      return NextResponse.json({ error: 'Invalid type' }, { status: 400 });
-    }
-
-    const form = await getVolunteerFormByEmail(email, type);
-
-    if (!form) {
-      return NextResponse.json({ exists: false });
-    }
-
-    return NextResponse.json({
-      exists: true,
-      status: form.status,
-      submittedAt: form.submittedAt,
-    });
-  } catch (error) {
-    console.error('Error checking volunteer form status:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
-  }
-}
+// There is deliberately no GET handler. Until 2026-09-06 this route answered
+// `GET ?email=<address>&type=<role>` for anyone, with no session and no rate
+// limit, telling the caller whether that person had applied to volunteer for
+// She Sharp and what their application status was. Nothing in the app ever
+// called it — both apply pages only POST, and `submitVolunteerForm()` /
+// `submitExAmbassadorForm()` already look up an existing submission by email
+// server-side.
